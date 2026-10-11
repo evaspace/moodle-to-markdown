@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    container_name: mathsdoomscroll_app
+    volumes:
+      - .:/app
+    ports:
+      - "172.17.0.1:5080:5000"
+    restart: always
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}

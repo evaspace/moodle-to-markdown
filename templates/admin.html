@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Injection - Scroll-to-Learn</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { height: auto; overflow: auto; }
+        body { font-family: ui-monospace, 'JetBrains Mono', monospace; color: #111; background: #fff; }
+        .admin-container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+        h1 { margin-bottom: 1rem; font-size: 1.5rem; text-transform: uppercase; }
+        .console-input { width: 100%; height: 55vh; padding: 1rem; border: 2px solid #111; font: inherit; font-size: 16px; resize: vertical; }
+        .console-btn { width: 100%; margin-top: 1rem; padding: 1rem; background: #111; color: #fff; border: none; font: inherit; font-weight: bold; cursor: pointer; }
+        .notice { padding: 1rem; margin-bottom: 1rem; border: 2px solid; font-size: .9rem; }
+        .notice.ok { border-color: #00cc66; background: #eaffea; }
+        .notice.ko { border-color: #ff3333; background: #ffeaea; }
+        pre { background: #f4f4f4; padding: 1rem; margin-top: 1.5rem; font-size: .8rem; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Injection de données</h1>
+
+        {% if result %}
+        <div class="notice {{ 'ok' if result.inserted else 'ko' }}">
+            {{ result.inserted }} carte(s) injectée(s){% if result.duplicates %}, {{ result.duplicates }} doublon(s) ignoré(s){% endif %}.
+            {% for e in result.errors %}<div>⚠ {{ e }}</div>{% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            <textarea class="console-input" name="raw_text" placeholder="Q: Loi de Fitts&#10;R: Temps pour atteindre une cible...&#10;---"></textarea>
+            <button class="console-btn" type="submit">INJECTER</button>
+        </form>
+
+<pre>CAT: Maths Discrètes / Logique     (optionnel, reste actif pour les blocs suivants)
+Q: Question ou titre du cours
+R: Explication (peut tenir sur plusieurs lignes)
+---
+Q: [QCM] Question ?
+C1: mauvais choix
+C2: bon choix [X]
+C3: autre mauvais choix
+R: Explication
+---
+Q: [TF] Affirmation ?
+A: vrai
+R: Explication
+---
+Maths : $a &lt; b$ ou $$\sum_{i=1}^n i$$ (KaTeX)</pre>
+    </div>
+</body>
+</html>

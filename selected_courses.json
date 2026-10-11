@@ -1,0 +1,365 @@
+{
+  "version": "1.1",
+  "description": "Sélection officielle des cours majeurs EPITA basée sur le Syllabus des UE Concevoir S1PC et S2PC",
+  "updated_at": "2026-10-11",
+  "examination_blocks": {
+    "B1": "OBM (Outils de Base Mathématiques) + DP (Dénombrement & Probabilités)",
+    "B2": "ARITH (Arithmétique des Entiers) + SR (Suites Réelles)",
+    "B3": "APEF (Analyse : Polynômes, EDO, Fonctions) + EV (Espaces Vectoriels)",
+    "B4": "EV (Espaces Vectoriels suite) + ALM (Applications Linéaires & Matrices)"
+  },
+  "domains": [
+    {
+      "domain_id": "maths_s1",
+      "label": "Mathématiques S1 (UE Concevoir S1PC - Coef 14)",
+      "icon": "∑",
+      "courses": [
+        {
+          "id": "maths-obm",
+          "ecue_code": "OBM",
+          "exam_block": "B1",
+          "coef": 3,
+          "seuil": 1,
+          "title": "OBM - Outils de Base Mathématiques",
+          "category_name": "Maths S1 - OBM",
+          "source_folder": "S1-MATHS-2030",
+          "priority": "P0",
+          "description": "Logique propositionnelle, quantificateurs, ensembles, relations, applications, nombres complexes et géométrie.",
+          "chapters": [
+            "Logique et assertions",
+            "Ensembles et applications",
+            "Nombres complexes et géométrie"
+          ]
+        },
+        {
+          "id": "maths-dp",
+          "ecue_code": "DP",
+          "exam_block": "B1",
+          "coef": 4,
+          "seuil": 1,
+          "title": "DP - Dénombrement et Probabilités",
+          "category_name": "Maths S1 - DP",
+          "source_folder": "S1-MATHS-2030",
+          "priority": "P0",
+          "description": "Dénombrement (permutations, combinaisons), espaces probabilisés, probabilités conditionnelles, indépendance, variables aléatoires discrètes.",
+          "chapters": [
+            "Dénombrement",
+            "Probabilités finies",
+            "Probabilités conditionnelles",
+            "Variables aléatoires"
+          ]
+        },
+        {
+          "id": "maths-arith",
+          "ecue_code": "ARITH",
+          "exam_block": "B2",
+          "coef": 3,
+          "seuil": 1,
+          "title": "ARITH - Arithmétique des Nombres Entiers",
+          "category_name": "Maths S1 - ARITH",
+          "source_folder": "S1-MATHS-2030",
+          "priority": "P0",
+          "description": "Divisibilité, division euclidienne, PGCD, algorithme d'Euclide, théorème de Bézout, nombres premiers, congruences et petit théorème de Fermat.",
+          "chapters": [
+            "Divisibilité & Division euclidienne",
+            "Bézout & Gauss",
+            "Nombres premiers",
+            "Congruences & Fermat"
+          ]
+        },
+        {
+          "id": "maths-sr",
+          "ecue_code": "SR",
+          "exam_block": "B2",
+          "coef": 4,
+          "seuil": 1,
+          "title": "SR - Suites Réelles",
+          "category_name": "Maths S1 - SR",
+          "source_folder": "S1-MATHS-2030",
+          "priority": "P0",
+          "description": "Suites monotones, bornées, limites, théorèmes d'encadrement, suites adjacentes, suites récurrentes et équivalents usuels.",
+          "chapters": [
+            "Généralités sur les suites",
+            "Limites & Théorèmes de convergence",
+            "Suites adjacentes & Bolzano-Weierstrass"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "maths_s2",
+      "label": "Mathématiques S2 (UE Concevoir S2PC - Coef 16)",
+      "icon": "∫",
+      "courses": [
+        {
+          "id": "maths-apef",
+          "ecue_code": "APEF",
+          "exam_block": "B3",
+          "coef": 6,
+          "seuil": 7,
+          "title": "APEF - Analyse : Polynômes, EDO et Fonctions",
+          "category_name": "Maths S2 - APEF",
+          "source_folder": "S2-MATHS-2030",
+          "priority": "P0",
+          "description": "Polynômes (racines, factorisation, division euclidienne), équations différentielles linéaires (1er et 2nd ordre), développements limités et formules de Taylor.",
+          "chapters": [
+            "Polynômes & Factorisation",
+            "Équations différentielles linéaires",
+            "Étude locale & Développements limités"
+          ]
+        },
+        {
+          "id": "maths-ev",
+          "ecue_code": "EV",
+          "exam_block": "B3-B4",
+          "coef": 5,
+          "seuil": 7,
+          "title": "EV - Espaces Vectoriels",
+          "category_name": "Maths S2 - EV",
+          "source_folder": "S2-MATHS-2030",
+          "priority": "P0",
+          "description": "Sous-espaces vectoriels, combinaisons linéaires, familles libres, génératrices, bases, dimension finie et formule de Grassmann.",
+          "chapters": [
+            "Sous-espaces vectoriels",
+            "Familles libres & génératrices",
+            "Bases & Dimension"
+          ]
+        },
+        {
+          "id": "maths-alm",
+          "ecue_code": "ALM",
+          "exam_block": "B4",
+          "coef": 5,
+          "seuil": 7,
+          "title": "ALM - Applications Linéaires et Matrices",
+          "category_name": "Maths S2 - ALM",
+          "source_folder": "S2-MATHS-2030",
+          "priority": "P0",
+          "description": "Noyau, image, théorème du rang, matrices associées aux applications linéaires, produit, inverse, calcul du rang et changement de base.",
+          "chapters": [
+            "Applications linéaires (Ker, Im, Rang)",
+            "Calcul matriciel & Inverses",
+            "Matrices & Changement de base"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "algo_prog",
+      "label": "Algorithmique & Programmation (UE Concevoir)",
+      "icon": "⚡",
+      "courses": [
+        {
+          "id": "algo-taa",
+          "ecue_code": "TAA",
+          "exam_block": "S1",
+          "coef": 2,
+          "seuil": 1,
+          "title": "TAA - Types Algébriques Abstraits",
+          "category_name": "Algorithmique (TAA)",
+          "source_folder": "[algo] TAA - Types algébriques abstraits",
+          "priority": "P0",
+          "description": "Spécification formelle, listes itératives et récursives, piles (LIFO), files (FIFO), ensembles, multi-ensembles et arbres.",
+          "chapters": [
+            "Types abstraits fondamentaux",
+            "Listes récursives & itératives",
+            "Piles & Files",
+            "Ensembles & Arbres"
+          ]
+        },
+        {
+          "id": "algo-caml",
+          "ecue_code": "CAML",
+          "exam_block": "S2",
+          "coef": 2,
+          "seuil": 1,
+          "title": "CAML - Programmation Fonctionnelle",
+          "category_name": "Algo (Caml)",
+          "source_folder": "[algo] Caml et récursivité",
+          "priority": "P1",
+          "description": "Syntaxe OCaml, récursivité simple et terminale, filtrage par motifs, structures de données immuables.",
+          "chapters": [
+            "Syntaxe & Typage statique",
+            "Récursivité simple & terminale",
+            "Pattern matching & Listes"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "archi",
+      "label": "Architecture des Ordinateurs",
+      "icon": "💻",
+      "courses": [
+        {
+          "id": "archi-s1",
+          "ecue_code": "NUM-BOOL",
+          "exam_block": "S1",
+          "coef": 2,
+          "seuil": 1,
+          "title": "Archi S1 - Numération & Logique Combinatoire",
+          "category_name": "Architecture S1",
+          "source_folder": "Archi S1 - Promo 2030",
+          "priority": "P0",
+          "description": "Représentation binaire, hexadécimale, complément à 2, virgule flottante IEEE 754, algèbre de Boole, simplification de Karnaugh et portes logiques.",
+          "chapters": [
+            "Arithmétique des ordinateurs",
+            "Virgule flottante IEEE 754",
+            "Algèbre de Boole & Portes",
+            "Circuits combinatoires"
+          ]
+        },
+        {
+          "id": "archi-s2",
+          "ecue_code": "LOGSEQ",
+          "exam_block": "S2",
+          "coef": 2,
+          "seuil": 1,
+          "title": "Archi S2 - Logique Séquentielle & Compteurs",
+          "category_name": "Architecture S2",
+          "source_folder": "Archi S2 2030 - Logique Séquentielle et systèmes à microprocesseur",
+          "priority": "P0",
+          "file_count": 88,
+          "description": "Bascules RS, D, JK, registres, compteurs synchrones et asynchrones, chronogrammes, architectures à microprocesseur.",
+          "chapters": [
+            "Logique séquentielle & Bascules",
+            "Compteurs synchrones et asynchrones",
+            "Systèmes à microprocesseur"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "si_elec_physique",
+      "label": "Sciences de l'Ingénieur : Électronique & Physique",
+      "icon": "🔌",
+      "courses": [
+        {
+          "id": "elec-aoc",
+          "ecue_code": "AOC",
+          "exam_block": "S1",
+          "coef": 1,
+          "seuil": 1,
+          "title": "AOC - Outils d'Analyse de Circuits",
+          "category_name": "Électronique S1 - AOC",
+          "source_folder": "S1 - Electronique - Promo 2030",
+          "priority": "P0",
+          "description": "Lois de Kirchhoff, ponts diviseurs, théorème de Millman, Thévenin et Norton, circuits linéaires RL/RC/RLC.",
+          "chapters": [
+            "Lois de base & Kirchhoff",
+            "Théorèmes de Thévenin, Norton, Millman",
+            "Circuits RL, RC, RLC"
+          ]
+        },
+        {
+          "id": "elec-fil",
+          "ecue_code": "FIL",
+          "exam_block": "S2",
+          "coef": 1,
+          "seuil": 5,
+          "title": "FIL - Étude des Filtres",
+          "category_name": "Électronique S2 - Filtres",
+          "source_folder": "Electronique S2 - Études des filtres",
+          "priority": "P1",
+          "description": "Fonctions de transfert harmoniques, diagrammes de Bode en gain et phase, filtres passifs et actifs du 1er et 2nd ordre.",
+          "chapters": [
+            "Fonctions de transfert harmoniques",
+            "Diagrammes de Bode (gain & phase)",
+            "Filtres passe-bas, passe-haut, passe-bande"
+          ]
+        },
+        {
+          "id": "elec-dio",
+          "ecue_code": "DIO",
+          "exam_block": "S2",
+          "coef": 1,
+          "seuil": 5,
+          "title": "DIO - Diodes et Redressement",
+          "category_name": "Électronique S2 - Diodes",
+          "source_folder": "Electronique S2 - Diodes [2526_I_INF_FISE_S02_CN_DIO]",
+          "priority": "P1",
+          "description": "Caractéristique statique de la diode, jonction PN, redressement simple et double alternance, diodes Zener et régulation.",
+          "chapters": [
+            "Jonction PN & Modélisation",
+            "Redressement et filtrage",
+            "Diodes Zener & Régulation"
+          ]
+        },
+        {
+          "id": "elec-ert",
+          "ecue_code": "ERT",
+          "exam_block": "S2",
+          "coef": 1,
+          "seuil": 5,
+          "title": "ERT - Régimes Transitoires",
+          "category_name": "Électronique S2 - Transitoires",
+          "source_folder": "Electronique S2 - Études des régimes transitoires [2526_I_INF_FISE_S02_CN_ERT]",
+          "priority": "P1",
+          "description": "Réponse indicielle et impulsionnelle des circuits RC et RL, constante de temps tau, énergie emmagasinée.",
+          "chapters": [
+            "Circuits RC & RL du 1er ordre",
+            "Constante de temps & Réponse indicielle"
+          ]
+        },
+        {
+          "id": "physique-promo2030",
+          "ecue_code": "ELM-THERMO-MECA",
+          "exam_block": "S1-S2",
+          "coef": 3,
+          "seuil": 5,
+          "title": "Physique - Mécanique, Électromagnétisme & Thermo",
+          "category_name": "Physique",
+          "source_folder": "Physique - Promo 2030",
+          "priority": "P1",
+          "description": "Mécanique du point (S1), électromagnétisme (S2 - ELM) et thermodynamique (S2 - THERMO).",
+          "chapters": [
+            "Mécanique du point",
+            "Électrostatique & Magnétostatique",
+            "Thermodynamique"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "nts_cyber_ia",
+      "label": "Nouvelles Technologies : Cyber & IA",
+      "icon": "🛡️",
+      "courses": [
+        {
+          "id": "cybersecurite",
+          "ecue_code": "CYBER",
+          "exam_block": "S2",
+          "coef": 1,
+          "seuil": 1,
+          "title": "CYBER - Initiation à la Cybersécurité",
+          "category_name": "Cybersécurité",
+          "source_folder": "2526_Prepa_S2_NTS_Cybersecurité",
+          "priority": "P1",
+          "description": "Méthodes des cyber-attaquants, vulnérabilités Web et réseaux, attaques par injection, défense en profondeur.",
+          "chapters": [
+            "Méthodes des attaquants",
+            "Vulnérabilités techniques & Exploits",
+            "Défense & Hygiène informatique"
+          ]
+        },
+        {
+          "id": "ia-generative",
+          "ecue_code": "IA",
+          "exam_block": "S1",
+          "coef": 1,
+          "seuil": 1,
+          "title": "IA - Intelligence Artificielle Générative",
+          "category_name": "Intelligence Artificielle",
+          "source_folder": "Intelligence Artificielle Générative-S1 2025",
+          "priority": "P1",
+          "description": "Modèles génératifs, architectures Transformers, attention multi-têtes, prompt engineering et RAG.",
+          "chapters": [
+            "Principes des modèles génératifs",
+            "Transformers et Attention",
+            "Prompt Engineering & RAG"
+          ]
+        }
+      ]
+    }
+  ]
+}

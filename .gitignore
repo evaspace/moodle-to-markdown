@@ -14,6 +14,8 @@ env/
 # Data & Course Notes (Personal university files - Never commit!)
 EPITA_Moodle_Notes/
 EPITA_Moodle_Notes_MD/
+Generated_QCMs/
+qcm_progress.json
 moodle_notes/
 moodle_notes_md/
 *_Notes/
@@ -23,6 +25,12 @@ state.json
 *.log
 .env
 .env.*
+
+# SQLite WAL & temporary files
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
 
 # External Clones & Temporary Notes
 markitdown_repo/

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FFFFFF">
+    <title>Maths Doomscrolling</title>
+
+    <!-- Favicon & OpenGraph (Le petit chat pixel art) -->
+    <link rel="icon" type="image/jpeg" href="/static/cat.jpg">
+    <link rel="apple-touch-icon" href="/static/cat.jpg">
+    <meta property="og:title" content="Maths Doomscrolling">
+    <meta property="og:description" content="Fait par Morgan PIERREFEU. Théorèmes, QCM, Vrai/Faux et intuition mathématique pure.">
+    <meta property="og:image" content="https://mathsdoomscrolling.pierref.eu/static/cat.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Maths Doomscrolling">
+    <meta name="twitter:description" content="Fait par Morgan PIERREFEU. Doomscrolle des maths 🧠🐱">
+    <meta name="twitter:image" content="https://mathsdoomscrolling.pierref.eu/static/cat.jpg">
+
+    <!-- Fonts : JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Styles & App -->
+    <link rel="stylesheet" href="/static/style.css">
+    <script defer src="/static/app.js"></script>
+</head>
+<body>
+    <div id="app-viewport">
+        <!-- CANVAS PIXEL GORE -->
+        <canvas id="gore-canvas" class="gore-canvas"></canvas>
+
+        <!-- HEADER ÉPURÉ SANS LOGO -->
+        <header id="app-header">
+            <div class="header-left">
+                <button id="header-back-btn" class="header-btn hidden" onclick="goHome()" title="Retour à l'accueil" aria-label="Retour">←</button>
+                <a href="https://morgan.pierref.eu/credits" target="_blank" rel="noopener" class="header-author-link" title="Crédits - Morgan PIERREFEU">
+                    Morgan PIERREFEU
+                </a>
+            </div>
+
+            <div class="header-center">
+                <div id="stats-panel" class="stats-badge">
+                    <span id="streak-counter" class="streak-pill" title="Série en cours">🔥 <span id="streak-val">0</span></span>
+                    <span id="level-display" class="level-pill" title="Niveau">LVL <span id="level-val">1</span></span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <!-- Bouton Partager avec le petit chat (flat) -->
+                <button id="share-btn" class="share-cat-btn" onclick="shareApp()" title="Partager" aria-label="Partager">
+                    <img src="/static/stand-up-cat-removebg-preview.png" alt="Chat Partage" class="share-cat-icon">
+                    <span class="share-label">SHARE</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- PROGRESS BAR -->
+        <div id="feed-progress-bar" class="progress-bar hidden">
+            <div id="feed-progress-fill" class="progress-fill"></div>
+        </div>
+
+        <!-- ÉCRAN 1 : ACCUEIL ÉPURÉ (ZÉRO SUPERFLU) -->
+        <div id="landing-screen" class="screen visible">
+            <div class="landing-content">
+                <!-- LE PETIT CHAT SEUL AU CENTRE -->
+                <div class="landing-cat-section" onclick="petTheCat()">
+                    <div id="landing-cat-bubble" class="cat-speech-bubble hidden">Miaou !</div>
+                    <div class="landing-cat-frame">
+                        <img src="/static/laying-cat-removebg-preview.png" alt="Le petit chat" class="landing-cat-img state-rest" id="landing-cat-img">
+                    </div>
+                </div>
+
+                <!-- BOUTON TOUT DOOMSCROLLER -->
+                <div class="quick-action-wrap">
+                    <button class="quick-all-btn" onclick="launchFeed(null, null)">
+                        <span>⚡ TOUT DOOMSCROLLER</span>
+                        <span class="quick-all-arrow">→</span>
+                    </button>
+                </div>
+
+                <!-- LISTE DES MODULES DIRECTE (SANS TITRE NI TEXTE INTERMÉDIAIRE) -->
+                <div id="category-list" class="category-list">
+                    <div class="loading-state">Chargement des modules...</div>
+                </div>
+
+                <!-- LIEN CRÉDITS EN BAS -->
+                <div class="landing-credits-footer">
+                    <a href="https://morgan.pierref.eu/credits" target="_blank" rel="noopener">
+                        Fait par Morgan PIERREFEU · Crédits
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉCRAN 2 : FEED DE DOOMSCROLLING -->
+        <div id="feed-screen" class="screen hidden">
+            <!-- Feed scrollable avec snap vertical -->
+            <div id="feed" tabindex="0"></div>
+
+            <!-- LE PETIT CHAT EN BAS À DROITE -->
+            <div id="bottom-cat-container" class="bottom-cat-wrap">
+                <div id="cat-bubble" class="cat-speech-bubble hidden">Miaou !</div>
+                <div class="mascot-frame" id="mascot-frame">
+                    <img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Petit Chat Focus" onclick="petTheCat()">
+                </div>
+            </div>
+
+            <!-- Animation Like plein écran -->
+            <div id="like-animation">❤️</div>
+
+            <!-- Navigation desktop discrète -->
+            <div class="desktop-nav-hint">
+                <span>[↓ / ESPACE] suivant</span>
+                <span>[↑] précédent</span>
+                <span>[←/→] vrai/faux</span>
+                <span>[L] like</span>
+            </div>
+        </div>
+
+        <!-- MODAL DOSSIERS / FAVORIS -->
+        <div id="folder-modal" class="modal-backdrop hidden" onclick="if (event.target === this) closeFolderModal()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📁 ENREGISTRER DANS UN DOSSIER</h3>
+                    <button class="modal-close-btn" onclick="closeFolderModal()">✕</button>
+                </div>
+                <div id="folder-list" class="folder-list"></div>
+                <div class="new-folder-row">
+                    <input type="text" id="new-folder-name" placeholder="Nom du dossier..." maxlength="40">
+                    <button class="new-folder-btn" onclick="createFolder()">+ CRÉER</button>
+                </div>
+                <button class="modal-done-btn" onclick="closeFolderModal()">TERMINÉ</button>
+            </div>
+        </div>
+
+        <!-- TOAST GLOBAL -->
+        <div id="toast" class="toast hidden"></div>
+    </div>
+</body>
+</html>
