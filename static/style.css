@@ -966,8 +966,10 @@ button {
 }
 
 /* 9. HIDDEN (Caché pendant les coulures de sang) */
-.mascot-cat-img.state-hidden {
+.mascot-cat-img.state-hidden,
+.landing-cat-img.state-hidden {
     opacity: 0 !important;
+    visibility: hidden !important;
     pointer-events: none !important;
 }
 
