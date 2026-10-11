@@ -11,15 +11,24 @@ venv/
 ENV/
 env/
 
-# Data & Downloads
+# Data & Course Notes (Personal university files - Never commit!)
 EPITA_Moodle_Notes/
+EPITA_Moodle_Notes_MD/
+moodle_notes/
+moodle_notes_md/
+*_Notes/
+*_Notes_MD/
 state.json
 *.tmp
 *.log
+.env
+.env.*
 
-# Archives & original sources
-moodle-scraper-master.zip
+# External Clones & Temporary Notes
+markitdown_repo/
 moodle-scraper-master/
+moodle-scraper-master.zip
+READMEcourse2markdown.md
 
 # IDE / OS
 .vscode/

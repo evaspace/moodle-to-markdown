@@ -21,6 +21,9 @@ MOODLE_TOKEN = ""
 MOODLE_USERNAME = ""
 MOODLE_PASSWORD = ""
 
+# Optionnel : Clé API Mistral (pour le nettoyage automatique IA via batch_convert.py)
+MISTRAL_API_KEY = ""
+
 # ==========================================
 # PARAMÈTRES D'EXPORTATION & TÉLÉCHARGEMENT
 # ==========================================

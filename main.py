@@ -32,8 +32,8 @@ def prompt_for_cookie(base_url: str) -> str:
     print("👉 Comment vous authentifier simplement avec votre compte EPITA Forge ID :")
     print(f"1. Connectez-vous sur {base_url} dans votre navigateur (Chrome/Firefox/Brave).")
     print("2. Appuyez sur F12 (Outils de développement).")
-    print("3. Allez dans l'onglet 'Application' (ou 'Stockage') -> Cookies -> https://moodle.epita.fr")
-    print("4. Copiez la valeur du cookie nommé 'MoodleSession' (ex: 82dglt0rpd4iss8jgngqm8eqla)")
+    print("3. Allez dans l'onglet 'Application' (ou 'Stockage') -> Cookies -> URL Moodle")
+    print("4. Copiez la valeur du cookie nommé 'MoodleSession' (ex: abc123def456...)")
     print("=" * 70)
 
     try:
