@@ -629,15 +629,48 @@ button {
     line-height: 1.4;
     letter-spacing: -0.5px;
     margin-bottom: 1.5rem;
-    white-space: pre-wrap;
     overflow-wrap: break-word;
 }
 
+/* KATEX & FORMULES MATHÉMATIQUES */
+.katex {
+    font-size: 1.05em;
+    font-weight: 400 !important;
+    line-height: 1.2;
+    text-rendering: auto;
+}
+
 .katex-display {
-    margin: 1rem 0 !important;
-    padding: 6px 0;
+    display: block;
+    margin: 0.85rem 0 !important;
+    padding: 8px 0;
     overflow-x: auto;
     overflow-y: hidden;
+    text-align: center;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-front .katex,
+.card-back .katex,
+.choice-btn .katex {
+    font-weight: 400 !important;
+}
+
+.choice-btn .katex-display {
+    display: inline-block;
+    margin: 0.2rem 0 !important;
+    vertical-align: middle;
+}
+
+.math-code {
+    background: #EEEEEE;
+    color: #111;
+    padding: 2px 6px;
+    font-size: 0.86em;
+    font-family: inherit;
+    border: 1px solid var(--border-color);
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* QCM CHOICES (PUR RECTANGLE FLAT) */

@@ -16,13 +16,111 @@ const toastEl = $('toast');
 const goreCanvas = $('gore-canvas');
 const appViewport = $('app-viewport');
 
+// ------------------------------------------------------------ CONFIGURATION & PARSER MATH LATEX ----
+const UNICODE_MATH_SYMBOLS = {
+    // Inégalités, équivalences et approximations
+    '≤': '\\le ', '≥': '\\ge ', '≠': '\\ne ', '≈': '\\approx ', '≡': '\\equiv ',
+    '∝': '\\propto ', '±': '\\pm ', '∓': '\\mp ', '∼': '\\sim ', '≃': '\\simeq ',
+    
+    // Opérateurs
+    '×': '\\times ', '÷': '\\div ', '⋅': '\\cdot ', '·': '\\cdot ', '∘': '\\circ ',
+    '⊗': '\\otimes ', '⊕': '\\oplus ',
+    
+    // Ensembles, logique et quantificateurs
+    '∈': '\\in ', '∉': '\\notin ', '⊂': '\\subset ', '⊆': '\\subseteq ',
+    '⊃': '\\supset ', '⊇': '\\supseteq ', '∪': '\\cup ', '∩': '\\cap ',
+    '∅': '\\emptyset ', '∀': '\\forall ', '∃': '\\exists ', '∄': '\\nexists ',
+    '⇒': '\\implies ', '⇐': '\\impliedby ', '⇔': '\\iff ', '→': '\\to ',
+    '←': '\\leftarrow ', '↔': '\\leftrightarrow ', '↦': '\\mapsto ',
+    '∧': '\\land ', '∨': '\\lor ', '¬': '\\neg ',
+    
+    // Analyse, calcul différentiel & sommations
+    '∞': '\\infty ', '∑': '\\sum ', '∏': '\\prod ', '∫': '\\int ',
+    '∬': '\\iint ', '∭': '\\iiint ', '∮': '\\oint ', '∂': '\\partial ',
+    '∇': '\\nabla ', '√': '\\sqrt ',
+    
+    // Ensembles de nombres usuels
+    'ℝ': '\\mathbb{R}', 'ℂ': '\\mathbb{C}', 'ℕ': '\\mathbb{N}',
+    'ℤ': '\\mathbb{Z}', 'ℚ': '\\mathbb{Q}', '𝕂': '\\mathbb{K}'
+};
+
 const KATEX_OPTS = {
     delimiters: [
         { left: '$$', right: '$$', display: true },
-        { left: '$', right: '$', display: false }
+        { left: '\\[', right: '\\]', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\(', right: '\\)', display: false }
     ],
-    throwOnError: false
+    ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+    throwOnError: false,
+    errorColor: '#E63946',
+    strict: false,
+    trust: true
 };
+
+function formatMathMarkdown(text) {
+    if (!text) return '';
+    let s = String(text).trim();
+
+    // 0. Nettoyage des accolades de titre de cours (ex: {Théorème de Pythagore})
+    s = s.replace(/^\s*\{([^{}]+)\}\s*$/, '$1');
+
+    const mathBlocks = [];
+
+    // 1. Isoler les blocs de maths en affichage hors-ligne ($$...$$ et \[...\])
+    s = s.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g, match => {
+        const id = `___MATH_DISPLAY_${mathBlocks.length}___`;
+        mathBlocks.push({ type: 'display', code: match });
+        return id;
+    });
+
+    // 2. Isoler les blocs de maths inline (\(...\) et $...$)
+    s = s.replace(/(\\\([\s\S]*?\\\)|\$([^\$\n]+?)\$)/g, match => {
+        const id = `___MATH_INLINE_${mathBlocks.length}___`;
+        mathBlocks.push({ type: 'inline', code: match });
+        return id;
+    });
+
+    // 3. Détecter intelligemment les équations polynomiales et formules sans délimiteurs
+    // Exemples : P(X) = -2X^3 + 3X - 4  ou  f'(x) = 2x + 1
+    s = s.replace(/\b([A-Za-z](?:'[A-Za-z]*)?\([A-Za-z0-9_]+\)\s*=[^,;\n?]+)/g, match => {
+        if (match.includes('___MATH_')) return match;
+        const id = `___MATH_INLINE_${mathBlocks.length}___`;
+        mathBlocks.push({ type: 'inline', code: `\\(${match.trim()}\\)` });
+        return id;
+    });
+
+    // 4. Remplacer les symboles Unicode mathématiques isolés dans le texte restant
+    for (const [sym, latex] of Object.entries(UNICODE_MATH_SYMBOLS)) {
+        if (s.includes(sym)) {
+            s = s.split(sym).join(` \\(${latex.trim()}\\) `);
+        }
+    }
+
+    // 5. Échappement HTML sécurisé uniquement sur le texte pur
+    s = s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    // 6. Typographie Markdown standard
+    s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+    s = s.replace(/`([^`\n]+?)`/g, '<code class="math-code">$1</code>');
+    s = s.replace(/\n/g, '<br>');
+
+    // 7. Restauration des blocs LaTeX originaux avec normalisation Unicode interne
+    mathBlocks.forEach((b, idx) => {
+        let code = b.code;
+        // Remplacer aussi les symboles Unicode à l'intérieur du LaTeX pour KaTeX
+        for (const [sym, latex] of Object.entries(UNICODE_MATH_SYMBOLS)) {
+            if (code.includes(sym)) {
+                code = code.split(sym).join(latex);
+            }
+        }
+        const placeholder = b.type === 'display' ? `___MATH_DISPLAY_${idx}___` : `___MATH_INLINE_${idx}___`;
+        s = s.replace(placeholder, () => code);
+    });
+
+    return s;
+}
 
 let session = 0;
 let isFetching = false;
@@ -749,6 +847,7 @@ async function fetchUserState() {
 
 // ------------------------------------------------------------ KATEX RENDER ----
 function renderMath(element) {
+    if (!element) return;
     const doRender = () => {
         if (window.renderMathInElement) {
             try {
@@ -767,10 +866,17 @@ function renderMath(element) {
                 clearInterval(checkInterval);
                 doRender();
             }
-        }, 100);
-        setTimeout(() => clearInterval(checkInterval), 5000);
+        }, 80);
+        setTimeout(() => clearInterval(checkInterval), 6000);
     }
 }
+
+// Re-vérification automatique lorsque KaTeX finit de charger
+window.addEventListener('load', () => {
+    if (window.renderMathInElement) {
+        document.querySelectorAll('.card').forEach(c => renderMath(c));
+    }
+});
 
 // ------------------------------------------------------------ INTERSECTION OBSERVER ----
 const observer = new IntersectionObserver(entries => {
@@ -868,13 +974,13 @@ function buildCard(c, uid) {
         </div>
 
         <div class="card-body">
-            <div class="card-front">${esc(c.front)}</div>
+            <div class="card-front">${formatMathMarkdown(c.front)}</div>
     `;
 
     if (c.type === 'QCM') {
         const choices = shuffle([...(c.payload?.choices || [])]);
         html += '<div class="qcm-choices">' +
-            choices.map(ch => `<button class="choice-btn" data-correct="${ch.correct}">${esc(ch.text)}</button>`).join('') +
+            choices.map(ch => `<button class="choice-btn" data-correct="${ch.correct}">${formatMathMarkdown(ch.text)}</button>`).join('') +
             '</div>';
     } else if (c.type === 'TF') {
         html += `
@@ -891,7 +997,7 @@ function buildCard(c, uid) {
     }
 
     if (c.back) {
-        html += `<div class="card-back">${esc(c.back)}</div>`;
+        html += `<div class="card-back">${formatMathMarkdown(c.back)}</div>`;
     }
 
     html += `</div>`;
@@ -920,6 +1026,7 @@ function buildCard(c, uid) {
         flipBtn.onclick = (e) => {
             e.stopPropagation();
             card.classList.toggle('revealed');
+            renderMath(card);
         };
     }
 
@@ -928,6 +1035,7 @@ function buildCard(c, uid) {
         revBtn.onclick = (e) => {
             e.stopPropagation();
             card.classList.toggle('revealed');
+            renderMath(card);
         };
     }
 
