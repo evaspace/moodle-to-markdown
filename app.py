@@ -8,7 +8,7 @@ import sqlite3
 from contextlib import contextmanager
 from functools import wraps
 
-from flask import Flask, Response, jsonify, render_template, request
+from flask import Flask, Response, jsonify, render_template, request, send_from_directory
 
 from init_db import DB_PATH, init_db
 
@@ -232,6 +232,16 @@ def fetch_batch(conn, cat=None, sub=None, exclude=None):
         r['payload'] = json.loads(r['payload']) if r['payload'] else {}
         r['is_favorite'] = bool(r.get('is_favorite'))
     return batch
+
+
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.static_folder, 'robots.txt', mimetype='text/plain')
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.static_folder, 'sitemap.xml', mimetype='application/xml')
 
 
 @app.route('/')
