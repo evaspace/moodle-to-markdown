@@ -16,6 +16,9 @@ EPITA_Moodle_Notes/
 EPITA_Moodle_Notes_MD/
 Generated_QCMs/
 qcm_progress.json
+md_to_cards_progress.json
+course_index.json
+import_queue/
 moodle_notes/
 moodle_notes_md/
 *_Notes/
