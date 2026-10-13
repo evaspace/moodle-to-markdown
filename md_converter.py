@@ -8,6 +8,36 @@ import urllib.parse
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 
+# ---------------------------------------------------------------------------
+# Balises mathématiques Moodle non standard (présentes dans 1 152 fichiers)
+# [mathjaxinline]X[/mathjaxinline]  ->  $X$     (inline)
+# [mathjax]X[/mathjax]              ->  $$X$$   (display)
+# Le contenu TeX est préservé tel quel : seuls les espaces extérieurs sont
+# nettoyés. md_converter.py:67 (html_to_markdown) ne les traite pas, d'où
+# cette passe de normalisation utilisée par md_to_cards.py.
+# ---------------------------------------------------------------------------
+MATHJAX_INLINE_TAG_RE = re.compile(
+    r"\[\s*mathjaxinline\s*\](.*?)\[\s*/mathjaxinline\s*\]",
+    re.DOTALL | re.IGNORECASE,
+)
+MATHJAX_BLOCK_TAG_RE = re.compile(
+    r"\[\s*mathjax\s*\](.*?)\[\s*/mathjax\s*\]",
+    re.DOTALL | re.IGNORECASE,
+)
+
+
+def normalize_mathjax_tags(text: str) -> str:
+    """Convertit les balises [mathjaxinline]/[mathjax] en $...$ / $$...$$."""
+    if not text:
+        return text
+    text = MATHJAX_BLOCK_TAG_RE.sub(
+        lambda m: "$$" + m.group(1).strip() + "$$", text
+    )
+    text = MATHJAX_INLINE_TAG_RE.sub(
+        lambda m: "$" + m.group(1).strip() + "$", text
+    )
+    return text
+
 
 def sanitize_filename(name: str, max_len: int = 100) -> str:
     """
