@@ -1,0 +1,79 @@
+---
+CAT: algo / TAA - Fondamentaux
+Q: [QCM] Quel est le but principal d'un **Type Abstrait de Données (TAD)** ?
+C1: [x] Définir une interface contractuelle pour manipuler des données sans révéler leur implémentation interne
+C2: Créer une classe concrète avec une implémentation fixe et non modifiable
+C3: Permettre l'accès direct aux champs privés d'une structure de données
+C4: Remplacer les structures de données existantes (ex: tableau, liste) sans ajout de fonctionnalités
+R: Un TAD se concentre sur *quoi faire* (opérations) plutôt que *comment faire* (implémentation), garantissant ainsi une abstraction et une modularité.
+---
+
+CAT: algo / TAA - Fondamentaux
+Q: [QCM] Dans un TAD, quel élément est **obligatoirement** inclus dans sa spécification ?
+C1: [x] L'ensemble des opérations disponibles et leurs signatures (ex: `insert(x)`, `delete()`)
+C2: Une implémentation en langage C ou Python
+C3: Les valeurs initiales des champs privés
+C4: La taille mémoire allouée pour les données
+R: La spécification d'un TAD se limite aux opérations *externes* et leurs effets (principe de *black-box*).
+---
+
+CAT: algo / TAA - Fondamentaux
+Q: [TF] Un TAD peut être implémenté de manière unique (ex: toujours avec une liste chaînée).
+A: Faux
+R: Un TAD admet généralement **plusieurs implémentations** (ex: liste chaînée vs tableau dynamique), mais doit toujours respecter la même interface.
+---
+
+CAT: algo / TAA - Fondamentaux
+Q: [TF] La loi d'invariance d'un TAD garantit que les opérations ne peuvent jamais violer les propriétés internes des données.
+A: Vrai
+R: L'**invariance** est une propriété invariante (ex: "tous les éléments d'une pile sont accessibles en LIFO") que les opérations doivent préserver.
+---
+
+CAT: algo / TAA - Exemples concrets
+Q: {Pile (Stack)}
+R: $$
+\text{Opérations typiques : } \text{push}(x), \text{pop}(), \text{top}() \\
+\text{Invariance : } \text{Les éléments sont empilés/dépilés selon LIFO (Last-In-First-Out)}
+$$
+---
+
+CAT: algo / TAA - Exemples concrets
+Q: [QCM] Quelle opération n'est **pas** définie dans un TAD de **file (Queue)** standard ?
+C1: [x] `dequeue()` (retire l'élément du début)
+C2: `enqueue(x)` (ajoute un élément à la fin)
+C3: `peek()` (accès au premier élément sans retrait)
+C4: `push(x)` (ajoute un élément à la fin)
+R: `push(x)` est typique d'une pile, pas d'une file. Une file utilise `enqueue()` pour ajouter.
+---
+CAT: algo / TAA - Exemples concrets
+Q: {Liste (List)}
+R: $$
+\text{Opérations courantes : } \text{insert}(i, x), \text{delete}(i), \text{access}(i) \\
+\text{Invariance : } \text{Ordre des éléments préservé, indexation cohérente}
+$$
+---
+CAT: algo / TAA - Abstraction et modularité
+Q: [QCM] Pourquoi utiliser un TAD pour gérer une collection d'éléments plutôt qu'une structure de données brute (ex: tableau) ?
+C1: [x] Pour encapsuler la logique métier et isoler les changements d'implémentation
+C2: Pour réduire la taille mémoire du programme
+C3: Pour interdire l'accès aux données aux autres modules
+C4: Pour obligatoirement utiliser une implémentation en C++
+R: Un TAD permet de **cacher l'implémentation** (ex: passer d'un tableau à une liste chaînée) sans modifier le code client.
+---
+CAT: algo / TAA - Abstraction et modularité
+Q: [TF] Un TAD peut être utilisé pour masquer les détails d'une implémentation inefficace (ex: une liste chaînée pour une recherche rapide).
+A: Vrai
+R: L'abstraction d'un TAD se concentre sur le *comportement*, pas sur l'*efficience*. Le client ne doit pas connaître l'implémentation sous-jacente.
+---
+CAT: algo / TAA - Exceptions et erreurs
+Q: {Erreur de sous-typage (Subtyping Error)}
+R: Violation de l'invariance d'un TAD due à une opération non autorisée (ex: `pop()` sur une pile vide).
+---
+CAT: algo / TAA - Exceptions et erreurs
+Q: [QCM] Quelle est la conséquence d'appeler `pop()` sur une pile vide dans un TAD bien conçu ?
+C1: [x] Une exception ou une erreur est levée (ex: `EmptyStackException`)
+C2: Le programme plante immédiatement (segmentation fault)
+C3: La pile retourne `null` sans erreur
+C4: La pile est initialisée avec un élément par défaut
+R: Un TAD doit **gérer les erreurs** (ex: pile vide) via des mécanismes de gestion d'erreurs (exceptions, retours d'erreur).
+---

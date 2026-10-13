@@ -1,0 +1,94 @@
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [QCM] Quel est le degré du polynôme \( P(X) = -2X^3 + 3X - 4 \) ?
+C1: [x] 3
+C2: 1
+C3: 2
+C4: 4
+R: Le degré d’un polynôme est le plus haut exposant de \( X \) avec un coefficient non nul. Ici, le terme dominant est \( -2X^3 \).
+
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [QCM] Si \( P(X) = a_0 + a_1X + \dots + a_nX^n \), quel est le coefficient dominant ?
+C1: [x] \( a_n \)
+C2: \( a_0 \)
+C3: \( a_{n-1} \)
+C4: \( a_1 \)
+R: Le coefficient dominant est celui associé au monôme de plus haut degré, soit \( X^n \).
+
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [QCM] Quelle est la formule générale du degré d’une somme de deux polynômes \( P(X) \) et \( Q(X) \) ?
+C1: [x] \( \deg(P + Q) \leq \max(\deg(P), \deg(Q)) \)
+C2: \( \deg(P + Q) = \deg(P) + \deg(Q) \)
+C3: \( \deg(P + Q) = \min(\deg(P), \deg(Q)) \)
+C4: \( \deg(P + Q) \) est toujours égal à 0
+R: Le degré de la somme est inférieur ou égal au maximum des degrés des polynômes, car les termes dominants peuvent s’annuler.
+
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [TF] Un polynôme unitaire est un polynôme dont le coefficient dominant est égal à 1.
+A: Vrai
+R: Par définition, un polynôme unitaire a son coefficient dominant (celui de \( X^n \)) égal à 1.
+
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [TF] La dérivée \( k \)-ième d’un polynôme \( P(X) = \sum_{i=0}^n a_i X^i \) en 0 est donnée par \( P^{(k)}(0) = k! \, a_k \).
+A: Vrai
+R: La formule de Taylor montre que \( P^{(k)}(0) = k! \, a_k \) pour un polynôme \( P(X) \).
+
+---
+CAT: Mathématiques / Polynômes et opérations
+Q: [TF] Si \( P(X) = (X - 1)^3 \), alors \( P(X) \) peut s’écrire sous la forme \( Q(Y) = \sum_{k=0}^3 b_k Y^k \) avec \( Y = X - 1 \).
+A: Vrai
+R: C’est une substitution directe : \( P(X) = Q(Y) \) où \( Y = X - 1 \), et \( Q(Y) \) est un polynôme en \( Y \).
+
+---
+CAT: Mathématiques / Division euclidienne de polynômes
+Q: [QCM] Quelle est la condition sur le reste \( R(X) \) dans la division euclidienne de deux polynômes \( P(X) \) et \( D(X) \) ?
+C1: [x] \( \deg(R) < \deg(D) \) ou \( R(X) = 0 \)
+C2: \( \deg(R) = \deg(D) \)
+C3: \( \deg(R) > \deg(D) \)
+C4: \( R(X) \) doit être un polynôme constant
+R: Le reste doit avoir un degré strictement inférieur à celui du diviseur ou être nul.
+
+---
+CAT: Mathématiques / Division euclidienne de polynômes
+Q: [QCM] Quel est le résultat de la division euclidienne de \( X^4 - X^2 + X - 5 \) par \( X^2 + X - 2 \) ?
+C1: [x] \( X^2 - 2X + 1 \) avec reste \( -3X - 3 \)
+C2: \( X^2 + 2X + 1 \) avec reste \( 0 \)
+C3: \( X^2 - X + 1 \) avec reste \( -X - 3 \)
+C4: \( X^2 \) avec reste \( -3X^2 + X - 5 \)
+R: Résultat obtenu par division polynomiale classique (vérifiez avec multiplication et soustraction).
+
+---
+CAT: Mathématiques / Division euclidienne de polynômes
+Q: [TF] L’algorithme d’Euclide pour les polynômes garantit la convergence car la suite des degrés des restes est strictement décroissante.
+A: Vrai
+R: La division euclidienne assure que le degré du reste diminue à chaque étape, garantissant la convergence.
+
+---
+CAT: Mathématiques / Racines et factorisation
+Q: {Théorème de factorisation}
+R: $$P(X) = (X - \alpha)^m Q(X) \quad \text{où} \quad Q(\alpha) \neq 0$$
+avec \( m \) l’ordre de multiplicité de la racine \( \alpha \).
+
+---
+CAT: Mathématiques / Racines et factorisation
+Q: [QCM] Si \( P(X) = (X - 2)^3 (X^2 + 1) \), quelle est la racine de multiplicité 3 ?
+C1: [x] 2
+C2: \( i \)
+C3: \( -i \)
+C4: 0
+R: La racine \( 2 \) apparaît avec un exposant de 3 dans la factorisation.
+
+---
+CAT: Mathématiques / Racines et factorisation
+Q: [TF] Un polynôme irréductible dans \( \mathbb{C}[X] \) est un polynôme qui ne peut pas être factorisé en produit de deux polynômes de degré strictement inférieur.
+A: Vrai
+R: Par définition, un polynôme irréductible ne se décompose pas en facteurs non constants dans \( \mathbb{C}[X] \).
+
+---
+CAT: Mathématiques / Racines et factorisation
+Q: {Lien racines et dérivées}
+R: $$P(\alpha) = 0 \quad \text{et} \quad P'(\alpha) = 0 \quad \Rightarrow \quad \alpha \text{ est racine multiple d’ordre } \geq 2.$$
