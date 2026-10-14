@@ -289,7 +289,59 @@ def get_cards():
     return jsonify(batch)
 
 
-@app.route('/api/user_state')
+@app.route('/api/search')
+def search_cards():
+    """Recherche rapide : catégories + cartes par texte (front/back).
+
+    Paramètres :
+      q : texte de recherche (minimum 2 caractères)
+      limit : max résultats de cartes (default 20)
+
+    Retourne :
+      { categories: [...], cards: [...] }
+    """
+    q = request.args.get('q', '').strip()
+    if len(q) < 2:
+        return jsonify({"categories": [], "cards": []})
+
+    limit = request.args.get('limit', 20, type=int)
+    pattern = '%' + q.lower() + '%'
+
+    with db() as conn:
+        cat_rows = conn.execute('''
+            SELECT cat.id, cat.name, COUNT(c.id) AS n
+            FROM category cat
+            JOIN subcategory sc ON sc.category_id = cat.id
+            JOIN card c ON c.subcategory_id = sc.id
+            WHERE c.status = 0
+              AND (LOWER(cat.name) LIKE ? OR LOWER(sc.name) LIKE ?)
+            GROUP BY cat.id ORDER BY cat.name LIMIT 10
+        ''', (pattern, pattern)).fetchall()
+
+        card_rows = conn.execute('''
+            SELECT c.id, c.type, c.front, c.back, c.payload,
+                   cat.name AS category_name, sc.name AS subcategory_name
+            FROM card c
+            JOIN subcategory sc ON sc.id = c.subcategory_id
+            JOIN category cat ON cat.id = sc.category_id
+            WHERE c.status = 0
+              AND (LOWER(c.front) LIKE ? OR LOWER(c.back) LIKE ?)
+            ORDER BY c.type, RANDOM()
+            LIMIT ?
+        ''', (pattern, pattern, limit)).fetchall()
+
+    categories = [{"id": r["id"], "name": r["name"], "n": r["n"]} for r in cat_rows]
+    cards = [{
+        "id": r["id"],
+        "type": r["type"],
+        "front": r["front"],
+        "back": r["back"],
+        "payload": r["payload"],
+        "category_name": r["category_name"],
+        "subcategory_name": r["subcategory_name"]
+    } for r in card_rows]
+
+    return jsonify({"categories": categories, "cards": cards})
 def get_user_state():
     with db() as conn:
         state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()

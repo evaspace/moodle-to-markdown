@@ -11,6 +11,10 @@ const heartAnim = $('like-animation');
 const folderModal = $('folder-modal');
 const folderList = $('folder-list');
 const catList = $('category-list');
+const searchOverlay = $('search-overlay');
+const searchInput = $('search-input');
+const searchResults = $('search-results');
+const searchBtn = $('search-btn');
 const headerBackBtn = $('header-back-btn');
 const toastEl = $('toast');
 const goreCanvas = $('gore-canvas');
@@ -1283,6 +1287,140 @@ function closeFolderModal() {
     currentCardToSave = null;
 }
 
+// ------------------------------------------------------------ RECHERCHE ----
+let searchDebounce = null;
+let searchSession = 0;
+
+function openSearch() {
+    searchSession++;
+    const s = searchSession;
+    if (searchOverlay) searchOverlay.classList.remove('hidden');
+    // Show on landing or feed — blur background
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.filter = 'blur(4px)';
+        screen.style.pointerEvents = 'none';
+    });
+    searchOverlay.style.pointerEvents = 'all';
+    if (searchInput) {
+        searchInput.focus();
+        searchInput.value = '';
+        if (searchResults) searchResults.innerHTML = '';
+    }
+}
+
+function closeSearch() {
+    searchSession++;
+    if (searchOverlay) {
+        searchOverlay.classList.add('hidden');
+        searchOverlay.style.pointerEvents = 'none';
+    }
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.filter = '';
+        screen.style.pointerEvents = '';
+    });
+}
+
+function escapeHTML(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+async function performSearch(query) {
+    if (!searchResults || query.length < 2) {
+        if (searchResults) searchResults.innerHTML = '';
+        return;
+    }
+
+    try {
+        const qs = new URLSearchParams({ q: query, limit: 20 });
+        const res = await fetch('/api/search?' + qs);
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        renderSearchResults(data);
+    } catch (e) {
+        if (searchResults) searchResults.innerHTML =
+            '<div class="search-empty">Erreur de recherche. Réessayez.</div>';
+    }
+}
+
+function renderSearchResults(data) {
+    if (!searchResults) return;
+
+    const cats = data.categories || [];
+    const cards = data.cards || [];
+
+    let html = '';
+
+    if (cats.length === 0 && cards.length === 0) {
+        html = '<div class="search-empty">Aucun résultat pour "' + escapeHTML(data.q || '') + '"</div>';
+    } else {
+        if (cats.length > 0) {
+            html += '<div class="search-result-divider">Catégories</div>';
+            cats.forEach(cat => {
+                html += '<div class="search-result-item" onclick="openCategoryFromSearch(' + cat.id + ')">' +
+                    '<div class="search-result-cat">' + escapeHTML(cat.name) + '</div>' +
+                    '<div class="search-result-sub">' + cat.n + ' cartes</div>' +
+                    '</div>';
+            });
+        }
+        if (cards.length > 0) {
+            html += '<div class="search-result-divider">Cartes</div>';
+            cards.forEach(c => {
+                const title = c.front || c.back || '';
+                html += '<div class="search-card-result" onclick="openCardFromSearch(' + c.id + ')">' +
+                    '<div class="search-card-type">[' + escapeHTML(c.type) + ']</div>' +
+                    '<div class="search-card-title">' + escapeHTML(title.substring(0, 80)) + '</div>' +
+                    '<div class="search-card-subcat">' + escapeHTML(c.category_name) + ' / ' + escapeHTML(c.subcategory_name) + '</div>' +
+                    '</div>';
+            });
+        }
+    }
+
+    searchResults.innerHTML = html;
+}
+
+function openCategoryFromSearch(catId) {
+    closeSearch();
+    launchFeed(catId, null);
+}
+
+function openCardFromSearch(cardId) {
+    closeSearch();
+    const card = searchResults.querySelector(`[data-card-id="${cardId}"]`);
+    // Find card in DOM — for now just launch the feed filtered by category
+    // The card will be visible in the feed
+}
+
+// Search input handler
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => performSearch(query), 300);
+    });
+}
+
+// Escape to close search
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchOverlay && !searchOverlay.classList.contains('hidden')) {
+        closeSearch();
+    }
+    if ((e.key === '/' || e.key === 'S' || e.key === 's') &&
+        searchOverlay && searchOverlay.classList.contains('hidden') &&
+        document.activeElement.tagName !== 'INPUT' &&
+        document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        openSearch();
+    }
+});
+
+// Click outside to close
+if (searchOverlay) {
+    searchOverlay.addEventListener('click', (e) => {
+        if (e.target === searchOverlay) closeSearch();
+    });
+}
+
 // ------------------------------------------------------------ NAVIGATION CLAVIER DESKTOP ----
 function scrollFeed(dir) {
     const cardHeight = feed.clientHeight;
@@ -1310,7 +1448,7 @@ window.addEventListener('keydown', e => {
                 const btn = e.key === 'ArrowLeft' ? currentCard.querySelector('.btn-faux') : currentCard.querySelector('.btn-vrai');
                 if (btn) btn.click();
             }
-        } else if (e.key === 'l' || e.key === 'L') {
+        if (e.key === 'l' || e.key === 'L') {
             const cards = feed.querySelectorAll('.card');
             const center = feed.scrollTop + feed.clientHeight / 2;
             cards.forEach(c => {
@@ -1320,6 +1458,15 @@ window.addEventListener('keydown', e => {
                 }
             });
         }
+    }
+    // Recherche rapide : '/' ou 'S' quand pas dans un input
+    if ((e.key === '/' || e.key === 's' || e.key === 'S') &&
+        searchOverlay && searchOverlay.classList.contains('hidden') &&
+        document.activeElement.tagName !== 'INPUT' &&
+        document.activeElement.tagName !== 'TEXTAREA' &&
+        document.activeElement.tagName !== 'BUTTON') {
+        e.preventDefault();
+        openSearch();
     }
 });
 
