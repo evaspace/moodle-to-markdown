@@ -78,7 +78,16 @@ Verification: distinct model (DEFAULT_VERIFY_MODEL)
 - Actual cost Pass C: ~€0.16 (268 chapters)
 - Pass D estimate: ~€0.20-0.50 (selective, limited by `--pass-d-limit`)
 
-## Blogbot Integration (18 Sites)
+### Site Identities (corrected)
+
+| Site | Domain | Utility |
+|---|---|---|
+| larchitectweb | Discord server generation via single IA prompt | Generate complete Discord servers (channels, roles, bots, moderation) in one prompt |
+| salepute | Extreme humor TikTok, internet nostalgia | Nostalgic absurd humor content in TikTok format |
+| focusator | Concentration/Fitts law testing | Interactive focus testing tool |
+| lbcstudio | Content creation & digital tools | Web performance & creator tools |
+| wclproject | Project collaboration workflow | Team workflow management |
+| mathsdoomscrolling | Math learning via flashcards | Spaced-repetition math cards with LaTeX |
 
 ### Site Discovery
 
