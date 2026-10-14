@@ -48,6 +48,7 @@ QCM_MODEL     ?= open-mistral-7b
 QCM_DELAY     ?= 0.8
 QCM_LIMIT     ?=
 QCM_COURSE    ?=
+QCM_C_LIMIT   ?= 5
 CONFIG_FILE   ?= selected_courses.json
 
 # Serveur distant Hetzner
@@ -127,6 +128,16 @@ help:
 	@echo "  $(GREEN)make qcm-archi$(RESET)        Architecture : Archi S1 (Numération) + Archi S2 (Séquentiel)"
 	@echo "  $(GREEN)make qcm-elec$(RESET)         Électronique : Circuits, Diodes, Filtres de Bode, Transitoires"
 	@echo "  $(GREEN)make qcm-cyber$(RESET)        Cybersécurité & IA Générative"
+	@echo ""
+	@echo "$(BOLD)$(PURPLE)🃏 GÉNÉRATION CARTE COURSE (md_to_cards.py) :$(RESET)"
+	@echo "  $(GREEN)make md-cards-b$(RESET)         Pass B : QCM déterministes (0 token)"
+	@echo "  $(GREEN)make md-cards-c-dry$(RESET)     Pass C dry-run : analyse existence seule"
+	@echo "  $(GREEN)make md-cards-c$(RESET)        Pass C v2 : rotation modèles + vérif LLM"
+	@echo "  $(GREEN)make md-cards-c-retry$(RESET)   Reprise des chapitres FAILED (429)"
+	@echo "  $(GREEN)make md-cards-c-limited$(RESET)    Pass C sur $(QCM_C_LIMIT) chapitres (test)"
+	@echo "  $(GREEN)make md-cards-d$(RESET)           Pass D : QCM d'entraînement LLM (conceptuels)"
+	@echo "  $(GREEN)make md-cards-d-limited$(RESET)   Pass D sur $(QCM_C_LIMIT) chapitres (test)"
+	@echo "  $(GREEN)make md-cards-test$(RESET)      Tests unitaires (unittest, 57 tests)"
 	@echo ""
 	@echo "$(BOLD)$(PURPLE)🚀 DÉPLOIEMENT & SERVEUR HETZNER :$(RESET)"
 	@echo "  $(GREEN)make sync-server$(RESET)      Transférer les QCM générés et les injecter dans la prod"
@@ -288,6 +299,46 @@ qcm-elec: setup
 qcm-cyber: setup
 	@echo "$(BOLD)$(CYAN)🛡️ Génération Cybersécurité & IA...$(RESET)"
 	$(PYTHON) generate_qcms.py $(QCM_ARGS) --course "Cyber"
+
+# ==============================================================================
+# GENERATION CARTE COURSE (md_to_cards.py — Passes A/B/C v2)
+# ==============================================================================
+
+md-cards-dry: setup
+	@echo "$(BOLD)$(CYAN)🔬 md_to_cards — dry-run complet (Passes A+B+C)...$(RESET)"
+	$(PYTHON) md_to_cards.py --dry-run --only-pass abc
+
+md-cards-b: setup
+	@echo "$(BOLD)$(CYAN)📋 md_to_cards — Passe B (QCM déterministes)...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass b
+
+md-cards-c-dry: setup
+	@echo "$(BOLD)$(CYAN)📚 md_to_cards — Passe C dry-run (analyse existence)...$(RESET)"
+	$(PYTHON) md_to_cards.py --dry-run --only-pass c
+
+md-cards-c: setup
+	@echo "$(BOLD)$(CYAN)🤖 md_to_cards — Passe C (rotation modèles + vérif LLM)...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass c --allow-llm
+
+md-cards-c-retry: setup
+	@echo "$(BOLD)$(YELLOW)🔄 md_to_cards — Retry des chapitres en échec (429)...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass c --allow-llm --retry-failed
+
+md-cards-c-limited: setup
+	@echo "$(BOLD)$(CYAN)🧪 md_cards — Passe C sur $(QCM_C_LIMIT) chapitres...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass c --allow-llm --pass-c-limit $(QCM_C_LIMIT)
+
+md-cards-d: setup
+	@echo "$(BOLD)$(CYAN)💡 md_to_cards — Passe D (QCM d'entraînement LLM)...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass d --allow-llm
+
+md-cards-d-limited: setup
+	@echo "$(BOLD)$(CYAN)🧪 md_cards — Passe D sur $(QCM_C_LIMIT) chapitres...$(RESET)"
+	$(PYTHON) md_to_cards.py --only-pass d --allow-llm --pass-d-limit $(QCM_C_LIMIT)
+
+md-cards-test: setup
+	@echo "$(BOLD)$(CYAN)🧪 Tests md_to_cards (unittest)...$(RESET)"
+	$(PYTHON) -m unittest tests.test_md_to_cards -v
 
 # ==============================================================================
 # SYNCHRONISATION & DÉPLOIEMENT SERVEUR (HETZNER)

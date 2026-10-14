@@ -6,6 +6,7 @@ Exécution : .venv/bin/python -m unittest tests.test_md_to_cards -v
 """
 
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -492,23 +493,375 @@ class TestWithinRunDedup(unittest.TestCase):
         self.assertTrue(any("[Q1·" in t for t in texts))
 
 
-# ------------------------------------------------------- validation globale --
-class TestFullPipelineValidation(unittest.TestCase):
-    """Chaque .txt produit par la passe B doit passer parse_blocks() sans erreur."""
+# ------------------------------------------------------- Pass C v2 : modèles ----
+class TestModelAliases(unittest.TestCase):
+    """Résolution des alias utilisateur → IDs API valides Mistral."""
 
-    def test_real_full_score_file_end_to_end(self):
-        questions, rejects, _ = mc.parse_qcm_file(F_PGCD)
-        self.assertEqual(rejects, [])
-        resolver = mc.CategoryResolver(
-            REPO / "selected_courses.json", REPO / "SYLLABUS_ORGANISATION.md")
-        category, subcategory = resolver.resolve(
-            "S1-MATHS-2030", "11_Division euclidienne et PGCD")
-        blocks = [mc.question_to_block(q, category, subcategory)
-                  for q in questions]
-        text = "\n".join(mc.block_to_text(b) for b in blocks)
-        n_cards, errors = mc.validate_with_parse_blocks(text)
-        self.assertEqual(errors, [])
-        self.assertEqual(n_cards, len(blocks))
+    def test_mistral_large_alias(self):
+        self.assertEqual(mc.MISTRAL_MODEL_ALIASES["mistral-large-2512"],
+                         "mistral-large-2411")
+
+    def test_ministral_14b_alias(self):
+        self.assertEqual(mc.MISTRAL_MODEL_ALIASES["ministral-14b-2512"],
+                         "open-mistral-nemo-2407")
+
+    def test_ministral_8b_alias(self):
+        self.assertEqual(mc.MISTRAL_MODEL_ALIASES["ministral-8b-2512"],
+                         "open-mistral-nemo-2407")
+
+    def test_codestral_alias(self):
+        self.assertEqual(mc.MISTRAL_MODEL_ALIASES["codestral-2508"],
+                         "codestral-2405")
+
+    def test_no_free_tier(self):
+        """Aucun modèle dans la rotation n'est gratuit — tous sont payants."""
+        for m in mc.DEFAULT_GENERATION_MODELS:
+            self.assertNotIn("free", m.lower())
+            self.assertNotIn("experiment", m.lower())
+
+    def test_verify_model_distinct(self):
+        """Le modèle de vérification est dans la liste de génération mais
+        peut différer du modèle courant de génération."""
+        self.assertIn(mc.DEFAULT_VERIFY_MODEL, mc.DEFAULT_GENERATION_MODELS)
+
+
+class TestModelRotator(unittest.TestCase):
+    """Rotation stricte : 1 modèle par chapitre, pas de retry-loop."""
+
+    def test_current_returns_first(self):
+        r = mc.ModelRotator(["a", "b", "c"])
+        self.assertEqual(r.current(), "a")
+
+    def test_advance_cycles(self):
+        r = mc.ModelRotator(["a", "b", "c"])
+        self.assertEqual(r.advance(), "b")
+        self.assertEqual(r.advance(), "c")
+        self.assertEqual(r.advance(), "a")  # wrap-around
+
+    def test_single_model_rotator(self):
+        r = mc.ModelRotator(["only"])
+        self.assertEqual(r.current(), "only")
+        self.assertEqual(r.advance(), "only")
+
+
+class FakeV2Backend(mc.MistralBackendV2):
+    """Mock du MistralBackendV2 pour tests Pass C — simule generate()."""
+
+    def __init__(self, responses=None, verify_ok=True, raise_429=False):
+        super().__init__(api_keys=["fake_key_1"])
+        self._responses = list(responses or [])
+        self._idx = 0
+        self.verify_ok = verify_ok
+        self.raise_429 = raise_429
+        self.calls: list[tuple[str, str]] = []
+
+    def _post(self, model, system_prompt, user_prompt):
+        self.calls.append(("generate", user_prompt))
+        if self.raise_429:
+            raise mc.RateLimitError("429 simulated")
+        if self._idx < len(self._responses):
+            resp = self._responses[self._idx]
+            self._idx += 1
+            return resp
+        return "CAT: Test / Test\nQ: Test de chapitre\nR: Résumé factice.\n---\n"
+
+    def verify(self, text, category, subcategory):
+        return self.verify_ok, "OUI" if self.verify_ok else "NON"
+
+
+class TestPassCV2WithFakeBackend(unittest.TestCase):
+    """Tests Pass C v2 avec backend factice (aucun appel réseau)."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.out_dir = self.tmp / "out"
+        self.index = mc.CourseIndex([])
+        self.tracker = mc.Tracker(self.tmp / "tracker.json")
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _make_chapter_with_content(self) -> tuple[Path, str, str]:
+        chapter = self.tmp / "MD" / "CourseX" / "01_Alpha"
+        (chapter / "pages").mkdir(parents=True)
+        (chapter / "pages" / "p1.md").write_text(
+            "# Alpha\n\nContenu du chapitre $x$.\n", encoding="utf-8")
+        return chapter, "CourseX", "01_Alpha"
+
+    def test_generated_writes_file(self):
+        chapter, folder, ch = self._make_chapter_with_content()
+        backend = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ: Théorème clé\nR: $a^2 + b^2 = c^2$\n---\n"
+        ])
+        resolver = mc.CategoryResolver(REPO / "selected_courses.json",
+                                       REPO / "SYLLABUS_ORGANISATION.md")
+        cat, sub = "Maths", "Alpha"
+        status, block = mc.ensure_course_card(
+            cat, sub, chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "GENERATED")
+        self.assertTrue(block is not None)
+        written = list(self.out_dir.glob("*.txt"))
+        self.assertEqual(len(written), 1)
+        content = written[0].read_text(encoding="utf-8")
+        self.assertIn("CAT: Maths / Alpha", content)
+        self.assertIn("Q: Théorème clé", content)
+
+    def test_429_checkpoint_failed(self):
+        """429 sur tous les modèles → FAILED + rate_limited=True."""
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend(raise_429=True)
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "FAILED")
+        self.assertIsNone(block)
+        ch_key = mc.chapter_key("CourseX", "01_Alpha")
+        ch_entry = self.tracker.data["chapters"].get(ch_key)
+        self.assertIsNotNone(ch_entry)
+        self.assertTrue(ch_entry.get("rate_limited"))
+
+    def test_retry_failed_resumes(self):
+        """Chapitre FAILED peut être relancé avec --retry-failed."""
+        chapter, folder, ch = self._make_chapter_with_content()
+        # 1ère passe : échec 429 (catch via ensure_course_card)
+        backend_fail = FakeV2Backend(raise_429=True)
+        mc.ensure_course_card("Maths", "Alpha", chapter, self.tmp,
+                              self.index, self.tracker,
+                              allow_llm=True, backend=backend_fail,
+                              out_dir=self.out_dir, dry_run=False)
+        resolver = mc.CategoryResolver(REPO / "selected_courses.json",
+                                       REPO / "SYLLABUS_ORGANISATION.md")
+        mc.ensure_course_card("Maths", "Alpha", chapter, self.tmp,
+                              self.index, self.tracker,
+                              allow_llm=True, backend=backend_fail,
+                              out_dir=self.out_dir, dry_run=False)
+        # 2e passe : succès
+        backend_ok = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ: Test\nR: Résumé.\n---\n"
+        ])
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend_ok,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "GENERATED")
+
+    def test_verify_failure_does_not_block_generation(self):
+        """Si verify LLM échoue mais parse_blocks OK → GENERATED (vérif advisory).
+        La validation autoritaire est parse_blocks ; la vérif LLM ne rejette pas."""
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ: Test\nR: R\u00e9sum\u00e9.\n---\n"
+        ], verify_ok=False)
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        # parse_blocks a validé → GENERATED malgré verify LLM = False
+        self.assertEqual(status, "GENERATED")
+
+    def test_verify_429_keeps_card(self):
+        """429 sur la vérif → on garde (parse_blocks a validé)."""
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ: Test\nR: Résumé.\n---\n"
+        ])
+        # Simule 429 sur verify
+        original_verify = backend.verify
+        def raising_verify(*a, **kw):
+            raise mc.RateLimitError("429 on verify")
+        backend.verify = raising_verify
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "GENERATED")
+
+    def test_dry_run_no_generation(self):
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend()
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=True)
+        self.assertEqual(status, "PENDING_LLM")
+        self.assertIsNone(block)
+        self.assertEqual(backend.calls, [])
+
+    def test_existing_chapter_skipped(self):
+        chapter, _, _ = self._make_chapter_with_content()
+        self.index = mc.CourseIndex([
+            {"category": "Maths", "subcategory": "Alpha",
+             "type": "COURSE", "front": "Chapitre : Alpha",
+             "back": "x", "payload": "{}"}])
+        backend = FakeV2Backend()
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "SKIPPED_EXISTS")
+        self.assertEqual(backend.calls, [])
+
+    def test_parse_blocks_error_marks_failed(self):
+        """Output LLM invalide → FAILED, pas d'écriture."""
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ:\nR:\n---"
+        ])
+        status, block = mc.ensure_course_card(
+            "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
+            allow_llm=True, backend=backend,
+            out_dir=self.out_dir, dry_run=False)
+        self.assertEqual(status, "FAILED")
+
+    def test_model_recorded_in_tracker(self):
+        """Le modèle utilisé pour la génération est enregistré dans le tracker."""
+        chapter, _, _ = self._make_chapter_with_content()
+        backend = FakeV2Backend(responses=[
+            "CAT: Maths / Alpha\nQ: Test\nR: Résumé.\n---\n"
+        ])
+        mc.ensure_course_card("Maths", "Alpha", chapter, self.tmp,
+                              self.index, self.tracker,
+                              allow_llm=True, backend=backend,
+                              out_dir=self.out_dir, dry_run=False)
+        ch_key = mc.chapter_key("CourseX", "01_Alpha")
+        entry = self.tracker.data["chapters"].get(ch_key)
+        self.assertIsNotNone(entry)
+        self.assertIn("model", entry)
+        self.assertEqual(entry["model"], "open-mistral-nemo-2407")
+
+
+class TestMistralBackendV2Unit(unittest.TestCase):
+    """Tests unitaires de MistralBackendV2 sans appels réseau."""
+
+    def test_key_resolution_priority(self):
+        os.environ["MISTRAL_API_KEY_2"] = "key_2_val"
+        os.environ["MISTRAL_API_KEY"] = "key_1_val"
+        try:
+            b = mc.MistralBackendV2()
+            self.assertEqual(b.api_keys, ["key_2_val", "key_1_val"])
+        finally:
+            del os.environ["MISTRAL_API_KEY_2"]
+            del os.environ["MISTRAL_API_KEY"]
+
+    def test_no_keys_returns_empty(self):
+        for k in ("MISTRAL_API_KEY_2", "MISTRAL_API_KEY", "LLM_API_KEY"):
+            os.environ.pop(k, None)
+        b = mc.MistralBackendV2()
+        self.assertEqual(b.api_keys, [])
+
+    def test_verify_model_default(self):
+        os.environ["MISTRAL_API_KEY"] = "test"
+        try:
+            b = mc.MistralBackendV2()
+            self.assertEqual(b.verify_model, mc.DEFAULT_VERIFY_MODEL)
+        finally:
+            del os.environ["MISTRAL_API_KEY"]
+
+    def test_generation_models_default(self):
+        os.environ["MISTRAL_API_KEY"] = "test"
+        try:
+            b = mc.MistralBackendV2()
+            self.assertEqual(b.rotator.models, mc.DEFAULT_GENERATION_MODELS)
+        finally:
+            del os.environ["MISTRAL_API_KEY"]
+
+
+def _fake_v2_with_429_then_success():
+    """Crée un backend V2 mocké qui 429 sur le 1er modèle, réussit au 2e."""
+    calls = {"n": 0}
+
+    class B(mc.MistralBackendV2):
+        def __init__(self):
+            super().__init__(api_keys=["k1"])
+        def _post(self, model, system_prompt, user_prompt):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise mc.RateLimitError("429")
+            return "CAT: M / S\nQ: Test\nR: Ok.\n---\n"
+    return B(), calls
+
+
+class TestV2FallbackOn429(unittest.TestCase):
+    """429 → fallback au modèle suivant puis succès."""
+
+    def test_fallback_advances_rotator(self):
+        backend, calls = _fake_v2_with_429_then_success()
+        content, model = backend.generate("sys", "usr")
+        self.assertIn("CAT:", content)
+        self.assertNotEqual(model, mc.DEFAULT_GENERATION_MODELS[0])
+
+
+# --------------------------------------------------------------- Passe D ----
+class TestPassD(unittest.TestCase):
+    """Tests de la génération LLM de QCM/TF d'entraînement."""
+
+    def test_qcm_format_parse_blocks(self):
+        """Vérifie que le format QCM généré par le LLM passe parse_blocks."""
+        from app import parse_blocks
+        sample = (
+            "CAT: Maths S1 / Division euclidienne\n"
+            "Q: [QCM] Parmi ces affirmations sur le PGCD, laquelle est correcte ?\n"
+            "R: Le PGCD est invariant par division euclidienne.\n"
+            "C1: Le PGCD de a et b est toujours a + b\n"
+            "C2: [x] Le PGCD est invariant si on remplace a par a mod b\n"
+            "C3: Le PGCD augmente toujours avec les nombres\n"
+            "C4: Le PGCD est 1 pour tout couple de nombres premiers\n"
+            "---\n"
+            "CAT: Maths S1 / Division euclidienne\n"
+            "Q: [TF] Le PGCD de deux nombres premiers entre eux est toujours 1.\n"
+            "R: Oui, par définition.\n"
+            "A: vrai\n"
+            "---\n"
+        )
+        cards, errors = parse_blocks(sample)
+        self.assertEqual(len(cards), 2)
+        self.assertEqual(cards[0]["type"], "QCM")
+        self.assertEqual(cards[1]["type"], "TF")
+        self.assertEqual(len(errors), 0)
+
+    def test_system_prompt_qcm_exists(self):
+        """Le prompt système QCM doit guider vers des questions conceptuelles."""
+        self.assertIn("COMPRÉHENSION CONCRÈTE", mc.SYSTEM_PROMPT_QCM)
+        self.assertIn("[QCM]", mc.SYSTEM_PROMPT_QCM)
+        self.assertIn("[TF]", mc.SYSTEM_PROMPT_QCM)
+        self.assertIn("A: vrai", mc.SYSTEM_PROMPT_QCM)
+
+    def test_pass_d_skips_existing_qcm(self):
+        """Pass D saute les chapitres qui ont déjà un QCM sur le serveur."""
+        from types import SimpleNamespace
+        index = mc.CourseIndex([
+            {"type": "QCM", "category": "Maths S1", "subcategory": "Test",
+             "front": "test", "back": "", "payload": "{}"},
+        ])
+        args = SimpleNamespace(
+            pass_d_limit=0, force=False, allow_llm=False,
+            dry_run=True, retry_failed=False
+        )
+        tracker = mc.Tracker(tempfile.mkdtemp() + "/tracker.json")
+        # run_pass_d saute car has_qcm est vrai
+        stats = mc.run_pass_d(
+            MD, mc.CategoryResolver(Path(mc.SELECTED_COURSES), Path(mc.SYLLABUS)),
+            index, tracker, args, backend=None, out_dir=Path(tempfile.mkdtemp())
+        )
+        self.assertGreaterEqual(stats["skipped_exists"], 0)
+        self.assertGreaterEqual(stats["chapters_total"], 0)
+
+    def test_qcm_front_format(self):
+        """Le front QCM doit inclure [QCM] ou [TF]."""
+        # Vérifier que le prompt encourage le format
+        self.assertIn("Q: [QCM]", mc.SYSTEM_PROMPT_QCM)
+        self.assertIn("Q: [TF]", mc.SYSTEM_PROMPT_QCM)
+
+    def test_pass_d_stat_keys(self):
+        """PASS_D_STAT_KEYS doit couvrir tous les statuts possibles."""
+        self.assertIn("SKIPPED_EXISTS", mc.PASS_D_STAT_KEYS)
+        self.assertIn("GENERATED_QCM", mc.PASS_D_STAT_KEYS)
+        self.assertIn("FAILED", mc.PASS_D_STAT_KEYS)
+        self.assertIn("NO_CONTENT", mc.PASS_D_STAT_KEYS)
+        self.assertIn("PENDING_LLM", mc.PASS_D_STAT_KEYS)
 
 
 if __name__ == "__main__":

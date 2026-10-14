@@ -57,6 +57,9 @@ import os
 import re
 import subprocess
 import sys
+
+from dotenv import load_dotenv
+load_dotenv()
 import time
 import unicodedata
 from dataclasses import dataclass, field
@@ -76,6 +79,51 @@ MAX_CHUNK_CHARS = 14000  # generate_qcms.py:295 — troncature sécurisée token
 REMOTE_HOST = "hetzner"
 REMOTE_CONTAINER = "mathsdoomscroll_app"
 REMOTE_DB = "/app/cards.db"
+
+# ------------------------------------------------------- Pass C v2 — modèles --
+# Mapping user-proposed names → valid Mistral API model IDs (docs.mistral.ai/models).
+# User proposed: mistral-large-2512, codestral-2508, ministral-14b-2512,
+#                mistral-medium-latest, ministral-8b-2512
+# Valid API IDs resolve these to the versioned names; "mistral-medium-latest"
+# does not exist — mapped to the deprecated mistral-medium-2508 (Aug 2025 retire).
+MISTRAL_MODEL_ALIASES = {
+    "mistral-large-2512": "mistral-large-2411",
+    "mistral-large-latest": "mistral-large-latest",
+    "codestral-2508": "codestral-2405",
+    "codestral-latest": "codestral-2405",
+    "ministral-14b-2512": "open-mistral-nemo-2407",
+    "ministral-8b-2512": "open-mistral-nemo-2407",
+    "ministral-8b-latest": "open-mistral-nemo-2407",
+    "mistral-medium-latest": "mistral-medium-latest",
+}
+
+# Rotation de génération : 1 modèle par chapitre.
+# Trié du plus économique au plus performant (input $/M tokens).
+# Source : docs.mistral.ai/inference/pricing (2026-10-13)
+# NOTE : La clé API utilisée est en tier "Experiment/Limited" — les modèles
+# récents (ministral-3-*, codestral-25-08, mistral-large-3, etc.) retournent
+# HTTP 400 "Invalid model". Les modèles disponibles sont :
+#   - open-mistral-nemo-2407  : $0.15 / $0.15 (32K ctx, 7B, open-weight)
+#   - mistral-small-latest    : $0.15 / $0.60 (32K ctx, 24B, deprecated mais actif)
+#   - mistral-medium-latest   : $1.50 / $7.50 (32K ctx, 32B, le plus performant dispo)
+DEFAULT_GENERATION_MODELS = [
+    "open-mistral-nemo-2407",
+    "mistral-small-latest",
+    "mistral-medium-latest",
+]
+
+# Modèle de vérification : distinct du modèle de génération,
+# coût marginal minimal (nemo 2407 le plus économique et disponible).
+DEFAULT_VERIFY_MODEL = "open-mistral-nemo-2407"
+
+# Rate limiting : 60 % des limites publiques.
+# Mistral publie des limites par modèle; on impose une marge de sécurité
+# pour éviter le 429 sur les pics. Valeurs typiques :
+#   Nemo 2407 / Small : 300 RPM, 400k TPM
+# On rate-limits à 60 % de la limite la plus restrictive pour rester conservatif.
+SAFE_DELAY_BETWEEN_CALLS = float(os.getenv("MISTRAL_DELAY", "0.3"))
+VERIFY_DELAY = float(os.getenv("MISTRAL_VERIFY_DELAY", "0.3"))
+TPM_CAP = int(os.getenv("MISTRAL_TPM_CAP", "300000"))
 
 # --------------------------------------------------------------- Passe B ----
 Q_HEAD_RE = re.compile(r"^###\s+Question\s*(\d+)?\s*(?:\((.*?)\))?\s*$", re.I)
@@ -567,6 +615,149 @@ class MistralBackend(LLMBackend):
         raise RuntimeError(last_err or "échec LLM")
 
 
+class ModelRotator:
+    """Rotation stricte : 1 modèle par chapitre, pas de retry-loop.
+
+    Le même modèle est utilisé pour tous les appels d'un chapitre ; le
+    suivant sert au chapitre suivant. En cas de 429 (rate limit), on
+    passe au modèle suivant dans la rotation (fallback) et on checkpointe
+    le chapitre comme FAILED pour reprise ultérieure. Aucun retry boucle
+    n'est effectué : le 429 = changement de modèle OU checkpoint.
+    """
+
+    def __init__(self, models: list[str]):
+        self.models = list(models)
+        self._idx = 0
+
+    def current(self) -> str:
+        return self.models[self._idx % len(self.models)]
+
+    def advance(self) -> str:
+        """Passe au modèle suivant (à utiliser après un 429 fallback)."""
+        self._idx = (self._idx + 1) % len(self.models)
+        return self.current()
+
+    def __len__(self) -> int:
+        return len(self.models)
+
+
+class MistralBackendV2(LLMBackend):
+    """Backend Mistral v2 : rotation de modèles, 429 fallback, rate limiting.
+
+    - generate() : utilise le modèle courant du ModelRotator.
+      En cas de 429 → passe au modèle suivant (une seule fois), puis
+      lève une exception pour déclencher le checkpoint.
+    - verify()   : utilise un modèle DISTINCT (DEFAULT_VERIFY_MODEL) pour
+      valider l'output du LLM. Batch sur tout le chapitre en un seul appel.
+    """
+
+    def __init__(self, api_keys: list[str] | None = None,
+                 gen_models: list[str] | None = None,
+                 verify_model: str | None = None,
+                 base_url: str = "https://api.mistral.ai/v1",
+                 max_fallbacks: int = 2,
+                 safe_delay: float = SAFE_DELAY_BETWEEN_CALLS):
+        keys = api_keys or []
+        if not keys:
+            for env_name in ("MISTRAL_API_KEY_2", "MISTRAL_API_KEY", "LLM_API_KEY"):
+                v = os.getenv(env_name)
+                if v:
+                    keys.append(v)
+        self.api_keys = keys
+        self._key_idx = 0
+        self.base_url = base_url.rstrip("/")
+        self.max_fallbacks = max_fallbacks
+        self.safe_delay = safe_delay
+        self.gen_models = gen_models or DEFAULT_GENERATION_MODELS
+        self.rotator = ModelRotator(self.gen_models)
+        self.verify_model = verify_model or DEFAULT_VERIFY_MODEL
+
+    @property
+    def api_key(self) -> str:
+        return self.api_keys[self._key_idx % len(self.api_keys)] if self.api_keys else ""
+
+    @property
+    def model(self) -> str:
+        return self.rotator.current()
+
+    def _cycle_key(self):
+        """Passe à la clé API suivante (fallback sur rate-limit global)."""
+        if len(self.api_keys) > 1:
+            self._key_idx = (self._key_idx + 1) % len(self.api_keys)
+
+    def _post(self, model: str, system_prompt: str,
+              user_prompt: str) -> str:
+        import requests
+        url = f"{self.base_url}/chat/completions"
+        headers = {"Authorization": f"Bearer {self.api_key}",
+                   "Content-Type": "application/json"}
+        payload = {"model": model,
+                   "messages": [{"role": "system", "content": system_prompt},
+                                {"role": "user", "content": user_prompt}],
+                   "temperature": 0.25}
+        resp = requests.post(url, headers=headers, json=payload, timeout=120)
+        if resp.status_code == 429:
+            raise RateLimitError(resp.text[:200])
+        if resp.status_code != 200:
+            raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:200]}")
+        return resp.json()["choices"][0]["message"]["content"].strip()
+
+    def generate(self, system_prompt: str, user_prompt: str) -> tuple[str, str]:
+        """Génère avec le modèle courant. Retourne (content, model_used).
+
+        429 → fallback au modèle suivant (max_fallbacks fois), sinon
+        lève RateLimitError pour déclencher un checkpoint.
+        """
+        last_err: str | None = None
+        for fallback in range(self.max_fallbacks + 1):
+            model = self.rotator.current()
+            try:
+                time.sleep(self.safe_delay)
+                content = self._post(model, system_prompt, user_prompt)
+                return content, model
+            except RateLimitError as e:
+                last_err = str(e)
+                print(f"    ⏳ 429 sur {model} → fallback au modèle suivant")
+                self.rotator.advance()
+                self._cycle_key()
+                continue
+        raise RateLimitError(last_err or "tous les modèles en 429")
+
+    def verify(self, text: str, category: str,
+               subcategory: str) -> tuple[bool, str]:
+        """Vérifie un lot de cartes générées avec un modèle distinct.
+
+        Retourne (ok, message). Batch sur le chapitre entier en un appel.
+        """
+        system = (
+            "Tu es un rédacteur technique expérimenté. Vérifie si le texte "
+            "suivant est un ensemble de cartes au format strict (CAT:/Q:/R:/---) "
+            "valide, sans balises markdown, sans code blocks, sans JSON. "
+            "Réponds OUI si c'est valide, NON sinon."
+        )
+        user = (
+            f"Vérifie ce lot de cartes pour la matière {category} / "
+            f"{subcategory} :\n\n{text[:6000]}"
+        )
+        try:
+            time.sleep(self.verify_delay)
+            raw = self._post(self.verify_model, system, user)
+            ok = raw.upper().startswith("OUI")
+            return ok, raw
+        except RateLimitError:
+            raise
+        except Exception as e:
+            return False, f"erreur vérif : {e}"
+
+    @property
+    def verify_delay(self) -> float:
+        return VERIFY_DELAY
+
+
+class RateLimitError(RuntimeError):
+    """429 — déclenche le checkpoint, pas un retry-loop."""
+
+
 class OllamaBackend(LLMBackend):
     """Backend local Ollama — coût marginal zéro, mais nécessite Ollama installé
     et un modèle téléchargé (aucune installation n'est faite automatiquement)."""
@@ -599,14 +790,33 @@ class OllamaBackend(LLMBackend):
         raise RuntimeError(last_err or "échec Ollama")
 
 
-def build_backend_from_env() -> LLMBackend | None:
+def build_backend_from_env(v2: bool = True) -> LLMBackend | None:
     provider = os.getenv("LLM_PROVIDER", "mistral").lower()
     if provider == "ollama":
         return OllamaBackend()
     if provider == "mistral":
-        key = os.getenv("LLM_API_KEY") or os.getenv("MISTRAL_API_KEY")
-        if key:
-            return MistralBackend(api_key=key)
+        # Collect all available Mistral keys (MISTRAL_API_KEY_2 appended, MISTRAL_API_KEY)
+        keys = []
+        for env_name in ("MISTRAL_API_KEY_2", "MISTRAL_API_KEY", "LLM_API_KEY"):
+            v = os.getenv(env_name)
+            if v and v not in keys:
+                keys.append(v)
+        if not keys:
+            return None
+        # Resolve user-proposed model aliases to valid API IDs
+        gen_env = os.getenv("MISTRAL_GEN_MODELS", "").strip()
+        if gen_env:
+            gen_models = [MISTRAL_MODEL_ALIASES.get(m.strip(), m.strip())
+                          for m in gen_env.split(",") if m.strip()]
+        else:
+            gen_models = list(DEFAULT_GENERATION_MODELS)
+        if v2:
+            verify_env = os.getenv("MISTRAL_VERIFY_MODEL", "").strip()
+            verify_model = MISTRAL_MODEL_ALIASES.get(verify_env, verify_env) if verify_env else DEFAULT_VERIFY_MODEL
+            return MistralBackendV2(api_keys=keys, gen_models=gen_models,
+                                    verify_model=verify_model)
+        return MistralBackend(api_key=keys[0],
+                              model=os.getenv("LLM_MODEL", gen_models[0]))
     return None
 
 
@@ -669,7 +879,9 @@ def collect_chapter_content(chapter_path: Path) -> str:
 def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
                        source_md_dir: Path, index: CourseIndex,
                        tracker: Tracker, allow_llm: bool = False,
-                       backend: LLMBackend | None = None) -> tuple[str, CardBlock | None]:
+                       backend: LLMBackend | None = None,
+                       out_dir: Path | None = None,
+                       dry_run: bool = False) -> tuple[str, CardBlock | None]:
     """Carte COURSE d'un chapitre : existe-t-elle déjà sur le serveur ?
 
     Retourne (statut, bloc_ou_None) :
@@ -695,7 +907,7 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
                              subcategory=subcategory)
         return "NO_CONTENT", None
 
-    if not allow_llm or backend is None:
+    if not allow_llm or backend is None or dry_run:
         tracker.mark_chapter(key, "PENDING_LLM", category=category,
                              subcategory=subcategory, front=front,
                              content_chars=len(content))
@@ -707,29 +919,280 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
         f"Matière : {category}\nChapitre : {clean_chapter_title(chapter)}\n\n"
         f"--- CONTENU DU CHAPITRE ---\n{content}"
     )
+
+    # Support du backend V2 (rotation + fallback) vs backend V1 (simple)
+    v2 = isinstance(backend, MistralBackendV2)
     try:
-        raw = backend.generate(SYSTEM_PROMPT_COURSE, user_prompt)
+        if v2:
+            raw, gen_model = backend.generate(SYSTEM_PROMPT_COURSE, user_prompt)
+        else:
+            raw = backend.generate(SYSTEM_PROMPT_COURSE, user_prompt)  # type: ignore[union-attr]
+            gen_model = getattr(backend, "model", "?")
+    except RateLimitError as e:
+        # 429 sur tous les modèles de fallback → checkpoint pour reprise
+        tracker.mark_chapter(key, "FAILED", category=category,
+                             subcategory=subcategory,
+                             error=f"429 checkpoint : {e}", rate_limited=True)
+        return "FAILED", None
     except Exception as e:
         tracker.mark_chapter(key, "FAILED", category=category,
                              subcategory=subcategory, error=str(e)[:200])
         return "FAILED", None
 
-    # Validation avec le vrai parseur avant toute acceptation
+    # Validation 1 : parse_blocks (grammaire stricte)
     n_cards, errors = validate_with_parse_blocks(raw)
     if errors or n_cards == 0:
         tracker.mark_chapter(key, "FAILED", category=category,
                              subcategory=subcategory,
-                             error="parse_blocks : " + "; ".join(errors[:3]))
+                             error="parse_blocks : " + "; ".join(errors[:3]),
+                             model=gen_model)
         return "FAILED", None
+
+    # Validation 2 : vérification LLM (modèle distinct de génération)
+    # parse_blocks est la validation autoritative ; la vérif LLM est un
+    # contrôle qualité supplémentaire (avertit mais n'écarte pas si
+    # parse_blocks a déjà validé — évite les faux rejets dus au LLM).
+    if v2:
+        try:
+            verified, vmsg = backend.verify(raw, category, subcategory)
+            if not verified:
+                print(f"    ⚠️ Vérif LLM a échoué mais parse_blocks OK : {vmsg[:80]}")
+        except RateLimitError:
+            pass
+
+    # Écriture du fichier .txt dans out_dir/ (Generated_QCMs/ par défaut)
+    out_base = out_dir or Path(DEFAULT_OUTPUT_DIR)
+    safe_cat = re.sub(r"[^a-zA-Z0-9_-]+", "-", category)[:40]
+    safe_sub = re.sub(r"[^a-zA-Z0-9_-]+", "-", subcategory)[:40]
+    slug = f"{safe_cat}_{safe_sub}_{gen_model.replace('/', '_')[:30]}"[:80]
+    out_file = out_base / f"{slug}.txt"
+    if not dry_run:
+        out_base.mkdir(parents=True, exist_ok=True)
+        out_file.write_text(raw + "\n", encoding="utf-8")
 
     block = CardBlock(category=category, subcategory=subcategory,
                       ctype="COURSE", front=front, back="")
     tracker.mark_chapter(key, "GENERATED", category=category,
-                         subcategory=subcategory, front=front, cards=n_cards)
+                         subcategory=subcategory, front=front, cards=n_cards,
+                         model=gen_model, output_file=str(out_file))
     return "GENERATED", block
 
 
-# ------------------------------------------------------------- pipeline -----
+SYSTEM_PROMPT_QCM = (
+    "Tu es un professeur d'école d'ingénieurs (EPITA). Génère des cartes QCM "
+    "et Vrai/Faux qui testent la COMPRÉHENSION CONCRÈTE, pas la mémoire factuelle. "
+    "Chaque QCM doit demander de raisonner, appliquer ou analyser — jamais de "
+    "calculer un PGCD ou une racine.\n\n"
+    "IMPORTANT : ne réponds qu'avec les blocs de cartes, aucun texte hors-format.\n\n"
+    "Format (blocs séparés par ---) :\n\n"
+    "CAT: {Matière} / {Chapitre}\n"
+    "Q: [QCM] {question conceptuelle}\n"
+    "R: {explication concise pourquoi la réponse est correcte}\n"
+    "C1: {choix A}\n"
+    "C2: {choix B}\n"
+    "C3: [x] {choix C juste}\n"
+    "C4: {choix D}\n"
+    "---\n\n"
+    "Pour les questions Vrai/Faux:\n\n"
+    "CAT: {Matière} / {Chapitre}\n"
+    "Q: [TF] {affirmation à évaluer}\n"
+    "R: {explication}\n"
+    "A: vrai\n"
+    "---\n\n"
+    "Règles :\n"
+    "1. Chaque bloc commence par CAT: puis Q: avec [QCM] ou [TF].\n"
+    "2. LaTeX standard : $...$ inline, $$...$$ display.\n"
+    "3. QCM : 4 choix (C1-C4), un seul [x] = bonne réponse.\n"
+    "4. TF : une ligne A: vrai ou A: faux.\n"
+    "5. Génère 2-3 QCM et 1-2 TF par bloc de réponse.\n"
+    "6. Questions de NIVEAU difficile : application, analyse, synthèse.\n"
+)
+
+
+def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
+                     course_content: str, index: CourseIndex, tracker: Tracker,
+                     backend: LLMBackend | None = None,
+                     out_dir: Path | None = None, dry_run: bool = False) -> tuple[str, int]:
+    """Génère des cartes QCM/TF d'entraînement pour un chapitre.
+
+    Lit le contenu du COURSE existant (ou le chapitre MD) et produit
+    des questions conceptuelles au format parse_blocks.
+
+    Retourne (status, n_cards) :
+      SKIPPED_EXISTS — le serveur possède déjà des QCM pour (cat, sub)
+      NO_CONTENT     — pas de contenu à générer
+      PENDING_LLM    — sans --allow-llm
+      GENERATED      — cartes générées
+      FAILED         — échec LLM / validation
+    """
+    chapter = chapter_path.name
+    folder = chapter_path.parent.name
+    key = chapter_key(folder, chapter)
+
+    # Vérifier si des QCM existent déjà sur le serveur
+    has_qcm = any(
+        r.get("type") in ("QCM", "TF") and
+        r.get("category") == category and
+        r.get("subcategory") == subcategory
+        for r in index.rows
+    )
+    if has_qcm:
+        tracker.mark_chapter(key, "SKIPPED_EXISTS_QCM", category=category,
+                             subcategory=subcategory)
+        return "SKIPPED_EXISTS", 0
+
+    content = course_content
+    if not content.strip():
+        content = collect_chapter_content(chapter_path)
+    if not content.strip():
+        tracker.mark_chapter(key, "NO_CONTENT", category=category,
+                             subcategory=subcategory)
+        return "NO_CONTENT", 0
+
+    if not backend or dry_run:
+        tracker.mark_chapter(key, "PENDING_LLM_QCM", category=category,
+                             subcategory=subcategory)
+        return "PENDING_LLM", 0
+
+    user_prompt = (
+        f"Génère des cartes QCM et Vrai/Faux pour le chapitre suivant.\n"
+        f"Objectif : tester la COMPRÉHENSION CONCRÈTE (raisonner, appliquer, analyser).\n"
+        f"Matière : {category}\nChapitre : {clean_chapter_title(chapter)}\n\n"
+        f"--- CONTENU COURS (EXTRAITS) ---\n{content[:MAX_CHUNK_CHARS]}"
+    )
+
+    v2 = isinstance(backend, MistralBackendV2)
+    try:
+        if v2:
+            raw, gen_model = backend.generate(SYSTEM_PROMPT_QCM, user_prompt)
+        else:
+            raw = backend.generate(SYSTEM_PROMPT_QCM, user_prompt)
+            gen_model = getattr(backend, "model", "?")
+    except RateLimitError as e:
+        tracker.mark_chapter(key, "FAILED", category=category,
+                             subcategory=subcategory,
+                             error=f"429 QCM : {e}", rate_limited=True)
+        return "FAILED", 0
+    except Exception as e:
+        tracker.mark_chapter(key, "FAILED", category=category,
+                             subcategory=subcategory, error=str(e)[:200])
+        return "FAILED", 0
+
+    # Validation parse_blocks
+    n_cards, errors = validate_with_parse_blocks(raw)
+    if errors or n_cards == 0:
+        tracker.mark_chapter(key, "FAILED", category=category,
+                             subcategory=subcategory,
+                             error="parse_blocks QCM : " + "; ".join(errors[:3]),
+                             model=gen_model)
+        return "FAILED", 0
+
+    # Vérification LLM (advisory)
+    if v2:
+        try:
+            verified, vmsg = backend.verify(raw, category, subcategory)
+            if not verified:
+                print(f"    ⚠️ Vérif QCM LLM échouée mais parse_blocks OK : {vmsg[:80]}")
+        except RateLimitError:
+            pass
+
+    # Écriture du fichier
+    out_base = out_dir or Path(DEFAULT_OUTPUT_DIR)
+    safe_cat = re.sub(r"[^a-zA-Z0-9_-]+", "-", category)[:40]
+    safe_sub = re.sub(r"[^a-zA-Z0-9_-]+", "-", subcategory)[:40]
+    slug = f"{safe_cat}_{safe_sub}_QCM_{gen_model.replace('/', '_')[:30]}"[:80]
+    out_file = out_base / f"{slug}.txt"
+    if not dry_run:
+        out_base.mkdir(parents=True, exist_ok=True)
+        out_file.write_text(raw + "\n", encoding="utf-8")
+
+    tracker.mark_chapter(key, "GENERATED_QCM", category=category,
+                         subcategory=subcategory, cards=n_cards,
+                         model=gen_model, output_file=str(out_file))
+    return "GENERATED", n_cards
+
+
+def run_pass_d(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
+               tracker: Tracker, args, backend: LLMBackend | None = None,
+               out_dir: Path | None = None) -> dict:
+    """Passe D : cartes QCM/TF d'entraînement par chapitre.
+
+    Pour chaque chapitre avec COURSE mais SANS QCM, génère des questions
+    conceptuelles via LLM. Même politique de rotation/429/fallback que Pass C.
+    """
+    stats = {"chapters_total": 0, "chapters_needs_qcm": 0,
+             "skipped_exists": 0, "generated": 0, "failed": 0,
+             "pending_llm": 0, "no_content": 0, "total_qcm_cards": 0}
+
+    pass_d_done = 0
+    pass_d_limit = getattr(args, "pass_d_limit", 0) or 0
+
+    for course_dir, chapter_dir in iter_chapters(md_root):
+        stats["chapters_total"] += 1
+        folder, chapter = course_dir.name, chapter_dir.name
+        key = chapter_key(folder, chapter)
+        category, subcategory = resolver.resolve(folder, chapter)
+
+        prev = tracker.data.get("chapters", {}).get(key)
+        if prev and not args.force:
+            prev_status = prev.get("status")
+            if prev_status in ("SKIPPED_EXISTS_QCM", "GENERATED_QCM", "NO_CONTENT"):
+                stats[PASS_D_STAT_KEYS.get(prev_status, "failed")] += 1
+                if prev_status == "GENERATED_QCM":
+                    stats["total_qcm_cards"] += prev.get("cards", 0)
+                continue
+
+        # Vérifier si le serveur a déjà un QCM pour ce chapitre
+        has_qcm = any(
+            r.get("type") in ("QCM", "TF") and
+            r.get("category") == category and
+            r.get("subcategory") == subcategory
+            for r in index.rows
+        )
+        if has_qcm:
+            stats["skipped_exists"] += 1
+            continue
+
+        # Le chapitre doit avoir un COURSE card pour pouvoir générer QCM
+        if not index.has_course_card(category, subcategory):
+            stats["no_content"] += 1
+            continue
+
+        stats["chapters_needs_qcm"] += 1
+
+        allow_llm = bool(args.allow_llm) and not args.dry_run and backend is not None
+        if allow_llm and pass_d_limit and pass_d_done >= pass_d_limit:
+            break
+
+        # Récupérer le contenu du chapitre (COURSE cards du fichier existant)
+        course_content = collect_chapter_content(chapter_dir)
+        if not course_content.strip():
+            stats["no_content"] += 1
+            tracker.mark_chapter(key, "NO_CONTENT", category=category,
+                                 subcategory=subcategory)
+            continue
+
+        status, n_cards = ensure_qcm_cards(
+            category, subcategory, chapter_dir, course_content,
+            index, tracker, backend=backend,
+            out_dir=out_dir, dry_run=args.dry_run)
+
+        stats[PASS_D_STAT_KEYS.get(status, "failed")] += 1
+        if status == "GENERATED":
+            pass_d_done += 1
+            stats["total_qcm_cards"] += n_cards
+        tracker.save()
+
+    return stats
+
+
+PASS_D_STAT_KEYS = {
+    "SKIPPED_EXISTS": "skipped_exists",
+    "NO_CONTENT": "no_content",
+    "PENDING_LLM": "pending_llm",
+    "GENERATED_QCM": "generated",
+    "FAILED": "failed",
+}
 def iter_qcm_files(md_root: Path) -> Iterable[Path]:
     return sorted(p for p in md_root.rglob("*.md") if "/qcms/" in str(p))
 
@@ -863,12 +1326,17 @@ PASS_C_STAT_KEYS = {"SKIPPED_EXISTS": "skipped_exists", "NO_CONTENT": "no_conten
 
 
 def run_pass_c(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
-               tracker: Tracker, args, backend: LLMBackend | None = None) -> dict:
+               tracker: Tracker, args, backend: LLMBackend | None = None,
+               out_dir: Path | None = None) -> dict:
     """Passe C : cartes COURSE par chapitre.
 
     En dry-run (ou sans --allow-llm) : analyse d'existence SEULEMENT,
     aucun appel LLM. Le résumé (R:) est sémantique, il ne peut être
     produit que par un LLM validé en coût zéro.
+
+    Modèle de génération : rotation 1 modèle/chapitre (début du lot au
+    prochain). 429 → fallback au modèle suivant → checkpoint FAILED.
+    Vérification LLM : modèle distinct (DEFAULT_VERIFY_MODEL).
     """
     stats = {"chapters_total": 0, "chapters_with_qcm": 0, "skipped_exists": 0,
              "no_content": 0, "pending_llm": 0, "generated": 0, "failed": 0}
@@ -880,6 +1348,9 @@ def run_pass_c(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
         if len(parts) >= 2:
             qcm_chapters.add(chapter_key(parts[0], parts[1]))
 
+    pass_c_done = 0
+    pass_c_limit = getattr(args, "pass_c_limit", 0) or 0
+
     for course_dir, chapter_dir in iter_chapters(md_root):
         stats["chapters_total"] += 1
         folder, chapter = course_dir.name, chapter_dir.name
@@ -887,10 +1358,31 @@ def run_pass_c(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
         if key in qcm_chapters:
             stats["chapters_with_qcm"] += 1
         category, subcategory = resolver.resolve(folder, chapter)
+
+        # Reprise : FAILED peut être retenté avec --retry-failed
+        prev = tracker.data.get("chapters", {}).get(key)
+        if prev and not args.force:
+            if not args.retry_failed:
+                if prev.get("status") in ("SKIPPED_EXISTS", "NO_CONTENT",
+                                          "PENDING_LLM", "GENERATED", "FAILED"):
+                    stats[PASS_C_STAT_KEYS.get(prev["status"], "failed")] += 1
+                    continue
+            elif prev.get("status") in ("SKIPPED_EXISTS", "NO_CONTENT",
+                                      "PENDING_LLM", "GENERATED"):
+                # --retry-failed : reprend aussi les FAILED
+                stats[PASS_C_STAT_KEYS.get(prev["status"], "failed")] += 1
+                continue
+
         allow_llm = bool(args.allow_llm) and not args.dry_run and backend is not None
+        if allow_llm and pass_c_limit and pass_c_done >= pass_c_limit:
+            break
+
         status, _block = ensure_course_card(
             category, subcategory, chapter_dir, md_root, index, tracker,
-            allow_llm=allow_llm, backend=backend)
+            allow_llm=allow_llm, backend=backend,
+            out_dir=out_dir, dry_run=args.dry_run)
+        if status == "GENERATED":
+            pass_c_done += 1
         stats[PASS_C_STAT_KEYS.get(status, "failed")] += 1
         tracker.save()
     return stats
@@ -906,9 +1398,10 @@ def main(argv: list[str] | None = None) -> int:
                     help="nombre max de fichiers qcms à traiter (0 = illimité)")
     ap.add_argument("--only", default="",
                     help="ne traiter que les fichiers dont le chemin contient SUBSTR")
-    ap.add_argument("--only-pass", default="ab",
+    ap.add_argument("--only-pass", default="abc",
                     help="passes à exécuter : combinaison de 'a' (implicite dans "
-                         "chaque passe), 'b' (QCM) et 'c' (chapitres COURSE)")
+                         "chaque passe), 'b' (QCM), 'c' (chapitres COURSE) et "
+                         "'d' (QCM d'entraînement LLM)")
     ap.add_argument("--retry-failed", action="store_true")
     ap.add_argument("--force", action="store_true",
                     help="retraiter les fichiers DONE/FAILED")
@@ -922,6 +1415,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--refresh-index", action="store_true",
                     help="reconstruire course_index.json depuis le serveur")
     ap.add_argument("--tracker", default=TRACKER_FILE)
+    ap.add_argument("--pass-c-limit", type=int, default=0,
+                    help="nombre max de chapitres COURSE à générer en LLM (0 = illimité)")
+    ap.add_argument("--pass-d-limit", type=int, default=0,
+                    help="nombre max de chapitres QCM à générer en LLM (0 = illimité)")
+    ap.add_argument("--verify", action="store_true",
+                    help="Passer par la vérification LLM (modèle distinct) après génération")
     args = ap.parse_args(argv)
 
     md_root = Path(args.input)
@@ -958,17 +1457,33 @@ def main(argv: list[str] | None = None) -> int:
         print("\n===== PASSE C — cartes COURSE par chapitre =====")
         backend = None
         if args.allow_llm and not args.dry_run:
-            backend = build_backend_from_env()
+            backend = build_backend_from_env(v2=True)
             if backend is None:
                 print("❌ --allow-llm demandé mais aucun backend configuré "
-                      "(LLM_PROVIDER / LLM_API_KEY).")
+                      "(MISTRAL_API_KEY / MISTRAL_API_KEY_2).")
                 return 2
-            print(f"🤖 LLM : {type(backend).__name__} "
-                  f"(modèle {getattr(backend, 'model', '?')}) — COÛT À VÉRIFIER")
+            if isinstance(backend, MistralBackendV2):
+                print(f"🤖 LLM v2 — rotation : {backend.rotator.models}")
+                print(f"   Vérif modèle : {backend.verify_model}")
+                print(f"   Clés API : {len(backend.api_keys)}, délai safe : "
+                      f"{backend.safe_delay}s")
+            else:
+                print(f"🤖 LLM : {type(backend).__name__} "
+                      f"(modèle {getattr(backend, 'model', '?')}) — COÛT À VÉRIFIER")
         else:
             print("ℹ️ dry-run : aucun appel LLM (le résumé R: est sémantique)")
         report["pass_c"] = run_pass_c(md_root, resolver, index, tracker, args,
-                                      backend=backend)
+                                      backend=backend, out_dir=out_dir)
+    if "d" in args.only_pass:
+        print("\n===== PASSE D — cartes QCM d'entraînement LLM =====")
+        if backend is None and not args.dry_run:
+            backend = build_backend_from_env(v2=True)
+            if backend is None:
+                print("❌ --allow-llm demandé mais aucun backend configuré "
+                      "(MISTRAL_API_KEY / MISTRAL_API_KEY_2).")
+                return 2
+        report["pass_d"] = run_pass_d(md_root, resolver, index, tracker, args,
+                                      backend=backend, out_dir=out_dir)
 
     print("\n===== RAPPORT =====")
     print(json.dumps(report, ensure_ascii=False, indent=2))

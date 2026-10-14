@@ -12,16 +12,18 @@ cartes ; le LaTeX reste en texte brut (`$…$`, `$$…$$`).
 | **A** | Normalisation `[mathjaxinline]X[/mathjaxinline]` → `$X$`, `[mathjax]X[/mathjax]` → `$$X$$` (`md_converter.normalize_mathjax_tags`) | 0 |
 | **B** | Extraction QCM réels depuis `qcms/*.md` — **questions à note PLEINE uniquement** (à note partielle/nulle, `[x]` = réponse de l'élève, pas la correction → rejet) | 0 |
 | **C** | Cartes COURSE par chapitre : existence via index **lecture seule** du serveur, front déterministe `Chapitre : <titre>`, résumé (R:) sémantique → LLM | LLM |
+| **D** | **QCM/TF d'entraînement** : génère des questions **conceptuelles** (raisonner, appliquer, analyser) pour les chapitres avec COURSE mais sans QCM | LLM |
 
 ## Commandes exactes
 
 ```bash
-# Tests (35 tests, unittest — aucune dépendance ajoutée)
+# Tests (62 tests, unittest — aucune dépendance ajoutée)
 .venv/bin/python -m unittest tests.test_md_to_cards -v
 
 # Analyse complète sans rien écrire (recommandé en premier)
 .venv/bin/python md_to_cards.py --dry-run --only-pass b
 .venv/bin/python md_to_cards.py --dry-run --only-pass c
+.venv/bin/python md_to_cards.py --dry-run --only-pass d
 
 # Lot limité réel (écrit Generated_QCMs/*.txt localement)
 .venv/bin/python md_to_cards.py --only "10_Cours 3 - Arithmétique" --only-pass b
@@ -33,11 +35,14 @@ cartes ; le LaTeX reste en texte brut (`$…$`, `$$…$$`).
 
 # Passe C avec LLM — UNIQUEMENT après validation du tier gratuit (§ Coût)
 .venv/bin/python md_to_cards.py --only-pass c --allow-llm
+
+# Passe D — QCM d'entraînement conceptuels (chaps sans QCM)
+.venv/bin/python md_to_cards.py --only-pass d --allow-llm --pass-d-limit 5
 ```
 
 Options : `--limit N`, `--only SUBSTR`, `--retry-failed`, `--force`,
-`--dry-run`, `--only-pass ab`, `--allow-llm`, `--offline` (index local),
-`--refresh-index`, `--tracker PATH`.
+`--dry-run`, `--only-pass abcd`, `--allow-llm`, `--offline` (index local),
+`--refresh-index`, `--tracker PATH`, `--pass-c-limit N`, `--pass-d-limit N`.
 
 ## Règles métier déterministes (Passe B)
 
@@ -80,16 +85,84 @@ Sauvegarde atomique après chaque fichier — une interruption ne retraite rien.
 ## Coût zéro (contrainte absolue)
 
 - **Aucun appel LLM sans `--allow-llm`**, et toujours un `--dry-run` d'abord.
-- Le modèle par défaut de `generate_qcms.py` (`open-mistral-7b`) est **payant** :
-  ne pas l'utiliser. Le tier gratuit *Experiment* de Mistral (aucune carte
-  bancaire, vérification SMS requise) couvre `mistral-small-latest` /
-  `open-mistral-nemo` — **vérifier le quota dans console.mistral.ai avant tout
-  appel** (limites exactes non publiées : ~1 req/s, plafond TPM visible en
-  console). Alternative zéro coût : `LLM_PROVIDER=ollama` (local, mais nécessite
-  Ollama + un modèle téléchargé — aucune installation automatique).
-- Gemini API : tier gratuit sans carte bancaire pour certains modèles, mais les
-  nouveaux comptes AI Studio peuvent être basculés sur un plan prépayé
-  (mars 2026) — à vérifier avant usage.
+- **Aucun modèle Mistral n'est gratuit** : la documentation officielle
+  (docs.mistral.ai/inference/pricing, 2026-10-13) liste tous les modèles
+  comme payants au volume. Le "tier gratuit Experiment" auquel le projet
+  faisait référence n'est plus mentionné dans les prix publiques. Ne pas
+  utiliser `open-mistral-7b` (modèle payant, ~0.15/0.60 $).
+- Modèles validés sur la clé API Experiment (testé 2026-10-13) — par coût croissant :
+  - `open-mistral-nemo-2407` : $0.15 / $0.15  (32K ctx, 7B, open-weight, **fonctionne**)
+  - `mistral-small-latest` : $0.15 / $0.60  (32K ctx, 24B, mais 429 fréquent)
+  - `mistral-medium-latest` : $1.50 / $7.50 (32K ctx, mais 429 fréquent)
+  - Les modèles récents (ministral-3-*, codestral-25-08, mistral-large-3)
+    retournent HTTP 400 "Invalid model" — **non disponibles** pour cette clé.
+- Coût estimé pour 281 chapitres : ~€0.16 (nemo 2407 seulement).
+- Alternative zéro coût : `LLM_PROVIDER=ollama` (local, mais nécessite Ollama +
+  un modèle téléchargé — aucune installation automatique).
+- Gemini API : tier gratuit possible pour certains modèles, mais vérifier
+  le quota avant usage.
+
+## Passe C v2 — rotation de modèles + vérification + checkpoint
+
+Pass C génère des cartes COURSE par chapitre avec :
+
+1. **Rotation stricte 1 modèle/chapitre** (`ModelRotator`) : le même modèle
+   est utilisé pour toutes les cartes d'un chapitre, le suivant au chapitre
+   suivant. Triée par coût croissant :
+   `ministral-3-3b → ministral-3-14b → codestral → mistral-large-3`.
+2. **Modèle de vérification distinct** (`DEFAULT_VERIFY_MODEL`) : toujours
+   différent du modèle de génération courant. Vérifie le lot entier du
+   chapitre en **un seul appel** (batch). Si la vérif échoue → FAILED.
+   Si la vérif a 429 → on garde la carte (parse_blocks a déjà validé).
+3. **429 fallback** : sur un rate-limit, passe au modèle suivant dans la
+   rotation (max 2 fallbacks). Si tous les modèles sont en 429 →
+   `RateLimitError` → **checkpoint FAILED** (reprise avec `--retry-failed`).
+   **Aucun retry-loop** : 429 = changement de modèle OU checkpoint.
+4. **Rate limiting** : délai safe de 0.5s entre appels (60 % des limites
+   publiques). Configurable via `MISTRAL_DELAY` / `MISTRAL_VERIFY_DELAY`.
+5. **Clé API multiples** : `MISTRAL_API_KEY_2` (clé dédiée, priorité haute)
+   + `MISTRAL_API_KEY` (existante). Rotation automatique en cas de
+   rate-limit global.
+6. **Reprise** : `md_to_cards_progress.json` checkpointe chaque chapitre.
+   `--retry-failed` relance uniquement les FAILED (rate-limit). `--force`
+   regénère tout.
+
+### Alias de modèles
+
+Les noms proposés par l'utilisateur sont résolus vers les IDs API valides
+via `MISTRAL_MODEL_ALIASES` :
+
+| Alias utilisateur       | ID API valide          |
+|---|---|
+| `mistral-large-2512`    | `mistral-large-2411`    |
+| `codestral-2508`        | `codestral-2405`          |
+| `ministral-14b-2512`    | `open-mistral-nemo-2407` (résolu — modèle récent non dispo)    |
+| `ministral-8b-2512`     | `open-mistral-nemo-2407` (résolu — modèle récent non dispo)     |
+| `mistral-medium-latest` | `mistral-medium-latest`      |
+
+```bash
+# Pass C avec rotation + vérification (dry-run d'abord, toujours)
+.env/bin/python md_to_cards.py --dry-run --only-pass c
+.env/bin/python md_to_cards.py --only-pass c --allow-llm
+.env/bin/python md_to_cards.py --only-pass c --allow-llm --pass-c-limit 5
+.env/bin/python md_to_cards.py --only-pass c --allow-llm --retry-failed
+
+# Pass D — QCM d'entraînement conceptuels (chaps sans QCM existant)
+.env/bin/python md_to_cards.py --only-pass d --allow-llm --pass-d-limit 5
+```
+
+### Pass D — QCM d'entraînement
+
+La Pass D génère des **questions de compréhension concrète** (raisonner, appliquer,
+analyser) pour les chapitres qui ont des cartes COURSE mais **aucun QCM**.
+
+Le `SYSTEM_PROMPT_QCM` exige :
+- Au moins 2 QCM par bloc (4 choix, 1 juste)
+- 1-2 Vrai/Faux par bloc
+- Pas de questions factuelles simples (pas de "calculer le PGCD de 12342")
+- Questions de niveau difficile : application, analyse, synthèse
+
+Même infrastructure de rotation/429/fallback/verification que la Pass C.
 
 ## Déploiement (après feu vert)
 
