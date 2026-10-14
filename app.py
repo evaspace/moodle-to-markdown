@@ -281,10 +281,11 @@ def get_categories():
 def get_cards():
     cat = request.args.get('cat', type=int)
     sub = request.args.get('sub', type=int)
-    exclude = [int(x) for x in request.args.get('exclude', '').split(',') if x.strip().isdigit()][:500]
+    exclude = [int(x) for x in request.args.get('exclude', '').split(',') if x.strip().isdigit()][:2000]
     with db() as conn:
         batch = fetch_batch(conn, cat=cat, sub=sub, exclude=exclude)
-        if not batch and exclude:        # Tout a été vu : cycle infini
+        if not batch and exclude:
+            # When cycling, try to get fresh batch but frontend will filter dups
             batch = fetch_batch(conn, cat=cat, sub=sub, exclude=[])
     return jsonify(batch)
 
@@ -342,7 +343,13 @@ def search_cards():
     } for r in card_rows]
 
     return jsonify({"categories": categories, "cards": cards})
+
+
+@app.route('/api/user_state')
 def get_user_state():
+    with db() as conn:
+        state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()
+    return jsonify(dict(state) if state else {"streak": 0, "max_streak": 0, "level": 1, "xp": 0})
     with db() as conn:
         state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()
     return jsonify(dict(state) if state else {"streak": 0, "max_streak": 0, "level": 1, "xp": 0})

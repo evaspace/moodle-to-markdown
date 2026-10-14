@@ -935,12 +935,19 @@ async function loadCards() {
         }
 
         cards.forEach(c => {
-            seenIds.add(c.id);
-            const card = buildCard(c, ++uidCounter);
-            feed.appendChild(card);
-            renderMath(card);
-            observer.observe(card);
+            if (!seenIds.has(c.id)) {
+                seenIds.add(c.id);
+                const card = buildCard(c, ++uidCounter);
+                feed.appendChild(card);
+                renderMath(card);
+                observer.observe(card);
+            }
         });
+        // If all returned cards were duplicates and we got some, maybe still need more? but avoid infinite loop
+        if (cards.length > 0 && feed.querySelectorAll('.card').length < 5 && !isFetching) {
+            // load more
+            setTimeout(loadCards, 10);
+        }
     } catch (e) {
         console.error('loadCards error:', e);
     } finally {
