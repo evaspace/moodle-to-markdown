@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Crédits & Soutien | Morgan Pierrefeu{% endblock %}
+{% block description %}Remerciements, technologies open-source et canaux de soutien pour l'écosystème d'ingénierie et d'automatisation de Morgan Pierrefeu.{% endblock %}
+
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/v2.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/credits.css') }}">
+{% endblock %}
+
+{% block content %}
+<header class="credits-hero">
+    <h1 class="credits-title">CRÉDITS & <span>SOUTIEN</span></h1>
+    <p class="credits-lead">
+        Chaque projet conçu dans cet écosystème vise à éliminer la friction opérationnelle. 
+        Merci aux contributeurs, mentors et utilisateurs qui soutiennent le développement continu de nos outils.
+    </p>
+</header>
+
+<main class="credits-container">
+    <!-- SOUTIEN DIRECT & CONTRIBUTION -->
+    <h2 class="credits-section-title">01 // SOUTENIR LE DÉVELOPPEMENT</h2>
+    
+    <div class="support-grid">
+        <!-- Carte Financement Participatif -->
+        <div class="glass-card-v2" style="border-top: 3px solid #ec6a11;">
+            <h3 style="font-size: 1.6rem; font-weight: 900; color: #ffffff; margin-bottom: 1rem; text-transform: uppercase;">Café & Micro-Don</h3>
+            <p style="color: rgba(244, 235, 217, 0.7); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                Si des outils comme <strong style="color: #ffffff;">Sharator</strong>, <strong style="color: #ffffff;">Auriga2Google</strong> ou <strong style="color: #ffffff;">Opticars</strong> vous font gagner du temps, vous pouvez offrir un café pour financer les serveurs Hetzner et les APIs IA.
+            </p>
+
+            <a href="https://coff.ee/evaspace201" target="_blank" rel="noopener" class="support-link-btn">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 38px; border-radius: 6px;">
+                    <span style="font-size: 0.95rem; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">Buy Me A Coffee</span>
+                </div>
+                <span style="color: #ec6a11; font-size: 1.25rem;">→</span>
+            </a>
+
+            <a href="https://paypal.me/evaspace?country.x=FR&locale.x=fr_FR" target="_blank" rel="noopener" class="support-link-btn">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 1.5rem;">💳</span>
+                    <span style="font-size: 0.95rem; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">PayPal Direct Support</span>
+                </div>
+                <span style="color: #38bdf8; font-size: 1.25rem;">→</span>
+            </a>
+        </div>
+
+        <!-- Carte Crypto -->
+        <div class="glass-card-v2" style="border-top: 3px solid #F5B853;">
+            <h3 style="font-size: 1.6rem; font-weight: 900; color: #ffffff; margin-bottom: 1rem; text-transform: uppercase;">Dons en Cryptomonnaies</h3>
+            <p style="color: rgba(244, 235, 217, 0.7); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+                Cliquez sur une adresse pour la copier instantanément dans votre presse-papiers :
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                    <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: #F5B853; font-weight: 800; margin-bottom: 0.35rem;">BITCOIN [BTC]</div>
+                    <div class="crypto-address-box" onclick="copyCrypto(this, 'bc1qu2vwy8ly45f0u07lmsr5p09pnt96v7qasj8d26')">
+                        <span>bc1qu2vwy8ly45f0u07lmsr5p09pnt96v7qasj8d26</span>
+                        <span class="copy-pill">Copier</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: #38bdf8; font-weight: 800; margin-bottom: 0.35rem;">ETHEREUM [ETH / ERC-20]</div>
+                    <div class="crypto-address-box" onclick="copyCrypto(this, '0x444E90B95B8367123A449C7D4166297316773f32')">
+                        <span>0x444E90B95B8367123A449C7D4166297316773f32</span>
+                        <span class="copy-pill">Copier</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 1.25rem; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: rgba(255, 255, 255, 0.35);">
+                🔒 Transactions vérifiables on-chain & sécurisées.
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉCOSYSTÈME DE PROJETS -->
+    <h2 class="credits-section-title">02 // TECHNOLOGIES & PROJETS CITÉS</h2>
+    
+    <div class="tools-grid">
+        <div class="tool-item">
+            <h4 style="font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; text-transform: uppercase;">Sharator</h4>
+            <p style="font-size: 0.85rem; color: rgba(244, 235, 217, 0.65); line-height: 1.5; margin-bottom: 0.75rem;">
+                Modélisation dynamique de parts sociales de startup selon la méthodologie Slicing Pie de Mike Moyer.
+            </p>
+            <a href="https://sharator.pierref.eu" target="_blank" style="color: #ec6a11; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; font-weight: 700;">Visiter Sharator →</a>
+        </div>
+
+        <div class="tool-item">
+            <h4 style="font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; text-transform: uppercase;">Auriga2Google</h4>
+            <p style="font-size: 0.85rem; color: rgba(244, 235, 217, 0.65); line-height: 1.5; margin-bottom: 0.75rem;">
+                Passerelle de synchronisation automatisée d'emplois du temps pour les étudiants d'EPITA avec Google Agenda.
+            </p>
+            <a href="https://auriga2google.pierref.eu" target="_blank" style="color: #ec6a11; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; font-weight: 700;">Visiter Auriga2Google →</a>
+        </div>
+
+        <div class="tool-item">
+            <h4 style="font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; text-transform: uppercase;">Opticars</h4>
+            <p style="font-size: 0.85rem; color: rgba(244, 235, 217, 0.65); line-height: 1.5; margin-bottom: 0.75rem;">
+                Calculateur multicritère automobile, analyse financière de décote, TCO et ratios puissance/poids en temps réel.
+            </p>
+            <a href="https://opticars.pierref.eu" target="_blank" style="color: #ec6a11; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; font-weight: 700;">Visiter Opticars →</a>
+        </div>
+
+        <div class="tool-item">
+            <h4 style="font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; text-transform: uppercase;">MatchShots</h4>
+            <p style="font-size: 0.85rem; color: rgba(244, 235, 217, 0.65); line-height: 1.5; margin-bottom: 0.75rem;">
+                Analytics sportifs en direct, tracking vidéo et heatmaps de positionnement assistés par vision par ordinateur.
+            </p>
+            <a href="https://matchshots.pierref.eu" target="_blank" style="color: #ec6a11; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; font-weight: 700;">Visiter MatchShots →</a>
+        </div>
+    </div>
+</main>
+
+<!-- V2 Blueprint Footer with Unified Review Widget -->
+<footer class="footer-v2">
+    <div class="footer-v2-nav" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.05em;">
+        <a href="/#projects" style="color: var(--color-text-main); text-decoration: none; transition: color 0.2s;">PROJETS</a>
+        <a href="/#about" style="color: var(--color-text-main); text-decoration: none; transition: color 0.2s;">À PROPOS</a>
+        <a href="/" style="color: var(--color-text-main); text-decoration: none; transition: color 0.2s;">ACCUEIL</a>
+        <a href="https://github.com/evaspace" target="_blank" rel="noopener" style="color: var(--color-text-muted); text-decoration: none;">GITHUB</a>
+        <a href="https://www.linkedin.com/in/morgan-pierrefeu/" target="_blank" rel="noopener" style="color: var(--color-text-muted); text-decoration: none;">LINKEDIN</a>
+        <a href="mailto:morgan@pierref.eu" style="color: var(--color-text-muted); text-decoration: none;">CONTACT</a>
+    </div>
+
+    <!-- Rating & Review System Widget -->
+    <div class="pierref-review-widget" data-site="pierref" style="max-width: 520px; margin: 0 auto 2.5rem auto;"></div>
+
+    <div class="huge-text">PIERREFEU</div>
+    <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--color-text-muted); letter-spacing: 0.1em; text-transform: uppercase;">
+        © 2026 Morgan Pierrefeu — Ingénierie des Systèmes, Automation & Croissance Organique
+    </p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function copyCrypto(el, address) {
+    navigator.clipboard.writeText(address).then(() => {
+        const pill = el.querySelector('.copy-pill');
+        const oldText = pill.innerText;
+        pill.innerText = 'Copié !';
+        pill.style.background = '#22c55e';
+        setTimeout(() => {
+            pill.innerText = oldText;
+            pill.style.background = 'rgba(255, 255, 255, 0.1)';
+        }, 2000);
+    }).catch(err => {
+        console.error('Erreur copie:', err);
+    });
+}
+</script>
+<script src="{{ url_for('static', filename='js/pierref-review.js') }}" defer></script>
+{% endblock %}

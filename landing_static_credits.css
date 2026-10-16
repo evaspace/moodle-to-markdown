@@ -1,0 +1,177 @@
+/* ==========================================================================
+   CREDITS PAGE — Styles spécifiques à la page crédits
+   ========================================================================== */
+
+.credits-hero {
+    position: relative;
+    padding: 9rem 1.5rem 4rem 1.5rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: radial-gradient(circle at 50% 20%, rgba(13, 107, 201, 0.18), transparent 70%);
+}
+
+.credits-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    background: rgba(236, 106, 17, 0.12);
+    border: 1px solid rgba(236, 106, 17, 0.3);
+    color: #ec6a11;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.credits-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+}
+
+.credits-title span {
+    background: linear-gradient(135deg, #ec6a11, #F5B853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.credits-lead {
+    font-size: 1.15rem;
+    color: rgba(244, 235, 217, 0.75);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.credits-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem 1.5rem;
+}
+
+.credits-section-title {
+    font-size: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0d6bc1;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.credits-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-v2 {
+    background: rgba(22, 27, 51, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card-v2:hover {
+    border-color: rgba(236, 106, 17, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(236, 106, 17, 0.15);
+}
+
+.support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.support-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    margin-top: 1rem;
+}
+
+.support-link-btn:hover {
+    background: rgba(236, 106, 17, 0.15);
+    border-color: #ec6a11;
+    transform: translateX(4px);
+}
+
+.crypto-address-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #F5B853;
+    word-break: break-all;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.crypto-address-box:hover {
+    border-color: #F5B853;
+    background: rgba(245, 184, 83, 0.08);
+}
+
+.copy-pill {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.tool-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.tool-item:hover {
+    border-color: rgba(13, 107, 201, 0.4);
+    background: rgba(13, 107, 201, 0.05);
+}
