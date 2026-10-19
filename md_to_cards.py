@@ -528,13 +528,33 @@ def disambiguate_front(block: CardBlock, index: CourseIndex,
 
 
 # ------------------------------------------------------- validation parseur --
-def validate_with_parse_blocks(text: str) -> tuple[int, list[str]]:
+def validate_with_parse_blocks(text: str, strict_generated: bool = False) -> tuple[int, list[str]]:
     """Passe le .txt généré dans le VRAI parseur de l'application (app.py:71).
 
     Tout bloc en erreur est rejeté — jamais déployé.
     """
     from app import parse_blocks  # import paresseux : app.py a des effets de bord
     cards, errors = parse_blocks(text)
+    for number, card in enumerate(cards, 1):
+        if strict_generated:
+            if not card.get("back") and card.get("type") != "TF":
+                errors.append(f"Carte {number} : explication R: vide")
+            if len(card.get("back") or "") > 600:
+                errors.append(f"Carte {number} : explication R: supérieure à 600 caractères")
+            math_text = f"{card.get('front', '')}\n{card.get('back', '')}"
+            math_text = re.sub(r"```[\s\S]*?```|`[^`]*`", "", math_text)
+            if math_text.count("$") % 2:
+                errors.append(f"Carte {number} : délimiteurs LaTeX $ non équilibrés")
+        if card.get("type") == "QCM":
+            try:
+                choices = json.loads(card.get("payload") or "{}").get("choices", [])
+                correct = sum(bool(choice.get("correct")) for choice in choices)
+                if len(choices) < 2 or correct < 1:
+                    errors.append(f"Carte {number} : QCM sans choix valides ou réponse juste")
+                if strict_generated and (len(choices) != 4 or correct != 1):
+                    errors.append(f"Carte {number} : QCM généré doit avoir 4 choix et exactement une bonne réponse")
+            except (ValueError, TypeError):
+                errors.append(f"Carte {number} : choix QCM illisibles")
     return len(cards), errors
 
 
@@ -553,8 +573,9 @@ SYSTEM_PROMPT_COURSE = (
     "Règles impératives :\n"
     "1. Chaque bloc commence par \"CAT:\" puis \"Q:\".\n"
     "2. LaTeX standard : $...$ inline et $$...$$ pour les équations.\n"
-    "3. Une carte COURSE par notion clé du chapitre, concise.\n"
-    "4. Ne paraphrase pas inutilement : définitions, théorèmes, pièges classiques.\n"
+    "3. Une carte COURSE = une idée atomique ; titre court et réponse concise.\n"
+    "4. Utilise uniquement les informations du texte fourni. N'invente aucune formule, hypothèse, valeur ou lien ; ignore les notions ambiguës/incomplètes.\n"
+    "5. Dans R:, ajoute une intuition utile (pourquoi le résultat est vrai, quand l'utiliser, ou le piège à éviter), sans dépasser 600 caractères.\n"
 )
 # La grammaire ci-dessus reprend SYSTEM_PROMPT de generate_qcms.py:30-61
 # (format texte brut, blocs séparés par ---), adaptée aux cartes COURSE.
@@ -723,26 +744,31 @@ class MistralBackendV2(LLMBackend):
                 continue
         raise RateLimitError(last_err or "tous les modèles en 429")
 
-    def verify(self, text: str, category: str,
-               subcategory: str) -> tuple[bool, str]:
-        """Vérifie un lot de cartes générées avec un modèle distinct.
-
-        Retourne (ok, message). Batch sur le chapitre entier en un appel.
-        """
+    def verify(self, text: str, category: str, subcategory: str,
+               source_text: str = "", generation_model: str | None = None) -> tuple[bool, str]:
+        """Compare les cartes au texte source et rejette les affirmations non étayées."""
+        verify_model = self.verify_model
+        if generation_model and verify_model == generation_model:
+            verify_model = next((m for m in self.gen_models if m != generation_model), "")
+        if not verify_model:
+            return False, "aucun modèle distinct disponible pour la vérification"
         system = (
-            "Tu es un rédacteur technique expérimenté. Vérifie si le texte "
-            "suivant est un ensemble de cartes au format strict (CAT:/Q:/R:/---) "
-            "valide, sans balises markdown, sans code blocks, sans JSON. "
-            "Réponds OUI si c'est valide, NON sinon."
+            "Tu es relecteur pédagogique. Vérifie chaque affirmation, formule, "
+            "hypothèse et réponse des cartes uniquement contre le texte source fourni. "
+            "Rejette toute information non étayée, ambiguë ou contradictoire. "
+            "Vérifie aussi le format CAT:/Q:/R:/---. Ne corrige pas les cartes. "
+            "Réponds exactement OK si toutes les cartes sont valides et étayées ; "
+            "sinon réponds NOT_OK suivi des numéros des cartes et d'une raison brève."
         )
         user = (
-            f"Vérifie ce lot de cartes pour la matière {category} / "
-            f"{subcategory} :\n\n{text[:6000]}"
+            f"Matière : {category} / {subcategory}\n\n"
+            f"SOURCE DU COURS :\n{source_text[:10000]}\n\n"
+            f"CARTES À VÉRIFIER :\n{text[:6000]}"
         )
         try:
             time.sleep(self.verify_delay)
-            raw = self._post(self.verify_model, system, user)
-            ok = raw.upper().startswith("OUI")
+            raw = self._post(verify_model, system, user)
+            ok = raw.strip().upper() == "OK"
             return ok, raw
         except RateLimitError:
             raise
@@ -940,7 +966,7 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
         return "FAILED", None
 
     # Validation 1 : parse_blocks (grammaire stricte)
-    n_cards, errors = validate_with_parse_blocks(raw)
+    n_cards, errors = validate_with_parse_blocks(raw, strict_generated=True)
     if errors or n_cards == 0:
         tracker.mark_chapter(key, "FAILED", category=category,
                              subcategory=subcategory,
@@ -948,15 +974,16 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
                              model=gen_model)
         return "FAILED", None
 
-    # Validation 2 : vérification LLM (modèle distinct de génération)
-    # parse_blocks est la validation autoritative ; la vérif LLM est un
-    # contrôle qualité supplémentaire (avertit mais n'écarte pas si
-    # parse_blocks a déjà validé — évite les faux rejets dus au LLM).
+    # Validation 2 : vérification factuelle contre le contenu source.
     if v2:
         try:
-            verified, vmsg = backend.verify(raw, category, subcategory)
+            verified, vmsg = backend.verify(raw, category, subcategory, content, gen_model)
             if not verified:
-                print(f"    ⚠️ Vérif LLM a échoué mais parse_blocks OK : {vmsg[:80]}")
+                tracker.mark_chapter(key, "FAILED", category=category,
+                                     subcategory=subcategory,
+                                     error=f"vérification bloquante : {vmsg[:180]}",
+                                     model=gen_model, rejected=True)
+                return "FAILED", None
         except RateLimitError:
             pass
 
@@ -1002,10 +1029,12 @@ SYSTEM_PROMPT_QCM = (
     "Règles :\n"
     "1. Chaque bloc commence par CAT: puis Q: avec [QCM] ou [TF].\n"
     "2. LaTeX standard : $...$ inline, $$...$$ display.\n"
-    "3. QCM : 4 choix (C1-C4), un seul [x] = bonne réponse.\n"
+    "3. QCM : exactement 4 choix (C1-C4), exactement un seul [x] = bonne réponse.\n"
     "4. TF : une ligne A: vrai ou A: faux.\n"
     "5. Génère 2-3 QCM et 1-2 TF par bloc de réponse.\n"
     "6. Questions de NIVEAU difficile : application, analyse, synthèse.\n"
+    "7. Utilise uniquement le contenu fourni ; n'invente aucune formule, hypothèse ou valeur.\n"
+    "8. Chaque R: explique brièvement le raisonnement et l'intuition, en 600 caractères maximum.\n"
 )
 
 
@@ -1079,7 +1108,7 @@ def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
         return "FAILED", 0
 
     # Validation parse_blocks
-    n_cards, errors = validate_with_parse_blocks(raw)
+    n_cards, errors = validate_with_parse_blocks(raw, strict_generated=True)
     if errors or n_cards == 0:
         tracker.mark_chapter(key, "FAILED", category=category,
                              subcategory=subcategory,
@@ -1087,12 +1116,16 @@ def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
                              model=gen_model)
         return "FAILED", 0
 
-    # Vérification LLM (advisory)
+    # Vérification factuelle bloquante contre le contenu du chapitre.
     if v2:
         try:
-            verified, vmsg = backend.verify(raw, category, subcategory)
+            verified, vmsg = backend.verify(raw, category, subcategory, content, gen_model)
             if not verified:
-                print(f"    ⚠️ Vérif QCM LLM échouée mais parse_blocks OK : {vmsg[:80]}")
+                tracker.mark_chapter(key, "FAILED", category=category,
+                                     subcategory=subcategory,
+                                     error=f"vérification QCM bloquante : {vmsg[:180]}",
+                                     model=gen_model, rejected=True)
+                return "FAILED", 0
         except RateLimitError:
             pass
 

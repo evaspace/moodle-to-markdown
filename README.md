@@ -8,6 +8,8 @@
 > **Universal Moodle scraper and batch course-to-markdown converter.**  
 > Transform entire Moodle platforms and course archives (PDFs, Word docs, PowerPoint slides, Excel sheets, quizzes, lecture notes) into clean, beautifully formatted **Markdown (`.md`)** files ready for **Obsidian**, **VS Code**, **Logseq**, **Notion**, or **Typora**.
 
+> For deploying the Maths Doomscrolling web app and its SQLite card database to a server, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ---
 
 ### 🌐 Language / Langue

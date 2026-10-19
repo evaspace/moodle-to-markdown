@@ -7,8 +7,11 @@ import re
 import sqlite3
 from contextlib import contextmanager
 from functools import wraps
+from pathlib import Path
 
-from flask import Flask, Response, jsonify, render_template, request, send_from_directory
+import bleach
+import markdown
+from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory
 
 from init_db import DB_PATH, init_db
 
@@ -21,6 +24,12 @@ if not ADMIN_PASSWORD:
 
 app = Flask(__name__)
 init_db()
+DOCS_ROOT = Path(__file__).resolve().parent / 'EPITA_Moodle_Notes_MD'
+DOC_TAGS = ['p', 'br', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li',
+            'blockquote', 'strong', 'em', 'del', 'code', 'pre', 'table', 'thead', 'tbody',
+            'tr', 'th', 'td', 'a', 'img']
+DOC_ATTRIBUTES = {'a': ['href', 'title'], 'img': ['src', 'alt', 'title'],
+                  'code': ['class'], 'th': ['align'], 'td': ['align']}
 
 # Auto-seed if database is empty
 try:
@@ -247,6 +256,41 @@ def sitemap():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/cours/')
+@app.route('/cours/<path:relative_path>')
+def course_document(relative_path='README.md'):
+    """Render Markdown documents from the Moodle export, without exposing other files."""
+    if not relative_path.lower().endswith('.md'):
+        abort(404)
+    root = DOCS_ROOT.resolve()
+    target = (root / relative_path).resolve()
+    if not target.is_relative_to(root) or not target.is_file():
+        abort(404)
+    try:
+        source = target.read_text(encoding='utf-8')
+    except (OSError, UnicodeError):
+        abort(404)
+    html = markdown.markdown(source, extensions=['tables', 'fenced_code', 'sane_lists'])
+    safe_html = bleach.clean(html, tags=DOC_TAGS, attributes=DOC_ATTRIBUTES,
+                             protocols=['http', 'https', 'mailto'], strip=True)
+    title_match = re.search(r'^\s*#\s+(.+?)\s*#*\s*$', source, re.M)
+    title = title_match.group(1) if title_match else target.stem
+    return render_template('docs.html', title=title, content=safe_html,
+                           relative_path=relative_path)
+
+
+@app.route('/healthz')
+def healthz():
+    """Lightweight container/reverse-proxy health check, including SQLite."""
+    try:
+        with db() as conn:
+            conn.execute('SELECT 1').fetchone()
+        return jsonify(status='ok'), 200
+    except sqlite3.Error:
+        logger.exception('Health check failed while querying SQLite')
+        return jsonify(status='error', reason='database unavailable'), 503
 
 
 @app.route('/api/categories')

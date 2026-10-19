@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>{{ title }} · Maths Doomscrolling</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/docs.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="/static/docs.js"></script>
+</head>
+<body class="docs-page">
+  <header class="docs-header">
+    <a href="/" class="docs-back">← Doomscroll</a>
+    <a href="/cours/README.md" class="docs-index">📚 Tous les cours</a>
+  </header>
+  <main class="docs-main">
+    <nav class="docs-breadcrumb" aria-label="Fil d’Ariane">
+      <a href="/cours/README.md">Cours</a><span> / </span>{{ relative_path|e }}
+    </nav>
+    <article class="docs-article">
+      <h1 class="docs-title">{{ title }}</h1>
+      <div class="docs-content">{{ content|safe }}</div>
+    </article>
+    <footer class="docs-footer"><a href="/">Retour au fil de révision →</a></footer>
+  </main>
+</body>
+</html>

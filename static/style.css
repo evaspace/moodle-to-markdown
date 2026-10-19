@@ -738,6 +738,34 @@ button {
     background: #F5F5F5;
 }
 
+.choice-btn.selected {
+    border-color: var(--text-color);
+    background: #EAF0F8;
+}
+
+.qcm-mode-hint {
+    margin: 1rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.qcm-submit-btn {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--text-color);
+    background: var(--text-color);
+    color: #FFF;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.qcm-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 .choice-btn:active:not(:disabled) {
     background: #EAEAEA;
 }

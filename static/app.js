@@ -722,7 +722,8 @@ async function shareApp() {
 // ------------------------------------------------------------ CHARGEMENT CATÉGORIES ----
 async function loadCategories() {
     try {
-        const res = await fetch('/api/categories');
+        const res = await fetch('/api/categories', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const cats = await res.json();
         catList.innerHTML = '';
 
@@ -792,7 +793,12 @@ async function loadCategories() {
             catList.appendChild(card);
         });
     } catch (e) {
-        catList.innerHTML = '<div class="loading-state">Erreur de connexion au serveur.</div>';
+        console.error('loadCategories error:', e);
+        catList.innerHTML = `
+            <div class="loading-state" role="alert">
+                Impossible de charger les cours. Vérifie la connexion puis réessaie.
+                <button type="button" class="subcat-btn" onclick="loadCategories()">Réessayer</button>
+            </div>`;
     }
 }
 
@@ -906,6 +912,15 @@ const observer = new IntersectionObserver(entries => {
 }, { root: feed, threshold: 0.5 });
 
 // ------------------------------------------------------------ CHARGEMENT CARTES ----
+function retryCardLoad() {
+    session++;
+    isFetching = false;
+    seenIds.clear();
+    observer.disconnect();
+    feed.replaceChildren();
+    loadCards();
+}
+
 async function loadCards() {
     if (isFetching) return;
     isFetching = true;
@@ -917,7 +932,7 @@ async function loadCards() {
         if (currentSub) qs.set('sub', currentSub);
         if (seenIds.size) qs.set('exclude', [...seenIds].slice(-300).join(','));
 
-        const res = await fetch('/api/cards?' + qs);
+        const res = await fetch('/api/cards?' + qs, { headers: { 'Accept': 'application/json' } });
         if (!res.ok) throw new Error(res.status);
         const cards = await res.json();
         if (mine !== session) return;
@@ -927,7 +942,8 @@ async function loadCards() {
                 <div class="card">
                     <div class="card-body" style="text-align: center;">
                         <div class="card-front">AUCUNE CARTE DISPONIBLE</div>
-                        <div class="card-back" style="display:block">Ajoute des cartes via l'interface /admin.</div>
+                        <div class="card-back" style="display:block">Aucune carte n’est disponible dans ce module. Réessaie le chargement ou ajoute des cartes via /admin.</div>
+                        <button type="button" class="subcat-btn" onclick="retryCardLoad()">Réessayer</button>
                     </div>
                 </div>
             `;
@@ -950,6 +966,16 @@ async function loadCards() {
         }
     } catch (e) {
         console.error('loadCards error:', e);
+        if (mine === session && !feed.children.length) {
+            feed.innerHTML = `
+                <div class="card">
+                    <div class="card-body" style="text-align:center">
+                        <div class="card-front">ERREUR DE CHARGEMENT</div>
+                        <div class="card-back" style="display:block">Le serveur n’a pas pu charger les cours. Vérifie ta connexion puis réessaie.</div>
+                        <button type="button" class="subcat-btn" onclick="retryCardLoad()">Réessayer</button>
+                    </div>
+                </div>`;
+        }
     } finally {
         if (mine === session) isFetching = false;
     }
@@ -988,11 +1014,16 @@ function buildCard(c, uid) {
             <div class="card-front">${formatMathMarkdown(c.front)}</div>
     `;
 
+    let qcmMultiple = false;
     if (c.type === 'QCM') {
         const choices = shuffle([...(c.payload?.choices || [])]);
+        qcmMultiple = choices.filter(ch => ch.correct).length > 1;
+        if (qcmMultiple) {
+            html += '<div class="qcm-mode-hint">Plusieurs réponses sont justes : sélectionne-les puis valide.</div>';
+        }
         html += '<div class="qcm-choices">' +
-            choices.map(ch => `<button class="choice-btn" data-correct="${ch.correct}">${formatMathMarkdown(ch.text)}</button>`).join('') +
-            '</div>';
+            choices.map(ch => `<button type="button" class="choice-btn" data-correct="${ch.correct}" aria-pressed="false">${formatMathMarkdown(ch.text)}</button>`).join('') +
+            '</div>' + (qcmMultiple ? '<button type="button" class="qcm-submit-btn">Valider mes réponses</button>' : '');
     } else if (c.type === 'TF') {
         html += `
             <div class="tf-actions">
@@ -1052,24 +1083,54 @@ function buildCard(c, uid) {
 
     // Gestion QCM
     if (c.type === 'QCM') {
-        card.querySelectorAll('.choice-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (card.classList.contains('answered')) return;
-                card.classList.add('answered', 'revealed');
-
-                const ok = btn.dataset.correct === 'true';
-                btn.classList.add(ok ? 'correct' : 'wrong');
-
-                if (!ok) {
-                    card.querySelectorAll('.choice-btn').forEach(b => {
-                        if (b.dataset.correct === 'true') b.classList.add('correct');
-                    });
-                }
-                card.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
-                answer(card, c.id, ok);
+        const choiceButtons = [...card.querySelectorAll('.choice-btn')];
+        const finishQcm = (chosenButtons) => {
+            if (card.classList.contains('answered')) return;
+            const correct = choiceButtons.filter(btn => btn.dataset.correct === 'true');
+            const chosenSet = new Set(chosenButtons);
+            const ok = chosenSet.size === correct.length && correct.every(btn => chosenSet.has(btn));
+            card.classList.add('answered', 'revealed');
+            choiceButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.correct === 'true') btn.classList.add('correct');
+                else if (chosenSet.has(btn)) btn.classList.add('wrong');
             });
-        });
+            const submit = card.querySelector('.qcm-submit-btn');
+            if (submit) submit.disabled = true;
+            answer(card, c.id, ok);
+        };
+
+        if (qcmMultiple) {
+            choiceButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (card.classList.contains('answered')) return;
+                    const selected = btn.classList.toggle('selected');
+                    btn.setAttribute('aria-pressed', String(selected));
+                });
+            });
+            card.querySelector('.qcm-submit-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                finishQcm(choiceButtons.filter(btn => btn.classList.contains('selected')));
+            });
+        } else {
+            card.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (card.classList.contains('answered')) return;
+                    card.classList.add('answered', 'revealed');
+                    const ok = btn.dataset.correct === 'true';
+                    btn.classList.add(ok ? 'correct' : 'wrong');
+                    if (!ok) {
+                        choiceButtons.forEach(choice => {
+                            if (choice.dataset.correct === 'true') choice.classList.add('correct');
+                        });
+                    }
+                    choiceButtons.forEach(choice => choice.disabled = true);
+                    answer(card, c.id, ok);
+                });
+            });
+        }
     } else if (c.type === 'TF') {
         card.querySelectorAll('.tf-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -1455,6 +1516,7 @@ window.addEventListener('keydown', e => {
                 const btn = e.key === 'ArrowLeft' ? currentCard.querySelector('.btn-faux') : currentCard.querySelector('.btn-vrai');
                 if (btn) btn.click();
             }
+        }
         if (e.key === 'l' || e.key === 'L') {
             const cards = feed.querySelectorAll('.card');
             const center = feed.scrollTop + feed.clientHeight / 2;

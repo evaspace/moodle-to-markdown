@@ -154,3 +154,29 @@ _Dernière mise à jour : 2026-10-13. Fichier de synthèse non versionné._
 **Ce que l'utilisateur doit décider :** choisir le modèle après le comparatif §5 ; donner le
 feu vert pour le lot de 10 chapitres, puis chaque lot de déploiement ; valider la
 régénération des 240 questions rejetées.
+
+---
+
+## 10. Reprise — 2026-10-19
+
+- Le dépôt contient **4 241 Markdown**, **294 exports `.txt`** et une base locale de
+  **3 486 cartes actives** (52 QCM, 8 TF, 3 426 COURSE). L'audit de l'importeur trouve
+  3 844 doublons, 16 cartes à corriger/écarter et **aucune carte valide manquante** dans
+  la base locale : aucune génération Mistral ne s'impose pour reconstruire les contenus.
+- Cause directe repérée dans le code client : `static/app.js` avait une accolade manquante
+  dans le gestionnaire clavier. Quand le serveur répondait, le navigateur rejetait tout le
+  fichier JavaScript avant l'initialisation des cartes. Le parseur JavaScript est maintenant
+  valide ; le code seul ne remet pas en service un hôte éteint.
+- Le player sait désormais traiter correctement les QCM Moodle à réponses multiples
+  (11 cartes actives concernées dans la base locale). Les QCM générés par IA restent
+  soumis aux règles quatre choix / une réponse juste ; les explications générées doivent
+  être concises, fondées sur le texte d'entrée et validées contre celui-ci.
+- Un endpoint `/healthz`, un healthcheck Docker et un transfert de base par snapshot
+  SQLite avec sauvegarde et rollback sont prêts. Le déploiement distant et le `git push`
+  restent à effectuer sur le nouvel hôte.
+- **Les fichiers Markdown ne sont pas lus par le site web** : ils servent à produire les
+  cartes. Le site affiche le contenu de `cards.db`. `make sync-md` reste disponible pour
+  transfert manuel, mais ne fait plus partie de `make sync-all`.
+- Aucun appel API Mistral ni changement de serveur n'a été fait pendant cette reprise.
+  Le comparatif de modèles et les étapes de génération/déploiement des lots restent
+  soumis aux décisions mentionnées en §7-§9.

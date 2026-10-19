@@ -1,0 +1,23 @@
+.docs-page { min-height: 100vh; background: #f6f7fb; color: #182033; font-family: system-ui, sans-serif; }
+.docs-header { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; padding: 14px max(20px, calc((100vw - 960px)/2)); background: #fff; border-bottom: 1px solid #e1e5ef; }
+.docs-header a, .docs-breadcrumb a, .docs-footer a { color: #354fd0; text-decoration: none; font-weight: 650; }
+.docs-main { width: min(900px, calc(100% - 32px)); margin: 28px auto 60px; }
+.docs-breadcrumb { margin: 0 0 14px; color: #687187; font-size: .86rem; overflow-wrap: anywhere; }
+.docs-article { background: #fff; border: 1px solid #e2e6ef; border-radius: 16px; padding: clamp(22px, 5vw, 54px); box-shadow: 0 8px 30px #17244a0a; }
+.docs-title { margin: 0 0 30px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.2; }
+.docs-content { line-height: 1.75; overflow-wrap: anywhere; }
+.docs-content h1, .docs-content h2, .docs-content h3 { line-height: 1.3; margin-top: 2em; }
+.docs-content h1 { font-size: 1.8rem; }.docs-content h2 { font-size: 1.45rem; border-bottom: 1px solid #e7eaf1; padding-bottom: .35em; }
+.docs-content a { color: #354fd0; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.docs-content img { max-width: 100%; height: auto; border-radius: 8px; }
+.docs-content pre { overflow-x: auto; padding: 16px; background: #f2f4f8; border-radius: 9px; }
+.docs-content code { font-family: ui-monospace, monospace; background: #f2f4f8; padding: .12em .32em; border-radius: 4px; }
+.docs-content pre code { padding: 0; background: transparent; }
+.docs-content blockquote { margin-left: 0; padding: 4px 18px; border-left: 3px solid #8492e7; color: #59647a; }
+.docs-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.docs-content th, .docs-content td { border: 1px solid #dfe3ec; padding: 7px 10px; text-align: left; }
+.docs-content th { background: #f4f5f9; }
+.docs-footer { text-align: center; padding: 28px; }
+.course-library-link { display: flex; justify-content: space-between; align-items: center; max-width: 540px; margin: 18px auto 8px; padding: 14px 18px; border: 1px solid #e1e5ef; border-radius: 12px; background: #fff; color: #303d82; text-decoration: none; font-weight: 700; }
+.course-library-link:hover { border-color: #8997e7; transform: translateY(-1px); }
+@media (max-width: 600px) { .docs-main { margin-top: 18px; }.docs-article { border-radius: 11px; }.docs-header { padding: 12px 16px; } }

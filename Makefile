@@ -86,7 +86,7 @@ endif
 # MENU D'AIDE PRINCIPAL
 # ==============================================================================
 
-.PHONY: all help info check-env setup install
+.PHONY: all help info check-env setup install sync-app deploy-db sync-md sync-all
 
 all: help
 
@@ -350,12 +350,19 @@ sync-server:
 
 sync-app:
 	@echo "$(BOLD)$(BLUE)📦 Déploiement du code applicatif sur $(REMOTE_HOST):$(REMOTE_APP_DIR)...$(RESET)"
-	rsync -avz --progress app.py init_db.py seed_data.py Dockerfile docker-compose.yml requirements.txt $(REMOTE_HOST):$(REMOTE_APP_DIR)/
+	rsync -avz --progress app.py init_db.py seed_data.py Dockerfile docker-compose.yml requirements.txt deploy_db.sh deploy_db_remote.sh $(REMOTE_HOST):$(REMOTE_APP_DIR)/
 	rsync -avz --progress templates/ $(REMOTE_HOST):$(REMOTE_APP_DIR)/templates/
 	rsync -avz --progress static/ $(REMOTE_HOST):$(REMOTE_APP_DIR)/static/
-	@echo "$(BOLD)$(GREEN)🔄 Redémarrage du conteneur en production...$(RESET)"
-	ssh $(REMOTE_HOST) "cd $(REMOTE_APP_DIR) && docker compose restart"
+	@echo "$(BOLD)$(GREEN)🔄 Reconstruction et démarrage du conteneur en production...$(RESET)"
+	ssh $(REMOTE_HOST) "cd $(REMOTE_APP_DIR) && docker compose up -d --build app"
 	@echo "$(BOLD)$(GREEN)✅ Application mise à jour en production !$(RESET)"
+
+# 🗄️ Pousse la base de données locale vers le serveur
+# cards.db est exclu du git (.gitignore) donc il faut le transférer manuellement
+deploy-db:
+	@echo "$(BOLD)$(YELLOW)⚠️  ATTENTION : Cette commande va écraser la base de production !$(RESET)"
+	@read -p "Continuer ? (oui/NON) : " ans && [ "$$ans" = "oui" ] || (echo "Annulé."; exit 1)
+	REMOTE_HOST="$(REMOTE_HOST)" REMOTE_APP_DIR="$(REMOTE_APP_DIR)" REMOTE_CONTAINER="$(REMOTE_CONTAINER)" DB_PATH="$(DB_PATH)" ./deploy_db.sh
 
 sync-md:
 	@echo "$(BOLD)$(BLUE)📦 Transfert des 4200+ cours Markdown vers $(REMOTE_HOST)...$(RESET)"
@@ -363,7 +370,7 @@ sync-md:
 	rsync -avz --progress $(MD_TARGET)/ $(REMOTE_HOST):$(REMOTE_APP_DIR)/EPITA_Moodle_Notes_MD/
 	@echo "$(BOLD)$(GREEN)✅ Cours Markdown synchronisés !$(RESET)"
 
-sync-all: sync-app sync-md sync-server
+sync-all: sync-app sync-md deploy-db
 	@echo "$(BOLD)$(GREEN)🎉 DÉPLOIEMENT INTÉGRAL TERMINÉ AVEC SUCCÈS !$(RESET)"
 
 server-status:

@@ -5,6 +5,8 @@
 # Web Application & API Platform
 Flask>=3.0.0
 Werkzeug>=3.0.0
+Markdown>=3.6
+bleach>=6.1
 gunicorn>=21.2.0
 python-dotenv>=1.0.0
 
