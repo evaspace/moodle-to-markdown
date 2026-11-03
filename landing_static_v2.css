@@ -8,7 +8,7 @@
     --color-text-muted: #6b7280;
     
     --color-brand-blue: #f3f4f6; /* Lighter background for parallax */
-    --color-brand-mustard: #2563eb; /* Blue primary for light mode */
+    --color-brand-mustard: #ec6a11; /* Loud accent (orange) */
     --color-brand-cream: #F4EBD9;
     --color-brand-sage: #059669;
     --color-brand-terracotta: #dc2626;
@@ -28,7 +28,7 @@
         --color-text-muted: #a1a1aa;
         
         --color-brand-blue: #161B33;
-        --color-brand-mustard: #F5B853;
+        --color-brand-mustard: #ec6a11;
         --color-brand-cream: #F4EBD9;
         --color-brand-sage: #3B7A72;
         --color-brand-terracotta: #E06355;
@@ -346,7 +346,7 @@ nav a, nav span {
 }
 
 .tag-highlight {
-    background-color: var(--color-brand-mustard, #2563eb);
+    background-color: var(--color-brand-mustard, #ec6a11);
     color: #ffffff;
     font-size: 11.5px;
     font-weight: 600;
@@ -736,7 +736,7 @@ nav a, nav span {
 }
 
 .model-card.active {
-    outline-color: var(--color-brand-mustard, #2563eb);
+    outline-color: var(--color-brand-mustard, #ec6a11);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3), 0 12px 24px -4px rgba(0, 0, 0, 0.2);
 }
 
