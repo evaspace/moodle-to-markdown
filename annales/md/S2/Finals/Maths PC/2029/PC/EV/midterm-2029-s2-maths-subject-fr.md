@@ -1,7 +1,7 @@
 # Examen S2-B4-EV (espaces vectoriels) — mai 2025 (sujet, FR)
 
 - Source : `raw/S2/Finals/Maths PC/2029/PC/EV/midterm-2029-s2-maths-subject-fr.pdf` (6 pages ; rangé dans « Finals » malgré le nom « midterm »)
-- Date réelle : mai 2025 (dossier promo 2029, ECUE EV). Pas de corrigé.
+- Date réelle : mai 2025 (dossier promo 2029, ECUE EV). Corrigé rédigé : `midterm-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20 points. 2 exercices.
 
 ## Exercice 1 : familles de vecteurs (10 points)

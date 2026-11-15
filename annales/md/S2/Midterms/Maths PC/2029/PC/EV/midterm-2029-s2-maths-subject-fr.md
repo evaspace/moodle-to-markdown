@@ -1,7 +1,7 @@
 # Examen S2-B3 EV — mars 2025 (sujet, FR)
 
 - Source : `raw/S2/Midterms/Maths PC/2029/PC/EV/midterm-2029-s2-maths-subject-fr.pdf` (6 pages)
-- Date réelle : mars 2025 (S2, bloc 3, espaces vectoriels, dossier promo 2029). Pas de corrigé officiel dans les annales.
+- Date réelle : mars 2025 (S2, bloc 3, espaces vectoriels, dossier promo 2029). Pas de corrigé officiel dans les annales. Corrigé rédigé : `midterm-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Documents et calculatrices interdits. Barème sur 20 points. Dans le sujet, sev signifie sous-espace vectoriel et deg signifie degré.
 
 ## Exercice 1 : sous-espaces vectoriels (6 points)

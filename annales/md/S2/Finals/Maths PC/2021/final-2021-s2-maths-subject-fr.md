@@ -1,7 +1,7 @@
 # Partiel 2 (S2) — juin 2017 (sujet, FR)
 
 - Source : `raw/S2/Finals/Maths PC/2021/final-2021-s2-maths-subject-fr.pdf` (scan, 10 pages)
-- Date réelle : juin 2017 (S2 16/17, dossier promo 2021). Pas de corrigé.
+- Date réelle : juin 2017 (S2 16/17, dossier promo 2021). Corrigé rédigé : `final-2021-s2-maths-correction-fr.md` (même dossier).
 - Barème : 21,5 points.
 
 ## Exercice 1 (2 points)

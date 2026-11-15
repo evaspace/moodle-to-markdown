@@ -1,7 +1,7 @@
 # Examen S2-B4-ALM (applications linéaires et matrices) — mai 2025 (sujet, FR)
 
 - Source : `raw/S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-subject-fr.pdf` (8 pages)
-- Date réelle : mai 2025 (dossier promo 2029, ECUE ALM). Pas de corrigé.
+- Date réelle : mai 2025 (dossier promo 2029, ECUE ALM). Corrigé rédigé : `final-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 2 heures. Barème sur 40 points divisé par 2. 5 exercices. Rigueur prise en compte, malus d'un point pour manque de propreté. Documents et calculatrices interdits.
 
 ## Exercice 1 : opérations matricielles (8 points)

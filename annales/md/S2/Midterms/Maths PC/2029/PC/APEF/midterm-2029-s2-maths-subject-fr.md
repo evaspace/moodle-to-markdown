@@ -1,7 +1,7 @@
 # Examen S2-B3 APEF — mars 2025 (sujet, FR)
 
 - Source : `raw/S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-subject-fr.pdf` (8 pages)
-- Date réelle : mars 2025 (S2, bloc 3, dossier promo 2029). Pas de corrigé officiel dans les annales.
+- Date réelle : mars 2025 (S2, bloc 3, dossier promo 2029). Pas de corrigé officiel dans les annales. Corrigé rédigé : `midterm-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 2 heures. Documents et calculatrices interdits. Barème sur 40 points, ramené à 20.
 
 ## Exercice 1 : polynômes (10 points)
