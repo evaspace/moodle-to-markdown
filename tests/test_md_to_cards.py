@@ -565,7 +565,7 @@ class FakeV2Backend(mc.MistralBackendV2):
             return resp
         return "CAT: Test / Test\nQ: Test de chapitre\nR: Résumé factice.\n---\n"
 
-    def verify(self, text, category, subcategory):
+    def verify(self, text, category, subcategory, source_text="", generation_model=None):
         return self.verify_ok, "OUI" if self.verify_ok else "NON"
 
 
@@ -648,9 +648,8 @@ class TestPassCV2WithFakeBackend(unittest.TestCase):
             out_dir=self.out_dir, dry_run=False)
         self.assertEqual(status, "GENERATED")
 
-    def test_verify_failure_does_not_block_generation(self):
-        """Si verify LLM échoue mais parse_blocks OK → GENERATED (vérif advisory).
-        La validation autoritaire est parse_blocks ; la vérif LLM ne rejette pas."""
+    def test_verify_failure_blocks_generation(self):
+        """Si verify LLM échoue (affirmation non étayée par la source) → FAILED (vérif bloquante)."""
         chapter, _, _ = self._make_chapter_with_content()
         backend = FakeV2Backend(responses=[
             "CAT: Maths / Alpha\nQ: Test\nR: R\u00e9sum\u00e9.\n---\n"
@@ -659,8 +658,8 @@ class TestPassCV2WithFakeBackend(unittest.TestCase):
             "Maths", "Alpha", chapter, self.tmp, self.index, self.tracker,
             allow_llm=True, backend=backend,
             out_dir=self.out_dir, dry_run=False)
-        # parse_blocks a validé → GENERATED malgré verify LLM = False
-        self.assertEqual(status, "GENERATED")
+        self.assertEqual(status, "FAILED")
+        self.assertIsNone(block)
 
     def test_verify_429_keeps_card(self):
         """429 sur la vérif → on garde (parse_blocks a validé)."""

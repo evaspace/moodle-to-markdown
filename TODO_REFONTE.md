@@ -69,7 +69,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [ ] Code couleur par matière (quand il y aura plus d'une matière)
 - [x] Tests `tests/test_levels.py` (8 OK), déployé le 2026-11-14, test de bout en bout en HTTPS OK
 - [x] Bouton retour : le fil a sa propre URL (`/?cat=..`), retour navigateur = liste des modules (testé dans Chrome headless)
-- [ ] Préexistant : 4 tests de `tests/test_md_to_cards.py` en erreur (`FakeV2Backend.verify()` signature), non lié
+- [x] Les 4 tests de `tests/test_md_to_cards.py` en erreur réparés (signature de `FakeV2Backend.verify`) et le test de vérif mis à jour : la vérification LLM est désormais bloquante (2026-11-15)
 
 ## Journal
 - 2026-11-15 (suite 5) : navbar commune `templates/nav.html` (Niveaux, Stats, Formules, Cours, Fil + niveaux sur papier validés / points / jours d'affilée via `/api/me`), pastille de l'accueil dynamique et cliquable vers `/stats`, footer PIERREFEU sur toutes les pages sauf le fil plein écran (`/scroll`, fil d'accueil). `/stats` : progression par parcours, réussite par semaine, niveaux à retravailler. `/admin/stats` (+ `?format=json`) : audience, activation, rétention, funnel par parcours, exercices les plus ratés (`admin_stats.py`). Branche `feat/navbar-stats-admin`.
