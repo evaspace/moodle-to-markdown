@@ -39,7 +39,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
   1. Finals S1 (= examen B2) et midterms S1 (= examen B1), sujets FR, 2024→2029
   2. Scans S1 restants
   3. S2
-- [ ] Corrigés : générer ceux qui manquent (fait : S1 B1 2029 DP et OBM, 2026-11-15 ; reste ~43 sujets sans corrigé, voir la liste des `*-subject-*` sans `*-correction-*`)
+- [x] Corrigés : tous les sujets maths S1/S2 ont maintenant un corrigé (officiel ou rédigé, 2026-11-15) ; les corrigés rédigés disent « corrigé rédigé » dans leur en-tête, sont vérifiés avec sympy et signalent les lectures ambiguës (DP 2029 ex. 1.4, mid-term 2023 ex. 7, TD2 2030 ex. 1.2 q5)
 - [x] Index `annales/INDEX.md` (examen → date réelle → exercices → type → ECUE → niveau), généré par `annales/tools/index.py`
 - [x] Fiche synthèse `annales/FORMULES.md` + page `/formules` (2026-11-15)
 
@@ -102,7 +102,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 3. [x] Transcription propre de **toutes** les annales (146 fichiers, dont 41 scans) + `annales/INDEX.md` + `annales/FORMULES.md` (2026-11-15).
    - [x] Formules affichées dans les niveaux relues et complétées (2026-11-15) : 20 notions sur 57 (cas manquants : racine non/simple/double en EDO, primitives usuelles, formes $u'f(u)$, décroissante/minorée, partition, Bayes développé, bijection…). Aucune formule fausse trouvée. La fiche du chapitre de la page d'exercice affiche en plus toute la section de `annales/FORMULES.md`.
    - [ ] Liste de formules par exercice (champ `formules` dans `parcours/src/*.py`) pour le bouton « Formules de la solution » ; aujourd'hui : formules du niveau.
-   - [ ] Corrigés à écrire pour les sujets sans corrigé officiel (ex. APEF et EV mars 2025, contrôles de TD).
+   - [x] Corrigés rédigés pour tous les sujets sans corrigé officiel (2026-11-15).
    - [ ] Lectures incertaines à vérifier sur le PDF : `td3-2028-s2-maths-subject-fr` (cours 2, q5 c), `td4-2030-s2` (ex. 1.1 q2), `td5-2030-s2` (borne basse de l'intégrale de φ).
 4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières.
 5. [x] Scroll adaptatif. [x] Accueil maths dans l'ordre du syllabus (2031, S1, S2).

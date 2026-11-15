@@ -120,3 +120,13 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Remaining subjects without correction (~43): priority S1 B1/B2 2029 finals (ARITH, SR), S1 midterm 2023/2027, then S2 2029 (ALM, EV, APEF), then TDs. List: `*-subject-*` with no `*-correction-*` sibling in `annales/md`.
 2. Pending question to the user: delete QA account `qa_feed1` (delete was denied by the permission classifier).
 3. Other subjects (Programmation, Physique, Archi): not started.
+
+# Handoff — 2026-11-15 (suite 8)
+## Done
+- All maths S1/S2 annales subjects now have a correction (official or « corrigé rédigé », ~45 files over branches `feat/corriges-annales-feed-state`, `feat/corriges-s1-midterms`, `feat/corriges-s2`). `annales/tools/index.py` OK (183 files, 1190 exercises). Ambiguous statements flagged in the corrections (DP 2029 ex 1.4, midterm 2023 ex 7, TD2 2030 ex 1.2 q5 where 500 €/month = interest only).
+- Branches: work committed on branches only, never main. Nothing pushed.
+## Next steps
+1. Merge/push decisions for the three correction branches (user).
+2. Other subjects (Programmation, Physique, Archi): not started — ask the user which first.
+3. Delete QA account `qa_feed1` (needs user OK; deletion command was blocked by the permission classifier).
+4. Uncertain scan readings listed in TODO_REFONTE.md.

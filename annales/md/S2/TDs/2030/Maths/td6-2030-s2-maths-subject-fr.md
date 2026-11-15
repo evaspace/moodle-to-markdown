@@ -1,7 +1,7 @@
 # Feuille de TD — Applications linéaires et matrices (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td6-2030-s2-maths-subject-fr.pdf` (9 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE ALM. Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE ALM. Pas de corrigé dans les annales. Corrigé rédigé : `td6-2030-s2-maths-correction-fr.md` (même dossier).
 - Seuls les exercices sont transcrits, avec la proposition à connaître par cœur. Les exercices marqués ⋆ sont plus difficiles.
 
 Proposition à connaître par cœur : soient $E$ et $F$ deux $\mathbb{R}$-espaces vectoriels de dimension finie, $\mathcal{B}_1$ une base de $E$, $\mathcal{B}_2$ une base de $F$ et $f \in \mathcal{L}(E,F)$. Alors $\mathrm{Mat}_{\mathcal{B}_2}(f(u)) = \mathrm{Mat}_{\mathcal{B}_1,\mathcal{B}_2}(f) \times \mathrm{Mat}_{\mathcal{B}_1}(u)$, où $\mathrm{Mat}_{\mathcal{B}_2}(f(u))$ est la colonne des coordonnées de $f(u)$ dans $\mathcal{B}_2$, $\mathrm{Mat}_{\mathcal{B}_1,\mathcal{B}_2}(f)$ la matrice de $f$ dans la base $\mathcal{B}_1$ au départ et $\mathcal{B}_2$ à l'arrivée, et $\mathrm{Mat}_{\mathcal{B}_1}(u)$ la colonne des coordonnées de $u$ dans $\mathcal{B}_1$.

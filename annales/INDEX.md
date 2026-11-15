@@ -1,6 +1,6 @@
 # Index des annales de maths (S1 et S2)
 
-177 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1110 exercices.
+183 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1190 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2247,6 +2247,23 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | ALM — Cours 1 : définitions et propriétés (12 points) | noyau, image, injectivité, surjectivité (cours) | ALM | maths-s2-alm/2 |
 | ALM — Cours 2 : exemples (8 points) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
 
+### Feuille de TD — Les polynômes (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td1-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
+| Exercice 1.2 | formule de Taylor pour les polynômes | APEF (polynômes) | maths-s2-apef-polynomes/7 |
+| Exercice 2.3 | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
+| Exercice 2.4 | division euclidienne et primitive d'une fraction rationnelle | APEF (polynômes) | maths-s2-apef-polynomes/8 |
+| Exercice 3.5 | divisibilité de polynômes par les racines | APEF (polynômes) | maths-s2-apef-polynomes/3 |
+| Exercice 3.6 | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| Exercice 3.7 | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| Exercice 3.8 | divisibilité de polynômes, multiplicité d'une racine | APEF (polynômes) | maths-s2-apef-polynomes/4 |
+| Exercice 3.9 | divisibilité et reste de division euclidienne de polynômes | APEF (polynômes) | maths-s2-apef-polynomes/5 |
+| Exercice 3.10 (⋆) | divisibilité et reste de division euclidienne de polynômes | APEF (polynômes) | maths-s2-apef-polynomes/5 |
+
 ### Feuille de TD — Les polynômes (S2 2026) (sujet, FR)
 
 `md/S2/TDs/2030/Maths/td1-2030-s2-maths-subject-fr.md` — date réelle : S2 2026
@@ -2264,6 +2281,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3.9 | divisibilité et reste de division euclidienne de polynômes | APEF (polynômes) | maths-s2-apef-polynomes/5 |
 | Exercice 3.10 (⋆) | divisibilité et reste de division euclidienne de polynômes | APEF (polynômes) | maths-s2-apef-polynomes/5 |
 
+### Feuille de TD — Équations différentielles linéaires (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td2-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | EDO linéaires 1er ordre (homogène, solution évidente, variation de la constante, condition initiale) | APIS (EDO) | maths-s1-apis-edo/6 |
+| Exercice 1.2 | modélisation par une EDO du 1er ordre (crédit) | APIS (EDO) | maths-s1-apis-edo/6 |
+| Exercice 2.3 | EDO 2nd ordre à coefficients constants avec second membre | APIS (EDO) | maths-s1-apis-edo/9 |
+| Exercice 2.4 | EDO 2nd ordre à coefficients constants avec second membre | APIS (EDO) | maths-s1-apis-edo/9 |
+
 ### Feuille de TD — Équations différentielles linéaires (S2 2026) (sujet, FR)
 
 `md/S2/TDs/2030/Maths/td2-2030-s2-maths-subject-fr.md` — date réelle : S2 2026
@@ -2274,6 +2302,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1.2 | modélisation par une EDO du 1er ordre (crédit) | APIS (EDO) | maths-s1-apis-edo/6 |
 | Exercice 2.3 | EDO 2nd ordre à coefficients constants avec second membre | APIS (EDO) | maths-s1-apis-edo/9 |
 | Exercice 2.4 | EDO 2nd ordre à coefficients constants avec second membre | APIS (EDO) | maths-s1-apis-edo/9 |
+
+### Feuille de TD — Études locales de fonctions : Landau et développements limités (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td3-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | petit o, grand O, équivalents (définitions et opérations) | APEF (fonctions) | maths-s2-apef-fonctions/3 |
+| Exercice 1.2 | petit o, grand O, équivalents (définitions et opérations) | APEF (fonctions) | maths-s2-apef-fonctions/3 |
+| Exercice 1.3 | équivalents simples (polynômes, fonctions usuelles, produits) | APEF (fonctions) | maths-s2-apef-fonctions/4 |
+| Exercice 1.4 | petit o, grand O, équivalents (définitions et opérations) | APEF (fonctions) | maths-s2-apef-fonctions/3 |
+| Exercice 1.5 | équivalents simples (polynômes, fonctions usuelles, produits) | APEF (fonctions) | maths-s2-apef-fonctions/4 |
+| Exercice 1.6 | petit o, grand O, équivalents (définitions et opérations) | APEF (fonctions) | maths-s2-apef-fonctions/3 |
+| Exercice 1.7 | petit o, grand O, équivalents (définitions et opérations) | APEF (fonctions) | maths-s2-apef-fonctions/3 |
+| Exercice 1.8 | équivalents simples (polynômes, fonctions usuelles, produits) | APEF (fonctions) | maths-s2-apef-fonctions/4 |
+| Exercice 1.9 | petit o, équivalents et développements limités (manipulation) | APEF (fonctions) | maths-s2-apef-fonctions/10 |
+| Exercice 2.10 | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+| Exercice 2.11 | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+| Exercice 2.12 (⋆) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+| Exercice 2.13 | développements limités, limite par équivalents | APEF (fonctions) | maths-s2-apef-fonctions/9 |
 
 ### Feuille de TD — Études locales de fonctions : Landau et développements limités (S2 2026) (sujet, FR)
 
@@ -2294,6 +2342,36 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 2.11 | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
 | Exercice 2.12 (⋆) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
 | Exercice 2.13 | développements limités, limite par équivalents | APEF (fonctions) | maths-s2-apef-fonctions/9 |
+
+### Feuille de TD — Espaces vectoriels (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td4-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | vecteurs du plan, combinaisons linéaires (dessin) | EV | maths-s2-ev/1 |
+| Exercice 1.2 | axiomes d'un espace vectoriel (loi externe non standard) | EV | maths-s2-ev/2 |
+| Exercice 1.3 | axiomes d'un espace vectoriel (loi externe non standard) | EV | maths-s2-ev/2 |
+| Exercice 1.4 | axiomes d'un espace vectoriel (loi externe non standard) | EV | maths-s2-ev/2 |
+| Exercice 1.5 | axiomes d'un espace vectoriel (loi externe non standard) | EV | maths-s2-ev/2 |
+| Exercice 2.6 | reconnaître un sous-espace vectoriel | EV | maths-s2-ev/3 |
+| Exercice 2.7 | reconnaître un sous-espace vectoriel | EV | maths-s2-ev/3 |
+| Exercice 2.8 | reconnaître un sous-espace vectoriel | EV | maths-s2-ev/3 |
+| Exercice 2.9 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 2.10 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 2.11 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 2.12 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 2.13 (⋆) | sous-espaces supplémentaires (fonctions paires et impaires) | EV | maths-s2-ev/9 |
+| Exercice 3.14 | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+| Exercice 3.15 | sous-espaces engendrés, inclusion, dimension | EV | maths-s2-ev/4 |
+| Exercice 3.16 | sous-espaces engendrés, inclusion, dimension | EV | maths-s2-ev/4 |
+| Exercice 3.17 | écrire un sous-espace sous forme de Vect (système linéaire) | EV | maths-s2-ev/4 |
+| Exercice 3.18 | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+| Exercice 3.19 | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
+| Exercice 3.20 | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
+| Exercice 3.21 | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+| Exercice 3.22 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 3.23 (⋆) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 
 ### Feuille de TD — Espaces vectoriels (S2 2026) (sujet, FR)
 
@@ -2325,6 +2403,29 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3.22 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 3.23 (⋆) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 
+### Feuille de TD — Applications linéaires (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td5-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
+| Exercice 1.2 | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
+| Exercice 2.3 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 2.4 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 2.5 | injectivité et noyau | ALM | maths-s2-alm/2 |
+| Exercice 2.6 | injectivité et noyau | ALM | maths-s2-alm/2 |
+| Exercice 3.7 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 3.8 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 3.9 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 3.10 | théorème du rang (conséquences : injectif, surjectif, bijectif) | ALM | maths-s2-alm/4 |
+| Exercice 3.11 (⋆) | théorème du rang (conséquences : injectif, surjectif, bijectif) | ALM | maths-s2-alm/4 |
+| Exercice 3.12 | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 4.13 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+| Exercice 4.14 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+| Exercice 4.15 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+| Exercice 4.16 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+
 ### Feuille de TD — Applications linéaires (S2 2026) (sujet, FR)
 
 `md/S2/TDs/2030/Maths/td5-2030-s2-maths-subject-fr.md` — date réelle : S2 2026
@@ -2347,6 +2448,27 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4.14 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
 | Exercice 4.15 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
 | Exercice 4.16 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+
+### Feuille de TD — Applications linéaires et matrices (S2 2026) (corrigé rédigé, FR)
+
+`md/S2/TDs/2030/Maths/td6-2030-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1.1 | application linéaire définie par l'image d'une base | ALM | maths-s2-alm/1 |
+| Exercice 1.2 | application linéaire définie par l'image d'une base | ALM | maths-s2-alm/1 |
+| Exercice 1.3 | application linéaire définie par l'image d'une base | ALM | maths-s2-alm/1 |
+| Exercice 1.4 | application linéaire définie par l'image d'une base | ALM | maths-s2-alm/1 |
+| Exercice 1.5 | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 2.6 | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 2.7 | changement de base, formule $Y = AX$ | ALM | maths-s2-alm/9 |
+| Exercice 2.8 | opérations matricielles, produit, inverse | ALM | maths-s2-alm/6 |
+| Exercice 2.9 | opérations matricielles, produit, inverse | ALM | maths-s2-alm/6 |
+| Exercice 2.10 | noyau, image, rang ; matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 2.11 (⋆) | changement de base, diagonalisation, puissance d'une matrice | ALM | maths-s2-alm/9 |
+| Exercice 3.12 | inverse d'une matrice, application linéaire associée | ALM | maths-s2-alm/8 |
+| Exercice 3.13 | changement de base, formule $Y = AX$ | ALM | maths-s2-alm/9 |
+| Exercice 3.14 (⋆) | changement de base, formule $Y = AX$ | ALM | maths-s2-alm/9 |
 
 ### Feuille de TD — Applications linéaires et matrices (S2 2026) (sujet, FR)
 
