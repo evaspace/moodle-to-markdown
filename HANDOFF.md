@@ -95,3 +95,28 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 - Raw HTML pitfall: `$a<b$` opens a `<b>` tag. Write `$a < b$`. Check script idea: regex `<[a-zA-Z/!]` over the built JSON.
 - APEF has two paths (polynômes has no Moodle chapter: `chapitres_moodle: []`).
 - Scratch venv with sympy + playwright: `/tmp/claude-1000/-home-server/020eaaa8-fe18-492e-ab24-7b1eae98a3b6/scratchpad/pw` (may vanish on reboot).
+
+# Handoff — 2026-11-15 (suite 5)
+## Done
+- Home maths categories sorted by `themes.syllabus_rank` (2031, S1, S2, rest).
+- Home feed state per account: `uid` column on `user_state`, `session_log`, `folder`, `favorite` (`init_db.migrate_uid`, backup `/tmp/claude-1000/cards.db.bak`), routes in `app.py` use `uid()`. Tested live with a QA account (deleted). 25/25 tests OK. README section added. No commit.
+## Next steps
+1. Feed block added to `/stats` (cards seen, % correct, time, best combo). Screenshot /stats at 390 px not done.
+2. Other subjects; corrections for subjects without one; user/admin stats quality.
+
+# Handoff — 2026-11-15 (suite 6)
+## Done
+- `/stats` feed block (« Le fil d'accueil ») checked at 390 px with a QA account (deleted): renders, no horizontal overflow. 25/25 tests OK. No commit.
+## Next steps
+1. Other subjects (none started); corrections for subjects without one (APEF/EV March 2025, TD tests); 2028/2029 S2 exams as exam levels.
+2. Ask the user: keep `apis_edo` levels 8+ with complex roots? APEF `C[X]` left out on purpose.
+3. Commit: repo is on `feat/navbar-stats-admin` with many uncommitted changes; user rule = branches only, never main.
+
+# Handoff — 2026-11-15 (suite 7)
+## Done
+- Fixed exercise page: missing `#xp` broke `static/niveaux.js` after each answer (next button + cat effects gone); `nav.html` has `<span id="xp">`, JS guarded, `niveaux.js?v=8`.
+- Corrections written (own work, not official, sympy-checked): `annales/md/S1/Midterms/Maths PC/2029/PC/{DP,OBM}/midterm-2029-s1-maths-correction-fr.md`; subject files point to them; `annales/tools/index.py` OK (148 files, 968 exercises). Probable typo in DP ex. 1.4 flagged in the file. No commit.
+## Next steps
+1. Remaining subjects without correction (~43): priority S1 B1/B2 2029 finals (ARITH, SR), S1 midterm 2023/2027, then S2 2029 (ALM, EV, APEF), then TDs. List: `*-subject-*` with no `*-correction-*` sibling in `annales/md`.
+2. Pending question to the user: delete QA account `qa_feed1` (delete was denied by the permission classifier).
+3. Other subjects (Programmation, Physique, Archi): not started.

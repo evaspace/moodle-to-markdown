@@ -1,6 +1,6 @@
 # Index des annales de maths (S1 et S2)
 
-146 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 956 exercices.
+148 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 968 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -730,6 +730,19 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : ensembles et fonctions (8 points) | image directe et réciproque, injectivité, surjectivité, composée | OBM | maths-s1-obm/9 |
 | Exercice 4 : relations (4 points) | propriétés d'une relation, négation, contraposée | OBM | maths-s1-obm/11 |
 
+### Examen S1B1-DP — octobre 2024 (corrigé rédigé, FR)
+
+`md/S1/Midterms/Maths PC/2029/PC/DP/midterm-2029-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : autour du cours et du TD (4 points) | interpréter une formule de dénombrement | DP | maths-s1-dp/5 |
+| Exercice 2 : dénombrement 1 (6 points) | p-listes, arrangements, complémentaire (digicode) | DP | maths-s1-dp/5 |
+| Exercice 3 : dénombrement 2 (8,5 points) | double comptage, $\binom np\binom pk = \binom nk\binom{n-k}{p-k}$ | DP | maths-s1-dp/6 |
+| Exercice 4 : probabilités conditionnelles (6,5 points) | probabilités totales et Bayes | DP | maths-s1-dp/10 |
+| Exercice 5 : cours (6 points) | démonstration de cours ($E(aX+b)$, $V(aX+b)$) | DP | maths-s1-dp/13 |
+| Exercice 6 : variables aléatoires (9 points) | loi d'une variable, Bernoulli, binomiale (somme d'indépendantes) | DP | maths-s1-dp/14 |
+
 ### Examen S1B1-DP — octobre 2024 (sujet, FR)
 
 `md/S1/Midterms/Maths PC/2029/PC/DP/midterm-2029-s1-maths-subject-fr.md` — date réelle : octobre 2024
@@ -742,6 +755,19 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4 : probabilités conditionnelles (6,5 points) | probabilités totales et Bayes | DP | maths-s1-dp/10 |
 | Exercice 5 : cours (6 points) | démonstration de cours ($E(aX+b)$, $V(aX+b)$) | DP | maths-s1-dp/13 |
 | Exercice 6 : variables aléatoires (9 points) | loi d'une variable, Bernoulli, binomiale (somme d'indépendantes) | DP | maths-s1-dp/14 |
+
+### Examen S1B1-OBM — octobre 2024 (corrigé rédigé, FR)
+
+`md/S1/Midterms/Maths PC/2029/PC/OBM/midterm-2029-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : logique (10 points) | conditions nécessaires et suffisantes, négations, contraposée, inclusion | OBM | maths-s1-obm/6 |
+| Exercice 2 : ensembles et fonctions 1 (7 points) | image directe et réciproque, injectivité, surjectivité, composée | OBM | maths-s1-obm/10 |
+| Exercice 3 : ensembles et fonctions 2 (3 points) | image directe, image réciproque (lecture graphique) | OBM | maths-s1-obm/9 |
+| Exercice 4 : relations (4 points) | propriétés d'une relation, négation, contraposée | OBM | maths-s1-obm/11 |
+| Exercice 5 : intégrales (6 points) | primitive $u'/u$, IPP trigonométrique, changement de variable vers arctan | APIS (intégrales) | maths-s1-apis-integrales/13 |
+| Exercice 6 : nombres complexes (10 points) | nombres complexes (cours, forme algébrique, module, forme exponentielle, équation) | HP (nombres complexes, hors programme 2031) | — |
 
 ### Examen S1B1-OBM — octobre 2024 (sujet, FR)
 

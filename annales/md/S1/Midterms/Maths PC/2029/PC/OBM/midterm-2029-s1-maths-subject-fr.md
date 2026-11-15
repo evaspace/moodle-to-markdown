@@ -1,7 +1,7 @@
 # Examen S1B1-OBM — octobre 2024 (sujet, FR)
 
 - Source : `raw/S1/Midterms/Maths PC/2029/PC/OBM/midterm-2029-s1-maths-subject-fr.pdf` (10 pages)
-- Date réelle : octobre 2024 (dossier promo 2029, ECUE OBM). Pas de corrigé.
+- Date réelle : octobre 2024 (dossier promo 2029, ECUE OBM). Corrigé rédigé : `midterm-2029-s1-maths-correction-fr.md` (même dossier).
 - Durée : 2 h 30. Barème sur 40 points divisé par 2. 6 exercices. Rigueur prise en compte, malus d'un point pour manque de propreté. Documents et calculatrices interdits.
 
 ## Exercice 1 : logique (10 points)

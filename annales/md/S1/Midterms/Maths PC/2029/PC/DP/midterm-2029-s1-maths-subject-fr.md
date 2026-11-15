@@ -1,7 +1,7 @@
 # Examen S1B1-DP — octobre 2024 (sujet, FR)
 
 - Source : `raw/S1/Midterms/Maths PC/2029/PC/DP/midterm-2029-s1-maths-subject-fr.pdf` (9 pages)
-- Date réelle : octobre 2024 (dossier promo 2029, ECUE DP). Pas de corrigé.
+- Date réelle : octobre 2024 (dossier promo 2029, ECUE DP). Corrigé rédigé : `midterm-2029-s1-maths-correction-fr.md` (même dossier).
 - Durée : 2 heures. Barème sur 40 points divisé par 2. 6 exercices. Rigueur prise en compte, malus d'un point pour manque de propreté. Documents et calculatrices interdits.
 
 ## Exercice 1 : autour du cours et du TD (4 points)

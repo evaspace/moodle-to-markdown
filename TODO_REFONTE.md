@@ -39,7 +39,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
   1. Finals S1 (= examen B2) et midterms S1 (= examen B1), sujets FR, 2024→2029
   2. Scans S1 restants
   3. S2
-- [ ] Corrigés : générer ceux qui manquent
+- [ ] Corrigés : générer ceux qui manquent (fait : S1 B1 2029 DP et OBM, 2026-11-15 ; reste ~43 sujets sans corrigé, voir la liste des `*-subject-*` sans `*-correction-*`)
 - [x] Index `annales/INDEX.md` (examen → date réelle → exercices → type → ECUE → niveau), généré par `annales/tools/index.py`
 - [x] Fiche synthèse `annales/FORMULES.md` + page `/formules` (2026-11-15)
 
@@ -64,7 +64,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Mail de réinitialisation (SMTP OVH depuis morgan@pierref.eu, lien 1 h, testé en réel le 2026-11-14)
 - [x] Mode Niveaux (`/niveaux`, `levels.py`) : 3 réussites d'affilée, recul d'un niveau sur échec + formules, chat qui applaudit / explose, entraînement libre sur un autre niveau
 - [x] Scroll adaptatif `/scroll/<parcours>` (`scroll.py`, 1 carte cours sur 4, QCM 1–2 cartes après, erreurs qui reviennent), tests `tests/test_scroll.py`
-- [ ] Brancher aussi le fil d'accueil (cartes `cards.db`, état global non lié aux comptes) sur les parcours
+- [x] (2026-11-15, état par compte) Brancher aussi le fil d'accueil (cartes `cards.db`, état global non lié aux comptes) sur les parcours
 - [x] Page « mes niveaux » avec % et liste cliquable des niveaux
 - [ ] Code couleur par matière (quand il y aura plus d'une matière)
 - [x] Tests `tests/test_levels.py` (8 OK), déployé le 2026-11-14, test de bout en bout en HTTPS OK
@@ -105,5 +105,5 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
    - [ ] Corrigés à écrire pour les sujets sans corrigé officiel (ex. APEF et EV mars 2025, contrôles de TD).
    - [ ] Lectures incertaines à vérifier sur le PDF : `td3-2028-s2-maths-subject-fr` (cours 2, q5 c), `td4-2030-s2` (ex. 1.1 q2), `td5-2030-s2` (borne basse de l'intégrale de φ).
 4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières.
-5. [x] Scroll adaptatif. [ ] Accueil dans l'ordre du syllabus.
+5. [x] Scroll adaptatif. [x] Accueil maths dans l'ordre du syllabus (2031, S1, S2).
 6. [x] Mail de réinitialisation depuis `morgan@pierref.eu` (via `/opt/pierref/mailer` ; accord donné le 2026-11-14).

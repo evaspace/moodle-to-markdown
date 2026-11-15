@@ -13,14 +13,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - minimum en $a$ : $\exists a, \forall x, f(x) \geqslant f(a)$
 - pair : $\exists k, n = 2k$
 
-**injectivité, surjectivité, image directe et réciproque** (8)
-
-- injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple $f(1) = f(2)$)
-- surjective : $\forall y, \exists x, f(x) = y$
-- $f(A) = \{f(x), x \in A\}$
-- $f^{-1}(B) = \{x, f(x) \in B\}$ (peut être vide)
-
-**image directe et réciproque, injectivité, surjectivité, composée** (8)
+**image directe et réciproque, injectivité, surjectivité, composée** (9)
 
 - $f(A) = \{y \in F, \exists x \in A, y = f(x)\}$
 - $f^{-1}(B) = \{x \in E, f(x) \in B\}$
@@ -28,6 +21,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - surjective : $\forall y, \exists x, y = f(x)$
 - $g \circ f$ injective si $f$, $g$ injectives
 - surjective si $f$, $g$ surjectives
+
+**injectivité, surjectivité, image directe et réciproque** (8)
+
+- injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple $f(1) = f(2)$)
+- surjective : $\forall y, \exists x, f(x) = y$
+- $f(A) = \{f(x), x \in A\}$
+- $f^{-1}(B) = \{x, f(x) \in B\}$ (peut être vide)
 
 **nier une phrase** (7)
 
@@ -38,21 +38,14 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\neg(P \vee Q) \iff \neg P \wedge \neg Q$
 - « aucun » = $\forall, \neg$
 
-**image directe, image réciproque (lecture graphique)** (6)
+**image directe, image réciproque (lecture graphique)** (7)
 
 - $f(A) = \{f(x), x \in A\}$
 - $f^{-1}(B) = \{x, f(x) \in B\}$
 - lire les valeurs prises (bornes ouvertes / fermées)
 - $f(\mathbb{R})$ = ensemble des valeurs prises
 
-**injectivité / surjectivité, restriction** (6)
-
-- injective $\iff$ toute droite horizontale coupe le graphe au plus une fois
-- surjective sur $F$ $\iff$ tout $y \in F$ est atteint
-- $(x-2)^2 - 1 \geqslant -1$
-- restreindre le départ à $[2, +\infty[$ rend injective, l'arrivée à $[-1, +\infty[$ rend surjective
-
-**propriétés d'une relation, négation, contraposée** (6)
+**propriétés d'une relation, négation, contraposée** (7)
 
 - réflexive $\forall x, x\mathcal Rx$
 - antisymétrique $x\mathcal Ry \wedge y\mathcal Rx \Rightarrow x = y$
@@ -61,6 +54,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - contraposée de $P \Rightarrow Q$ : $\neg Q \Rightarrow \neg P$
 - $\neg(A \wedge B) = \neg A \vee \neg B$
 - ordre = réflexive + antisymétrique + transitive
+
+**injectivité / surjectivité, restriction** (6)
+
+- injective $\iff$ toute droite horizontale coupe le graphe au plus une fois
+- surjective sur $F$ $\iff$ tout $y \in F$ est atteint
+- $(x-2)^2 - 1 \geqslant -1$
+- restreindre le départ à $[2, +\infty[$ rend injective, l'arrivée à $[-1, +\infty[$ rend surjective
 
 **ensembles (appartenance, inclusion, union, intersection, produit, complémentaire)** (6)
 
@@ -158,6 +158,16 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $n \geqslant 2 \Rightarrow \frac2{n+1} \leqslant \frac23$
 - initialisation $n = 2$ : $\frac{4}{2} = 2 = \frac92 \cdot \frac49$
 
+**conditions nécessaires et suffisantes, négations, contraposée, inclusion** (2)
+
+- $x^2 > 4 \iff x < -2$ ou $x > 2$
+- $A \Rightarrow P$ vraie si l'ensemble de $A$ est inclus dans celui de $P$
+- $\neg(A \Rightarrow B) \iff A \wedge \neg B$
+- contraposée $\neg B \Rightarrow \neg A$ (même table de vérité)
+- $\cos \in [-1, 1]$
+- $A \subset B \iff \forall x, x \in A \Rightarrow x \in B$
+- contre-exemple pour $B \not\subset A$
+
 **vérité, négation et contraposée d'une implication quantifiée** (2)
 
 - $x^2 - 3x + 2 = (x-1)(x-2) \leqslant 0 \iff x \in [1, 2]$
@@ -181,16 +191,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $f^{-1}(\{b\}) = \{x, f(x) = b\}$
 - séparer les cas $n$ pair ($n = 2k$) et impair
 
-**conditions nécessaires et suffisantes, négations, contraposée, inclusion** (1)
-
-- $x^2 > 4 \iff x < -2$ ou $x > 2$
-- $A \Rightarrow P$ vraie si l'ensemble de $A$ est inclus dans celui de $P$
-- $\neg(A \Rightarrow B) \iff A \wedge \neg B$
-- contraposée $\neg B \Rightarrow \neg A$ (même table de vérité)
-- $\cos \in [-1, 1]$
-- $A \subset B \iff \forall x, x \in A \Rightarrow x \in B$
-- contre-exemple pour $B \not\subset A$
-
 **nier une phrase quantifiée** (1)
 
 - $\neg(\forall x, P) = \exists x, \neg P$
@@ -199,7 +199,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## DP
 
-**probabilités totales et Bayes** (14)
+**probabilités totales et Bayes** (15)
 
 - probabilités totales : $P(M) = P(M \mid V)P(V) + P(M \mid \bar V)P(\bar V)$
 - Bayes : $P(V \mid M) = \frac{P(M \mid V)P(V)}{P(M)}$
@@ -245,18 +245,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - double comptage : compter le même ensemble de deux façons
 - $\binom nk$ façons de choisir $k$ cases
 
-**cardinal d'une union, partition** (4)
-
-- $F \cap G = \emptyset \Rightarrow \mathrm{Card}(F \cup G) = \mathrm{Card}F + \mathrm{Card}G$
-- $A = (A \setminus B) \sqcup (A \cap B)$
-- $\mathrm{Card}(A \cup B) = \mathrm{Card}A + \mathrm{Card}B - \mathrm{Card}(A \cap B)$
-
-**interpréter une formule de dénombrement** (4)
+**interpréter une formule de dénombrement** (5)
 
 - $\frac{n!}{(n-p)!} = A_n^p$ : tirage successif sans remise (ordre)
 - $\binom np$ : tirage simultané
 - $\binom{8}{3}\binom{8}{2}$ : 3 cartes d'une couleur et 2 d'une autre
 - $\binom{7}{1}\binom{24}{3}$ : exactement 1 parmi 7, le reste parmi 24 (catégories disjointes)
+
+**cardinal d'une union, partition** (4)
+
+- $F \cap G = \emptyset \Rightarrow \mathrm{Card}(F \cup G) = \mathrm{Card}F + \mathrm{Card}G$
+- $A = (A \setminus B) \sqcup (A \cap B)$
+- $\mathrm{Card}(A \cup B) = \mathrm{Card}A + \mathrm{Card}B - \mathrm{Card}(A \cap B)$
 
 **tirages simultanés, combinaisons** (3)
 
@@ -301,6 +301,15 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $E(aX + b) = aE(X) + b$
 - $V(X) = E((X - E(X))^2) = E(X^2) - E(X)^2$
 - $(a - b)^2 = a^2 - 2ab + b^2$
+
+**loi d'une variable, Bernoulli, binomiale (somme d'indépendantes)** (3)
+
+- $P(X = x) = \frac{\text{nb de boules } x}{\text{nb total}}$
+- $E(X) = \sum xP(X = x)$
+- $V = E(X^2) - E(X)^2$
+- Bernoulli $E = p$, $V = p(1-p)$
+- somme de $n$ Bernoulli indépendantes de paramètre $p$ : $\mathcal{B}(n, p)$, $E = np$, $V = np(1-p)$
+- binôme pour $\sum P = 1$
 
 **dénombrement de mains, probabilités totales et Bayes** (2)
 
@@ -349,14 +358,27 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\sum_i P(X = x_i) = 1$
 - linéarité de $\sum$
 
-**loi d'une variable, Bernoulli, binomiale (somme d'indépendantes)** (2)
+**p-listes, arrangements, complémentaire (digicode)** (2)
 
-- $P(X = x) = \frac{\text{nb de boules } x}{\text{nb total}}$
-- $E(X) = \sum xP(X = x)$
-- $V = E(X^2) - E(X)^2$
-- Bernoulli $E = p$, $V = p(1-p)$
-- somme de $n$ Bernoulli indépendantes de paramètre $p$ : $\mathcal{B}(n, p)$, $E = np$, $V = np(1-p)$
-- binôme pour $\sum P = 1$
+- principe multiplicatif
+- chiffres distincts : $10 \times 9 \times 8$
+- avec répétition : $10^3$
+- permutations de 3 chiffres connus : $3!$
+- « au moins un 4 » = total $-$ « aucun 4 » : $10^3 - 9^3$
+
+**double comptage, $\binom np\binom pk = \binom nk\binom{n-k}{p-k}$** (2)
+
+- choisir $p$ puis $k$ parmi eux = choisir les $k$ puis $p - k$ parmi les $n - k$ restants
+- $\binom nk = \frac{n!}{k!(n-k)!}$
+- $\sum_{k=0}^p \binom pk = 2^p$, donc $S_p = \binom np 2^p$
+
+**démonstration de cours ($E(aX+b)$, $V(aX+b)$)** (2)
+
+- $E(X) = \sum x_iP(X = x_i)$
+- $V(X) = \sum (x_i - E(X))^2P(X = x_i)$
+- $E(aX + b) = aE(X) + b$
+- $V(aX + b) = a^2V(X)$
+- $\sum P(X = x_i) = 1$
 
 **p-listes, complémentaire** (2)
 
@@ -369,28 +391,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $|\Omega| = 36$
 - « exactement un 6 » : $2 \times \frac16 \times \frac56 = \frac{10}{36}$
 - « au moins un 6 » $= 1 - P(\text{aucun}) = 1 - \left(\frac56\right)^2$
-
-**p-listes, arrangements, complémentaire (digicode)** (1)
-
-- principe multiplicatif
-- chiffres distincts : $10 \times 9 \times 8$
-- avec répétition : $10^3$
-- permutations de 3 chiffres connus : $3!$
-- « au moins un 4 » = total $-$ « aucun 4 » : $10^3 - 9^3$
-
-**double comptage, $\binom np\binom pk = \binom nk\binom{n-k}{p-k}$** (1)
-
-- choisir $p$ puis $k$ parmi eux = choisir les $k$ puis $p - k$ parmi les $n - k$ restants
-- $\binom nk = \frac{n!}{k!(n-k)!}$
-- $\sum_{k=0}^p \binom pk = 2^p$, donc $S_p = \binom np 2^p$
-
-**démonstration de cours ($E(aX+b)$, $V(aX+b)$)** (1)
-
-- $E(X) = \sum x_iP(X = x_i)$
-- $V(X) = \sum (x_i - E(X))^2P(X = x_i)$
-- $E(aX + b) = aE(X) + b$
-- $V(aX + b) = a^2V(X)$
-- $\sum P(X = x_i) = 1$
 
 **coefficients binomiaux, récurrence (somme de $\binom kp$)** (1)
 
@@ -529,6 +529,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\int \frac{dt}{1+t^2} = \arctan t$
 - $\arctan\sqrt3 = \frac\pi3$, $\arctan 1 = \frac\pi4$
 
+**primitive $u'/u$, IPP trigonométrique, changement de variable vers arctan** (2)
+
+- $\int \frac{u'}u = \ln|u|$ ($2x + 2 = \frac12(4x + 4)$)
+- IPP $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$, $\int \cos\frac x3 = 3\sin\frac x3$
+- $t = \frac x{\sqrt3}$, $dx = \sqrt3\,dt$, $3 + x^2 = 3(1 + t^2)$
+- $\int \frac{dt}{1+t^2} = \arctan t$
+
 **intégrale comme aire, relation de Chasles** (1)
 
 - $f \geqslant 0$ : $\int_a^b f$ = aire sous la courbe
@@ -552,13 +559,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $(x^n)' = nx^{n-1}$
 - $(e^x)' = e^x$
 - $(\ln x)' = \frac1x$
-
-**primitive $u'/u$, IPP trigonométrique, changement de variable vers arctan** (1)
-
-- $\int \frac{u'}u = \ln|u|$ ($2x + 2 = \frac12(4x + 4)$)
-- IPP $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$, $\int \cos\frac x3 = 3\sin\frac x3$
-- $t = \frac x{\sqrt3}$, $dx = \sqrt3\,dt$, $3 + x^2 = 3(1 + t^2)$
-- $\int \frac{dt}{1+t^2} = \arctan t$
 
 **primitive $u'/u^n$, IPP trigonométrique** (1)
 
@@ -1656,7 +1656,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\Delta < 0$ : $z = \frac{-b \pm i\sqrt{-\Delta}}{2a}$
 - $z = |z|e^{i\theta}$, $|a + ib| = \sqrt{a^2 + b^2}$, $\cos\theta = \frac{a}{|z|}$, $\sin\theta = \frac{b}{|z|}$
 
-**nombres complexes (cours, forme algébrique, module, forme exponentielle, équation)** (1)
+**nombres complexes (cours, forme algébrique, module, forme exponentielle, équation)** (2)
 
 - $i^2 = -1$
 - $z = a + ib$ (forme algébrique), $\bar z = a - ib$, $|z| = \sqrt{a^2 + b^2}$
