@@ -141,6 +141,18 @@ class Api(unittest.TestCase):
         self.assertEqual(self.c.get('/api/me').get_json()['streak'], 1)
         self.assertEqual(self.c.get('/stats').status_code, 200)
 
+    def test_admin_only_for_owner_account(self):
+        os.environ['ADMIN_PASSWORD'] = 'x'
+        import app as app_module
+        app_module.ADMIN_PASSWORD = 'secret-admin'
+        self.register('plainuser')
+        self.assertEqual(self.c.get('/admin/stats').status_code, 401)
+        self.assertNotIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
+        self.c.post('/api/logout')
+        self.register('morgan.pierrefeu')
+        self.assertIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
+        self.assertEqual(self.c.get('/admin/stats').status_code, 200)
+
     def test_progress_up_down_and_isolation(self):
         self.register('alice')
         n1 = len(self.data['levels'][0]['exos'])

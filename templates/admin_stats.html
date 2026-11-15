@@ -6,12 +6,12 @@
   <meta name="robots" content="noindex">
   <title>Stats admin · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261114">
-  <link rel="stylesheet" href="/static/niveaux.css?v=12">
+  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/niveaux.css?v=13">
 </head>
 <body class="lv-page">
 <header class="app-nav"><a class="app-nav-brand" href="/">Epita Doomscrolling</a>
-  <nav class="app-nav-links"><a href="/admin">Injecter des cartes</a><a href="/admin/stats" aria-current="page">Stats</a><a href="/admin/stats?format=json">JSON</a></nav></header>
+  <nav class="app-nav-links"><a href="/admin">Injecter des cartes</a><a href="/admin/stats" aria-current="page">Stats</a><a href="/admin/stats?format=json">JSON</a><a href="https://morgan.pierref.eu/admin">Admin morgan.pierref.eu</a></nav></header>
 <div class="lv-wrap lv-wide">
   <h1>Stats de l'application</h1>
   <p class="lv-muted">Chiffres agrégés, aucun identifiant d'utilisateur. Réponses mesurées sur les exercices sur papier.</p>
@@ -55,10 +55,9 @@
   <div class="st-chart">{% for b in s.signup_chart %}<div title="{{ b.label }} : {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
   <div class="st-axis lv-muted"><span>{{ s.signup_chart[0].label }}</span><span>aujourd'hui</span></div>
 
-  <h2>Heure de travail</h2>
-  <div class="st-chart st-hours">{% for b in s.hours %}<div title="{{ b.label }} h : {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
-  <div class="st-axis lv-muted"><span>0 h</span><span>12 h</span><span>23 h</span></div>
-  <p class="lv-muted">Par jour : {% for d in s.weekdays %}{{ d.label }} {{ d.n }}{{ ' · ' if not loop.last }}{% endfor %}</p>
+  <h2>Jour de la semaine et heure</h2>
+  <p class="lv-muted">Exercices faits, tous utilisateurs : plus c'est vert, plus il y en a. Compare les jours entre eux.</p>
+  {% set heat = s.heat %}{% include 'heat.html' %}
 
   <h2>Parcours</h2>
   <p class="lv-muted">Pour chaque parcours : utilisateurs qui l'ont commencé, puis part d'entre eux qui a validé le niveau 1, 2, 3, etc.</p>

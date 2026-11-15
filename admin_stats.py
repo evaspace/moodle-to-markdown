@@ -6,6 +6,20 @@ MAX_SECS = 1800     # one attempt counts at most 30 min (tab left open)
 MIN_ATTEMPTS = 5    # an exercise needs this many attempts to be ranked as hard
 
 
+DAYS = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim']
+
+
+def week_heat(datetimes):
+    """7 rows (Monday first) x 24 hour cells; colour goes from white (nothing) to green (the busiest slot)."""
+    grid = [[0] * 24 for _ in DAYS]
+    for t in datetimes:
+        grid[t.weekday()][t.hour] += 1
+    top = max(max(r) for r in grid) or 1
+    return [{'day': DAYS[i], 'total': sum(r), 'cells': [
+        {'h': h, 'n': n, 'color': f'hsl(130, 62%, {round(97 - 59 * (n / top) ** 0.6)}%)' if n else '#fff'}
+        for h, n in enumerate(r)]} for i, r in enumerate(grid)]
+
+
 def _pct(a, b):
     return round(100 * a / b) if b else 0
 
@@ -43,7 +57,6 @@ def compute(accounts, logs, progress, paths, today):
     last30 = [today - timedelta(days=29 - i) for i in range(30)]
     signups = Counter(c for c in created.values())
     per_day = Counter(r['at'].date() for r in logs)
-    hours, weekdays = Counter(r['at'].hour for r in logs), Counter(r['at'].weekday() for r in logs)
     weekly = Counter()  # exercises per ISO week, last 8 weeks
     for r in logs:
         d = r['at'].date()
@@ -91,9 +104,7 @@ def compute(accounts, logs, progress, paths, today):
         'minutes_per_active_day': round(secs / 60 / max(1, sum(len(d) for d in active_days.values()))),
         'retention': {'d1': retention(1), 'd7': retention(7), 'd30': retention(30)},
         'signup_chart': _series(signups, last30), 'exo_chart': _series(per_day, last30),
-        'hours': [{'label': h, 'n': hours.get(h, 0), 'h': _pct(hours.get(h, 0), max(hours.values(), default=1))} for h in range(24)],
-        'weekdays': [{'label': n, 'n': weekdays.get(i, 0), 'h': _pct(weekdays.get(i, 0), max(weekdays.values(), default=1))}
-                     for i, n in enumerate(['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim'])],
+        'heat': week_heat([r['at'] for r in logs]),
         'weekly': [weekly.get(i, 0) for i in range(7, -1, -1)],
         'funnel': funnel,
         'hard': [{'subject': paths.get(k[0], {}).get('titre', k[0]), 'level': k[1], 'exo': k[2], 'attempts': v[0],

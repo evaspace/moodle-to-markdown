@@ -420,6 +420,13 @@ def reset_confirm():
     return jsonify(ok=True, username=row['username'])
 
 
+ADMIN_USERS = {u.strip().lower() for u in os.environ.get('ADMIN_USERNAMES', 'morgan.pierrefeu').split(',') if u.strip()}
+
+
+def is_admin():
+    return (session.get('username') or '').lower() in ADMIN_USERS
+
+
 def nav_state():
     """What the navbar shows for the logged-in user: validated paper levels, points, day streak."""
     uid = session.get('uid')
@@ -442,7 +449,7 @@ def nav_state():
         streak, day = streak + 1, day - timedelta(days=1)
     total = sum(len(d['levels']) for _, d in paths)
     done = sum(min(best.get(sid, 0), len(d['levels'])) for sid, d in paths)
-    return {'logged': True, 'username': session['username'], 'xp': points, 'streak': streak,
+    return {'logged': True, 'username': session['username'], 'admin': is_admin(), 'xp': points, 'streak': streak,
             'levels_done': done, 'levels_total': total, 'percent': percent(done, total)}
 
 
@@ -714,7 +721,9 @@ def compute_stats(rows, today, titles=None):
     weeks_rate = [{'label': 'cette semaine' if i == 0 else f'il y a {i} sem.', 'n': wk[i][0],
                    'rate': round(100 * wk[i][1] / wk[i][0]) if wk[i][0] else None} for i in range(7, -1, -1)]
     weak = sorted(((k, v) for k, v in lvl.items() if v[0] >= 3 and v[1] < v[0]), key=lambda kv: (kv[1][1] / kv[1][0], -kv[1][0]))[:5]
+    from admin_stats import week_heat
     return {
+        'heat': week_heat([r['at'] for r in rows]),
         'weeks_rate': weeks_rate,
         'weak': [{'id': k[0], 'subject': titles.get(k[0], k[0]), 'level': k[1], 'n': v[0], 'rate': round(100 * v[1] / v[0])} for k, v in weak],
         'avg_secs': round(sum(min(r['secs'] or 0, MAX_SECS) for r in rows) / done) if done else 0,

@@ -163,3 +163,22 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .st-table th { background: var(--text-color); color: #fff; }
 .st-subjects a { color: var(--text-color); font-weight: 700; text-decoration: none; }
 .st-subjects a:hover { color: var(--accent-color); }
+
+/* weekday x hour heatmap */
+.wk-heat { display: grid; gap: 3px; min-width: 340px; }
+.wk-row { display: grid; grid-template-columns: 34px repeat(24, 1fr); gap: 3px; align-items: center; }
+.wk-row span, .wk-row b { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.wk-row b { text-align: left; font-weight: 600; }
+.wk-row i { aspect-ratio: 1; border: 1px solid #E5E7EB; }
+.wk-heat-scroll { overflow-x: auto; }
+
+.nav-short { display: none; }
+@media (max-width: 640px) {
+  .app-nav { flex-wrap: nowrap; gap: 14px; }
+  .app-nav-links { order: 0; width: auto; flex-wrap: nowrap; gap: 14px; }
+  .app-nav .nav-sec, .app-nav-me { display: none; }
+  .nav-long { display: none; }
+  .nav-short { display: inline; }
+  .app-nav-acc { max-width: 28vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+.st-legend i { border: 1px solid #E5E7EB; }

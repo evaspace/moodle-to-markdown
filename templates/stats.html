@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Mes stats · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261114">
-  <link rel="stylesheet" href="/static/niveaux.css?v=12">
+  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/niveaux.css?v=13">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -63,6 +63,10 @@
   </div>
   <div class="st-axis lv-muted"><span>{{ s.chart[0].label }}</span><span>aujourd'hui</span></div>
 
+  <h2>Quand tu travailles</h2>
+  <p class="lv-muted">Chaque case est une heure d'un jour de la semaine : plus elle est verte, plus tu as fait d'exercices.</p>
+  {% set heat = s.heat %}{% include 'heat.html' %}
+
   <h2>Les petits records</h2>
   <dl class="st-facts">
     <div><dt>Série en cours</dt><dd>{{ s.streak }} jour{{ 's' if s.streak > 1 }} d'affilée</dd></div>
@@ -70,7 +74,6 @@
     {% if s.best_day %}<div><dt>Meilleur jour</dt><dd>{{ s.best_day.date }} : {{ s.best_day.ok }} réussi{{ 's' if s.best_day.ok > 1 }} sur {{ s.best_day.n }}</dd></div>{% endif %}
     <div><dt>Réussi du premier coup</dt><dd>{{ s.first_try }} % de {{ s.distinct }} exercices différents</dd></div>
     <div><dt>Revanches</dt><dd>{{ s.revenge }} exercice{{ 's' if s.revenge > 1 }} raté{{ 's' if s.revenge > 1 }} puis réussi{{ 's' if s.revenge > 1 }}</dd></div>
-    {% if s.hour is not none %}<div><dt>Ton heure</dt><dd>entre {{ s.hour }} h et {{ s.hour + 1 }} h</dd></div>{% endif %}
     {% if s.hardest %}<div><dt>Ton boss</dt><dd>{{ s.hardest.subject }}, niveau {{ s.hardest.level }} : raté {{ s.hardest.fails }} fois</dd></div>{% endif %}
     <div><dt>Temps écoulé</dt><dd>{{ s.timeouts }} fois</dd></div>
   </dl>

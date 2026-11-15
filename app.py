@@ -18,7 +18,7 @@ import markdown
 from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory
 
 from init_db import DB_PATH, init_db
-from levels import bp as levels_bp, init_levels_db, secret_key
+from levels import bp as levels_bp, init_levels_db, is_admin, secret_key
 from scroll import bp as scroll_bp, init_scroll_db
 from themes import clean_name, theme_for, theme_order
 
@@ -98,6 +98,8 @@ def db():
 def admin_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
+        if is_admin():  # logged in as the owner account
+            return f(*args, **kwargs)
         if ADMIN_PASSWORD:
             auth = request.authorization
             if not auth or not hmac.compare_digest((auth.password or ''), ADMIN_PASSWORD):

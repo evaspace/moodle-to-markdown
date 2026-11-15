@@ -1,11 +1,12 @@
 <header class="app-nav">
-  <a class="app-nav-brand" href="/">Epita Doomscrolling</a>
+  <a class="app-nav-brand" href="/"><span class="nav-long">Epita Doomscrolling</span><span class="nav-short">EDS</span></a>
   <nav class="app-nav-links" aria-label="Navigation">
     <a href="/niveaux"{% if active == 'niveaux' %} aria-current="page"{% endif %}>Niveaux</a>
     <a href="/stats"{% if active == 'stats' %} aria-current="page"{% endif %}>Stats</a>
-    <a href="/formules"{% if active == 'formules' %} aria-current="page"{% endif %}>Formules</a>
-    <a href="/cours/">Cours</a>
-    <a href="/">Fil</a>
+    <a class="nav-sec" href="/formules"{% if active == 'formules' %} aria-current="page"{% endif %}>Formules</a>
+    <a class="nav-sec" href="/cours/">Cours</a>
+    <a class="nav-sec" href="/">Fil</a>
+    {% if nav.admin %}<a href="/admin/stats"{% if active == 'admin' %} aria-current="page"{% endif %}>Admin</a>{% endif %}
   </nav>
   {% if nav.logged %}
   <a class="app-nav-me" href="/stats" title="Niveaux sur papier validés, points, jours d'affilée">
