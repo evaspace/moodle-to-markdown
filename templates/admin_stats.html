@@ -7,11 +7,11 @@
   <title>Stats admin · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=13">
+  <link rel="stylesheet" href="/static/niveaux.css?v=14">
 </head>
 <body class="lv-page">
-<header class="app-nav"><a class="app-nav-brand" href="/">Epita Doomscrolling</a>
-  <nav class="app-nav-links"><a href="/admin">Injecter des cartes</a><a href="/admin/stats" aria-current="page">Stats</a><a href="/admin/stats?format=json">JSON</a><a href="https://morgan.pierref.eu/admin">Admin morgan.pierref.eu</a></nav></header>
+<header class="app-nav admin-nav"><a class="app-nav-brand" href="/">Epita Doomscrolling</a>
+  <nav class="app-nav-links"><a href="/admin">Cartes</a><a href="/admin/stats" aria-current="page">Stats</a><a href="/admin/stats?format=json">JSON</a><a href="https://morgan.pierref.eu/admin">morgan.pierref.eu</a></nav></header>
 <div class="lv-wrap lv-wide">
   <h1>Stats de l'application</h1>
   <p class="lv-muted">Chiffres agrégés, aucun identifiant d'utilisateur. Réponses mesurées sur les exercices sur papier.</p>
@@ -70,7 +70,7 @@
   <h2>Exercices les plus ratés</h2>
   {% if s.hard %}
   <table class="st-table">
-    <thead><tr><th>Parcours</th><th>Niveau</th><th>Exercice</th><th>Essais</th><th>Ratés</th><th>Temps moyen</th></tr></thead>
+    <thead><tr><th>Parcours</th><th>Niveau</th><th>Exercice</th><th>Essais</th><th>Ratés</th><th>Temps</th></tr></thead>
     <tbody>{% for h in s.hard %}<tr><td>{{ h.subject }}</td><td>{{ h.level }}</td><td>{{ h.exo }}</td><td>{{ h.attempts }}</td><td>{{ h.fail }} %</td><td>{{ h.avg_secs }} s</td></tr>{% endfor %}</tbody>
   </table>
   {% else %}<p class="lv-muted">Pas encore assez d'essais (5 minimum par exercice).</p>{% endif %}

@@ -182,3 +182,10 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
   .app-nav-acc { max-width: 28vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 .st-legend i { border: 1px solid #E5E7EB; }
+
+/* admin: nothing may widen the page on a phone */
+@media (max-width: 640px) {
+  .admin-nav .app-nav-links { flex-wrap: wrap; gap: 6px 14px; }
+  .st-table { font-size: 12px; table-layout: fixed; }
+  .st-table th, .st-table td { padding: 4px; overflow-wrap: anywhere; }
+}
