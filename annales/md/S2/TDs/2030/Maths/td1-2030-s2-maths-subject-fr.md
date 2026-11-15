@@ -1,7 +1,7 @@
 # Feuille de TD — Les polynômes (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td1-2030-s2-maths-subject-fr.pdf` (6 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD d'une semaine, ECUE APEF (bloc B3). Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD d'une semaine, ECUE APEF (bloc B3). Pas de corrigé dans les annales. Corrigé rédigé : `td1-2030-s2-maths-correction-fr.md` (même dossier).
 - Prérequis : OBM du séminaire, développer un produit de polynômes, résoudre une équation du second degré. Seuls les exercices sont transcrits (ni la motivation ni les résumés de cours). Les exercices marqués ⋆ sont plus difficiles.
 
 Attendus : déterminer le degré d'une somme ou d'un produit ; énoncer et faire une division euclidienne ; relier racine et factorisation ; relier racine et dérivées successives ; déterminer l'ordre de multiplicité d'une racine ; factoriser en produit d'irréductibles dans $\mathbb{C}[X]$ ou $\mathbb{R}[X]$.

@@ -1,7 +1,7 @@
 # Feuille de TD — Équations différentielles linéaires (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td2-2030-s2-maths-subject-fr.pdf` (4 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD d'une semaine, ECUE APEF (bloc B3). Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD d'une semaine, ECUE APEF (bloc B3). Pas de corrigé dans les annales. Corrigé rédigé : `td2-2030-s2-maths-correction-fr.md` (même dossier).
 - Prérequis : OBM du séminaire, équation du second degré, dérivées et primitives usuelles. Seuls les exercices sont transcrits.
 
 Attendus : résoudre une équation linéaire homogène du premier ordre à coefficients quelconques (calcul de primitive) ; identifier les solutions évidentes ; trouver une solution particulière par variation de la constante ; résoudre une équation homogène du second ordre à coefficients constants ; trouver une solution particulière quand le second membre est un polynôme ou un polynôme multiplié par $e^{mt}$, $m \in \mathbb{R}$.

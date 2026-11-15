@@ -1,7 +1,7 @@
 # Feuille de TD — Études locales de fonctions : Landau et développements limités (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td3-2030-s2-maths-subject-fr.pdf` (7 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE APEF (bloc B3). Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE APEF (bloc B3). Pas de corrigé dans les annales. Corrigé rédigé : `td3-2030-s2-maths-correction-fr.md` (même dossier).
 - Seuls les exercices sont transcrits, avec les définitions à connaître par cœur. Les exercices marqués ⋆ sont plus difficiles.
 
 Définitions à connaître par cœur (au voisinage de $x_0 \in \mathbb{R} \cup \{-\infty, +\infty\}$) :
