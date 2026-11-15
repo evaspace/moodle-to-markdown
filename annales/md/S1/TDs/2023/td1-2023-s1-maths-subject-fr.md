@@ -1,7 +1,7 @@
 # Contrôle TD 1 (S1) — lundi 8 octobre 2018 (sujet, FR)
 
 - Source : `raw/S1/TDs/2023/td1-2023-s1-maths-subject-fr.pdf` (scan, 2 pages)
-- Date réelle : 8 octobre 2018 (dossier promo 2023). Pas de corrigé.
+- Date réelle : 8 octobre 2018 (dossier promo 2023). Corrigé rédigé : `td1-2023-s1-maths-correction-fr.md` (même dossier).
 - Durée : 45 minutes.
 
 ## Question de cours

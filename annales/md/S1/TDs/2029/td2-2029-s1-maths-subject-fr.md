@@ -1,7 +1,7 @@
 # Contrôle de cours ECUE ARITH, mathématiques S1 — lundi 25 novembre 2024 (sujet, FR)
 
 - Source : `raw/S1/TDs/2029/td2-2029-s1-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 25 novembre 2024 (dossier promo 2029). Pas de corrigé.
+- Date réelle : 25 novembre 2024 (dossier promo 2029). Corrigé rédigé : `td2-2029-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20.
 
 ## Cours 1 : divisibilité et division euclidienne (5 points)

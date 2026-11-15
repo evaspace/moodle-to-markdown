@@ -1,7 +1,7 @@
 # Examen S1B2-ARITH — janvier 2025 (sujet, FR)
 
 - Source : `raw/S1/Finals/Maths PC/2029/PC/ARITH/final-2029-s1-maths-subject-fr.pdf` (8 pages)
-- Date réelle : janvier 2025 (dossier promo 2029, ECUE arithmétique). Pas de corrigé.
+- Date réelle : janvier 2025 (dossier promo 2029, ECUE arithmétique). Corrigé rédigé : `final-2029-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 h 30. Barème sur 30 points ramené à 20. 5 exercices. Rigueur prise en compte, malus d'un point pour manque de propreté. Documents et calculatrices interdits.
 
 ## Exercice 1 : autour des nombres premiers (7 points)

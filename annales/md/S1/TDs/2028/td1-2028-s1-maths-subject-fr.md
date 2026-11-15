@@ -1,7 +1,7 @@
 # Contrôle de cours 1, mathématiques S1 — lundi 16 octobre 2023 (sujet, FR)
 
 - Source : `raw/S1/TDs/2028/td1-2028-s1-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 16 octobre 2023 (dossier promo 2028). Pas de corrigé.
+- Date réelle : 16 octobre 2023 (dossier promo 2028). Corrigé rédigé : `td1-2028-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Deux parties (ECUE LE et DP), 30 minutes et 20 points chacune, deux notes distinctes.
 
 ## Partie LE, cours 1 : sur la logique (9 points)

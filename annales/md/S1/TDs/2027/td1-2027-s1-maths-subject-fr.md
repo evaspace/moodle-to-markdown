@@ -1,7 +1,7 @@
 # Contrôle de cours 1, mathématiques S1 — lundi 3 octobre 2022 (sujet, FR)
 
 - Source : `raw/S1/TDs/2027/td1-2027-s1-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 3 octobre 2022 (dossier promo 2027). Pas de corrigé.
+- Date réelle : 3 octobre 2022 (dossier promo 2027). Corrigé rédigé : `td1-2027-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20.
 
 ## Exercice 1 (3,5 points)

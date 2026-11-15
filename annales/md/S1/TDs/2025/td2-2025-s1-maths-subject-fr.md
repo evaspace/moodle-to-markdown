@@ -1,7 +1,7 @@
 # Contrôle TD 2 (S1) — distanciel, fin 2020 (sujet, FR)
 
 - Source : `raw/S1/TDs/2025/td2-2025-s1-maths-subject-fr.pdf` (2 pages, mise en page Word)
-- Date réelle : S1 2020-2021 (dossier promo 2025), date exacte non indiquée. Pas de corrigé ; réponses du QCM vérifiées à la main.
+- Date réelle : S1 2020-2021 (dossier promo 2025), date exacte non indiquée. Pas de corrigé ; réponses du QCM vérifiées à la main. Corrigé rédigé : `td2-2025-s1-maths-correction-fr.md` (même dossier).
 
 ## Question de cours 1
 Type : loi binomiale (QCM) · ECUE : DP · Niveau : maths-s1-dp/14

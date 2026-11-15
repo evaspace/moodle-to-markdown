@@ -1,7 +1,7 @@
 # Partiel 1 — janvier 2016 (sujet, FR)
 
 - Source : `raw/S1/Finals/Maths PC/2020/final-2020-s1-maths-subject-fr.pdf` (scan, 8 pages)
-- Date réelle : janvier 2016 (Info-Sup 15/16, dossier promo 2020)
+- Date réelle : janvier 2016 (Info-Sup 15/16, dossier promo 2020). Corrigé rédigé : `final-2020-s1-maths-correction-fr.md` (même dossier).
 - Durée : 3 heures. Documents et calculatrices non autorisés.
 - Barème : 22 points
 

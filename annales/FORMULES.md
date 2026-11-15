@@ -5,7 +5,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## OBM
 
-**traduire avec quantificateurs** (12)
+**traduire avec quantificateurs** (13)
 
 - « tout » $= \forall$, « il existe » $= \exists$, « aucun » $= \forall \dots \neg$
 - l'ordre $\forall\exists$ / $\exists\forall$ change le sens
@@ -13,7 +13,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - minimum en $a$ : $\exists a, \forall x, f(x) \geqslant f(a)$
 - pair : $\exists k, n = 2k$
 
-**image directe et réciproque, injectivité, surjectivité, composée** (9)
+**image directe et réciproque, injectivité, surjectivité, composée** (11)
 
 - $f(A) = \{y \in F, \exists x \in A, y = f(x)\}$
 - $f^{-1}(B) = \{x \in E, f(x) \in B\}$
@@ -22,14 +22,21 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $g \circ f$ injective si $f$, $g$ injectives
 - surjective si $f$, $g$ surjectives
 
-**injectivité, surjectivité, image directe et réciproque** (8)
+**injectivité, surjectivité, image directe et réciproque** (10)
 
 - injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple $f(1) = f(2)$)
 - surjective : $\forall y, \exists x, f(x) = y$
 - $f(A) = \{f(x), x \in A\}$
 - $f^{-1}(B) = \{x, f(x) \in B\}$ (peut être vide)
 
-**nier une phrase** (7)
+**image directe, image réciproque (lecture graphique)** (9)
+
+- $f(A) = \{f(x), x \in A\}$
+- $f^{-1}(B) = \{x, f(x) \in B\}$
+- lire les valeurs prises (bornes ouvertes / fermées)
+- $f(\mathbb{R})$ = ensemble des valeurs prises
+
+**nier une phrase** (8)
 
 - $\neg(\forall x, P(x)) \iff \exists x, \neg P(x)$
 - $\neg(\exists x, P(x)) \iff \forall x, \neg P(x)$
@@ -37,13 +44,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\neg(P \wedge Q) \iff \neg P \vee \neg Q$
 - $\neg(P \vee Q) \iff \neg P \wedge \neg Q$
 - « aucun » = $\forall, \neg$
-
-**image directe, image réciproque (lecture graphique)** (7)
-
-- $f(A) = \{f(x), x \in A\}$
-- $f^{-1}(B) = \{x, f(x) \in B\}$
-- lire les valeurs prises (bornes ouvertes / fermées)
-- $f(\mathbb{R})$ = ensemble des valeurs prises
 
 **propriétés d'une relation, négation, contraposée** (7)
 
@@ -55,14 +55,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\neg(A \wedge B) = \neg A \vee \neg B$
 - ordre = réflexive + antisymétrique + transitive
 
-**injectivité / surjectivité, restriction** (6)
-
-- injective $\iff$ toute droite horizontale coupe le graphe au plus une fois
-- surjective sur $F$ $\iff$ tout $y \in F$ est atteint
-- $(x-2)^2 - 1 \geqslant -1$
-- restreindre le départ à $[2, +\infty[$ rend injective, l'arrivée à $[-1, +\infty[$ rend surjective
-
-**ensembles (appartenance, inclusion, union, intersection, produit, complémentaire)** (6)
+**ensembles (appartenance, inclusion, union, intersection, produit, complémentaire)** (7)
 
 - $x \in A$
 - $A \subset B$
@@ -71,17 +64,47 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - complémentaire $\bar B = E \setminus B$
 - $B = [\![0, 7]\!]$
 
+**injectivité / surjectivité, restriction** (6)
+
+- injective $\iff$ toute droite horizontale coupe le graphe au plus une fois
+- surjective sur $F$ $\iff$ tout $y \in F$ est atteint
+- $(x-2)^2 - 1 \geqslant -1$
+- restreindre le départ à $[2, +\infty[$ rend injective, l'arrivée à $[-1, +\infty[$ rend surjective
+
+**injectivité / surjectivité, composées** (5)
+
+- injective : $f(x) = f(y) \Rightarrow x = y$, contre-exemple $f(a) = f(b)$ avec $a \neq b$
+- surjective : $\forall y, \exists x, f(x) = y$
+- $(f \circ g)(x) = f(g(x))$
+
 **relation d'ordre** (5)
 
 - ordre = réflexive ($\forall x, x\mathcal Rx$), antisymétrique ($x\mathcal Ry$ et $y\mathcal Rx \Rightarrow x = y$), transitive ($x\mathcal Ry$ et $y\mathcal Rz \Rightarrow x\mathcal Rz$)
 - contre-exemple pour réfuter
 - $x^2 = y^2 \iff x = \pm y$
 
-**injectivité / surjectivité, composées** (4)
+**négations, implications et équivalences** (4)
 
-- injective : $f(x) = f(y) \Rightarrow x = y$, contre-exemple $f(a) = f(b)$ avec $a \neq b$
-- surjective : $\forall y, \exists x, f(x) = y$
-- $(f \circ g)(x) = f(g(x))$
+- $\neg(P \wedge Q) = \neg P \vee \neg Q$
+- $\neg(P \vee (Q \wedge R)) = \neg P \wedge (\neg Q \vee \neg R)$
+- $\neg(P \Rightarrow Q) = P \wedge \neg Q$
+- $P \Rightarrow Q \equiv \neg P \vee Q$
+- $x^2 + x - 6 = (x+3)(x-2)$
+- multiple de 6 $\Rightarrow$ multiple de 3
+- $\sqrt{x^2} = |x|$
+
+**récurrence (inégalité de Bernoulli)** (3)
+
+- récurrence : $P(n_0)$ et $P(n) \Rightarrow P(n+1)$
+- $(1+x)^{n+1} = (1+x)^n(1+x)$
+- $(1+nx)(1+x) = 1 + (n+1)x + nx^2 \geqslant 1 + (n+1)x$
+
+**injectivité / surjectivité de $x \mapsto x^2$** (3)
+
+- injective : $f(x) = f(y) \Rightarrow x = y$
+- surjective : $\forall y \in F, \exists x \in E, y = f(x)$
+- $x^2 = y^2 \iff x = \pm y$
+- $x^2 \geqslant 0$
 
 **récurrence ($n! > 2^n$)** (3)
 
@@ -114,19 +137,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\neg(f > 0) = (f \leqslant 0)$
 - $P \Rightarrow Q$ équivaut à sa contraposée $\neg Q \Rightarrow \neg P$
 
-**récurrence (inégalité de Bernoulli)** (2)
-
-- récurrence : $P(n_0)$ et $P(n) \Rightarrow P(n+1)$
-- $(1+x)^{n+1} = (1+x)^n(1+x)$
-- $(1+nx)(1+x) = 1 + (n+1)x + nx^2 \geqslant 1 + (n+1)x$
-
-**injectivité / surjectivité de $x \mapsto x^2$** (2)
-
-- injective : $f(x) = f(y) \Rightarrow x = y$
-- surjective : $\forall y \in F, \exists x \in E, y = f(x)$
-- $x^2 = y^2 \iff x = \pm y$
-- $x^2 \geqslant 0$
-
 **récurrence (dérivée $n$-ième)** (2)
 
 - récurrence
@@ -139,6 +149,11 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple : $f(a) = f(b)$, $a \neq b$)
 - surjective : $\forall y, \exists x, y = f(x)$ (contre-exemple : un $y$ sans antécédent)
 - $(g \circ f)(n) = g(f(n))$
+
+**image réciproque d'un singleton** (2)
+
+- $f^{-1}(\{b\}) = \{x, f(x) = b\}$
+- séparer les cas $n$ pair ($n = 2k$) et impair
 
 **vérité d'une proposition quantifiée** (2)
 
@@ -168,6 +183,12 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $A \subset B \iff \forall x, x \in A \Rightarrow x \in B$
 - contre-exemple pour $B \not\subset A$
 
+**nier une phrase quantifiée** (2)
+
+- $\neg(\forall x, P) = \exists x, \neg P$
+- $\neg(A \Rightarrow B) = A \wedge \neg B$
+- $\neg(f(x) \geqslant f(x')) = f(x) < f(x')$
+
 **vérité, négation et contraposée d'une implication quantifiée** (2)
 
 - $x^2 - 3x + 2 = (x-1)(x-2) \leqslant 0 \iff x \in [1, 2]$
@@ -176,36 +197,15 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - contraposée $\neg B \Rightarrow \neg A$
 - $\neg(x \leqslant 1 \vee x \geqslant 2) = (x > 1 \wedge x < 2)$
 
-**négations, implications et équivalences** (2)
-
-- $\neg(P \wedge Q) = \neg P \vee \neg Q$
-- $\neg(P \vee (Q \wedge R)) = \neg P \wedge (\neg Q \vee \neg R)$
-- $\neg(P \Rightarrow Q) = P \wedge \neg Q$
-- $P \Rightarrow Q \equiv \neg P \vee Q$
-- $x^2 + x - 6 = (x+3)(x-2)$
-- multiple de 6 $\Rightarrow$ multiple de 3
-- $\sqrt{x^2} = |x|$
-
-**image réciproque d'un singleton** (1)
-
-- $f^{-1}(\{b\}) = \{x, f(x) = b\}$
-- séparer les cas $n$ pair ($n = 2k$) et impair
-
-**nier une phrase quantifiée** (1)
-
-- $\neg(\forall x, P) = \exists x, \neg P$
-- $\neg(A \Rightarrow B) = A \wedge \neg B$
-- $\neg(f(x) \geqslant f(x')) = f(x) < f(x')$
-
 ## DP
 
-**probabilités totales et Bayes** (15)
+**probabilités totales et Bayes** (17)
 
 - probabilités totales : $P(M) = P(M \mid V)P(V) + P(M \mid \bar V)P(\bar V)$
 - Bayes : $P(V \mid M) = \frac{P(M \mid V)P(V)}{P(M)}$
 - $P(\bar V) = 1 - P(V)$
 
-**dénombrement (p-listes, arrangements, anagrammes, parties)** (9)
+**dénombrement (p-listes, arrangements, anagrammes, parties)** (10)
 
 - $p$-listes (avec remise, ordre) : $n^p$
 - arrangements (sans remise, ordre) : $A_n^p = \frac{n!}{(n-p)!}$
@@ -214,7 +214,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - nombre de parties d'un ensemble à $m$ éléments : $2^m$
 - principe multiplicatif
 
-**formules de base des probabilités** (8)
+**formules de base des probabilités** (9)
 
 - $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
 - $P(\Omega) = 1$
@@ -223,7 +223,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - indépendants $\iff P(A \cap B) = P(A)P(B)$
 - partition : deux à deux disjoints, union $= \Omega$ (non vides)
 
-**coefficients binomiaux (symétrie)** (6)
+**coefficients binomiaux (symétrie)** (7)
 
 - $\binom np = \frac{n!}{p!(n-p)!}$
 - $\binom np = \binom n{n-p}$
@@ -237,7 +237,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $E(G) = \sum x_iP(G = x_i)$
 - $V(G) = E(G^2) - E(G)^2$ (König-Huygens)
 
-**binôme de Newton et double comptage** (5)
+**binôme de Newton et double comptage** (6)
 
 - $(a + b)^n = \sum_{k=0}^n \binom nk a^kb^{n-k}$
 - $a = 1$, $b = 3$
@@ -245,7 +245,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - double comptage : compter le même ensemble de deux façons
 - $\binom nk$ façons de choisir $k$ cases
 
-**interpréter une formule de dénombrement** (5)
+**interpréter une formule de dénombrement** (6)
 
 - $\frac{n!}{(n-p)!} = A_n^p$ : tirage successif sans remise (ordre)
 - $\binom np$ : tirage simultané
@@ -257,6 +257,14 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $F \cap G = \emptyset \Rightarrow \mathrm{Card}(F \cup G) = \mathrm{Card}F + \mathrm{Card}G$
 - $A = (A \setminus B) \sqcup (A \cap B)$
 - $\mathrm{Card}(A \cup B) = \mathrm{Card}A + \mathrm{Card}B - \mathrm{Card}(A \cap B)$
+
+**dénombrement de mains de cartes** (3)
+
+- $|\Omega| = \binom{32}5$
+- « au moins un » : complémentaire $P(A) = 1 - P(\bar A)$
+- $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+- principe multiplicatif (choisir chaque catégorie séparément)
+- équiprobabilité $P = \frac{|A|}{|\Omega|}$
 
 **tirages simultanés, combinaisons** (3)
 
@@ -326,14 +334,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - uniforme sur $[\![1,n]\!]$ : $P(Y = k) = \frac1n$, $E(Y) = \frac{n+1}2$
 - $\sum_{k=1}^n k = \frac{n(n+1)}2$
 
-**dénombrement de mains de cartes** (2)
-
-- $|\Omega| = \binom{32}5$
-- « au moins un » : complémentaire $P(A) = 1 - P(\bar A)$
-- $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
-- principe multiplicatif (choisir chaque catégorie séparément)
-- équiprobabilité $P = \frac{|A|}{|\Omega|}$
-
 **combinaisons et arrangements avec contraintes** (2)
 
 - groupe sans ordre : $\binom nk$
@@ -380,6 +380,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $V(aX + b) = a^2V(X)$
 - $\sum P(X = x_i) = 1$
 
+**coefficients binomiaux, récurrence (somme de $\binom kp$)** (2)
+
+- $C_n^p = \binom np = \frac{n!}{p!(n-p)!}$
+- Pascal $\binom n{p} + \binom n{p+1} = \binom{n+1}{p+1}$
+- même dénominateur $(p+1)!(n+1-p)!$
+- récurrence : $\sum_{k=p}^{n+1} \binom kp = \binom{n+1}{p+1} + \binom{n+1}p$
+
+**loi binomiale (QCM)** (2)
+
+- $\mathcal{B}(n, p)$ : $P(Y = k) = \binom nk p^k(1-p)^{n-k}$, $E = np$, $V = np(1-p)$
+- $P(Y > 1) = 1 - P(Y = 0) - P(Y = 1)$
+
 **p-listes, complémentaire** (2)
 
 - $p$-listes de $n$ éléments : $n^p$
@@ -391,18 +403,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $|\Omega| = 36$
 - « exactement un 6 » : $2 \times \frac16 \times \frac56 = \frac{10}{36}$
 - « au moins un 6 » $= 1 - P(\text{aucun}) = 1 - \left(\frac56\right)^2$
-
-**coefficients binomiaux, récurrence (somme de $\binom kp$)** (1)
-
-- $C_n^p = \binom np = \frac{n!}{p!(n-p)!}$
-- Pascal $\binom n{p} + \binom n{p+1} = \binom{n+1}{p+1}$
-- même dénominateur $(p+1)!(n+1-p)!$
-- récurrence : $\sum_{k=p}^{n+1} \binom kp = \binom{n+1}{p+1} + \binom{n+1}p$
-
-**loi binomiale (QCM)** (1)
-
-- $\mathcal{B}(n, p)$ : $P(Y = k) = \binom nk p^k(1-p)^{n-k}$, $E = np$, $V = np(1-p)$
-- $P(Y > 1) = 1 - P(Y = 0) - P(Y = 1)$
 
 **binôme de Newton, cardinal de $\mathcal{P}(E)$** (1)
 
@@ -437,7 +437,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\int u'\cos u = \sin u$
 - $\int f(ax+b) = \frac1aF(ax+b)$
 
-**dériver une composée** (8)
+**dériver une composée** (10)
 
 - $(g \circ u)' = u' \times g' \circ u$
 - $(e^u)' = u'e^u$
@@ -462,7 +462,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\int \frac{dt}{1+t} = \ln(1+t)$
 - $\int t^n = \frac{t^{n+1}}{n+1}$
 
-**intégrales (primitive directe, IPP, changement de variable)** (5)
+**intégrales (primitive directe, IPP, changement de variable)** (6)
 
 - $\int u'u = \frac{u^2}2$ ($u = \arctan$, $u' = \frac1{1+x^2}$)
 - IPP : $\int uv' = [uv] - \int u'v$ avec $u = \ln x$, $v' = \frac1{x^2}$, $v = -\frac1x$
@@ -471,7 +471,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\int \frac{du}{1+u^2} = \arctan u$
 - $1 - u^2 = (1-u)(1+u)$
 
-**IPP : polynôme × sin/cos** (4)
+**IPP : polynôme × sin/cos** (5)
 
 - IPP $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$
 - $u = x$, $u' = 1$
@@ -536,6 +536,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $t = \frac x{\sqrt3}$, $dx = \sqrt3\,dt$, $3 + x^2 = 3(1 + t^2)$
 - $\int \frac{dt}{1+t^2} = \arctan t$
 
+**primitive $u'/u^n$, IPP trigonométrique** (2)
+
+- $\int \frac{u'}{u^2} = -\frac1u$
+- IPP $\int uv' = [uv] - \int u'v$ avec $u = x$, $v' = \sin(3x)$, $v = -\frac{\cos(3x)}3$
+- $\int \cos(3x) = \frac{\sin(3x)}3$
+
+**primitive $u'\sqrt u$, théorème d'intégration par parties** (2)
+
+- $\int u'u^{1/2} = \frac23u^{3/2}$ ($x = \frac12(x^2+1)'$)
+- IPP : $u$, $v$ de classe $C^1$ sur $[a,b]$, $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$
+- preuve : $(uv)' = u'v + uv'$ intégré sur $[a,b]$
+
 **intégrale comme aire, relation de Chasles** (1)
 
 - $f \geqslant 0$ : $\int_a^b f$ = aire sous la courbe
@@ -560,18 +572,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $(e^x)' = e^x$
 - $(\ln x)' = \frac1x$
 
-**primitive $u'/u^n$, IPP trigonométrique** (1)
-
-- $\int \frac{u'}{u^2} = -\frac1u$
-- IPP $\int uv' = [uv] - \int u'v$ avec $u = x$, $v' = \sin(3x)$, $v = -\frac{\cos(3x)}3$
-- $\int \cos(3x) = \frac{\sin(3x)}3$
-
-**primitive $u'\sqrt u$, théorème d'intégration par parties** (1)
-
-- $\int u'u^{1/2} = \frac23u^{3/2}$ ($x = \frac12(x^2+1)'$)
-- IPP : $u$, $v$ de classe $C^1$ sur $[a,b]$, $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$
-- preuve : $(uv)' = u'v + uv'$ intégré sur $[a,b]$
-
 **IPP avec ln** (1)
 
 - IPP : $\int_a^b uv' = [uv]_a^b - \int_a^b u'v$ avec $u = \ln x$, $u' = \frac1x$
@@ -580,19 +580,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## APIS (suites)
 
-**comparaison et limites** (10)
+**comparaison et limites** (11)
 
 - $u_n \leqslant v_n$ et $v_n \to -\infty \Rightarrow u_n \to -\infty$
 - $u_n \leqslant v_n$ et $u_n \to +\infty \Rightarrow v_n \to +\infty$
 - pour une limite finie, il faut deux gendarmes
 
-**suites adjacentes** (8)
-
-- adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n - u_n \to 0$
-- alors elles convergent vers la même limite
-- $\frac1{(n+1)!} = \frac1{n!} \cdot \frac1{n+1}$
-
-**comparaison de suites ($\sim$, $o$, $O$)** (8)
+**comparaison de suites ($\sim$, $o$, $O$)** (9)
 
 - $u_n \sim v_n \iff \frac{u_n}{v_n} \to 1$
 - $u_n = o(v_n) \iff \frac{u_n}{v_n} \to 0$
@@ -602,7 +596,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\frac{\sin n}{n} \to 0$
 - factoriser par le terme dominant
 
-**suite récurrente $u_{n+1} = f(u_n)$** (7)
+**suites adjacentes** (8)
+
+- adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n - u_n \to 0$
+- alors elles convergent vers la même limite
+- $\frac1{(n+1)!} = \frac1{n!} \cdot \frac1{n+1}$
+
+**suite récurrente $u_{n+1} = f(u_n)$** (8)
 
 - constante $\iff u_0 = f(u_0)$
 - tableau de variations via $f'$
@@ -632,6 +632,12 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - monotone bornée $\Rightarrow$ convergente
 - $f$ continue : $\ell = f(\ell)$
 
+**suites adjacentes via une suite géométrique** (5)
+
+- $w_{n+1} = qw_n \Rightarrow w_n = w_0q^n$
+- $|q| < 1 \Rightarrow q^n \to 0$
+- adjacentes : une croissante, l'autre décroissante, différence $\to 0$
+
 **suites adjacentes ($\sum 1/k!$)** (5)
 
 - adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n - u_n \to 0$
@@ -640,11 +646,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - adjacentes $\Rightarrow$ convergentes
 - convergente $\Rightarrow$ bornée
 
-**suites adjacentes via une suite géométrique** (4)
+**limites usuelles de suites** (5)
 
-- $w_{n+1} = qw_n \Rightarrow w_n = w_0q^n$
+- $\cos n$ diverge (suites extraites)
+- $\ln(n^2 + n) \to +\infty$
 - $|q| < 1 \Rightarrow q^n \to 0$
-- adjacentes : une croissante, l'autre décroissante, différence $\to 0$
+- $\frac1n \to 0$
+
+**démonstration de cours (convergente implique bornée)** (4)
+
+- $u_n \to \ell$ : $\forall \varepsilon > 0, \exists N, \forall n \geqslant N, |u_n - \ell| < \varepsilon$
+- bornée : $\exists M, \forall n, |u_n| \leqslant M$
+- inégalité triangulaire $|u_n| \leqslant |u_n - \ell| + |\ell|$
+- $M = \max(|u_0|, \dots, |u_{N-1}|, 1 + |\ell|)$
+- contre-exemple $(-1)^n$
 
 **limite de $q^n$** (4)
 
@@ -653,12 +668,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $q = 1$ : 1
 - $q \leqslant -1$ : pas de limite
 
-**limites usuelles de suites** (4)
+**théorème de la limite monotone** (4)
 
-- $\cos n$ diverge (suites extraites)
-- $\ln(n^2 + n) \to +\infty$
-- $|q| < 1 \Rightarrow q^n \to 0$
-- $\frac1n \to 0$
+- croissante majorée $\Rightarrow$ convergente
+- décroissante minorée $\Rightarrow$ convergente
+- croissante non majorée $\Rightarrow +\infty$
+
+**définitions sur les suites, exemples, limite de $q^n$** (4)
+
+- croissante $\forall n, u_n \leqslant u_{n+1}$
+- bornée $\exists M, \forall n, |u_n| \leqslant M$
+- exemples $(-1)^n$, $1 - \frac1n$, $\cos n$
+- $(q^n)$ converge $\iff -1 < q \leqslant 1$ (limite 0 si $|q| < 1$, 1 si $q = 1$)
 
 **propriétés de suites et suites extraites (vrac)** (4)
 
@@ -675,19 +696,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\frac1{a^2} - \frac1{b^2} = \frac{(b-a)(b+a)}{a^2b^2}$
 - $(u_{2n})$ et $(u_{2n+1})$ même limite $\Rightarrow (u_n)$ converge
 
-**démonstration de cours (convergente implique bornée)** (3)
+**monotonie et encadrement d'une somme** (3)
 
-- $u_n \to \ell$ : $\forall \varepsilon > 0, \exists N, \forall n \geqslant N, |u_n - \ell| < \varepsilon$
-- bornée : $\exists M, \forall n, |u_n| \leqslant M$
-- inégalité triangulaire $|u_n| \leqslant |u_n - \ell| + |\ell|$
-- $M = \max(|u_0|, \dots, |u_{N-1}|, 1 + |\ell|)$
-- contre-exemple $(-1)^n$
+- $u_{n+1} - u_n$ : écrire les deux sommes et simplifier les termes communs ($\frac1{2n} + \frac1{2n+1} - \frac1n$)
+- $n \leqslant k \leqslant 2n-1 \Rightarrow \frac1{2n-1} \leqslant \frac1k \leqslant \frac1n$
+- somme de $n$ termes
+- monotone bornée $\Rightarrow$ convergente
+- passage à la limite dans les inégalités larges
 
-**théorème de la limite monotone** (3)
+**suites extraites et divergence** (3)
 
-- croissante majorée $\Rightarrow$ convergente
-- décroissante minorée $\Rightarrow$ convergente
-- croissante non majorée $\Rightarrow +\infty$
+- $\sin(k\pi) = 0$
+- $\sin\left(2k\pi + \frac\pi3\right) = \frac{\sqrt3}2$
+- si $u_n \to \ell$, toute suite extraite tend vers $\ell$
+- deux suites extraites de limites différentes $\Rightarrow (u_n)$ diverge
 
 **monotonie d'une suite, somme géométrique** (3)
 
@@ -738,32 +760,33 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $(-1)^{2n} = 1$, $(-1)^{2n+1} = -1$
 - $(u_{2n})$ et $(u_{2n+1})$ même limite $\Rightarrow (u_n)$ converge
 
-**monotonie et encadrement d'une somme** (2)
-
-- $u_{n+1} - u_n$ : écrire les deux sommes et simplifier les termes communs ($\frac1{2n} + \frac1{2n+1} - \frac1n$)
-- $n \leqslant k \leqslant 2n-1 \Rightarrow \frac1{2n-1} \leqslant \frac1k \leqslant \frac1n$
-- somme de $n$ termes
-- monotone bornée $\Rightarrow$ convergente
-- passage à la limite dans les inégalités larges
-
-**suites extraites et divergence** (2)
-
-- $\sin(k\pi) = 0$
-- $\sin\left(2k\pi + \frac\pi3\right) = \frac{\sqrt3}2$
-- si $u_n \to \ell$, toute suite extraite tend vers $\ell$
-- deux suites extraites de limites différentes $\Rightarrow (u_n)$ diverge
-
 **somme des termes d'une suite géométrique** (2)
 
 - $\sum_{k=0}^{n} q^k = \frac{1 - q^{n+1}}{1 - q}$ ($q \neq 1$)
 - nombre de termes = $n + 1$
 
-**définitions sur les suites, exemples, limite de $q^n$** (2)
+**énoncés de cours sur les suites (récurrence, gendarmes, majorée)** (2)
 
-- croissante $\forall n, u_n \leqslant u_{n+1}$
-- bornée $\exists M, \forall n, |u_n| \leqslant M$
-- exemples $(-1)^n$, $1 - \frac1n$, $\cos n$
-- $(q^n)$ converge $\iff -1 < q \leqslant 1$ (limite 0 si $|q| < 1$, 1 si $q = 1$)
+- récurrence : $P(n_0)$ et $\forall n \geqslant n_0, P(n) \Rightarrow P(n+1)$ donnent $\forall n \geqslant n_0, P(n)$
+- gendarmes $v_n \leqslant u_n \leqslant w_n$, $v_n, w_n \to \ell \Rightarrow u_n \to \ell$
+- majorée : $\exists M, \forall n, u_n \leqslant M$
+
+**suites géométriques (terme général, somme, limite de $q^n$)** (2)
+
+- $u_n = u_0q^n$
+- $\sum_{k=p}^n q^k = q^p\frac{1 - q^{n-p+1}}{1 - q}$
+- $\sum_{k=2}^8 \frac1{2^k} = \frac14 \cdot \frac{1 - (1/2)^7}{1/2}$
+- $q^n \to +\infty$ ($q > 1$), $1$ ($q = 1$), $0$ ($|q| < 1$), pas de limite ($q \leqslant -1$)
+
+**opérations sur les limites, formes indéterminées** (2)
+
+- $\frac{\ell}{\ell'}$
+- $\frac{\ell > 0}{0^+} = +\infty$
+- $\frac{\pm\infty}{\ell'}$ selon le signe
+- $\frac\infty\infty$ indéterminée
+- $\frac{+\infty}{0^+} = +\infty$
+- $\frac{0^-}{0^+}$ indéterminée
+- factoriser par le terme dominant
 
 **somme de suites convergentes ou divergentes** (2)
 
@@ -828,29 +851,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - décroissante minorée $\Rightarrow$ convergente
 - gendarmes $0 \leqslant u_n \leqslant v_n \to 0$
 - $|q| < 1 \Rightarrow q^n \to 0$
-
-**énoncés de cours sur les suites (récurrence, gendarmes, majorée)** (1)
-
-- récurrence : $P(n_0)$ et $\forall n \geqslant n_0, P(n) \Rightarrow P(n+1)$ donnent $\forall n \geqslant n_0, P(n)$
-- gendarmes $v_n \leqslant u_n \leqslant w_n$, $v_n, w_n \to \ell \Rightarrow u_n \to \ell$
-- majorée : $\exists M, \forall n, u_n \leqslant M$
-
-**suites géométriques (terme général, somme, limite de $q^n$)** (1)
-
-- $u_n = u_0q^n$
-- $\sum_{k=p}^n q^k = q^p\frac{1 - q^{n-p+1}}{1 - q}$
-- $\sum_{k=2}^8 \frac1{2^k} = \frac14 \cdot \frac{1 - (1/2)^7}{1/2}$
-- $q^n \to +\infty$ ($q > 1$), $1$ ($q = 1$), $0$ ($|q| < 1$), pas de limite ($q \leqslant -1$)
-
-**opérations sur les limites, formes indéterminées** (1)
-
-- $\frac{\ell}{\ell'}$
-- $\frac{\ell > 0}{0^+} = +\infty$
-- $\frac{\pm\infty}{\ell'}$ selon le signe
-- $\frac\infty\infty$ indéterminée
-- $\frac{+\infty}{0^+} = +\infty$
-- $\frac{0^-}{0^+}$ indéterminée
-- factoriser par le terme dominant
 
 **limite d'une fraction rationnelle** (1)
 
@@ -1008,6 +1008,26 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 - en $\pm\infty$ : quotient des termes de plus haut degré, $\frac{x - 1}{x + 1} \sim \frac xx = 1$
 
+**cercle trigonométrique, valeurs remarquables, fonction tangente** (2)
+
+- $\cos(\pi - x) = -\cos x$
+- $\cos(\frac\pi2 + x) = -\sin x$
+- $\sin(\frac\pi2 - x) = \cos x$
+- table $0, \frac\pi6, \frac\pi4, \frac\pi3, \frac\pi2$ : $\cos = 1, \frac{\sqrt3}2, \frac{\sqrt2}2, \frac12, 0$
+- réduire modulo $2\pi$
+- $\tan = \frac{\sin}{\cos}$ sur $\mathbb{R} \setminus \{\frac\pi2 + k\pi\}$
+- $\tan' = \frac1{\cos^2} = 1 + \tan^2$
+- $(\frac uv)' = \frac{u'v - uv'}{v^2}$
+
+**fonction logarithme (propriétés, équations, limites, composées)** (2)
+
+- $e^{\ln x} = x$ ($x > 0$), $\ln(e^x) = x$
+- $\ln 1 = 0$, $\ln e = 1$
+- $\ln(ab) = \ln a + \ln b$, $\ln\frac1a = -\ln a$, $\ln\frac ab = \ln a - \ln b$, $n\ln a = \ln(a^n)$
+- $\ln$ croissante : $\ln X < 1 \iff 0 < X < e$
+- $\frac{\ln x}x \to 0$, $x\ln x \to 0$ en $0^+$
+- $(\ln u)' = \frac{u'}u$, $(\sqrt u)' = \frac{u'}{2\sqrt u}$
+
 **asymptotes** (1)
 
 - $\lim_{x \to a} f = \pm\infty$ : asymptote verticale $x = a$
@@ -1096,26 +1116,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\cos\frac{2\pi}3 = -\frac12$, $\sin\frac{2\pi}3 = \frac{\sqrt3}2$
 - TVI : $f$ continue et $f(a)f(b) < 0 \Rightarrow \exists \alpha \in ]a,b[$, $f(\alpha) = 0$
 
-**cercle trigonométrique, valeurs remarquables, fonction tangente** (1)
-
-- $\cos(\pi - x) = -\cos x$
-- $\cos(\frac\pi2 + x) = -\sin x$
-- $\sin(\frac\pi2 - x) = \cos x$
-- table $0, \frac\pi6, \frac\pi4, \frac\pi3, \frac\pi2$ : $\cos = 1, \frac{\sqrt3}2, \frac{\sqrt2}2, \frac12, 0$
-- réduire modulo $2\pi$
-- $\tan = \frac{\sin}{\cos}$ sur $\mathbb{R} \setminus \{\frac\pi2 + k\pi\}$
-- $\tan' = \frac1{\cos^2} = 1 + \tan^2$
-- $(\frac uv)' = \frac{u'v - uv'}{v^2}$
-
-**fonction logarithme (propriétés, équations, limites, composées)** (1)
-
-- $e^{\ln x} = x$ ($x > 0$), $\ln(e^x) = x$
-- $\ln 1 = 0$, $\ln e = 1$
-- $\ln(ab) = \ln a + \ln b$, $\ln\frac1a = -\ln a$, $\ln\frac ab = \ln a - \ln b$, $n\ln a = \ln(a^n)$
-- $\ln$ croissante : $\ln X < 1 \iff 0 < X < e$
-- $\frac{\ln x}x \to 0$, $x\ln x \to 0$ en $0^+$
-- $(\ln u)' = \frac{u'}u$, $(\sqrt u)' = \frac{u'}{2\sqrt u}$
-
 **fonction arctan (définition, dérivée, valeurs remarquables)** (1)
 
 - $\arctan : \mathbb{R} \to \left]-\frac\pi2, \frac\pi2\right[$, réciproque de $\tan$
@@ -1142,7 +1142,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\exists!\,(Q,R)$, $A = BQ + R$, $\deg R < \deg B$
 - $\alpha$ racine $\iff A(\alpha) = 0 \iff X - \alpha \mid A$
 
-**multiplicité d'une racine d'un polynôme** (8)
+**multiplicité d'une racine d'un polynôme** (9)
 
 - $\alpha$ racine d'ordre $m$ $\iff P(\alpha) = P'(\alpha) = \dots = P^{(m-1)}(\alpha) = 0$ et $P^{(m)}(\alpha) \neq 0$
 - $(X^n)' = nX^{n-1}$
@@ -1153,6 +1153,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\alpha$ racine d'ordre $m$ $\iff P(\alpha) = \dots = P^{(m-1)}(\alpha) = 0$, $P^{(m)}(\alpha) \neq 0$
 - $(X^n)' = nX^{n-1}$
 
+**divisibilité et reste de division euclidienne de polynômes** (5)
+
+- $A = BQ + R$, $\deg R < \deg B$
+- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
+- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
+- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
+
 **décomposition en éléments simples** (5)
 
 - si $\deg N \geqslant \deg D$ : division euclidienne, partie entière
@@ -1161,20 +1168,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - facteur irréductible $X^2 + 1$ : $\frac{bX + c}{X^2 + 1}$
 - identifier en évaluant (ex. $X = 0$) ou par limite de $xF(x)$ en $+\infty$
 
-**divisibilité et reste de division euclidienne de polynômes** (4)
-
-- $A = BQ + R$, $\deg R < \deg B$
-- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
-- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
-- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
-
 **divisibilité de polynômes par les racines** (4)
 
 - $X - a \mid P \iff P(a) = 0$
 - $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
 - $(X-a)^2 \mid P \iff P(a) = P'(a) = 0$
 
-**racine multiple d'un polynôme à paramètre** (2)
+**racine multiple d'un polynôme à paramètre** (3)
 
 - $\alpha$ racine au moins double $\iff Q(\alpha) = Q'(\alpha) = 0$
 - $((X+1)^7)' = 7(X+1)^6$
@@ -1417,7 +1417,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## HP (arithmétique)
 
-**équation diophantienne $ax+by=c$ (Euclide, Gauss)** (14)
+**équation diophantienne $ax+by=c$ (Euclide, Gauss)** (16)
 
 - Euclide : $a = bq + r$, $a \wedge b = b \wedge r$
 - solutions $\iff (a \wedge b) \mid c$
@@ -1427,19 +1427,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $a(x - x_0) = -b(y - y_0)$ donne $x = x_0 + \frac{b}{d}k$, $y = y_0 - \frac{a}{d}k$, $k \in \mathbb{Z}$
 - vérifier la réciproque
 
-**petit théorème de Fermat, reste d'une puissance** (6)
-
-- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
-- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
-- $a^{q(p-1)+r} \equiv a^r\,[p]$
-
-**division euclidienne dans $\mathbb{Z}$** (6)
-
-- $\exists!\,(q, r)$, $a = bq + r$, $0 \leqslant r < |b|$
-- ajuster : $a = bq + r = b(q+1) + (r - b)$
-- pour $-a$ : $-a = b(-q) - r = b(-q-1) + (b - r)$
-
-**congruences (définition, opérations)** (6)
+**congruences (définition, opérations)** (9)
 
 - $a \equiv b\,[n] \iff n \mid a - b$
 - compatibilité avec $+$, $\times$, puissances
@@ -1447,7 +1435,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - réduire chaque nombre modulo $n$
 - reste dans $[\![0, n-1]\!]$
 
-**divisibilité et division euclidienne (vrai/faux)** (6)
+**divisibilité et division euclidienne (vrai/faux)** (8)
 
 - $a \mid b \iff \exists k \in \mathbb{Z}, b = ka$
 - $a \mid b$ et $b \mid a \Rightarrow a = \pm b$
@@ -1455,6 +1443,41 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - contre-exemple $2 \mid 4$, $4 \mid 4$, $8 \nmid 4$
 - $a \mid bc \not\Rightarrow a \mid b$ ou $a \mid c$ ($6 \mid 2 \times 3$)
 - division euclidienne $0 \leqslant r < |b|$
+
+**Bézout, Euclide, lemme de Gauss (démonstrations)** (7)
+
+- Bézout : $\exists (u,v), au + bv = a \wedge b$
+- $a \wedge b = 1 \iff \exists (u,v), au + bv = 1$
+- Euclide : $a = bq + r$, remonter les divisions
+- Gauss : $a \mid bc$, $a \wedge b = 1 \Rightarrow a \mid c$
+- $a \mid c$, $b \mid c$, $a \wedge b = 1 \Rightarrow ab \mid c$
+
+**division euclidienne dans $\mathbb{Z}$** (7)
+
+- $\exists!\,(q, r)$, $a = bq + r$, $0 \leqslant r < |b|$
+- ajuster : $a = bq + r = b(q+1) + (r - b)$
+- pour $-a$ : $-a = b(-q) - r = b(-q-1) + (b - r)$
+
+**petit théorème de Fermat, reste d'une puissance** (6)
+
+- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
+- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
+- $a^{q(p-1)+r} \equiv a^r\,[p]$
+
+**Bézout (énoncé et applications)** (6)
+
+- Bézout : $\exists (u,v), au + bv = a \wedge b$
+- $a \wedge b = 1 \iff \exists (u,v), au + bv = 1$
+- élever au carré / multiplier une relation de Bézout
+- $2 \times (2n+1) \cdot 1 - \dots$ : $1 \cdot (2n+1) - 2 \cdot n = 1$
+- fraction irréductible $\iff$ numérateur et dénominateur premiers entre eux
+
+**PGCD par facteurs premiers, Fermat** (6)
+
+- décomposition en facteurs premiers
+- $a \wedge b = \prod p^{\min}$
+- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
+- premier : exactement deux diviseurs positifs
 
 **congruences, reste d'une puissance** (5)
 
@@ -1470,13 +1493,19 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $d \mid a$ et $d \mid b \Rightarrow d \mid au + bv$
 - transitivité de $\mid$
 
-**Bézout, Euclide, lemme de Gauss (démonstrations)** (5)
+**décomposition en facteurs premiers, diviseurs communs** (5)
 
-- Bézout : $\exists (u,v), au + bv = a \wedge b$
-- $a \wedge b = 1 \iff \exists (u,v), au + bv = 1$
-- Euclide : $a = bq + r$, remonter les divisions
-- Gauss : $a \mid bc$, $a \wedge b = 1 \Rightarrow a \mid c$
-- $a \mid c$, $b \mid c$, $a \wedge b = 1 \Rightarrow ab \mid c$
+- $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
+- $d \mid a$ et $d \mid b \iff d \mid a \wedge b$ (Bézout)
+- diviseurs de $\prod p_i^{\gamma_i}$ : $\prod p_i^{\delta_i}$, $0 \leqslant \delta_i \leqslant \gamma_i$
+- nombre : $\prod(\gamma_i + 1)$
+
+**congruences et Fermat, divisibilité** (4)
+
+- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
+- Fermat : $p$ premier $\Rightarrow a^p \equiv a\,[p]$
+- $a^{mn+r} = (a^m)^n a^r$
+- $n \mid A \iff A \equiv 0\,[n]$
 
 **congruences, Fermat, reste d'une puissance** (4)
 
@@ -1485,27 +1514,12 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
 - $a^{q(p-1)+r} \equiv a^r\,[p]$
 
-**décomposition en facteurs premiers, diviseurs communs** (4)
+**PGCD et Bézout (démonstration)** (3)
 
-- $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
-- $d \mid a$ et $d \mid b \iff d \mid a \wedge b$ (Bézout)
-- diviseurs de $\prod p_i^{\gamma_i}$ : $\prod p_i^{\delta_i}$, $0 \leqslant \delta_i \leqslant \gamma_i$
-- nombre : $\prod(\gamma_i + 1)$
-
-**Bézout (énoncé et applications)** (4)
-
-- Bézout : $\exists (u,v), au + bv = a \wedge b$
-- $a \wedge b = 1 \iff \exists (u,v), au + bv = 1$
-- élever au carré / multiplier une relation de Bézout
-- $2 \times (2n+1) \cdot 1 - \dots$ : $1 \cdot (2n+1) - 2 \cdot n = 1$
-- fraction irréductible $\iff$ numérateur et dénominateur premiers entre eux
-
-**PGCD par facteurs premiers, Fermat** (4)
-
-- décomposition en facteurs premiers
-- $a \wedge b = \prod p^{\min}$
-- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
-- premier : exactement deux diviseurs positifs
+- $d \mid a$ et $d \mid b$ : $a = da'$, $b = db'$
+- $a' \wedge b' = 1$
+- Bézout : $a' \wedge b' = 1 \iff \exists (u,v), a'u + b'v = 1$
+- multiplier par $d$
 
 **Bézout ($a+b$ et $ab$ premiers entre eux)** (3)
 
@@ -1518,25 +1532,19 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - critères de divisibilité (2, 3 : somme des chiffres, 5, 11)
 - $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
 
-**congruences et Fermat, divisibilité** (3)
-
-- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
-- Fermat : $p$ premier $\Rightarrow a^p \equiv a\,[p]$
-- $a^{mn+r} = (a^m)^n a^r$
-- $n \mid A \iff A \equiv 0\,[n]$
-
 **décomposition en facteurs premiers, nombre de diviseurs, PGCD** (3)
 
 - diviseur de $\prod p_i^{\alpha_i}$ : $\prod p_i^{\beta_i}$, $0 \leqslant \beta_i \leqslant \alpha_i$
 - nombre de diviseurs $\prod(\alpha_i + 1)$
 - $a \wedge b = \prod p^{\min}$
 
-**PGCD et Bézout (démonstration)** (2)
+**petit théorème de Fermat (énoncé, démonstration, application)** (3)
 
-- $d \mid a$ et $d \mid b$ : $a = da'$, $b = db'$
-- $a' \wedge b' = 1$
-- Bézout : $a' \wedge b' = 1 \iff \exists (u,v), a'u + b'v = 1$
-- multiplier par $d$
+- Fermat : $p$ premier $\Rightarrow \forall n, n^p \equiv n\,[p]$
+- si $p \nmid n$, $n^{p-1} \equiv 1\,[p]$
+- binôme $(n+1)^p = \sum_k \binom pk n^k$ et $p \mid \binom pk$ pour $1 \leqslant k \leqslant p-1$ (récurrence)
+- Gauss pour simplifier par $n$
+- $a^{6q+r} \equiv a^r\,[7]$
 
 **division euclidienne (énigme)** (2)
 
@@ -1568,15 +1576,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $a^2 - 1 = (a-1)(a+1)$
 - Fermat : $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
 
-**petit théorème de Fermat (énoncé, démonstration, application)** (2)
-
-- Fermat : $p$ premier $\Rightarrow \forall n, n^p \equiv n\,[p]$
-- si $p \nmid n$, $n^{p-1} \equiv 1\,[p]$
-- binôme $(n+1)^p = \sum_k \binom pk n^k$ et $p \mid \binom pk$ pour $1 \leqslant k \leqslant p-1$ (récurrence)
-- Gauss pour simplifier par $n$
-- $a^{6q+r} \equiv a^r\,[7]$
-
-**congruences modulo $n$, équation sans solution** (1)
+**congruences modulo $n$, équation sans solution** (2)
 
 - $a \equiv b\,[n] \Rightarrow a^2 \equiv b^2\,[n]$
 - $11 \equiv 1$, $7 \equiv 2\,[5]$
@@ -1584,7 +1584,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $x = 5k \Rightarrow x^2 = 25k^2$
 - $25 \mid$ membre de gauche mais $25 \nmid 5$
 
-**divisibilité, PGCD, Bézout, Gauss, Fermat (QCM)** (1)
+**divisibilité, PGCD, Bézout, Gauss, Fermat (QCM)** (2)
 
 - $a \mid b$ et $a \mid c \Rightarrow a \mid b - c$
 - $au + cv = d \Rightarrow (a \wedge c) \mid d$
@@ -1622,7 +1622,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## HP (nombres complexes, hors programme 2031)
 
-**forme exponentielle, argument** (9)
+**forme exponentielle, argument** (10)
 
 - $z = |z|e^{i\theta}$
 - $e^{i\theta}e^{i\varphi} = e^{i(\theta + \varphi)}$
@@ -1630,7 +1630,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $(re^{i\theta})^n = r^ne^{in\theta}$
 - $-i = e^{-i\pi/2}$
 
-**équation du second degré à coefficients complexes** (5)
+**équation du second degré à coefficients complexes** (6)
 
 - $\Delta = b^2 - 4ac$
 - racine carrée $\delta = a + ib$ de $\Delta$ : $a^2 - b^2 = \mathrm{Re}\,\Delta$, $a^2 + b^2 = |\Delta|$, $2ab = \mathrm{Im}\,\Delta$

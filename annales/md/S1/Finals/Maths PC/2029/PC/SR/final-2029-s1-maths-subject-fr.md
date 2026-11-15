@@ -1,7 +1,7 @@
 # Examen S1B2-SR (suites réelles) — janvier 2025 (sujet, FR)
 
 - Source : `raw/S1/Finals/Maths PC/2029/PC/SR/final-2029-s1-maths-subject-fr.pdf` (8 pages)
-- Date réelle : janvier 2025 (dossier promo 2029, ECUE SR = APIS suites 2031). Pas de corrigé.
+- Date réelle : janvier 2025 (dossier promo 2029, ECUE SR = APIS suites 2031). Corrigé rédigé : `final-2029-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 h 30. Barème sur 30 points ramené à 20. 6 exercices. Rigueur prise en compte, malus d'un point pour manque de propreté. Documents et calculatrices interdits.
 
 ## Exercice 1 : suites adjacentes (7 points)

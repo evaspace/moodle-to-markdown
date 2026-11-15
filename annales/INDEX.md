@@ -1,10 +1,26 @@
 # Index des annales de maths (S1 et S2)
 
-148 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 968 exercices.
+162 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1041 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
 ## S1 — Partiels (finals)
+
+### Partiel 1 — janvier 2016 (corrigé rédigé, FR)
+
+`md/S1/Finals/Maths PC/2020/final-2020-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (4 points) | nier une phrase | OBM | maths-s1-obm/3 |
+| Exercice 2 (2 points) | récurrence (inégalité de Bernoulli) | OBM | maths-s1-obm/7 |
+| Exercice 3 (2 points) | traduire avec quantificateurs | OBM | maths-s1-obm/4 |
+| Exercice 4 (2 points) | injectivité / surjectivité de $x \mapsto x^2$ | OBM | maths-s1-obm/10 |
+| Exercice 5 (3 points) | équation diophantienne $ax+by=c$ (Euclide, Gauss) | HP (arithmétique) | — |
+| Exercice 6 (2 points) | PGCD et Bézout (démonstration) | HP (arithmétique) | — |
+| Exercice 7 (2 points) | multiplicité d'une racine d'un polynôme | APEF (polynômes) | maths-s2-apef-polynomes/4 |
+| Exercice 8 (3 points) | divisibilité et reste de division euclidienne de polynômes | APEF (polynômes) | maths-s2-apef-polynomes/5 |
+| Exercice 9 (2 points) | racine multiple d'un polynôme à paramètre | APEF (polynômes) | maths-s2-apef-polynomes/10 |
 
 ### Final exam n°1 — January 2016 (subject, EN)
 
@@ -304,6 +320,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 5 : étude d'une suite (10 points) | suite homographique, suite auxiliaire géométrique | APIS (suites) | maths-s1-apis-suites/10 |
 | Exercice 6 : suites extraites (3 points) | suites extraites $(u_{2n})$, $(u_{2n+1})$ | APIS (suites) | maths-s1-apis-suites/11 |
 
+### Examen S1B2-ARITH — janvier 2025 (corrigé rédigé, FR)
+
+`md/S1/Finals/Maths PC/2029/PC/ARITH/final-2029-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : autour des nombres premiers (7 points) | décomposition en facteurs premiers, diviseurs communs | HP (arithmétique) | — |
+| Exercice 2 : équation diophantienne (6 points) | équation diophantienne $ax+by=c$ (Euclide, Gauss) | HP (arithmétique) | — |
+| Exercice 3 : autour du cours et de Bézout (6 points) | Bézout (énoncé et applications) | HP (arithmétique) | — |
+| Exercice 4 : autour du cours et de Fermat (7 points) | petit théorème de Fermat (énoncé, démonstration, application) | HP (arithmétique) | — |
+| Exercice 5 : congruence (4 points) | congruences modulo $n$, équation sans solution | HP (arithmétique) | — |
+
 ### Examen S1B2-ARITH — janvier 2025 (sujet, FR)
 
 `md/S1/Finals/Maths PC/2029/PC/ARITH/final-2029-s1-maths-subject-fr.md` — date réelle : janvier 2025
@@ -315,6 +343,19 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : autour du cours et de Bézout (6 points) | Bézout (énoncé et applications) | HP (arithmétique) | — |
 | Exercice 4 : autour du cours et de Fermat (7 points) | petit théorème de Fermat (énoncé, démonstration, application) | HP (arithmétique) | — |
 | Exercice 5 : congruence (4 points) | congruences modulo $n$, équation sans solution | HP (arithmétique) | — |
+
+### Examen S1B2-SR (suites réelles) — janvier 2025 (corrigé rédigé, FR)
+
+`md/S1/Finals/Maths PC/2029/PC/SR/final-2029-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : suites adjacentes (7 points) | suites adjacentes via une suite géométrique | APIS (suites) | maths-s1-apis-suites/9 |
+| Exercice 2 : étude d'une suite (5 points) | monotonie et encadrement d'une somme | APIS (suites) | maths-s1-apis-suites/8 |
+| Exercice 3 : comparaison de suites (7,5 points) | comparaison de suites ($\sim$, $o$, $O$) | APIS (suites) | maths-s1-apis-suites/12 |
+| Exercice 4 : cours (3 points) | démonstration de cours (convergente implique bornée) | APIS (suites) | maths-s1-apis-suites/13 |
+| Exercice 5 : suite récurrente (4,5 points) | suite récurrente $u_{n+1} = f(u_n)$ | APIS (suites) | maths-s1-apis-suites/10 |
+| Exercice 6 : suites extraites (3 points) | suites extraites et divergence | APIS (suites) | maths-s1-apis-suites/11 |
 
 ### Examen S1B2-SR (suites réelles) — janvier 2025 (sujet, FR)
 
@@ -486,6 +527,21 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4 (4 points) | équation du second degré à coefficients complexes | HP (nombres complexes, hors programme 2031) | — |
 | Exercice 5 (4 points) | développements limités, limite par équivalents | APEF (fonctions) | maths-s2-apef-fonctions/9 |
 | Exercice 6 (2 points) | théorème des valeurs intermédiaires | APEF (fonctions) | maths-s2-apef-fonctions/2 |
+
+### Contrôle 1 S1 — octobre 2018 (corrigé rédigé, FR)
+
+`md/S1/Midterms/Maths PC/2023/midterm-2023-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (2,5 points) | image directe, image réciproque (lecture graphique) | OBM | maths-s1-obm/9 |
+| Exercice 2 (1,5 points) | image réciproque d'un singleton | OBM | maths-s1-obm/9 |
+| Exercice 3 (2 points) | dériver une composée | APIS (intégrales) | maths-s1-apis-integrales/1 |
+| Exercice 4 (4 points) | intégrales (primitive directe, IPP, changement de variable) | APIS (intégrales) | maths-s1-apis-integrales/13 |
+| Exercice 5 (3 points) | équation du second degré à coefficients complexes | HP (nombres complexes, hors programme 2031) | — |
+| Exercice 6 (3 points) | injectivité / surjectivité, composées | OBM | maths-s1-obm/10 |
+| Exercice 7 (2 points) | dénombrement de mains de cartes | DP | maths-s1-dp/5 |
+| Exercice 8 (3 points) | probabilités totales et Bayes | DP | maths-s1-dp/10 |
 
 ### Contrôle 1 S1 — octobre 2018 (sujet, FR)
 
@@ -784,6 +840,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 
 ## S1 — Contrôles de TD et feuilles de TD
 
+### Contrôle TD 1 (S1) — lundi 8 octobre 2018 (corrigé rédigé, FR)
+
+`md/S1/TDs/2023/td1-2023-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Question de cours | image directe et réciproque, injectivité, surjectivité, composée | OBM | maths-s1-obm/10 |
+| Exercice 1 | forme exponentielle, argument | HP (nombres complexes, hors programme 2031) | — |
+| Exercice 2 | coefficients binomiaux, récurrence (somme de $\binom kp$) | DP | maths-s1-dp/6 |
+| Exercice 3 | IPP : polynôme × sin/cos | APIS (intégrales) | maths-s1-apis-integrales/7 |
+
 ### Contrôle TD 1 (S1) — lundi 8 octobre 2018 (sujet, FR)
 
 `md/S1/TDs/2023/td1-2023-s1-maths-subject-fr.md` — date réelle : 8 octobre 2018
@@ -795,6 +862,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 2 | coefficients binomiaux, récurrence (somme de $\binom kp$) | DP | maths-s1-dp/6 |
 | Exercice 3 | IPP : polynôme × sin/cos | APIS (intégrales) | maths-s1-apis-integrales/7 |
 
+### Contrôle TD 1 (S1) — lundi 19 octobre 2020 (corrigé rédigé, FR)
+
+`md/S1/TDs/2025/td1-2025-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Questions de cours | image directe et réciproque, injectivité, surjectivité, composée | OBM | maths-s1-obm/10 |
+| Exercice 1 | image directe, image réciproque (lecture graphique) | OBM | maths-s1-obm/9 |
+| Exercice 2 | primitive $u'/u^n$, IPP trigonométrique | APIS (intégrales) | maths-s1-apis-integrales/7 |
+| Exercice 3 | nier une phrase quantifiée | OBM | maths-s1-obm/5 |
+
 ### Contrôle TD 1 (S1) — lundi 19 octobre 2020 (sujet, FR)
 
 `md/S1/TDs/2025/td1-2025-s1-maths-subject-fr.md` — date réelle : 19 octobre 2020
@@ -805,6 +883,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1 | image directe, image réciproque (lecture graphique) | OBM | maths-s1-obm/9 |
 | Exercice 2 | primitive $u'/u^n$, IPP trigonométrique | APIS (intégrales) | maths-s1-apis-integrales/7 |
 | Exercice 3 | nier une phrase quantifiée | OBM | maths-s1-obm/5 |
+
+### Contrôle TD 2 (S1) — distanciel, fin 2020 (corrigé rédigé, FR)
+
+`md/S1/TDs/2025/td2-2025-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Question de cours 1 | loi binomiale (QCM) | DP | maths-s1-dp/14 |
+| Question de cours 2 | divisibilité, PGCD, Bézout, Gauss, Fermat (QCM) | HP (arithmétique) | — |
+| Exercice 1 : probabilités | probabilités totales et Bayes | DP | maths-s1-dp/10 |
+| Exercice 2 : arithmétique | congruences et Fermat, divisibilité | HP (arithmétique) | — |
 
 ### Contrôle TD 2 (S1) — distanciel, fin 2020 (sujet, FR)
 
@@ -861,6 +950,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 2 (3 points) | décomposition en facteurs premiers, diviseurs communs | HP (arithmétique) | — |
 | Exercice 3 (1,5 points) | Bézout (énoncé et applications) | HP (arithmétique) | — |
 
+### Contrôle de cours 1, mathématiques S1 — lundi 3 octobre 2022 (corrigé rédigé, FR)
+
+`md/S1/TDs/2027/td1-2027-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (3,5 points) | négations, implications et équivalences | OBM | maths-s1-obm/2 |
+| Exercice 2 (6 points) | injectivité, surjectivité, image directe et réciproque | OBM | maths-s1-obm/10 |
+| Exercice 3 (4,5 points) | primitive $u'\sqrt u$, théorème d'intégration par parties | APIS (intégrales) | maths-s1-apis-integrales/6 |
+| Exercice 4 (2,5 points) | dénombrement (p-listes, arrangements, anagrammes, parties) | DP | maths-s1-dp/4 |
+| Exercice 5 (3,5 points) | coefficients binomiaux (symétrie) | DP | maths-s1-dp/6 |
+
 ### Contrôle de cours 1, mathématiques S1 — lundi 3 octobre 2022 (sujet, FR)
 
 `md/S1/TDs/2027/td1-2027-s1-maths-subject-fr.md` — date réelle : 3 octobre 2022
@@ -873,6 +974,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4 (2,5 points) | dénombrement (p-listes, arrangements, anagrammes, parties) | DP | maths-s1-dp/4 |
 | Exercice 5 (3,5 points) | coefficients binomiaux (symétrie) | DP | maths-s1-dp/6 |
 
+### Contrôle de cours 2, mathématiques S1 — lundi 5 décembre 2022 (corrigé rédigé, FR)
+
+`md/S1/TDs/2027/td2-2027-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : divisibilité et division euclidienne (3,5 points) | division euclidienne dans $\mathbb{Z}$ | HP (arithmétique) | — |
+| Exercice 2 : congruence (5 points) | congruences (définition, opérations) | HP (arithmétique) | — |
+| Exercice 3 : lemme de Gauss (3 points) | Bézout, Euclide, lemme de Gauss (démonstrations) | HP (arithmétique) | — |
+| Exercice 4 : pgcd (2,5 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
+| Exercice 5 (6 points) | définitions sur les suites, exemples, limite de $q^n$ | APIS (suites) | maths-s1-apis-suites/4 |
+
 ### Contrôle de cours 2, mathématiques S1 — lundi 5 décembre 2022 (sujet, FR)
 
 `md/S1/TDs/2027/td2-2027-s1-maths-subject-fr.md` — date réelle : 5 décembre 2022
@@ -884,6 +997,19 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : lemme de Gauss (3 points) | Bézout, Euclide, lemme de Gauss (démonstrations) | HP (arithmétique) | — |
 | Exercice 4 : pgcd (2,5 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
 | Exercice 5 (6 points) | définitions sur les suites, exemples, limite de $q^n$ | APIS (suites) | maths-s1-apis-suites/4 |
+
+### Contrôle de cours 1, mathématiques S1 — lundi 16 octobre 2023 (corrigé rédigé, FR)
+
+`md/S1/TDs/2028/td1-2028-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Partie LE, cours 1 : sur la logique (9 points) | négations, implications et équivalences | OBM | maths-s1-obm/2 |
+| Partie LE, cours 2 : sur les ensembles (4 points) | ensembles (appartenance, inclusion, union, intersection, produit, complémentaire) | OBM | maths-s1-obm/8 |
+| Partie LE, cours 3 : sur les fonctions (7 points) | injectivité, surjectivité, image directe et réciproque | OBM | maths-s1-obm/10 |
+| Partie DP, cours 1 : dénombrement (6 points) | interpréter une formule de dénombrement | DP | maths-s1-dp/4 |
+| Partie DP, cours 2 : sur les combinaisons (8 points) | binôme de Newton et double comptage | DP | maths-s1-dp/6 |
+| Partie DP, cours 3 : probabilités (6 points) | formules de base des probabilités | DP | maths-s1-dp/8 |
 
 ### Contrôle de cours 1, mathématiques S1 — lundi 16 octobre 2023 (sujet, FR)
 
@@ -898,6 +1024,16 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Partie DP, cours 2 : sur les combinaisons (8 points) | binôme de Newton et double comptage | DP | maths-s1-dp/6 |
 | Partie DP, cours 3 : probabilités (6 points) | formules de base des probabilités | DP | maths-s1-dp/8 |
 
+### Contrôle de cours ECUE FCT, mathématiques S1PA — lundi 20 novembre 2023 (corrigé rédigé, FR)
+
+`md/S1/TDs/2028/td1-2028-s1-maths_PA-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : fonctions trigonométriques (8 points) | cercle trigonométrique, valeurs remarquables, fonction tangente | APEF (fonctions) | — |
+| Cours 2 : dérivées de fonctions composées (2 points) | dériver une composée | APIS (intégrales) | maths-s1-apis-integrales/1 |
+| Cours 3 : la fonction $x \mapsto \ln(x)$ (10 points) | fonction logarithme (propriétés, équations, limites, composées) | APEF (fonctions) | — |
+
 ### Contrôle de cours ECUE FCT, mathématiques S1PA — lundi 20 novembre 2023 (sujet, FR)
 
 `md/S1/TDs/2028/td1-2028-s1-maths_PA-subject-fr.md` — date réelle : 20 novembre 2023
@@ -907,6 +1043,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 1 : fonctions trigonométriques (8 points) | cercle trigonométrique, valeurs remarquables, fonction tangente | APEF (fonctions) | — |
 | Cours 2 : dérivées de fonctions composées (2 points) | dériver une composée | APIS (intégrales) | maths-s1-apis-integrales/1 |
 | Cours 3 : la fonction $x \mapsto \ln(x)$ (10 points) | fonction logarithme (propriétés, équations, limites, composées) | APEF (fonctions) | — |
+
+### Contrôle de cours, mathématiques S1 — lundi 27 novembre 2023 (corrigé rédigé, FR)
+
+`md/S1/TDs/2028/td2-2028-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Partie ARITH, cours 1 : divisibilité et division euclidienne (7 points) | divisibilité et division euclidienne (vrai/faux) | HP (arithmétique) | — |
+| Partie ARITH, cours 2 : autour de Bézout (5 points) | Bézout (énoncé et applications) | HP (arithmétique) | — |
+| Partie ARITH, cours 3 : congruence (8 points) | congruences (définition, opérations) | HP (arithmétique) | — |
+| Partie ASI, cours 1 : définitions (5 points) | définitions sur les suites, exemples, limite de $q^n$ | APIS (suites) | maths-s1-apis-suites/3 |
+| Partie ASI, cours 2 : convergence ou divergence (5 points) | limites usuelles de suites | APIS (suites) | maths-s1-apis-suites/4 |
 
 ### Contrôle de cours, mathématiques S1 — lundi 27 novembre 2023 (sujet, FR)
 
@@ -920,6 +1068,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Partie ASI, cours 1 : définitions (5 points) | définitions sur les suites, exemples, limite de $q^n$ | APIS (suites) | maths-s1-apis-suites/3 |
 | Partie ASI, cours 2 : convergence ou divergence (5 points) | limites usuelles de suites | APIS (suites) | maths-s1-apis-suites/4 |
 
+### Contrôle de cours 1, mathématiques S1PA — lundi 9 octobre 2023 (corrigé rédigé, FR)
+
+`md/S1/TDs/2028/td2-2028-s1-maths_PA-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : définitions et théorèmes à énoncer (5 points) | énoncés de cours sur les suites (récurrence, gendarmes, majorée) | APIS (suites) | maths-s1-apis-suites/13 |
+| Cours 2 : exemple des suites géométriques (4 points) | suites géométriques (terme général, somme, limite de $q^n$) | APIS (suites) | maths-s1-apis-suites/1 |
+| Cours 3 : limites de suites (6 points) | opérations sur les limites, formes indéterminées | APIS (suites) | maths-s1-apis-suites/5 |
+| Cours 4 : comparaisons (3 points) | comparaison et limites | APIS (suites) | maths-s1-apis-suites/6 |
+| Cours 5 : convergence ou divergence (2 points) | théorème de la limite monotone | APIS (suites) | maths-s1-apis-suites/8 |
+
 ### Contrôle de cours 1, mathématiques S1PA — lundi 9 octobre 2023 (sujet, FR)
 
 `md/S1/TDs/2028/td2-2028-s1-maths_PA-subject-fr.md` — date réelle : 9 octobre 2023
@@ -931,6 +1091,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 3 : limites de suites (6 points) | opérations sur les limites, formes indéterminées | APIS (suites) | maths-s1-apis-suites/5 |
 | Cours 4 : comparaisons (3 points) | comparaison et limites | APIS (suites) | maths-s1-apis-suites/6 |
 | Cours 5 : convergence ou divergence (2 points) | théorème de la limite monotone | APIS (suites) | maths-s1-apis-suites/8 |
+
+### Contrôle de cours ECUE ARITH, mathématiques S1 — lundi 25 novembre 2024 (corrigé rédigé, FR)
+
+`md/S1/TDs/2029/td2-2029-s1-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : divisibilité et division euclidienne (5 points) | divisibilité et division euclidienne (vrai/faux) | HP (arithmétique) | — |
+| Cours 2 : congruence (6,5 points) | congruences (définition, opérations) | HP (arithmétique) | — |
+| Cours 3 : autour de Bézout (6,5 points) | Bézout, Euclide, lemme de Gauss (démonstrations) | HP (arithmétique) | — |
+| Cours 4 : nombres premiers et pgcd (2 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
 
 ### Contrôle de cours ECUE ARITH, mathématiques S1 — lundi 25 novembre 2024 (sujet, FR)
 

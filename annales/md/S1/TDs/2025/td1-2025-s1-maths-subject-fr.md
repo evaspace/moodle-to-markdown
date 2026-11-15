@@ -1,7 +1,7 @@
 # Contrôle TD 1 (S1) — lundi 19 octobre 2020 (sujet, FR)
 
 - Source : `raw/S1/TDs/2025/td1-2025-s1-maths-subject-fr.pdf` (2 pages)
-- Date réelle : 19 octobre 2020 (dossier promo 2025). Pas de corrigé.
+- Date réelle : 19 octobre 2020 (dossier promo 2025). Corrigé rédigé : `td1-2025-s1-maths-correction-fr.md` (même dossier).
 
 ## Questions de cours
 Type : image directe et réciproque, injectivité, surjectivité, composée · ECUE : OBM · Niveau : maths-s1-obm/10

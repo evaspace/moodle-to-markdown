@@ -1,7 +1,7 @@
 # Contrôle de cours 1, mathématiques S1PA — lundi 9 octobre 2023 (sujet, FR)
 
 - Source : `raw/S1/TDs/2028/td2-2028-s1-maths_PA-subject-fr.pdf` (scan d'une copie remplie et notée, 3 pages ; seuls les énoncés sont repris)
-- Date réelle : 9 octobre 2023 (parcours PA, dossier promo 2028).
+- Date réelle : 9 octobre 2023 (parcours PA, dossier promo 2028). Corrigé rédigé : `td2-2028-s1-maths_PA-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20.
 
 ## Cours 1 : définitions et théorèmes à énoncer (5 points)

@@ -1,7 +1,7 @@
 # Contrôle de cours, mathématiques S1 — lundi 27 novembre 2023 (sujet, FR)
 
 - Source : `raw/S1/TDs/2028/td2-2028-s1-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 27 novembre 2023 (dossier promo 2028). Pas de corrigé.
+- Date réelle : 27 novembre 2023 (dossier promo 2028). Corrigé rédigé : `td2-2028-s1-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Deux parties : ARITH (environ 45 min, sur 20) et ASI (environ 15 min, sur 10, note doublée).
 
 ## Partie ARITH, cours 1 : divisibilité et division euclidienne (7 points)

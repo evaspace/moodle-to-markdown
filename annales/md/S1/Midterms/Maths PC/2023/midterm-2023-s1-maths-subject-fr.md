@@ -1,7 +1,7 @@
 # Contrôle 1 S1 — octobre 2018 (sujet, FR)
 
 - Source : `raw/S1/Midterms/Maths PC/2023/midterm-2023-s1-maths-subject-fr.pdf` (scan, 6 pages)
-- Date réelle : octobre 2018 (S1 18/19, dossier promo 2023). Pas de corrigé.
+- Date réelle : octobre 2018 (S1 18/19, dossier promo 2023). Corrigé rédigé : `midterm-2023-s1-maths-correction-fr.md` (même dossier).
 - Durée : trois heures. Documents et calculatrices non autorisés. Barème : 21 points.
 
 ## Exercice 1 (2,5 points)
