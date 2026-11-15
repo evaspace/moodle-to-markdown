@@ -84,6 +84,15 @@
       <div class="lv-meter"><span style="width:{{ x.rate }}%"></span></div></li>{% endfor %}
   </ul>
   {% endif %}
+  {% if s.feed.n %}
+  <h2>Le fil d'accueil</h2>
+  <dl class="st-big">
+    <div><dt>Cartes vues</dt><dd>{{ s.feed.n }}</dd></div>
+    <div><dt>Réponses justes</dt><dd class="st-ok">{{ s.feed.rate }} %</dd></div>
+    <div><dt>Temps</dt><dd>{{ s.feed.minutes }} min</dd></div>
+    <div><dt>Meilleur combo</dt><dd>{{ s.feed.combo }}</dd></div>
+  </dl>
+  {% endif %}
 </div>
 <script>for (const el of document.querySelectorAll('.st-heat-scroll')) el.scrollLeft = el.scrollWidth;</script>
 {% include 'footer.html' %}

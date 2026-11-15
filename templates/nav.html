@@ -10,7 +10,7 @@
   </nav>
   {% if nav.logged %}
   <a class="app-nav-me" href="/stats" title="Niveaux sur papier validés, points, jours d'affilée">
-    <strong>{{ nav.levels_done }}/{{ nav.levels_total }}</strong> niveaux · {{ nav.xp }} pts{% if nav.streak %} · {{ nav.streak }} j{% endif %}
+    <strong>{{ nav.levels_done }}/{{ nav.levels_total }}</strong> niveaux · <span id="xp">{{ nav.xp }}</span> pts{% if nav.streak %} · {{ nav.streak }} j{% endif %}
   </a>
   <a class="app-nav-acc" href="/compte">{{ nav.username }}</a>
   {% else %}

@@ -413,3 +413,8 @@ Linked from `/niveaux` and `/compte`.
 ## Navbar, stats et admin (2026-11-15)
 - `templates/nav.html` : navbar commune, alimentée par `levels.nav_state()` (processeur de contexte `nav`, route `/api/me`). Footer `footer.html` inclus sur toutes les pages sauf les fils plein écran.
 - `/stats` : stats personnelles. `/admin/stats` (HTTP Basic `ADMIN_PASSWORD`, `?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).
+
+
+## Home feed state per account
+
+`user_state`, `session_log`, `folder` and `favorite` have a `uid` column (account id, `0` = anonymous visitors, who share one state as before). `init_db.migrate_uid` adds it and rebuilds `folder`/`favorite` (UNIQUE now includes `uid`). Streak, XP, failed-card replay, likes and folders therefore follow the logged-in account. The home category list for maths is sorted promo 2031, then S1, then S2, then the rest (`themes.syllabus_rank`).

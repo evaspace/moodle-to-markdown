@@ -791,4 +791,11 @@ def stats_page():
             s['paths'].append({'id': sid, 'titre': data['subject']['titre'], 'best': best, 'n': len(data['levels']),
                                'green': green, 'total': sum(len(l['exos']) for l in data['levels']),
                                'percent': total_percent(st, data)})
+    with db() as conn:  # home feed (session_log is per account since uid)
+        n, answered, right, ms = conn.execute(
+            'SELECT COUNT(*), COUNT(is_correct), COALESCE(SUM(is_correct), 0), COALESCE(SUM(time_spent_ms), 0)'
+            ' FROM session_log WHERE uid=?', (session['uid'],)).fetchone()
+        best = conn.execute('SELECT max_streak FROM user_state WHERE uid=?', (session['uid'],)).fetchone()
+    s['feed'] = {'n': n, 'answered': answered, 'rate': round(100 * right / answered) if answered else 0,
+                 'minutes': round(ms / 60000), 'combo': best[0] if best else 0}
     return render_template('stats.html', s=s, username=session['username'], xp=total_xp)

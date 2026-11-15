@@ -51,3 +51,15 @@ def theme_for(category_name: str) -> dict:
 def theme_order(theme_id: str) -> int:
     ids = [t[0] for t in THEMES]
     return ids.index(theme_id) if theme_id in ids else len(ids)
+
+
+def syllabus_rank(category_name: str) -> int:
+    """Sort key putting promo 2031 first, then S1, then S2, then the rest (unlabelled categories)."""
+    norm = _normalize(clean_name(category_name))
+    if ' 2031 ' in norm:
+        return 0
+    if ' s1 ' in norm:
+        return 1
+    if ' s2 ' in norm:
+        return 2
+    return 3

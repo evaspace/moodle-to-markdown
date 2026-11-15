@@ -185,7 +185,7 @@
       lines.push(`+${d.points} points ${fast}${d.peek === 2 ? ' · divisé par 2 : fiche du chapitre ouverte' : d.peek ? ' · divisé par 3 : formules de la solution ouvertes' : ''}`);
     }
     fb.replaceChildren(...lines.map((t, i) => { const p = document.createElement('p'); p.textContent = t; if (i) p.className = 'lv-points'; return p; }));
-    if (d.xp !== undefined) $('xp').textContent = d.xp;
+    if (d.xp !== undefined && $('xp')) $('xp').textContent = d.xp;
     const sq = document.querySelector(`.lv-squares i[data-exo="${exo.dataset.exo}"]`);
     if (sq) sq.className = (ok ? 'ok' : 'ko') + ' cur';
     if (d.percent !== undefined) { $('total-bar').style.width = d.percent + '%'; $('total-pct').textContent = d.percent; }

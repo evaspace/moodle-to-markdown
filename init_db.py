@@ -58,10 +58,39 @@ SCHEMA = '''
 '''
 
 
+def _cols(conn, table):
+    return {r[1] for r in conn.execute(f'PRAGMA table_info({table})')}
+
+
+def migrate_uid(conn):
+    """Feed state per account: uid column (0 = anonymous). folder/favorite are rebuilt, their
+    UNIQUE constraints must include uid."""
+    for t in ('user_state', 'session_log'):
+        if 'uid' not in _cols(conn, t):
+            conn.execute(f'ALTER TABLE {t} ADD COLUMN uid INTEGER NOT NULL DEFAULT 0')
+    if 'uid' not in _cols(conn, 'folder'):
+        conn.executescript('''
+            ALTER TABLE folder RENAME TO folder_old;
+            ALTER TABLE favorite RENAME TO favorite_old;
+            CREATE TABLE folder (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL,
+                uid INTEGER NOT NULL DEFAULT 0, UNIQUE(uid, name));
+            CREATE TABLE favorite (id INTEGER PRIMARY KEY AUTOINCREMENT, card_id INTEGER NOT NULL,
+                folder_id INTEGER, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                uid INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(card_id) REFERENCES card(id),
+                FOREIGN KEY(folder_id) REFERENCES folder(id), UNIQUE(uid, card_id, folder_id));
+            INSERT INTO folder (id, name) SELECT id, name FROM folder_old;
+            INSERT INTO favorite (id, card_id, folder_id, created_at)
+                SELECT id, card_id, folder_id, created_at FROM favorite_old;
+            DROP TABLE favorite_old; DROP TABLE folder_old;''')
+    conn.execute('CREATE UNIQUE INDEX IF NOT EXISTS idx_state_uid ON user_state(uid)')
+    conn.execute('CREATE INDEX IF NOT EXISTS idx_log_uid ON session_log(uid, card_id, id)')
+
+
 def init_db(path=DB_PATH):
     conn = sqlite3.connect(path)
     conn.execute('PRAGMA journal_mode=WAL')
     conn.executescript(SCHEMA)
+    migrate_uid(conn)
     conn.execute("INSERT OR IGNORE INTO user_state (id, streak, max_streak, level, xp) VALUES (1, 0, 0, 1, 0)")
     conn.commit()
     conn.close()

@@ -15,12 +15,12 @@ from urllib.parse import quote
 
 import bleach
 import markdown
-from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory
+from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory, session
 
 from init_db import DB_PATH, init_db
 from levels import bp as levels_bp, init_levels_db, is_admin, secret_key
 from scroll import bp as scroll_bp, init_scroll_db
-from themes import clean_name, theme_for, theme_order
+from themes import clean_name, syllabus_rank, theme_for, theme_order
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
@@ -243,6 +243,17 @@ def admin_stats_page():
 
 
 # ------------------------------------------------------------------ API ----
+def uid():
+    """Account id, 0 = anonymous visitor (shared state)."""
+    return session.get('uid') or 0
+
+
+def feed_state(conn):
+    conn.execute('INSERT OR IGNORE INTO user_state (uid) VALUES (?)', (uid(),))
+    row = conn.execute('SELECT streak, max_streak, level, xp FROM user_state WHERE uid = ?', (uid(),)).fetchone()
+    return dict(row)
+
+
 def fetch_batch(conn, cat=None, sub=None, exclude=None):
     """cat: one category id or a list of ids (merged duplicates, or a whole theme)."""
     exclude = exclude or []
@@ -264,22 +275,23 @@ def fetch_batch(conn, cat=None, sub=None, exclude=None):
     base = f"""
         SELECT c.id, c.type, c.front, c.back, c.payload,
                sc.name AS subcategory_name, cat.name AS category_name,
-               (SELECT 1 FROM favorite f WHERE f.card_id = c.id LIMIT 1) AS is_favorite
+               (SELECT 1 FROM favorite f WHERE f.card_id = c.id AND f.uid = ? LIMIT 1) AS is_favorite
         FROM card c
         LEFT JOIN subcategory sc ON sc.id = c.subcategory_id
         LEFT JOIN category cat ON cat.id = sc.category_id
         WHERE {cond}
     """
+    params = [uid()] + params
 
     # Spaced repetition: Cartes dont la DERNIÈRE réponse était fausse
     failed_rows = conn.execute(base + '''
         AND c.id IN (
             SELECT s.card_id FROM session_log s
-            WHERE s.is_correct = 0
+            WHERE s.is_correct = 0 AND s.uid = ?
               AND s.id = (SELECT MAX(s2.id) FROM session_log s2
-                          WHERE s2.card_id = s.card_id AND s2.is_correct IS NOT NULL)
+                          WHERE s2.card_id = s.card_id AND s2.uid = s.uid AND s2.is_correct IS NOT NULL)
         )
-        ORDER BY RANDOM() LIMIT 2''', params).fetchall()
+        ORDER BY RANDOM() LIMIT 2''', params + [uid()]).fetchall()
     got = [r['id'] for r in failed_rows]
 
     def rnd(ctype, limit):
@@ -460,7 +472,8 @@ def grouped_categories(conn):
         theme['n'] += entry['n']
         theme['categories'].append(entry)
     for theme in themes.values():
-        theme['categories'].sort(key=lambda e: e['name'].casefold())
+        rank = syllabus_rank if theme['id'] == 'maths' else (lambda _n: 0)
+        theme['categories'].sort(key=lambda e: (rank(e['name']), e['name'].casefold()))
     return sorted(themes.values(), key=lambda t: theme_order(t['id']))
 
 
@@ -563,11 +576,7 @@ def search_cards():
 @app.route('/api/user_state')
 def get_user_state():
     with db() as conn:
-        state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()
-    return jsonify(dict(state) if state else {"streak": 0, "max_streak": 0, "level": 1, "xp": 0})
-    with db() as conn:
-        state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()
-    return jsonify(dict(state) if state else {"streak": 0, "max_streak": 0, "level": 1, "xp": 0})
+        return jsonify(feed_state(conn))
 
 
 @app.route('/api/log', methods=['POST'])
@@ -585,19 +594,20 @@ def log_session():
     ok = None if ok is None else int(bool(ok))
 
     with db() as conn:
-        conn.execute("INSERT INTO session_log (card_id, time_spent_ms, is_correct) VALUES (?, ?, ?)",
-                     (card_id, spent, ok))
+        conn.execute("INSERT INTO session_log (card_id, time_spent_ms, is_correct, uid) VALUES (?, ?, ?, ?)",
+                     (card_id, spent, ok, uid()))
+        feed_state(conn)
         if ok == 1:
             conn.execute("""UPDATE user_state
                             SET streak = streak + 1,
                                 xp = xp + 15,
                                 level = (xp + 15) / 100 + 1,
                                 max_streak = MAX(max_streak, streak + 1)
-                            WHERE id = 1""")
+                            WHERE uid = ?""", (uid(),))
         elif ok == 0:
-            conn.execute("UPDATE user_state SET streak = 0 WHERE id = 1")
-        state = conn.execute("SELECT streak, max_streak, level, xp FROM user_state WHERE id = 1").fetchone()
-    return jsonify(status='ok', state=dict(state))
+            conn.execute("UPDATE user_state SET streak = 0 WHERE uid = ?", (uid(),))
+        state = feed_state(conn)
+    return jsonify(status='ok', state=state)
 
 
 @app.route('/api/folders', methods=['GET', 'POST'])
@@ -606,8 +616,8 @@ def handle_folders():
         if request.method == 'POST':
             name = ((request.get_json(silent=True) or {}).get('name') or '').strip()[:40]
             if name:
-                conn.execute("INSERT OR IGNORE INTO folder (name) VALUES (?)", (name,))
-        folders = conn.execute("SELECT id, name FROM folder ORDER BY name").fetchall()
+                conn.execute("INSERT OR IGNORE INTO folder (name, uid) VALUES (?, ?)", (name, uid()))
+        folders = conn.execute("SELECT id, name FROM folder WHERE uid = ? ORDER BY name", (uid(),)).fetchall()
     return jsonify([dict(r) for r in folders])
 
 
@@ -624,14 +634,16 @@ def toggle_favorite():
     with db() as conn:
         if not conn.execute("SELECT 1 FROM card WHERE id = ?", (card_id,)).fetchone():
             return jsonify(error='carte inconnue'), 404
-        existing = conn.execute("SELECT id FROM favorite WHERE card_id = ?", (card_id,)).fetchone()
+        existing = conn.execute("SELECT id FROM favorite WHERE card_id = ? AND uid = ?", (card_id, uid())).fetchone()
         if existing and folder_id is None:
             conn.execute("DELETE FROM favorite WHERE id = ?", (existing['id'],))
             action = 'removed'
         else:
             if existing:
                 conn.execute("DELETE FROM favorite WHERE id = ?", (existing['id'],))
-            conn.execute("INSERT INTO favorite (card_id, folder_id) VALUES (?, ?)", (card_id, folder_id))
+            if folder_id is not None and not conn.execute("SELECT 1 FROM folder WHERE id = ? AND uid = ?", (folder_id, uid())).fetchone():
+                return jsonify(error='dossier inconnu'), 404
+            conn.execute("INSERT INTO favorite (card_id, folder_id, uid) VALUES (?, ?, ?)", (card_id, folder_id, uid()))
             action = 'added'
     return jsonify(status='ok', action=action)
 
