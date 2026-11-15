@@ -1,0 +1,1304 @@
+{
+ "subject": {
+  "id": "physique-s2-thermo",
+  "ordre": 310,
+  "matiere": "physique",
+  "semestre": "S2",
+  "ecue": "Thermodynamique",
+  "titre": "Thermodynamique",
+  "chapitres_moodle": [
+   "02_Cours",
+   "04_TD_Thermodynamique"
+  ],
+  "td": "TD thermodynamique (Moodle Physique)",
+  "examens": [
+   "Partiel de physique (S2)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "etat",
+   "titre": "Variables d'état et gaz parfait",
+   "formule": "$PV=nRT$ · $R=8{,}31$ J·mol$^{-1}$·K$^{-1}$ · $T(\\mathrm K)=\\theta(^\\circ\\mathrm C)+273$ · 1 bar $=10^5$ Pa · 1 L $=10^{-3}$ m³ · $n$ constant : $\\dfrac{P_1V_1}{T_1}=\\dfrac{P_2V_2}{T_2}$",
+   "exemple": "volume constant, $T$ de $250$ K à $300$ K : $P$ est multipliée par $\\frac{300}{250}=\\frac65$",
+   "cours": "Toujours convertir en kelvin, pascal et mètre cube avant de calculer. Intensives (indépendantes de la taille) : $T$, $P$. Extensives : $V$, $n$, $m$, $U$. Système ouvert : échange matière et énergie ; fermé : énergie seulement ; isolé : rien."
+  },
+  {
+   "id": "energie_interne",
+   "titre": "Énergie interne et capacité thermique",
+   "formule": "$dU=C_v\\,dT$ · $\\Delta U=C_v\\Delta T=m\\,c_v\\Delta T$ · gaz parfait monoatomique : $C_v=\\frac32nR$ · $\\Delta U$ ne dépend que de l'état initial et final",
+   "exemple": "$150$ kg d'eau de $10$ à $60$ °C, $c_v=4{,}2$ kJ·kg$^{-1}$·K$^{-1}$ : $\\Delta U=150\\times4{,}2\\times50=31\\,500$ kJ",
+   "cours": "$U$ est une fonction d'état : sur un cycle, $\\Delta U=0$. $C_v$ est supposée indépendante de $T$. Pour une phase condensée, $C_v=m\\,c_v$ avec $c_v$ massique en J·kg$^{-1}$·K$^{-1}$."
+  },
+  {
+   "id": "travail",
+   "titre": "Travail des forces de pression",
+   "formule": "$W=-\\displaystyle\\int_{V_i}^{V_f}P_{ext}\\,dV$ · isochore : $W=0$ · monobare : $W=-P_0(V_f-V_i)$ · isotherme réversible (gaz parfait) : $W=nRT\\ln\\dfrac{V_i}{V_f}=nRT\\ln\\dfrac{P_f}{P_i}$",
+   "exemple": "compression monobare à $10^5$ Pa de $3$ L à $1$ L : $W=-10^5\\times(10^{-3}-3\\times10^{-3})=+200$ J",
+   "cours": "Convention : $W>0$ si le système reçoit de l'énergie. Compression ($dV<0$) : $W>0$. Détente : $W<0$. Isobare avec variation de volume implique monobare. Pour une isotherme réversible, $P_{ext}=P=\\frac{nRT}V$."
+  },
+  {
+   "id": "chaleur",
+   "titre": "Transfert thermique et calorimétrie",
+   "formule": "$Q=m\\,c\\,\\Delta T$ · changement d'état à $T$ constante : $Q=m\\,\\Delta h_{fus}$ · calorimètre isolé : $\\sum Q=0$ · adiabatique : $Q=0$",
+   "exemple": "$0{,}5$ kg d'eau de $20$ à $100$ °C, $c=4200$ J·kg$^{-1}$·K$^{-1}$ : $Q=0{,}5\\times4200\\times80=168\\,000$ J",
+   "cours": "Trois modes : conduction (sans déplacement de matière), convection (avec un fluide en mouvement), rayonnement. Calorimétrie : tout ce qui est reçu par un corps est cédé par un autre. Vérifier d'abord si toute la glace peut fondre avant de supposer l'état final."
+  },
+  {
+   "id": "premier",
+   "titre": "Premier principe et enthalpie",
+   "formule": "$\\Delta U=Q+W$ · $H=U+PV$ · $dH=C_p\\,dT$ · isochore : $Q=\\Delta U$ · monobare (état initial et final à $P_0$) : $Q=\\Delta H$ · cycle : $\\Delta U=0$, donc $Q=-W$",
+   "exemple": "$Q=-150$ J et $W=+400$ J : $\\Delta U=250$ J",
+   "cours": "$\\Delta U=Q+W$ traduit la conservation de l'énergie (on néglige les énergies cinétique et potentielle). $Q$ et $W$ dépendent du chemin suivi, pas $\\Delta U$ ni $\\Delta H$ : jamais de « $\\Delta$ » devant $Q$ ou $W$."
+  },
+  {
+   "id": "gp",
+   "titre": "Gaz parfait : Mayer, Laplace, adiabatique",
+   "formule": "$C_p-C_v=nR$ · $\\gamma=\\dfrac{C_p}{C_v}$ · $C_v=\\dfrac{nR}{\\gamma-1}$ · adiabatique réversible : $PV^\\gamma=$ cte, $TV^{\\gamma-1}=$ cte, $T^\\gamma P^{1-\\gamma}=$ cte · $W=\\Delta U=C_v\\Delta T$",
+   "exemple": "monoatomique : $C_v=\\frac32nR$, $\\gamma=\\frac53$ ; diatomique : $C_v=\\frac52nR$, $\\gamma=\\frac75$",
+   "cours": "Quand $Q=0$, le premier principe donne $W=\\Delta U$. Les lois de Laplace valent seulement pour une adiabatique réversible d'un gaz parfait. Elles se retrouvent à partir de $PV^\\gamma=$ cte et $PV=nRT$."
+  },
+  {
+   "id": "diagrammes",
+   "titre": "Diagrammes de phase et de Clapeyron",
+   "formule": "point triple : trois phases en équilibre · point critique : au-delà, fluide supercritique · palier d'Andrews $(P,v)$ : liquide $+$ gaz à $T$ et $P$ constants · courbe d'ébullition (côté liquide), courbe de rosée (côté gaz)",
+   "exemple": "eau : la courbe de fusion $(P,T)$ a une pente négative",
+   "cours": "Sur la courbe de changement d'état de $(P,T)$, les deux phases coexistent mais le diagramme ne dit pas en quelle proportion : il faut $(P,v)$. Sur le palier, $P$ et $T$ sont liés, donc le volume massique $v$ fixe la proportion de chaque phase."
+  },
+  {
+   "id": "entropie",
+   "titre": "Entropie et deuxième principe",
+   "formule": "$\\Delta S=S_{ech}+S_{cr}$ · $S_{ech}=\\dfrac QT$ · $S_{cr}\\geq0$, $=0$ si réversible · adiabatique réversible : $\\Delta S=0$ (isentropique)",
+   "exemple": "$Q=600$ J reçus d'un thermostat à $300$ K, de façon réversible : $\\Delta S=2$ J·K$^{-1}$",
+   "cours": "Le premier principe n'interdit pas une détente de Joule–Gay-Lussac à l'envers ; le deuxième impose $S_{cr}\\geq0$ et donne le sens de l'évolution. $T$ est la température de la source avec laquelle l'échange a lieu, en kelvin."
+  },
+  {
+   "id": "machines",
+   "titre": "Machines thermiques dithermes",
+   "formule": "cycle : $Q_c+Q_f+W=0$ et $\\dfrac{Q_c}{T_c}+\\dfrac{Q_f}{T_f}+S_{cr}=0$ · moteur : $\\rho=-\\dfrac W{Q_c}=1+\\dfrac{Q_f}{Q_c}\\leq1-\\dfrac{T_f}{T_c}$ · frigo : $e=\\dfrac{Q_f}W\\leq\\dfrac{T_f}{T_c-T_f}$ · PAC : $\\mathrm{COP}=-\\dfrac{Q_c}W\\leq\\dfrac{T_c}{T_c-T_f}$",
+   "exemple": "frigo entre $T_f=278$ K et $T_c=298$ K : $e\\leq\\frac{278}{20}\\approx14$",
+   "cours": "$Q>0$ si reçu par la machine. Moteur : $W<0$ et $Q_c>0$. Frigo : on prend $Q_f>0$ à la source froide avec $W>0$. PAC : on cède $Q_c<0$ à la source chaude. Efficacité d'un frigo ou d'une PAC supérieure à $1$ est possible ; le rendement d'un moteur est toujours inférieur à $1$."
+  },
+  {
+   "id": "cycles",
+   "titre": "Cycles : Carnot, Stirling, Lenoir, Brayton",
+   "formule": "Carnot (2 isothermes + 2 adiabatiques réversibles) : $\\rho=1-\\dfrac{T_f}{T_c}$ · Stirling : 2 isothermes + 2 isochores · Lenoir : isochore + isotherme + isobare · Brayton : 2 isobares + 2 adiabatiques, $\\rho=1-\\left(\\dfrac{P_A}{P_B}\\right)^{\\frac{\\gamma-1}\\gamma}$",
+   "exemple": "Carnot entre $300$ K et $600$ K : $\\rho=\\frac12$",
+   "cours": "Sur un cycle $\\Delta U=0$ donc $W=-\\sum Q$. Un cycle parcouru dans le sens horaire du diagramme $(P,V)$ est moteur ($W<0$). Pour chaque étape : identifier la transformation, calculer $W$ et $Q$, puis vérifier le bilan du cycle."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "etat",
+   "type": "qcm",
+   "q": "Parmi ces grandeurs, laquelle est extensive ?",
+   "choix": [
+    "le volume",
+    "la pression",
+    "la température",
+    "la masse volumique"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "etat",
+   "type": "vf",
+   "q": "Dans $PV=nRT$, la température doit être exprimée en kelvin.",
+   "bonne": true
+  },
+  {
+   "notion": "energie_interne",
+   "type": "vf",
+   "q": "Sur un cycle, la variation d'énergie interne est nulle.",
+   "bonne": true
+  },
+  {
+   "notion": "energie_interne",
+   "type": "qcm",
+   "q": "Pour une phase condensée, $\\Delta U$ vaut :",
+   "choix": [
+    "$mc_v\\Delta T$",
+    "$mc_v T$",
+    "$PV$",
+    "$Q+W$ seulement si adiabatique"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "travail",
+   "type": "qcm",
+   "q": "Le travail d'une transformation isochore vaut :",
+   "choix": [
+    "$0$",
+    "$-P\\Delta V$",
+    "$nRT\\ln\\frac{V_f}{V_i}$",
+    "$\\Delta U$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "travail",
+   "type": "vf",
+   "q": "Le travail reçu par un gaz que l'on comprime est positif.",
+   "bonne": true
+  },
+  {
+   "notion": "chaleur",
+   "type": "qcm",
+   "q": "Pendant la fusion de la glace à $0$ °C sous pression constante :",
+   "choix": [
+    "$T$ reste constante",
+    "$T$ augmente",
+    "$Q=0$",
+    "$\\Delta H=0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "chaleur",
+   "type": "vf",
+   "q": "Dans un calorimètre isolé, la somme des chaleurs échangées est nulle.",
+   "bonne": true
+  },
+  {
+   "notion": "premier",
+   "type": "qcm",
+   "q": "Pour un gaz parfait en transformation isotherme :",
+   "choix": [
+    "$Q=-W$",
+    "$Q=W$",
+    "$Q=0$",
+    "$W=0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "premier",
+   "type": "qcm",
+   "q": "Laquelle de ces grandeurs n'est pas une fonction d'état ?",
+   "choix": [
+    "la chaleur $Q$",
+    "l'enthalpie $H$",
+    "l'énergie interne $U$",
+    "la température $T$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "premier",
+   "type": "qcm",
+   "q": "À pression constante, la chaleur reçue vaut :",
+   "choix": [
+    "$\\Delta H$",
+    "$\\Delta U$",
+    "$-P\\Delta V$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gp",
+   "type": "qcm",
+   "q": "La relation de Mayer pour un gaz parfait est :",
+   "choix": [
+    "$C_p-C_v=nR$",
+    "$C_p+C_v=nR$",
+    "$C_pC_v=nR$",
+    "$C_p=C_v$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gp",
+   "type": "qcm",
+   "q": "Pour une adiabatique réversible d'un gaz parfait :",
+   "choix": [
+    "$PV^\\gamma=$ cte",
+    "$PV=$ cte",
+    "$P/V=$ cte",
+    "$P^\\gamma V=$ cte"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gp",
+   "type": "vf",
+   "q": "Pour une transformation adiabatique, le travail est égal à la variation d'énergie interne.",
+   "bonne": true
+  },
+  {
+   "notion": "diagrammes",
+   "type": "qcm",
+   "q": "Au-delà du point critique, on a :",
+   "choix": [
+    "un fluide supercritique",
+    "un solide",
+    "un mélange liquide-gaz",
+    "un gaz parfait"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "diagrammes",
+   "type": "vf",
+   "q": "Pour l'eau, la courbe de fusion du diagramme $(P,T)$ a une pente négative.",
+   "bonne": true
+  },
+  {
+   "notion": "entropie",
+   "type": "qcm",
+   "q": "Pour une transformation réversible :",
+   "choix": [
+    "$S_{cr}=0$",
+    "$S_{cr}>0$",
+    "$S_{cr}<0$",
+    "$S_{ech}=0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "entropie",
+   "type": "vf",
+   "q": "L'entropie créée peut être négative pour une transformation spontanée.",
+   "bonne": false
+  },
+  {
+   "notion": "machines",
+   "type": "qcm",
+   "q": "Rendement maximal d'un moteur ditherme :",
+   "choix": [
+    "$1-\\dfrac{T_f}{T_c}$",
+    "$1-\\dfrac{T_c}{T_f}$",
+    "$\\dfrac{T_f}{T_c}$",
+    "$\\dfrac{T_c}{T_c-T_f}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "machines",
+   "type": "vf",
+   "q": "L'efficacité d'une machine frigorifique peut dépasser $1$.",
+   "bonne": true
+  },
+  {
+   "notion": "machines",
+   "type": "qcm",
+   "q": "Pour un moteur, les signes de $W$ et $Q_c$ sont :",
+   "choix": [
+    "$W<0$ et $Q_c>0$",
+    "$W>0$ et $Q_c>0$",
+    "$W<0$ et $Q_c<0$",
+    "$W>0$ et $Q_c<0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cycles",
+   "type": "qcm",
+   "q": "Le cycle de Carnot comprend :",
+   "choix": [
+    "deux isothermes et deux adiabatiques",
+    "deux isobares et deux isochores",
+    "deux isothermes et deux isochores",
+    "deux isobares et deux adiabatiques"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cycles",
+   "type": "vf",
+   "q": "Un cycle parcouru dans le sens horaire du diagramme $(P,V)$ est moteur.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Variables d'état et gaz parfait",
+   "notions": [
+    "etat"
+   ],
+   "exos": [
+    {
+     "id": "he1",
+     "enonce": "Convertir $27$ °C en kelvin (on prend $T=\\theta+273$).",
+     "ans": "300",
+     "sol": "$T=27+273=300$ K.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Convertir $-13$ °C en kelvin ($T=\\theta+273$).",
+       "ans": "260",
+       "sol": "$-13+273=260$ K."
+      }
+     ],
+     "formules": "$T(\\mathrm K)=\\theta(^\\circ\\mathrm C)+273$",
+     "type": "value"
+    },
+    {
+     "id": "he2",
+     "enonce": "Pneu à volume constant, gonflé à $3$ bar à $-23$ °C. Quelle pression (en bar) à $27$ °C ?",
+     "ans": "18/5",
+     "sol": "$T_1=250$ K, $T_2=300$ K. À $V$ et $n$ constants, $\\frac{P_1}{T_1}=\\frac{P_2}{T_2}$ donc $P_2=3\\times\\frac{300}{250}=3{,}6$ bar.",
+     "src": "TD1 de thermodynamique, ex. 1 (adapté)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Gaz à volume constant : $2$ bar à $300$ K. Pression (en bar) à $450$ K ?",
+       "ans": "3",
+       "sol": "$P_2=2\\times\\frac{450}{300}=3$ bar."
+      }
+     ],
+     "formules": "$PV=nRT$ · $T(\\mathrm K)=\\theta+273$ · $\\frac{P_1}{T_1}=\\frac{P_2}{T_2}$ (isochore)",
+     "type": "value"
+    },
+    {
+     "id": "he3",
+     "enonce": "Volume (en L) occupé par $1$ mol de gaz parfait à $300$ K sous $1$ bar ? ($R=8{,}31$)",
+     "ans": "2493/100",
+     "sol": "$V=\\frac{nRT}P=\\frac{8{,}31\\times300}{10^5}=2{,}493\\times10^{-2}$ m³ $\\approx24{,}9$ L.",
+     "duree": 3,
+     "formules": "$PV=nRT$ · $T(\\mathrm K)=\\theta+273$ · $V=\\frac{nRT}P$",
+     "type": "value"
+    },
+    {
+     "id": "he4",
+     "enonce": "À température constante, on divise par $4$ le volume d'un gaz parfait. Par combien est multipliée la pression ?",
+     "ans": "4",
+     "sol": "$PV=nRT=$ cte : $P_2V_2=P_1V_1$ avec $V_2=\\frac{V_1}4$, donc $P_2=4P_1$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "À $T$ constante, on multiplie le volume par $3$. Par combien est multipliée la pression ?",
+       "ans": "1/3",
+       "sol": "$P_2=\\frac{P_1}3$."
+      }
+     ],
+     "formules": "$PV=nRT$ · $T(\\mathrm K)=\\theta+273$ · $T$ constante : $P_1V_1=P_2V_2$",
+     "type": "value"
+    },
+    {
+     "id": "he5",
+     "enonce": "Parmi $T$, $V$, $P$, $n$, $U$, lesquelles sont intensives, lesquelles extensives ? Un café dans une bouteille thermos fermée est-il un système ouvert, fermé ou isolé ?",
+     "sol": "Intensives : $T$, $P$ (inchangées si on double le système). Extensives : $V$, $n$, $U$ (doublent). Un thermos fermé : isolé en première approximation (ni matière ni énergie échangées), fermé sinon.",
+     "duree": 3,
+     "formules": "intensives : $T$, $P$ · extensives : $V$, $n$, $m$, $U$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Énergie interne et capacité thermique",
+   "notions": [
+    "energie_interne"
+   ],
+   "exos": [
+    {
+     "id": "hu1",
+     "enonce": "$150$ kg d'eau passent de $10$ à $60$ °C, $c_v=4{,}2$ kJ·kg$^{-1}$·K$^{-1}$. Variation d'énergie interne (en kJ) ?",
+     "ans": "31500",
+     "sol": "$\\Delta U=mc_v\\Delta T=150\\times4{,}2\\times50=31\\,500$ kJ.",
+     "src": "Cours, exemple 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$100$ kg d'eau passent de $20$ à $70$ °C, $c_v=4{,}2$ kJ·kg$^{-1}$·K$^{-1}$. $\\Delta U$ (en kJ) ?",
+       "ans": "21000",
+       "sol": "$100\\times4{,}2\\times50=21\\,000$ kJ."
+      }
+     ],
+     "formules": "$\\Delta U=C_v\\Delta T=mc_v\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hu2",
+     "enonce": "Exprimer ces $31\\,500$ kJ en kWh ($1$ kWh $=3600$ kJ).",
+     "ans": "35/4",
+     "sol": "$\\frac{31\\,500}{3600}=8{,}75$ kWh.",
+     "src": "Cours, exemple 1",
+     "duree": 2,
+     "formules": "1 kWh $=3600$ kJ",
+     "type": "value"
+    },
+    {
+     "id": "hu3",
+     "enonce": "$1$ mol de gaz parfait monoatomique voit sa température augmenter de $100$ K. Variation d'énergie interne (en J) ? ($R=8{,}3$)",
+     "ans": "1245",
+     "sol": "$\\Delta U=C_v\\Delta T=\\frac32nR\\Delta T=1{,}5\\times8{,}3\\times100=1245$ J.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$2$ mol de gaz parfait monoatomique chauffées de $50$ K. $\\Delta U$ (en J) ? ($R=8{,}3$)",
+       "ans": "1245",
+       "sol": "$\\frac32\\times2\\times8{,}3\\times50=1245$ J."
+      }
+     ],
+     "formules": "$\\Delta U=C_v\\Delta T=mc_v\\Delta T$ · $C_v=\\frac32nR$",
+     "type": "value"
+    },
+    {
+     "id": "hu4",
+     "enonce": "Bloc de cuivre de $2$ kg, $c=400$ J·kg$^{-1}$·K$^{-1}$, chauffé de $20$ à $70$ °C. $\\Delta U$ (en J) ?",
+     "ans": "40000",
+     "sol": "$mc\\Delta T=2\\times400\\times50=40\\,000$ J.",
+     "duree": 2,
+     "formules": "$\\Delta U=C_v\\Delta T=mc_v\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hu5",
+     "enonce": "Pourquoi $\\Delta U=0$ sur un cycle ? Et pourquoi dit-on que $U$ est une fonction d'état ?",
+     "sol": "$U$ ne dépend que de l'état du système ($P$, $T$, $V$, $n$) et non de la manière dont il y est arrivé. Un cycle ramène le système à son état initial, donc $\\Delta U=U_f-U_i=0$.",
+     "duree": 3,
+     "formules": "$U$ fonction d'état · cycle : $\\Delta U=0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Travail des forces de pression",
+   "notions": [
+    "travail"
+   ],
+   "exos": [
+    {
+     "id": "hw1",
+     "enonce": "Un gaz est chauffé dans une enceinte rigide. Travail des forces de pression (en J) ?",
+     "ans": "0",
+     "sol": "Isochore : $dV=0$, donc $W=-\\int P_{ext}dV=0$.",
+     "duree": 1,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$)",
+     "type": "value"
+    },
+    {
+     "id": "hw2",
+     "enonce": "Compression monobare à $P_0=1$ bar : le volume passe de $3$ L à $1$ L. Travail reçu (en J) ?",
+     "ans": "200",
+     "sol": "$W=-P_0(V_f-V_i)=-10^5\\times(10^{-3}-3\\times10^{-3})=+200$ J : positif, le gaz reçoit de l'énergie.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Compression monobare à $2$ bar de $4$ L à $2$ L. Travail reçu (en J) ?",
+       "ans": "400",
+       "sol": "$W=-2\\times10^5\\times(-2\\times10^{-3})=400$ J."
+      }
+     ],
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · monobare : $W=-P_0(V_f-V_i)$",
+     "type": "value"
+    },
+    {
+     "id": "hw3",
+     "enonce": "Détente monobare à $2$ bar : le volume passe de $1$ L à $4$ L. Travail reçu (en J) ?",
+     "ans": "-600",
+     "sol": "$W=-2\\times10^5\\times3\\times10^{-3}=-600$ J : négatif, le gaz fournit de l'énergie.",
+     "duree": 3,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · monobare : $W=-P_0(V_f-V_i)$",
+     "type": "value"
+    },
+    {
+     "id": "hw4",
+     "enonce": "Compression isotherme réversible d'un gaz parfait de $V_1=2$ L à $\\frac{V_1}{10}$, avec $P_1=1$ bar. Donner $W$ en J avec $\\ln10=2{,}3$.",
+     "ans": "460",
+     "sol": "$W=nRT\\ln\\frac{V_1}{V_2}=P_1V_1\\ln10=10^5\\times2\\times10^{-3}\\times2{,}3=460$ J.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 1 (adapté)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Compression isotherme réversible de $V_1=3$ L à $\\frac{V_1}{10}$ avec $P_1=1$ bar ($\\ln10=2{,}3$). $W$ (en J) ?",
+       "ans": "690",
+       "sol": "$P_1V_1\\ln10=300\\times2{,}3=690$ J."
+      }
+     ],
+     "formules": "isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$",
+     "type": "value"
+    },
+    {
+     "id": "hw5",
+     "enonce": "Retrouver $W=nRT\\ln\\dfrac{V_i}{V_f}$ pour une isotherme réversible d'un gaz parfait.",
+     "sol": "Réversible : $P_{ext}=P=\\dfrac{nRT}V$. Alors $W=-\\displaystyle\\int_{V_i}^{V_f}\\frac{nRT}V\\,dV=-nRT\\ln\\frac{V_f}{V_i}=nRT\\ln\\frac{V_i}{V_f}$. Comme $PV$ est constant, c'est aussi $nRT\\ln\\frac{P_f}{P_i}$.",
+     "duree": 4,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · $P=\\frac{nRT}V$ · $\\int\\frac{dV}V=\\ln V$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Transfert thermique et calorimétrie",
+   "notions": [
+    "chaleur"
+   ],
+   "exos": [
+    {
+     "id": "hq1",
+     "enonce": "Chaleur reçue (en J) par $0{,}5$ kg d'eau chauffée de $20$ à $100$ °C ($c=4200$ J·kg$^{-1}$·K$^{-1}$) ?",
+     "ans": "168000",
+     "sol": "$Q=mc\\Delta T=0{,}5\\times4200\\times80=168\\,000$ J.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$2$ kg d'eau chauffés de $10$ à $60$ °C ($c=4200$). $Q$ (en J) ?",
+       "ans": "420000",
+       "sol": "$2\\times4200\\times50=420\\,000$ J."
+      }
+     ],
+     "formules": "$Q=mc\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hq2",
+     "enonce": "On mélange $2$ kg d'eau à $80$ °C et $3$ kg d'eau à $20$ °C dans un calorimètre isolé. Température finale (en °C) ?",
+     "ans": "44",
+     "sol": "$\\sum Q=0$ : $2c(T_F-80)+3c(T_F-20)=0$, donc $T_F=\\frac{2\\times80+3\\times20}5=44$ °C.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On mélange $1$ kg d'eau à $90$ °C et $4$ kg à $10$ °C. Température finale (en °C) ?",
+       "ans": "26",
+       "sol": "$T_F=\\frac{90+40}5=26$ °C."
+      }
+     ],
+     "formules": "$Q=mc\\Delta T$ · calorimètre isolé : $\\sum Q=0$",
+     "type": "value"
+    },
+    {
+     "id": "hq3",
+     "enonce": "Énergie (en kJ) pour fondre $0{,}5$ kg de glace à $0$ °C ($\\Delta h_{fus}=335$ kJ·kg$^{-1}$) ?",
+     "ans": "335/2",
+     "sol": "$Q=m\\Delta h_{fus}=0{,}5\\times335=167{,}5$ kJ.",
+     "src": "TD1 de thermodynamique, ex. 3",
+     "duree": 2,
+     "formules": "fusion : $Q=m\\Delta h_{fus}$ à $T$ constante",
+     "type": "value"
+    },
+    {
+     "id": "hq4",
+     "enonce": "$1$ kg d'eau liquide passe de $20$ °C à $0$ °C ($c=4{,}2$ kJ·kg$^{-1}$·K$^{-1}$). Énergie cédée (en kJ) ?",
+     "ans": "84",
+     "sol": "$mc|\\Delta T|=1\\times4{,}2\\times20=84$ kJ.",
+     "src": "TD1 de thermodynamique, ex. 3",
+     "duree": 2,
+     "formules": "$Q=mc\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hq5",
+     "enonce": "On ajoute $0{,}5$ kg de glace à $0$ °C à $1$ kg d'eau à $20$ °C. Les $84$ kJ cédés ne suffisent pas à fondre toute la glace ($167{,}5$ kJ). Quelle masse de glace fond (en g) ? ($\\Delta h_{fus}=335$ kJ·kg$^{-1}$)",
+     "ans": "84000/335",
+     "sol": "L'état final est à $0$ °C. $m_{fondue}=\\frac{84}{335}\\approx0{,}251$ kg, soit environ $251$ g ; il reste $\\approx249$ g de glace, donc $x\\approx0{,}50$.",
+     "src": "TD1 de thermodynamique, ex. 3",
+     "duree": 4,
+     "formules": "$Q=mc\\Delta T$ · fusion : $Q=m\\Delta h_{fus}$ à $T$ constante · calorimètre isolé : $\\sum Q=0$",
+     "type": "value"
+    },
+    {
+     "id": "hq6",
+     "enonce": "Citer les trois modes de transfert thermique avec un exemple de chaque.",
+     "sol": "Conduction : transfert sans déplacement de matière (barre de métal chauffée à une extrémité). Convection : transfert porté par un fluide en mouvement (chauffage soufflant). Rayonnement : par onde électromagnétique (soleil, radiateur infrarouge).",
+     "duree": 2,
+     "formules": "conduction · convection · rayonnement",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Changement d'état et enthalpie",
+   "notions": [
+    "chaleur",
+    "premier"
+   ],
+   "exos": [
+    {
+     "id": "hh1",
+     "enonce": "$1{,}0$ g de glace passe de $250$ K à $273$ K ($c_g=2{,}1$ kJ·kg$^{-1}$·K$^{-1}$). $\\Delta H_1$ (en J) ?",
+     "ans": "483/10",
+     "sol": "$\\Delta H_1=mc_g\\Delta T=10^{-3}\\times2100\\times23=48{,}3$ J.",
+     "src": "Cours, exemple 2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$2{,}0$ g de glace passent de $263$ K à $273$ K ($c_g=2100$ J·kg$^{-1}$·K$^{-1}$). $\\Delta H_1$ (en J) ?",
+       "ans": "42",
+       "sol": "$2\\times10^{-3}\\times2100\\times10=42$ J."
+      }
+     ],
+     "formules": "$Q=mc\\Delta T$ · $\\Delta H=mc\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hh2",
+     "enonce": "Même échantillon : $1{,}0$ g de glace à $250$ K devient de l'eau à $300$ K. Variation totale d'enthalpie (en J), avec $\\Delta h_{fus}=335$ kJ·kg$^{-1}$ et $c_e=4{,}2$ kJ·kg$^{-1}$·K$^{-1}$ ?",
+     "ans": "4967/10",
+     "sol": "Trois étapes : réchauffer la glace ($48{,}3$ J), fondre ($335$ J), réchauffer l'eau de $273$ à $300$ K ($113{,}4$ J). Somme : $496{,}7$ J.",
+     "src": "Cours, exemple 2",
+     "duree": 5,
+     "formules": "$Q=mc\\Delta T$ · fusion : $Q=m\\Delta h_{fus}$ à $T$ constante · $\\Delta H=\\Delta H_1+\\Delta H_2+\\Delta H_3$",
+     "type": "value"
+    },
+    {
+     "id": "hh3",
+     "enonce": "$\\Delta U=500$ J lors d'une transformation à $P=10^5$ Pa où le volume augmente de $2$ L. Calculer $\\Delta H$ (en J).",
+     "ans": "700",
+     "sol": "$H=U+PV$ donc à $P$ constante $\\Delta H=\\Delta U+P\\Delta V=500+10^5\\times2\\times10^{-3}=700$ J.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\Delta U=300$ J à $P=10^5$ Pa avec $\\Delta V=3$ L. $\\Delta H$ (en J) ?",
+       "ans": "600",
+       "sol": "$\\Delta H=\\Delta U+P\\Delta V=300+300=600$ J."
+      }
+     ],
+     "formules": "$H=U+PV$ · $dH=C_pdT$ · $Q=\\Delta H$ à $P$ constante",
+     "type": "value"
+    },
+    {
+     "id": "hh4",
+     "enonce": "Pour refroidir $200$ g de jus de $25$ °C à $5$ °C, on ajoute des glaçons à $-18$ °C. $m\\,(\\Delta h_{fus}+c_g\\cdot18+c_e\\cdot5)=200\\,c_e\\cdot20$ avec $\\Delta h_{fus}=330$, $c_g=2{,}1$, $c_e=4{,}2$ (kJ·kg$^{-1}$, kJ·kg$^{-1}$·K$^{-1}$). Masse de glaçons (en g) ?",
+     "ans": "3500/81",
+     "sol": "$m=\\dfrac{200\\times4{,}2\\times20}{330+2{,}1\\times18+4{,}2\\times5}=\\dfrac{16\\,800}{388{,}8}\\approx43{,}2$ g.",
+     "src": "TD1 de thermodynamique, ex. 4 (corrigé)",
+     "duree": 6,
+     "formules": "$Q=mc\\Delta T$ · fusion : $Q=m\\Delta h_{fus}$ à $T$ constante · calorimètre isolé : $\\sum Q=0$",
+     "type": "value"
+    },
+    {
+     "id": "hh5",
+     "enonce": "Pourquoi la température reste-t-elle constante pendant la fusion de la glace alors qu'on lui fournit de l'énergie ?",
+     "sol": "L'énergie fournie sert à rompre les liaisons du solide (changement de phase), pas à augmenter l'agitation thermique. $Q=m\\Delta h_{fus}$ à $T$ constante : $\\Delta H\\neq0$ avec $\\Delta T=0$.",
+     "duree": 3,
+     "formules": "fusion : $Q=m\\Delta h_{fus}$ à $T$ constante",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Premier principe",
+   "notions": [
+    "premier"
+   ],
+   "exos": [
+    {
+     "id": "hp1",
+     "enonce": "Un système cède $150$ J de chaleur et reçoit $400$ J de travail. Variation d'énergie interne (en J) ?",
+     "ans": "250",
+     "sol": "$\\Delta U=Q+W=-150+400=250$ J.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Un système cède $50$ J de chaleur et reçoit $120$ J de travail. $\\Delta U$ (en J) ?",
+       "ans": "70",
+       "sol": "$\\Delta U=-50+120=70$ J."
+      }
+     ],
+     "formules": "$\\Delta U=Q+W$",
+     "type": "value"
+    },
+    {
+     "id": "hp2",
+     "enonce": "Un moteur reçoit $300$ J de chaleur sur un cycle. Travail reçu sur le cycle (en J) ?",
+     "ans": "-300",
+     "sol": "$\\Delta U=0$ donc $W=-Q=-300$ J : le moteur fournit $300$ J.",
+     "duree": 2,
+     "formules": "cycle : $\\Delta U=0$, $W=-\\sum Q$ · $Q_c+Q_f+W=0$",
+     "type": "value"
+    },
+    {
+     "id": "hp3",
+     "enonce": "Transformation isochore, $C_v=20$ J·K$^{-1}$, $\\Delta T=15$ K. Chaleur reçue (en J) ?",
+     "ans": "300",
+     "sol": "$W=0$, donc $Q=\\Delta U=C_v\\Delta T=300$ J.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Isochore, $C_v=25$ J·K$^{-1}$, $\\Delta T=8$ K. $Q$ (en J) ?",
+       "ans": "200",
+       "sol": "$Q=C_v\\Delta T=200$ J."
+      }
+     ],
+     "formules": "$\\Delta U=Q+W$ · isochore : $Q=\\Delta U=C_v\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hp4",
+     "enonce": "Transformation isobare, $C_p=29$ J·K$^{-1}$, $\\Delta T=10$ K. Chaleur reçue (en J) ?",
+     "ans": "290",
+     "sol": "À pression constante, $Q=\\Delta H=C_p\\Delta T=290$ J.",
+     "duree": 2,
+     "formules": "$H=U+PV$ · $dH=C_pdT$ · $Q=\\Delta H$ à $P$ constante · $\\Delta H=C_p\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hp5",
+     "enonce": "Joule–Gay-Lussac : un gaz parfait se détend dans le vide entre deux récipients à parois adiabatiques. Calculer $W$, $Q$, $\\Delta U$ et conclure sur $T$.",
+     "sol": "Détente dans le vide : $P_{ext}=0$ donc $W=0$. Parois adiabatiques : $Q=0$. Alors $\\Delta U=0$ ; pour un gaz parfait $U$ ne dépend que de $T$, donc $T$ est inchangée. La transformation est irréversible : le premier principe ne l'interdit pas à l'envers, le deuxième si.",
+     "src": "Cours, partie IV",
+     "duree": 5,
+     "formules": "$\\Delta U=Q+W$ · $P_{ext}=0\\Rightarrow W=0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Transformations du gaz parfait",
+   "notions": [
+    "gp",
+    "travail",
+    "premier"
+   ],
+   "exos": [
+    {
+     "id": "hg1",
+     "enonce": "Gaz parfait avec $C_v=\\frac52nR$. Que vaut $\\gamma=\\dfrac{C_p}{C_v}$ ?",
+     "ans": "7/5",
+     "sol": "Mayer : $C_p=C_v+nR=\\frac72nR$, donc $\\gamma=\\frac75$.",
+     "duree": 2,
+     "formules": "Mayer : $C_p-C_v=nR$ · $\\gamma=\\frac{C_p}{C_v}$ · $C_v=\\frac32nR$ (monoatomique), $\\frac52nR$ (diatomique)",
+     "type": "value"
+    },
+    {
+     "id": "hg2",
+     "enonce": "$1$ mol de gaz parfait ($C_v=\\frac52R$, $R=8{,}3$) chauffée à volume constant de $300$ à $400$ K. $Q$ (en J) ?",
+     "ans": "2075",
+     "sol": "$Q=\\Delta U=C_v\\Delta T=2{,}5\\times8{,}3\\times100=2075$ J.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$2$ mol ($C_v=\\frac52nR$, $R=8{,}3$) chauffées à volume constant de $50$ K. $Q$ (en J) ?",
+       "ans": "2075",
+       "sol": "$2{,}5\\times2\\times8{,}3\\times50=2075$ J."
+      }
+     ],
+     "formules": "Mayer : $C_p-C_v=nR$ · $\\gamma=\\frac{C_p}{C_v}$ · $C_v=\\frac32nR$ (monoatomique), $\\frac52nR$ (diatomique) · isochore : $Q=\\Delta U$",
+     "type": "value"
+    },
+    {
+     "id": "hg3",
+     "enonce": "Même gaz chauffé à pression constante de $300$ à $400$ K. $Q$ (en J) ?",
+     "ans": "2905",
+     "sol": "$Q=\\Delta H=C_p\\Delta T=3{,}5\\times8{,}3\\times100=2905$ J.",
+     "duree": 3,
+     "formules": "Mayer : $C_p-C_v=nR$ · $\\gamma=\\frac{C_p}{C_v}$ · $C_v=\\frac32nR$ (monoatomique), $\\frac52nR$ (diatomique) · isobare : $Q=\\Delta H=C_p\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hg4",
+     "enonce": "Compression isotherme réversible d'un gaz parfait avec $W=+420$ J. Chaleur reçue (en J) ?",
+     "ans": "-420",
+     "sol": "Isotherme d'un gaz parfait : $\\Delta U=0$, donc $Q=-W=-420$ J : chaleur cédée.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 1",
+     "duree": 2,
+     "formules": "$\\Delta U=Q+W$ · isotherme (gaz parfait) : $\\Delta U=0$",
+     "type": "value"
+    },
+    {
+     "id": "hg5",
+     "enonce": "Un gaz passe de $(1\\ \\mathrm{bar},3\\ \\mathrm L)$ à $(3\\ \\mathrm{bar},1\\ \\mathrm L)$ par une isochore puis une isobare à $3$ bar. Chaleur reçue $Q$ (en J) ? ($P_1V_1=P_2V_2$ donc $\\Delta U=0$)",
+     "ans": "-600",
+     "sol": "Isochore : $W=0$. Isobare à $3$ bar de $3$ L à $1$ L : $W=-3\\times10^5\\times(-2\\times10^{-3})=+600$ J. $\\Delta U=0$ donc $Q=-600$ J : chaleur évacuée.",
+     "src": "TD2 de thermodynamique, ex. 2",
+     "duree": 5,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · monobare : $W=-P_0(V_f-V_i)$ · $\\Delta U=Q+W$ · $P_1V_1=P_2V_2\\Rightarrow\\Delta U=0$",
+     "type": "value"
+    },
+    {
+     "id": "hg6",
+     "enonce": "Même passage de $(1\\ \\mathrm{bar},3\\ \\mathrm L)$ à $(3\\ \\mathrm{bar},1\\ \\mathrm L)$ par une isobare à $1$ bar puis une isochore. $Q$ (en J) ?",
+     "ans": "-200",
+     "sol": "Isobare à $1$ bar de $3$ L à $1$ L : $W=+200$ J. Isochore : $W=0$. $\\Delta U=0$ donc $Q=-200$ J.",
+     "src": "TD2 de thermodynamique, ex. 2",
+     "duree": 5,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · monobare : $W=-P_0(V_f-V_i)$ · $\\Delta U=Q+W$",
+     "type": "value"
+    },
+    {
+     "id": "hg7",
+     "enonce": "Même passage par l'isotherme réversible $PV=$ cte. Calculer $W$ et $Q$, puis comparer aux deux autres chemins. Conclusion ?",
+     "sol": "$W=P_1V_1\\ln\\frac{V_1}{V_2}=300\\ln3\\approx330$ J (avec $P_1V_1=10^5\\times3\\times10^{-3}=300$ J) et $Q=-W\\approx-330$ J.\n\nLes trois chemins ont le même $\\Delta U=0$ mais des $W$ différents ($600$, $200$, $330$ J) et des $Q$ différents : $W$ et $Q$ dépendent du chemin, pas $\\Delta U$.",
+     "src": "TD2 de thermodynamique, ex. 2",
+     "duree": 6,
+     "formules": "isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$ · $\\Delta U=Q+W$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Adiabatique et lois de Laplace",
+   "notions": [
+    "gp"
+   ],
+   "exos": [
+    {
+     "id": "ha1",
+     "enonce": "Compression adiabatique réversible de $1$ mol de gaz parfait monoatomique qui échauffe le gaz de $60$ K. Travail reçu (en J) ? ($R=8{,}3$)",
+     "ans": "747",
+     "sol": "$Q=0$, donc $W=\\Delta U=\\frac32nR\\Delta T=1{,}5\\times8{,}3\\times60=747$ J.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 1 II",
+     "duree": 3,
+     "formules": "adiabatique : $Q=0$, $W=\\Delta U$ · $C_v=\\frac32nR$",
+     "type": "value"
+    },
+    {
+     "id": "ha2",
+     "enonce": "Compression adiabatique réversible, $\\gamma=\\frac53$, volume divisé par $8$. Par combien est multipliée la pression ?",
+     "ans": "32",
+     "sol": "$PV^\\gamma=$ cte : $\\frac{P_2}{P_1}=\\left(\\frac{V_1}{V_2}\\right)^\\gamma=8^{5/3}=2^5=32$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Compression adiabatique réversible, $\\gamma=\\frac53$, volume divisé par $27$. Facteur sur la pression ?",
+       "ans": "243",
+       "sol": "$27^{5/3}=3^5=243$."
+      }
+     ],
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte",
+     "type": "value"
+    },
+    {
+     "id": "ha3",
+     "enonce": "Même compression ($\\gamma=\\frac53$, volume divisé par $8$) à partir de $T_1=300$ K. Température finale (en K) ?",
+     "ans": "1200",
+     "sol": "$TV^{\\gamma-1}=$ cte : $T_2=T_1\\times8^{2/3}=300\\times4=1200$ K.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Même compression ($\\gamma=\\frac53$, volume divisé par $27$) à partir de $T_1=300$ K. $T_2$ (en K) ?",
+       "ans": "2700",
+       "sol": "$27^{2/3}=9$, donc $T_2=2700$ K."
+      }
+     ],
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte",
+     "type": "value"
+    },
+    {
+     "id": "ha4",
+     "enonce": "Même compression avec $P_1V_1=100$ J et $P_2V_2=400$ J. Travail $W=\\dfrac{P_2V_2-P_1V_1}{\\gamma-1}$ (en J) ?",
+     "ans": "450",
+     "sol": "$W=\\dfrac{400-100}{\\frac53-1}=\\dfrac{300}{2/3}=450$ J.",
+     "duree": 3,
+     "formules": "$W=\\frac{P_2V_2-P_1V_1}{\\gamma-1}$ · adiabatique : $Q=0$, $W=\\Delta U$",
+     "type": "value"
+    },
+    {
+     "id": "ha5",
+     "enonce": "À partir de $PV^\\gamma=$ cte et $PV=nRT$, établir $T^\\gamma P^{1-\\gamma}=$ cte.",
+     "sol": "$V=\\dfrac{nRT}P$ donc $PV^\\gamma=P\\left(\\dfrac{nRT}P\\right)^\\gamma=(nR)^\\gamma\\,T^\\gamma P^{1-\\gamma}$. Comme $PV^\\gamma$ et $(nR)^\\gamma$ sont constants, $T^\\gamma P^{1-\\gamma}=$ cte.",
+     "src": "Partiel de physique n° 2 (mai 2019), QCM 8",
+     "duree": 4,
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte · $PV=nRT$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Diagrammes de phase et de Clapeyron",
+   "notions": [
+    "diagrammes"
+   ],
+   "exos": [
+    {
+     "id": "hd1",
+     "enonce": "Définir : isobare, isotherme, isochore, monobare, monotherme, adiabatique, réversible.",
+     "sol": "Isobare : $P=$ cte. Isotherme : $T=$ cte. Isochore : $V=$ cte. Monobare : $P_{ext}=$ cte. Monotherme : $T_{ext}=$ cte. Adiabatique : $Q=0$. Réversible : suite d'états d'équilibre, on peut revenir en arrière en inversant les causes (lent, sans frottement).",
+     "src": "TD2 de thermodynamique, ex. 1",
+     "duree": 4,
+     "formules": "isobare $P$, isotherme $T$, isochore $V$ constants · adiabatique $Q=0$ · monobare : $P_{ext}$ constante · réversible : succession d'états d'équilibre",
+     "type": "open"
+    },
+    {
+     "id": "hd2",
+     "enonce": "Dans le diagramme $(P,v)$ avec isothermes d'Andrews, situer : liquide, gaz, liquide $+$ gaz, courbe de rosée, courbe d'ébullition.",
+     "sol": "La courbe de saturation (qui passe par le point critique $C$) délimite le domaine de coexistence. À gauche : liquide ; à droite : gaz ; sous la courbe : liquide $+$ gaz, avec un palier horizontal pour chaque isotherme. Branche gauche de la courbe : courbe d'ébullition ; branche droite : courbe de rosée.",
+     "src": "TD2 de thermodynamique, ex. 1",
+     "duree": 5,
+     "formules": "courbe d'ébullition · courbe de rosée · palier d'Andrews · point critique",
+     "type": "open"
+    },
+    {
+     "id": "hd3",
+     "enonce": "Dans le diagramme $(P,T)$, décrire les domaines, le point triple et le point critique. Qu'a de particulier l'eau ?",
+     "sol": "Trois domaines : solide, liquide, gaz, séparés par les courbes de fusion, vaporisation et sublimation. Au point triple, les trois phases coexistent. Au point critique, liquide et gaz ne se distinguent plus : fluide supercritique. Pour l'eau la courbe de fusion a une pente négative (la glace fond sous pression, et elle flotte sur l'eau).",
+     "duree": 5,
+     "formules": "point triple · point critique · eau : fusion de pente négative",
+     "type": "open"
+    },
+    {
+     "id": "hd4",
+     "enonce": "Sur un palier de changement d'état, $P$ et $T$ ne suffisent pas à décrire l'état du système. Pourquoi, et que faut-il ajouter ?",
+     "sol": "Sur le palier, $P$ et $T$ sont liés ($P=P_{sat}(T)$) et restent constants quelle que soit la proportion de liquide et de gaz. Il faut une troisième variable, le volume massique $v$, pour fixer la proportion de chaque phase : c'est l'intérêt du diagramme de Clapeyron.",
+     "duree": 4,
+     "formules": "palier : $P=P_{sat}(T)$ · diagramme de Clapeyron $(P,v)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Entropie et deuxième principe",
+   "notions": [
+    "entropie"
+   ],
+   "exos": [
+    {
+     "id": "hs1",
+     "enonce": "Un système reçoit $Q=600$ J d'un thermostat à $300$ K. Entropie échangée (en J·K$^{-1}$) ?",
+     "ans": "2",
+     "sol": "$S_{ech}=\\frac QT=\\frac{600}{300}=2$ J·K$^{-1}$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Un système reçoit $900$ J d'un thermostat à $300$ K. $S_{ech}$ (en J·K$^{-1}$) ?",
+       "ans": "3",
+       "sol": "$\\frac{900}{300}=3$ J·K$^{-1}$."
+      }
+     ],
+     "formules": "$S_{ech}=\\frac QT$",
+     "type": "value"
+    },
+    {
+     "id": "hs2",
+     "enonce": "Fusion de $0{,}1$ kg de glace à $273$ K ($\\Delta h_{fus}=335$ kJ·kg$^{-1}$), réversible. $\\Delta S$ (en J·K$^{-1}$) ?",
+     "ans": "33500/273",
+     "sol": "$Q=m\\Delta h_{fus}=33\\,500$ J à $T=273$ K constante : $\\Delta S=\\frac QT\\approx122{,}7$ J·K$^{-1}$.",
+     "duree": 3,
+     "formules": "fusion : $Q=m\\Delta h_{fus}$ à $T$ constante · $\\Delta S=\\frac QT$",
+     "type": "value"
+    },
+    {
+     "id": "hs3",
+     "enonce": "$1000$ J passent spontanément d'une source à $400$ K vers une source à $300$ K. Entropie créée (en J·K$^{-1}$) ?",
+     "ans": "5/6",
+     "sol": "$\\Delta S_{tot}=-\\frac{1000}{400}+\\frac{1000}{300}=\\frac56\\approx0{,}83$ J·K$^{-1}$. Positif : transformation irréversible, possible dans ce sens seulement.",
+     "duree": 4,
+     "formules": "$\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$",
+     "type": "value"
+    },
+    {
+     "id": "hs4",
+     "enonce": "Pour la détente de Joule–Gay-Lussac, $Q=0$. Quel est le signe de $S_{cr}$ ? Que dit le deuxième principe de la transformation inverse ?",
+     "sol": "$\\Delta S=S_{ech}+S_{cr}=0+S_{cr}$. La détente a lieu spontanément, donc $S_{cr}>0$ (irréversible). La transformation inverse aurait $S_{cr}<0$ : impossible. Le premier principe ne l'interdit pas (il donne $\\Delta U=0$ dans les deux sens).",
+     "src": "Cours, partie IV",
+     "duree": 4,
+     "formules": "$\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$ · $Q=0$",
+     "type": "open"
+    },
+    {
+     "id": "hs5",
+     "enonce": "Que signifie « isentropique » ? À quelle condition une transformation l'est-elle ?",
+     "sol": "$\\Delta S=0$. Comme $\\Delta S=\\frac QT+S_{cr}$, il faut $Q=0$ (adiabatique) et $S_{cr}=0$ (réversible) : une adiabatique réversible est isentropique.",
+     "duree": 3,
+     "formules": "$\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$ · isentropique : $\\Delta S=0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Machines thermiques dithermes",
+   "notions": [
+    "machines",
+    "entropie"
+   ],
+   "exos": [
+    {
+     "id": "hm1",
+     "enonce": "Moteur : $Q_c=1000$ J, $Q_f=-600$ J. Rendement $\\rho$ ?",
+     "ans": "2/5",
+     "sol": "$W=-(Q_c+Q_f)=-400$ J, $\\rho=-\\frac W{Q_c}=\\frac{400}{1000}=0{,}4$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Moteur : $Q_c=800$ J, $Q_f=-500$ J. Rendement ?",
+       "ans": "3/8",
+       "sol": "$W=-300$ J, $\\rho=\\frac{300}{800}=\\frac38$."
+      }
+     ],
+     "formules": "cycle : $\\Delta U=0$, $W=-\\sum Q$ · $Q_c+Q_f+W=0$ · moteur : $\\rho=-\\frac W{Q_c}=1+\\frac{Q_f}{Q_c}\\leq1-\\frac{T_f}{T_c}$",
+     "type": "value"
+    },
+    {
+     "id": "hm2",
+     "enonce": "Rendement maximal d'un moteur entre $T_c=600$ K et $T_f=300$ K ?",
+     "ans": "1/2",
+     "sol": "$\\rho\\leq1-\\frac{T_f}{T_c}=\\frac12$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Rendement maximal entre $T_c=800$ K et $T_f=300$ K ?",
+       "ans": "5/8",
+       "sol": "$1-\\frac{300}{800}=\\frac58$."
+      }
+     ],
+     "formules": "moteur : $\\rho=-\\frac W{Q_c}=1+\\frac{Q_f}{Q_c}\\leq1-\\frac{T_f}{T_c}$",
+     "type": "value"
+    },
+    {
+     "id": "hm3",
+     "enonce": "Efficacité maximale d'un réfrigérateur entre $T_f=278$ K (intérieur) et $T_c=298$ K (cuisine) ?",
+     "ans": "139/10",
+     "sol": "$e\\leq\\frac{T_f}{T_c-T_f}=\\frac{278}{20}=13{,}9\\approx14$.",
+     "src": "Midterm de physique 2030 (S2), ex. 2",
+     "duree": 3,
+     "formules": "frigo : $e=\\frac{Q_f}W\\leq\\frac{T_f}{T_c-T_f}$",
+     "type": "value"
+    },
+    {
+     "id": "hm4",
+     "enonce": "COP maximal d'une pompe à chaleur entre $T_f=273$ K (extérieur) et $T_c=293$ K (maison) ?",
+     "ans": "293/20",
+     "sol": "$\\mathrm{COP}\\leq\\frac{T_c}{T_c-T_f}=\\frac{293}{20}=14{,}65$.",
+     "duree": 3,
+     "formules": "PAC : $\\mathrm{COP}=-\\frac{Q_c}W\\leq\\frac{T_c}{T_c-T_f}$",
+     "type": "value"
+    },
+    {
+     "id": "hm5",
+     "enonce": "Un frigo reçoit $W=100$ J d'électricité et prend $Q_f=400$ J à la source froide. Efficacité ?",
+     "ans": "4",
+     "sol": "$e=\\frac{Q_f}W=4$ : $1$ J d'électricité déplace $4$ J de chaleur.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Un frigo reçoit $50$ J d'électricité et prend $200$ J au froid. Efficacité ?",
+       "ans": "4",
+       "sol": "$e=\\frac{200}{50}=4$."
+      }
+     ],
+     "formules": "frigo : $e=\\frac{Q_f}W$",
+     "type": "value"
+    },
+    {
+     "id": "hm6",
+     "enonce": "Montrer qu'un moteur avec une seule source de chaleur ne peut pas fournir de travail.",
+     "sol": "Cycle monotherme : $\\Delta U=Q+W=0$ donc $W=-Q$. $\\Delta S=\\frac QT+S_{cr}=0$ donc $Q=-TS_{cr}\\leq0$. Alors $W=-Q\\geq0$ : le système reçoit du travail au lieu d'en fournir. Un moteur ($W<0$) exige deux sources.",
+     "src": "TD3 de thermodynamique, ex. 1",
+     "duree": 5,
+     "formules": "$\\Delta U=Q+W$ · $\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$ · cycle monotherme",
+     "type": "open"
+    },
+    {
+     "id": "hm7",
+     "enonce": "Pompe à chaleur : schéma énergétique, COP en détaillant, puis cas réversible.",
+     "sol": "Schéma : flèche $Q_f>0$ de la source froide vers la machine, flèche $W>0$ vers la machine, flèche $Q_c<0$ de la machine vers la source chaude.\n\n1er principe : $W=-(Q_c+Q_f)$ donc $\\mathrm{COP}=-\\frac{Q_c}W=\\frac{Q_c}{Q_c+Q_f}=\\frac1{1+Q_f/Q_c}$.\n\n2e principe : $\\frac{Q_f}{T_f}+\\frac{Q_c}{T_c}+S_{cr}=0$ donc $\\frac{Q_f}{Q_c}=-\\frac{T_f}{T_c}-\\frac{T_fS_{cr}}{Q_c}$. Réversible ($S_{cr}=0$) : $\\mathrm{COP}=\\dfrac1{1-T_f/T_c}=\\dfrac{T_c}{T_c-T_f}$, et c'est un maximum.",
+     "src": "TD3 de thermodynamique, ex. 2",
+     "duree": 8,
+     "formules": "cycle : $\\Delta U=0$, $W=-\\sum Q$ · $Q_c+Q_f+W=0$ · $\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$ · PAC : $\\mathrm{COP}=-\\frac{Q_c}W\\leq\\frac{T_c}{T_c-T_f}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Cycles : Carnot, Stirling, Lenoir",
+   "notions": [
+    "cycles",
+    "travail",
+    "premier"
+   ],
+   "exos": [
+    {
+     "id": "hc1",
+     "enonce": "Stirling : $n=40$ mmol, état 1 à $P_1=1$ bar et $T_1=300$ K. Volume $V_1$ (en L) ? ($R=8{,}31$)",
+     "ans": "2493/2500",
+     "sol": "$V_1=\\frac{nRT_1}{P_1}=\\frac{0{,}04\\times8{,}31\\times300}{10^5}\\approx9{,}97\\times10^{-4}$ m³ $\\approx1{,}0$ L.",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 3,
+     "formules": "$PV=nRT$ · $T(\\mathrm K)=\\theta+273$",
+     "type": "value"
+    },
+    {
+     "id": "hc2",
+     "enonce": "Stirling, étape 1→2 : compression isotherme jusqu'à $V_2=\\frac{V_1}{10}$ à $T_1$. Pression $P_2$ (en bar) ?",
+     "ans": "10",
+     "sol": "$P_2=P_1\\frac{V_1}{V_2}=10$ bar.",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 1,
+     "formules": "isotherme réversible : $P_1V_1=P_2V_2$ · $PV=nRT$ · $T(\\mathrm K)=\\theta+273$",
+     "type": "value"
+    },
+    {
+     "id": "hc3",
+     "enonce": "Travail reçu en 1→2 (en J) avec $nRT_1=0{,}04\\times8{,}31\\times300$ et $\\ln10=2{,}3$ ?",
+     "ans": "57339/250",
+     "sol": "$W_{12}=nRT_1\\ln\\frac{V_1}{V_2}=99{,}72\\times2{,}3\\approx229$ J (positif : compression).",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 3,
+     "formules": "isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$",
+     "type": "value"
+    },
+    {
+     "id": "hc4",
+     "enonce": "Étape 2→3 : isochore de $T_1=300$ K à $T_c=600$ K, $c_v=\\dfrac{nR}{0{,}4}$. Chaleur $Q_{23}$ (en J) ?",
+     "ans": "2493/10",
+     "sol": "$W_{23}=0$, $Q_{23}=\\Delta U=c_v(T_c-T_1)=\\frac{0{,}3324}{0{,}4}\\times300=249{,}3$ J.",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 4,
+     "formules": "$\\Delta U=Q+W$ · isochore : $Q=\\Delta U=C_v\\Delta T$",
+     "type": "value"
+    },
+    {
+     "id": "hc5",
+     "enonce": "Rendement du Stirling sans régénérateur : $\\rho=\\dfrac{\\ln10}{\\frac1{0{,}4}+\\frac{T_c}{T_c-T_f}\\ln10}$ avec $T_c=600$, $T_f=300$, $\\ln10=2{,}3$. Valeur ?",
+     "ans": "23/71",
+     "sol": "$\\rho=\\dfrac{2{,}3}{2{,}5+2\\times2{,}3}=\\dfrac{2{,}3}{7{,}1}\\approx0{,}32$ (bien inférieur à Carnot, $0{,}5$).",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 4,
+     "formules": "cycle : $\\Delta U=0$, $W=-\\sum Q$ · $Q_c+Q_f+W=0$ · $\\rho=-\\frac W{Q_{reçu}}$",
+     "type": "value"
+    },
+    {
+     "id": "hc6",
+     "enonce": "Lenoir : état 1 à $T_1=373$ K, $V_1=10$ L, $P_1=2\\times10^5$ Pa. Détente isotherme 2→3 jusqu'à $V_3=2V_1$, puis isobare 3→1. Température $T_2=T_3$ (en K) ?",
+     "ans": "746",
+     "sol": "Isobare 3→1 : $\\frac{V_3}{T_3}=\\frac{V_1}{T_1}$ donc $T_3=2T_1=746$ K, et $T_2=T_3$.",
+     "src": "TD2 de thermodynamique, ex. 3",
+     "duree": 4,
+     "formules": "isobare : $\\frac VT=$ cte · $PV=nRT$ · $T(\\mathrm K)=\\theta+273$",
+     "type": "value"
+    },
+    {
+     "id": "hc7",
+     "enonce": "Stirling avec régénérateur : justifier l'idée de Stirling, donner le rendement et dire s'il peut être amélioré sans changer les sources.",
+     "sol": "Le régénérateur stocke la chaleur cédée par le gaz en 4→1 et la rend au gaz en 2→3 : ces deux échanges se compensent, donc les sources n'échangent de chaleur que pendant les deux isothermes. Rendement : $\\rho=1-\\frac{T_f}{T_c}=\\frac12$, celui de Carnot. On ne peut pas faire mieux avec ces deux sources, c'est le maximum du deuxième principe.",
+     "src": "TD3 de thermodynamique, ex. 3",
+     "duree": 6,
+     "formules": "Carnot : $\\rho=1-\\frac{T_f}{T_c}$ · cycle : $\\Delta U=0$, $W=-\\sum Q$ · $Q_c+Q_f+W=0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Niveau examen : sujets complets",
+   "notions": [
+    "premier",
+    "gp",
+    "chaleur",
+    "machines",
+    "cycles"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "hx1",
+     "enonce": "QCM de partiel : (1) définition de $H$ ; (2) $dH$ pour une transformation réversible ; (3) $Q$ d'un gaz parfait en isotherme ; (4) $W$ en isobare ; (5) $Q$ en isochore réversible ; (6) fonction non d'état ; (7) $T$ et $P$ en isochore ; (8) loi de Laplace en $T$ et $P$.",
+     "sol": "(1) $H=U+PV$. (2) $dH=dU+VdP$. (3) $Q=-W$ (car $\\Delta U=0$). (4) $W=-P(V_2-V_1)$. (5) $Q=nc_v\\Delta T$. (6) $Q$, la chaleur. (7) $T_1P_2=T_2P_1$. (8) $T^\\gamma P^{1-\\gamma}=$ cte.",
+     "src": "Partiel de physique n° 2 (mai 2019), QCM",
+     "duree": 8,
+     "formules": "$H=U+PV$ · $dH=C_pdT$ · $Q=\\Delta H$ à $P$ constante · $dH=dU+VdP$ · Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte",
+     "type": "open"
+    },
+    {
+     "id": "hx2",
+     "enonce": "$P_1=1$ bar. (I) Compression isotherme réversible de $V_1$ à $\\frac{V_1}{10}$, $W_{12}=420$ J, $R=8{,}3$, $\\ln10=2{,}3$ : 1) $Q_{12}$ ; 2) $P_2$ ; 3) $V_1$ ; 4) la température si $n=0{,}02$ mol. (II) Compression adiabatique réversible de $1$ mol de gaz monoatomique, $\\Delta T=100$ °C : $Q_{12}$, $W_{12}$, $P_2$.",
+     "sol": "(I) 1) $\\Delta U=0$ donc $Q_{12}=-W_{12}=-420$ J. 2) $P_2=10P_1=10$ bar. 3) $W_{12}=P_1V_1\\ln10$ donc $V_1=\\frac{420}{10^5\\times2{,}3}\\approx1{,}8\\times10^{-3}$ m³ $=1{,}8$ L. 4) $T=\\frac{P_1V_1}{nR}=\\frac{182{,}6}{0{,}02\\times8{,}3}\\approx1{,}1\\times10^3$ K.\n\n(II) $Q_{12}=0$ (adiabatique). $W_{12}=\\Delta U=\\frac32nR\\Delta T=1{,}5\\times8{,}3\\times100=1245$ J. $T^\\gamma P^{1-\\gamma}=$ cte donne $P_2=P_1\\left(\\frac{T_1+\\Delta T}{T_1}\\right)^{\\gamma/(\\gamma-1)}$ avec $\\gamma=\\frac53$.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 1",
+     "duree": 12,
+     "formules": "isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$ · adiabatique : $Q=0$, $W=\\Delta U$ · Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte",
+     "type": "open"
+    },
+    {
+     "id": "hx3",
+     "enonce": "$1$ mol de gaz parfait ($c_v=\\frac52R$, $c_p=\\frac72R$) passe de $a(P_1,V_1)$ à $b(2P_1,2V_1)$ par $acb$ (isochore puis isobare), $adb$ (isobare puis isochore) et la droite $ab$. 1) $T_b$, $T_c$, $T_d$. 2) $W$ pour chaque chemin. 3) $Q$ pour chaque chemin. Conclure.",
+     "sol": "1) $T_b=\\frac{2P_1\\cdot2V_1}{R}=4T_1$ ; $c=(2P_1,V_1)$ et $d=(P_1,2V_1)$ donnent $T_c=T_d=2T_1$.\n\n2) $W_{acb}=-2P_1(2V_1-V_1)=-2RT_1$ ; $W_{adb}=-P_1V_1=-RT_1$ ; droite : $P=\\frac{P_1}{V_1}V$, $W_{ab}=-\\frac{P_1}{2V_1}(4V_1^2-V_1^2)=-\\frac32RT_1$.\n\n3) $\\Delta U=c_v(T_b-T_a)=\\frac{15}2RT_1$. $Q_{acb}=\\Delta U-W=\\frac{19}2RT_1$ ; $Q_{adb}=\\frac{17}2RT_1$ ; $Q_{ab}=9RT_1$.\n\n$\\Delta U$ ne dépend pas du chemin ; $W$ et $Q$ si.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 2",
+     "duree": 15,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · $\\Delta U=C_v\\Delta T=mc_v\\Delta T$ · $\\Delta U=Q+W$ · $C_p-C_v=R$",
+     "type": "open"
+    },
+    {
+     "id": "hx4",
+     "enonce": "$1$ mol de gaz parfait : $A(P_1,V_1,T_1)$, compression adiabatique réversible jusqu'à $V_B=\\frac{V_1}4$, puis isochore jusqu'à $T_1$ (état $C$), puis détente isotherme réversible jusqu'à $A$. 1) Tracer le cycle. 2) Chaleur reçue. 3) Travail reçu sur l'adiabatique. 4) $P_C$, $P_B$, $T_B$.",
+     "sol": "1) $A\\to B$ adiabatique raide, $B\\to C$ verticale vers le bas, $C\\to A$ hyperbole $PV=$ cte.\n\n2) La chaleur reçue est celle de l'isotherme $C\\to A$ : $Q_{CA}=-W_{CA}=P_1V_1\\ln4$.\n\n3) $W_{AB}=\\Delta U=\\frac{nR}{\\gamma-1}(T_B-T_1)=\\dfrac{P_1V_1}{\\gamma-1}\\left(4^{\\gamma-1}-1\\right)$.\n\n4) $P_C=\\frac{P_1V_1}{V_1/4}=4P_1$ (isotherme). Laplace : $P_B=P_1\\cdot4^\\gamma$ et $T_B=T_1\\cdot4^{\\gamma-1}$.",
+     "src": "Partiel de physique n° 2 (mai 2019), ex. 3",
+     "duree": 15,
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte · isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$ · adiabatique : $Q=0$, $W=\\Delta U$",
+     "type": "open"
+    },
+    {
+     "id": "hx5",
+     "enonce": "Calorimètre : $0{,}02$ kg de glace à $-20$ °C ($c=2000$ J·kg$^{-1}$·K$^{-1}$) et $0{,}1$ kg d'eau à $30$ °C ($c=4000$). Température finale $10$ °C. $\\Delta H_{tot}=0$ avec $\\Delta H_1=400$ J, $\\Delta H_3=800-8000$ J. Enthalpie de fusion (en kJ·kg$^{-1}$) ?",
+     "ans": "340",
+     "sol": "$m_{gl}\\Delta h=-\\Delta H_1-\\Delta H_3=-400+7200=6800$ J, donc $\\Delta h=\\frac{6800}{0{,}02}=340\\,000$ J·kg$^{-1}=340$ kJ·kg$^{-1}$.",
+     "src": "Midterm de physique 2030 (S2), ex. 1",
+     "duree": 6,
+     "formules": "$Q=mc\\Delta T$ · fusion : $Q=m\\Delta h_{fus}$ à $T$ constante · calorimètre isolé : $\\sum Q=0$",
+     "type": "value"
+    },
+    {
+     "id": "hx6",
+     "enonce": "Réfrigérateur entre $T_f=5$ °C et $T_c=25$ °C : schéma, signes de $Q_c$, $Q_f$, $W$, efficacité réversible, valeur et interprétation.",
+     "sol": "Frigo : $Q_f>0$ (prise à l'intérieur), $W>0$ (électricité), $Q_c<0$ (cédée à la cuisine). $W=-(Q_c+Q_f)$ et $e=\\frac{Q_f}W=\\frac1{-1-Q_c/Q_f}$ ; avec $S_{cr}=0$ : $e=\\frac{T_f}{T_c-T_f}=\\frac{278}{20}\\approx14$.\n\nPour $1$ J d'énergie électrique fourni, le frigo extrait $14$ J de l'intérieur (valeur maximale, idéale).",
+     "src": "Midterm de physique 2030 (S2), ex. 2",
+     "duree": 10,
+     "formules": "frigo : $e=\\frac{Q_f}W\\leq\\frac{T_f}{T_c-T_f}$ · $\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "cycles",
+    "gp",
+    "machines"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "hy1",
+     "enonce": "Brayton (hélium, $\\gamma=\\frac53$) : $\\rho=1-\\left(\\dfrac{P_A}{P_B}\\right)^{(\\gamma-1)/\\gamma}$ avec $\\dfrac{P_B}{P_A}=32$. Valeur de $\\rho$ ?",
+     "ans": "3/4",
+     "sol": "$\\frac{\\gamma-1}\\gamma=\\frac25$ et $32^{2/5}=2^2=4$, donc $\\rho=1-\\frac14=\\frac34$.",
+     "src": "Partiel de physique 2020/2021, ex. 1",
+     "duree": 5,
+     "formules": "Brayton : $\\rho=1-\\left(\\frac{P_A}{P_B}\\right)^{\\frac{\\gamma-1}\\gamma}$ · Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte",
+     "type": "value"
+    },
+    {
+     "id": "hy2",
+     "enonce": "Cycle de Brayton $A\\to B$ adiabatique réversible, $B\\to C$ isobare, $C\\to D$ adiabatique réversible, $D\\to A$ isobare. Établir $\\rho=1-\\dfrac{T_A}{T_B}=1-\\left(\\dfrac{P_A}{P_B}\\right)^{\\frac{\\gamma-1}\\gamma}$.",
+     "sol": "Adiabatiques : $T_B=T_A\\left(\\frac{P_B}{P_A}\\right)^{\\frac{\\gamma-1}\\gamma}$ et $T_C=T_D\\left(\\frac{P_B}{P_A}\\right)^{\\frac{\\gamma-1}\\gamma}$, donc $\\frac{T_C}{T_D}=\\frac{T_B}{T_A}$.\n\nIsobares : $Q_{BC}=C_p(T_C-T_B)$ et $Q_{DA}=C_p(T_A-T_D)$. $\\rho=1+\\frac{Q_{DA}}{Q_{BC}}=1-\\frac{T_D-T_A}{T_C-T_B}$.\n\nOr $T_D-T_A=\\frac{T_A}{T_B}(T_C-T_B)$, d'où $\\rho=1-\\frac{T_A}{T_B}$.",
+     "src": "Partiel de physique 2020/2021, ex. 1",
+     "duree": 12,
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte · isobare : $Q=C_p\\Delta T$ · moteur : $\\rho=-\\frac W{Q_c}=1+\\frac{Q_f}{Q_c}\\leq1-\\frac{T_f}{T_c}$",
+     "type": "open"
+    },
+    {
+     "id": "hy3",
+     "enonce": "Cycle de Carnot $A\\to B$ isotherme à $T_c$, $B\\to C$ adiabatique, $C\\to D$ isotherme à $T_f$, $D\\to A$ adiabatique. Montrer $\\dfrac{V_B}{V_A}=\\dfrac{V_C}{V_D}$ avec Laplace, puis $\\rho=1-\\dfrac{T_f}{T_c}$.",
+     "sol": "Laplace $TV^{\\gamma-1}=$ cte : $T_cV_B^{\\gamma-1}=T_fV_C^{\\gamma-1}$ et $T_cV_A^{\\gamma-1}=T_fV_D^{\\gamma-1}$. En divisant : $\\frac{V_B}{V_A}=\\frac{V_C}{V_D}$.\n\n$Q_{AB}=nRT_c\\ln\\frac{V_B}{V_A}$ et $Q_{CD}=nRT_f\\ln\\frac{V_D}{V_C}=-nRT_f\\ln\\frac{V_B}{V_A}$. $\\rho=1+\\frac{Q_{CD}}{Q_{AB}}=1-\\frac{T_f}{T_c}$.",
+     "src": "Partiel de physique 2020/2021, ex. 2",
+     "duree": 12,
+     "formules": "Laplace : $PV^\\gamma=$ cte · $TV^{\\gamma-1}=$ cte · $T^\\gamma P^{1-\\gamma}=$ cte · isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$ · Carnot : $\\rho=1-\\frac{T_f}{T_c}$",
+     "type": "open"
+    },
+    {
+     "id": "hy4",
+     "enonce": "Lenoir ($P_1=2\\times10^5$ Pa, $V_1=10$ L, $T_2=2T_1$, $V_3=2V_1$) : $W_{12}=0$, $W_{31}=+2000$ J et $W_{23}=-4000\\ln2$. Travail total (en J) avec $\\ln2\\approx0{,}7$ ?",
+     "ans": "-800",
+     "sol": "$W_{tot}=2000-4000\\times0{,}7=-800$ J : le moteur fournit environ $800$ J par cycle (sens horaire).",
+     "src": "TD2 de thermodynamique, ex. 3",
+     "duree": 8,
+     "formules": "$W=-\\int P_{ext}\\,dV$ (reçu $>0$) · monobare : $W=-P_0(V_f-V_i)$ · isotherme réversible : $W=nRT\\ln\\frac{V_i}{V_f}=P_1V_1\\ln\\frac{V_i}{V_f}$",
+     "type": "value"
+    },
+    {
+     "id": "hy5",
+     "enonce": "Pourquoi aucune transformation réelle n'est-elle parfaitement adiabatique ou réversible ? Quelle conséquence sur le rendement d'un moteur réel ?",
+     "sol": "L'équilibre thermique finit toujours par s'établir : même une transformation rapide échange un peu de chaleur. Frottements, gradients de température et de pression créent de l'entropie : $S_{cr}>0$. Le rendement réel $\\rho=1-\\frac{T_f}{T_c}-\\frac{T_fS_{cr}}{Q_c}$ est donc inférieur à celui de Carnot.",
+     "duree": 6,
+     "formules": "$\\Delta S=\\frac QT+S_{cr}$, $S_{cr}\\geq0$ · moteur : $\\rho=-\\frac W{Q_c}=1+\\frac{Q_f}{Q_c}\\leq1-\\frac{T_f}{T_c}$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

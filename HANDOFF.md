@@ -148,3 +148,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Physics S2: thermodynamique (B3, `Cours_thermodynamique_V2.pdf`, TD1-3, annales `S2/*/Phys`) then électromagnétisme (B4, `Cours_Electromagnétisme_V1.pdf`, TD3-5). PDFs already downloaded in `annales/raw/S{1,2}/*/Phys` and `S2/TDs/2030/Physique` (32 are scans).
 2. Transcribe physics annales to `annales/md` (not done) and add `FORMULES.md` section « Mécanique » for the course sheet.
 3. Code colour per subject (now two subjects exist). Then Archi.
+
+# Handoff — 2026-11-16
+## Done
+- Thermodynamics path `physique-s2-thermo` (`parcours/src/phys_thermo.py`): 14 levels, 77 exos (levels 13-14 exam), 10 notions, 23 quiz, 20 variants, FORMULES for all. Added to `PATHS` in `parcours/build.py` and to `syllabus.json` (physique S2 `Thermodynamique`, B3). Build OK (sympy), 26/26 tests, 491 formulas render in KaTeX 0.16.9 with 0 error, `/niveaux/physique-s2-thermo` answers 200 after `docker restart`. Branch `feat/physique-thermo` (from `feat/physique-meca`), nothing pushed.
+## Next steps
+1. Not checked: exercise pages of the new path at 390 px with a QA account (delete it afterwards).
+2. Transcribe S2 physics annales (`annales/raw/S2/*/Phys`, mostly scans) to `annales/md`, add a `Thermodynamique` section in `annales/tools/formules.py`/`index.py` `ORDER`, then `FICHE_SECTION['physique-s2-thermo']` in `levels.py`.
+3. Électromagnétisme path (B4, `Cours_Electromagnétisme_V1.pdf`, TD1&2-5 in `annales/raw/S2/TDs/2030/Physique/B4`).
+4. Code colour per subject; then Archi.

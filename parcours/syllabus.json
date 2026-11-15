@@ -209,6 +209,31 @@
        ]
       }
      ]
+    },
+    {
+     "id": "S2",
+     "moodle": "Physique - Promo 2030",
+     "ecues": [
+      {
+       "id": "Thermodynamique",
+       "titre": "Thermodynamique",
+       "bloc": "B3",
+       "periode_examen": "partiel en mai",
+       "chapitres": [
+        "02_Cours",
+        "04_TD_Thermodynamique"
+       ],
+       "parcours": [
+        "physique-s2-thermo"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S2/Finals/Phys/2023/final-2023-s2-phys-subject-fr.pdf",
+        "S2/Finals/Phys/2025/final-2025-s2-phys-subject-fr.pdf",
+        "S2/Midterms/Phys/2030/midterms-2030-s2-phys-correction-fr.pdf"
+       ]
+      }
+     ]
     }
    ]
   }
