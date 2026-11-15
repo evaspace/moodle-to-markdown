@@ -221,6 +221,32 @@ LEVELS = [
         v("fz4", r"Calculer $\displaystyle\lim_{x\to0}(\cos x)^{1/x^2}$.", "limit(cos(x)**(1/x**2), x, 0)", "exp(Rational(-1,2))",
           r"$(\cos x)^{1/x^2}=e^{\frac{\ln\cos x}{x^2}}$ et $\ln\cos x=\ln\left(1-\frac{x^2}2+o(x^2)\right)\sim-\frac{x^2}2$. L'exposant tend vers $-\frac12$ : limite $e^{-1/2}=\frac1{\sqrt e}$.", duree=7),
     ]},
+    {"n": 12, "titre": "Examens 2028 et 2029", "notions": ["negligeable", "equivalent", "dl-usuels", "dl-operations", "limite-dl"], "examen": True, "exos": [
+        o("fw1", r"1. Donner deux définitions de $f=o(g)$ et de $f\sim g$ en $x_0$. 2. Équivalent de $P(x)=2x^3-x^2+6x$ en $0$ et en $+\infty$. 3. Équivalents en $0$ de $f=\sin 2x$, $g=1-e^{-2x}$, $fg$ et $f-g$.",
+          r"1. $f=o(g)\iff f=g\varepsilon$ avec $\varepsilon\to0\iff f/g\to0$. $f\sim g\iff f=g(1+\varepsilon)$ avec $\varepsilon\to0\iff f/g\to1$." "\n\n"
+          r"2. En $+\infty$ : $P/2x^3=1-\frac1{2x}+\frac3{x^2}\to1$, $P\sim2x^3$. En $0$ : $P/6x=\frac{x^2}3-\frac x6+1\to1$, $P\sim6x$." "\n\n"
+          r"3. $f=2x+o(x)\sim2x$ ; $g=1-(1-2x+o(x))\sim2x$ ; $fg\sim4x^2$. Pour $f-g$, il faut pousser les DL : $\sin2x=2x+o(x^2)$ et $g=2x-2x^2+o(x^2)$, donc $f-g=2x^2+o(x^2)\sim2x^2$ (on ne soustrait pas des équivalents).",
+          src="Examen S2-B3 APEF mars 2024, ex. 4", duree=12),
+        o("fw2", r"1. Condition nécessaire et suffisante sur $\alpha$ pour que $\dfrac{\ln x}{x^2}=o\!\left(\dfrac1{x^\alpha}\right)$ en $+\infty$. 2. DL d'ordre $3$ en $0$ d'une fonction avec $f(x)\sim-2x$ et $f(x)+2x=o(x^3)$.",
+          r"1. Le quotient vaut $x^{\alpha-2}\ln x$. Si $\alpha\ge2$ il tend vers $+\infty$ ; si $\alpha<2$, croissances comparées : $0$. Condition : $\alpha<2$." "\n\n"
+          r"2. $f(x)=-2x+o(x^3)$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 4", duree=8),
+        v("fw3", r"Coefficient de $x^4$ dans le DL en $0$ de $\cos(x)\sqrt{1-x^2}$ ?", dl("cos(x)*sqrt(1-x**2)", 4) + ".coeff(x,4)", "Rational(1,6)",
+          r"$\left(1-\frac{x^2}2+\frac{x^4}{24}\right)\left(1-\frac{x^2}2-\frac{x^4}8\right)=1-x^2+\frac{x^4}6+o(x^4)$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 5", duree=6),
+        v("fw4", r"Coefficient de $x^3$ dans le DL en $0$ de $\ln(2-\sin x)$ ?", dl("log(2-sin(x))", 3) + ".coeff(x,3)", "Rational(1,24)",
+          r"$\ln(2-\sin x)=\ln2+\ln\left(1-\frac x2+\frac{x^3}{12}\right)=\ln2-\frac x2-\frac{x^2}8+\frac{x^3}{24}+o(x^3)$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 5", duree=8),
+        v("fw5", r"Calculer $\displaystyle\lim_{x\to+\infty}\left(1+\sin\frac1x\right)^x$.", "limit((1+sin(1/x))**x, x, oo)", "E",
+          r"$\left(1+\sin\frac1x\right)^x=e^{x\ln(1+\frac1x+o(\frac1x))}=e^{1+o(1)}\to e$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 6", duree=6),
+        v("fw6", r"Calculer $\displaystyle\lim_{x\to+\infty}\left(\cos\frac1x\right)^{x^2}$.", "limit(cos(1/x)**(x**2), x, oo)", "exp(-Rational(1,2))",
+          r"$x^2\ln\cos\frac1x$ avec $t=\frac1x$ : $\ln\cos t=-\frac{t^2}2+o(t^2)$, donc l'exposant tend vers $-\frac12$ : limite $e^{-1/2}$.",
+          src="Examen S2-B3 APEF mars 2025, ex. 5", duree=8),
+        v("fw7", r"Coefficient de $x^4$ dans le DL en $0$ de $\ln(1+\cos x)$ ?", dl("log(1+cos(x))", 4) + ".coeff(x,4)", "-Rational(1,96)",
+          r"$1+\cos x=2\left(1-\frac{x^2}4+\frac{x^4}{48}\right)$, puis $\ln(1+u)=u-\frac{u^2}2$ : $\ln2-\frac{x^2}4-\frac{x^4}{96}+o(x^4)$.",
+          src="Examen S2-B3 APEF mars 2025, ex. 4", duree=8),
+    ]},
 ]
 
 
@@ -356,6 +382,9 @@ FORMULES = {
     "fl1": _EXP + r" · $f\sim g\Rightarrow$ même limite", "fl2": _SIN, "fl3": _LN, "fl4": _POW + r" · $\ln(1+u)\sim u$ en $0$",
     "fl5": r"$1-\cos x\sim\frac{x^2}2$ · $\sin x\sim x$ · " + _EQQ, "fl6": _EXP + " · " + _COS,
     "fd1": _O + r" $\iff f=g\,\varepsilon$, $\varepsilon\to0$ · $f\sim g\iff\frac fg\to1\iff f=g(1+\varepsilon)$, $\varepsilon\to0$",
+    "fw1": _O + r" · $f\sim g\iff\frac fg\to1$ · " + _EQ0 + r" · on ne soustrait pas des équivalents : pousser les DL", "fw2": _O + r" · croissances comparées : $x^a\ln x\to0$ pour $a<0$ en $+\infty$",
+    "fw3": _COS + " · " + _ALPHA + " · " + _PROD, "fw4": _SIN + " · " + _LN + " · " + _COMP, "fw5": _POW + " · " + _LN + r" · $\sin t\sim t$",
+    "fw6": _POW + " · " + _COS + " · " + _LN, "fw7": _COS + " · " + _LN + " · " + _COMP,
     "fq1": r"$f\sim$ premier terme non nul du DL · $o(x^2)=x^2\varepsilon(x)$ · $\sin x\sim x$ · équivalent d'un produit = produit des équivalents",
     "fa1": _LN + " · " + _COS + " · " + r"$(1+u)^\alpha=1+\alpha u+o(u)$ · " + _EQQ,
     "fa2": _POW + r" · $\sin u=u+o(u)$ · $\ln(1+u)=u+o(u)$",

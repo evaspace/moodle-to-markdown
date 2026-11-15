@@ -1028,6 +1028,88 @@
      "type": "value"
     }
    ]
+  },
+  {
+   "n": 12,
+   "titre": "Examens 2028 et 2029",
+   "notions": [
+    "negligeable",
+    "equivalent",
+    "dl-usuels",
+    "dl-operations",
+    "limite-dl"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "fw1",
+     "enonce": "1. Donner deux définitions de $f=o(g)$ et de $f\\sim g$ en $x_0$. 2. Équivalent de $P(x)=2x^3-x^2+6x$ en $0$ et en $+\\infty$. 3. Équivalents en $0$ de $f=\\sin 2x$, $g=1-e^{-2x}$, $fg$ et $f-g$.",
+     "sol": "1. $f=o(g)\\iff f=g\\varepsilon$ avec $\\varepsilon\\to0\\iff f/g\\to0$. $f\\sim g\\iff f=g(1+\\varepsilon)$ avec $\\varepsilon\\to0\\iff f/g\\to1$.\n\n2. En $+\\infty$ : $P/2x^3=1-\\frac1{2x}+\\frac3{x^2}\\to1$, $P\\sim2x^3$. En $0$ : $P/6x=\\frac{x^2}3-\\frac x6+1\\to1$, $P\\sim6x$.\n\n3. $f=2x+o(x)\\sim2x$ ; $g=1-(1-2x+o(x))\\sim2x$ ; $fg\\sim4x^2$. Pour $f-g$, il faut pousser les DL : $\\sin2x=2x+o(x^2)$ et $g=2x-2x^2+o(x^2)$, donc $f-g=2x^2+o(x^2)\\sim2x^2$ (on ne soustrait pas des équivalents).",
+     "src": "Examen S2-B3 APEF mars 2024, ex. 4",
+     "duree": 12,
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$ · $f\\sim g\\iff\\frac fg\\to1$ · en $0$ : $\\sin x\\sim x$, $e^x-1\\sim x$, $\\ln(1+x)\\sim x$ · on ne soustrait pas des équivalents : pousser les DL",
+     "type": "open"
+    },
+    {
+     "id": "fw2",
+     "enonce": "1. Condition nécessaire et suffisante sur $\\alpha$ pour que $\\dfrac{\\ln x}{x^2}=o\\!\\left(\\dfrac1{x^\\alpha}\\right)$ en $+\\infty$. 2. DL d'ordre $3$ en $0$ d'une fonction avec $f(x)\\sim-2x$ et $f(x)+2x=o(x^3)$.",
+     "sol": "1. Le quotient vaut $x^{\\alpha-2}\\ln x$. Si $\\alpha\\ge2$ il tend vers $+\\infty$ ; si $\\alpha<2$, croissances comparées : $0$. Condition : $\\alpha<2$.\n\n2. $f(x)=-2x+o(x^3)$.",
+     "src": "Examen S2-B3 APEF mars 2024, ex. 4",
+     "duree": 8,
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$ · croissances comparées : $x^a\\ln x\\to0$ pour $a<0$ en $+\\infty$",
+     "type": "open"
+    },
+    {
+     "id": "fw3",
+     "enonce": "Coefficient de $x^4$ dans le DL en $0$ de $\\cos(x)\\sqrt{1-x^2}$ ?",
+     "ans": "Rational(1,6)",
+     "sol": "$\\left(1-\\frac{x^2}2+\\frac{x^4}{24}\\right)\\left(1-\\frac{x^2}2-\\frac{x^4}8\\right)=1-x^2+\\frac{x^4}6+o(x^4)$.",
+     "src": "Examen S2-B3 APEF mars 2024, ex. 5",
+     "duree": 6,
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $(1+u)^\\alpha=1+\\alpha u+\\frac{\\alpha(\\alpha-1)}2u^2+o(u^2)$ · produit de DL : tronquer à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fw4",
+     "enonce": "Coefficient de $x^3$ dans le DL en $0$ de $\\ln(2-\\sin x)$ ?",
+     "ans": "Rational(1,24)",
+     "sol": "$\\ln(2-\\sin x)=\\ln2+\\ln\\left(1-\\frac x2+\\frac{x^3}{12}\\right)=\\ln2-\\frac x2-\\frac{x^2}8+\\frac{x^3}{24}+o(x^3)$.",
+     "src": "Examen S2-B3 APEF mars 2024, ex. 5",
+     "duree": 8,
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fw5",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(1+\\sin\\frac1x\\right)^x$.",
+     "ans": "E",
+     "sol": "$\\left(1+\\sin\\frac1x\\right)^x=e^{x\\ln(1+\\frac1x+o(\\frac1x))}=e^{1+o(1)}\\to e$.",
+     "src": "Examen S2-B3 APEF mars 2024, ex. 6",
+     "duree": 6,
+     "formules": "$a^b=e^{b\\ln a}$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · $\\sin t\\sim t$",
+     "type": "value"
+    },
+    {
+     "id": "fw6",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\cos\\frac1x\\right)^{x^2}$.",
+     "ans": "exp(-Rational(1,2))",
+     "sol": "$x^2\\ln\\cos\\frac1x$ avec $t=\\frac1x$ : $\\ln\\cos t=-\\frac{t^2}2+o(t^2)$, donc l'exposant tend vers $-\\frac12$ : limite $e^{-1/2}$.",
+     "src": "Examen S2-B3 APEF mars 2025, ex. 5",
+     "duree": 8,
+     "formules": "$a^b=e^{b\\ln a}$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$",
+     "type": "value"
+    },
+    {
+     "id": "fw7",
+     "enonce": "Coefficient de $x^4$ dans le DL en $0$ de $\\ln(1+\\cos x)$ ?",
+     "ans": "-Rational(1,96)",
+     "sol": "$1+\\cos x=2\\left(1-\\frac{x^2}4+\\frac{x^4}{48}\\right)$, puis $\\ln(1+u)=u-\\frac{u^2}2$ : $\\ln2-\\frac{x^2}4-\\frac{x^4}{96}+o(x^4)$.",
+     "src": "Examen S2-B3 APEF mars 2025, ex. 4",
+     "duree": 8,
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    }
+   ]
   }
  ]
 }

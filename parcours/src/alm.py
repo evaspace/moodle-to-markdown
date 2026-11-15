@@ -259,6 +259,29 @@ LEVELS = [
         o("ay3", r"Soit $f$ un endomorphisme de $E$. Montrer que $\mathrm{Ker}f\subset\mathrm{Ker}f^2$ et $\mathrm{Im}f^2\subset\mathrm{Im}f$.",
           r"Si $x\in\mathrm{Ker}f$ : $f^2(x)=f(f(x))=f(0)=0$, donc $x\in\mathrm{Ker}f^2$. Si $y\in\mathrm{Im}f^2$ : $y=f^2(x)=f(f(x))\in\mathrm{Im}f$.", duree=6),
     ]},
+    {"n": 13, "titre": "Examens 2028 et 2029", "notions": ["inverse", "noyau", "rang", "matrice", "changement", "projecteur"], "examen": True, "exos": [
+        v("aw1", r"Inverse de $A=" + pm([[2, 1, 1], [2, -1, 2], [-1, 1, -1]]) + r"$ : donner le coefficient en ligne 3, colonne 3 de $A^{-1}$.", "Matrix([[2,1,1],[2,-1,2],[-1,1,-1]]).inv()[2,2]", "4",
+          r"Pivot de Gauss : $A^{-1}=" + pm([[1, -2, -3], [0, 1, 2], [-1, 3, 4]]) + r"$.", src="Examen S2-B4 ALM juin 2024, ex. 1", duree=8),
+        v("aw2", r"$f:\mathbb R_2[X]\to\mathbb R^2$, $P\mapsto(P(0),P'(-1))$. Quelle est la dimension de $\mathrm{Ker}f$ ?", "3-Matrix([[1,0,0],[0,1,-2]]).rank()", "1",
+          r"Matrice $" + pm([[1, 0, 0], [0, 1, -2]]) + r"$. $\mathrm{Ker}f=\mathrm{Vect}(2X+X^2)$, dimension $1$ (rang $2$, théorème du rang).", src="Examen S2-B4 ALM juin 2024, ex. 2", duree=6),
+        o("aw3", r"$f:\mathbb R_2[X]\to\mathbb R^2$ vérifie $\mathrm{Ker}f=\mathrm{Vect}(X+1)$. 1. $\dim\mathrm{Im}f$ ? 2. $f$ injective ? surjective ? Énoncer le théorème du rang.",
+          r"Théorème du rang : $f\in\mathcal L(E,F)$, $E$ de dimension finie : $\dim E=\dim\mathrm{Ker}f+\dim\mathrm{Im}f$. 1. $3-1=2$. 2. Non injective ($\mathrm{Ker}f\ne\{0\}$). Surjective : $\mathrm{Im}f\subset\mathbb R^2$ et $\dim\mathrm{Im}f=2$, donc $\mathrm{Im}f=\mathbb R^2$.",
+          src="Examen S2-B4 ALM mai 2025, ex. 2", duree=8),
+        o("aw4", r"$f:\mathbb R^2\to\mathbb R_1[X]$, $(a,b)\mapsto(-3a+5b)X-4a+6b$. 1. Matrice dans les bases canoniques. 2. Matrice dans $\mathcal B_1=((1,1),(2,1))$ et $\mathcal B_2=(X+1,X+2)$.",
+          r"1. $f(1,0)=-3X-4$, $f(0,1)=5X+6$ : $A=" + pm([[-4, 6], [-3, 5]]) + r"$." "\n\n"
+          r"2. $f(1,1)=2X+2=2(X+1)$ et $f(2,1)=-X-2=-(X+2)$ : matrice $" + pm([[2, 0], [0, -1]]) + r"$.",
+          src="Examen S2-B4 ALM juin 2024, ex. 3", duree=10),
+        o("aw5", r"$p:\mathbb R^2\to\mathbb R^2$, $(x,y)\mapsto(0,x+y)$. 1. Vérifier $p\circ p=p$. 2. $\mathrm{Ker}p=\mathrm{Vect}(1,-1)$ et $\mathrm{Im}p=\mathrm{Vect}(0,1)$ : montrer que $\mathbb R^2=\mathrm{Ker}p\oplus\mathrm{Im}p$. 3. $p(-1,-2)$ ? 4. Matrice de $p$ dans $((1,-1),(0,1))$.",
+          r"1. $p(p(x,y))=p(0,x+y)=(0,x+y)=p(x,y)$." "\n\n"
+          r"2. $\mathrm{Ker}p\cap\mathrm{Im}p=\{0\}$ (droites distinctes) et $\dim=1+1-0=2$." "\n\n"
+          r"3. $(-1,-2)=(-1,1)+(0,-3)$ avec $(-1,1)\in\mathrm{Ker}p$ : $p(-1,-2)=(0,-3)$." "\n\n"
+          r"4. $p(1,-1)=0$, $p(0,1)=(0,1)$ : $" + pm([[0, 0], [0, 1]]) + r"$.",
+          src="Examen S2-B4 ALM juin 2024, ex. 4", duree=12),
+        v("aw6", r"$\mathcal B'=((2,0,0),(-3,1,0),(16,8,1))$, $u=2u_1+3u_2-4u_3$. Quelles sont les coordonnées de $u$ dans la base canonique ?", "Matrix([[2,-3,16],[0,1,8],[0,0,1]])*Matrix([2,3,-4])", "Matrix([-69,-29,-4])",
+          r"$X=PX'$ avec $P=" + pm([[2, -3, 16], [0, 1, 8], [0, 0, 1]]) + r"$ et $X'=(2,3,-4)^T$ : $X=(-69,-29,-4)^T$.", src="Examen S2-B4 ALM juin 2024, ex. 5", duree=6),
+        v("aw7", r"$p$ projection de $\mathbb R^2$ sur $F=\mathrm{Vect}(2,1)$ parallèlement à $G=\mathrm{Vect}(-2,4)$. Calculer $p(3,4)$.", "2*Matrix([2,1])", "Matrix([4,2])",
+          r"$(3,4)=2(2,1)+\frac12(-2,4)$ : $p(3,4)=2(2,1)$, soit $(4,2)$.", src="Examen S2-B4 ALM mai 2025, ex. 4", duree=6),
+    ]},
 ]
 
 
@@ -375,6 +398,9 @@ FORMULES = {
     "aj1": _PROJ + " · " + _KER, "aj2": _PROJ + " · " + _PROD, "aj3": _SD + r" · $u\in\mathrm{Vect}(\varepsilon)\iff u=\lambda\varepsilon$",
     "aj4": r"projection sur $F$ parallèlement à $G$ : $u=v+w\mapsto v$ · " + _COL + r" · matrice dans une base adaptée : $\mathrm{diag}(1,0)$",
     "aj5": _PROJ + r" · $s=2p-id$ · $s\circ s=id$", "aj6": _PROJ + " · " + _SD + r" · $x=(x-p(x))+p(x)$",
+    "aw1": _GAUSS + r" · $AA^{-1}=I$", "aw2": _KER + " · " + _RG + " · " + _COL, "aw3": _RG + " · " + _INJ + r" · $\dim\mathrm{Im}f=\dim F\Rightarrow$ surjective",
+    "aw4": _COL + r" · coordonnées dans la base d'arrivée", "aw5": _PROJ + " · " + _SD + " · " + _COL,
+    "aw6": _PASS, "aw7": r"projection sur $F$ parallèlement à $G$ : $u=v+w\mapsto v$ · " + _PROJ,
     "ay1": r"$\mathrm{Im}f=\{f(x)\}$ · $\mathrm{Ker}f=\{x,\ f(x)=0\}$ · " + _RG + r" · $F\subset G\Rightarrow\dim F\le\dim G$",
     "ay2": r"$N$ nilpotente : $N^3=0$ · si $AB=BA$ : $(A+B)^n=\sum_k\binom nkA^kB^{n-k}$ · $(I+N)^n=I+nN+\binom n2N^2$",
     "ay3": r"$\mathrm{Ker}f=\{x,\ f(x)=0\}$ · $\mathrm{Im}f=\{f(x)\}$ · $f(0)=0$ · $f^2(x)=f(f(x))$",

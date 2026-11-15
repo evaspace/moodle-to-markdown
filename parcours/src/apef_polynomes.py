@@ -197,6 +197,22 @@ LEVELS = [
         o("py3", r"Trouver $a\in\mathbb R$ pour que $Q=(X+1)^7-X^7-a$ ait une racine réelle au moins double.",
           r"$\alpha$ racine au moins double $\iff Q(\alpha)=Q'(\alpha)=0$. $Q'=7(X+1)^6-7X^6=0\iff X+1=\pm X\iff X=-\frac12$. $Q\left(-\frac12\right)=\frac1{128}+\frac1{128}-a=0$ donne $a=\frac1{64}$.", duree=8),
     ]},
+    {"n": 11, "titre": "Examens 2028 et 2029", "notions": ["multiplicite", "factorisation", "racine"], "examen": True, "exos": [
+        o("pw1", r"$P=X^5+4X^4+7X^3+6X^2+2X$. 1. Sans dérivée, montrer que $0$ est racine d'ordre exactement $1$. 2. Montrer que $-1$ est racine d'ordre exactement $2$. 3. En déduire que $X^3+2X^2+X\mid P$. 4. Poser la division euclidienne et factoriser $P$ dans $\mathbb R[X]$ et dans $\mathbb C[X]$.",
+          r"1. $P=X(X^4+4X^3+7X^2+6X+2)=XQ$ avec $Q(0)=2\ne0$ : racine simple." "\n\n"
+          r"2. $P(-1)=-1+4-7+6-2=0$ ; $P'=5X^4+16X^3+21X^2+12X+2$, $P'(-1)=5-16+21-12+2=0$ ; $P''=20X^3+48X^2+42X+12$, $P''(-1)=-20+48-42+12=-2\ne0$." "\n\n"
+          r"3. $X\mid P$ et $(X+1)^2\mid P$ avec des racines distinctes, donc $X(X+1)^2=X^3+2X^2+X\mid P$." "\n\n"
+          r"4. $P=(X^3+2X^2+X)(X^2+2X+2)$, reste nul. $\Delta=-4<0$ : irréductible dans $\mathbb R[X]$. $\mathbb R[X]$ : $X(X+1)^2(X^2+2X+2)$. $\mathbb C[X]$ : $X(X+1)^2(X+1-i)(X+1+i)$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 1", duree=15),
+        o("pw2", r"$P=Q\cdot(X-1)^n$ avec $\deg Q=2$, $Q(0)=Q(-1)=0$, $Q(1)=2$, $P(1)=P'(1)=P''(1)=0$ et $P^{(3)}(1)\ne0$. Trouver $P$ factorisé.",
+          r"$Q=\alpha X(X+1)$ et $Q(1)=2\alpha=2$ donc $\alpha=1$. $1$ est racine d'ordre exactement $3$ et $Q(1)\ne0$ : $n=3$. $P=X(X+1)(X-1)^3$.",
+          src="Examen S2-B3 APEF mars 2024, ex. 2", duree=8),
+        o("pw3", r"$P_1=3X^6+6X^4-X^3+2X^2$ et $P_2=X^{5} + 2 X^{4} + 2 X^{3} - 8 X^{2} - 19 X - 10$. 1. Ordre de $0$ dans $P_1$. 2. Ordre de $-1$ dans $P_2$. 3. Factoriser $P_2$ dans $\mathbb R[X]$ puis $\mathbb C[X]$.",
+          r"1. $P_1=X^2(3X^4+6X^2-X+2)$ et le facteur vaut $2\ne0$ en $0$ : ordre exactement $2$." "\n\n"
+          r"2. Cofacteur $(X-2)(X^2+2X+5)$ en $-1$ : $(-3)(4)=-12\ne0$ : ordre exactement $2$." "\n\n"
+          r"3. $X^2+2X+5$ : $\Delta=4-20=-16<0$. $\mathbb R[X]$ : $(X-2)(X+1)^2(X^2+2X+5)$. $\mathbb C[X]$ : $(X-2)(X+1)^2(X+1-2i)(X+1+2i)$.",
+          src="Examen S2-B3 APEF mars 2025, ex. 1", duree=12),
+    ]},
 ]
 
 
@@ -314,6 +330,7 @@ FORMULES = {
     "pz6": r"pôle double : $\frac{c_1}{X-a}+\frac{c_2}{(X-a)^2}$, $c_2=\left[(X-a)^2F\right](a)$ · " + _PS + r" · limite de $xF(x)$ en $+\infty$",
     "px2": r"$B\mid A\iff\exists Q,\ A=BQ$ · racine d'ordre $\ge2$ de $P$ $\Rightarrow$ racine de $P'$ · $(X-a)(X-b)\mid P\iff P(a)=P(b)=0$ · $\deg(AB)=\deg A+\deg B$ · $\int X^n=\frac{X^{n+1}}{n+1}$",
     "px3": _R2,
+    "pw1": _RAC + " · " + _MULT + " · " + _DIV + " · " + _IRR, "pw2": _MULT + r" · $\deg(AB)=\deg A+\deg B$", "pw3": _MULT + " · " + _DIV + " · " + _IRR,
     "py1": r"racine d'ordre $\ge2$ de $P$ $\Rightarrow$ racine de $P'$ · $\int X^n=\frac{X^{n+1}}{n+1}$",
     "py2": _RD + " · " + _R2 + r" · $(X^n)'=nX^{n-1}$",
     "py3": r"$\alpha$ racine au moins double $\iff Q(\alpha)=Q'(\alpha)=0$ · $((X+1)^7)'=7(X+1)^6$ · $u^6=v^6\iff u=\pm v$ (réels)",
