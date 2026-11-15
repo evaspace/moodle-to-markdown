@@ -29,7 +29,7 @@ Les applications suivantes sont-elles linéaires ?
 - $f_8 : \mathbb{R}^{\mathbb{N}} \to \mathbb{R}^2$, $(u_n) \mapsto (u_0, |u_1|)$
 - $f_9 : \mathbb{R}[X] \to \mathbb{R}[X]$, $P \mapsto 2(X+1)P - X^2$
 - $f_{10} : \mathbb{R}[X] \to \mathbb{R}[X]$, $P \mapsto 2(X+1)P - (X^2 - 2X + 1)P'$
-- $\varphi : C^0(\mathbb{R}) \to \mathbb{R}$, $f \mapsto \displaystyle\int_0^1 f(t)\,dt$ où $C^0(\mathbb{R})$ est l'ensemble des fonctions continues de $\mathbb{R}$ dans $\mathbb{R}$ (bornes de l'intégrale lues 0 et 1 ; la borne basse est perdue dans la couche texte).
+- $\varphi : C^0(\mathbb{R}) \to \mathbb{R}$, $f \mapsto \displaystyle\int_0^1 f(t)\,dt$ où $C^0(\mathbb{R})$ est l'ensemble des fonctions continues de $\mathbb{R}$ dans $\mathbb{R}$.
 
 ## Exercice 2.3
 Type : noyau, image, rang d'une application linéaire · ECUE : ALM · Niveau : maths-s2-alm/3

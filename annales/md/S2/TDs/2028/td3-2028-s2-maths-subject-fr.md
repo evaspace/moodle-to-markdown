@@ -22,7 +22,7 @@ Les questions sont indépendantes. Pour les questions 2, 3 et 4, ce n'est pas la
 2. Donner un exemple d'un polynôme $P \in \mathbb{R}[X]$, de degré 3, ayant $-1$ et 2 comme racines simples.
 3. Donner un exemple d'un polynôme $Q \in \mathbb{R}[X]$, de degré 5, ayant $-2$ comme racine d'ordre de multiplicité exactement égal à 3.
 4. Donner un exemple d'un polynôme $A \in \mathbb{R}[X]$, de degré 4, vérifiant $A(0) = 0$ et $A(-3) = A'(-3) = 0$.
-5. Dans la liste de polynômes ci-dessous, entourer les polynômes irréductibles dans $\mathbb{R}[X]$ : a) $2X + 1$ ; b) $X^2 + X$ ; c) $X^3 + X + 1$ (lecture incertaine sur le scan) ; d) $X^2 - 1$ ; e) $X^2 + X + 1$.
+5. Dans la liste de polynômes ci-dessous, entourer les polynômes irréductibles dans $\mathbb{R}[X]$ : a) $2X + 1$ ; b) $X^2 + X$ ; c) $X^3 + X + 1$ (scan flou : la conclusion ne dépend pas des coefficients, tout polynôme de degré 3 est réductible dans $\mathbb{R}[X]$) ; d) $X^2 - 1$ ; e) $X^2 + X + 1$.
 
 ## 2. Équations différentielles (6 points)
 Type : démonstration de cours (structure des solutions de $a(t)y' + b(t)y = c(t)$) · ECUE : APIS (EDO) · Niveau : maths-s1-apis-edo/5

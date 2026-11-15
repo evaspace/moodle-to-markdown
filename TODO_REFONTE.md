@@ -46,20 +46,20 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 ### Phase 2 — Carte des compétences (maths S1)
 - [x] Pour chaque exercice d'annale : type d'exercice + formules nécessaires (lignes « Type : » et « Formules : », 223 types)
 - [ ] Graphe de prérequis : notion → type d'exercice simple → … → niveau annale + 20 %
-- [ ] Rattacher chaque exercice de TD (TD1–TD4 2026) à un niveau du graphe
+- [x] Rattacher chaque exercice de TD (TD1–TD4 2026) à un niveau du graphe (les 956+ exercices d'annales, TD 2026 compris, portent un `Niveau :`, vérifié par `annales/tools/index.py`)
 - [x] APIS intégrales : 14 niveaux, 77 exercices (TD3 + annales 2020-2024 + niveau +20 %), 11 notions, 23 QCM/VF.
   Source `parcours/src/apis_integrales.py`, vérifié par sympy (`parcours/build.py`), sortie `parcours/apis_integrales.json`.
 
 ### Phase 3 — Contenu
-- [ ] Cartes de cours 10 secondes par notion (APIS d'abord)
-- [ ] QCM / vrai-faux par notion
-- [ ] Exercices types gradués par niveau + corrigés
+- [x] Cartes de cours 10 secondes par notion (APIS d'abord) (NOTIONS de chaque parcours : formule, exemple, cours long ; 9 parcours maths)
+- [x] QCM / vrai-faux par notion (QUIZ de chaque parcours, 9 parcours maths)
+- [x] Exercices types gradués par niveau + corrigés (582 exercices, corrigés inclus)
 
 ### Phase 4 — Application
 - [x] Lien « Niveaux » sur l'accueil
 - [x] Lire `app.py`, templates, schéma `cards.db`
-- [ ] Corriger le bouton retour (retour à la page précédente)
-- [ ] Hiérarchie matière → semestre → ECUE → chapitre dans l'ordre du syllabus
+- [x] Corriger le bouton retour (retour à la page précédente) (voir plus bas : fil à URL propre)
+- [x] Hiérarchie matière → semestre → ECUE → chapitre dans l'ordre du syllabus (sélecteur sem/matière/chapitre de `/niveaux`, ordre du syllabus)
 - [x] Comptes identifiant + mot de passe (`/compte`), e-mail facultatif stocké
 - [x] Mail de réinitialisation (SMTP OVH depuis morgan@pierref.eu, lien 1 h, testé en réel le 2026-11-14)
 - [x] Mode Niveaux (`/niveaux`, `levels.py`) : 3 réussites d'affilée, recul d'un niveau sur échec + formules, chat qui applaudit / explose, entraînement libre sur un autre niveau
@@ -87,7 +87,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Page 404 personnalisée (`templates/404.html`, JSON sur `/api/`)
 - [x] Barre de progression totale sur la page d'exercice (% de toutes les formules du parcours en vert)
 - [x] Validation par couverture : un carré par exercice (vert / rouge / vide), niveau validé quand tout est vert, les rouges reviennent
-- [ ] **Approfondir chaque niveau : un exercice par formule** (ex. primitives usuelles : une par ligne du tableau, sin et cos séparés ; dérivées usuelles idem). Commencer par APIS intégrales niveaux 1–5, puis DP, OBM, suites, EDO.
+- [x] **Approfondir chaque niveau : un exercice par formule** (ex. primitives usuelles : une par ligne du tableau, sin et cos séparés ; dérivées usuelles idem). Commencer par APIS intégrales niveaux 1–5, puis DP, OBM, suites, EDO. (fait pour les 9 parcours)
   - [x] APIS intégrales niveaux 1–5 (2026-11-14) : +17 exos (cos u, 1/u, tan u ; cos, sin, eˣ, 1/x, 1/√x, arctan, 1/cos² seuls ; ln et √ de ax+b ; u'/u², u'/√u ; u'/(1+u²), u' cos u, u' sin u). 94 exos.
 - [x] Sélection semestre → matière → chapitre (ou matière d'abord) + « Tout confondu » sur `/niveaux` (2026-11-14).
 - [x] Approfondir DP, OBM, suites, EDO (2026-11-14) : formules sans exercice dédié ajoutées (E(X+Y), Bernoulli E=p, ¬(P∨Q), (ln n)^a/n^b, qⁿ/n!, EDO racine double).
@@ -98,12 +98,12 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 1. [x] Registre `parcours/syllabus.json` + contrôles de liens dans `build.py` (chemins Moodle, annales ↔ niveaux, prérequis, TD) ; dates : avant chaque vacances (pas de dates officielles).
 2. [x] Parcours **DP** (16 niveaux, 81 exos) et **OBM** (13 niveaux, 55 exos), calibrés sur B1-DP oct. 2024, B1 nov. 2023, B1-OBM oct. 2024, B1-LE nov. 2023, TD1/TD2/séminaire 2026. En ligne, ordre syllabus OBM → DP → APIS.
    - [x] Nombres complexes : hors programme 2031, non traités (décision utilisateur 2026-11-14)
-   - [ ] Rattacher chaque exercice de TD1/TD2/séminaire à un niveau
+   - [x] Rattacher chaque exercice de TD1/TD2/séminaire à un niveau (voir ci-dessus)
 3. [x] Transcription propre de **toutes** les annales (146 fichiers, dont 41 scans) + `annales/INDEX.md` + `annales/FORMULES.md` (2026-11-15).
    - [x] Formules affichées dans les niveaux relues et complétées (2026-11-15) : 20 notions sur 57 (cas manquants : racine non/simple/double en EDO, primitives usuelles, formes $u'f(u)$, décroissante/minorée, partition, Bayes développé, bijection…). Aucune formule fausse trouvée. La fiche du chapitre de la page d'exercice affiche en plus toute la section de `annales/FORMULES.md`.
-   - [ ] Liste de formules par exercice (champ `formules` dans `parcours/src/*.py`) pour le bouton « Formules de la solution » ; aujourd'hui : formules du niveau.
+   - [x] Liste de formules par exercice (champ `formules` dans `parcours/src/*.py`) pour le bouton « Formules de la solution » ; aujourd'hui : formules du niveau. (dict `FORMULES`, 358 puis 582 exercices)
    - [x] Corrigés rédigés pour tous les sujets sans corrigé officiel (2026-11-15).
-   - [ ] Lectures incertaines à vérifier sur le PDF : `td3-2028-s2-maths-subject-fr` (cours 2, q5 c), `td4-2030-s2` (ex. 1.1 q2), `td5-2030-s2` (borne basse de l'intégrale de φ).
+   - [x] Lectures incertaines vérifiées sur les PDF (2026-11-15) : td4-2030 ex. 1.1 = $-\frac12u$, td5-2030 = $\int_0^1$, td3-2028 cours 2 q5 c illisible mais sans effet (cubique toujours réductible).
 4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières.
 5. [x] Scroll adaptatif. [x] Accueil maths dans l'ordre du syllabus (2031, S1, S2).
 6. [x] Mail de réinitialisation depuis `morgan@pierref.eu` (via `/opt/pierref/mailer` ; accord donné le 2026-11-14).

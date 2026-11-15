@@ -15,7 +15,7 @@ Formules : $(x,y) + (x',y') = (x + x', y + y')$ ; $\alpha(x,y) = (\alpha x, \alp
 
 On se place dans l'espace vectoriel $\mathbb{R}^2$. On cherche dans cet exercice à dessiner (quadrillage, 2 carreaux = 1 unité).
 1. Dessiner les axes du plan $\mathbb{R}^2$ et représenter le vecteur $u = (3,1)$.
-2. Représenter les vecteurs $2u$, $-u$, $-\frac12u$ (coefficient fractionnaire perdu dans la couche texte, probablement $-\frac12$) et $0u$. Lire graphiquement leurs coordonnées. À votre avis, que représente l'ensemble $D = \{\alpha u,\ \alpha \in \mathbb{R}\}$ ?
+2. Représenter les vecteurs $2u$, $-u$, $-\frac12u$ et $0u$. Lire graphiquement leurs coordonnées. À votre avis, que représente l'ensemble $D = \{\alpha u,\ \alpha \in \mathbb{R}\}$ ?
 3. Ajouter sur le dessin le vecteur $v = (-2,1)$. Construire alors les vecteurs $u + v$, $v - u$, $2u + 3v$. Lire graphiquement leurs coordonnées. À votre avis, que représente l'ensemble $E = \{\alpha u + \beta v,\ (\alpha,\beta) \in \mathbb{R}^2\}$ ?
 4. Définir l'addition interne $+$ et la multiplication externe $\cdot$ du $\mathbb{R}$-espace vectoriel $\mathbb{R}^2$. Vérifier la cohérence avec vos résultats graphiques.
 5. À votre avis, que représentent les ensembles $D$ et $E$ si $u$ et $v$ sont des vecteurs de $\mathbb{R}^3$ ?
