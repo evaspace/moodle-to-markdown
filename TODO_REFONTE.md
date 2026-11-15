@@ -45,7 +45,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 
 ### Phase 2 — Carte des compétences (maths S1)
 - [x] Pour chaque exercice d'annale : type d'exercice + formules nécessaires (lignes « Type : » et « Formules : », 223 types)
-- [ ] Graphe de prérequis : notion → type d'exercice simple → … → niveau annale + 20 %
+- [x] Prérequis entre parcours (2026-11-15) : après un exercice raté, liens « Notions de base à revoir » vers les parcours dont dépend celui-ci (`levels.PREREQ`, ex. ALM → EV → polynômes → OBM). Reste ouvert : un graphe plus fin au niveau des notions.
 - [x] Rattacher chaque exercice de TD (TD1–TD4 2026) à un niveau du graphe (les 956+ exercices d'annales, TD 2026 compris, portent un `Niveau :`, vérifié par `annales/tools/index.py`)
 - [x] APIS intégrales : 14 niveaux, 77 exercices (TD3 + annales 2020-2024 + niveau +20 %), 11 notions, 23 QCM/VF.
   Source `parcours/src/apis_integrales.py`, vérifié par sympy (`parcours/build.py`), sortie `parcours/apis_integrales.json`.

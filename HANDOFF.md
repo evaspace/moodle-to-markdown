@@ -130,3 +130,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 2. Other subjects (Programmation, Physique, Archi): not started — ask the user which first.
 3. Delete QA account `qa_feed1` (needs user OK; deletion command was blocked by the permission classifier).
 4. Uncertain scan readings listed in TODO_REFONTE.md.
+
+# Handoff — 2026-11-15 (suite 9)
+## Done
+- Tests: md_to_cards fixed (89+ tests OK). Uncertain scan readings checked on the PDFs. TODO items already done marked.
+- Prerequisite links after a failed exercise (`levels.PREREQ`, `static/niveaux.js` v9, test added), deployed, checked in Chromium with qa_feed1.
+- Branch `feat/prerequisite-links` (from `fix/md-to-cards-tests`, from `feat/corriges-s2`). Nothing pushed, main untouched.
+## Open
+- Code colour per subject (needs a second subject); other subjects (Programmation, Physique, Archi) — ask the user; delete QA account qa_feed1 (needs user OK).

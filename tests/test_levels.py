@@ -243,6 +243,16 @@ class Api(unittest.TestCase):
                 self.assertTrue(all(e.get('formules') for e in lvl['exos']), (sid, lvl['n']))
             self.assertIn('Formules du niveau', r.get_data(as_text=True))
 
+    def test_prerequisite_links_after_failure(self):
+        paths = levels.load_parcours()
+        for sid, pre in levels.PREREQ.items():
+            self.assertIn(sid, paths)
+            self.assertTrue(all(p in paths and p != sid for p in pre), sid)
+        self.register('prereq_user')
+        r = self.answer(1, False)
+        self.assertEqual([p['id'] for p in r['prereq']], levels.PREREQ.get(SUBJECT, []))
+        self.assertNotIn('prereq', self.answer(1, True))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -41,6 +41,11 @@ FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-inte
                  'maths-s1-apis-suites': 'APIS (suites)', 'maths-s1-apis-edo': 'APIS (EDO)',
                  'maths-s2-apef-polynomes': 'APEF (polynômes)', 'maths-s2-apef-fonctions': 'APEF (fonctions)',
                  'maths-s2-ev': 'EV', 'maths-s2-alm': 'ALM'}
+# path id -> paths whose notions it relies on; shown as links after a failed exercise
+PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-obm'],
+          'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm'],
+          'maths-s2-apef-fonctions': ['maths-s1-apis-suites'],
+          'maths-s2-ev': ['maths-s2-apef-polynomes'], 'maths-s2-alm': ['maths-s2-ev']}
 TIMEOUT_BONUS = 0.5        # +50 % time per timeout on the same exercise since its last success
 TIMEOUT_MAX = 3.0          # at most x3
 MIN_SAMPLES = 5            # successful attempts needed before the users' average replaces the authored time
@@ -628,6 +633,8 @@ def level_result(subject):
         green = sum(1 for v in status.values() if v == 1)
         extra = dict(points=pts, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
                      percent=total_percent(st, data))
+        if not ok:
+            extra['prereq'] = [{'id': p, 'titre': get_parcours(p)['subject']['titre']} for p in PREREQ.get(subject, [])]
         if practice:  # practice on another level: logged (squares change), level unchanged
             return jsonify(event='practice', level=level, best=best, **extra)
         level, best, event = apply_result(level, best, ok, green == len(status), n_levels)

@@ -185,6 +185,19 @@
       lines.push(`+${d.points} points ${fast}${d.peek === 2 ? ' · divisé par 2 : fiche du chapitre ouverte' : d.peek ? ' · divisé par 3 : formules de la solution ouvertes' : ''}`);
     }
     fb.replaceChildren(...lines.map((t, i) => { const p = document.createElement('p'); p.textContent = t; if (i) p.className = 'lv-points'; return p; }));
+    if (d.prereq && d.prereq.length) {
+      const p = document.createElement('p');
+      p.className = 'lv-points';
+      p.append('Notions de base à revoir : ');
+      d.prereq.forEach((r, i) => {
+        if (i) p.append(', ');
+        const a = document.createElement('a');
+        a.href = `/niveaux/${r.id}`;
+        a.textContent = r.titre;
+        p.append(a);
+      });
+      fb.append(p);
+    }
     if (d.xp !== undefined && $('xp')) $('xp').textContent = d.xp;
     const sq = document.querySelector(`.lv-squares i[data-exo="${exo.dataset.exo}"]`);
     if (sq) sq.className = (ok ? 'ok' : 'ko') + ' cur';
