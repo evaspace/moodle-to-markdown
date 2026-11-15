@@ -1,0 +1,1256 @@
+{
+ "subject": {
+  "id": "physique-s1-meca",
+  "ordre": 300,
+  "matiere": "physique",
+  "semestre": "S1",
+  "ecue": "Mécanique",
+  "titre": "Mécanique du point",
+  "chapitres_moodle": [
+   "02_Cours",
+   "05_TD_Mécanique",
+   "06_Corrigés_Mécanique"
+  ],
+  "td": "TD mécanique (Moodle Physique)",
+  "examens": [
+   "Contrôle de physique (novembre)",
+   "Partiel de physique (janvier)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "vecteurs",
+   "titre": "Vecteurs, produit scalaire et vectoriel",
+   "formule": "$\\vec u\\cdot\\vec v=\\|\\vec u\\|\\|\\vec v\\|\\cos\\alpha=x x'+y y'$ · $\\vec u\\cdot\\vec v=0\\iff$ orthogonaux · $\\|\\vec u\\wedge\\vec v\\|=\\|\\vec u\\|\\|\\vec v\\||\\sin\\alpha|$ · composantes d'une force d'angle $\\alpha$ avec $Ox$ : $(F\\cos\\alpha,\\ F\\sin\\alpha)$",
+   "exemple": "$\\vec F$ de norme $10$ N à $60^\\circ$ de $Ox$ : $F_x=5$ N, $F_y=5\\sqrt3$ N",
+   "cours": "Deux vecteurs colinéaires de sens opposés ont un produit scalaire strictement négatif ($\\cos\\pi=-1$). Le produit vectoriel est orthogonal aux deux vecteurs. Toujours dessiner l'angle avant de choisir sinus ou cosinus."
+  },
+  {
+   "id": "derivation",
+   "titre": "Dériver une fonction du temps",
+   "formule": "$\\dfrac{d}{dt}f(\\theta(t))=\\dot\\theta f'(\\theta)$ · $\\dfrac{d}{dt}\\cos^2\\theta=-2\\dot\\theta\\cos\\theta\\sin\\theta$ · $\\dot x=\\dfrac{dx}{dt}$, $\\ddot x=\\dfrac{d^2x}{dt^2}$",
+   "exemple": "$x(t)=10-2t^2$ : $\\dot x=-4t$, $\\ddot x=-4$",
+   "cours": "Une grandeur qui dépend de $t$ par l'intermédiaire de $\\theta(t)$ se dérive comme une fonction composée : ne jamais oublier le facteur $\\dot\\theta$."
+  },
+  {
+   "id": "cinematique",
+   "titre": "Vitesse et accélération en cartésiennes",
+   "formule": "$\\vec v=\\dfrac{d\\overrightarrow{OM}}{dt}=(\\dot x,\\dot y)$ · $\\vec a=\\dfrac{d\\vec v}{dt}=(\\ddot x,\\ddot y)$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$ · $\\vec v\\cdot\\vec a>0$ accéléré, $<0$ décéléré, $=0$ trajectoire seule modifiée",
+   "exemple": "$x=3t^2-2t$ : $v=6t-2$, $a=6$",
+   "cours": "Uniforme : $\\|\\vec v\\|$ constante (pas forcément rectiligne). Pour savoir si un mouvement accélère, regarder le signe de $\\vec v\\cdot\\vec a$ et non celui de $a$."
+  },
+  {
+   "id": "rectiligne",
+   "titre": "Mouvement rectiligne uniformément varié",
+   "formule": "$a$ constante : $v=v_0+at$ · $x=x_0+v_0t+\\frac12at^2$ · $v^2-v_0^2=2a(x-x_0)$ · $1\\ \\mathrm{km/h}=\\frac1{3{,}6}\\ \\mathrm{m/s}$",
+   "exemple": "$v_0=20$ m/s, $a=-5$ m/s² : arrêt après $d=\\dfrac{v_0^2}{2|a|}=40$ m",
+   "cours": "Convertir en unités SI avant tout calcul. Pour une distance sans le temps, utiliser $v^2-v_0^2=2a\\Delta x$."
+  },
+  {
+   "id": "projectile",
+   "titre": "Chute libre et projectile",
+   "formule": "lancer de $v_0$, angle $\\alpha$ : $x=v_0\\cos\\alpha\\,t$, $y=v_0\\sin\\alpha\\,t-\\frac12gt^2$ · sommet : $v_y=0$, $t_S=\\dfrac{v_0\\sin\\alpha}g$, $h=\\dfrac{v_0^2\\sin^2\\alpha}{2g}$ · portée $\\dfrac{v_0^2\\sin2\\alpha}g$ · trajectoire $y=x\\tan\\alpha-\\dfrac{gx^2}{2v_0^2\\cos^2\\alpha}$",
+   "exemple": "chute de $5$ m sans vitesse initiale, $g=10$ : $t=\\sqrt{2h/g}=1$ s, $v=10$ m/s",
+   "cours": "Le PFD donne $\\vec a=\\vec g$ : l'accélération ne dépend pas de la masse. Intégrer deux fois avec les conditions initiales. Pour la trajectoire, éliminer $t$ entre $x(t)$ et $y(t)$."
+  },
+  {
+   "id": "polaires",
+   "titre": "Coordonnées polaires",
+   "formule": "$\\vec u_\\rho=\\cos\\theta\\,\\vec u_x+\\sin\\theta\\,\\vec u_y$ · $\\vec u_\\theta=-\\sin\\theta\\,\\vec u_x+\\cos\\theta\\,\\vec u_y$ · $\\dfrac{d\\vec u_\\rho}{dt}=\\dot\\theta\\vec u_\\theta$, $\\dfrac{d\\vec u_\\theta}{dt}=-\\dot\\theta\\vec u_\\rho$ · $\\overrightarrow{OM}=\\rho\\vec u_\\rho$ · $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$",
+   "exemple": "$\\rho=2$, $\\theta=\\frac\\pi3$ : $x=1$, $y=\\sqrt3$",
+   "cours": "La base polaire tourne avec le point : ses vecteurs ont une dérivée non nulle. $\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$ et $\\vec a=(\\ddot\\rho-\\rho\\dot\\theta^2)\\vec u_\\rho+(2\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta$."
+  },
+  {
+   "id": "circulaire",
+   "titre": "Mouvement circulaire",
+   "formule": "$\\rho=R$ constant : $\\vec v=R\\dot\\theta\\,\\vec u_\\theta$ · $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$ · uniforme ($\\dot\\theta=\\omega$) : $\\vec a=-R\\omega^2\\vec u_\\rho$, $\\|\\vec a\\|=\\dfrac{v^2}R$ · $\\omega=\\dfrac{2\\pi}T$",
+   "exemple": "$R=2$ m, $\\omega=3$ rad/s : $v=6$ m/s, $a=18$ m/s²",
+   "cours": "Circulaire uniforme : l'accélération n'est pas nulle, elle est centripète (dirigée vers le centre). Circulaire décéléré : composante tangentielle $R\\ddot\\theta<0$."
+  },
+  {
+   "id": "cylindrique",
+   "titre": "Coordonnées cylindriques, hélice",
+   "formule": "$\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta+\\dot z\\,\\vec u_z$ · hélice $x=R\\cos\\omega t$, $y=R\\sin\\omega t$, $z=H\\omega t$ : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$, $\\|\\vec a\\|=R\\omega^2$",
+   "exemple": "$R=3$, $H=4$, $\\omega=2$ : $\\|\\vec v\\|=10$, $\\|\\vec a\\|=12$",
+   "cours": "Les cylindriques sont les polaires plus la cote $z$ : la composante sur $\\vec u_z$ s'ajoute simplement. Retrouver les normes cartésiennes sert de vérification."
+  },
+  {
+   "id": "newton",
+   "titre": "Lois de Newton et forces",
+   "formule": "1er : sans interaction (ou forces qui se compensent), $\\vec v$ constant · 2e : $\\sum\\vec F=m\\vec a=\\dfrac{d\\vec p}{dt}$, $\\vec p=m\\vec v$ · 3e : $\\vec F_{1\\to2}=-\\vec F_{2\\to1}$ · poids $\\vec P=m\\vec g$ · gravitation $F=G\\dfrac{m_1m_2}{d^2}$ · frottement fluide $\\vec f=-\\alpha\\vec v$",
+   "exemple": "$m=0{,}5$ kg, $F=3$ N : $a=6$ m/s²",
+   "cours": "Méthode : référentiel galiléen, système, bilan des forces (schéma), PFD, projection sur des axes, résolution. Le principe d'inertie ne dit rien d'un corps dont les forces ne se compensent pas."
+  },
+  {
+   "id": "incline",
+   "titre": "Plan incliné et poulies",
+   "formule": "sans frottement, angle $\\alpha$ : $a=g\\sin\\alpha$ le long du plan · $R=mg\\cos\\alpha$ · fil inextensible : même accélération · poulie idéale : même tension",
+   "exemple": "$\\alpha=30^\\circ$ : $a=5$ m/s²",
+   "cours": "Choisir un axe le long du plan et un axe normal. Pour deux masses reliées, écrire le PFD sur chacune avec la même tension $T$, puis résoudre le système : additionner pour trouver $a$, remplacer pour trouver $T$."
+  },
+  {
+   "id": "frottement",
+   "titre": "Frottement fluide",
+   "formule": "$m\\dot v=mg-\\alpha v$ · $v(t)=v_\\ell\\left(1-e^{-t/\\tau}\\right)$ · $v_\\ell=\\dfrac{mg}\\alpha$ · $\\tau=\\dfrac m\\alpha$",
+   "exemple": "$m=2$ kg, $\\alpha=4$ : $v_\\ell=5$ m/s, $\\tau=0{,}5$ s",
+   "cours": "Équation différentielle du premier ordre : solution homogène $Ke^{-t/\\tau}$ plus solution particulière constante $v_\\ell$. La vitesse limite est atteinte quand l'accélération s'annule."
+  },
+  {
+   "id": "moment",
+   "titre": "Moments et équilibre",
+   "formule": "$M_\\Delta(\\vec F)=\\pm\\,d\\,F=\\pm\\,OA\\,F\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$ et $\\sum M_\\Delta=0$ · $\\vec M=\\overrightarrow{OA}\\wedge\\vec F$ est orthogonal à $\\vec F$",
+   "exemple": "$F=10$ N à $d=0{,}5$ m, perpendiculaire : $M=5$ N·m",
+   "cours": "Choisir l'axe de rotation sur le point où s'applique la force inconnue : son moment est nul. Le poids d'une poutre homogène s'applique en son milieu. Signe : sens trigonométrique positif."
+  },
+  {
+   "id": "frenet",
+   "titre": "Repère de Frenet et gouttière",
+   "formule": "$\\vec a=\\dfrac{dv}{dt}\\vec u_T+\\dfrac{v^2}{r}\\vec u_N$ · gouttière sans frottement : $a_T=g\\sin\\theta$, $V^2=2gr(1-\\cos\\theta)$ · quitte le support quand $R=0$",
+   "exemple": "$\\theta=60^\\circ$, $r=1$ m, $g=10$ : $V^2=10$ m²/s²",
+   "cours": "Projeter le PFD sur la tangente puis sur la normale. La réaction se déduit de la composante normale. La relation $V^2$ vient de la conservation de l'énergie ou de l'intégration de $a_T$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "vecteurs",
+   "type": "vf",
+   "q": "Le produit scalaire de deux vecteurs non nuls colinéaires de sens opposés est strictement négatif.",
+   "bonne": true
+  },
+  {
+   "notion": "vecteurs",
+   "type": "qcm",
+   "q": "La norme de $\\vec V_1\\wedge\\vec V_2$ vaut :",
+   "choix": [
+    "$V_1V_2|\\sin\\alpha|$",
+    "$V_1V_2|\\cos\\alpha|$",
+    "$\\sqrt{V_1^2+V_2^2+2V_1V_2\\cos\\alpha}$",
+    "$V_1+V_2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "derivation",
+   "type": "qcm",
+   "q": "La dérivée de $A\\cos^2(\\theta(t))$ par rapport à $t$ est :",
+   "choix": [
+    "$-2A\\dot\\theta\\cos\\theta\\sin\\theta$",
+    "$2A\\dot\\theta\\cos\\theta\\sin\\theta$",
+    "$-2A\\cos\\theta\\sin\\theta$",
+    "$-A\\dot\\theta\\sin^2\\theta$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cinematique",
+   "type": "vf",
+   "q": "Un mouvement uniforme est forcément rectiligne.",
+   "bonne": false
+  },
+  {
+   "notion": "cinematique",
+   "type": "qcm",
+   "q": "$x(t)=10-2t^2$ avec $t>0$. Le mouvement est :",
+   "choix": [
+    "accéléré",
+    "décéléré",
+    "uniforme",
+    "circulaire"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cinematique",
+   "type": "qcm",
+   "q": "L'accélération est :",
+   "choix": [
+    "$\\dfrac{d^2\\overrightarrow{OM}}{dt^2}$",
+    "$\\dfrac{d\\overrightarrow{OM}}{dt}$",
+    "$\\left(\\dfrac{d\\overrightarrow{OM}}{dt}\\right)^2$",
+    "$\\overrightarrow{OM}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rectiligne",
+   "type": "qcm",
+   "q": "$72$ km/h valent :",
+   "choix": [
+    "20 m/s",
+    "72 m/s",
+    "7,2 m/s",
+    "259 m/s"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "projectile",
+   "type": "vf",
+   "q": "En chute libre, l'accélération dépend de la masse de l'objet.",
+   "bonne": false
+  },
+  {
+   "notion": "projectile",
+   "type": "qcm",
+   "q": "Au sommet de la trajectoire d'un projectile :",
+   "choix": [
+    "$v_y=0$",
+    "$v_x=0$",
+    "$\\vec v=\\vec0$",
+    "$\\vec a=\\vec0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "polaires",
+   "type": "qcm",
+   "q": "En polaires, $\\vec v$ vaut :",
+   "choix": [
+    "$\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$",
+    "$\\rho\\,\\vec u_\\rho+\\theta\\,\\vec u_\\theta$",
+    "$\\dot\\rho\\,\\vec u_\\rho$",
+    "$\\rho\\dot\\theta\\,\\vec u_\\rho$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "polaires",
+   "type": "qcm",
+   "q": "$\\dfrac{d\\vec u_\\rho}{dt}$ vaut :",
+   "choix": [
+    "$\\dot\\theta\\,\\vec u_\\theta$",
+    "$-\\dot\\theta\\,\\vec u_\\theta$",
+    "$\\dot\\theta\\,\\vec u_\\rho$",
+    "$\\vec0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "circulaire",
+   "type": "vf",
+   "q": "Dans un mouvement circulaire uniforme, l'accélération est nulle.",
+   "bonne": false
+  },
+  {
+   "notion": "circulaire",
+   "type": "qcm",
+   "q": "Circulaire uniforme de rayon $R$ : l'accélération vaut :",
+   "choix": [
+    "$-R\\omega^2\\vec u_\\rho$",
+    "$R\\omega^2\\vec u_\\theta$",
+    "$R\\omega\\,\\vec u_\\theta$",
+    "$\\vec0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cylindrique",
+   "type": "qcm",
+   "q": "Pour une hélice de rayon $R$, de pas lié à $H$, la norme de la vitesse est :",
+   "choix": [
+    "$\\omega\\sqrt{R^2+H^2}$",
+    "$R\\omega$",
+    "$H\\omega$",
+    "$\\omega(R+H)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "newton",
+   "type": "vf",
+   "q": "Le principe d'inertie s'applique à une balle qui tombe en accélérant.",
+   "bonne": false
+  },
+  {
+   "notion": "newton",
+   "type": "qcm",
+   "q": "Deuxième loi de Newton à masse constante :",
+   "choix": [
+    "$\\sum\\vec F=m\\vec a$",
+    "$\\sum\\vec F=m\\vec v$",
+    "$\\sum\\vec F=\\dfrac{m}{\\vec a}$",
+    "$\\sum\\vec F=\\vec p\\,t$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "incline",
+   "type": "qcm",
+   "q": "Accélération sans frottement le long d'un plan incliné d'angle $\\alpha$ :",
+   "choix": [
+    "$g\\sin\\alpha$",
+    "$g\\cos\\alpha$",
+    "$g\\tan\\alpha$",
+    "$g$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "incline",
+   "type": "vf",
+   "q": "Avec une poulie idéale et un fil inextensible, la tension est la même des deux côtés.",
+   "bonne": true
+  },
+  {
+   "notion": "frottement",
+   "type": "qcm",
+   "q": "La vitesse limite avec un frottement $-\\alpha\\vec v$ vaut :",
+   "choix": [
+    "$\\dfrac{mg}\\alpha$",
+    "$\\dfrac{\\alpha}{mg}$",
+    "$mg\\alpha$",
+    "$\\dfrac{g}\\alpha$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "moment",
+   "type": "qcm",
+   "q": "Le moment d'une force par rapport à un axe est nul quand :",
+   "choix": [
+    "la droite d'action de la force coupe l'axe",
+    "la force est grande",
+    "la force est perpendiculaire à l'axe",
+    "le bras de levier est maximal"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "moment",
+   "type": "vf",
+   "q": "Le poids d'une poutre homogène s'applique en son milieu.",
+   "bonne": true
+  },
+  {
+   "notion": "frenet",
+   "type": "qcm",
+   "q": "Dans le repère de Frenet, l'accélération vaut :",
+   "choix": [
+    "$\\dot v\\,\\vec u_T+\\dfrac{v^2}r\\vec u_N$",
+    "$\\dot v\\,\\vec u_N+\\dfrac{v^2}r\\vec u_T$",
+    "$\\dfrac{v^2}r\\vec u_T$",
+    "$\\dot v\\,\\vec u_T$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Vecteurs et produits",
+   "notions": [
+    "vecteurs"
+   ],
+   "exos": [
+    {
+     "id": "pv1",
+     "enonce": "$\\vec u=(1,2)$ et $\\vec v=(3,-1)$. Calculer $\\vec u\\cdot\\vec v$.",
+     "ans": "1",
+     "sol": "$1\\times3+2\\times(-1)=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\vec u=(2,-1)$ et $\\vec v=(4,3)$. Calculer $\\vec u\\cdot\\vec v$.",
+       "ans": "5",
+       "sol": "$8-3=5$."
+      }
+     ],
+     "formules": "$\\vec u\\cdot\\vec v=xx'+yy'=\\|\\vec u\\|\\|\\vec v\\|\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pv2",
+     "enonce": "$\\vec u=(2,0,1)$ et $\\vec v=(1,3,0)$. Calculer $\\|\\vec u\\wedge\\vec v\\|$.",
+     "ans": "sqrt(46)",
+     "sol": "$\\vec u\\wedge\\vec v=(0\\cdot0-1\\cdot3,\\ 1\\cdot1-2\\cdot0,\\ 2\\cdot3-0\\cdot1)=(-3,1,6)$, norme $\\sqrt{9+1+36}=\\sqrt{46}$.",
+     "duree": 3,
+     "formules": "$\\|\\vec u\\wedge\\vec v\\|=\\|\\vec u\\|\\|\\vec v\\||\\sin\\alpha|$ · $\\vec u\\wedge\\vec v$ par déterminant",
+     "type": "value"
+    },
+    {
+     "id": "pv3",
+     "enonce": "Une force de norme $10$ N fait un angle de $60^\\circ$ avec l'axe $Ox$. Quelle est sa composante $F_x$ (en N) ?",
+     "ans": "5",
+     "sol": "$F_x=F\\cos\\alpha=10\\times\\frac12=5$ N.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Une force de norme $20$ N fait un angle de $30^\\circ$ avec $Ox$. Composante $F_y$ (en N) ?",
+       "ans": "10",
+       "sol": "$F_y=20\\sin30^\\circ=10$ N."
+      }
+     ],
+     "formules": "$F_x=F\\cos\\alpha$, $F_y=F\\sin\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pv4",
+     "enonce": "$\\|\\vec V_1\\|=3$, $\\|\\vec V_2\\|=4$ et l'angle entre eux vaut $30^\\circ$. Calculer $\\|\\vec V_1\\wedge\\vec V_2\\|$.",
+     "ans": "6",
+     "sol": "$V_1V_2|\\sin\\alpha|=12\\times\\frac12=6$.",
+     "duree": 2,
+     "formules": "$\\|\\vec u\\wedge\\vec v\\|=\\|\\vec u\\|\\|\\vec v\\||\\sin\\alpha|$",
+     "type": "value"
+    },
+    {
+     "id": "pv5",
+     "enonce": "Quel est le signe du produit scalaire de deux vecteurs non nuls colinéaires et de sens opposés ? Que vaut-il pour deux vecteurs orthogonaux ?",
+     "sol": "Strictement négatif : $\\vec u\\cdot\\vec v=\\|\\vec u\\|\\|\\vec v\\|\\cos\\pi=-\\|\\vec u\\|\\|\\vec v\\|$. Nul pour deux vecteurs orthogonaux ($\\cos\\frac\\pi2=0$).",
+     "duree": 2,
+     "formules": "$\\vec u\\cdot\\vec v=xx'+yy'=\\|\\vec u\\|\\|\\vec v\\|\\cos\\alpha$ · $\\cos\\pi=-1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Dériver en fonction du temps",
+   "notions": [
+    "derivation"
+   ],
+   "exos": [
+    {
+     "id": "pd1",
+     "enonce": "$x(t)=10-2t^2$. Calculer l'accélération $\\ddot x$.",
+     "ans": "-4",
+     "sol": "$\\dot x=-4t$, $\\ddot x=-4$ m/s².",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$x(t)=5+3t^2$. Calculer $\\ddot x$.",
+       "ans": "6",
+       "sol": "$\\dot x=6t$, $\\ddot x=6$."
+      }
+     ],
+     "formules": "dérivée composée : $\\frac d{dt}f(\\theta)=\\dot\\theta f'(\\theta)$ · $(t^n)'=nt^{n-1}$",
+     "type": "value"
+    },
+    {
+     "id": "pd2",
+     "enonce": "$x(t)=e^{2t}$. Calculer la vitesse $\\dot x$ à l'instant $t=0$.",
+     "ans": "2",
+     "sol": "$\\dot x=2e^{2t}$, soit $2$ en $t=0$.",
+     "duree": 2,
+     "formules": "$(e^{at})'=ae^{at}$",
+     "type": "value"
+    },
+    {
+     "id": "pd3",
+     "enonce": "$f(t)=A\\cos^2(\\theta(t))$, $A$ constante. Calculer $\\dfrac{df}{dt}$.",
+     "sol": "$f'=A\\cdot2\\cos\\theta\\cdot(-\\sin\\theta)\\cdot\\dot\\theta=-2A\\dot\\theta\\cos\\theta\\sin\\theta$.",
+     "src": "Contrôle 1 de physique, QCM 4",
+     "duree": 3,
+     "formules": "dérivée composée : $\\frac d{dt}f(\\theta)=\\dot\\theta f'(\\theta)$",
+     "type": "open"
+    },
+    {
+     "id": "pd4",
+     "enonce": "$x(t)=A\\left(\\omega t-\\sin\\omega t\\right)$ avec $A=2$, $\\omega=3$. Calculer $\\dot x$ en $t=\\dfrac\\pi3$.",
+     "ans": "12",
+     "sol": "$\\dot x=A\\omega(1-\\cos\\omega t)=6(1-\\cos\\pi)=12$.",
+     "duree": 3,
+     "formules": "dérivée composée : $\\frac d{dt}f(\\theta)=\\dot\\theta f'(\\theta)$ · $(\\sin\\omega t)'=\\omega\\cos\\omega t$",
+     "type": "value"
+    },
+    {
+     "id": "pd5",
+     "enonce": "Dériver par rapport à $\\theta$ puis par rapport à $t$ les vecteurs $\\vec u_\\rho=\\cos\\theta\\,\\vec u_x+\\sin\\theta\\,\\vec u_y$ et $\\vec u_\\theta=-\\sin\\theta\\,\\vec u_x+\\cos\\theta\\,\\vec u_y$.",
+     "sol": "$\\dfrac{d\\vec u_\\rho}{d\\theta}=-\\sin\\theta\\,\\vec u_x+\\cos\\theta\\,\\vec u_y=\\vec u_\\theta$ et $\\dfrac{d\\vec u_\\theta}{d\\theta}=-\\cos\\theta\\,\\vec u_x-\\sin\\theta\\,\\vec u_y=-\\vec u_\\rho$. Avec la dérivée composée : $\\dfrac{d\\vec u_\\rho}{dt}=\\dot\\theta\\vec u_\\theta$ et $\\dfrac{d\\vec u_\\theta}{dt}=-\\dot\\theta\\vec u_\\rho$.",
+     "src": "Contrôle de physique novembre (S1), ex. 2",
+     "duree": 5,
+     "formules": "$\\frac d{d\\theta}\\cos\\theta=-\\sin\\theta$ · $\\frac d{d\\theta}\\sin\\theta=\\cos\\theta$ · dérivée composée : $\\frac d{dt}f(\\theta)=\\dot\\theta f'(\\theta)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Vitesse et accélération cartésiennes",
+   "notions": [
+    "cinematique",
+    "derivation"
+   ],
+   "exos": [
+    {
+     "id": "pc1",
+     "enonce": "$x(t)=3t^2-2t$. Calculer la vitesse à $t=2$ s.",
+     "ans": "10",
+     "sol": "$v=6t-2=10$ m/s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$x(t)=2t^2+t$. Calculer la vitesse à $t=3$ s.",
+       "ans": "13",
+       "sol": "$v=4t+1=13$ m/s."
+      }
+     ],
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$",
+     "type": "value"
+    },
+    {
+     "id": "pc2",
+     "enonce": "$x(t)=t^3$ et $y(t)=2t$. Donner le vecteur accélération à $t=1$.",
+     "ans": "Matrix([6,0])",
+     "sol": "$\\ddot x=6t=6$, $\\ddot y=0$ : $\\vec a=(6,0)$.",
+     "duree": 2,
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$",
+     "type": "value"
+    },
+    {
+     "id": "pc3",
+     "enonce": "Cycloïde $x=A(\\omega t-\\sin\\omega t)$, $y=A(1-\\cos\\omega t)$, $A=2$, $\\omega=3$. Calculer $\\|\\vec v\\|$ à $t=\\dfrac\\pi3$.",
+     "ans": "12",
+     "sol": "$\\vec v=A\\omega(1-\\cos\\omega t,\\ \\sin\\omega t)$. En $\\omega t=\\pi$ : $\\vec v=(12,0)$, norme $12$.",
+     "duree": 4,
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$ · $\\cos\\pi=-1$",
+     "type": "value"
+    },
+    {
+     "id": "pc4",
+     "enonce": "Cycloïde $x=A(\\omega t-\\sin\\omega t)$, $y=A(1-\\cos\\omega t)$. Calculer $\\vec v$, $\\vec a$ et leurs normes (on donne $1-\\cos\\alpha=2\\sin^2\\frac\\alpha2$).",
+     "sol": "$\\vec v=A\\omega(1-\\cos\\omega t,\\ \\sin\\omega t)$, $\\vec a=A\\omega^2(\\sin\\omega t,\\ \\cos\\omega t)$.\n\n$\\|\\vec v\\|^2=A^2\\omega^2\\left[(1-\\cos\\omega t)^2+\\sin^2\\omega t\\right]=2A^2\\omega^2(1-\\cos\\omega t)=4A^2\\omega^2\\sin^2\\frac{\\omega t}2$, donc $\\|\\vec v\\|=2A\\omega\\left|\\sin\\frac{\\omega t}2\\right|$.\n\n$\\|\\vec a\\|=A\\omega^2$ (constante).",
+     "src": "Contrôle 1 de physique, ex. 1 (6 points)",
+     "duree": 10,
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$ · $1-\\cos\\alpha=2\\sin^2\\frac\\alpha2$",
+     "type": "open"
+    },
+    {
+     "id": "pc5",
+     "enonce": "Un mobile suit $x(t)=10-2t^2$ ($t>0$). Le mouvement est-il uniforme ? accéléré ou décéléré ? Quelle est la norme de l'accélération ?",
+     "sol": "$v=-4t$, $a=-4$ m/s². $v$ varie : pas uniforme. $v\\,a=16t>0$ : $\\vec v$ et $\\vec a$ de même sens, le mouvement est accéléré. $\\|\\vec a\\|=4$ m/s².",
+     "src": "Contrôle de physique novembre (S1), QCM 3",
+     "duree": 4,
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$ · $\\vec v\\cdot\\vec a>0$ : accéléré",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Mouvement rectiligne uniformément varié",
+   "notions": [
+    "rectiligne"
+   ],
+   "exos": [
+    {
+     "id": "pr1",
+     "enonce": "Un mobile part de $x_0=0$ avec $v_0=5$ m/s et $a=2$ m/s². Quelle est sa position (en m) à $t=3$ s ?",
+     "ans": "24",
+     "sol": "$x=v_0t+\\frac12at^2=15+9=24$ m.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$x_0=0$, $v_0=2$ m/s, $a=4$ m/s². Position à $t=3$ s (en m) ?",
+       "ans": "24",
+       "sol": "$6+18=24$ m."
+      }
+     ],
+     "formules": "$v=v_0+at$ · $x=x_0+v_0t+\\frac12at^2$ · $v^2-v_0^2=2a\\Delta x$",
+     "type": "value"
+    },
+    {
+     "id": "pr2",
+     "enonce": "Une voiture roule à $20$ m/s et freine avec $a=-5$ m/s². Quelle distance parcourt-elle avant de s'arrêter (en m) ?",
+     "ans": "40",
+     "sol": "$v^2-v_0^2=2a\\Delta x$ avec $v=0$ : $\\Delta x=\\frac{400}{10}=40$ m.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Une voiture roule à $30$ m/s et freine avec $a=-5$ m/s². Distance d'arrêt (en m) ?",
+       "ans": "90",
+       "sol": "$\\frac{900}{10}=90$ m."
+      }
+     ],
+     "formules": "$v=v_0+at$ · $x=x_0+v_0t+\\frac12at^2$ · $v^2-v_0^2=2a\\Delta x$",
+     "type": "value"
+    },
+    {
+     "id": "pr3",
+     "enonce": "Une voiture passe de $72$ km/h à $108$ km/h avec $a=2$ m/s². Combien de secondes ?",
+     "ans": "5",
+     "sol": "$72$ km/h $=20$ m/s, $108$ km/h $=30$ m/s. $t=\\frac{30-20}2=5$ s.",
+     "duree": 3,
+     "formules": "$1\\ \\mathrm{km/h}=\\frac1{3{,}6}\\ \\mathrm{m/s}$ · $v=v_0+at$",
+     "type": "value"
+    },
+    {
+     "id": "pr4",
+     "enonce": "Pour $a$ constante, démontrer $v^2-v_0^2=2a(x-x_0)$.",
+     "sol": "$v=v_0+at$ et $x-x_0=v_0t+\\frac12at^2$. Donc $t=\\frac{v-v_0}a$ et $x-x_0=\\frac{v_0(v-v_0)}a+\\frac{(v-v_0)^2}{2a}=\\frac{(v-v_0)(v+v_0)}{2a}=\\frac{v^2-v_0^2}{2a}$.",
+     "duree": 5,
+     "formules": "$v=v_0+at$ · $x=x_0+v_0t+\\frac12at^2$ · $v^2-v_0^2=2a\\Delta x$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Chute libre et projectile",
+   "notions": [
+    "projectile",
+    "rectiligne"
+   ],
+   "exos": [
+    {
+     "id": "pj1",
+     "enonce": "Chute libre sans vitesse initiale d'une hauteur de $5$ m, $g=10$ m/s². Durée de chute (en s) ?",
+     "ans": "1",
+     "sol": "$h=\\frac12gt^2$ : $t=\\sqrt{2h/g}=1$ s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Chute libre sans vitesse initiale d'une hauteur de $20$ m, $g=10$. Durée (en s) ?",
+       "ans": "2",
+       "sol": "$t=\\sqrt{2h/g}=2$ s."
+      }
+     ],
+     "formules": "$h=\\frac12gt^2$ · $t=\\sqrt{2h/g}$",
+     "type": "value"
+    },
+    {
+     "id": "pj2",
+     "enonce": "Même chute : vitesse d'arrivée au sol (en m/s) ?",
+     "ans": "10",
+     "sol": "$v^2=2gh=100$ : $v=10$ m/s.",
+     "duree": 2,
+     "formules": "$v^2=2gh$",
+     "type": "value"
+    },
+    {
+     "id": "pj3",
+     "enonce": "Projectile lancé à $v_0=20$ m/s avec $\\alpha=30^\\circ$, $g=10$ m/s². Hauteur maximale (en m) ?",
+     "ans": "5",
+     "sol": "$h=\\frac{(v_0\\sin\\alpha)^2}{2g}=\\frac{100}{20}=5$ m.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Projectile lancé à $v_0=40$ m/s avec $\\alpha=30^\\circ$, $g=10$. Hauteur maximale (en m) ?",
+       "ans": "20",
+       "sol": "$\\frac{(40\\cdot\\frac12)^2}{20}=20$ m."
+      }
+     ],
+     "formules": "$h=\\frac{v_0^2\\sin^2\\alpha}{2g}$ · $x=v_0\\cos\\alpha\\,t$ · $y=v_0\\sin\\alpha\\,t-\\frac12gt^2$ · sommet : $v_y=0$",
+     "type": "value"
+    },
+    {
+     "id": "pj4",
+     "enonce": "Même projectile : durée du vol jusqu'au retour à la hauteur de départ (en s) ?",
+     "ans": "2",
+     "sol": "$t=\\frac{2v_0\\sin\\alpha}g=\\frac{2\\times10}{10}=2$ s.",
+     "duree": 3,
+     "formules": "$t=\\frac{2v_0\\sin\\alpha}g$ · $x=v_0\\cos\\alpha\\,t$ · $y=v_0\\sin\\alpha\\,t-\\frac12gt^2$ · sommet : $v_y=0$",
+     "type": "value"
+    },
+    {
+     "id": "pj5",
+     "enonce": "Même projectile : portée (en m) ?",
+     "ans": "20*sqrt(3)",
+     "sol": "$\\frac{v_0^2\\sin2\\alpha}g=\\frac{400\\sin60^\\circ}{10}=20\\sqrt3$ m.",
+     "duree": 3,
+     "formules": "portée $\\frac{v_0^2\\sin2\\alpha}g$",
+     "type": "value"
+    },
+    {
+     "id": "pj6",
+     "enonce": "$\\overrightarrow{OM}=\\big(v_0\\cos\\alpha\\,t,\\ v_0\\sin\\alpha\\,t-5t^2\\big)$. 1. Équations horaires. 2. Équation de la trajectoire. 3. Vecteur vitesse et sa norme. 4. Hauteur maximale.",
+     "sol": "1. $x=v_0\\cos\\alpha\\,t$, $y=v_0\\sin\\alpha\\,t-5t^2$.\n\n2. $t=\\frac x{v_0\\cos\\alpha}$ donne $y=x\\tan\\alpha-\\dfrac{5x^2}{v_0^2\\cos^2\\alpha}$ : une parabole.\n\n3. $\\vec v=(v_0\\cos\\alpha,\\ v_0\\sin\\alpha-10t)$, $\\|\\vec v\\|=\\sqrt{v_0^2-20v_0\\sin\\alpha\\,t+100t^2}$.\n\n4. Au sommet $v_y=0$ : $t_S=\\frac{v_0\\sin\\alpha}{10}$, $y_S=\\dfrac{v_0^2\\sin^2\\alpha}{20}$.",
+     "src": "Contrôle de physique novembre (S1), ex. 3 (5,5 points)",
+     "duree": 10,
+     "formules": "$x=v_0\\cos\\alpha\\,t$ · $y=v_0\\sin\\alpha\\,t-\\frac12gt^2$ · sommet : $v_y=0$ · éliminer $t$ · $\\|\\vec v\\|=\\sqrt{v_x^2+v_y^2}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Coordonnées polaires",
+   "notions": [
+    "polaires",
+    "derivation"
+   ],
+   "exos": [
+    {
+     "id": "pp1",
+     "enonce": "Un point a pour coordonnées polaires $\\rho=2$, $\\theta=\\dfrac\\pi3$. Quelle est son abscisse $x$ ?",
+     "ans": "1",
+     "sol": "$x=\\rho\\cos\\theta=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Point de coordonnées polaires $\\rho=4$, $\\theta=\\dfrac\\pi6$. Ordonnée $y$ ?",
+       "ans": "2",
+       "sol": "$y=\\rho\\sin\\theta=2$."
+      }
+     ],
+     "formules": "$\\vec u_\\rho=(\\cos\\theta,\\sin\\theta)$ · $\\vec u_\\theta=(-\\sin\\theta,\\cos\\theta)$ · $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$",
+     "type": "value"
+    },
+    {
+     "id": "pp2",
+     "enonce": "Un point a pour coordonnées cartésiennes $(1,1)$. Quel est son $\\rho$ ?",
+     "ans": "sqrt(2)",
+     "sol": "$\\rho=\\sqrt{x^2+y^2}=\\sqrt2$ et $\\theta=\\frac\\pi4$.",
+     "duree": 2,
+     "formules": "$\\rho=\\sqrt{x^2+y^2}$ · $\\tan\\theta=\\frac yx$",
+     "type": "value"
+    },
+    {
+     "id": "pp3",
+     "enonce": "Exprimer $\\vec u_\\rho$ et $\\vec u_\\theta$ dans la base cartésienne. Exprimer $\\overrightarrow{OM}$ dans les deux bases.",
+     "sol": "$\\vec u_\\rho=\\cos\\theta\\,\\vec u_x+\\sin\\theta\\,\\vec u_y$, $\\vec u_\\theta=-\\sin\\theta\\,\\vec u_x+\\cos\\theta\\,\\vec u_y$. $\\overrightarrow{OM}=x\\vec u_x+y\\vec u_y=\\rho\\vec u_\\rho$ avec $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$.",
+     "src": "Contrôle de physique novembre (S1), ex. 2",
+     "duree": 4,
+     "formules": "$\\vec u_\\rho=(\\cos\\theta,\\sin\\theta)$ · $\\vec u_\\theta=(-\\sin\\theta,\\cos\\theta)$ · $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$",
+     "type": "open"
+    },
+    {
+     "id": "pp4",
+     "enonce": "Démontrer $\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$ en partant de $\\overrightarrow{OM}=\\rho\\,\\vec u_\\rho$.",
+     "sol": "$\\vec v=\\frac{d(\\rho\\vec u_\\rho)}{dt}=\\dot\\rho\\,\\vec u_\\rho+\\rho\\frac{d\\vec u_\\rho}{dt}=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$, car $\\frac{d\\vec u_\\rho}{dt}=\\dot\\theta\\vec u_\\theta$.",
+     "src": "Contrôle de physique novembre (S1), ex. 2 q. 5",
+     "duree": 4,
+     "formules": "$\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$ · $\\frac{d\\vec u_\\rho}{dt}=\\dot\\theta\\vec u_\\theta$",
+     "type": "open"
+    },
+    {
+     "id": "pp5",
+     "enonce": "$\\rho(t)=\\rho_0e^{\\omega t}$ et $\\theta(t)=\\omega t$. Donner $x(t)$ et $y(t)$.",
+     "sol": "$x=\\rho\\cos\\theta=\\rho_0e^{\\omega t}\\cos\\omega t$ et $y=\\rho\\sin\\theta=\\rho_0e^{\\omega t}\\sin\\omega t$.",
+     "src": "Contrôle 1 de physique, QCM 8",
+     "duree": 3,
+     "formules": "$\\vec u_\\rho=(\\cos\\theta,\\sin\\theta)$ · $\\vec u_\\theta=(-\\sin\\theta,\\cos\\theta)$ · $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$",
+     "type": "open"
+    },
+    {
+     "id": "pp6",
+     "enonce": "Établir $\\vec a=(\\ddot\\rho-\\rho\\dot\\theta^2)\\vec u_\\rho+(2\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta$.",
+     "sol": "$\\vec a=\\frac{d}{dt}\\big(\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta\\big)=\\ddot\\rho\\,\\vec u_\\rho+\\dot\\rho\\dot\\theta\\,\\vec u_\\theta+(\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta-\\rho\\dot\\theta^2\\vec u_\\rho$, soit le résultat.",
+     "duree": 6,
+     "formules": "$\\vec a=(\\ddot\\rho-\\rho\\dot\\theta^2)\\vec u_\\rho+(2\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta$ · $\\frac{d\\vec u_\\theta}{dt}=-\\dot\\theta\\vec u_\\rho$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Mouvement circulaire",
+   "notions": [
+    "circulaire",
+    "polaires"
+   ],
+   "exos": [
+    {
+     "id": "pq1",
+     "enonce": "Mouvement circulaire uniforme de rayon $R=2$ m et $\\omega=3$ rad/s. Norme de l'accélération (en m/s²) ?",
+     "ans": "18",
+     "sol": "$a=R\\omega^2=18$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Mouvement circulaire uniforme, $R=0{,}5$ m, $\\omega=4$ rad/s. Norme de l'accélération (en m/s²) ?",
+       "ans": "8",
+       "sol": "$R\\omega^2=8$."
+      }
+     ],
+     "formules": "$\\rho=R$ : $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$ · uniforme : $a=R\\omega^2$",
+     "type": "value"
+    },
+    {
+     "id": "pq2",
+     "enonce": "Mouvement circulaire uniforme de rayon $2$ m et de période $4$ s. Vitesse (en m/s) ?",
+     "ans": "pi",
+     "sol": "$\\omega=\\frac{2\\pi}T=\\frac\\pi2$ et $v=R\\omega=\\pi$ m/s.",
+     "duree": 2,
+     "formules": "$\\omega=\\frac{2\\pi}T$ · $v=R\\omega$",
+     "type": "value"
+    },
+    {
+     "id": "pq3",
+     "enonce": "Spirale $\\rho=e^{2t}$, $\\theta=2t$. Norme de la vitesse à $t=0$ ?",
+     "ans": "2*sqrt(2)",
+     "sol": "$\\dot\\rho=2$ et $\\rho\\dot\\theta=2$ en $t=0$ : $\\|\\vec v\\|=\\sqrt{4+4}=2\\sqrt2$.",
+     "duree": 3,
+     "formules": "$\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$",
+     "type": "value"
+    },
+    {
+     "id": "pq4",
+     "enonce": "Mouvement circulaire de rayon $R$ : écrire $\\vec a$ d'après la formule générale. Que devient-elle si le mouvement est aussi uniforme ?",
+     "sol": "$\\dot\\rho=\\ddot\\rho=0$ : $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$. Uniforme : $\\dot\\theta=\\omega$ constante, $\\ddot\\theta=0$, donc $\\vec a=-R\\omega^2\\vec u_\\rho$, dirigée vers le centre (centripète) et non nulle.",
+     "src": "Contrôle de physique novembre (S1), ex. 4",
+     "duree": 4,
+     "formules": "$\\rho=R$ : $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$ · uniforme : $a=R\\omega^2$ · $\\vec a=(\\ddot\\rho-\\rho\\dot\\theta^2)\\vec u_\\rho+(2\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta$",
+     "type": "open"
+    },
+    {
+     "id": "pq5",
+     "enonce": "Mouvement circulaire décéléré de rayon $R$ : quelle est la composante de l'accélération sur $\\vec u_\\theta$ ? son signe ?",
+     "sol": "$a_\\theta=R\\ddot\\theta$. Décéléré signifie $\\dot\\theta$ diminue, donc $\\ddot\\theta<0$ (pour $\\dot\\theta>0$) : $a_\\theta<0$. La composante radiale reste $-R\\dot\\theta^2$.",
+     "src": "Contrôle 1 de physique, QCM 6",
+     "duree": 3,
+     "formules": "$\\rho=R$ : $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$ · uniforme : $a=R\\omega^2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Cylindriques et hélice",
+   "notions": [
+    "cylindrique",
+    "circulaire"
+   ],
+   "exos": [
+    {
+     "id": "pe1",
+     "enonce": "Hélice $x=R\\cos\\omega t$, $y=R\\sin\\omega t$, $z=H\\omega t$ avec $R=3$, $H=4$, $\\omega=2$. Norme de la vitesse ?",
+     "ans": "10",
+     "sol": "$\\vec v=(-R\\omega\\sin,\\ R\\omega\\cos,\\ H\\omega)$ : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}=10$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Hélice avec $R=6$, $H=8$, $\\omega=1$. Norme de la vitesse ?",
+       "ans": "10",
+       "sol": "$\\omega\\sqrt{R^2+H^2}=10$."
+      }
+     ],
+     "formules": "hélice : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$ · $\\|\\vec a\\|=R\\omega^2$",
+     "type": "value"
+    },
+    {
+     "id": "pe2",
+     "enonce": "Même hélice : norme de l'accélération ?",
+     "ans": "12",
+     "sol": "$\\vec a=(-R\\omega^2\\cos,\\ -R\\omega^2\\sin,\\ 0)$ : $\\|\\vec a\\|=R\\omega^2=12$.",
+     "duree": 3,
+     "formules": "hélice : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$ · $\\|\\vec a\\|=R\\omega^2$",
+     "type": "value"
+    },
+    {
+     "id": "pe3",
+     "enonce": "Hélice $x=R\\cos\\omega t$, $y=R\\sin\\omega t$, $z=H\\omega t$ : exprimer $\\overrightarrow{OM}$, $\\vec v$ et $\\vec a$ en coordonnées cylindriques et retrouver les normes.",
+     "sol": "$\\rho=R$, $\\theta=\\omega t$, $z=H\\omega t$ : $\\overrightarrow{OM}=R\\vec u_\\rho+H\\omega t\\,\\vec u_z$.\n\n$\\vec v=R\\omega\\,\\vec u_\\theta+H\\omega\\,\\vec u_z$, $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$.\n\n$\\vec a=-R\\omega^2\\vec u_\\rho$, $\\|\\vec a\\|=R\\omega^2$. On retrouve les normes cartésiennes.",
+     "src": "Contrôle 1 de physique, ex. 2 (6 points)",
+     "duree": 10,
+     "formules": "$\\vec v=\\dot\\rho\\vec u_\\rho+\\rho\\dot\\theta\\vec u_\\theta+\\dot z\\vec u_z$ · hélice : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$ · $\\|\\vec a\\|=R\\omega^2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Lois de Newton",
+   "notions": [
+    "newton"
+   ],
+   "exos": [
+    {
+     "id": "pn1",
+     "enonce": "Quel est le poids (en N) d'un objet de masse $2$ kg, avec $g=10$ m/s² ?",
+     "ans": "20",
+     "sol": "$P=mg=20$ N.",
+     "duree": 1,
+     "formules": "$\\vec P=m\\vec g$",
+     "type": "value"
+    },
+    {
+     "id": "pn2",
+     "enonce": "On double la distance entre deux masses. Par quel facteur la force de gravitation est-elle multipliée ?",
+     "ans": "1/4",
+     "sol": "$F=G\\frac{m_1m_2}{d^2}$ : $d\\to2d$ donne $F\\to F/4$.",
+     "duree": 2,
+     "formules": "$F=G\\frac{m_1m_2}{d^2}$",
+     "type": "value"
+    },
+    {
+     "id": "pn3",
+     "enonce": "Un corps de masse $0{,}5$ kg subit une force résultante de $3$ N. Quelle accélération (en m/s²) ?",
+     "ans": "6",
+     "sol": "$a=F/m=6$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Un corps de $2$ kg subit une force résultante de $9$ N. Accélération (en m/s²) ?",
+       "ans": "9/2",
+       "sol": "$a=F/m=4{,}5$."
+      }
+     ],
+     "formules": "PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "value"
+    },
+    {
+     "id": "pn4",
+     "enonce": "Quantité de mouvement (en kg·m/s) d'un corps de $3$ kg à $4$ m/s ?",
+     "ans": "12",
+     "sol": "$p=mv=12$.",
+     "duree": 1,
+     "formules": "$\\vec p=m\\vec v$",
+     "type": "value"
+    },
+    {
+     "id": "pn5",
+     "enonce": "Une balle lâchée tombe verticalement, mouvement non uniforme. Que dit le principe d'inertie ?",
+     "sol": "Rien sur ce cas : il décrit un corps soumis à des forces qui se compensent. Ici la vitesse varie, donc les forces (le poids) ne se compensent pas : c'est le PFD qui s'applique.",
+     "src": "Partiel de physique janvier (S1), QCM 8",
+     "duree": 3,
+     "formules": "1er principe : forces qui se compensent $\\Rightarrow$ $\\vec v$ constant · PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "open"
+    },
+    {
+     "id": "pn6",
+     "enonce": "Chute libre depuis $y_0=5$ m sans vitesse initiale. Établir $a$, $v(t)$ et $y(t)$ avec le PFD.",
+     "sol": "Poids seul, axe $y$ vers le haut : $-mg=ma$, donc $a=-g$ (indépendant de $m$). $v=-gt$ (car $v(0)=0$) et $y=y_0-\\frac12gt^2$.",
+     "duree": 5,
+     "formules": "PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$ · $v=\\int a\\,dt$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Plan incliné et poulies",
+   "notions": [
+    "incline",
+    "newton"
+   ],
+   "exos": [
+    {
+     "id": "pi1",
+     "enonce": "Bloc sur un plan incliné de $30^\\circ$, sans frottement, $g=10$. Accélération le long du plan (en m/s²) ?",
+     "ans": "5",
+     "sol": "$a=g\\sin\\alpha=5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Plan incliné de $45^\\circ$ sans frottement, $g=10$. Accélération (en m/s²) ?",
+       "ans": "5*sqrt(2)",
+       "sol": "$g\\sin45^\\circ=5\\sqrt2$."
+      }
+     ],
+     "formules": "plan incliné : $a=g\\sin\\alpha$ · $R=mg\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pi2",
+     "enonce": "Bloc de $2$ kg sur un plan incliné de $60^\\circ$ : norme de la réaction normale (en N) ?",
+     "ans": "10",
+     "sol": "$R=mg\\cos\\alpha=20\\times\\frac12=10$ N.",
+     "duree": 2,
+     "formules": "plan incliné : $a=g\\sin\\alpha$ · $R=mg\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pi3",
+     "enonce": "$m_1=0{,}8$ kg sur un plan incliné de $30^\\circ$ (sans frottement), relié par un fil et une poulie idéale à $m=1$ kg qui pend. $g=10$. Accélération de $m$ (en m/s²) ?",
+     "ans": "10/3",
+     "sol": "$m$ : $mg-T=ma$. $m_1$ : $T-m_1g\\sin\\alpha=m_1a$. Somme : $a=\\dfrac{mg-m_1g\\sin\\alpha}{m+m_1}=\\dfrac{10-4}{1{,}8}=\\dfrac{10}3$ m/s².",
+     "src": "Partiel de physique janvier (S1), ex. 1",
+     "duree": 6,
+     "formules": "plan incliné : $a=g\\sin\\alpha$ · $R=mg\\cos\\alpha$ · même $a$ et même $T$ · PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "value"
+    },
+    {
+     "id": "pi4",
+     "enonce": "Même montage : tension du fil (en N) ?",
+     "ans": "20/3",
+     "sol": "$T=m(g-a)=10-\\frac{10}3=\\frac{20}3$ N.",
+     "src": "Partiel de physique janvier (S1), ex. 1",
+     "duree": 3,
+     "formules": "PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "value"
+    },
+    {
+     "id": "pi5",
+     "enonce": "Même montage : norme de la réaction du plan sur $m_1$ (en N) ?",
+     "ans": "4*sqrt(3)",
+     "sol": "$R=m_1g\\cos\\alpha=8\\times\\frac{\\sqrt3}2=4\\sqrt3$ N.",
+     "src": "Partiel de physique janvier (S1), ex. 1",
+     "duree": 3,
+     "formules": "plan incliné : $a=g\\sin\\alpha$ · $R=mg\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pi6",
+     "enonce": "Machine d'Atwood : deux masses $m_1 < m_2$ reliées par un fil sur une poulie idéale. Établir l'accélération et la tension.",
+     "sol": "$m_2g-T=m_2a$ et $T-m_1g=m_1a$ (même $a$ et même $T$). Somme : $a=\\dfrac{m_2-m_1}{m_1+m_2}g$. Puis $T=m_1(g+a)=\\dfrac{2m_1m_2}{m_1+m_2}g$.",
+     "duree": 6,
+     "formules": "PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$ · même $a$ et même $T$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Frottement fluide",
+   "notions": [
+    "frottement",
+    "newton"
+   ],
+   "exos": [
+    {
+     "id": "pf1",
+     "enonce": "Chute avec frottement $-\\alpha\\vec v$, $m=2$ kg, $\\alpha=4$ kg/s, $g=10$. Vitesse limite (en m/s) ?",
+     "ans": "5",
+     "sol": "$v_\\ell=\\frac{mg}\\alpha=5$ m/s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$m=3$ kg, $\\alpha=6$ kg/s, $g=10$. Vitesse limite (en m/s) ?",
+       "ans": "5",
+       "sol": "$mg/\\alpha=5$."
+      }
+     ],
+     "formules": "$m\\dot v=mg-\\alpha v$ · $v_\\ell=\\frac{mg}\\alpha$ · $\\tau=\\frac m\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pf2",
+     "enonce": "Même chute : constante de temps $\\tau$ (en s) ?",
+     "ans": "1/2",
+     "sol": "$\\tau=\\frac m\\alpha=\\frac12$ s.",
+     "duree": 2,
+     "formules": "$m\\dot v=mg-\\alpha v$ · $v_\\ell=\\frac{mg}\\alpha$ · $\\tau=\\frac m\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "pf3",
+     "enonce": "Quelle fraction de $v_\\ell$ la vitesse atteint-elle à $t=\\tau$ ?",
+     "ans": "1-exp(-1)",
+     "sol": "$v(\\tau)=v_\\ell(1-e^{-1})\\approx0{,}63\\,v_\\ell$.",
+     "duree": 2,
+     "formules": "$v(t)=v_\\ell(1-e^{-t/\\tau})$",
+     "type": "value"
+    },
+    {
+     "id": "pf4",
+     "enonce": "Établir $v(t)$ pour une chute sans vitesse initiale avec frottement $-\\alpha\\vec v$ (axe vers le bas).",
+     "sol": "PFD : $m\\dot v=mg-\\alpha v$, soit $\\dot v+\\frac\\alpha mv=g$. Homogène : $Ke^{-\\alpha t/m}$. Particulière constante : $\\frac{mg}\\alpha$. Avec $v(0)=0$ : $K=-\\frac{mg}\\alpha$, donc $v(t)=\\frac{mg}\\alpha\\left(1-e^{-\\alpha t/m}\\right)$.",
+     "duree": 8,
+     "formules": "$m\\dot v=mg-\\alpha v$ · $v_\\ell=\\frac{mg}\\alpha$ · $\\tau=\\frac m\\alpha$ · EDO du 1er ordre : homogène + particulière",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Moments et équilibre",
+   "notions": [
+    "moment"
+   ],
+   "exos": [
+    {
+     "id": "pm1",
+     "enonce": "Force de $10$ N appliquée à $0{,}5$ m de l'axe, perpendiculairement au bras de levier. Valeur du moment (en N·m) ?",
+     "ans": "5",
+     "sol": "$M=Fd=5$ N·m.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Force de $20$ N à $0{,}25$ m de l'axe, perpendiculaire au bras. Moment (en N·m) ?",
+       "ans": "5",
+       "sol": "$Fd=5$."
+      }
+     ],
+     "formules": "$M=Fd\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$, $\\sum M=0$",
+     "type": "value"
+    },
+    {
+     "id": "pm2",
+     "enonce": "Même force à $0{,}5$ m, mais faisant $30^\\circ$ avec le bras. Moment (en N·m) ?",
+     "ans": "5/2",
+     "sol": "$M=Fd\\sin30^\\circ=2{,}5$ N·m.",
+     "duree": 2,
+     "formules": "$M=Fd\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$, $\\sum M=0$",
+     "type": "value"
+    },
+    {
+     "id": "pm3",
+     "enonce": "Poutre horizontale homogène de longueur $L=1$ m, poids $100$ N, articulée au mur, portant une charge de $300$ N à son extrémité. Un câble vertical tient l'extrémité. Tension $T$ (en N) ?",
+     "ans": "350",
+     "sol": "Moments par rapport à l'articulation : $TL=P\\frac L2+P_1L$, donc $T=50+300=350$ N.",
+     "src": "Partiel de physique janvier (S1), ex. 2 (adapté)",
+     "duree": 5,
+     "formules": "$M=Fd\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$, $\\sum M=0$ · poids d'une poutre homogène au milieu",
+     "type": "value"
+    },
+    {
+     "id": "pm4",
+     "enonce": "Même poutre : composante verticale de la réaction du mur (en N) ?",
+     "ans": "50",
+     "sol": "Équilibre vertical : $R_y+T=P+P_1$, donc $R_y=400-350=50$ N.",
+     "src": "Partiel de physique janvier (S1), ex. 2 (adapté)",
+     "duree": 3,
+     "formules": "$M=Fd\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$, $\\sum M=0$",
+     "type": "value"
+    },
+    {
+     "id": "pm5",
+     "enonce": "Échelle homogène, poids $P$, longueur $L$, faisant un angle $\\beta$ avec le sol. Contact sans frottement en $A$ (mur), avec frottement en $B$ (sol), $\\vec R_B$ faisant l'angle $\\varphi$ avec la normale. Écrire les conditions d'équilibre et trouver la condition de non-glissement.",
+     "sol": "Translation : sur $x$, $R_A-R_B\\sin\\varphi=0$ ; sur $y$, $R_B\\cos\\varphi=P$.\n\nRotation autour de $B$ : $P\\frac L2\\cos\\beta=R_AL\\sin\\beta$, donc $R_A=\\dfrac P{2\\tan\\beta}$.\n\nAlors $\\tan\\varphi=\\dfrac{R_A}P=\\dfrac1{2\\tan\\beta}$. Pas de glissement si $\\tan\\varphi\\le\\mu$, soit $\\mu\\ge\\dfrac1{2\\tan\\beta}$.",
+     "src": "Partiel de physique janvier (S1), QCM 2 et 3",
+     "duree": 10,
+     "formules": "$M=Fd\\sin\\varphi$ · équilibre : $\\sum\\vec F=\\vec0$, $\\sum M=0$ · axe en $B$ : $M(\\vec R_B)=0$ · $\\tan\\varphi\\le\\mu$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Repère de Frenet et gouttière",
+   "notions": [
+    "frenet",
+    "newton"
+   ],
+   "exos": [
+    {
+     "id": "pg1",
+     "enonce": "Gouttière : $V^2=2gr(1-\\cos\\theta)$ avec $r=1$ m, $g=10$, $\\theta=60^\\circ$. Valeur de $V^2$ (en m²/s²) ?",
+     "ans": "10",
+     "sol": "$2\\times10\\times\\frac12=10$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$V^2=2gr(1-\\cos\\theta)$ avec $r=2$ m, $g=10$, $\\theta=60^\\circ$. Valeur (en m²/s²) ?",
+       "ans": "20",
+       "sol": "$40\\times\\frac12=20$."
+      }
+     ],
+     "formules": "$\\vec a=\\dot v\\,\\vec u_T+\\frac{v^2}r\\vec u_N$ · quitte le support : $R=0$",
+     "type": "value"
+    },
+    {
+     "id": "pg2",
+     "enonce": "Composante tangentielle de l'accélération $a_T=g\\sin\\theta$ pour $\\theta=30^\\circ$, $g=10$ (en m/s²) ?",
+     "ans": "5",
+     "sol": "$a_T=10\\times\\frac12=5$.",
+     "duree": 1,
+     "formules": "$\\vec a=\\dot v\\,\\vec u_T+\\frac{v^2}r\\vec u_N$ · quitte le support : $R=0$",
+     "type": "value"
+    },
+    {
+     "id": "pg3",
+     "enonce": "Solide qui glisse sans frottement depuis le sommet $A$ d'une gouttière en quart de cercle de rayon $r$ (par l'extérieur), repéré par l'angle $\\theta$ avec la verticale. Établir $a_T$ et la réaction $R$ en fonction de $g$, $\\theta$ et $V$.",
+     "sol": "Forces : poids $m\\vec g$ et réaction $\\vec R$ (normale). PFD dans Frenet.\n\nTangente : $m\\dot V=mg\\sin\\theta$, donc $a_T=g\\sin\\theta$.\n\nNormale (vers le centre) : $mg\\cos\\theta-R=m\\dfrac{V^2}r$, donc $R=m\\left(g\\cos\\theta-\\dfrac{V^2}r\\right)$.",
+     "src": "Partiel de physique janvier (S1), ex. 3 (6 points)",
+     "duree": 10,
+     "formules": "$\\vec a=\\dot v\\,\\vec u_T+\\frac{v^2}r\\vec u_N$ · quitte le support : $R=0$ · PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "open"
+    },
+    {
+     "id": "pg4",
+     "enonce": "Avec $V^2=2gr(1-\\cos\\theta)$, exprimer $R$ en fonction de $m$, $g$, $\\theta$, puis trouver l'angle où le solide quitte la gouttière.",
+     "sol": "$R=m\\left(g\\cos\\theta-2g(1-\\cos\\theta)\\right)=mg(3\\cos\\theta-2)$. Le solide quitte la gouttière quand $R=0$ : $\\cos\\theta=\\frac23$, soit $\\theta\\approx48^\\circ$.",
+     "src": "Partiel de physique janvier (S1), ex. 3",
+     "duree": 6,
+     "formules": "$\\vec a=\\dot v\\,\\vec u_T+\\frac{v^2}r\\vec u_N$ · quitte le support : $R=0$ · $V^2=2gr(1-\\cos\\theta)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Niveau examen : sujets complets",
+   "notions": [
+    "cinematique",
+    "polaires",
+    "cylindrique",
+    "incline",
+    "frenet",
+    "projectile"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "px1",
+     "enonce": "Cycloïde $x=A(\\omega t-\\sin\\omega t)$, $y=A(1-\\cos\\omega t)$. 1. Composantes de $\\vec v$ et $\\vec a$. 2. Leurs normes. 3. Tracer la cycloïde pour $t=0,\\frac T4,\\frac T2,\\frac{3T}4,T$.",
+     "sol": "Voir la correction de « Cycloïde » au niveau 3. Points à tracer, avec $\\omega t=0,\\frac\\pi2,\\pi,\\frac{3\\pi}2,2\\pi$ : $(0,0)$, $A(\\frac\\pi2-1,\\ A)$, $A(\\pi,\\ 2A)$, $A(\\frac{3\\pi}2+1,\\ A)$, $A(2\\pi,\\ 0)$. Le point revient à $y=0$ toutes les périodes avec une vitesse nulle (point de rebroussement).",
+     "src": "Contrôle 1 de physique, ex. 1",
+     "duree": 12,
+     "formules": "$\\vec v=\\frac{d\\overrightarrow{OM}}{dt}$ · $\\vec a=\\frac{d\\vec v}{dt}$ · $\\|\\vec v\\|=\\sqrt{\\dot x^2+\\dot y^2}$ · $1-\\cos\\alpha=2\\sin^2\\frac\\alpha2$",
+     "type": "open"
+    },
+    {
+     "id": "px2",
+     "enonce": "Mouvement hélicoïdal $x=R\\cos\\omega t$, $y=R\\sin\\omega t$, $z=H\\omega t$. 1. $\\vec v$ et $\\|\\vec v\\|$. 2. $\\vec a$ et $\\|\\vec a\\|$. 3. $\\overrightarrow{OM}$, $\\vec v$, $\\vec a$ en cylindriques.",
+     "sol": "1. $\\vec v=(-R\\omega\\sin\\omega t,\\ R\\omega\\cos\\omega t,\\ H\\omega)$, $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$.\n\n2. $\\vec a=(-R\\omega^2\\cos\\omega t,\\ -R\\omega^2\\sin\\omega t,\\ 0)$, $\\|\\vec a\\|=R\\omega^2$.\n\n3. $\\overrightarrow{OM}=R\\vec u_\\rho+H\\omega t\\,\\vec u_z$, $\\vec v=R\\omega\\vec u_\\theta+H\\omega\\vec u_z$, $\\vec a=-R\\omega^2\\vec u_\\rho$ : mêmes normes.",
+     "src": "Contrôle 1 de physique, ex. 2",
+     "duree": 12,
+     "formules": "hélice : $\\|\\vec v\\|=\\omega\\sqrt{R^2+H^2}$ · $\\|\\vec a\\|=R\\omega^2$ · $\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$",
+     "type": "open"
+    },
+    {
+     "id": "px3",
+     "enonce": "Objet $m_1=0{,}8$ kg sur un plan incliné de $30^\\circ$ sans frottement, relié par un fil et une poulie légère à $m=1$ kg qui pend. 1. Forces sur chaque système. 2. Accélération (expression puis valeur). 3. Tension. 4. Réaction du plan.",
+     "sol": "$a=\\dfrac{mg-m_1g\\sin\\alpha}{m+m_1}=\\dfrac{10}3$ m/s² ; $T=m(g-a)=\\dfrac{20}3$ N ; $R=m_1g\\cos\\alpha=4\\sqrt3\\approx6{,}9$ N. (Détail au niveau 10.)",
+     "src": "Partiel de physique janvier (S1), ex. 1",
+     "duree": 12,
+     "formules": "plan incliné : $a=g\\sin\\alpha$ · $R=mg\\cos\\alpha$ · même $a$ et même $T$ · PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "open"
+    },
+    {
+     "id": "px4",
+     "enonce": "Solide sur gouttière en quart de cercle (voir niveau 13) : composante tangentielle, réaction, angle de décollage.",
+     "sol": "$a_T=g\\sin\\theta$ ; $R=mg(3\\cos\\theta-2)$ ; décollage pour $\\cos\\theta=\\frac23$. (Détail au niveau 13.)",
+     "src": "Partiel de physique janvier (S1), ex. 3",
+     "duree": 12,
+     "formules": "$\\vec a=\\dot v\\,\\vec u_T+\\frac{v^2}r\\vec u_N$ · quitte le support : $R=0$ · PFD : $\\sum\\vec F=m\\vec a$ · poids $\\vec P=m\\vec g$",
+     "type": "open"
+    },
+    {
+     "id": "px5",
+     "enonce": "Questions de cours : (a) $\\vec u_\\rho$, $\\vec u_\\theta$ en cartésiennes ; (b) $\\frac{d\\vec u_\\rho}{d\\theta}$ et $\\frac{d\\vec u_\\theta}{d\\theta}$ ; (c) $\\vec v$ en polaires ; (d) $\\vec a$ pour un mouvement circulaire puis circulaire uniforme.",
+     "sol": "(a) $\\vec u_\\rho=(\\cos\\theta,\\sin\\theta)$, $\\vec u_\\theta=(-\\sin\\theta,\\cos\\theta)$. (b) $\\vec u_\\theta$ et $-\\vec u_\\rho$. (c) $\\vec v=\\dot\\rho\\vec u_\\rho+\\rho\\dot\\theta\\vec u_\\theta$. (d) $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\vec u_\\theta$, puis $-R\\omega^2\\vec u_\\rho$.",
+     "src": "Contrôle de physique novembre (S1), ex. 2 et 4",
+     "duree": 10,
+     "formules": "$\\vec u_\\rho=(\\cos\\theta,\\sin\\theta)$ · $\\vec u_\\theta=(-\\sin\\theta,\\cos\\theta)$ · $x=\\rho\\cos\\theta$, $y=\\rho\\sin\\theta$ · $\\vec v=\\dot\\rho\\,\\vec u_\\rho+\\rho\\dot\\theta\\,\\vec u_\\theta$ · $\\rho=R$ : $\\vec a=-R\\dot\\theta^2\\vec u_\\rho+R\\ddot\\theta\\,\\vec u_\\theta$ · uniforme : $a=R\\omega^2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "polaires",
+    "projectile",
+    "frottement"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "py1",
+     "enonce": "Spirale $\\rho=\\rho_0e^{\\omega t}$, $\\theta=\\omega t$ avec $\\rho_0=1$, $\\omega=1$. Norme de l'accélération à $t=0$ ?",
+     "ans": "2",
+     "sol": "$a_\\rho=\\ddot\\rho-\\rho\\dot\\theta^2=\\omega^2\\rho-\\omega^2\\rho=0$ et $a_\\theta=2\\dot\\rho\\dot\\theta=2\\rho_0\\omega^2e^{\\omega t}$ : $\\|\\vec a\\|=2$ en $t=0$.",
+     "duree": 6,
+     "formules": "$\\vec a=(\\ddot\\rho-\\rho\\dot\\theta^2)\\vec u_\\rho+(2\\dot\\rho\\dot\\theta+\\rho\\ddot\\theta)\\vec u_\\theta$ · $\\rho=\\rho_0e^{\\omega t}$",
+     "type": "value"
+    },
+    {
+     "id": "py2",
+     "enonce": "Démontrer que la portée d'un tir à $v_0$ fixé est maximale pour $\\alpha=45^\\circ$.",
+     "sol": "Portée $=\\dfrac{v_0^2\\sin2\\alpha}g$, maximale quand $\\sin2\\alpha=1$, soit $\\alpha=45^\\circ$ (pour $\\alpha\\in[0,\\frac\\pi2]$).",
+     "duree": 4,
+     "formules": "portée $\\frac{v_0^2\\sin2\\alpha}g$ · $\\sin2\\alpha\\le1$",
+     "type": "open"
+    },
+    {
+     "id": "py3",
+     "enonce": "Un projectile est lancé de l'origine avec $v_0=20$ m/s. Quel angle $\\alpha$ permet d'atteindre le point $(20\\sqrt3,\\ 0)$ au sol ? Y a-t-il une autre solution ?",
+     "sol": "Portée $\\frac{v_0^2\\sin2\\alpha}g=40\\sin2\\alpha=20\\sqrt3$ donne $\\sin2\\alpha=\\frac{\\sqrt3}2$, soit $2\\alpha=60^\\circ$ ou $120^\\circ$ : $\\alpha=30^\\circ$ ou $\\alpha=60^\\circ$ (tirs complémentaires).",
+     "duree": 6,
+     "formules": "portée $\\frac{v_0^2\\sin2\\alpha}g$ · $\\sin x=\\sin(\\pi-x)$",
+     "type": "open"
+    },
+    {
+     "id": "py4",
+     "enonce": "Chute avec frottement fluide : montrer que l'accélération s'annule quand $v=v_\\ell$ et que $v(t)$ ne dépasse jamais $v_\\ell$.",
+     "sol": "$m\\dot v=mg-\\alpha v$, donc $\\dot v=0\\iff v=\\frac{mg}\\alpha=v_\\ell$. Comme $v(t)=v_\\ell(1-e^{-t/\\tau})$ avec $e^{-t/\\tau}>0$, on a $v < v_\\ell$ pour tout $t$ fini, et $v\\to v_\\ell$.",
+     "duree": 6,
+     "formules": "$m\\dot v=mg-\\alpha v$ · $v_\\ell=\\frac{mg}\\alpha$ · $\\tau=\\frac m\\alpha$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
