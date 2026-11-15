@@ -1,6 +1,6 @@
 # Index des annales de maths (S1 et S2)
 
-162 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1041 exercices.
+177 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1110 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1116,6 +1116,20 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 
 ## S2 — Partiels (finals)
 
+### Partiel 2 (S2) — juin 2017 (corrigé rédigé, FR)
+
+`md/S2/Finals/Maths PC/2021/final-2021-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (2 points) | inverse d'une matrice | ALM | maths-s2-alm/8 |
+| Exercice 2 (4,5 points) | décomposition en éléments simples | APEF (polynômes) | maths-s2-apef-polynomes/8 |
+| Exercice 3 (3 points) | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 4 (3 points) | noyau et image d'un endomorphisme (inclusions) | ALM | maths-s2-alm/12 |
+| Exercice 5 (2 points) | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+| Exercice 6 (3 points) | puissance d'une matrice (binôme, nilpotente) | ALM | maths-s2-alm/12 |
+| Exercice 7 (4 points) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+
 ### Final exam 2 (S2) — June 2017 (subject, EN)
 
 `md/S2/Finals/Maths PC/2021/final-2021-s2-maths-subject-en.md` — date réelle : juin 2017
@@ -1393,6 +1407,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1 : familles de vecteurs (10 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
 | Exercice 2 : somme de sev (10 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 
+### Examen S2-B4-ALM (applications linéaires et matrices) — mai 2025 (corrigé rédigé, FR)
+
+`md/S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : opérations matricielles (8 points) | opérations matricielles, produit, inverse | ALM | maths-s2-alm/6 |
+| Exercice 2 : application linéaire (10 points) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice 3 : changement de bases (7 points) | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 4 : projection (10 points) | projecteur, noyau et image | ALM | maths-s2-alm/10 |
+| Exercice 5 : une démonstration guidée (5 points) | changement de base, formule $Y = AX$ | ALM | maths-s2-alm/9 |
+
 ### Examen S2-B4-ALM (applications linéaires et matrices) — mai 2025 (sujet, FR)
 
 `md/S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-subject-fr.md` — date réelle : mai 2025
@@ -1404,6 +1430,15 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : changement de bases (7 points) | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
 | Exercice 4 : projection (10 points) | projecteur, noyau et image | ALM | maths-s2-alm/10 |
 | Exercice 5 : une démonstration guidée (5 points) | changement de base, formule $Y = AX$ | ALM | maths-s2-alm/9 |
+
+### Examen S2-B4-EV (espaces vectoriels) — mai 2025 (corrigé rédigé, FR)
+
+`md/S2/Finals/Maths PC/2029/PC/EV/midterm-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : familles de vecteurs (10 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
+| Exercice 2 : somme de sev (10 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 
 ### Examen S2-B4-EV (espaces vectoriels) — mai 2025 (sujet, FR)
 
@@ -1865,6 +1900,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 2 : somme de sev (5 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 3 : les familles (5 points) | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
 
+### Examen S2-B3 APEF — mars 2025 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : polynômes (10 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| Exercice 2 : équations différentielles (10 points) | EDO linéaires 1er ordre (variation de la constante) et 2nd ordre | APIS (EDO) | maths-s1-apis-edo/11 |
+| Exercice 3 : étude locale de fonctions (10 points) | petit o, équivalents et développements limités (manipulation) | APEF (fonctions) | maths-s2-apef-fonctions/10 |
+| Exercice 4 : développements limités (6 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+| Exercice 5 : calcul de limites (4 points) | développements limités, limite par équivalents | APEF (fonctions) | maths-s2-apef-fonctions/9 |
+
 ### Examen S2-B3 APEF — mars 2025 (sujet, FR)
 
 `md/S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-subject-fr.md` — date réelle : mars 2025
@@ -1876,6 +1923,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : étude locale de fonctions (10 points) | petit o, équivalents et développements limités (manipulation) | APEF (fonctions) | maths-s2-apef-fonctions/10 |
 | Exercice 4 : développements limités (6 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
 | Exercice 5 : calcul de limites (4 points) | développements limités, limite par équivalents | APEF (fonctions) | maths-s2-apef-fonctions/9 |
+
+### Examen S2-B3 EV — mars 2025 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Maths PC/2029/PC/EV/midterm-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 : sous-espaces vectoriels (6 points) | reconnaître un sous-espace vectoriel | EV | maths-s2-ev/3 |
+| Exercice 2 : cours 1 sur les sev (3 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 3 : somme de sous-espaces vectoriels (7 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 4 : cours 2 sur les familles (4 points) | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
 
 ### Examen S2-B3 EV — mars 2025 (sujet, FR)
 
@@ -1914,6 +1972,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 
 ## S2 — Contrôles de TD et feuilles de TD
 
+### Contrôle TD 3 (S2) — lundi 29 janvier 2018 (corrigé rédigé, FR)
+
+`md/S2/TDs/2022/td3-2022-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Question de cours | suites extraites | APIS (suites) | maths-s1-apis-suites/11 |
+| Questions de cours | sommes de termes consécutifs (suites arithmétiques et géométriques) | APIS (suites) | maths-s1-apis-suites/1 |
+| Exercice 1 | suites extraites et divergence | APIS (suites) | maths-s1-apis-suites/11 |
+| Exercice 2 | suites adjacentes, suites extraites $(u_{2n})$, $(u_{2n+1})$ | APIS (suites) | maths-s1-apis-suites/9 |
+
 ### Contrôle TD 3 (S2) — lundi 29 janvier 2018 (sujet, FR)
 
 `md/S2/TDs/2022/td3-2022-s2-maths-subject-fr.md` — date réelle : 29 janvier 2018
@@ -1925,6 +1994,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1 | suites extraites et divergence | APIS (suites) | maths-s1-apis-suites/11 |
 | Exercice 2 | suites adjacentes, suites extraites $(u_{2n})$, $(u_{2n+1})$ | APIS (suites) | maths-s1-apis-suites/9 |
 
+### Contrôle TD 4 (S2) — lundi 9 avril 2018 (corrigé rédigé, FR)
+
+`md/S2/TDs/2022/td4-2022-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Question de cours | noyau, image, injectivité, surjectivité (cours) | ALM | maths-s2-alm/2 |
+| Exercice 1 | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
+| Exercice 2 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+| Exercice 3 | écrire un sous-espace sous forme de Vect (système linéaire) | EV | maths-s2-ev/4 |
+
 ### Contrôle TD 4 (S2) — lundi 9 avril 2018 (sujet, FR)
 
 `md/S2/TDs/2022/td4-2022-s2-maths-subject-fr.md` — date réelle : 9 avril 2018
@@ -1935,6 +2015,20 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1 | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
 | Exercice 2 | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 3 | écrire un sous-espace sous forme de Vect (système linéaire) | EV | maths-s2-ev/4 |
+
+### Contrôle TD 4 (S2) — avril 2020 (corrigé rédigé, FR)
+
+`md/S2/TDs/2024/td4-2024-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice (version 1) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 2) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 3) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 4) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 5) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 6) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
+| Exercice (version 7) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
 
 ### Contrôle TD 4 (S2) — avril 2020 (sujet, FR)
 
@@ -1993,6 +2087,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1 | projecteur, noyau et image | ALM | maths-s2-alm/10 |
 | Exercice 2 | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
 
+### Contrôle de cours 1 (S2) — lundi 30 janvier 2023 (corrigé rédigé, FR)
+
+`md/S2/TDs/2027/td3-2027-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : divisibilité et division euclidienne (3 points) | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
+| Cours 2 : racines (6 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| Cours 3 : équations différentielles (7 points) | démonstration de cours (solutions de $a(t)y' + b(t)y = 0$) | APIS (EDO) | maths-s1-apis-edo/4 |
+| Cours 4 : développements limités (4 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+
 ### Contrôle de cours 1 (S2) — lundi 30 janvier 2023 (sujet, FR)
 
 `md/S2/TDs/2027/td3-2027-s2-maths-subject-fr.md` — date réelle : 30 janvier 2023
@@ -2004,6 +2109,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 3 : équations différentielles (7 points) | démonstration de cours (solutions de $a(t)y' + b(t)y = 0$) | APIS (EDO) | maths-s1-apis-edo/4 |
 | Cours 4 : développements limités (4 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
 
+### Contrôle de cours 2 (S2) — lundi 3 avril 2023 (corrigé rédigé, FR)
+
+`md/S2/TDs/2027/td4-2027-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : familles de vecteurs (6 points) | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+| Cours 2 : bases (3 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
+| Cours 3 : exemples d'applications linéaires (3 points) | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
+| Cours 4 : noyau et image (8 points) | noyau, image, injectivité, surjectivité (cours) | ALM | maths-s2-alm/2 |
+
 ### Contrôle de cours 2 (S2) — lundi 3 avril 2023 (sujet, FR)
 
 `md/S2/TDs/2027/td4-2027-s2-maths-subject-fr.md` — date réelle : 3 avril 2023
@@ -2014,6 +2130,19 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 2 : bases (3 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
 | Cours 3 : exemples d'applications linéaires (3 points) | application linéaire (caractérisation) | ALM | maths-s2-alm/1 |
 | Cours 4 : noyau et image (8 points) | noyau, image, injectivité, surjectivité (cours) | ALM | maths-s2-alm/2 |
+
+### Contrôle de cours EFDP (S2 PA) — lundi 19 février 2024 (corrigé rédigé, FR)
+
+`md/S2/TDs/2028/td3-2028-s2-maths-PA-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : ensembles (4 points) | ensembles (appartenance, inclusion, union, intersection, produit, complémentaire) | OBM | maths-s1-obm/8 |
+| Cours 2 : ensembles et fonctions - partie 1 (5,5 points) | injectivité, surjectivité, image directe et réciproque | OBM | maths-s1-obm/9 |
+| Cours 3 : ensembles et fonctions - partie 2 (5 points) | injectivité, surjectivité, image directe et réciproque | OBM | maths-s1-obm/10 |
+| Cours 4 : dénombrement 1 (6 points) | dénombrement de mains de cartes | DP | maths-s1-dp/4 |
+| Cours 5 : dénombrement 2 (5,5 points) | coefficients binomiaux (symétrie) | DP | maths-s1-dp/6 |
+| Cours 6 : variable aléatoire (4 points) | loi d'une variable aléatoire finie, espérance, variance | DP | maths-s1-dp/12 |
 
 ### Contrôle de cours EFDP (S2 PA) — lundi 19 février 2024 (sujet, FR)
 
@@ -2028,6 +2157,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 5 : dénombrement 2 (5,5 points) | coefficients binomiaux (symétrie) | DP | maths-s1-dp/6 |
 | Cours 6 : variable aléatoire (4 points) | loi d'une variable aléatoire finie, espérance, variance | DP | maths-s1-dp/12 |
 
+### Contrôle de cours APEF (S2) — lundi 19 février 2024 (corrigé rédigé, FR)
+
+`md/S2/TDs/2028/td3-2028-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : divisibilité et division euclidienne (2,5 points) | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
+| Cours 2 : autour des racines (5,5 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| 2. Équations différentielles (6 points) | démonstration de cours (structure des solutions de $a(t)y' + b(t)y = c(t)$) | APIS (EDO) | maths-s1-apis-edo/5 |
+| 3. Développements limités usuels (6 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+
 ### Contrôle de cours APEF (S2) — lundi 19 février 2024 (sujet, FR)
 
 `md/S2/TDs/2028/td3-2028-s2-maths-subject-fr.md` — date réelle : 19 février 2024
@@ -2038,6 +2178,18 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 2 : autour des racines (5,5 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
 | 2. Équations différentielles (6 points) | démonstration de cours (structure des solutions de $a(t)y' + b(t)y = c(t)$) | APIS (EDO) | maths-s1-apis-edo/5 |
 | 3. Développements limités usuels (6 points) | développements limités usuels et composés | APEF (fonctions) | maths-s2-apef-fonctions/8 |
+
+### Contrôle de cours ARITH (S2 PA) — lundi 6 mai 2024 (corrigé rédigé, FR)
+
+`md/S2/TDs/2028/td4-2028-s2-maths-PA-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Cours 1 : divisibilité et division euclidienne (4 points) | division euclidienne dans $\mathbb{Z}$ | HP (arithmétique) | — |
+| Cours 2 : congruences (11,5 points) | congruences, Fermat, reste d'une puissance | HP (arithmétique) | — |
+| Cours 3 : nombres premiers et pgcd (2 points) | décomposition en facteurs premiers, PGCD | HP (arithmétique) | — |
+| Cours 4 : polynômes 1 (2,5 points) | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
+| Cours 5 : polynômes 2 (10 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
 
 ### Contrôle de cours ARITH (S2 PA) — lundi 6 mai 2024 (sujet, FR)
 
@@ -2051,6 +2203,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 4 : polynômes 1 (2,5 points) | degré, division euclidienne de polynômes, racine | APEF (polynômes) | maths-s2-apef-polynomes/2 |
 | Cours 5 : polynômes 2 (10 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
 
+### Contrôle de cours APEF (S2 B3) — lundi 10 février 2025 (corrigé rédigé, FR)
+
+`md/S2/TDs/2029/td3-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| 1. Polynômes (7 points) | divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$ | APEF (polynômes) | maths-s2-apef-polynomes/9 |
+| 2. Équations différentielles linéaires du premier ordre (5,5 points) | démonstration de cours (solutions de $a(t)y' + b(t)y = 0$) | APIS (EDO) | maths-s1-apis-edo/4 |
+| 3. Équations différentielles linéaires du second ordre (2 points) | EDO 2nd ordre homogène (équation caractéristique, cours) | APIS (EDO) | maths-s1-apis-edo/8 |
+| 4. Étude locale de fonctions (5,5 points) | petit o, équivalents et développements limités (manipulation) | APEF (fonctions) | maths-s2-apef-fonctions/10 |
+
 ### Contrôle de cours APEF (S2 B3) — lundi 10 février 2025 (sujet, FR)
 
 `md/S2/TDs/2029/td3-2029-s2-maths-subject-fr.md` — date réelle : 10 février 2025
@@ -2061,6 +2224,17 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | 2. Équations différentielles linéaires du premier ordre (5,5 points) | démonstration de cours (solutions de $a(t)y' + b(t)y = 0$) | APIS (EDO) | maths-s1-apis-edo/4 |
 | 3. Équations différentielles linéaires du second ordre (2 points) | EDO 2nd ordre homogène (équation caractéristique, cours) | APIS (EDO) | maths-s1-apis-edo/8 |
 | 4. Étude locale de fonctions (5,5 points) | petit o, équivalents et développements limités (manipulation) | APEF (fonctions) | maths-s2-apef-fonctions/10 |
+
+### Contrôle de cours EV et ALM (S2 B4) — lundi 7 avril 2025 (corrigé rédigé, FR)
+
+`md/S2/TDs/2029/td4-2029-s2-maths-correction-fr.md` — date réelle : non indiquée
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| EV — Cours 1 : familles de vecteurs (12 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
+| EV — Cours 2 : autour du Vect (8 points) | sous-espaces engendrés, inclusion, dimension | EV | maths-s2-ev/4 |
+| ALM — Cours 1 : définitions et propriétés (12 points) | noyau, image, injectivité, surjectivité (cours) | ALM | maths-s2-alm/2 |
+| ALM — Cours 2 : exemples (8 points) | noyau, image, rang d'une application linéaire | ALM | maths-s2-alm/3 |
 
 ### Contrôle de cours EV et ALM (S2 B4) — lundi 7 avril 2025 (sujet, FR)
 

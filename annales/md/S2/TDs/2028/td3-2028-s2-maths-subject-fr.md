@@ -1,7 +1,7 @@
 # Contrôle de cours APEF (S2) — lundi 19 février 2024 (sujet, FR)
 
 - Source : `raw/S2/TDs/2028/td3-2028-s2-maths-subject-fr.pdf` (scan, 3 pages)
-- Date réelle : 19 février 2024 (dossier promo 2028). Pas de corrigé dans les annales.
+- Date réelle : 19 février 2024 (dossier promo 2028). Pas de corrigé dans les annales. Corrigé rédigé : `td3-2028-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20 points.
 
 ## Cours 1 : divisibilité et division euclidienne (2,5 points)

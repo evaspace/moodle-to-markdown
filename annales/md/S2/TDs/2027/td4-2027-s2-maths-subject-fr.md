@@ -1,7 +1,7 @@
 # Contrôle de cours 2 (S2) — lundi 3 avril 2023 (sujet, FR)
 
 - Source : `raw/S2/TDs/2027/td4-2027-s2-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 3 avril 2023 (dossier promo 2027). Pas de corrigé dans les annales.
+- Date réelle : 3 avril 2023 (dossier promo 2027). Pas de corrigé dans les annales. Corrigé rédigé : `td4-2027-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20. Quatre questions de cours.
 
 ## Cours 1 : familles de vecteurs (6 points)

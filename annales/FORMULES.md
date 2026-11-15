@@ -13,6 +13,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - minimum en $a$ : $\exists a, \forall x, f(x) \geqslant f(a)$
 - pair : $\exists k, n = 2k$
 
+**injectivité, surjectivité, image directe et réciproque** (12)
+
+- injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple $f(1) = f(2)$)
+- surjective : $\forall y, \exists x, f(x) = y$
+- $f(A) = \{f(x), x \in A\}$
+- $f^{-1}(B) = \{x, f(x) \in B\}$ (peut être vide)
+
 **image directe et réciproque, injectivité, surjectivité, composée** (11)
 
 - $f(A) = \{y \in F, \exists x \in A, y = f(x)\}$
@@ -21,13 +28,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - surjective : $\forall y, \exists x, y = f(x)$
 - $g \circ f$ injective si $f$, $g$ injectives
 - surjective si $f$, $g$ surjectives
-
-**injectivité, surjectivité, image directe et réciproque** (10)
-
-- injective : $f(x) = f(y) \Rightarrow x = y$ (contre-exemple $f(1) = f(2)$)
-- surjective : $\forall y, \exists x, f(x) = y$
-- $f(A) = \{f(x), x \in A\}$
-- $f^{-1}(B) = \{x, f(x) \in B\}$ (peut être vide)
 
 **image directe, image réciproque (lecture graphique)** (9)
 
@@ -45,6 +45,15 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\neg(P \vee Q) \iff \neg P \wedge \neg Q$
 - « aucun » = $\forall, \neg$
 
+**ensembles (appartenance, inclusion, union, intersection, produit, complémentaire)** (8)
+
+- $x \in A$
+- $A \subset B$
+- $A \cup B$, $A \cap B$
+- $A \times B = \{(a, b), a \in A, b \in B\}$
+- complémentaire $\bar B = E \setminus B$
+- $B = [\![0, 7]\!]$
+
 **propriétés d'une relation, négation, contraposée** (7)
 
 - réflexive $\forall x, x\mathcal Rx$
@@ -54,15 +63,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - contraposée de $P \Rightarrow Q$ : $\neg Q \Rightarrow \neg P$
 - $\neg(A \wedge B) = \neg A \vee \neg B$
 - ordre = réflexive + antisymétrique + transitive
-
-**ensembles (appartenance, inclusion, union, intersection, produit, complémentaire)** (7)
-
-- $x \in A$
-- $A \subset B$
-- $A \cup B$, $A \cap B$
-- $A \times B = \{(a, b), a \in A, b \in B\}$
-- complémentaire $\bar B = E \setminus B$
-- $B = [\![0, 7]\!]$
 
 **injectivité / surjectivité, restriction** (6)
 
@@ -223,7 +223,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - indépendants $\iff P(A \cap B) = P(A)P(B)$
 - partition : deux à deux disjoints, union $= \Omega$ (non vides)
 
-**coefficients binomiaux (symétrie)** (7)
+**coefficients binomiaux (symétrie)** (8)
 
 - $\binom np = \frac{n!}{p!(n-p)!}$
 - $\binom np = \binom n{n-p}$
@@ -252,19 +252,19 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\binom{8}{3}\binom{8}{2}$ : 3 cartes d'une couleur et 2 d'une autre
 - $\binom{7}{1}\binom{24}{3}$ : exactement 1 parmi 7, le reste parmi 24 (catégories disjointes)
 
-**cardinal d'une union, partition** (4)
-
-- $F \cap G = \emptyset \Rightarrow \mathrm{Card}(F \cup G) = \mathrm{Card}F + \mathrm{Card}G$
-- $A = (A \setminus B) \sqcup (A \cap B)$
-- $\mathrm{Card}(A \cup B) = \mathrm{Card}A + \mathrm{Card}B - \mathrm{Card}(A \cap B)$
-
-**dénombrement de mains de cartes** (3)
+**dénombrement de mains de cartes** (4)
 
 - $|\Omega| = \binom{32}5$
 - « au moins un » : complémentaire $P(A) = 1 - P(\bar A)$
 - $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
 - principe multiplicatif (choisir chaque catégorie séparément)
 - équiprobabilité $P = \frac{|A|}{|\Omega|}$
+
+**cardinal d'une union, partition** (4)
+
+- $F \cap G = \emptyset \Rightarrow \mathrm{Card}(F \cup G) = \mathrm{Card}F + \mathrm{Card}G$
+- $A = (A \setminus B) \sqcup (A \cap B)$
+- $\mathrm{Card}(A \cup B) = \mathrm{Card}A + \mathrm{Card}B - \mathrm{Card}(A \cap B)$
 
 **tirages simultanés, combinaisons** (3)
 
@@ -404,19 +404,19 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - « exactement un 6 » : $2 \times \frac16 \times \frac56 = \frac{10}{36}$
 - « au moins un 6 » $= 1 - P(\text{aucun}) = 1 - \left(\frac56\right)^2$
 
+**loi d'une variable aléatoire finie, espérance, variance** (2)
+
+- $\sum_k P(X = k) = 1$
+- $E(X) = \sum_k kP(X = k)$
+- $V(X) = E\big((X - E(X))^2\big) = \sum_k (k - E(X))^2P(X = k)$
+- König-Huygens : $V(X) = E(X^2) - E(X)^2$, $E(X^2) = \sum_k k^2P(X = k)$
+
 **binôme de Newton, cardinal de $\mathcal{P}(E)$** (1)
 
 - $(a+b)^n = \sum_{k=0}^n \binom nk a^kb^{n-k}$
 - nombre de parties à $k$ éléments : $\binom nk$
 - union disjointe : les cardinaux s'ajoutent
 - $\sum_{k=0}^n \binom nk = (1+1)^n = 2^n = \mathrm{Card}\,\mathcal{P}(E)$
-
-**loi d'une variable aléatoire finie, espérance, variance** (1)
-
-- $\sum_k P(X = k) = 1$
-- $E(X) = \sum_k kP(X = k)$
-- $V(X) = E\big((X - E(X))^2\big) = \sum_k (k - E(X))^2P(X = k)$
-- König-Huygens : $V(X) = E(X^2) - E(X)^2$, $E(X^2) = \sum_k k^2P(X = k)$
 
 ## APIS (intégrales)
 
@@ -611,18 +611,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - monotone bornée $\Rightarrow$ convergente
 - $\ell = f(\ell)$
 
+**suites extraites** (6)
+
+- toute suite extraite d'une suite convergente converge vers la même limite
+- $(u_{6n})$ extraite de $(u_{2n})$ et de $(u_{3n})$
+- $(u_{2n})$ et $(u_{2n+1})$ convergent vers $\ell$ $\Rightarrow (u_n) \to \ell$
+
 **propriétés de suites avec quantificateurs** (5)
 
 - bornée : $\exists m, M, \forall n, m \leqslant u_n \leqslant M$
 - non bornée : $\forall m, M, \exists n, u_n < m$ ou $u_n > M$
 - croissante : $\forall n, u_{n+1} \geqslant u_n$
 - monotone : croissante ou décroissante
-
-**suites extraites** (5)
-
-- toute suite extraite d'une suite convergente converge vers la même limite
-- $(u_{6n})$ extraite de $(u_{2n})$ et de $(u_{3n})$
-- $(u_{2n})$ et $(u_{2n+1})$ convergent vers $\ell$ $\Rightarrow (u_n) \to \ell$
 
 **suite récurrente $u_{n+1} = f(u_n)$, intervalles stables** (5)
 
@@ -653,6 +653,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $|q| < 1 \Rightarrow q^n \to 0$
 - $\frac1n \to 0$
 
+**suites adjacentes, suites extraites $(u_{2n})$, $(u_{2n+1})$** (4)
+
+- adjacentes : une croissante, l'autre décroissante, différence $\to 0$
+- $u_{2n+2} - u_{2n}$ = deux termes de la somme
+- $\frac1{a^2} - \frac1{b^2} = \frac{(b-a)(b+a)}{a^2b^2}$
+- $(u_{2n})$ et $(u_{2n+1})$ même limite $\Rightarrow (u_n)$ converge
+
 **démonstration de cours (convergente implique bornée)** (4)
 
 - $u_n \to \ell$ : $\forall \varepsilon > 0, \exists N, \forall n \geqslant N, |u_n - \ell| < \varepsilon$
@@ -660,6 +667,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - inégalité triangulaire $|u_n| \leqslant |u_n - \ell| + |\ell|$
 - $M = \max(|u_0|, \dots, |u_{N-1}|, 1 + |\ell|)$
 - contre-exemple $(-1)^n$
+
+**suites extraites et divergence** (4)
+
+- $\sin(k\pi) = 0$
+- $\sin\left(2k\pi + \frac\pi3\right) = \frac{\sqrt3}2$
+- si $u_n \to \ell$, toute suite extraite tend vers $\ell$
+- deux suites extraites de limites différentes $\Rightarrow (u_n)$ diverge
 
 **limite de $q^n$** (4)
 
@@ -689,13 +703,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $(u_{2n})$ et $(u_{2n+1})$ même limite $\Rightarrow (u_n)$ converge
 - $(u_{3n})$, $(u_{3n+1})$ ne couvrent pas $(u_{3n+2})$
 
-**suites adjacentes, suites extraites $(u_{2n})$, $(u_{2n+1})$** (3)
-
-- adjacentes : une croissante, l'autre décroissante, différence $\to 0$
-- $u_{2n+2} - u_{2n}$ = deux termes de la somme
-- $\frac1{a^2} - \frac1{b^2} = \frac{(b-a)(b+a)}{a^2b^2}$
-- $(u_{2n})$ et $(u_{2n+1})$ même limite $\Rightarrow (u_n)$ converge
-
 **monotonie et encadrement d'une somme** (3)
 
 - $u_{n+1} - u_n$ : écrire les deux sommes et simplifier les termes communs ($\frac1{2n} + \frac1{2n+1} - \frac1n$)
@@ -703,13 +710,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - somme de $n$ termes
 - monotone bornée $\Rightarrow$ convergente
 - passage à la limite dans les inégalités larges
-
-**suites extraites et divergence** (3)
-
-- $\sin(k\pi) = 0$
-- $\sin\left(2k\pi + \frac\pi3\right) = \frac{\sqrt3}2$
-- si $u_n \to \ell$, toute suite extraite tend vers $\ell$
-- deux suites extraites de limites différentes $\Rightarrow (u_n)$ diverge
 
 **monotonie d'une suite, somme géométrique** (3)
 
@@ -808,6 +808,11 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - gendarmes : $a_n \leqslant u_n \leqslant b_n$, $a_n, b_n \to \ell \Rightarrow u_n \to \ell$
 - $\frac{n^2}{n^2 + n} \to 1$
 
+**sommes de termes consécutifs (suites arithmétiques et géométriques)** (2)
+
+- arithmétique : $\sum_{k=p}^n u_k = (n - p + 1)\frac{u_p + u_n}2$ (nombre de termes × moyenne des extrêmes)
+- géométrique, $q \neq 1$ : $\sum_{k=p}^n u_k = u_p\frac{1 - q^{n-p+1}}{1 - q}$ (premier terme × $\frac{1 - q^{\text{nb de termes}}}{1 - q}$)
+
 **suite récurrente, calcul de termes** (1)
 
 - $u_{n+1} = f(u_n, n)$ : calculer $u_1$ puis $u_2$
@@ -856,20 +861,22 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 - en $\pm\infty$ : quotient des termes de plus haut degré, $\frac{x - 1}{x + 1} \sim \frac xx = 1$
 
-**sommes de termes consécutifs (suites arithmétiques et géométriques)** (1)
-
-- arithmétique : $\sum_{k=p}^n u_k = (n - p + 1)\frac{u_p + u_n}2$ (nombre de termes × moyenne des extrêmes)
-- géométrique, $q \neq 1$ : $\sum_{k=p}^n u_k = u_p\frac{1 - q^{n-p+1}}{1 - q}$ (premier terme × $\frac{1 - q^{\text{nb de termes}}}{1 - q}$)
-
 ## APIS (EDO)
 
-**EDO linéaires 1er ordre (variation de la constante) et 2nd ordre** (12)
+**EDO linéaires 1er ordre (variation de la constante) et 2nd ordre** (13)
 
 - $y' + a(x)y = 0 \Rightarrow y = ke^{-A(x)}$, $A' = a$
 - solution générale = homogène + particulière
 - variation de la constante $y_p = k(x)y_0(x)$
 - $ay'' + by' + cy = 0$ : $ar^2 + br + c = 0$, racine double $r$ : $y = (k_1x + k_2)e^{rx}$
 - second membre $P(x)e^{rx}$ : $y_p = Q(x)e^{rx}$
+
+**démonstration de cours (solutions de $a(t)y' + b(t)y = 0$)** (4)
+
+- $S_0 = \{t \mapsto ke^{-F(t)}, k \in \mathbb{R}\}$ avec $F$ primitive de $\frac ba$, $F' = \frac ba$
+- $z = y_0e^F \Rightarrow z' = (y_0' + \frac bay_0)e^F = 0 \Rightarrow z$ constante (inclusion $\subset$)
+- réciproque : dériver $ke^{-F}$ et reporter (inclusion $\supset$)
+- $\int \frac{u'}u = \ln|u|$, $e^{-\alpha\ln u} = u^{-\alpha}$
 
 **EDO linéaire 1er ordre à coefficient variable, solution particulière constante** (3)
 
@@ -886,12 +893,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\int \frac1{2\sqrt t} = \sqrt t$
 - second membre $\cos + \sin$ : $y_p = a\cos t + b\sin t$, identifier les coefficients de $\cos$ et $\sin$
 
-**démonstration de cours (solutions de $a(t)y' + b(t)y = 0$)** (2)
+**démonstration de cours (structure des solutions de $a(t)y' + b(t)y = c(t)$)** (2)
 
-- $S_0 = \{t \mapsto ke^{-F(t)}, k \in \mathbb{R}\}$ avec $F$ primitive de $\frac ba$, $F' = \frac ba$
-- $z = y_0e^F \Rightarrow z' = (y_0' + \frac bay_0)e^F = 0 \Rightarrow z$ constante (inclusion $\subset$)
-- réciproque : dériver $ke^{-F}$ et reporter (inclusion $\supset$)
-- $\int \frac{u'}u = \ln|u|$, $e^{-\alpha\ln u} = u^{-\alpha}$
+- $S_0 = \{t \mapsto ke^{-F(t)}\}$, $F' = \frac ba$
+- $S = \{y_p + y_0,\ y_0 \in S_0\}$
+- linéarité : $a(y_p + y_0)' + b(y_p + y_0) = c + 0$ (inclusion $\supset$)
+- si $y \in S$ alors $y - y_p \in S_0$ (inclusion $\subset$)
+- retrouver l'équation : $y_0 = ke^{-F}$ donne $\frac ba = F'$, puis $c = ay_p' + by_p$
+
+**EDO 2nd ordre homogène (équation caractéristique, cours)** (2)
+
+- $ay'' + by' + cy = 0$ : équation caractéristique $ar^2 + br + c = 0$
+- deux racines réelles $r_1 \neq r_2$ : $y = k_1e^{r_1x} + k_2e^{r_2x}$
+- racine double $r$ : $y = (k_1x + k_2)e^{rx}$
+- racines complexes $\alpha \pm i\beta$ : $y = e^{\alpha x}(k_1\cos(\beta x) + k_2\sin(\beta x))$
 
 **EDO 2nd ordre à coefficients constants avec second membre** (2)
 
@@ -901,21 +916,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - second membre polynôme : $y_p$ polynôme de même degré
 - second membre $P(x)e^{mx}$ : $y_p = Q(x)e^{mx}$ avec $\deg Q = \deg P$ (+1 si $m$ racine simple, +2 si racine double)
 - solution générale = homogène + particulière
-
-**démonstration de cours (structure des solutions de $a(t)y' + b(t)y = c(t)$)** (1)
-
-- $S_0 = \{t \mapsto ke^{-F(t)}\}$, $F' = \frac ba$
-- $S = \{y_p + y_0,\ y_0 \in S_0\}$
-- linéarité : $a(y_p + y_0)' + b(y_p + y_0) = c + 0$ (inclusion $\supset$)
-- si $y \in S$ alors $y - y_p \in S_0$ (inclusion $\subset$)
-- retrouver l'équation : $y_0 = ke^{-F}$ donne $\frac ba = F'$, puis $c = ay_p' + by_p$
-
-**EDO 2nd ordre homogène (équation caractéristique, cours)** (1)
-
-- $ay'' + by' + cy = 0$ : équation caractéristique $ar^2 + br + c = 0$
-- deux racines réelles $r_1 \neq r_2$ : $y = k_1e^{r_1x} + k_2e^{r_2x}$
-- racine double $r$ : $y = (k_1x + k_2)e^{rx}$
-- racines complexes $\alpha \pm i\beta$ : $y = e^{\alpha x}(k_1\cos(\beta x) + k_2\sin(\beta x))$
 
 **EDO linéaires 1er ordre (homogène, solution évidente, variation de la constante, condition initiale)** (1)
 
@@ -936,7 +936,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## APEF (fonctions)
 
-**développements limités usuels et composés** (24)
+**développements limités usuels et composés** (27)
 
 - $e^u = \sum \frac{u^k}{k!}$
 - $\cos u = 1 - \frac{u^2}2 + \frac{u^4}{24}$
@@ -948,7 +948,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - composition : poser $u$, calculer $u^2$ à l'ordre voulu
 - $1 + \cos 2x = 2\cos^2 x$
 
-**développements limités, limite par équivalents** (21)
+**développements limités, limite par équivalents** (22)
 
 - en 0 : $e^x = 1 + x + \frac{x^2}2 + \frac{x^3}6 + o(x^3)$
 - $\ln(1+x) = x - \frac{x^2}2 + o(x^2)$
@@ -959,7 +959,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $a^b = e^{b\ln a}$
 - $f \sim g \Rightarrow$ même limite
 
-**petit o, équivalents et développements limités (manipulation)** (13)
+**petit o, équivalents et développements limités (manipulation)** (15)
 
 - $f = o(x^n) \iff f(x) = x^n\varepsilon(x)$, $\varepsilon \to 0$
 - $o(x^3) \Rightarrow o(x^2)$ (pas l'inverse)
@@ -1126,7 +1126,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## APEF (polynômes)
 
-**divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$** (18)
+**divisibilité de polynômes, multiplicité, factorisation dans $\mathbb{R}[X]$ et $\mathbb{C}[X]$** (23)
 
 - $P(a) = 0 \iff X - a \mid P$
 - racine d'ordre $\geqslant 2$ $\iff P(a) = P'(a) = 0$
@@ -1135,7 +1135,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $X^2 + 1 = (X - i)(X + i)$
 - $\Delta < 0 \Rightarrow$ irréductible dans $\mathbb{R}[X]$
 
-**degré, division euclidienne de polynômes, racine** (11)
+**degré, division euclidienne de polynômes, racine** (14)
 
 - $\deg(A+B) \leqslant \max(\deg A, \deg B)$
 - $\deg(AB) = \deg A + \deg B$
@@ -1153,20 +1153,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\alpha$ racine d'ordre $m$ $\iff P(\alpha) = \dots = P^{(m-1)}(\alpha) = 0$, $P^{(m)}(\alpha) \neq 0$
 - $(X^n)' = nX^{n-1}$
 
-**divisibilité et reste de division euclidienne de polynômes** (5)
-
-- $A = BQ + R$, $\deg R < \deg B$
-- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
-- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
-- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
-
-**décomposition en éléments simples** (5)
+**décomposition en éléments simples** (6)
 
 - si $\deg N \geqslant \deg D$ : division euclidienne, partie entière
 - pôle simple $a$ : $\frac{c}{X - a}$ avec $c = \left[(X - a)F\right](a)$
 - pôle double : $\frac{c_1}{X-a} + \frac{c_2}{(X-a)^2}$
 - facteur irréductible $X^2 + 1$ : $\frac{bX + c}{X^2 + 1}$
 - identifier en évaluant (ex. $X = 0$) ou par limite de $xF(x)$ en $+\infty$
+
+**divisibilité et reste de division euclidienne de polynômes** (5)
+
+- $A = BQ + R$, $\deg R < \deg B$
+- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
+- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
+- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
 
 **divisibilité de polynômes par les racines** (4)
 
@@ -1202,7 +1202,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## EV
 
-**sous-espaces, intersection, somme directe** (25)
+**sous-espaces, intersection, somme directe** (29)
 
 - $\mathrm{Vect}(u)$ : droite si $u \neq 0$
 - plan $ax + by + cz = 0$ : exprimer $z$, $G = \mathrm{Vect}(u, v)$
@@ -1210,7 +1210,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - Grassmann $\dim(F + G) = \dim F + \dim G - \dim(F \cap G)$
 - $F \oplus G = E \iff F \cap G = \{0\}$ et $\dim F + \dim G = \dim E$
 
-**familles libres, génératrices, bases** (21)
+**familles libres, génératrices, bases** (24)
 
 - libre : $\sum \lambda_ie_i = 0 \Rightarrow \forall i, \lambda_i = 0$
 - génératrice : tout vecteur est combinaison linéaire
@@ -1219,21 +1219,21 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - en dimension $n$ : plus de $n$ vecteurs $\Rightarrow$ liée, moins de $n$ $\Rightarrow$ non génératrice, $n$ vecteurs libres $\Rightarrow$ base
 - degrés échelonnés $\Rightarrow$ libre
 
-**reconnaître un sous-espace vectoriel** (20)
-
-- sev : contient 0, stable par addition et multiplication par un scalaire
-- contre-exemple $\lambda u \notin E$
-- équation non linéaire ($z^2$) $\Rightarrow$ en général pas un sev
-- $\mathrm{Vect}(\dots)$ est toujours un sev
-
-**familles libres, génératrices, bases ; coordonnées** (19)
+**familles libres, génératrices, bases ; coordonnées** (22)
 
 - libre : $\sum \lambda_ie_i = 0 \Rightarrow \lambda_i = 0$
 - en dimension $n$, une famille libre de $n$ vecteurs est une base
 - plus de $n$ vecteurs $\Rightarrow$ liée
 - coordonnées : résoudre $P = \alpha Q_1 + \beta Q_2 + \gamma Q_3$ en identifiant les coefficients
 
-**sous-espaces engendrés, inclusion, dimension** (7)
+**reconnaître un sous-espace vectoriel** (21)
+
+- sev : contient 0, stable par addition et multiplication par un scalaire
+- contre-exemple $\lambda u \notin E$
+- équation non linéaire ($z^2$) $\Rightarrow$ en général pas un sev
+- $\mathrm{Vect}(\dots)$ est toujours un sev
+
+**sous-espaces engendrés, inclusion, dimension** (8)
 
 - $P \in \mathrm{Vect}(u_1, \dots) \iff P$ combinaison linéaire des $u_i$
 - $F \subset G$ si les générateurs de $F$ sont dans $G$
@@ -1255,7 +1255,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $f = \frac{f(x) + f(-x)}2 + \frac{f(x) - f(-x)}2$
 - paire et impaire $\Rightarrow f = 0$
 
-**écrire un sous-espace sous forme de Vect (système linéaire)** (2)
+**écrire un sous-espace sous forme de Vect (système linéaire)** (3)
 
 - résoudre le système par pivot de Gauss
 - exprimer les inconnues principales en fonction des inconnues libres
@@ -1272,7 +1272,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## ALM
 
-**noyau, image, rang d'une application linéaire** (29)
+**noyau, image, rang d'une application linéaire** (39)
 
 - linéaire : $f(\lambda u + v) = \lambda f(u) + f(v)$
 - $\mathrm{Ker} f$ : résoudre $f(x) = 0$
@@ -1280,21 +1280,21 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\mathrm{rg} f = \dim F \Rightarrow \mathrm{Im} f = F$ (surjective)
 - $\mathrm{Im} f = \mathrm{Vect}(f(e_1), \dots, f(e_n))$
 
-**projecteur, noyau et image** (16)
+**projecteur, noyau et image** (17)
 
 - projecteur $\iff f \circ f = f$
 - $E = \mathrm{Ker} f \oplus \mathrm{Im} f$
 - $f = id$ sur $\mathrm{Im} f$, $0$ sur $\mathrm{Ker} f$
 - matrice dans une base adaptée $\mathrm{diag}(0, \dots, 0, 1, \dots, 1)$
 
-**matrice d'une application linéaire** (13)
+**matrice d'une application linéaire** (15)
 
 - colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée
 - base canonique de $\mathbb{R}_2[X]$ : $(1, X, X^2)$
 - de $\mathcal{M}_2(\mathbb{R})$ : $E_{11}, E_{12}, E_{21}, E_{22}$
 - taille (dim arrivée) $\times$ (dim départ)
 
-**inverse d'une matrice** (12)
+**inverse d'une matrice** (13)
 
 - $A$ inversible $\iff \det A \neq 0$
 - pivot de Gauss sur $(A \mid I_n) \to (I_n \mid A^{-1})$
@@ -1302,7 +1302,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - vérifier $AA^{-1} = I_n$
 - $2 \times 2$ : $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1} = \frac1{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$
 
-**changement de base, formule $Y = AX$** (10)
+**changement de base, formule $Y = AX$** (11)
 
 - $X = PX'$, $P$ = matrice de passage (colonnes = nouveaux vecteurs dans l'ancienne base)
 - $X' = P^{-1}X$
@@ -1310,11 +1310,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - coordonnées de l'image $Y = AX$
 - inverse $2 \times 2$ : $\frac1{ad - bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$
 
-**application linéaire (caractérisation)** (8)
+**application linéaire (caractérisation)** (10)
 
 - $f$ linéaire $\Rightarrow f(0) = 0$ et $f(2x) = 2f(x)$ (conditions nécessaires)
 - réciproquement vérifier $f(\lambda x + y) = \lambda f(x) + f(y)$
 - les applications linéaires de $\mathbb{R}$ dans $\mathbb{R}$ sont $x \mapsto bx$
+
+**noyau, image, injectivité, surjectivité (cours)** (9)
+
+- sous-espace : contient 0 et stable par $\alpha u + v$
+- $f(\alpha u + v) = \alpha f(u) + f(v)$
+- injective $\iff \mathrm{Ker} f = \{0\}$
+- surjective $\iff \mathrm{Im} f = F$
 
 **noyau, image, rang ; matrice d'une application linéaire** (8)
 
@@ -1324,28 +1331,7 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\dim\mathrm{Im} = \dim F \Rightarrow$ surjective
 - colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée
 
-**changement de base, diagonalisation, puissance d'une matrice** (6)
-
-- $\mathrm{Mat}_{\mathcal{B}'}(f) = P^{-1}AP$ avec $P = \mathrm{Mat}_{\mathcal{B}', \mathcal{B}}(id)$ (colonnes = vecteurs de $\mathcal{B}'$ dans $\mathcal{B}$)
-- $f(u_i) = \lambda_iu_i \Rightarrow D = \mathrm{diag}(\lambda_i)$
-- $D^n = \mathrm{diag}(\lambda_i^n)$
-- $A = PDP^{-1} \Rightarrow A^n = PD^nP^{-1}$
-
-**noyau, image, injectivité, surjectivité (cours)** (6)
-
-- sous-espace : contient 0 et stable par $\alpha u + v$
-- $f(\alpha u + v) = \alpha f(u) + f(v)$
-- injective $\iff \mathrm{Ker} f = \{0\}$
-- surjective $\iff \mathrm{Im} f = F$
-
-**inverse d'une matrice, application linéaire associée** (6)
-
-- pivot de Gauss sur $AU = V$
-- $A$ inversible $\iff f$ bijective, $\mathrm{Mat}(f^{-1}) = A^{-1}$
-- colonnes de $A$ = images des vecteurs de la base de départ
-- $g(aX^2 + bX + c) = ag(X^2) + bg(X) + cg(1)$
-
-**noyau et image d'un endomorphisme (inclusions)** (5)
+**noyau et image d'un endomorphisme (inclusions)** (6)
 
 - $\mathrm{Ker} f = \{x, f(x) = 0\}$
 - $\mathrm{Im} f = \{f(x)\}$
@@ -1354,18 +1340,32 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $f^2(x) = f(f(x)) \in \mathrm{Im} f$
 - double implication par éléments
 
-**injectivité et noyau** (5)
+**changement de base, diagonalisation, puissance d'une matrice** (6)
 
-- $f$ linéaire : $f(0) = 0$, $f(x) - f(y) = f(x - y)$
-- $f$ injective $\iff \mathrm{Ker} f = \{0\}$
+- $\mathrm{Mat}_{\mathcal{B}'}(f) = P^{-1}AP$ avec $P = \mathrm{Mat}_{\mathcal{B}', \mathcal{B}}(id)$ (colonnes = vecteurs de $\mathcal{B}'$ dans $\mathcal{B}$)
+- $f(u_i) = \lambda_iu_i \Rightarrow D = \mathrm{diag}(\lambda_i)$
+- $D^n = \mathrm{diag}(\lambda_i^n)$
+- $A = PDP^{-1} \Rightarrow A^n = PD^nP^{-1}$
 
-**opérations matricielles, produit, inverse** (5)
+**inverse d'une matrice, application linéaire associée** (6)
+
+- pivot de Gauss sur $AU = V$
+- $A$ inversible $\iff f$ bijective, $\mathrm{Mat}(f^{-1}) = A^{-1}$
+- colonnes de $A$ = images des vecteurs de la base de départ
+- $g(aX^2 + bX + c) = ag(X^2) + bg(X) + cg(1)$
+
+**opérations matricielles, produit, inverse** (6)
 
 - $(\lambda A + \mu B)_{ij} = \lambda a_{ij} + \mu b_{ij}$
 - produit $AB$ défini si (colonnes de $A$) = (lignes de $B$), taille $n \times p$ par $p \times q$ donne $n \times q$
 - $(AB)_{ij} = \sum_k a_{ik}b_{kj}$
 - inverse par pivot de Gauss
 - vérification $AA^{-1} = I$
+
+**injectivité et noyau** (5)
+
+- $f$ linéaire : $f(0) = 0$, $f(x) - f(y) = f(x - y)$
+- $f$ injective $\iff \mathrm{Ker} f = \{0\}$
 
 **application linéaire définie par l'image d'une base** (4)
 
@@ -1376,18 +1376,18 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - si les vecteurs donnés sont liés, les images doivent vérifier la même relation
 - s'ils n'engendrent pas l'espace, $f$ n'est pas déterminée
 
-**symétrie par rapport à un sous-espace** (3)
-
-- $E = F \oplus G$ : $u = v + w$ unique
-- projection sur $F$ : $u \mapsto v$
-- symétrie par rapport à $F$ parallèlement à $G$ : $u \mapsto v - w$, $s \circ s = id$
-
-**puissance d'une matrice (binôme, nilpotente)** (2)
+**puissance d'une matrice (binôme, nilpotente)** (3)
 
 - $J$ nilpotente : $J^3 = 0$
 - si $AB = BA$ : $(A + B)^n = \sum_k \binom nk A^kB^{n-k}$
 - $I$ commute avec tout
 - $(I + N)^n = I + nN + \binom n2 N^2$ si $N^3 = 0$
+
+**symétrie par rapport à un sous-espace** (3)
+
+- $E = F \oplus G$ : $u = v + w$ unique
+- projection sur $F$ : $u \mapsto v$
+- symétrie par rapport à $F$ parallèlement à $G$ : $u \mapsto v - w$, $s \circ s = id$
 
 **calcul matriciel, transposée** (2)
 
@@ -1435,6 +1435,12 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - réduire chaque nombre modulo $n$
 - reste dans $[\![0, n-1]\!]$
 
+**division euclidienne dans $\mathbb{Z}$** (8)
+
+- $\exists!\,(q, r)$, $a = bq + r$, $0 \leqslant r < |b|$
+- ajuster : $a = bq + r = b(q+1) + (r - b)$
+- pour $-a$ : $-a = b(-q) - r = b(-q-1) + (b - r)$
+
 **divisibilité et division euclidienne (vrai/faux)** (8)
 
 - $a \mid b \iff \exists k \in \mathbb{Z}, b = ka$
@@ -1451,12 +1457,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - Euclide : $a = bq + r$, remonter les divisions
 - Gauss : $a \mid bc$, $a \wedge b = 1 \Rightarrow a \mid c$
 - $a \mid c$, $b \mid c$, $a \wedge b = 1 \Rightarrow ab \mid c$
-
-**division euclidienne dans $\mathbb{Z}$** (7)
-
-- $\exists!\,(q, r)$, $a = bq + r$, $0 \leqslant r < |b|$
-- ajuster : $a = bq + r = b(q+1) + (r - b)$
-- pour $-a$ : $-a = b(-q) - r = b(-q-1) + (b - r)$
 
 **petit théorème de Fermat, reste d'une puissance** (6)
 
@@ -1493,6 +1493,13 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $d \mid a$ et $d \mid b \Rightarrow d \mid au + bv$
 - transitivité de $\mid$
 
+**congruences, Fermat, reste d'une puissance** (5)
+
+- reste de la division par 4 : $r \in \{0,1,2,3\}$
+- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
+- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
+- $a^{q(p-1)+r} \equiv a^r\,[p]$
+
 **décomposition en facteurs premiers, diviseurs communs** (5)
 
 - $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
@@ -1500,19 +1507,17 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - diviseurs de $\prod p_i^{\gamma_i}$ : $\prod p_i^{\delta_i}$, $0 \leqslant \delta_i \leqslant \gamma_i$
 - nombre : $\prod(\gamma_i + 1)$
 
+**décomposition en facteurs premiers, PGCD** (4)
+
+- critères de divisibilité (2, 3 : somme des chiffres, 5, 11)
+- $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
+
 **congruences et Fermat, divisibilité** (4)
 
 - $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
 - Fermat : $p$ premier $\Rightarrow a^p \equiv a\,[p]$
 - $a^{mn+r} = (a^m)^n a^r$
 - $n \mid A \iff A \equiv 0\,[n]$
-
-**congruences, Fermat, reste d'une puissance** (4)
-
-- reste de la division par 4 : $r \in \{0,1,2,3\}$
-- $a \equiv b\,[n] \Rightarrow a^k \equiv b^k\,[n]$
-- Fermat : $p$ premier, $p \nmid a \Rightarrow a^{p-1} \equiv 1\,[p]$
-- $a^{q(p-1)+r} \equiv a^r\,[p]$
 
 **PGCD et Bézout (démonstration)** (3)
 
@@ -1526,11 +1531,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - Bézout : $a \wedge b = 1 \iff \exists (u,v) \in \mathbb{Z}^2, au + bv = 1$
 - $(au + bv)^2 = 1$
 - $a^2u^2 + b^2v^2 = (a+b)(au^2 + bv^2) - ab(u^2 + v^2)$
-
-**décomposition en facteurs premiers, PGCD** (3)
-
-- critères de divisibilité (2, 3 : somme des chiffres, 5, 11)
-- $a \wedge b = \prod p^{\min(\alpha_p, \beta_p)}$
 
 **décomposition en facteurs premiers, nombre de diviseurs, PGCD** (3)
 

@@ -1,7 +1,7 @@
 # Contrôle TD 4 (S2) — avril 2020 (sujet, FR)
 
 - Source : `raw/S2/TDs/2024/td4-2024-s2-maths-subject-fr.pdf` (2 pages)
-- Date réelle : avril 2020 (dossier promo 2024). Pas de corrigé dans les annales.
+- Date réelle : avril 2020 (dossier promo 2024). Pas de corrigé dans les annales. Corrigé rédigé : `td4-2024-s2-maths-correction-fr.md` (même dossier).
 - Le fichier regroupe 7 versions du même exercice (une par sujet distribué). Consigne commune : rédiger le raisonnement pas à pas en justifiant chaque étape ; une partie importante de la note porte sur la justification.
 
 ## Exercice (version 1)

@@ -1,7 +1,7 @@
 # Contrôle de cours EFDP (S2 PA) — lundi 19 février 2024 (sujet, FR)
 
 - Source : `raw/S2/TDs/2028/td3-2028-s2-maths-PA-subject-fr.pdf` (scan d'une copie annotée, 3 pages)
-- Date réelle : 19 février 2024 (S2 PA, dossier promo 2028). Les réponses manuscrites de la copie ne sont pas reprises.
+- Date réelle : 19 février 2024 (S2 PA, dossier promo 2028). Les réponses manuscrites de la copie ne sont pas reprises. Corrigé rédigé : `td3-2028-s2-maths-PA-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 30, ramené à 20.
 
 ## Cours 1 : ensembles (4 points)

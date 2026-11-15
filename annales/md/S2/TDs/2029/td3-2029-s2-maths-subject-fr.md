@@ -1,7 +1,7 @@
 # Contrôle de cours APEF (S2 B3) — lundi 10 février 2025 (sujet, FR)
 
 - Source : `raw/S2/TDs/2029/td3-2029-s2-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 10 février 2025 (dossier promo 2029). Pas de corrigé dans les annales.
+- Date réelle : 10 février 2025 (dossier promo 2029). Pas de corrigé dans les annales. Corrigé rédigé : `td3-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20 points.
 
 ## 1. Polynômes (7 points)

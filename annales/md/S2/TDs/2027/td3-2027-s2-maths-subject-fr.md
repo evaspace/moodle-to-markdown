@@ -1,7 +1,7 @@
 # Contrôle de cours 1 (S2) — lundi 30 janvier 2023 (sujet, FR)
 
 - Source : `raw/S2/TDs/2027/td3-2027-s2-maths-subject-fr.pdf` (3 pages)
-- Date réelle : 30 janvier 2023 (dossier promo 2027). Pas de corrigé dans les annales.
+- Date réelle : 30 janvier 2023 (dossier promo 2027). Pas de corrigé dans les annales. Corrigé rédigé : `td3-2027-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Barème sur 20. Quatre questions de cours.
 
 ## Cours 1 : divisibilité et division euclidienne (3 points)

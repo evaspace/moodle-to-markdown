@@ -1,7 +1,7 @@
 # Contrôle TD 3 (S2) — lundi 29 janvier 2018 (sujet, FR)
 
 - Source : `raw/S2/TDs/2022/td3-2022-s2-maths-subject-fr.pdf` (scan, 2 pages)
-- Date réelle : 29 janvier 2018 (dossier promo 2022). Pas de corrigé dans les annales.
+- Date réelle : 29 janvier 2018 (dossier promo 2022). Pas de corrigé dans les annales. Corrigé rédigé : `td3-2022-s2-maths-correction-fr.md` (même dossier).
 - Durée : 45 minutes.
 
 ## Question de cours

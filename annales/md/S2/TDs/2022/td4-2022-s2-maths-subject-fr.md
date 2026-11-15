@@ -1,7 +1,7 @@
 # Contrôle TD 4 (S2) — lundi 9 avril 2018 (sujet, FR)
 
 - Source : `raw/S2/TDs/2022/td4-2022-s2-maths-subject-fr.pdf` (scan, 2 pages)
-- Date réelle : 9 avril 2018 (dossier promo 2022). Pas de corrigé dans les annales.
+- Date réelle : 9 avril 2018 (dossier promo 2022). Pas de corrigé dans les annales. Corrigé rédigé : `td4-2022-s2-maths-correction-fr.md` (même dossier).
 
 ## Question de cours
 Type : noyau, image, injectivité, surjectivité (cours) · ECUE : ALM · Niveau : maths-s2-alm/2

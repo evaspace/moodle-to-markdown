@@ -1,7 +1,7 @@
 # Contrôle de cours EV et ALM (S2 B4) — lundi 7 avril 2025 (sujet, FR)
 
 - Source : `raw/S2/TDs/2029/td4-2029-s2-maths-subject-fr.pdf` (4 pages)
-- Date réelle : 7 avril 2025 (dossier promo 2029). Pas de corrigé dans les annales.
+- Date réelle : 7 avril 2025 (dossier promo 2029). Pas de corrigé dans les annales. Corrigé rédigé : `td4-2029-s2-maths-correction-fr.md` (même dossier).
 - Durée : 1 heure. Deux parties distinctes (ECUE EV et ALM), 30 minutes chacune, chacune sur 20 points (deux notes).
 
 ## EV — Cours 1 : familles de vecteurs (12 points)
