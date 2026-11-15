@@ -1,17 +1,27 @@
 services:
   app:
     build: .
-    container_name: mathsdoomscroll_app
-    volumes:
-      - .:/app
-    ports:
-      - "${APP_BIND_IP:-127.0.0.1}:5080:5000"
-    restart: always
+    container_name: epitadoomscrolling_app
     environment:
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
+    - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
+    - MAIL_SERVER=${MAIL_SERVER:-ssl0.ovh.net}
+    - MAIL_PORT=${MAIL_PORT:-587}
+    - MAIL_USERNAME=${MAIL_USERNAME:-}
+    - MAIL_PASSWORD=${MAIL_PASSWORD:-}
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/healthz', timeout=3)"]
       interval: 30s
-      timeout: 5s
       retries: 3
       start_period: 10s
+      test:
+      - CMD
+      - python
+      - -c
+      - import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/healthz',
+        timeout=3)
+      timeout: 5s
+    ports:
+    - 127.0.0.1:5117:5000
+    - 172.17.0.1:5080:5000
+    restart: always
+    volumes:
+    - .:/app

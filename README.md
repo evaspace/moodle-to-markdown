@@ -8,7 +8,8 @@
 > **Universal Moodle scraper and batch course-to-markdown converter.**  
 > Transform entire Moodle platforms and course archives (PDFs, Word docs, PowerPoint slides, Excel sheets, quizzes, lecture notes) into clean, beautifully formatted **Markdown (`.md`)** files ready for **Obsidian**, **VS Code**, **Logseq**, **Notion**, or **Typora**.
 
-> For deploying the Maths Doomscrolling web app and its SQLite card database to a server, see [DEPLOYMENT.md](DEPLOYMENT.md).
+> For deploying the Epita Doomscrolling web app and its SQLite card database to a server, see [DEPLOYMENT.md](DEPLOYMENT.md).
+> Product goals for the revision app (levels, scroll, exams calibration): see [README_OBJECTIFS.md](README_OBJECTIFS.md).
 
 ---
 
@@ -362,3 +363,48 @@ COURSES_FILTER = []  # Laisser vide pour tout télécharger
    - Formules mathématiques rendues proprement via MathJax / KaTeX.
    - Textes de polycopiés et présentations entièrement indexables et consultables hors-ligne.
    - Vos annotations personnelles sous `## ✍️ Mes Notes Personnelles` restent préservées à chaque mise à jour.
+
+## Renommage et footer (2026-11-12)
+- Ancien nom: mathsdoomscrolling. Dossier `/opt/pierref/epitadoomscrolling`, container `epitadoomscrolling_app`, domaine `epitadoomscrolling.pierref.eu` (les anciens domaines redirigent en 301 via Caddy).
+- Le dossier `/opt/pierref/landing` est devenu `/opt/pierref/morgan` (service compose `landing` inchangé).
+- Footer identique à morgan.pierref.eu: `templates/footer.html` + `static/footer.css` (accueil et /cours). Blog: `blogbot/morgan_footer.py`, appelé par `blogbot/html_renderer.py`.
+- Notation: widget `pierref-review.js` avec `data-site="epitadoomscrolling"` sur la balise script (sinon le site est déduit du hostname). Avis dans `morgan/data/reviews.db`.
+- DNS OVH: l'enregistrement A `epitadoomscrolling` → 109.24.217.120 est nécessaire pour que Caddy obtienne le certificat.
+
+## Levels mode (`/niveaux`)
+
+Paper exercises graded from the simplest skill up to exam level + 20 %. Goals and rules: [README_OBJECTIFS.md](README_OBJECTIFS.md); work plan: [TODO_REFONTE.md](TODO_REFONTE.md).
+
+- Accounts: `/compte` (username + password, optional e-mail). Session key from `SECRET_KEY` env or the generated `.secret_key` file (git-ignored).
+- Rules (`levels.py`): one exercise per formula; a level is passed when **all** its exercises are green (last answer right). A failure turns the square red, drops one level and shows the formulas; greens are kept, reds come back (`pick_exo`: never done first, then red, never the one just failed). Opening another level (`?n=K`) is free practice: squares change, the level does not. The page shows the total progress bar (% of all the path's exercises green).
+- Selection (`/niveaux?ordre=semestre|matiere&sem=&mat=&ch=`): order of the lists (semester first or subject first), then semester / subject / chapter (= level path), each narrowed by the lists before it; empty = all (`levels.select_paths`, `levels.selector`). "Tout confondu" (`/niveaux/melange?<same filters>`) redirects to a random selected path at the user's current level there, with `mix=1` so "Exercice suivant" draws again.
+- Variants (`"variants"` on an exercise in `parcours/src/*.py`, e.g. the `VARIANTS` dict of `apis_integrales.py`): same formula, other numbers; each overrides `f`/`ans`/`a`/`b`/`calc`/`enonce`/`sol` and is checked by `build.py` like the exercise. The page shows the base, then each variant in turn, one more per previous attempt of that exercise (`levels.variant`); a variant never shows the past-exam `src`. The square stays the same.
+- Formulas per exercise (`FORMULES` dict at the end of each `parcours/src/*.py`, id → formulas separated by ` · `): what the help « Formules de la solution » shows first, one per line, above the level's course reminder. `build.py` fails if an exercise (or an `EXTRA_PARTS` part) has no entry or an entry names an unknown id; a `multi` exercise gets the union of its parts. Variants share the formulas of their exercise.
+- 404: `templates/404.html` (the cat explodes), JSON `{error}` under `/api/`.
+- `ode` exercises (`parcours/build.py`): general solution `f` with constants `C1`, `C2` plugged into `lhs` (`Y0`=y, `Y1`=y', `Y2`=y''); the number of constants must equal the order.
+- `value` exercises (`parcours/build.py`): `calc` must equal `ans`. Numbers are compared numerically; expressions with a variable (polynomial quotient, `series(f, x, 0, n+1).removeO()`, factorisation) are compared at sample points; sympy matrices (`Matrix([[..]])`, product, `.inv()`, `.rank()`) must be exactly equal. Any sympy name can be used in `calc` (`quo`, `rem`, `roots`, `limit`, `degree`, `LC`).
+- S2 paths (2026-11-15): `apef_polynomes.py` (10 levels, 43 exercises), `apef_fonctions.py` (11, 57), `ev.py` (11, 60), `alm.py` (12, 64), calibrated on the 2026 exams of promo 2030 (APEF, EV B3 and B4, ALM). No complex numbers (promo 2031). A new path needs: its file in `parcours/src/`, its name in `PATHS` (`parcours/build.py`), its id in `parcours/syllabus.json` and in `FICHE_SECTION` (`levels.py`, section title of `annales/FORMULES.md`).
+- Exercise text is inserted as raw HTML: never write `<` directly followed by a letter inside a formula (`$a<b$` opens a `<b>` tag); write `$a < b$`.
+- Past exams ↔ levels: S2 `Type :` lines of `annales/md/` now carry `· Niveau : maths-s2-…/k` (394 exercises tagged by type); `python3 annales/tools/index.py` checks every id and rebuilds `annales/INDEX.md`.
+- Content: one Python file per path in `parcours/src/`, verified with sympy and exported to JSON:
+  `python parcours/build.py` (needs `sympy`, not needed by the web app). Every answer (derivative, primitive, integral value) is checked; the build fails on any wrong answer.
+- Past exams: `annales/raw/` (PDF from the Epidocs Past-Exams GitHub repo), `annales/md/` (clean LaTeX transcription of all 146 maths S1/S2 files, 956 exercises, done 2026-11-15). Each exercise is a `## ` heading followed by `Type : <type> · ECUE : <ecue> · Niveau : <path id>/<n>` (Niveau only for S1 paths) and `Formules : ...` (every formula needed to solve it). In corrections that restate the statement, the solution lines start with `> `.
+- `annales/tools/formules.py`: exercise type -> formulas (single source). `python3 annales/tools/index.py` rebuilds `annales/INDEX.md` (exam -> real date -> exercises -> type -> ECUE -> level) and `annales/FORMULES.md` (formula sheet by ECUE); it fails if a type has no formulas, an exercise has no Type/Formules line or a level id does not exist. Run it after editing any file in `annales/md/`.
+- Formula sheet page: `/formules` (login required, linked from `/niveaux`), rendered from `annales/FORMULES.md` (`formula_sheet()` in `levels.py`, cached per file change), template `templates/formules.html`.
+- Other tools in `annales/tools/`: `bx.py` (text layer with exponent markers), `addf.py SCRATCH` (installs `SCRATCH/out/NNN.md` into `annales/md` and inserts the Formules lines), `en.py` (English-version note from the French file), `subj.py` (subject file derived from a correction with `> ` solutions), `list.txt` (line N = raw PDF N).
+- Points (`levels.score`): 100 × (1 + (level − 1)/4) × speed, speed = reference time / time spent, clamped to ×0.5..×2. Two helps can be opened before answering (`levels.HINTS`, buttons on the exercise page): « Fiche du chapitre » (every notion of the path + the path's section of `annales/FORMULES.md`, mapped by `FICHE_SECTION`) halves the points and adds 50 % of the time limit; « Formules de la solution » (the notions of the level) gives a third of the points and doubles the time limit. Both opened: a third, +150 % time. The browser calls `POST /api/niveaux/<subject>/hint {kind}`; the helps are stored in the session clock, so points and the timeout check are computed by the server. `exo_log.peek`: 0 none, 1 solution formulas, 2 chapter sheet only. A failure gives 0. Time is measured server-side (session clock set when the exercise page is served).
+- Reference time (`levels.timing`): average time of all users' successful attempts on the **level** (one average per level so it fills quickly), scaled by the exercise's authored length; used once a level has 5 successes, before that the authored `duree` is the limit and 60 % of it the reference. Time limit = 1.6 × reference. When the countdown ends the exercise counts as failed (`timeout` column of `exo_log`, trusted only if the server clock agrees); each timeout on that exercise since its last success adds +50 % to its limit, up to ×3 (`levels.time_bonus`). The reference used for points does not move, so a slower answer still earns fewer points.
+- Cat: `static/cat.js` (shared with the feed): fixed bottom-right, idle life every 4–9 s, claps on success, explodes in pixel blood on failure and respawns after 1.5 s.
+- Password reset: `/compte` → "Mot de passe oublié" sends a one-hour link (`/compte?reset=TOKEN`, only the sha256 is stored, one mail per account every 5 min, same answer whether the account exists). Mail from morgan@pierref.eu via OVH SMTP; `MAIL_SERVER`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD` in `.env` (mode 600, git-ignored), passed by `docker-compose.yml`. Links use `PUBLIC_URL`, never the Host header.
+- Syllabus registry: `parcours/syllabus.json` (subject → semester → ECUE → Moodle chapters → level paths → past exams → exam period). `parcours/build.py` fails if a Moodle chapter, a past exam file or a listed level path is missing, or if a built path is not in the registry.
+- Adaptive scroll (`scroll.py`, `/scroll/<path>`): course cards from the path's notions, QCM / true-false from its quiz. About 1 course card in 4, a course card is tested on the next 1–2 cards, a wrong answer brings the notion's course card back and the missed question returns after 4 cards. Scroll level: +1 right, −1 wrong, one more notion unlocked every 2 points (notions in syllabus order). Never changes exercise levels. Display: same markup and CSS as the main feed (`templates/scroll.html` reuses `#app-header`, `#feed` snap scrolling and `.card`/`.card-front`/`.choice-btn` from `static/style.css`; `static/scroll.js` builds the cards).
+- Tests: `.venv/bin/python -m unittest tests.test_levels tests.test_scroll -v`.
+- Deploy: the container bind-mounts the project; after a Python or template change run `docker restart epitadoomscrolling_app`.
+
+### Stats page (`/stats`)
+Per-account statistics computed from `exo_log` by `levels.compute_stats` (pure function, unit-tested):
+totals (done, passed, failed, success rate, time, points), a year heatmap (53 weeks, one square per day,
+hue from red = all failed to green = all passed, grey = no work), minutes per day over 30 days, streaks,
+best day, first-try rate, "revenges" (failed then passed), favourite hour, most failed exercise, timeouts,
+and a per-subject bar. Times are shown in Europe/Paris; one attempt counts at most 30 min (`MAX_SECS`).
+Linked from `/niveaux` and `/compte`.

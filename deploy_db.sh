@@ -2,8 +2,8 @@
 set -Eeuo pipefail
 
 REMOTE_HOST="${REMOTE_HOST:-hetzner}"
-REMOTE_APP_DIR="${REMOTE_APP_DIR:-/opt/pierref/mathsdoomscroll}"
-REMOTE_CONTAINER="${REMOTE_CONTAINER:-mathsdoomscroll_app}"
+REMOTE_APP_DIR="${REMOTE_APP_DIR:-/opt/pierref/epitadoomscrolling}"
+REMOTE_CONTAINER="${REMOTE_CONTAINER:-epitadoomscrolling_app}"
 DB_PATH="${DB_PATH:-cards.db}"
 STAGE_NAME="cards.db.upload.$$"
 

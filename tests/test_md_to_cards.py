@@ -824,7 +824,7 @@ class TestPassD(unittest.TestCase):
 
     def test_system_prompt_qcm_exists(self):
         """Le prompt système QCM doit guider vers des questions conceptuelles."""
-        self.assertIn("COMPRÉHENSION CONCRÈTE", mc.SYSTEM_PROMPT_QCM)
+        self.assertIn("NIVEAU FACILE", mc.SYSTEM_PROMPT_QCM)
         self.assertIn("[QCM]", mc.SYSTEM_PROMPT_QCM)
         self.assertIn("[TF]", mc.SYSTEM_PROMPT_QCM)
         self.assertIn("A: vrai", mc.SYSTEM_PROMPT_QCM)

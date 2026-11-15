@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Mes niveaux · Epita Doomscrolling</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/niveaux.css?v=8">
+</head>
+<body class="lv-page">
+<div class="lv-wrap">
+  <nav class="lv-bar"><a href="/">← Fil de révision</a><span><a href="/formules">Formules</a> · <a href="/stats">Mes stats</a> · <a class="lv-user" href="/compte">{{ username }} · {{ xp }} pts</a></span></nav>
+  <h1>Mes niveaux</h1>
+  <p>Exercices sur papier, un par formule. Un niveau est validé quand toutes ses formules sont en vert ; un raté passe en rouge, revient plus tard, et fait redescendre d'un niveau (les verts restent acquis).</p>
+
+
+  <form class="lv-pick" method="get" action="/niveaux">
+    <fieldset class="lv-order"><legend>Choisir d'abord</legend>
+      <label><input type="radio" name="ordre" value="semestre" {{ 'checked' if f.ordre == 'semestre' }}> le semestre</label>
+      <label><input type="radio" name="ordre" value="matiere" {{ 'checked' if f.ordre == 'matiere' }}> la matière</label>
+    </fieldset>
+    {% macro sem() %}<label>Semestre <select name="sem"><option value="">Tous</option>{% for x in sel.sems %}<option {{ 'selected' if f.sem == x }}>{{ x }}</option>{% endfor %}</select></label>{% endmacro %}
+    {% macro mat() %}<label>Matière <select name="mat"><option value="">Toutes</option>{% for x in sel.mats %}<option value="{{ x }}" {{ 'selected' if f.mat == x }}>{{ x|capitalize }}</option>{% endfor %}</select></label>{% endmacro %}
+    <div class="lv-selects">
+      {% if f.ordre == 'semestre' %}{{ sem() }}{{ mat() }}{% else %}{{ mat() }}{{ sem() }}{% endif %}
+      <label>Chapitre <select name="ch"><option value="">Tous</option>{% for c in sel.chs %}<option value="{{ c.id }}" {{ 'selected' if f.ch == c.id }}>{{ c.titre }}</option>{% endfor %}</select></label>
+    </div>
+    <div class="lv-row"><button class="lv-btn" type="submit">Afficher</button>
+      <a class="lv-btn primary" href="/niveaux/melange?{{ qs }}">Tout confondu : exercices mélangés</a></div>
+  </form>
+
+  {% for s in subjects %}
+  <section class="lv-subject">
+    <h2>{{ s.semestre }} {{ s.matiere|capitalize }} · {{ s.ecue }} · {{ s.titre }}</h2>
+    <div class="lv-meter" role="progressbar" aria-valuenow="{{ s.percent }}" aria-valuemin="0" aria-valuemax="100"
+         aria-label="Progression {{ s.titre }}"><span style="width: {{ s.percent }}%"></span></div>
+    <p><strong>{{ s.percent }} %</strong> · niveau {{ s.level }} sur {{ s.n }} ·
+      <span class="lv-squares" role="img" aria-label="{{ s.squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ s.squares|length }}">{% for q in s.squares %}<i class="{{ q.state }}" data-exo="{{ q.id }}"></i>{% endfor %}</span></p>
+    <div class="lv-row"><a class="lv-btn primary" href="/niveaux/{{ s.id }}">Continuer au niveau {{ s.level }}</a>
+      <a class="lv-btn" href="/scroll/{{ s.id }}">Scroll : le cours en cartes</a></div>
+    <ol class="lv-levels">
+      {% for l in s.levels %}
+      <li class="{{ 'done' if l.n <= s.best }} {{ 'current' if l.n == s.level }} {{ 'exam' if l.examen }}">
+        <a href="/niveaux/{{ s.id }}?n={{ l.n }}"><span>Niveau {{ l.n }} : {{ l.titre }}</span>
+          <span>{% if l.n == s.level %}en cours{% elif l.n <= s.best %}validé{% endif %}</span></a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
+</div>
+<script>document.querySelectorAll('.lv-pick input, .lv-pick select').forEach(e => e.addEventListener('change', () => e.form.submit()));</script>
+</body>
+</html>

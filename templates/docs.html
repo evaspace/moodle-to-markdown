@@ -1,12 +1,25 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZK655F8T1W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZK655F8T1W');
+</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index,follow">
-  <title>{{ title }} · Maths Doomscrolling</title>
+  <title>{{ title }} · Epita Doomscrolling</title>
+  {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+  <link rel="canonical" href="{{ canonical }}">
+  <script type="application/ld+json">{{ jsonld | safe }}</script>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/docs.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -27,5 +40,6 @@
     </article>
     <footer class="docs-footer"><a href="/">Retour au fil de révision →</a></footer>
   </main>
+  {% include 'footer.html' %}
 </body>
 </html>

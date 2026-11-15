@@ -1,0 +1,203 @@
+# EPITA Doomscrolling — Objectifs de l'application parfaite
+
+Document de référence produit. Toute décision de conception doit être vérifiée contre ce fichier.
+Établi le 2026-11-14 à partir d'un entretien de cadrage (20 questions). Mettre à jour à chaque décision nouvelle.
+
+## Besoin numéro 1
+
+Devenir **addict à la révision**, et que cette révision soit **utile** :
+
+- toujours au bon niveau : assez facile pour réussir, pas trop facile pour progresser ;
+- toujours une marche au-dessus qui pousse à continuer ;
+- un niveau final égal à l'examen **+ 20 %** environ, pour être sûr d'avoir 100 % à l'examen ;
+- **tout** ce qui tombe à l'examen doit être vu et testé ;
+- atteindre 100 % **le plus vite et le plus efficacement possible** : le moins d'exercices possible, mais la pente la plus douce possible.
+
+Problème réel à résoudre : bloquer sur un exercice trop dur et abandonner. L'application doit au contraire renvoyer vers le cours et un exercice un peu plus facile, puis remonter.
+
+## Utilisateurs
+
+- D'abord le créateur (révision personnelle), puis toute la promo, puis tous les élèves d'EPITA.
+- Chaque utilisateur a **sa propre progression**. Personne n'avance sur le niveau d'un autre.
+- Pas de compétition imposée : c'est une compétition avec soi-même. Classement entre amis : peut-être plus tard, pas prioritaire.
+
+## Matière pilote
+
+Les **maths** d'abord (ordre du syllabus et ordre des examens, voir `SYLLABUS_ORGANISATION.md`). Les autres matières suivent le même modèle ensuite, avec une progression propre à chaque matière.
+
+## Les trois modes
+
+### 1. Scroll (mode principal) — connaître le cours
+
+But : savoir les formules et notions. C'est l'étape 1, nécessaire mais pas suffisante (connaître la formule de l'IPP ne veut pas dire savoir faire une IPP).
+
+- **L'utilisateur choisit le sujet** ; le flux affiche son niveau sur ce sujet et des questions de ce niveau.
+- Ratio du flux : environ **1 carte de cours sur 4**, le reste en QCM et vrai/faux.
+- En cas d'erreur : **plus de cartes de cours** sur la notion ratée.
+- Une notion vue en carte de cours est testée par un QCM **1 ou 2 cartes après**.
+- Les questions ratées **reviennent** plus tard dans le flux.
+- Le niveau de scroll évolue réellement à chaque réponse (monte si réussite, descend si échec).
+- **Le scroll ne fait pas monter les niveaux d'exercices.** Connaître les formules et réussir des exercices sur papier sont deux choses différentes.
+
+**Carte de cours** : lisible en **10 secondes** (une notion, la formule, au besoin un mini exemple). Bouton **« Aller au cours »** qui ouvre la version longue.
+
+### 2. Niveaux (mode jeu vidéo) — savoir faire les exercices sur papier
+
+- Les exercices sont des **exercices types**, classés par difficulté réelle, de la base jusqu'au niveau examen + 20 %.
+- Une **unité de niveau = un type d'exercice** (ex. : formules de probabilités → probabilité d'un dé → arbre de probabilités → variance…).
+- Chaque niveau indique **quelles formules et quelles notions** il utilise, avec un accès direct aux formules (ne jamais devoir chercher la formule de l'IPP dans les fichiers).
+- **Validation** : l'utilisateur fait l'exercice sur papier, clique sur « Correction », puis déclare lui-même « validé » ou « pas validé ». Honnêteté envers soi-même.
+- **Montée** : ~~3 réussites d'affilée~~ remplacé le 2026-11-14 : le niveau est validé quand **tous ses exercices (toutes ses formules)** sont réussis (voir « Décisions du 2026-11-14 (nuit) »).
+- **Échec** : on **recule d'un niveau** et on reçoit la fiche de cours concernée. On peut reculer jusqu'au tout début (ex. : retour au dé à six faces).
+- **Prérequis entre matières** : si un échec vient d'une notion d'un autre module (ex. : une notion d'OBM pendant des IPP), l'application renvoie vers ce module.
+- Les exercices de TD existants sont réutilisés, mais **reclassés par vrai niveau** (dans un TD, réussir l'exercice 3 ne garantit pas l'exercice 2, et on ne sait pas quelle formule chacun utilise).
+
+Piste à étudier (optionnelle) : saisie de la réponse finale avec vérification **par équivalence symbolique** (sympy), pas par « pourcentage de ressemblance ». Exemple : une primitive de `exp(3x)` vaut `exp(3x)/3` ; `exp(3x)` doit être refusée même si le texte est proche. La validation manuelle reste le mode par défaut.
+
+### 3. Exercices corrigés
+
+- Exercices à faire sur papier avec correction détaillée.
+- Affichage **par niveau** ou **niveaux mélangés**, au choix de l'utilisateur.
+
+## Calibration sur les annales
+
+- Source : https://past-exams.epidocs.eu/
+- « Prêt à 100 % » = réussir **tous les exercices d'une annale complète** et **chaque type d'exercice** présent dans les annales.
+- Chaque type d'exercice d'annale devient le sommet d'une chaîne de niveaux ; les niveaux en dessous sont ses prérequis.
+- Les annales n'ont pas de corrigé : un LLM les corrige.
+- Les annales sont des **scans de copies** : il faut une transcription fiable en Markdown (un `.md` par examen), faite par un modèle capable de lire les images, de façon automatisée et sans erreur.
+
+## Progression et motivation
+
+- Jauge **XP de 0 à 100 %** par sujet ; 100 % = toute la barre passée, tout est su.
+- **Code couleur par matière.**
+- Une page qui montre **tous les niveaux** de l'utilisateur ; un clic emmène **directement au bon exercice**.
+- Progression par module affichée ; passage **automatique** au module suivant ; message clair « module terminé ».
+- Récompenses régulières ; objectif central visible : « prêt pour l'examen ».
+- **Compte à rebours avant l'examen.**
+- Sessions de toutes tailles : quelques minutes dans le métro (scroll), ou une longue session à la maison sur les exercices.
+
+## Comptes
+
+- Comptes **obligatoires** : identifiant + mot de passe, sans confirmation d'e-mail.
+- E-mail **facultatif**, seulement pour réinitialiser le mot de passe.
+- Création de nombreux comptes par une même personne : sans importance.
+
+## Style
+
+- Garder le style actuel : **très simple, un peu pixel art**.
+- Garder **le chat** : content quand on réussit, il **explose** quand on rate.
+
+## Contenu et génération
+
+- Les cours et exercices sont rédigés par un LLM, pas à la main.
+- Choix privilégié : **Claude via l'abonnement Pro** du créateur, sur plusieurs sessions (meilleur en maths, pas de coût en plus).
+- Mistral : jugé peu fiable sur les maths, à éviter pour le contenu.
+- API payante : petite dérogation possible, seulement si nécessaire et après accord.
+- Les maths générées doivent pouvoir être vérifiées (calcul symbolique quand c'est possible, bouton de signalement d'erreur).
+
+## Données existantes
+
+- Les cartes actuelles (`cards.db`) et les cours actuels **ne sont pas supprimés** : ils vont dans une sauvegarde.
+- L'outil de récupération Moodle existant (`main.py`, `batch_convert.py`) doit être remis en service, et étendu aux annales de past-exams.
+
+## Problèmes constatés sur la version actuelle
+
+À corriger dans la refonte :
+
+1. Arborescence des matières illisible : « Maths », « Maths appliquées », « Maths S1 », puis « Maths S1 ARITH », « Maths S1 OBM »… mélangés au même niveau, alors que ce sont des sous-catégories. Il faut une hiérarchie propre : matière → semestre → module (ECUE) → chapitre, **dans l'ordre du syllabus**.
+2. Page « Cours » désordonnée : on ne sait pas par où commencer.
+3. Trop peu de cartes par chapitre ; parfois **une seule carte par module** (ex. : Cyber).
+4. Cartes de cours peu adaptées à l'apprentissage.
+5. Le niveau n'évolue pas entre les cartes.
+6. Pas de passage automatique au module suivant, pas de message de fin de module, pas de progression par module.
+7. Niveaux non reliés entre eux ; cours non reliés aux TD (le TD 1 doit être relié aux notions de cours précises).
+8. Ordre des exercices faux (ex. : IPP / changement de variable : l'exercice 1 est déjà difficile, l'exercice 6 n'est pas de niveau 6).
+9. Cours incomplets.
+10. **Le bouton retour renvoie à l'accueil** au lieu de la page précédente.
+
+## Décisions du 2026-11-14 (suite)
+
+- **Chrono par exercice** : il démarre à l'ouverture. Il faut chercher seul jusqu'au bout du temps (2 à 5 min selon la question, 5 min par défaut). « J'ai ma réponse » montre la correction et on se note ; temps écoulé sans réponse = raté, la correction s'affiche, le chat explose.
+- **Tous les niveaux de maths**, pour tous les examens (B1, B2, rattrapages, S2), pas seulement les intégrales.
+- **Priorité rattrapage** : parcours **DP** (dénombrement, probabilités) et **OBM** (logique, ensembles, applications), ratés au B1.
+- **Calendrier** : relier annales (dates sur past-exams) ↔ syllabus ↔ dates d'examen fournies par l'utilisateur.
+- **Toutes les annales transcrites** proprement en `.md`, scans compris, avec un index.
+- **E-mail** de réinitialisation envoyé depuis `morgan@pierref.eu`.
+- **Accueil** : matières dans l'ordre du syllabus ; **scroll adaptatif** branché sur les notions et QCM des parcours.
+
+- **Autorisation totale** donnée par l'utilisateur le 2026-11-14 (mail, déploiement, contenu) : avancer sans redemander.
+- **Dates d'examen** : non publiées ; en général juste avant chaque période de vacances (B1 ≈ fin octobre, B2 ≈ avant Noël/janvier). Le calendrier des MiMos (`TODO_REFONTE.md`) sert de repère.
+- **Ordre de travail** : toutes les maths (S1 puis S2, tous les examens), ensuite toutes les autres matières.
+
+## Décisions du 2026-11-14 (nuit)
+
+Paroles de l'utilisateur, à respecter dans toute la suite :
+
+- **Le chat** est toujours en bas à droite de l'écran, sur toutes les pages (flux, niveaux, scroll). Il est content quand on réussit et « fait sa vie » le reste du temps. Quand on rate, il explose et envoie du sang partout, puis il se régénère **vite** (modèle : le flux du Doom scrolling).
+- **Temps et récompense** : plus on réussit un exercice vite, plus la récompense est grosse. Le temps de référence est le **temps moyen des utilisateurs**, calculé **par niveau** (pas par exercice, sinon il faut trop de données), puis ajusté à la longueur de l'exercice.
+- **Cours regardé avant de répondre** : on donne quand même des points, environ **un tiers**.
+- **Téléphone d'abord**, mais le site doit aussi bien marcher sur ordinateur.
+- **Programme 2031** : on suit la promo 2031. Les nombres complexes ne sont plus dans l'OBM 2031 : on ne les fait pas.
+- **Ordre** : toutes les maths (tous les examens), puis toutes les autres matières.
+- **Annales** : transcrire proprement les 146 annales (dont les 41 scans), avec un index.
+- **Page 404 personnalisée.**
+- **Barre de progression totale** visible pendant les exercices de niveau.
+- **Valider un niveau = avoir fait le tour de toutes les formules du niveau**, pas « 3 justes d'affilée ». Trois intégrales réussies ne prouvent pas qu'on sait toutes les intégrales ; réussir tous les sinus ne prouve pas qu'on sait les cosinus. Exemple : une dizaine de primitives usuelles, il faut les passer toutes pour passer au niveau suivant. Pas de combinaisons de formules à ce stade : chaque formule du niveau est testée au moins une fois.
+- **Affichage** : une rangée de petits carrés par niveau : vert = réussi, rouge = raté, vide = pas encore fait. La liste continue, et un carré rouge redevient vert quand on réussit l'exercice plus tard.
+- **Après un raté**, idéalement l'exercice revient **avec d'autres chiffres** (variantes) : à faire.
+- **Conséquence pour le contenu** : travail plus profond sur chaque niveau, pour qu'il y ait **un exercice par formule** (chaque primitive usuelle, chaque dérivée usuelle, sinus et cosinus séparés, etc.).
+- **Tout ce que dit l'utilisateur est consigné ici**, pour garder la direction.
+
+## Cohérence des liaisons
+
+Une seule source de vérité par lien, et un contrôle automatique qui fait échouer la construction si un lien casse (`parcours/build.py`, lancé avant chaque déploiement) :
+- réponse ↔ énoncé : vérifiée par sympy ;
+- niveau ↔ notions, QCM ↔ notions, exercice d'annale ↔ exercices des niveaux : identifiants vérifiés ;
+- à venir : registre `parcours/syllabus.json` (matière → semestre → ECUE → chapitre Moodle → parcours → annales → dates d'examen) avec contrôle que chaque chemin Moodle existe, que chaque exercice d'annale transcrit est rattaché à un niveau, que chaque prérequis entre parcours pointe vers un niveau existant, et que chaque exercice de TD est classé.
+
+## Décision du 2026-11-14 (soir, suite)
+
+Demande : « avoir un truc pour sélectionner quelle section on va travailler : soit d'abord S1 ou S2, puis la matière, puis le chapitre ; soit la matière d'abord, puis S1/S2, puis le chapitre ; et également la version où il y a tout confondu ».
+
+- Page « Mes niveaux » : choix de l'ordre (semestre d'abord ou matière d'abord), puis trois listes semestre / matière / chapitre (« Tous » possible à chaque étape).
+- « Tout confondu » : exercices tirés au hasard dans tous les chapitres sélectionnés, chacun au niveau actuel de l'utilisateur dans ce chapitre.
+
+## Décision du 2026-11-14 (temps)
+
+Demande : « si c'est raté à cause du temps, rajoute un peu de temps, pour que ça soit toujours compétitif, et pas qu'on rate toujours si on est trop lent ».
+
+- Chaque raté par temps écoulé sur un exercice donne +50 % de temps à cet exercice (jusqu'à ×3), remis à zéro dès qu'il est réussi.
+- Les points restent calculés sur le temps de référence : plus lent = moins de points.
+
+## Questions encore ouvertes
+
+- Date du prochain examen de maths et bloc concerné (B3 ? B4 ?).
+- Accès à past-exams.epidocs.eu : public ou connexion requise ?
+
+## Décision du 2026-11-14 (stats)
+Page « Mes stats » façon GitHub : exercices faits, réussis, ratés, un carré par jour de l'année
+(plus c'est rouge plus le jour est raté, plus c'est vert plus il est réussi), graphique du temps passé,
+et des petits records (séries, meilleur jour, revanches, réussi du premier coup, heure préférée, exercice le plus raté).
+
+## Décision du 2026-11-14 (annales, formules)
+
+- Chaque exercice d'annale transcrit (sujet et corrigé) porte une ligne « Formules : » listant **toutes** les formules utilisées pour le résoudre. Raison : les formules affichées dans les niveaux sont souvent fausses ou incomplètes ; ces lignes servent de référence pour les corriger.
+
+## Décision du 2026-11-14 (scroll du cours, fiche synthèse)
+
+- Le scroll sur le cours n'a plus le même format qu'avant : c'est pénible. Il doit retrouver le format d'avant.
+- Faire une **fiche synthèse** avec toutes les formules (les nouvelles, tirées des lignes « Formules : » des annales).
+
+## Décision du 2026-11-15 (aides sur les exercices sur papier)
+
+- Deux aides sur la page d'exercice :
+  1. **Fiche du chapitre** : toutes les formules nécessaires au chapitre, vraiment toutes (notions du parcours + toutes les formules des annales du chapitre).
+  2. **Formules de la solution** : les formules utilisées dans la solution.
+- Dévoiler une aide **ajoute du temps** pour finir l'exercice, mais **donne moins de points** (pas trop « cheaté »).
+- Réglage choisi (modifiable dans `levels.HINTS`) : fiche = points ÷ 2, + 50 % de temps ; formules de la solution = points ÷ 3, temps × 2 ; les deux = points ÷ 3, + 150 % de temps. Compté par le serveur.
+- Limite actuelle : « formules de la solution » = formules du niveau (un niveau = un type d'exercice), pas encore une liste par exercice.
+
+## Décision du 2026-11-15 (confettis)
+
+- Quand tout est passé (niveau validé) : confettis **pixel art** qui partent partout, dans le même esprit que l'explosion du chat.

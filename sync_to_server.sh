@@ -4,7 +4,7 @@
 
 LOCAL_DIR="Generated_QCMs"
 REMOTE_HOST="hetzner"
-REMOTE_APP_DIR="/opt/pierref/mathsdoomscroll"
+REMOTE_APP_DIR="/opt/pierref/epitadoomscrolling"
 REMOTE_IMPORT_DIR="$REMOTE_APP_DIR/import_queue"
 
 if [ ! -d "$LOCAL_DIR" ]; then
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 EOF"
 
 # Exécute le script à l'intérieur du conteneur en cours d'exécution
-echo "▶️ Exécution dans mathsdoomscroll_app..."
-ssh $REMOTE_HOST "docker exec mathsdoomscroll_app python /app/ingest_all.py"
+echo "▶️ Exécution dans epitadoomscrolling_app..."
+ssh $REMOTE_HOST "docker exec epitadoomscrolling_app python /app/ingest_all.py"
 
 echo "✅ Synchronisation et ingestion terminées !"

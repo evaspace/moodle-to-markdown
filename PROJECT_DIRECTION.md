@@ -1,4 +1,4 @@
-# MathsDoomScrolling — Project Direction
+# EpitaDoomscrolling — Project Direction
 
 ## Vision
 
@@ -9,14 +9,14 @@ with a multi-pass LLM pipeline, and integrate all 18 Hetzner sites into a unifie
 ## Architecture (3-Repo Plan)
 
 ```
-1. COURSES REPO          (this repo: mathsdoomscrolling)
+1. COURSES REPO          (this repo: epitadoomscrolling)
    - EPITA_Moodle_Notes_MD/S      ← Moodle exports (source, never modified)
    - md_to_cards.py               ← 4-pass pipeline (A/B/C/D)
    - app.py                       ← Flask app, parse_blocks(), card DB
    - tests/test_md_to_cards.py    ← 62 tests (all pass)
    - README_md_to_cards.md        ← Pipeline docs + pricing + Pass C v2
 
-2. CARD MAPPING REPO     (Hetzner: /opt/pierref/mathsdoomscroll/)
+2. CARD MAPPING REPO     (Hetzner: /opt/pierref/epitadoomscrolling/)
    - cards.db                     ← SQLite: 3,486 cards (COURSE + QCM + TF)
    - Generated_QCMs/              ← 304 generated .txt files (268 COURSE + 30 QCM/TF)
    - selected_courses.json        ← Category resolution
@@ -87,7 +87,7 @@ Verification: distinct model (DEFAULT_VERIFY_MODEL)
 | focusator | Concentration/Fitts law testing | Interactive focus testing tool |
 | lbcstudio | Content creation & digital tools | Web performance & creator tools |
 | wclproject | Project collaboration workflow | Team workflow management |
-| mathsdoomscrolling | Math learning via flashcards | Spaced-repetition math cards with LaTeX |
+| epitadoomscrolling | Math learning via flashcards | Spaced-repetition math cards with LaTeX |
 
 ### Site Discovery
 
@@ -109,7 +109,7 @@ generates `BRAND_PRESETS` entries with per-site identity, and produces `sites.js
 | salepute | salepute | New theme |
 | wclproject | wclproject | New theme |
 | dodomailator | dodomailator | New theme |
-| mathsdoomscrolling | mathsdoomscrolling | New theme |
+| epitadoomscrolling | epitadoomscrolling | New theme |
 | shareperprojet | generic | Fallback |
 | mailer | generic | Fallback |
 | humanizator | generic | Fallback |

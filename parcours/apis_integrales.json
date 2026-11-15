@@ -1,0 +1,1967 @@
+{
+ "subject": {
+  "id": "maths-s1-apis-integrales",
+  "ordre": 130,
+  "matiere": "maths",
+  "semestre": "S1",
+  "ecue": "APIS",
+  "titre": "Primitives et intégrales",
+  "chapitres_moodle": [
+   "12_Cours 3 - Primitives et intégrales - ECUE APIS",
+   "13_Primitive et intégrale d'une fonction - révisions",
+   "14_Intégration par parties et changement de variable"
+  ],
+  "td": "S12026_TD3_Primitives_Intégrales",
+  "examens": [
+   "Test à distance 16 nov. 2026",
+   "Test à distance 7 déc. 2026",
+   "Examen B2 S1"
+  ]
+ },
+ "notions": [
+  {
+   "id": "derivee-composee",
+   "titre": "Dérivée d'une composée",
+   "formule": "$(f\\circ u)' = u'\\times f'(u)$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(u^n)'=nu'u^{n-1}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$ · $(\\sin u)'=u'\\cos u$ · $(\\cos u)'=-u'\\sin u$ · $(\\arctan u)'=\\frac{u'}{1+u^2}$",
+   "exemple": "$\\big(\\sin(e^{3x})\\big)' = 3e^{3x}\\cos(e^{3x})$",
+   "cours": "On dérive la fonction extérieure, évaluée en $u(x)$, puis on multiplie par $u'(x)$. Cas fréquents : $(e^u)'=u'e^u$, $(\\ln u)'=\\frac{u'}{u}$, $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$, $(u^n)'=nu'u^{n-1}$, $(\\arctan u)'=\\frac{u'}{1+u^2}$. Pour intégrer, il faut savoir dériver : une primitive se vérifie toujours en la dérivant."
+  },
+  {
+   "id": "prim-usuelles",
+   "titre": "Primitives usuelles",
+   "formule": "$x^n \\to \\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) · $\\frac1x \\to \\ln|x|$ · $\\frac1{x^2}\\to-\\frac1x$ · $\\frac1{\\sqrt x}\\to2\\sqrt x$ · $e^x \\to e^x$ · $\\cos \\to \\sin$ · $\\sin \\to -\\cos$",
+   "exemple": "$\\frac1{x^2}=x^{-2} \\to -\\frac1x$ ; $\\sqrt x = x^{1/2} \\to \\frac23 x^{3/2}$",
+   "cours": "Tableau à connaître par cœur : $a \\to ax$ ; $x^\\alpha \\to \\frac{x^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) ; $\\frac1{\\sqrt x}\\to 2\\sqrt x$ ; $\\frac1{x^2}\\to-\\frac1x$ ; $\\frac1x\\to\\ln|x|$ ; $e^x\\to e^x$ ; $\\cos x\\to\\sin x$ ; $\\sin x\\to-\\cos x$ ; $1+\\tan^2x=\\frac1{\\cos^2x}\\to\\tan x$ ; $\\frac1{1+x^2}\\to\\arctan x$. Réécrire racines et inverses en puissances avant d'intégrer."
+  },
+  {
+   "id": "prim-trigo-arctan",
+   "titre": "Tangente et arctangente",
+   "formule": "$\\frac1{\\cos^2 x}=1+\\tan^2 x \\to \\tan x$ · $\\frac1{1+x^2}\\to\\arctan x$",
+   "exemple": "$\\int_0^1\\frac{dx}{1+x^2}=\\arctan 1=\\frac\\pi4$",
+   "cours": "Valeurs à connaître : $\\arctan 0=0$, $\\arctan\\frac1{\\sqrt3}=\\frac\\pi6$, $\\arctan 1=\\frac\\pi4$, $\\arctan\\sqrt3=\\frac\\pi3$. Et $\\tan x=\\frac{\\sin x}{\\cos x}=-\\frac{(\\cos x)'}{\\cos x}$ donc une primitive de $\\tan$ est $-\\ln|\\cos x|$."
+  },
+  {
+   "id": "prim-affine",
+   "titre": "Primitive de f(ax+b)",
+   "formule": "$f(ax+b) \\to \\frac1a F(ax+b)$ ($a\\ne0$) · $e^{ax}\\to\\frac1ae^{ax}$ · $\\cos(ax)\\to\\frac1a\\sin(ax)$ · $\\sin(ax)\\to-\\frac1a\\cos(ax)$ · $\\frac1{ax+b}\\to\\frac1a\\ln|ax+b|$",
+   "exemple": "$e^{6x-7}\\to\\frac16e^{6x-7}$ ; $\\cos\\frac x2 \\to 2\\sin\\frac x2$",
+   "cours": "Si $F$ est une primitive de $f$, alors $\\frac1aF(ax+b)$ est une primitive de $f(ax+b)$ ($a\\ne0$). On divise par le coefficient de $x$, on ne multiplie pas. Vérification : dériver $\\frac1aF(ax+b)$ redonne $a\\cdot\\frac1a f(ax+b)$."
+  },
+  {
+   "id": "prim-u-puissance",
+   "titre": "Forme u' × uⁿ",
+   "formule": "$u'u^\\alpha \\to \\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) · $\\frac{u'}{\\sqrt u}\\to 2\\sqrt u$ · $\\frac{u'}{u^2}\\to-\\frac1u$",
+   "exemple": "$4t(2t^2+1)^4 \\to \\frac{(2t^2+1)^5}5$",
+   "cours": "Repérer $u$ (le bloc élevé à une puissance ou sous la racine), calculer $u'$, puis ajuster la constante : si on a $(x^2+1)$ devant et $u'=3x^2+3$, on écrit $(x^2+1)=\\frac13u'$. Une racine est une puissance $\\frac12$, un inverse une puissance $-1$."
+  },
+  {
+   "id": "prim-u-ln-exp",
+   "titre": "Formes u'/u, u'eᵘ, u'/(1+u²)",
+   "formule": "$\\frac{u'}u\\to\\ln|u|$ · $u'e^u\\to e^u$ · $\\frac{u'}{1+u^2}\\to\\arctan u$ · $u'\\cos u\\to\\sin u$ · $u'\\sin u\\to-\\cos u$ · $\\frac{u'}{\\cos^2u}\\to\\tan u$",
+   "exemple": "$\\frac{2x+2}{2x^2+4x+1}=\\frac12\\cdot\\frac{u'}{u} \\to \\frac12\\ln|2x^2+4x+1|$",
+   "cours": "Une fraction dont le numérateur ressemble à la dérivée du dénominateur donne un $\\ln$. Une exponentielle multipliée par la dérivée de ce qui est en exposant donne l'exponentielle. Même idée en trigonométrie : $u'\\cos u\\to\\sin u$ et $u'\\sin u\\to-\\cos u$. Toujours ajuster la constante multiplicative."
+  },
+  {
+   "id": "integrale-bornes",
+   "titre": "Calcul d'une intégrale",
+   "formule": "$\\int_a^b f(x)\\,dx = \\big[F(x)\\big]_a^b = F(b)-F(a)$",
+   "exemple": "$\\int_0^1 2x\\,dx=[x^2]_0^1=1$",
+   "cours": "On trouve une primitive $F$, on l'évalue en $b$ puis en $a$, on soustrait. Écrire le crochet avant de remplacer : cela évite les erreurs de signe. Valeurs utiles : $\\ln 1=0$, $\\ln e=1$, $e^0=1$, $\\cos\\frac\\pi4=\\sin\\frac\\pi4=\\frac{\\sqrt2}2$, $\\cos\\frac\\pi3=\\frac12$, $\\sin\\frac\\pi3=\\frac{\\sqrt3}2$."
+  },
+  {
+   "id": "ipp",
+   "titre": "Intégration par parties",
+   "formule": "$\\int_a^b u\\,v' = \\big[uv\\big]_a^b - \\int_a^b u'\\,v$",
+   "exemple": "$\\int_0^1 xe^x\\,dx=[xe^x]_0^1-\\int_0^1e^x\\,dx=e-(e-1)=1$",
+   "cours": "Hypothèse : $u$ et $v$ de classe $C^1$ sur $[a,b]$. À l'examen, on pose clairement $u$, $u'$, $v'$, $v$ et on écrit la formule. On dérive le facteur qui se simplifie (polynôme, $\\ln$) et on intègre l'autre ($e^{kx}$, $\\sin$, $\\cos$, $x^n$)."
+  },
+  {
+   "id": "ipp-choix",
+   "titre": "IPP : qui dériver ?",
+   "formule": "Dériver : $\\ln$, puis polynôme. Intégrer : $e^{kx}$, $\\sin$, $\\cos$.",
+   "exemple": "$\\int\\ln x\\,dx$ : $u=\\ln x$, $v'=1$, donc $v=x$",
+   "cours": "Règle pratique : on dérive ce qui devient plus simple. Le $\\ln$ se dérive toujours (sa primitive n'est pas usuelle) ; s'il est seul, on pose $v'=1$. Un polynôme de degré 2 demande deux IPP. Pour $e^x\\sin x$, deux IPP font réapparaître l'intégrale de départ : on résout une équation."
+  },
+  {
+   "id": "cv",
+   "titre": "Changement de variable",
+   "formule": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\int_{\\varphi(a)}^{\\varphi(b)}f(x)\\,dx=\\int_a^bf(\\varphi(t))\\,\\varphi'(t)\\,dt$",
+   "exemple": "$x=2t+1$ : $dx=2\\,dt$ ; $x=1\\Rightarrow t=0$",
+   "cours": "Trois choses à remplacer : la fonction (écrite en $t$), $dx$ (par $\\varphi'(t)\\,dt$), les bornes (on résout $\\varphi(t)=a$ et $\\varphi(t)=b$). Si on pose $t=\\psi(x)$, on exprime $x$ en fonction de $t$ ou on calcule $dt=\\psi'(x)\\,dx$. On ne revient jamais à $x$ quand les bornes ont été changées."
+  },
+  {
+   "id": "cv-arctan",
+   "titre": "1/(x²+a²) et arctan",
+   "formule": "$\\int\\frac{dx}{x^2+a^2}=\\frac1a\\arctan\\frac xa$",
+   "exemple": "$\\int_0^{\\sqrt3}\\frac{dx}{3+x^2}=\\frac1{\\sqrt3}\\arctan 1=\\frac{\\pi}{4\\sqrt3}$",
+   "cours": "On pose $t=\\frac xa$ : $x^2+a^2=a^2(1+t^2)$ et $dx=a\\,dt$, d'où $\\frac1a\\int\\frac{dt}{1+t^2}$. Pour $(x-c)^2+a^2$, on pose $x=at+c$. Pour $x^2+2x+2$, on met d'abord sous forme canonique : $(x+1)^2+1$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "derivee-composee",
+   "type": "qcm",
+   "q": "Dérivée de $e^{x^2}$ ?",
+   "choix": [
+    "$2xe^{x^2}$",
+    "$e^{x^2}$",
+    "$x^2e^{x^2-1}$",
+    "$2e^{x^2}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "derivee-composee",
+   "type": "vf",
+   "q": "$(\\ln(\\cos x))'=-\\tan x$",
+   "bonne": true
+  },
+  {
+   "notion": "prim-usuelles",
+   "type": "qcm",
+   "q": "Primitive de $\\frac1{x^2}$ ?",
+   "choix": [
+    "$-\\frac1x$",
+    "$\\ln(x^2)$",
+    "$\\frac1x$",
+    "$-\\frac2{x^3}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-usuelles",
+   "type": "qcm",
+   "q": "Primitive de $\\sqrt x$ ?",
+   "choix": [
+    "$\\frac23x^{3/2}$",
+    "$\\frac1{2\\sqrt x}$",
+    "$\\frac32x^{3/2}$",
+    "$2\\sqrt x$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-usuelles",
+   "type": "vf",
+   "q": "Une primitive de $\\sin x$ est $\\cos x$.",
+   "bonne": false
+  },
+  {
+   "notion": "prim-trigo-arctan",
+   "type": "qcm",
+   "q": "$\\arctan\\sqrt3=$ ?",
+   "choix": [
+    "$\\frac\\pi3$",
+    "$\\frac\\pi6$",
+    "$\\frac\\pi4$",
+    "$\\sqrt3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-trigo-arctan",
+   "type": "vf",
+   "q": "Une primitive de $\\tan x$ est $-\\ln|\\cos x|$.",
+   "bonne": true
+  },
+  {
+   "notion": "prim-affine",
+   "type": "qcm",
+   "q": "Primitive de $e^{3x}$ ?",
+   "choix": [
+    "$\\frac13e^{3x}$",
+    "$3e^{3x}$",
+    "$e^{3x}$",
+    "$\\frac{e^{3x+1}}{3x+1}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-affine",
+   "type": "vf",
+   "q": "Une primitive de $\\cos(2x)$ est $2\\sin(2x)$.",
+   "bonne": false
+  },
+  {
+   "notion": "prim-u-puissance",
+   "type": "qcm",
+   "q": "Primitive de $2x(x^2+1)^3$ ?",
+   "choix": [
+    "$\\frac{(x^2+1)^4}4$",
+    "$\\frac{(x^2+1)^4}2$",
+    "$x^2(x^2+1)^3$",
+    "$6x(x^2+1)^2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-u-puissance",
+   "type": "vf",
+   "q": "Une primitive de $\\frac{u'}{\\sqrt u}$ est $2\\sqrt u$.",
+   "bonne": true
+  },
+  {
+   "notion": "prim-u-ln-exp",
+   "type": "qcm",
+   "q": "Primitive de $\\frac{2x}{x^2+1}$ ?",
+   "choix": [
+    "$\\ln(x^2+1)$",
+    "$\\arctan x$",
+    "$\\frac{x^2}{x^2+1}$",
+    "$2\\ln(x^2+1)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "prim-u-ln-exp",
+   "type": "vf",
+   "q": "Une primitive de $\\frac{2x}{1+x^4}$ est $\\arctan(x^2)$.",
+   "bonne": true
+  },
+  {
+   "notion": "integrale-bornes",
+   "type": "qcm",
+   "q": "$\\int_1^e\\frac{dx}x=$ ?",
+   "choix": [
+    "$1$",
+    "$e-1$",
+    "$0$",
+    "$\\frac1e$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "integrale-bornes",
+   "type": "vf",
+   "q": "$\\int_a^b f=F(a)-F(b)$",
+   "bonne": false
+  },
+  {
+   "notion": "ipp",
+   "type": "qcm",
+   "q": "Formule de l'IPP : $\\int_a^b uv'=$ ?",
+   "choix": [
+    "$[uv]_a^b-\\int_a^bu'v$",
+    "$[uv]_a^b+\\int_a^bu'v$",
+    "$u'v-\\int uv'$",
+    "$\\int u\\int v'$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ipp",
+   "type": "vf",
+   "q": "L'IPP exige que $u$ et $v$ soient de classe $C^1$ sur $[a,b]$.",
+   "bonne": true
+  },
+  {
+   "notion": "ipp-choix",
+   "type": "qcm",
+   "q": "Pour $\\int x e^{2x}\\,dx$, on pose :",
+   "choix": [
+    "$u=x$, $v'=e^{2x}$",
+    "$u=e^{2x}$, $v'=x$",
+    "$u=xe^{2x}$, $v'=1$",
+    "pas d'IPP possible"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ipp-choix",
+   "type": "qcm",
+   "q": "Pour $\\int\\ln x\\,dx$, on pose :",
+   "choix": [
+    "$u=\\ln x$, $v'=1$",
+    "$u=1$, $v'=\\ln x$",
+    "$u=x$, $v'=\\ln x$",
+    "$t=\\ln x$ obligatoire"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cv",
+   "type": "qcm",
+   "q": "Avec $x=2t+1$, $dx=$ ?",
+   "choix": [
+    "$2\\,dt$",
+    "$\\frac12dt$",
+    "$(2t+1)\\,dt$",
+    "$dt$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cv",
+   "type": "vf",
+   "q": "Après un changement de variable, on garde les mêmes bornes.",
+   "bonne": false
+  },
+  {
+   "notion": "cv-arctan",
+   "type": "qcm",
+   "q": "$\\int\\frac{dx}{x^2+9}=$ ?",
+   "choix": [
+    "$\\frac13\\arctan\\frac x3$",
+    "$\\arctan\\frac x3$",
+    "$3\\arctan(3x)$",
+    "$\\ln(x^2+9)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cv-arctan",
+   "type": "vf",
+   "q": "$x^2+2x+2=(x+1)^2+1$",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Dériver une composée",
+   "notions": [
+    "derivee-composee"
+   ],
+   "exos": [
+    {
+     "id": "d1",
+     "ans": "2*x*exp(x**2+1)",
+     "enonce": "Dériver $f(x)=e^{x^2+1}$.",
+     "sol": "$u=x^2+1$, $u'=2x$, $(e^u)'=u'e^u$ donc $f'(x)=2x\\,e^{x^2+1}$.",
+     "variants": [
+      {
+       "ans": "3*x**2*exp(x**3-2)",
+       "enonce": "Dériver $f(x)=e^{x^3-2}$.",
+       "sol": "$u'=3x^2$ : $f'(x)=3x^2e^{x^3-2}$."
+      }
+     ],
+     "formules": "$(e^u)'=u'e^u$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d2",
+     "ans": "2*x/(x**2+1)",
+     "enonce": "Dériver $f(x)=\\ln(x^2+1)$.",
+     "sol": "$(\\ln u)'=\\frac{u'}u$ donc $f'(x)=\\frac{2x}{x^2+1}$.",
+     "variants": [
+      {
+       "ans": "4*x**3/(x**4+3)",
+       "enonce": "Dériver $f(x)=\\ln(x^4+3)$.",
+       "sol": "$\\frac{u'}u$ : $f'(x)=\\frac{4x^3}{x^4+3}$."
+      }
+     ],
+     "formules": "$(\\ln u)'=\\frac{u'}u$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d3",
+     "ans": "30*x*(3*x**2+1)**4",
+     "enonce": "Dériver $f(x)=(3x^2+1)^5$.",
+     "sol": "$(u^5)'=5u'u^4$ avec $u'=6x$ : $f'(x)=30x(3x^2+1)^4$.",
+     "variants": [
+      {
+       "ans": "24*x**2*(2*x**3-1)**3",
+       "enonce": "Dériver $f(x)=(2x^3-1)^4$.",
+       "sol": "$4u'u^3$ avec $u'=6x^2$ : $f'(x)=24x^2(2x^3-1)^3$."
+      }
+     ],
+     "formules": "$(u^n)'=nu'u^{n-1}$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d4",
+     "ans": "2/(1+4*x**2)",
+     "enonce": "Dériver $f(x)=\\arctan(2x)$.",
+     "sol": "$(\\arctan u)'=\\frac{u'}{1+u^2}$ : $f'(x)=\\frac{2}{1+4x^2}$.",
+     "variants": [
+      {
+       "ans": "2*x/(1+x**4)",
+       "enonce": "Dériver $f(x)=\\arctan(x^2)$.",
+       "sol": "$\\frac{u'}{1+u^2}$ : $f'(x)=\\frac{2x}{1+x^4}$."
+      }
+     ],
+     "formules": "$(\\arctan u)'=\\frac{u'}{1+u^2}$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d5",
+     "ans": "3*exp(3*x)*cos(exp(3*x)+2)",
+     "src": "Contrôle 1 S1, nov. 2020, ex. 3.1",
+     "enonce": "Sans vous préoccuper du domaine, dériver $f(x)=\\sin(e^{3x}+2)$.",
+     "sol": "$u=e^{3x}+2$, $u'=3e^{3x}$ : $f'(x)=3e^{3x}\\cos(e^{3x}+2)$.",
+     "variants": [
+      {
+       "ans": "-2*exp(-2*x)*cos(exp(-2*x)+1)",
+       "enonce": "Dériver $f(x)=\\sin(e^{-2x}+1)$.",
+       "sol": "$u'=-2e^{-2x}$ : $f'(x)=-2e^{-2x}\\cos(e^{-2x}+1)$."
+      }
+     ],
+     "formules": "$(\\sin u)'=u'\\cos u$ · $(e^{ax})'=ae^{ax}$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d6",
+     "ans": "(3*x**2+3)/(2*sqrt(x**3+3*x+1))",
+     "enonce": "Dériver $f(x)=\\sqrt{x^3+3x+1}$.",
+     "sol": "$(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$ : $f'(x)=\\frac{3x^2+3}{2\\sqrt{x^3+3x+1}}$.",
+     "variants": [
+      {
+       "ans": "(2*x+5)/(2*sqrt(x**2+5*x))",
+       "enonce": "Dériver $f(x)=\\sqrt{x^2+5x}$.",
+       "sol": "$\\frac{u'}{2\\sqrt u}$ : $f'(x)=\\frac{2x+5}{2\\sqrt{x^2+5x}}$."
+      }
+     ],
+     "formules": "$(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d7",
+     "ans": "6*x*sin(x**2+3)**2*cos(x**2+3)",
+     "src": "TD3 ex. 1.1 a",
+     "enonce": "Dériver $f(x)=\\sin^3(x^2+3)$.",
+     "sol": "Trois étages : $(u^3)'=3u'u^2$ avec $u=\\sin(x^2+3)$, $u'=2x\\cos(x^2+3)$. Donc $f'(x)=6x\\sin^2(x^2+3)\\cos(x^2+3)$.",
+     "variants": [
+      {
+       "ans": "-8*sin(2*x+1)*cos(2*x+1)**3",
+       "enonce": "Dériver $f(x)=\\cos^4(2x+1)$.",
+       "sol": "$(u^4)'=4u'u^3$ avec $u=\\cos(2x+1)$, $u'=-2\\sin(2x+1)$ : $f'(x)=-8\\sin(2x+1)\\cos^3(2x+1)$."
+      }
+     ],
+     "formules": "$(u^n)'=nu'u^{n-1}$ · $(\\sin u)'=u'\\cos u$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d8",
+     "ans": "-3*x**2*sin(x**3)",
+     "enonce": "Dériver $f(x)=\\cos(x^3)$.",
+     "sol": "$(\\cos u)'=-u'\\sin u$ avec $u'=3x^2$ : $f'(x)=-3x^2\\sin(x^3)$.",
+     "variants": [
+      {
+       "ans": "-10*x*sin(5*x**2)",
+       "enonce": "Dériver $f(x)=\\cos(5x^2)$.",
+       "sol": "$-u'\\sin u$ : $f'(x)=-10x\\sin(5x^2)$."
+      }
+     ],
+     "formules": "$(\\cos u)'=-u'\\sin u$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d9",
+     "ans": "-2*x/(x**2+3)**2",
+     "enonce": "Dériver $f(x)=\\frac1{x^2+3}$.",
+     "sol": "$\\left(\\frac1u\\right)'=-\\frac{u'}{u^2}$ : $f'(x)=-\\frac{2x}{(x^2+3)^2}$.",
+     "variants": [
+      {
+       "ans": "-3*x**2/(x**3+1)**2",
+       "enonce": "Dériver $f(x)=\\frac1{x^3+1}$.",
+       "sol": "$-\\frac{u'}{u^2}$ : $f'(x)=-\\frac{3x^2}{(x^3+1)^2}$."
+      }
+     ],
+     "formules": "$\\left(\\frac1u\\right)'=-\\frac{u'}{u^2}$",
+     "duree": 2,
+     "type": "derivative"
+    },
+    {
+     "id": "d10",
+     "ans": "2*x*(1+tan(x**2)**2)",
+     "enonce": "Dériver $f(x)=\\tan(x^2)$.",
+     "sol": "$(\\tan u)'=u'(1+\\tan^2u)=\\frac{u'}{\\cos^2u}$ : $f'(x)=2x\\big(1+\\tan^2(x^2)\\big)$.",
+     "variants": [
+      {
+       "ans": "3*(1+tan(3*x+1)**2)",
+       "enonce": "Dériver $f(x)=\\tan(3x+1)$.",
+       "sol": "$u'(1+\\tan^2u)$ : $f'(x)=3\\big(1+\\tan^2(3x+1)\\big)$."
+      }
+     ],
+     "formules": "$(\\tan u)'=u'(1+\\tan^2u)=\\frac{u'}{\\cos^2u}$",
+     "duree": 2,
+     "type": "derivative"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Primitives usuelles",
+   "notions": [
+    "prim-usuelles",
+    "prim-trigo-arctan"
+   ],
+   "exos": [
+    {
+     "id": "p1",
+     "ans": "x**5/5+x**2",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+     "enonce": "Donner une primitive de $f(x)=x^4+2x$.",
+     "sol": "$F(x)=\\frac{x^5}5+x^2$.",
+     "variants": [
+      {
+       "ans": "x**4/4+5*x**2/2",
+       "enonce": "Donner une primitive de $f(x)=x^3+5x$.",
+       "sol": "$F(x)=\\frac{x^4}4+\\frac52x^2$."
+      }
+     ],
+     "formules": "$x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$)",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p2",
+     "ans": "-1/x",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+     "enonce": "Donner une primitive de $f(x)=\\frac1{x^2}$.",
+     "sol": "$x^{-2}\\to\\frac{x^{-1}}{-1}$ : $F(x)=-\\frac1x$.",
+     "variants": [
+      {
+       "ans": "-1/(2*x**2)",
+       "enonce": "Donner une primitive de $f(x)=\\frac1{x^3}$.",
+       "sol": "$x^{-3}\\to\\frac{x^{-2}}{-2}$ : $F(x)=-\\frac1{2x^2}$."
+      }
+     ],
+     "formules": "$x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) avec $n=-2$ : $\\frac1{x^2}\\to-\\frac1x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p3",
+     "ans": "2*x**(Rational(3,2))/3",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+     "enonce": "Donner une primitive de $f(x)=\\sqrt x$.",
+     "sol": "$x^{1/2}\\to\\frac{x^{3/2}}{3/2}$ : $F(x)=\\frac23x\\sqrt x$.",
+     "variants": [
+      {
+       "ans": "3*x**Rational(4,3)/4",
+       "enonce": "Donner une primitive sur $\\mathbb R^+$ de $f(x)=\\sqrt[3]x$.",
+       "sol": "$x^{1/3}\\to\\frac{x^{4/3}}{4/3}$ : $F(x)=\\frac34x^{4/3}$."
+      }
+     ],
+     "formules": "$x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) avec $n=\\frac12$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p4",
+     "ans": "tan(x)",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+     "enonce": "Donner une primitive de $f(x)=1+\\tan^2(x)$.",
+     "sol": "$1+\\tan^2=\\tan'$ : $F(x)=\\tan x$.",
+     "variants": [
+      {
+       "ans": "2*tan(x)",
+       "enonce": "Donner une primitive de $f(x)=2+2\\tan^2(x)$.",
+       "sol": "$2(1+\\tan^2)$ : $F(x)=2\\tan x$."
+      }
+     ],
+     "formules": "$1+\\tan^2x=\\frac1{\\cos^2x}\\to\\tan x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p5",
+     "ans": "3*log(x)-5*x**2/2+6*x**5/5",
+     "src": "TD3 ex. 1.2 application",
+     "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $g(x)=\\frac3x-5x+6x^4$.",
+     "sol": "$G(x)=3\\ln x-\\frac52x^2+\\frac65x^5$.",
+     "variants": [
+      {
+       "ans": "4*log(x)+x**3-2*x",
+       "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $g(x)=\\frac4x+3x^2-2$.",
+       "sol": "$G(x)=4\\ln x+x^3-2x$."
+      }
+     ],
+     "formules": "$\\frac1x\\to\\ln|x|$ · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$)",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p6",
+     "ans": "2*x**Rational(5,2)/5",
+     "src": "TD3 ex. 1.2 application",
+     "enonce": "Donner une primitive sur $\\mathbb R^+$ de $f(x)=x\\sqrt x$.",
+     "sol": "$x\\sqrt x=x^{3/2}\\to\\frac{x^{5/2}}{5/2}$ : $F(x)=\\frac25x^2\\sqrt x$.",
+     "variants": [
+      {
+       "ans": "2*x**Rational(7,2)/7",
+       "enonce": "Donner une primitive sur $\\mathbb R^+$ de $f(x)=x^2\\sqrt x$.",
+       "sol": "$x^{5/2}\\to\\frac{x^{7/2}}{7/2}$ : $F(x)=\\frac27x^3\\sqrt x$."
+      }
+     ],
+     "formules": "$x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) avec $n=\\frac32$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p7",
+     "ans": "3*cos(x)+2*exp(x)",
+     "src": "TD3 ex. 1.2 application",
+     "enonce": "Donner une primitive de $h(x)=-3\\sin x+2e^x$.",
+     "sol": "$\\sin\\to-\\cos$ : $H(x)=3\\cos x+2e^x$.",
+     "variants": [
+      {
+       "ans": "-4*cos(x)-exp(x)",
+       "enonce": "Donner une primitive de $h(x)=4\\sin x-e^x$.",
+       "sol": "$H(x)=-4\\cos x-e^x$."
+      }
+     ],
+     "formules": "$\\sin\\to-\\cos$ · $e^x\\to e^x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p8",
+     "ans": "sin(x)",
+     "enonce": "Donner une primitive de $f(x)=\\cos x$.",
+     "sol": "$\\sin'=\\cos$ : $F(x)=\\sin x$.",
+     "variants": [
+      {
+       "ans": "3*sin(x)",
+       "enonce": "Donner une primitive de $f(x)=3\\cos x$.",
+       "sol": "$F(x)=3\\sin x$."
+      }
+     ],
+     "formules": "$\\cos\\to\\sin$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p9",
+     "ans": "-cos(x)",
+     "enonce": "Donner une primitive de $f(x)=\\sin x$.",
+     "sol": "$(-\\cos)'=\\sin$ : $F(x)=-\\cos x$. Le signe moins va sur la primitive du sinus.",
+     "variants": [
+      {
+       "ans": "2*cos(x)",
+       "enonce": "Donner une primitive de $f(x)=-2\\sin x$.",
+       "sol": "$\\sin\\to-\\cos$ : $F(x)=2\\cos x$."
+      }
+     ],
+     "formules": "$\\sin\\to-\\cos$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p10",
+     "ans": "5*exp(x)",
+     "enonce": "Donner une primitive de $f(x)=5e^x$.",
+     "sol": "$e^x\\to e^x$ : $F(x)=5e^x$.",
+     "variants": [
+      {
+       "ans": "-exp(x)/2",
+       "enonce": "Donner une primitive de $f(x)=-\\frac{e^x}2$.",
+       "sol": "$F(x)=-\\frac{e^x}2$."
+      }
+     ],
+     "formules": "$e^x\\to e^x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p11",
+     "ans": "2*log(x)",
+     "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $f(x)=\\frac2x$.",
+     "sol": "$\\frac1x\\to\\ln|x|$ : $F(x)=2\\ln x$.",
+     "variants": [
+      {
+       "ans": "7*log(x)",
+       "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $f(x)=\\frac7x$.",
+       "sol": "$F(x)=7\\ln x$."
+      }
+     ],
+     "formules": "$\\frac1x\\to\\ln|x|$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p12",
+     "ans": "2*sqrt(x)",
+     "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $f(x)=\\frac1{\\sqrt x}$.",
+     "sol": "$x^{-1/2}\\to\\frac{x^{1/2}}{1/2}$ : $F(x)=2\\sqrt x$.",
+     "variants": [
+      {
+       "ans": "6*sqrt(x)",
+       "enonce": "Donner une primitive sur $\\mathbb R^{+*}$ de $f(x)=\\frac3{\\sqrt x}$.",
+       "sol": "$F(x)=6\\sqrt x$."
+      }
+     ],
+     "formules": "$\\frac1{\\sqrt x}\\to2\\sqrt x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p13",
+     "ans": "atan(x)",
+     "enonce": "Donner une primitive de $f(x)=\\frac1{1+x^2}$.",
+     "sol": "$\\arctan'=\\frac1{1+x^2}$ : $F(x)=\\arctan x$.",
+     "variants": [
+      {
+       "ans": "4*atan(x)",
+       "enonce": "Donner une primitive de $f(x)=\\frac4{1+x^2}$.",
+       "sol": "$F(x)=4\\arctan x$."
+      }
+     ],
+     "formules": "$\\frac1{1+x^2}\\to\\arctan x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "p14",
+     "ans": "3*tan(x)",
+     "enonce": "Donner une primitive sur $\\left]-\\frac\\pi2,\\frac\\pi2\\right[$ de $f(x)=\\frac3{\\cos^2x}$.",
+     "sol": "$\\frac1{\\cos^2}=\\tan'$ : $F(x)=3\\tan x$.",
+     "variants": [
+      {
+       "ans": "5*tan(x)",
+       "enonce": "Donner une primitive sur $\\left]-\\frac\\pi2,\\frac\\pi2\\right[$ de $f(x)=\\frac5{\\cos^2x}$.",
+       "sol": "$F(x)=5\\tan x$."
+      }
+     ],
+     "formules": "$\\frac1{\\cos^2x}\\to\\tan x$",
+     "duree": 2,
+     "type": "primitive"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Primitive de f(ax+b)",
+   "notions": [
+    "prim-affine"
+   ],
+   "exos": [
+    {
+     "id": "a1",
+     "ans": "-cos(2*x)/2",
+     "src": "TD3 ex. 1.2.3 a",
+     "enonce": "Donner une primitive de $f(x)=\\sin(2x)$.",
+     "sol": "$F(x)=-\\frac12\\cos(2x)$.",
+     "variants": [
+      {
+       "ans": "-cos(5*x)/5",
+       "enonce": "Donner une primitive de $f(x)=\\sin(5x)$.",
+       "sol": "$F(x)=-\\frac15\\cos(5x)$."
+      }
+     ],
+     "formules": "$\\sin(ax)\\to-\\frac1a\\cos(ax)$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a2",
+     "ans": "2*sin(x/2)",
+     "src": "TD3 ex. 1.2.3 a",
+     "enonce": "Donner une primitive de $g(x)=\\cos\\left(\\frac x2\\right)$.",
+     "sol": "$a=\\frac12$, on divise par $a$ : $G(x)=2\\sin\\frac x2$.",
+     "variants": [
+      {
+       "ans": "3*sin(x/3)",
+       "enonce": "Donner une primitive de $g(x)=\\cos\\left(\\frac x3\\right)$.",
+       "sol": "$a=\\frac13$ : $G(x)=3\\sin\\frac x3$."
+      }
+     ],
+     "formules": "$\\cos(ax)\\to\\frac1a\\sin(ax)$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a3",
+     "ans": "exp(6*x-7)/6",
+     "src": "TD3 ex. 1.2.3 a",
+     "enonce": "Donner une primitive de $h(x)=e^{6x-7}$.",
+     "sol": "$H(x)=\\frac16e^{6x-7}$.",
+     "variants": [
+      {
+       "ans": "exp(4*x+1)/4",
+       "enonce": "Donner une primitive de $h(x)=e^{4x+1}$.",
+       "sol": "$H(x)=\\frac14e^{4x+1}$."
+      }
+     ],
+     "formules": "$f(ax+b)\\to\\frac1aF(ax+b)$ · $e^x\\to e^x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a4",
+     "ans": "-exp(-3*x)/3",
+     "enonce": "Donner une primitive de $f(x)=e^{-3x}$.",
+     "sol": "$F(x)=-\\frac13e^{-3x}$.",
+     "variants": [
+      {
+       "ans": "-2*exp(-x/2)",
+       "enonce": "Donner une primitive de $f(x)=e^{-x/2}$.",
+       "sol": "$a=-\\frac12$ : $F(x)=-2e^{-x/2}$."
+      }
+     ],
+     "formules": "$e^{ax}\\to\\frac1ae^{ax}$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a5",
+     "ans": "(3*x-1)**5/15",
+     "enonce": "Donner une primitive de $f(x)=(3x-1)^4$.",
+     "sol": "$\\frac13\\cdot\\frac{(3x-1)^5}5$ : $F(x)=\\frac{(3x-1)^5}{15}$.",
+     "variants": [
+      {
+       "ans": "(2*x+5)**4/8",
+       "enonce": "Donner une primitive de $f(x)=(2x+5)^3$.",
+       "sol": "$\\frac12\\cdot\\frac{(2x+5)^4}4$ : $F(x)=\\frac{(2x+5)^4}8$."
+      }
+     ],
+     "formules": "$f(ax+b)\\to\\frac1aF(ax+b)$ · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$)",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a6",
+     "ans": "tan(3*x)/3",
+     "enonce": "Donner une primitive de $f(x)=\\frac1{\\cos^2(3x)}$.",
+     "sol": "$F(x)=\\frac13\\tan(3x)$.",
+     "variants": [
+      {
+       "ans": "2*tan(x/2)",
+       "enonce": "Donner une primitive sur $]-\\pi,\\pi[$ de $f(x)=\\frac1{\\cos^2(x/2)}$.",
+       "sol": "$F(x)=2\\tan\\frac x2$."
+      }
+     ],
+     "formules": "$f(ax+b)\\to\\frac1aF(ax+b)$ · $\\frac1{\\cos^2x}\\to\\tan x$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a7",
+     "ans": "(exp(2)-1)/2",
+     "enonce": "Calculer $\\int_0^1 e^{2x}\\,dx$.",
+     "sol": "$\\left[\\frac12e^{2x}\\right]_0^1=\\frac{e^2-1}2$.",
+     "variants": [
+      {
+       "ans": "(exp(3)-1)/3",
+       "enonce": "Calculer $\\int_0^1 e^{3x}\\,dx$.",
+       "sol": "$\\left[\\frac13e^{3x}\\right]_0^1=\\frac{e^3-1}3$."
+      }
+     ],
+     "formules": "$e^{ax}\\to\\frac1ae^{ax}$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "a8",
+     "ans": "log(2*x+1)/2",
+     "enonce": "Donner une primitive sur $\\left]-\\frac12,+\\infty\\right[$ de $f(x)=\\frac1{2x+1}$.",
+     "sol": "$\\frac1x\\to\\ln|x|$, on divise par $a=2$ : $F(x)=\\frac12\\ln(2x+1)$.",
+     "variants": [
+      {
+       "ans": "log(3*x+2)/3",
+       "enonce": "Donner une primitive sur $\\left]-\\frac23,+\\infty\\right[$ de $f(x)=\\frac1{3x+2}$.",
+       "sol": "$F(x)=\\frac13\\ln(3x+2)$."
+      }
+     ],
+     "formules": "$\\frac1{ax+b}\\to\\frac1a\\ln|ax+b|$",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "a9",
+     "ans": "sqrt(4*x+1)/2",
+     "enonce": "Donner une primitive sur $\\left]-\\frac14,+\\infty\\right[$ de $f(x)=\\frac1{\\sqrt{4x+1}}$.",
+     "sol": "$\\frac1{\\sqrt x}\\to2\\sqrt x$, on divise par $a=4$ : $F(x)=\\frac12\\sqrt{4x+1}$.",
+     "variants": [
+      {
+       "ans": "sqrt(2*x+3)",
+       "enonce": "Donner une primitive sur $\\left]-\\frac32,+\\infty\\right[$ de $f(x)=\\frac1{\\sqrt{2x+3}}$.",
+       "sol": "$\\frac12\\cdot2\\sqrt{2x+3}$ : $F(x)=\\sqrt{2x+3}$."
+      }
+     ],
+     "formules": "$f(ax+b)\\to\\frac1aF(ax+b)$ · $\\frac1{\\sqrt x}\\to2\\sqrt x$",
+     "duree": 2,
+     "type": "primitive"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Forme u' × uⁿ",
+   "notions": [
+    "prim-u-puissance",
+    "integrale-bornes"
+   ],
+   "exos": [
+    {
+     "id": "u1",
+     "ans": "(x**2+1)**4/4",
+     "enonce": "Donner une primitive de $f(x)=2x(x^2+1)^3$.",
+     "sol": "$u=x^2+1$, $u'=2x$ : $F(x)=\\frac{(x^2+1)^4}4$.",
+     "variants": [
+      {
+       "ans": "(x**3+2)**3/3",
+       "enonce": "Donner une primitive de $f(x)=3x^2(x^3+2)^2$.",
+       "sol": "$u=x^3+2$, $u'=3x^2$ : $F(x)=\\frac{(x^3+2)^3}3$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$)",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "u2",
+     "ans": "4*(x**3+x+1)**3",
+     "src": "TD3 ex. 1.2.3 c",
+     "enonce": "Donner une primitive de $f_2(x)=4(9x^2+3)(x^3+x+1)^2$.",
+     "sol": "$u=x^3+x+1$, $u'=3x^2+1$, donc $9x^2+3=3u'$ et $f_2=12u'u^2$ : $F(x)=4(x^3+x+1)^3$.",
+     "variants": [
+      {
+       "ans": "(x**2+x+3)**4/2",
+       "enonce": "Donner une primitive de $f(x)=2(2x+1)(x^2+x+3)^3$.",
+       "sol": "$u=x^2+x+3$, $u'=2x+1$ : $F(x)=2\\cdot\\frac{u^4}4=\\frac{(x^2+x+3)^4}2$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$)",
+     "duree": 2,
+     "type": "primitive"
+    },
+    {
+     "id": "u3",
+     "ans": "Rational(242,5)",
+     "src": "TD3 ex. 3.11.2",
+     "enonce": "Calculer $I_2=\\int_0^1 4t(2t^2+1)^4\\,dt$.",
+     "sol": "$u=2t^2+1$, $u'=4t$ : $\\left[\\frac{(2t^2+1)^5}5\\right]_0^1=\\frac{3^5-1}5=\\frac{242}5$.",
+     "variants": [
+      {
+       "ans": "Rational(255,4)",
+       "enonce": "Calculer $I=\\int_0^1 6t(3t^2+1)^3\\,dt$.",
+       "sol": "$u=3t^2+1$, $u'=6t$ : $\\left[\\frac{(3t^2+1)^4}4\\right]_0^1=\\frac{4^4-1}4=\\frac{255}4$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u4",
+     "ans": "(2*sqrt(2)-1)/3",
+     "src": "TD3 ex. 3.11.9",
+     "enonce": "Calculer $I_9=\\int_0^1 x\\sqrt{x^2+1}\\,dx$.",
+     "sol": "$x=\\frac12u'$ avec $u=x^2+1$ : $\\left[\\frac13(x^2+1)^{3/2}\\right]_0^1=\\frac{2\\sqrt2-1}3$.",
+     "variants": [
+      {
+       "ans": "(8-3*sqrt(3))/3",
+       "enonce": "Calculer $I=\\int_0^1 x\\sqrt{x^2+3}\\,dx$.",
+       "sol": "$x=\\frac12u'$ avec $u=x^2+3$ : $\\left[\\frac13(x^2+3)^{3/2}\\right]_0^1=\\frac{8-3\\sqrt3}3$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=\\frac12$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u5",
+     "ans": "Rational(2,5)",
+     "src": "Partiel S1 janv. 2023, ex. 1.1",
+     "enonce": "Sans IPP ni changement de variable, calculer $I=\\int_1^2(x-1)\\sqrt{x-1}\\,dx$.",
+     "sol": "$(x-1)\\sqrt{x-1}=(x-1)^{3/2}$ : $\\left[\\frac25(x-1)^{5/2}\\right]_1^2=\\frac25$.",
+     "variants": [
+      {
+       "ans": "Rational(62,5)",
+       "enonce": "Sans IPP ni changement de variable, calculer $I=\\int_0^3(x+1)\\sqrt{x+1}\\,dx$.",
+       "sol": "$(x+1)^{3/2}$ : $\\left[\\frac25(x+1)^{5/2}\\right]_0^3=\\frac25(32-1)=\\frac{62}5$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=\\frac32$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u6",
+     "ans": "2*(5*sqrt(5)-1)/9",
+     "src": "Contrôle S1 nov. 2021, ex. 3.1",
+     "enonce": "Calculer directement $I=\\int_0^1(x^2+1)\\sqrt{x^3+3x+1}\\,dx$.",
+     "sol": "$u=x^3+3x+1$, $u'=3(x^2+1)$ : $I=\\frac13\\left[\\frac23u^{3/2}\\right]_0^1=\\frac29(5\\sqrt5-1)$.",
+     "variants": [
+      {
+       "ans": "Rational(52,9)",
+       "enonce": "Calculer $I=\\int_0^2 x^2\\sqrt{x^3+1}\\,dx$.",
+       "sol": "$u=x^3+1$, $u'=3x^2$ : $I=\\frac13\\left[\\frac23u^{3/2}\\right]_0^2=\\frac29(27-1)=\\frac{52}9$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=\\frac12$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u7",
+     "ans": "Rational(15,64)",
+     "src": "Contrôle S1 nov. 2022, ex. 1.1",
+     "enonce": "Sans IPP ni changement de variable, calculer $I=\\int_0^1\\frac{2x^3+1}{(x^4+2x+1)^3}\\,dx$.",
+     "sol": "$u=x^4+2x+1$, $u'=2(2x^3+1)$ : $I=\\frac12\\left[-\\frac1{2u^2}\\right]_0^1=-\\frac1{64}+\\frac14=\\frac{15}{64}$.",
+     "variants": [
+      {
+       "ans": "Rational(3,16)",
+       "enonce": "Sans IPP ni changement de variable, calculer $I=\\int_0^1\\frac{x}{(x^2+1)^3}\\,dx$.",
+       "sol": "$u=x^2+1$, $u'=2x$ : $I=\\frac12\\left[-\\frac1{2u^2}\\right]_0^1=\\frac12\\left(-\\frac18+\\frac12\\right)=\\frac3{16}$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=-3$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u8",
+     "ans": "Rational(1,2)",
+     "enonce": "Calculer $I=\\int_0^1\\frac{2x}{(x^2+1)^2}\\,dx$.",
+     "sol": "$u=x^2+1$, $\\frac{u'}{u^2}\\to-\\frac1u$ : $\\left[-\\frac1{x^2+1}\\right]_0^1=-\\frac12+1=\\frac12$.",
+     "variants": [
+      {
+       "ans": "Rational(1,12)",
+       "enonce": "Calculer $I=\\int_0^1\\frac{2x}{(x^2+3)^2}\\,dx$.",
+       "sol": "$\\frac{u'}{u^2}\\to-\\frac1u$ : $\\left[-\\frac1{x^2+3}\\right]_0^1=-\\frac14+\\frac13=\\frac1{12}$."
+      }
+     ],
+     "formules": "$\\frac{u'}{u^2}\\to-\\frac1u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "u9",
+     "ans": "sqrt(x**2+4)",
+     "enonce": "Donner une primitive de $f(x)=\\frac{x}{\\sqrt{x^2+4}}$.",
+     "sol": "$u=x^2+4$, $u'=2x$, $f=\\frac12\\cdot\\frac{u'}{\\sqrt u}$ et $\\frac{u'}{\\sqrt u}\\to2\\sqrt u$ : $F(x)=\\sqrt{x^2+4}$.",
+     "variants": [
+      {
+       "ans": "2*sqrt(x**3+1)/3",
+       "enonce": "Donner une primitive sur $]-1,+\\infty[$ de $f(x)=\\frac{x^2}{\\sqrt{x^3+1}}$.",
+       "sol": "$f=\\frac13\\cdot\\frac{u'}{\\sqrt u}$ avec $u=x^3+1$ : $F(x)=\\frac23\\sqrt{x^3+1}$."
+      }
+     ],
+     "formules": "$\\frac{u'}{\\sqrt u}\\to2\\sqrt u$",
+     "duree": 2,
+     "type": "primitive"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Formes u'/u, u'eᵘ, u'/√u, arctan",
+   "notions": [
+    "prim-u-ln-exp",
+    "prim-trigo-arctan"
+   ],
+   "exos": [
+    {
+     "id": "l1",
+     "ans": "Rational(3,2)*(1-exp(-4))",
+     "src": "TD3 ex. 3.11.1",
+     "enonce": "Calculer $I_1=\\int_0^2 3te^{-t^2}\\,dt$.",
+     "sol": "$u=-t^2$, $u'=-2t$ : $\\left[-\\frac32e^{-t^2}\\right]_0^2=\\frac32(1-e^{-4})$.",
+     "variants": [
+      {
+       "ans": "E-1",
+       "enonce": "Calculer $I=\\int_0^1 2te^{t^2}\\,dt$.",
+       "sol": "$u'e^u$ : $\\left[e^{t^2}\\right]_0^1=e-1$."
+      }
+     ],
+     "formules": "$u'e^u\\to e^u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l2",
+     "ans": "Rational(1,3)",
+     "src": "TD3 ex. 3.11.3",
+     "enonce": "Calculer $I_3=\\int_1^e\\frac{(\\ln t)^2}t\\,dt$.",
+     "sol": "$u=\\ln t$, $u'=\\frac1t$ : $\\left[\\frac{(\\ln t)^3}3\\right]_1^e=\\frac13$.",
+     "variants": [
+      {
+       "ans": "Rational(1,4)",
+       "enonce": "Calculer $I=\\int_1^e\\frac{\\ln^3t}t\\,dt$.",
+       "sol": "$u=\\ln t$, $u'u^3$ : $\\left[\\frac{\\ln^4t}4\\right]_1^e=\\frac14$."
+      }
+     ],
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $u=\\ln t$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l3",
+     "ans": "log(7)/2",
+     "src": "Examen B1-OBM oct. 2024, ex. 5.1",
+     "enonce": "Calculer directement avec une primitive $I=\\int_0^1\\frac{2x+2}{2x^2+4x+1}\\,dx$.",
+     "sol": "$u=2x^2+4x+1$, $u'=2(2x+2)$ : $\\frac12\\big[\\ln|u|\\big]_0^1=\\frac{\\ln7}2$.",
+     "variants": [
+      {
+       "ans": "log(5)",
+       "enonce": "Calculer $I=\\int_0^1\\frac{2x+3}{x^2+3x+1}\\,dx$.",
+       "sol": "$\\frac{u'}u$ : $\\left[\\ln(x^2+3x+1)\\right]_0^1=\\ln5$."
+      }
+     ],
+     "formules": "$\\frac{u'}u\\to\\ln|u|$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l4",
+     "ans": "log(2)",
+     "src": "Partiel S1 janv. 2023, ex. 1.2",
+     "enonce": "Sans IPP ni changement de variable, calculer $J=\\int_0^1\\frac{x^2+2}{x^3+6x+1}\\,dx$.",
+     "sol": "$u'=3(x^2+2)$ : $\\frac13\\big[\\ln|u|\\big]_0^1=\\frac{\\ln 8}3=\\ln2$.",
+     "variants": [
+      {
+       "ans": "log(2)/2",
+       "enonce": "Calculer $I=\\int_0^1\\frac{x+1}{x^2+2x+3}\\,dx$.",
+       "sol": "$x+1=\\frac12u'$ : $\\frac12\\left[\\ln(x^2+2x+3)\\right]_0^1=\\frac12\\ln\\frac63=\\frac{\\ln2}2$."
+      }
+     ],
+     "formules": "$\\frac{u'}u\\to\\ln|u|$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l5",
+     "ans": "log(3)/2",
+     "src": "TD3 ex. 3.11.4",
+     "enonce": "Calculer $I_4=\\int_{\\pi/6}^{\\pi/3}\\tan x\\,dx$.",
+     "sol": "$\\tan=-\\frac{(\\cos)'}{\\cos}$ : $\\big[-\\ln\\cos x\\big]_{\\pi/6}^{\\pi/3}=-\\ln\\frac12+\\ln\\frac{\\sqrt3}2=\\ln\\sqrt3=\\frac{\\ln3}2$.",
+     "variants": [
+      {
+       "ans": "log(2)/2",
+       "enonce": "Calculer $I=\\int_0^{\\pi/4}\\tan x\\,dx$.",
+       "sol": "$\\tan=-\\frac{(\\cos)'}{\\cos}$ : $\\left[-\\ln\\cos x\\right]_0^{\\pi/4}=-\\ln\\frac{\\sqrt2}2=\\frac{\\ln2}2$."
+      }
+     ],
+     "formules": "$\\tan x=\\frac{\\sin x}{\\cos x}=-\\frac{u'}u$ avec $u=\\cos x$ · $\\frac{u'}u\\to\\ln|u|$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l6",
+     "ans": "Rational(2,3)",
+     "src": "TD3 ex. 3.11.5",
+     "enonce": "Calculer $I_5=\\int_0^1\\frac{t^2+1}{2\\sqrt{t^3+3t}}\\,dt$.",
+     "sol": "$u=t^3+3t$, $u'=3(t^2+1)$, $\\frac{u'}{2\\sqrt u}\\to\\sqrt u$ : $\\frac13\\big[\\sqrt u\\big]_0^1=\\frac23$.",
+     "variants": [
+      {
+       "ans": "sqrt(3)-1",
+       "enonce": "Calculer $I=\\int_0^1\\frac{2t+1}{2\\sqrt{t^2+t+1}}\\,dt$.",
+       "sol": "$\\frac{u'}{2\\sqrt u}$ : $\\left[\\sqrt{t^2+t+1}\\right]_0^1=\\sqrt3-1$."
+      }
+     ],
+     "formules": "$\\frac{u'}{2\\sqrt u}\\to\\sqrt u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l7",
+     "ans": "pi**2/32",
+     "src": "TD3 ex. 3.11.8",
+     "enonce": "Calculer $I_8=\\int_0^1\\frac{\\arctan x}{1+x^2}\\,dx$.",
+     "sol": "$u=\\arctan x$, $u'u\\to\\frac{u^2}2$ : $\\frac12\\left(\\frac\\pi4\\right)^2=\\frac{\\pi^2}{32}$.",
+     "variants": [
+      {
+       "ans": "pi**3/192",
+       "enonce": "Calculer $I=\\int_0^1\\frac{\\arctan^2x}{1+x^2}\\,dx$.",
+       "sol": "$u=\\arctan x$, $u'u^2$ : $\\left[\\frac{\\arctan^3x}3\\right]_0^1=\\frac13\\left(\\frac\\pi4\\right)^3=\\frac{\\pi^3}{192}$."
+      }
+     ],
+     "formules": "$u'u\\to\\frac{u^2}2$ avec $u=\\arctan x$, $u'=\\frac1{1+x^2}$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l8",
+     "ans": "2-2**Rational(3,4)",
+     "src": "TD3 ex. 3.11.6",
+     "enonce": "Calculer $I_6=\\int_0^{\\pi/4}\\frac{\\sin x}{\\sqrt{\\cos x}}\\,dx$.",
+     "sol": "$u=\\cos x$, $-\\frac{u'}{\\sqrt u}\\to-2\\sqrt u$ : $\\big[-2\\sqrt{\\cos x}\\big]_0^{\\pi/4}=2-2^{3/4}$.",
+     "variants": [
+      {
+       "ans": "2-sqrt(2)",
+       "enonce": "Calculer $I=\\int_{\\pi/6}^{\\pi/2}\\frac{\\cos x}{\\sqrt{\\sin x}}\\,dx$.",
+       "sol": "$\\frac{u'}{\\sqrt u}\\to2\\sqrt u$ : $\\left[2\\sqrt{\\sin x}\\right]_{\\pi/6}^{\\pi/2}=2-\\frac2{\\sqrt2}=2-\\sqrt2$."
+      }
+     ],
+     "formules": "$\\frac{u'}{\\sqrt u}\\to2\\sqrt u$ avec $u=\\cos x$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l9",
+     "ans": "0",
+     "src": "TD3 ex. 3.11.7",
+     "enonce": "Calculer $I_7=\\int_{-\\pi/4}^{\\pi/4}\\tan x\\,(1+\\tan^2x)\\,dx$.",
+     "sol": "$u=\\tan x$, $u'u\\to\\frac{\\tan^2x}2$ : $\\frac12-\\frac12=0$.",
+     "variants": [
+      {
+       "ans": "Rational(1,3)",
+       "enonce": "Calculer $I=\\int_0^{\\pi/4}\\tan^2x\\,(1+\\tan^2x)\\,dx$.",
+       "sol": "$u=\\tan x$, $u'u^2$ : $\\left[\\frac{\\tan^3x}3\\right]_0^{\\pi/4}=\\frac13$."
+      }
+     ],
+     "formules": "$u'u\\to\\frac{u^2}2$ avec $u=\\tan x$, $u'=1+\\tan^2x$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l10",
+     "ans": "pi/4",
+     "enonce": "Calculer $I=\\int_0^1\\frac{2x}{1+x^4}\\,dx$.",
+     "sol": "$u=x^2$, $u'=2x$, $\\frac{u'}{1+u^2}\\to\\arctan u$ : $\\big[\\arctan(x^2)\\big]_0^1=\\frac\\pi4$.",
+     "variants": [
+      {
+       "ans": "pi/8",
+       "enonce": "Calculer $I=\\int_0^1\\frac{x}{1+x^4}\\,dx$.",
+       "sol": "$u=x^2$, $x=\\frac12u'$ : $\\frac12\\left[\\arctan(x^2)\\right]_0^1=\\frac\\pi8$."
+      }
+     ],
+     "formules": "$\\frac{u'}{1+u^2}\\to\\arctan u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l11",
+     "ans": "1",
+     "enonce": "Calculer $I=\\int_0^{\\sqrt{\\pi/2}}2x\\cos(x^2)\\,dx$.",
+     "sol": "$u=x^2$, $u'\\cos u\\to\\sin u$ : $\\big[\\sin(x^2)\\big]_0^{\\sqrt{\\pi/2}}=\\sin\\frac\\pi2=1$.",
+     "variants": [
+      {
+       "ans": "Rational(1,4)",
+       "enonce": "Calculer $I=\\int_0^{\\sqrt{\\pi/6}}x\\cos(x^2)\\,dx$.",
+       "sol": "$x=\\frac12u'$ avec $u=x^2$ : $\\frac12\\left[\\sin(x^2)\\right]_0^{\\sqrt{\\pi/6}}=\\frac12\\sin\\frac\\pi6=\\frac14$."
+      }
+     ],
+     "formules": "$u'\\cos u\\to\\sin u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "l12",
+     "ans": "1",
+     "enonce": "Calculer $I=\\int_0^{\\sqrt\\pi}x\\sin(x^2)\\,dx$.",
+     "sol": "$u=x^2$, $x=\\frac12u'$, $u'\\sin u\\to-\\cos u$ : $\\left[-\\frac12\\cos(x^2)\\right]_0^{\\sqrt\\pi}=\\frac12+\\frac12=1$.",
+     "variants": [
+      {
+       "ans": "1",
+       "enonce": "Calculer $I=\\int_0^{\\sqrt{\\pi/2}}2x\\sin(x^2)\\,dx$.",
+       "sol": "$u'\\sin u\\to-\\cos u$ : $\\left[-\\cos(x^2)\\right]_0^{\\sqrt{\\pi/2}}=0+1=1$."
+      }
+     ],
+     "formules": "$u'\\sin u\\to-\\cos u$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "IPP : polynôme × exponentielle",
+   "notions": [
+    "ipp",
+    "ipp-choix"
+   ],
+   "exos": [
+    {
+     "id": "ie1",
+     "ans": "1",
+     "enonce": "Par IPP, calculer $\\int_0^1 xe^x\\,dx$.",
+     "sol": "$u=x$, $v'=e^x$ ; $u'=1$, $v=e^x$. $[xe^x]_0^1-\\int_0^1e^x\\,dx=e-(e-1)=1$.",
+     "variants": [
+      {
+       "ans": "(exp(2)+1)/4",
+       "enonce": "Calculer $I=\\int_0^1 xe^{2x}\\,dx$.",
+       "sol": "$u=x$, $v'=e^{2x}$ : $\\left[\\frac x2e^{2x}\\right]_0^1-\\frac12\\int_0^1e^{2x}=\\frac{e^2}2-\\frac{e^2-1}4=\\frac{e^2+1}4$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ie2",
+     "ans": "1-2*exp(-1)",
+     "enonce": "Par IPP, calculer $\\int_0^1 xe^{-x}\\,dx$.",
+     "sol": "$u=x$, $v=-e^{-x}$ : $[-xe^{-x}]_0^1+\\int_0^1e^{-x}\\,dx=-e^{-1}+1-e^{-1}=1-\\frac2e$.",
+     "variants": [
+      {
+       "ans": "Rational(1,4)-3*exp(-2)/4",
+       "enonce": "Calculer $I=\\int_0^1 xe^{-2x}\\,dx$.",
+       "sol": "$\\left[-\\frac x2e^{-2x}\\right]_0^1+\\frac12\\int_0^1e^{-2x}=-\\frac{e^{-2}}2+\\frac{1-e^{-2}}4=\\frac14-\\frac34e^{-2}$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ie3",
+     "ans": "exp(2)",
+     "src": "Contrôle S1 nov. 2021, ex. 3.2",
+     "enonce": "En intégrant par parties, calculer $J=\\int_0^1(2x+1)e^{2x}\\,dx$.",
+     "sol": "$u=2x+1$, $v=\\frac12e^{2x}$ : $\\left[\\frac{(2x+1)e^{2x}}2\\right]_0^1-\\int_0^1e^{2x}\\,dx=\\frac{3e^2-1}2-\\frac{e^2-1}2=e^2$.",
+     "variants": [
+      {
+       "ans": "E",
+       "enonce": "Calculer $I=\\int_0^1(x+1)e^x\\,dx$.",
+       "sol": "$\\left[(x+1)e^x\\right]_0^1-\\int_0^1e^x=2e-1-(e-1)=e$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ie4",
+     "ans": "(5*exp(2)+1)/4",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.2",
+     "enonce": "Via une IPP dont vous énoncerez la formule générale, calculer $J=\\int_0^1(3x+1)e^{2x}\\,dx$.",
+     "sol": "$u=3x+1$, $v=\\frac12e^{2x}$ : $\\frac{4e^2-1}2-\\frac32\\cdot\\frac{e^2-1}2=\\frac{5e^2+1}4$.",
+     "variants": [
+      {
+       "ans": "3-E",
+       "enonce": "Calculer $I=\\int_0^1(2x-1)e^x\\,dx$.",
+       "sol": "$\\left[(2x-1)e^x\\right]_0^1-2\\int_0^1e^x=e+1-2(e-1)=3-e$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ie5",
+     "ans": "(13*exp(3)-7)/9",
+     "src": "TD3 ex. 3.12.1",
+     "enonce": "Par IPP, calculer $I=\\int_0^1(2x+3)e^{3x}\\,dx$.",
+     "sol": "$u=2x+3$, $v=\\frac13e^{3x}$ : $\\frac{5e^3-3}3-\\frac23\\cdot\\frac{e^3-1}3=\\frac{13e^3-7}9$.",
+     "variants": [
+      {
+       "ans": "(5*exp(2)-3)/4",
+       "enonce": "Calculer $I=\\int_0^1(x+2)e^{2x}\\,dx$.",
+       "sol": "$\\left[\\frac{x+2}2e^{2x}\\right]_0^1-\\frac12\\int_0^1e^{2x}=\\frac32e^2-1-\\frac{e^2-1}4=\\frac{5e^2-3}4$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "IPP : polynôme × sin/cos",
+   "notions": [
+    "ipp",
+    "prim-affine"
+   ],
+   "exos": [
+    {
+     "id": "it1",
+     "ans": "pi",
+     "enonce": "Par IPP, calculer $\\int_0^\\pi x\\sin x\\,dx$.",
+     "sol": "$u=x$, $v=-\\cos x$ : $[-x\\cos x]_0^\\pi+\\int_0^\\pi\\cos x\\,dx=\\pi+0=\\pi$.",
+     "variants": [
+      {
+       "ans": "pi/2-1",
+       "enonce": "Calculer $I=\\int_0^{\\pi/2}x\\cos x\\,dx$.",
+       "sol": "$\\left[x\\sin x\\right]_0^{\\pi/2}-\\int_0^{\\pi/2}\\sin x=\\frac\\pi2-1$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "it2",
+     "ans": "pi*sqrt(2)/2-4+2*sqrt(2)",
+     "src": "TD3 ex. 3.12.2",
+     "enonce": "Par IPP, calculer $J=\\int_0^{\\pi/2}x\\cos\\frac x2\\,dx$.",
+     "sol": "$u=x$, $v=2\\sin\\frac x2$ : $\\left[2x\\sin\\frac x2\\right]_0^{\\pi/2}-\\int_0^{\\pi/2}2\\sin\\frac x2\\,dx=\\frac{\\pi\\sqrt2}2-(4-2\\sqrt2)$.",
+     "variants": [
+      {
+       "ans": "4",
+       "enonce": "Calculer $I=\\int_0^{\\pi}x\\sin\\frac x2\\,dx$.",
+       "sol": "$v=-2\\cos\\frac x2$ : $\\left[-2x\\cos\\frac x2\\right]_0^\\pi+2\\int_0^\\pi\\cos\\frac x2=0+4\\left[\\sin\\frac x2\\right]_0^\\pi=4$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $\\cos(ax)\\to\\frac1a\\sin(ax)$ · $\\sin(ax)\\to-\\frac1a\\cos(ax)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "it3",
+     "ans": "1",
+     "src": "Contrôle S1 nov. 2022, ex. 1.2",
+     "enonce": "En intégrant par parties, calculer $J=\\int_0^{\\pi/4}(2x+1)\\sin(2x)\\,dx$.",
+     "sol": "$u=2x+1$, $v=-\\frac12\\cos 2x$ : $\\left[-\\frac{(2x+1)\\cos2x}2\\right]_0^{\\pi/4}+\\int_0^{\\pi/4}\\cos2x\\,dx=\\frac12+\\frac12=1$.",
+     "variants": [
+      {
+       "ans": "pi/8+Rational(1,4)",
+       "enonce": "Calculer $I=\\int_0^{\\pi/4}(x+1)\\cos(2x)\\,dx$.",
+       "sol": "$\\left[\\frac{x+1}2\\sin2x\\right]_0^{\\pi/4}-\\frac12\\int_0^{\\pi/4}\\sin2x=\\frac\\pi8+\\frac12-\\frac14=\\frac\\pi8+\\frac14$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $\\sin(ax)\\to-\\frac1a\\cos(ax)$ · $\\cos(ax)\\to\\frac1a\\sin(ax)$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "it4",
+     "ans": "3*sqrt(3)*(pi+1)/2-Rational(9,2)",
+     "src": "Examen B1-OBM oct. 2024, ex. 5.2",
+     "enonce": "Via une IPP (posez $u$, $u'$, $v$, $v'$ et la formule), calculer $J=\\int_0^\\pi(x+1)\\cos\\frac x3\\,dx$.",
+     "sol": "$u=x+1$, $v=3\\sin\\frac x3$ : $\\left[3(x+1)\\sin\\frac x3\\right]_0^\\pi-3\\int_0^\\pi\\sin\\frac x3\\,dx=\\frac{3\\sqrt3}2(\\pi+1)-3\\left[-3\\cos\\frac x3\\right]_0^\\pi=\\frac{3\\sqrt3}2(\\pi+1)-\\frac92$.",
+     "variants": [
+      {
+       "ans": "3",
+       "enonce": "Calculer $I=\\int_0^{\\pi/2}(2x+1)\\sin x\\,dx$.",
+       "sol": "$\\left[-(2x+1)\\cos x\\right]_0^{\\pi/2}+2\\int_0^{\\pi/2}\\cos x=1+2=3$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $\\cos(ax)\\to\\frac1a\\sin(ax)$ · $\\sin(ax)\\to-\\frac1a\\cos(ax)$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "IPP avec ln",
+   "notions": [
+    "ipp-choix"
+   ],
+   "exos": [
+    {
+     "id": "il1",
+     "ans": "1",
+     "src": "TD3 ex. 3.12.3",
+     "enonce": "Par IPP, calculer $K=\\int_1^e\\ln x\\,dx$.",
+     "sol": "$u=\\ln x$, $v'=1$, $v=x$ : $[x\\ln x]_1^e-\\int_1^e1\\,dx=e-(e-1)=1$.",
+     "variants": [
+      {
+       "ans": "exp(2)+1",
+       "enonce": "Calculer $I=\\int_1^{e^2}\\ln x\\,dx$.",
+       "sol": "$u=\\ln x$, $v'=1$ : $\\left[x\\ln x-x\\right]_1^{e^2}=2e^2-e^2+1=e^2+1$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver $\\ln$ : $u=\\ln x$, $u'=\\frac1x$, $v'=1$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "il2",
+     "ans": "(exp(2)+1)/4",
+     "enonce": "Par IPP, calculer $\\int_1^e x\\ln x\\,dx$.",
+     "sol": "$u=\\ln x$, $v=\\frac{x^2}2$ : $\\frac{e^2}2-\\int_1^e\\frac x2\\,dx=\\frac{e^2}2-\\frac{e^2-1}4=\\frac{e^2+1}4$.",
+     "variants": [
+      {
+       "ans": "(2*exp(3)+1)/9",
+       "enonce": "Calculer $I=\\int_1^e x^2\\ln x\\,dx$.",
+       "sol": "$\\left[\\frac{x^3}3\\ln x\\right]_1^e-\\int_1^e\\frac{x^2}3=\\frac{e^3}3-\\frac{e^3-1}9=\\frac{2e^3+1}9$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver $\\ln$ : $u=\\ln x$, $u'=\\frac1x$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "il3",
+     "ans": "4-2*sqrt(E)",
+     "src": "Contrôle 1 S1 nov. 2020, ex. 3.3",
+     "enonce": "À l'aide d'une IPP, calculer $K=\\int_1^e\\frac{\\ln x}{\\sqrt x}\\,dx$.",
+     "sol": "$u=\\ln x$, $v=2\\sqrt x$ : $[2\\sqrt x\\ln x]_1^e-\\int_1^e\\frac2{\\sqrt x}\\,dx=2\\sqrt e-(4\\sqrt e-4)=4-2\\sqrt e$.",
+     "variants": [
+      {
+       "ans": "(2*exp(Rational(3,2))+4)/9",
+       "enonce": "Calculer $I=\\int_1^e\\sqrt x\\ln x\\,dx$.",
+       "sol": "$\\left[\\frac23x^{3/2}\\ln x\\right]_1^e-\\frac23\\int_1^e\\sqrt x=\\frac23e^{3/2}-\\frac49(e^{3/2}-1)=\\frac{2e^{3/2}+4}9$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver $\\ln$ : $u=\\ln x$, $u'=\\frac1x$ · $\\frac1{\\sqrt x}\\to2\\sqrt x$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "il4",
+     "ans": "1-2*exp(-1)",
+     "src": "TD3 ex. 3.12.6 ★",
+     "enonce": "Par IPP, calculer $N=\\int_1^e\\frac{\\ln x}{x^2}\\,dx$.",
+     "sol": "$u=\\ln x$, $v=-\\frac1x$ : $\\left[-\\frac{\\ln x}x\\right]_1^e+\\int_1^e\\frac{dx}{x^2}=-\\frac1e+1-\\frac1e=1-\\frac2e$.",
+     "variants": [
+      {
+       "ans": "Rational(1,4)-3*exp(-2)/4",
+       "enonce": "Calculer $I=\\int_1^e\\frac{\\ln x}{x^3}\\,dx$.",
+       "sol": "$v=-\\frac1{2x^2}$ : $\\left[-\\frac{\\ln x}{2x^2}\\right]_1^e+\\int_1^e\\frac1{2x^3}=-\\frac1{2e^2}+\\frac14-\\frac1{4e^2}=\\frac14-\\frac3{4e^2}$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver $\\ln$ : $u=\\ln x$, $u'=\\frac1x$ · $\\frac1{x^2}\\to-\\frac1x$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Double IPP et astuces",
+   "notions": [
+    "ipp-choix"
+   ],
+   "exos": [
+    {
+     "id": "dd1",
+     "ans": "E-2",
+     "enonce": "Par deux IPP, calculer $\\int_0^1x^2e^x\\,dx$.",
+     "sol": "$[x^2e^x]_0^1-2\\int_0^1xe^x\\,dx=e-2\\cdot1=e-2$.",
+     "variants": [
+      {
+       "ans": "2-5*exp(-1)",
+       "enonce": "Calculer $I=\\int_0^1x^2e^{-x}\\,dx$.",
+       "sol": "Deux IPP : primitive $-(x^2+2x+2)e^{-x}$, donc $I=-5e^{-1}+2$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ deux fois : chaque IPP baisse le degré du polynôme",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "dd2",
+     "ans": "pi**2-4",
+     "src": "TD3 ex. 3.12.4",
+     "enonce": "Par deux IPP, calculer $L=\\int_0^\\pi x^2\\sin x\\,dx$.",
+     "sol": "$[-x^2\\cos x]_0^\\pi+2\\int_0^\\pi x\\cos x\\,dx=\\pi^2+2\\big([x\\sin x]_0^\\pi-\\int_0^\\pi\\sin x\\,dx\\big)=\\pi^2-4$.",
+     "variants": [
+      {
+       "ans": "pi**2/4-2",
+       "enonce": "Calculer $I=\\int_0^{\\pi/2}x^2\\cos x\\,dx$.",
+       "sol": "Deux IPP : primitive $x^2\\sin x+2x\\cos x-2\\sin x$, donc $I=\\frac{\\pi^2}4-2$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ deux fois : chaque IPP baisse le degré du polynôme",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "dd3",
+     "ans": "(exp(pi)+1)/2",
+     "src": "TD3 ex. 3.12.5",
+     "enonce": "Calculer $M=\\int_0^\\pi e^x\\sin x\\,dx$.",
+     "sol": "Deux IPP ($u=\\sin$ puis $u=\\cos$, $v=e^x$) donnent $M=e^\\pi+1-M$, donc $M=\\frac{e^\\pi+1}2$.",
+     "variants": [
+      {
+       "ans": "(exp(pi/2)-1)/2",
+       "enonce": "Calculer $I=\\int_0^{\\pi/2}e^x\\cos x\\,dx$.",
+       "sol": "Deux IPP font revenir $I$ : $2I=\\left[e^x(\\sin x+\\cos x)\\right]_0^{\\pi/2}=e^{\\pi/2}-1$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ deux fois : l'intégrale de départ réapparaît, on résout l'équation en $M$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "dd4",
+     "ans": "pi/4-log(2)/2",
+     "src": "TD3 ex. 3.12.7 ★",
+     "enonce": "Par IPP, calculer $O=\\int_0^{\\pi/4}\\frac x{\\cos^2x}\\,dx$.",
+     "sol": "$u=x$, $v=\\tan x$ : $[x\\tan x]_0^{\\pi/4}-\\int_0^{\\pi/4}\\tan x\\,dx=\\frac\\pi4+\\big[\\ln\\cos x\\big]_0^{\\pi/4}=\\frac\\pi4-\\frac{\\ln2}2$.",
+     "variants": [
+      {
+       "ans": "pi/4+log(2)/2",
+       "enonce": "Calculer $I=\\int_{\\pi/4}^{\\pi/2}\\frac{x}{\\sin^2x}\\,dx$.",
+       "sol": "$v=-\\cot x$ : $\\left[-x\\cot x\\right]_{\\pi/4}^{\\pi/2}+\\int\\cot x=\\frac\\pi4+\\left[\\ln\\sin x\\right]_{\\pi/4}^{\\pi/2}=\\frac\\pi4+\\frac{\\ln2}2$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · $\\frac1{\\cos^2x}\\to\\tan x$ · $\\int\\tan x\\,dx=-\\ln|\\cos x|$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Changement de variable affine",
+   "notions": [
+    "cv"
+   ],
+   "exos": [
+    {
+     "id": "ca1",
+     "ans": "Rational(4,15)",
+     "enonce": "Calculer $\\int_0^1x\\sqrt{1-x}\\,dx$ en posant $t=1-x$.",
+     "sol": "$x=1-t$, $dx=-dt$, bornes $1\\to0$ : $\\int_0^1(1-t)\\sqrt t\\,dt=\\frac23-\\frac25=\\frac4{15}$.",
+     "variants": [
+      {
+       "ans": "Rational(116,15)",
+       "enonce": "Calculer $I=\\int_0^3x\\sqrt{x+1}\\,dx$ avec $t=x+1$.",
+       "sol": "$\\int_1^4(t-1)\\sqrt t\\,dt=\\left[\\frac25t^{5/2}-\\frac23t^{3/2}\\right]_1^4=\\frac{62}5-\\frac{14}3=\\frac{116}{15}$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$)",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ca2",
+     "ans": "pi/6",
+     "src": "Contrôle S1 nov. 2021, ex. 3.3",
+     "enonce": "À l'aide du changement de variable $x=2t+1$, calculer $K=\\int_1^{2\\sqrt3+1}\\frac{dx}{(x-1)^2+4}$.",
+     "sol": "$dx=2\\,dt$, $(x-1)^2+4=4(t^2+1)$, bornes $0\\to\\sqrt3$ : $\\frac12\\int_0^{\\sqrt3}\\frac{dt}{1+t^2}=\\frac12\\cdot\\frac\\pi3=\\frac\\pi6$.",
+     "variants": [
+      {
+       "ans": "pi/12",
+       "enonce": "Calculer $I=\\int_{-1}^2\\frac{dx}{(x+1)^2+9}$.",
+       "sol": "$t=x+1$ : $\\left[\\frac13\\arctan\\frac t3\\right]_0^3=\\frac13\\cdot\\frac\\pi4=\\frac\\pi{12}$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "ca3",
+     "ans": "Rational(3,4)-log(2)",
+     "src": "TD3 ex. 3.13.1",
+     "enonce": "Calculer $I=\\int_0^{1/2}\\frac{4x^2}{(2x+1)^2}\\,dx$ en posant $t=2x+1$.",
+     "sol": "$4x^2=(t-1)^2$, $dx=\\frac{dt}2$, bornes $1\\to2$ : $\\frac12\\int_1^2\\left(1-\\frac2t+\\frac1{t^2}\\right)dt=\\frac12\\left(\\frac32-2\\ln2\\right)=\\frac34-\\ln2$.",
+     "variants": [
+      {
+       "ans": "Rational(3,2)-2*log(2)",
+       "enonce": "Calculer $I=\\int_0^1\\frac{x^2}{(x+1)^2}\\,dx$ avec $t=x+1$.",
+       "sol": "$\\int_1^2\\frac{(t-1)^2}{t^2}dt=\\int_1^2\\left(1-\\frac2t+\\frac1{t^2}\\right)dt=1-2\\ln2+\\frac12$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1t\\to\\ln|t|$ · $\\frac1{t^2}\\to-\\frac1t$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Changement de variable vers arctan",
+   "notions": [
+    "cv",
+    "cv-arctan"
+   ],
+   "exos": [
+    {
+     "id": "cr1",
+     "ans": "pi/8",
+     "enonce": "Calculer $\\int_0^2\\frac{dx}{x^2+4}$ en posant $t=\\frac x2$.",
+     "sol": "$x^2+4=4(t^2+1)$, $dx=2\\,dt$ : $\\frac12\\int_0^1\\frac{dt}{1+t^2}=\\frac\\pi8$.",
+     "variants": [
+      {
+       "ans": "pi/12",
+       "enonce": "Calculer $I=\\int_0^3\\frac{dx}{x^2+9}$.",
+       "sol": "$x=3u$ : $\\left[\\frac13\\arctan\\frac x3\\right]_0^3=\\frac\\pi{12}$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cr2",
+     "ans": "pi*sqrt(3)/18",
+     "src": "Contrôle 1 S1 nov. 2020, ex. 3.2",
+     "enonce": "Calculer $J=\\int_0^1\\frac{dx}{x^2+3}$ en posant $t=\\frac x{\\sqrt3}$.",
+     "sol": "$x^2+3=3(t^2+1)$, $dx=\\sqrt3\\,dt$, bornes $0\\to\\frac1{\\sqrt3}$ : $\\frac1{\\sqrt3}\\arctan\\frac1{\\sqrt3}=\\frac{\\pi}{6\\sqrt3}=\\frac{\\pi\\sqrt3}{18}$.",
+     "variants": [
+      {
+       "ans": "pi*sqrt(2)/8",
+       "enonce": "Calculer $I=\\int_0^{\\sqrt2}\\frac{dx}{x^2+2}$.",
+       "sol": "$\\left[\\frac1{\\sqrt2}\\arctan\\frac x{\\sqrt2}\\right]_0^{\\sqrt2}=\\frac1{\\sqrt2}\\cdot\\frac\\pi4=\\frac{\\pi\\sqrt2}8$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cr3",
+     "ans": "pi*sqrt(3)/12",
+     "src": "Examen B1-OBM oct. 2024, ex. 5.3",
+     "enonce": "Calculer $K=\\int_0^{\\sqrt3}\\frac{dx}{3+x^2}$ en posant $t=\\frac x{\\sqrt3}$.",
+     "sol": "Bornes $0\\to1$ : $\\frac1{\\sqrt3}\\arctan1=\\frac{\\pi}{4\\sqrt3}=\\frac{\\pi\\sqrt3}{12}$.",
+     "variants": [
+      {
+       "ans": "pi/6",
+       "enonce": "Calculer $I=\\int_0^{2\\sqrt3}\\frac{dx}{4+x^2}$.",
+       "sol": "$\\left[\\frac12\\arctan\\frac x2\\right]_0^{2\\sqrt3}=\\frac12\\cdot\\frac\\pi3=\\frac\\pi6$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cr4",
+     "ans": "pi/12",
+     "src": "Examen B2-ASI janv. 2024, ex. 1.3 ; TD3 ex. 3.13.2",
+     "enonce": "Calculer $K=\\int_0^{\\ln\\sqrt3}\\frac{dt}{e^{-t}+e^t}$ en posant $x=e^t$.",
+     "sol": "$dt=\\frac{dx}x$, $\\frac1{\\frac1x+x}=\\frac x{1+x^2}$, bornes $1\\to\\sqrt3$ : $\\int_1^{\\sqrt3}\\frac{dx}{1+x^2}=\\frac\\pi3-\\frac\\pi4=\\frac\\pi{12}$.",
+     "variants": [
+      {
+       "ans": "pi/6",
+       "enonce": "Calculer $I=\\int_{-\\ln\\sqrt3}^{\\ln\\sqrt3}\\frac{dt}{e^{-t}+e^t}$.",
+       "sol": "$u=e^t$ : $\\int_{1/\\sqrt3}^{\\sqrt3}\\frac{du}{1+u^2}=\\frac\\pi3-\\frac\\pi6=\\frac\\pi6$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $x=e^t$ : $dt=\\frac{dx}x$ · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Changement de variable racine, ln, tan",
+   "notions": [
+    "cv"
+   ],
+   "exos": [
+    {
+     "id": "cs1",
+     "ans": "2*exp(2)+2",
+     "src": "TD3 ex. 3.13.5",
+     "enonce": "Calculer $M=\\int_0^4e^{\\sqrt x}\\,dx$ en posant $t=\\sqrt x$.",
+     "sol": "$x=t^2$, $dx=2t\\,dt$, bornes $0\\to2$ : $\\int_0^22te^t\\,dt=2\\big[(t-1)e^t\\big]_0^2=2e^2+2$ (IPP).",
+     "variants": [
+      {
+       "ans": "2",
+       "enonce": "Calculer $I=\\int_0^1e^{\\sqrt x}\\,dx$ avec $t=\\sqrt x$.",
+       "sol": "$dx=2t\\,dt$ : $\\int_0^12te^t\\,dt=2\\left[(t-1)e^t\\right]_0^1=2$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\sqrt x$ : $x=t^2$, $dx=2t\\,dt$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cs2",
+     "ans": "4-2*sqrt(E)",
+     "src": "TD3 ex. 3.13.3",
+     "enonce": "Calculer $K=\\int_1^e\\frac{\\ln x}{\\sqrt x}\\,dx$ en posant $t=\\ln x$.",
+     "sol": "$x=e^t$, $dx=e^t\\,dt$ : $\\int_0^1te^{t/2}\\,dt=\\big[2te^{t/2}\\big]_0^1-2\\int_0^1e^{t/2}\\,dt=2\\sqrt e-4(\\sqrt e-1)=4-2\\sqrt e$.",
+     "variants": [
+      {
+       "ans": "4",
+       "enonce": "Calculer $I=\\int_1^{e^2}\\frac{\\ln x}{\\sqrt x}\\,dx$.",
+       "sol": "$\\left[2\\sqrt x\\ln x-4\\sqrt x\\right]_1^{e^2}=(4e-4e)-(0-4)=4$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\ln x$ : $x=e^t$, $dx=e^t\\,dt$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cs3",
+     "ans": "pi/6",
+     "src": "Contrôle S1 nov. 2022, ex. 1.3 ; TD3 ex. 3.13.4",
+     "enonce": "Calculer $K=\\int_{-1}^1\\frac{dx}{(x+3)\\sqrt{x+2}}$ en posant $t=\\sqrt{x+2}$.",
+     "sol": "$x=t^2-2$, $dx=2t\\,dt$, $x+3=t^2+1$, bornes $1\\to\\sqrt3$ : $\\int_1^{\\sqrt3}\\frac{2\\,dt}{1+t^2}=2\\left(\\frac\\pi3-\\frac\\pi4\\right)=\\frac\\pi6$.",
+     "variants": [
+      {
+       "ans": "pi/2",
+       "enonce": "Calculer $I=\\int_{-1}^0\\frac{dx}{(x+2)\\sqrt{x+1}}$ avec $t=\\sqrt{x+1}$.",
+       "sol": "$dx=2t\\,dt$ : $\\int_0^1\\frac{2\\,dt}{t^2+1}=2\\cdot\\frac\\pi4=\\frac\\pi2$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\sqrt{x+2}$ : $x=t^2-2$, $dx=2t\\,dt$ · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "cs4",
+     "ans": "log(3)",
+     "src": "TD3 ex. 3.13.6 ★",
+     "enonce": "Calculer $N=\\int_{\\pi/6}^{\\pi/3}\\frac{dt}{\\sin t\\cos t}$ en posant $x=\\tan t$.",
+     "sol": "$dx=\\frac{dt}{\\cos^2t}$ et $\\frac1{\\sin t\\cos t}=\\frac1{\\tan t\\cos^2t}$ : $\\int_{1/\\sqrt3}^{\\sqrt3}\\frac{dx}x=\\ln\\sqrt3-\\ln\\frac1{\\sqrt3}=\\ln3$.",
+     "variants": [
+      {
+       "ans": "log(3)/2",
+       "enonce": "Calculer $I=\\int_{\\pi/4}^{\\pi/3}\\frac{dt}{\\sin t\\cos t}$.",
+       "sol": "$\\frac1{\\sin t\\cos t}=\\frac{1+\\tan^2t}{\\tan t}$, donc $\\left[\\ln\\tan t\\right]_{\\pi/4}^{\\pi/3}=\\ln\\sqrt3=\\frac{\\ln3}2$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $x=\\tan t$ : $dx=\\frac{dt}{\\cos^2t}$ · $\\frac1x\\to\\ln|x|$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Niveau examen : annales complètes",
+   "notions": [
+    "ipp",
+    "cv",
+    "prim-u-ln-exp"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "x1",
+     "src": "Contrôle S1 nov. 2021, ex. 3 (4,5 points)",
+     "enonce": "1. Calculer directement $I=\\int_0^1(x^2+1)\\sqrt{x^3+3x+1}\\,dx$.\n2. Calculer, en intégrant par parties, $J=\\int_0^1(2x+1)e^{2x}\\,dx$.\n3. À l'aide du changement de variable $x=2t+1$, calculer $K=\\int_1^{2\\sqrt3+1}\\frac{dx}{(x-1)^2+4}$.",
+     "sol": "**1.** $u=x^3+3x+1$, $u'=3(x^2+1)$ : $I=\\frac13\\left[\\frac23u^{3/2}\\right]_0^1=\\frac29(5\\sqrt5-1)$.\n\n**2.** $u=2x+1$, $v=\\frac12e^{2x}$ : $\\left[\\frac{(2x+1)e^{2x}}2\\right]_0^1-\\int_0^1e^{2x}\\,dx=\\frac{3e^2-1}2-\\frac{e^2-1}2=e^2$.\n\n**3.** $dx=2\\,dt$, $(x-1)^2+4=4(t^2+1)$, bornes $0\\to\\sqrt3$ : $\\frac12\\int_0^{\\sqrt3}\\frac{dt}{1+t^2}=\\frac12\\cdot\\frac\\pi3=\\frac\\pi6$.",
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=\\frac12$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "x2",
+     "src": "Contrôle S1 nov. 2022, ex. 1 (5 points)",
+     "enonce": "1. Sans IPP ni changement de variable, calculer $I=\\int_0^1\\frac{2x^3+1}{(x^4+2x+1)^3}\\,dx$.\n2. En intégrant par parties, calculer $J=\\int_0^{\\pi/4}(2x+1)\\sin(2x)\\,dx$.\n3. Calculer $K=\\int_{-1}^1\\frac{dx}{(x+3)\\sqrt{x+2}}$ en posant $t=\\sqrt{x+2}$.",
+     "sol": "**1.** $u=x^4+2x+1$, $u'=2(2x^3+1)$ : $I=\\frac12\\left[-\\frac1{2u^2}\\right]_0^1=-\\frac1{64}+\\frac14=\\frac{15}{64}$.\n\n**2.** $u=2x+1$, $v=-\\frac12\\cos 2x$ : $\\left[-\\frac{(2x+1)\\cos2x}2\\right]_0^{\\pi/4}+\\int_0^{\\pi/4}\\cos2x\\,dx=\\frac12+\\frac12=1$.\n\n**3.** $x=t^2-2$, $dx=2t\\,dt$, $x+3=t^2+1$, bornes $1\\to\\sqrt3$ : $\\int_1^{\\sqrt3}\\frac{2\\,dt}{1+t^2}=2\\left(\\frac\\pi3-\\frac\\pi4\\right)=\\frac\\pi6$.",
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=-3$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $\\sin(ax)\\to-\\frac1a\\cos(ax)$ · $\\cos(ax)\\to\\frac1a\\sin(ax)$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\sqrt{x+2}$ : $x=t^2-2$, $dx=2t\\,dt$ · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "x3",
+     "src": "Examen B1-OBM oct. 2024, ex. 5 (6 points)",
+     "enonce": "1. Calculer directement avec une primitive $I=\\int_0^1\\frac{2x+2}{2x^2+4x+1}\\,dx$.\n2. Via une IPP (posez $u$, $u'$, $v$, $v'$ et la formule), calculer $J=\\int_0^\\pi(x+1)\\cos\\frac x3\\,dx$.\n3. Calculer $K=\\int_0^{\\sqrt3}\\frac{dx}{3+x^2}$ en posant $t=\\frac x{\\sqrt3}$.",
+     "sol": "**1.** $u=2x^2+4x+1$, $u'=2(2x+2)$ : $\\frac12\\big[\\ln|u|\\big]_0^1=\\frac{\\ln7}2$.\n\n**2.** $u=x+1$, $v=3\\sin\\frac x3$ : $\\left[3(x+1)\\sin\\frac x3\\right]_0^\\pi-3\\int_0^\\pi\\sin\\frac x3\\,dx=\\frac{3\\sqrt3}2(\\pi+1)-3\\left[-3\\cos\\frac x3\\right]_0^\\pi=\\frac{3\\sqrt3}2(\\pi+1)-\\frac92$.\n\n**3.** Bornes $0\\to1$ : $\\frac1{\\sqrt3}\\arctan1=\\frac{\\pi}{4\\sqrt3}=\\frac{\\pi\\sqrt3}{12}$.",
+     "formules": "$\\frac{u'}u\\to\\ln|u|$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $\\cos(ax)\\to\\frac1a\\sin(ax)$ · $\\sin(ax)\\to-\\frac1a\\cos(ax)$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "x4",
+     "src": "Contrôle 1 S1 nov. 2020, ex. 3 (5 points)",
+     "enonce": "1. Dériver $f(x)=\\sin(e^{3x}+2)$.\n2. Calculer $J=\\int_0^1\\frac{dx}{x^2+3}$ en posant $t=\\frac x{\\sqrt3}$.\n3. À l'aide d'une IPP, calculer $K=\\int_1^e\\frac{\\ln x}{\\sqrt x}\\,dx$.",
+     "sol": "**1.** $u=e^{3x}+2$, $u'=3e^{3x}$ : $f'(x)=3e^{3x}\\cos(e^{3x}+2)$.\n\n**2.** $x^2+3=3(t^2+1)$, $dx=\\sqrt3\\,dt$, bornes $0\\to\\frac1{\\sqrt3}$ : $\\frac1{\\sqrt3}\\arctan\\frac1{\\sqrt3}=\\frac{\\pi}{6\\sqrt3}=\\frac{\\pi\\sqrt3}{18}$.\n\n**3.** $u=\\ln x$, $v=2\\sqrt x$ : $[2\\sqrt x\\ln x]_1^e-\\int_1^e\\frac2{\\sqrt x}\\,dx=2\\sqrt e-(4\\sqrt e-4)=4-2\\sqrt e$.",
+     "formules": "$(\\sin u)'=u'\\cos u$ · $(e^{ax})'=ae^{ax}$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver $\\ln$ : $u=\\ln x$, $u'=\\frac1x$ · $\\frac1{\\sqrt x}\\to2\\sqrt x$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "x5",
+     "src": "Examen B2-ASI janv. 2024, ex. 1 (10 points)",
+     "enonce": "1. Donner une primitive de : $\\ln 2$, $x^4+2x$, $\\frac{e^{\\sqrt x}}{\\sqrt x}$, $\\sin x$, $1+\\tan^2x$, $\\frac1{x^2}$, $\\sqrt x$, $\\frac{x^5}{x^6+1}$.\n2. Via une IPP dont vous énoncerez la formule générale, calculer $J=\\int_0^1(3x+1)e^{2x}\\,dx$.\n3. Calculer $K=\\int_0^{\\ln\\sqrt3}\\frac{dt}{e^{-t}+e^t}$ en posant $x=e^t$.",
+     "sol": "**1.** $u=\\sqrt x$, $u'=\\frac1{2\\sqrt x}$ : $F=2e^{\\sqrt x}$.\n\n**2.** $\\frac16\\cdot\\frac{u'}u$ : $F=\\frac16\\ln(x^6+1)$.\n\n**3.** $F=x\\ln2$.\n\n**4.** $F(x)=\\frac{x^5}5+x^2$.\n\n**5.** $1+\\tan^2=\\tan'$ : $F(x)=\\tan x$.\n\n**6.** $x^{-2}\\to\\frac{x^{-1}}{-1}$ : $F(x)=-\\frac1x$.\n\n**7.** $x^{1/2}\\to\\frac{x^{3/2}}{3/2}$ : $F(x)=\\frac23x\\sqrt x$.\n\n**8.** $u=3x+1$, $v=\\frac12e^{2x}$ : $\\frac{4e^2-1}2-\\frac32\\cdot\\frac{e^2-1}2=\\frac{5e^2+1}4$.\n\n**9.** $dt=\\frac{dx}x$, $\\frac1{\\frac1x+x}=\\frac x{1+x^2}$, bornes $1\\to\\sqrt3$ : $\\int_1^{\\sqrt3}\\frac{dx}{1+x^2}=\\frac\\pi3-\\frac\\pi4=\\frac\\pi{12}$.",
+     "formules": "$u'e^u\\to e^u$ avec $u=\\sqrt x$ · $\\frac{u'}u\\to\\ln|u|$ · constante $c\\to cx$ · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) · $1+\\tan^2x=\\frac1{\\cos^2x}\\to\\tan x$ · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) avec $n=-2$ : $\\frac1{x^2}\\to-\\frac1x$ · $x^n\\to\\frac{x^{n+1}}{n+1}$ ($n\\ne-1$) avec $n=\\frac12$ · $\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ · dériver le polynôme, intégrer l'exponentielle ou le sinus/cosinus · $e^{ax}\\to\\frac1ae^{ax}$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $x=e^t$ : $dt=\\frac{dx}x$ · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 45,
+     "type": "multi"
+    },
+    {
+     "id": "x6",
+     "src": "Partiel S1 janv. 2023, ex. 1 (3 points)",
+     "enonce": "1. Sans IPP ni changement de variable, calculer $I=\\int_1^2(x-1)\\sqrt{x-1}\\,dx$.\n2. Sans IPP ni changement de variable, calculer $J=\\int_0^1\\frac{x^2+2}{x^3+6x+1}\\,dx$.",
+     "sol": "**1.** $(x-1)\\sqrt{x-1}=(x-1)^{3/2}$ : $\\left[\\frac25(x-1)^{5/2}\\right]_1^2=\\frac25$.\n\n**2.** $u'=3(x^2+2)$ : $\\frac13\\big[\\ln|u|\\big]_0^1=\\frac{\\ln 8}3=\\ln2$.",
+     "formules": "$u'u^\\alpha\\to\\frac{u^{\\alpha+1}}{\\alpha+1}$ ($\\alpha\\ne-1$) avec $\\alpha=\\frac32$ · $\\int_a^b f(x)\\,dx=\\big[F(x)\\big]_a^b=F(b)-F(a)$ · $\\frac{u'}u\\to\\ln|u|$",
+     "duree": 10,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "ipp-choix",
+    "cv-arctan"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "h1",
+     "ans": "pi/4-log(2)/2",
+     "enonce": "Calculer $\\int_0^1\\arctan x\\,dx$.",
+     "sol": "IPP $u=\\arctan x$, $v=x$ : $\\frac\\pi4-\\int_0^1\\frac{x}{1+x^2}\\,dx=\\frac\\pi4-\\frac12\\ln2$.",
+     "variants": [
+      {
+       "ans": "pi/4-Rational(1,2)",
+       "enonce": "Calculer $I=\\int_0^1x\\arctan x\\,dx$.",
+       "sol": "$\\left[\\frac{x^2}2\\arctan x\\right]_0^1-\\frac12\\int_0^1\\frac{x^2}{1+x^2}=\\frac\\pi8-\\frac12\\left(1-\\frac\\pi4\\right)=\\frac\\pi4-\\frac12$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ avec $u=\\arctan x$, $v'=1$ · $\\frac{u'}u\\to\\ln|u|$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "h2",
+     "ans": "E-2",
+     "enonce": "Calculer $\\int_1^e(\\ln x)^2\\,dx$.",
+     "sol": "IPP $u=(\\ln x)^2$, $v=x$ : $e-2\\int_1^e\\ln x\\,dx=e-2$.",
+     "variants": [
+      {
+       "ans": "2*exp(2)-2",
+       "enonce": "Calculer $I=\\int_1^{e^2}\\ln^2x\\,dx$.",
+       "sol": "Deux IPP : primitive $x(\\ln^2x-2\\ln x+2)$, donc $I=2e^2-2$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ avec $u=(\\ln x)^2$, $v'=1$ · $\\int_1^e\\ln x\\,dx=1$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "h3",
+     "ans": "atan(2)-pi/4",
+     "enonce": "Calculer $\\int_0^1\\frac{dx}{x^2+2x+2}$ (aucun changement de variable n'est donné).",
+     "sol": "Forme canonique $(x+1)^2+1$, on pose $t=x+1$ : $\\big[\\arctan t\\big]_1^2=\\arctan2-\\frac\\pi4$.",
+     "variants": [
+      {
+       "ans": "pi/4",
+       "enonce": "Calculer $I=\\int_{-2}^{-1}\\frac{dx}{x^2+4x+5}$.",
+       "sol": "$x^2+4x+5=(x+2)^2+1$ : $\\left[\\arctan(x+2)\\right]_{-2}^{-1}=\\frac\\pi4$."
+      }
+     ],
+     "formules": "forme canonique : $x^2+2x+2=(x+1)^2+1$ · $x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "h4",
+     "ans": "(exp(pi)-2)/5",
+     "enonce": "Calculer $\\int_0^{\\pi/2}e^{2x}\\cos x\\,dx$.",
+     "sol": "Deux IPP ($v'=e^{2x}$) : $I=\\big[\\tfrac12e^{2x}\\cos x\\big]+\\tfrac12\\int e^{2x}\\sin x=\\dots$ ; on obtient $\\frac54I=\\frac{e^\\pi}4-\\frac12$, donc $I=\\frac{e^\\pi-2}5$.",
+     "variants": [
+      {
+       "ans": "2*(exp(pi/2)+1)/5",
+       "enonce": "Calculer $I=\\int_0^{\\pi/2}e^x\\sin(2x)\\,dx$.",
+       "sol": "Deux IPP font revenir $I$ : $5I=\\left[e^x(\\sin2x-2\\cos2x)\\right]_0^{\\pi/2}=2e^{\\pi/2}+2$."
+      }
+     ],
+     "formules": "$\\int_a^b u\\,v'=\\big[uv\\big]_a^b-\\int_a^b u'\\,v$ deux fois : l'intégrale de départ réapparaît, on résout l'équation en $I$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "h5",
+     "ans": "Rational(8,3)",
+     "enonce": "Calculer $\\int_0^3\\frac{x}{\\sqrt{x+1}}\\,dx$ en posant $t=\\sqrt{x+1}$.",
+     "sol": "$x=t^2-1$, $dx=2t\\,dt$, bornes $1\\to2$ : $2\\int_1^2(t^2-1)\\,dt=2\\left[\\frac{t^3}3-t\\right]_1^2=\\frac83$.",
+     "variants": [
+      {
+       "ans": "Rational(14,3)",
+       "enonce": "Calculer $I=\\int_0^5\\frac{x}{\\sqrt{x+4}}\\,dx$.",
+       "sol": "$t=\\sqrt{x+4}$ : $\\int_2^3(t^2-4)\\cdot2\\,dt=2\\left[\\frac{t^3}3-4t\\right]_2^3=\\frac{14}3$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\sqrt{x+1}$ : $x=t^2-1$, $dx=2t\\,dt$",
+     "duree": 5,
+     "type": "integral"
+    },
+    {
+     "id": "h6",
+     "ans": "2-pi/2",
+     "enonce": "Calculer $\\int_0^{\\ln2}\\sqrt{e^x-1}\\,dx$ (changement de variable à trouver).",
+     "sol": "$t=\\sqrt{e^x-1}$ : $e^x=t^2+1$, $dx=\\frac{2t\\,dt}{t^2+1}$, bornes $0\\to1$ : $\\int_0^1\\frac{2t^2}{1+t^2}\\,dt=2-2\\cdot\\frac\\pi4=2-\\frac\\pi2$.",
+     "variants": [
+      {
+       "ans": "2*sqrt(3)-2*pi/3",
+       "enonce": "Calculer $I=\\int_0^{\\ln4}\\sqrt{e^x-1}\\,dx$.",
+       "sol": "$t=\\sqrt{e^x-1}$, $dx=\\frac{2t}{1+t^2}dt$ : $\\int_0^{\\sqrt3}\\frac{2t^2}{1+t^2}dt=2\\left[t-\\arctan t\\right]_0^{\\sqrt3}=2\\sqrt3-\\frac{2\\pi}3$."
+      }
+     ],
+     "formules": "$x=\\varphi(t)$ : $dx=\\varphi'(t)\\,dt$ et on change les bornes · $t=\\sqrt{e^x-1}$ : $dx=\\frac{2t\\,dt}{t^2+1}$ · $\\frac{t^2}{1+t^2}=1-\\frac1{1+t^2}$ · $\\frac1{1+t^2}\\to\\arctan t$",
+     "duree": 5,
+     "type": "integral"
+    }
+   ]
+  }
+ ]
+}

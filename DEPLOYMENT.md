@@ -1,4 +1,4 @@
-# Déploiement Maths Doomscrolling
+# Déploiement Epita Doomscrolling
 
 ## Ce qui alimente le site
 
@@ -31,13 +31,13 @@ juste.
 3. Depuis ce dépôt, envoyer le code et construire l'application :
 
    ```bash
-   make sync-app REMOTE_HOST=nouveau-serveur REMOTE_APP_DIR=/opt/mathsdoomscrolling
+   make sync-app REMOTE_HOST=nouveau-serveur REMOTE_APP_DIR=/opt/epitadoomscrolling
    ```
 
 4. Envoyer `cards.db` avec sauvegarde SQLite cohérente et vérification de santé :
 
    ```bash
-   make deploy-db REMOTE_HOST=nouveau-serveur REMOTE_APP_DIR=/opt/mathsdoomscrolling
+   make deploy-db REMOTE_HOST=nouveau-serveur REMOTE_APP_DIR=/opt/epitadoomscrolling
    ```
 
    La commande demande confirmation avant de remplacer la base distante. Elle conserve

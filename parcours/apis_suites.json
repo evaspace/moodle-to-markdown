@@ -1,0 +1,1329 @@
+{
+ "subject": {
+  "id": "maths-s1-apis-suites",
+  "ordre": 140,
+  "matiere": "maths",
+  "semestre": "S1",
+  "ecue": "APIS",
+  "titre": "Suites numériques",
+  "chapitres_moodle": [
+   "15_Cours 4 - Suites numériques - ECUE APIS",
+   "16_Introduction aux suites numériques",
+   "17_Limite d'une suite numérique",
+   "18_Exemples remarquables",
+   "19_Théorèmes de convergence",
+   "20_Suites récurrentes",
+   "21_Comparaisons de suites",
+   "22_Démonstrations à connaître"
+  ],
+  "td": "TD4 suites (2026)",
+  "examens": [
+   "Test à distance 7 déc. 2026",
+   "Examen B2 S1 (APIS)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "arith-geo",
+   "titre": "Suites arithmétiques et géométriques",
+   "formule": "$u_n=u_0+nr$ · $v_n=v_0q^n$ · $\\sum_{k=0}^{n}q^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\ne1$) · $\\sum_{k=1}^{n}k=\\frac{n(n+1)}2$",
+   "exemple": "$1+3+\\dots+3^9=\\frac{3^{10}-1}{2}$",
+   "cours": "Arithmétique : $u_{n+1}-u_n=r$ constant. Géométrique : $\\frac{v_{n+1}}{v_n}=q$ constant. Pour montrer qu'une suite est géométrique, on calcule $v_{n+1}$ et on l'écrit $q\\,v_n$. Somme de termes consécutifs d'une suite géométrique : premier terme $\\times\\frac{1-q^{\\text{nombre de termes}}}{1-q}$. Si $|q|<1$, $q^n\\to0$ ; si $q>1$, $q^n\\to+\\infty$."
+  },
+  {
+   "id": "variation",
+   "titre": "Sens de variation",
+   "formule": "$u_{n+1}-u_n\\ge0$ : croissante, $\\le0$ : décroissante · si $u_n>0$ : $\\frac{u_{n+1}}{u_n}\\ge1$ : croissante, $\\le1$ : décroissante · $u_n=f(n)$ : même sens de variation que $f$",
+   "exemple": "$u_n=\\frac{n}{n+1}$ : $u_{n+1}-u_n=\\frac1{(n+1)(n+2)}>0$",
+   "cours": "Méthode 1 : signe de $u_{n+1}-u_n$ (factoriser, réduire au même dénominateur). Méthode 2, pour une suite à termes strictement positifs : comparer $\\frac{u_{n+1}}{u_n}$ à $1$ (pratique avec des puissances et des factorielles). Méthode 3 : si $u_n=f(n)$, étudier $f$ sur $[0,+\\infty[$. Pour une somme $\\sum_{k=n}^{2n-1}$, écrire les deux sommes et regarder quels termes restent."
+  },
+  {
+   "id": "bornee",
+   "titre": "Suite majorée, minorée, bornée",
+   "formule": "majorée : $\\exists M,\\ \\forall n,\\ u_n\\le M$ · minorée : $\\exists m,\\ \\forall n,\\ u_n\\ge m$ · bornée $\\iff\\exists M\\ge0,\\ \\forall n,\\ |u_n|\\le M$",
+   "exemple": "$u_n=(-1)^n+\\frac1{n+1}$ : $-1<u_n\\le2$",
+   "cours": "Majorée : $\\exists M,\\ \\forall n,\\ u_n\\le M$ ; minorée : $\\exists m,\\ \\forall n,\\ u_n\\ge m$ ; bornée = les deux, ou de façon équivalente $|u_n|\\le M$. Pour encadrer une somme de $p$ termes, on encadre chaque terme par le plus petit et le plus grand : $p\\times\\min\\le\\sum\\le p\\times\\max$."
+  },
+  {
+   "id": "limites",
+   "titre": "Limites usuelles et croissances comparées",
+   "formule": "$\\frac{P(n)}{Q(n)}$ : quotient des termes de plus haut degré · $q^n\\to0$ si $|q|<1$, $\\to+\\infty$ si $q>1$, pas de limite si $q\\le-1$ · $\\frac{(\\ln n)^a}{n^b}\\to0$ ($b>0$) · $\\frac{n^a}{q^n}\\to0$ ($q>1$) · $\\frac{q^n}{n!}\\to0$",
+   "exemple": "$\\frac{3n^2+1}{n^2+5}\\to3$ ; $n^2e^{-n}\\to0$",
+   "cours": "Factoriser par le terme dominant au numérateur et au dénominateur. Hiérarchie en $+\\infty$ : $\\ln n\\ll n^a\\ll q^n\\ll n!$ ($a>0$, $q>1$). Somme de deux puissances : factoriser par la plus grande, $\\frac{3^n+2^n}{3^n}=1+\\left(\\frac23\\right)^n\\to1$."
+  },
+  {
+   "id": "fi",
+   "titre": "Formes indéterminées",
+   "formule": "$\\sqrt a-\\sqrt b=\\frac{a-b}{\\sqrt a+\\sqrt b}$ · $\\frac{\\sin x}{x}\\xrightarrow[x\\to0]{}1$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+   "exemple": "$\\sqrt{n^2+n}-n=\\frac{n}{\\sqrt{n^2+n}+n}\\to\\frac12$",
+   "cours": "$\\infty-\\infty$ avec racines : quantité conjuguée. $0\\times\\infty$ : se ramener à une limite connue ($n\\sin\\frac1n=\\frac{\\sin(1/n)}{1/n}$ avec $x=\\frac1n\\to0$). Puissance $1^\\infty$ : écrire $\\left(1+\\frac1n\\right)^n=e^{n\\ln(1+1/n)}$ et utiliser $\\frac{\\ln(1+x)}{x}\\to1$."
+  },
+  {
+   "id": "gendarmes",
+   "titre": "Gendarmes et comparaison",
+   "formule": "$v_n\\le u_n\\le w_n$, $v_n\\to\\ell$, $w_n\\to\\ell$ $\\Rightarrow u_n\\to\\ell$ · $u_n\\ge v_n\\to+\\infty\\Rightarrow u_n\\to+\\infty$",
+   "exemple": "$\\left|\\frac{\\sin n}n\\right|\\le\\frac1n$ donc $\\frac{\\sin n}n\\to0$",
+   "cours": "Encadrer à partir d'un certain rang, avec deux suites de **même** limite. Bornes utiles : $-1\\le\\sin,\\cos,(-1)^n\\le1$ ; pour une somme de $n$ termes, minorer et majorer chaque terme. Une seule minoration par une suite qui tend vers $+\\infty$ suffit pour $+\\infty$."
+  },
+  {
+   "id": "arith-geo-rec",
+   "titre": "Suites arithmético-géométriques",
+   "formule": "$u_{n+1}=au_n+b$, $a\\ne1$ : $\\ell=\\frac{b}{1-a}$, $v_n=u_n-\\ell$ géométrique de raison $a$",
+   "exemple": "$u_{n+1}=2u_n-3$, $u_0=5$ : $\\ell=3$, $u_n=3+2^{n+1}$",
+   "cours": "On cherche le point fixe $\\ell=a\\ell+b$. Alors $u_{n+1}-\\ell=a(u_n-\\ell)$ : $v_n=u_n-\\ell$ est géométrique, $v_n=a^nv_0$, donc $u_n=\\ell+a^n(u_0-\\ell)$. Si $|a|<1$, $u_n\\to\\ell$. Un énoncé peut aussi donner directement la suite auxiliaire $v_n$ (parfois avec $\\frac1{u_n}$) : il suffit de calculer $v_{n+1}$."
+  },
+  {
+   "id": "monotone",
+   "titre": "Théorème de la limite monotone",
+   "formule": "croissante et majorée $\\Rightarrow$ converge · croissante non majorée $\\Rightarrow+\\infty$ · décroissante et minorée $\\Rightarrow$ converge · décroissante non minorée $\\Rightarrow-\\infty$",
+   "exemple": "$u_n=\\sum_{k=1}^n\\frac1{k^2}$ croissante, majorée par $2$ : converge",
+   "cours": "Énoncé symétrique : décroissante et minorée $\\Rightarrow$ converge. Le théorème donne l'existence de la limite, pas sa valeur : on l'encadre avec les bornes ($m\\le\\ell\\le M$, et $\\ell\\le u_n$ pour tout $n$ si la suite décroît). Majorations classiques : $\\frac1{k^2}\\le\\frac1{k-1}-\\frac1k$, $\\frac1{k!}\\le\\frac1{2^{k-1}}$."
+  },
+  {
+   "id": "adjacentes",
+   "titre": "Suites adjacentes",
+   "formule": "$(u_n)\\nearrow$, $(v_n)\\searrow$, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$",
+   "exemple": "$u_n=\\sum_{k=0}^n\\frac1{k!}$, $v_n=u_n+\\frac1{n!}$",
+   "cours": "Rédaction attendue : rappeler la définition, puis trois points : monotonie de $(u_n)$ (signe de $u_{n+1}-u_n$), monotonie de $(v_n)$, limite de $v_n-u_n$. Souvent on étudie d'abord $w_n=v_n-u_n$ (géométrique, de signe connu). Conclusion : convergence vers une limite commune, encadrée par $u_n$ et $v_n$."
+  },
+  {
+   "id": "recurrentes",
+   "titre": "Suites récurrentes $u_{n+1}=f(u_n)$",
+   "formule": "si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+   "exemple": "$u_{n+1}=1+\\frac{u_n^2}4$ : $u_{n+1}-u_n=\\frac{(u_n-2)^2}4\\ge0$",
+   "cours": "Plan type : 1) encadrement $a<u_n<b$ par récurrence ; 2) monotonie (signe de $u_{n+1}-u_n=f(u_n)-u_n$, à factoriser) ; 3) limite monotone : la suite converge ; 4) la limite vérifie $\\ell=f(\\ell)$, on garde la solution compatible avec l'encadrement. Les limites **possibles** se cherchent avant de savoir si la suite converge."
+  },
+  {
+   "id": "extraites",
+   "titre": "Suites extraites",
+   "formule": "$u_n\\to\\ell\\Rightarrow u_{\\varphi(n)}\\to\\ell$ · $u_{2n}\\to\\ell$ et $u_{2n+1}\\to\\ell\\Rightarrow u_n\\to\\ell$",
+   "exemple": "$\\sin\\frac{n\\pi}3$ : $u_{3n}=0$, $u_{6n+1}=\\frac{\\sqrt3}2$ : diverge",
+   "cours": "Pour montrer qu'une suite **diverge** : deux suites extraites de limites différentes (contraposée du premier résultat). Pour montrer qu'elle **converge** : les termes pairs et impairs tendent vers la même limite. Calculer $u_{2n}$, $u_{2n+1}$ en remplaçant $n$."
+  },
+  {
+   "id": "landau",
+   "titre": "Comparaison : $o$, $O$, $\\sim$",
+   "formule": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$",
+   "exemple": "$1-2n^2\\sim-2n^2+n-3$ ; $4^n+1=o(5^n)$",
+   "cours": "(Suites ne s'annulant pas à partir d'un certain rang.) Méthode : calculer la limite de $\\frac{u_n}{v_n}$. Limite $1$ : $u\\sim v$, $u=O(v)$ et $v=O(u)$. Limite $c\\ne0,1$ : $O$ dans les deux sens, pas $\\sim$. Limite $0$ : $u=o(v)$ donc $u=O(v)$ ; $v$ n'est pas $O(u)$. Limite infinie : inverser les rôles. Citer **toutes** les relations vraies."
+  },
+  {
+   "id": "demos",
+   "titre": "Démonstrations à connaître",
+   "formule": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$",
+   "exemple": "convergente $\\Rightarrow$ bornée ; réciproque fausse : $(-1)^n$",
+   "cours": "À savoir rédiger : unicité de la limite ($\\varepsilon=\\frac{|\\ell-\\ell'|}3$) ; convergente $\\Rightarrow$ bornée ($\\varepsilon=1$, puis $M=\\max(|u_0|,\\dots,|u_{N-1}|,|\\ell|+1)$) ; théorème des gendarmes (à partir d'un rang, $\\ell-\\varepsilon\\le v_n\\le u_n\\le w_n\\le\\ell+\\varepsilon$)."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "arith-geo",
+   "type": "qcm",
+   "q": "$\\sum_{k=0}^{n}q^k$ ($q\\ne1$) $=$ ?",
+   "choix": [
+    "$\\frac{1-q^{n+1}}{1-q}$",
+    "$\\frac{1-q^{n}}{1-q}$",
+    "$nq$",
+    "$\\frac{q^n}{1-q}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "arith-geo",
+   "type": "vf",
+   "q": "Si $|q|<1$, $q^n\\to0$.",
+   "bonne": true
+  },
+  {
+   "notion": "variation",
+   "type": "qcm",
+   "q": "$u_n>0$ et $\\frac{u_{n+1}}{u_n}\\le1$ pour tout $n$ : $(u_n)$ est",
+   "choix": [
+    "décroissante",
+    "croissante",
+    "constante",
+    "on ne peut rien dire"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "variation",
+   "type": "vf",
+   "q": "$u_n=\\frac n{n+1}$ est décroissante.",
+   "bonne": false
+  },
+  {
+   "notion": "bornee",
+   "type": "vf",
+   "q": "Une suite bornée est convergente.",
+   "bonne": false
+  },
+  {
+   "notion": "bornee",
+   "type": "qcm",
+   "q": "Somme de $n$ termes, chacun entre $a$ et $b$ :",
+   "choix": [
+    "$na\\le S\\le nb$",
+    "$a\\le S\\le b$",
+    "$a^n\\le S\\le b^n$",
+    "$S\\le n$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "limites",
+   "type": "qcm",
+   "q": "$\\lim\\frac{3n^2+1}{n^2+5}=$ ?",
+   "choix": [
+    "$3$",
+    "$\\frac15$",
+    "$+\\infty$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "limites",
+   "type": "vf",
+   "q": "$\\frac{n^{10}}{2^n}\\to0$",
+   "bonne": true
+  },
+  {
+   "notion": "fi",
+   "type": "qcm",
+   "q": "$\\lim\\left(\\sqrt{n^2+n}-n\\right)=$ ?",
+   "choix": [
+    "$\\frac12$",
+    "$0$",
+    "$1$",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "fi",
+   "type": "qcm",
+   "q": "$\\lim\\left(1+\\frac1n\\right)^n=$ ?",
+   "choix": [
+    "$e$",
+    "$1$",
+    "$+\\infty$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gendarmes",
+   "type": "vf",
+   "q": "$v_n\\le u_n\\le w_n$, $v_n\\to0$, $w_n\\to1$ : $(u_n)$ converge.",
+   "bonne": false
+  },
+  {
+   "notion": "gendarmes",
+   "type": "qcm",
+   "q": "$\\lim\\frac{\\sin n}n=$ ?",
+   "choix": [
+    "$0$",
+    "$1$",
+    "n'existe pas",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "arith-geo-rec",
+   "type": "qcm",
+   "q": "$u_{n+1}=2u_n-3$ : point fixe ?",
+   "choix": [
+    "$3$",
+    "$-3$",
+    "$\\frac32$",
+    "$1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "arith-geo-rec",
+   "type": "vf",
+   "q": "Si $u_{n+1}=au_n+b$ et $\\ell=a\\ell+b$, alors $u_n-\\ell$ est géométrique de raison $a$.",
+   "bonne": true
+  },
+  {
+   "notion": "monotone",
+   "type": "vf",
+   "q": "Une suite croissante et majorée converge.",
+   "bonne": true
+  },
+  {
+   "notion": "monotone",
+   "type": "vf",
+   "q": "Une suite croissante tend vers $+\\infty$.",
+   "bonne": false
+  },
+  {
+   "notion": "adjacentes",
+   "type": "qcm",
+   "q": "Adjacentes : $(u_n)\\nearrow$, $(v_n)\\searrow$ et",
+   "choix": [
+    "$v_n-u_n\\to0$",
+    "$u_n\\le v_n$",
+    "$u_0=v_0$",
+    "$v_n-u_n$ constante"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "adjacentes",
+   "type": "vf",
+   "q": "Deux suites adjacentes convergent vers la même limite.",
+   "bonne": true
+  },
+  {
+   "notion": "recurrentes",
+   "type": "qcm",
+   "q": "$u_{n+1}=\\frac{u_n}{u_n+8}$, $u_n>0$ : limites possibles ?",
+   "choix": [
+    "$0$ seulement",
+    "$0$ et $-7$",
+    "$-7$",
+    "$\\frac18$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "recurrentes",
+   "type": "vf",
+   "q": "Si $u_{n+1}=f(u_n)$, toute solution de $\\ell=f(\\ell)$ est la limite de $(u_n)$.",
+   "bonne": false
+  },
+  {
+   "notion": "extraites",
+   "type": "vf",
+   "q": "$u_{2n}\\to1$ et $u_{2n+1}\\to-1$ : $(u_n)$ diverge.",
+   "bonne": true
+  },
+  {
+   "notion": "extraites",
+   "type": "qcm",
+   "q": "$u_n=\\sin\\frac{n\\pi}3$ : $u_{6n+1}=$ ?",
+   "choix": [
+    "$\\frac{\\sqrt3}2$",
+    "$0$",
+    "$\\frac12$",
+    "$1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "landau",
+   "type": "qcm",
+   "q": "$\\frac{u_n}{v_n}\\to0$ :",
+   "choix": [
+    "$u_n=o(v_n)$",
+    "$u_n\\sim v_n$",
+    "$v_n=o(u_n)$",
+    "$v_n=O(u_n)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "landau",
+   "type": "vf",
+   "q": "$3n+6\\sim5n-1$",
+   "bonne": false
+  },
+  {
+   "notion": "landau",
+   "type": "vf",
+   "q": "$4^n+1=o(5^n)$",
+   "bonne": true
+  },
+  {
+   "notion": "demos",
+   "type": "vf",
+   "q": "La réciproque de « convergente $\\Rightarrow$ bornée » est vraie.",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Suites arithmétiques et géométriques",
+   "notions": [
+    "arith-geo"
+   ],
+   "exos": [
+    {
+     "id": "ag1",
+     "enonce": "$(u_n)$ est arithmétique, $u_0=3$, raison $4$. Calculer $u_{20}$.",
+     "ans": "83",
+     "sol": "$u_{20}=u_0+20r=3+80=83$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$(u_n)$ est arithmétique, $u_0=7$, raison $-2$. Calculer $u_{15}$.",
+       "ans": "-23",
+       "sol": "$u_{15}=7-30=-23$."
+      }
+     ],
+     "formules": "$u_n=u_0+nr$",
+     "type": "value"
+    },
+    {
+     "id": "ag2",
+     "enonce": "$(v_n)$ est géométrique, $v_0=5$, raison $2$. Calculer $v_6$.",
+     "ans": "320",
+     "sol": "$v_6=v_0q^6=5\\times64=320$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$(v_n)$ est géométrique, $v_0=3$, raison $3$. Calculer $v_5$.",
+       "ans": "729",
+       "sol": "$v_5=3\\times3^5=729$."
+      }
+     ],
+     "formules": "$v_n=v_0q^n$",
+     "type": "value"
+    },
+    {
+     "id": "ag3",
+     "enonce": "Calculer $1+2+\\dots+100$.",
+     "ans": "5050",
+     "sol": "$\\frac{100\\times101}2=5050$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $1+2+\\dots+50$.",
+       "ans": "1275",
+       "sol": "$\\frac{50\\times51}2=1275$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^{n}k=\\frac{n(n+1)}2$",
+     "type": "value"
+    },
+    {
+     "id": "ag4",
+     "enonce": "Calculer $\\sum_{k=0}^{9}3^k$.",
+     "ans": "(3**10-1)/2",
+     "sol": "Géométrique de raison $3$, 10 termes : $\\frac{3^{10}-1}{3-1}=29524$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{7}2^k$.",
+       "ans": "255",
+       "sol": "8 termes de raison $2$ : $\\frac{2^8-1}{2-1}=255$."
+      }
+     ],
+     "formules": "$\\sum_{k=0}^{n}q^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\ne1$)",
+     "type": "value"
+    },
+    {
+     "id": "ag5",
+     "enonce": "$(u_n)$ est arithmétique avec $u_3=10$ et $u_7=22$. Calculer $u_{50}$.",
+     "ans": "151",
+     "sol": "$u_7-u_3=4r=12$ donc $r=3$ ; $u_{50}=u_3+47r=10+141=151$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$(u_n)$ est arithmétique avec $u_2=5$ et $u_6=17$. Calculer $u_{40}$.",
+       "ans": "119",
+       "sol": "$4r=12$ donc $r=3$ ; $u_{40}=u_2+38r=5+114=119$."
+      }
+     ],
+     "formules": "$u_n=u_p+(n-p)r$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Sens de variation",
+   "notions": [
+    "variation"
+   ],
+   "exos": [
+    {
+     "id": "va1",
+     "enonce": "Étudier le sens de variation de $u_n=\\frac{n}{n+1}$, $n\\in\\mathbb N$.",
+     "sol": "$u_{n+1}-u_n=\\frac{n+1}{n+2}-\\frac n{n+1}=\\frac{(n+1)^2-n(n+2)}{(n+1)(n+2)}=\\frac1{(n+1)(n+2)}>0$ : $(u_n)$ est strictement croissante.",
+     "duree": 3,
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante",
+     "type": "open"
+    },
+    {
+     "id": "va2",
+     "enonce": "Étudier le sens de variation de $u_n=\\frac{2^n}{n!}$, $n\\ge1$.",
+     "sol": "$u_n>0$ et $\\frac{u_{n+1}}{u_n}=\\frac{2^{n+1}}{(n+1)!}\\cdot\\frac{n!}{2^n}=\\frac2{n+1}\\le1$ pour $n\\ge1$ : $(u_n)$ est décroissante (strictement à partir de $n=2$ ; $u_1=u_2=2$).",
+     "duree": 3,
+     "formules": "si $u_n>0$ : $\\frac{u_{n+1}}{u_n}\\le1$ $\\Rightarrow$ décroissante · $(n+1)!=(n+1)\\,n!$",
+     "type": "open"
+    },
+    {
+     "id": "va3",
+     "enonce": "Étudier le sens de variation de $u_n=\\sum_{k=1}^{n}\\frac1{k^2}$, $n\\ge1$.",
+     "sol": "$u_{n+1}-u_n=\\frac1{(n+1)^2}>0$ : $(u_n)$ est strictement croissante.",
+     "duree": 2,
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante",
+     "type": "open"
+    },
+    {
+     "id": "va4",
+     "enonce": "Étudier le sens de variation de $u_n=n^2-4n$.",
+     "sol": "$u_{n+1}-u_n=(n+1)^2-4(n+1)-n^2+4n=2n-3$. Négatif pour $n\\le1$, positif pour $n\\ge2$ : $u_0=0>u_1=-3>u_2=-4$, puis $(u_n)$ est croissante à partir du rang $2$.",
+     "duree": 3,
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante",
+     "type": "open"
+    },
+    {
+     "id": "va5",
+     "enonce": "Soit $u_n=\\sum_{k=n}^{2n-1}\\frac1k$ pour $n\\ge1$. Étudier la monotonie de $(u_n)$.",
+     "sol": "$u_{n+1}=\\sum_{k=n+1}^{2n+1}\\frac1k$. Les termes $k=n+1,\\dots,2n-1$ sont communs, donc $u_{n+1}-u_n=\\frac1{2n}+\\frac1{2n+1}-\\frac1n=\\frac1{2n+1}-\\frac1{2n}=\\frac{-1}{2n(2n+1)}<0$ : $(u_n)$ est strictement décroissante.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 2.1",
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Suites bornées, encadrements",
+   "notions": [
+    "bornee"
+   ],
+   "exos": [
+    {
+     "id": "bo1",
+     "enonce": "Montrer que $u_n=(-1)^n+\\frac1{n+1}$ est bornée.",
+     "sol": "$-1\\le(-1)^n\\le1$ et $0<\\frac1{n+1}\\le1$, donc $-1<u_n\\le2$ et $|u_n|\\le2$ : $(u_n)$ est bornée.",
+     "duree": 2,
+     "formules": "bornée $\\iff\\exists M\\ge0,\\ \\forall n,\\ |u_n|\\le M$ · $-1\\le(-1)^n\\le1$",
+     "type": "open"
+    },
+    {
+     "id": "bo2",
+     "enonce": "Montrer que $u_n=\\frac{2n+1}{n+3}$ est bornée en donnant un minorant et un majorant.",
+     "sol": "$u_n=\\frac{2(n+3)-5}{n+3}=2-\\frac5{n+3}$. Comme $0<\\frac5{n+3}\\le\\frac53$ : $\\frac13\\le u_n<2$.",
+     "duree": 3,
+     "formules": "bornée : $\\exists m,M,\\ \\forall n,\\ m\\le u_n\\le M$ · écrire $\\frac{2n+1}{n+3}=2-\\frac5{n+3}$",
+     "type": "open"
+    },
+    {
+     "id": "bo3",
+     "enonce": "Rappeler la définition de « $(u_n)$ est bornée » et montrer qu'elle équivaut à $\\exists M\\ge0,\\ \\forall n,\\ |u_n|\\le M$.",
+     "sol": "Bornée : $\\exists m,M',\\ \\forall n,\\ m\\le u_n\\le M'$. Si c'est le cas, $M=\\max(|m|,|M'|)$ convient : $-M\\le m\\le u_n\\le M'\\le M$. Réciproquement $|u_n|\\le M$ donne $-M\\le u_n\\le M$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 4.1",
+     "formules": "bornée : $\\exists m,M',\\ \\forall n,\\ m\\le u_n\\le M'$ · $|x|\\le M\\iff-M\\le x\\le M$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "bo4",
+     "enonce": "Soit $u_n=\\sum_{k=n}^{2n-1}\\frac1k$ ($n\\ge1$). En encadrant chaque terme, montrer $\\frac{n}{2n-1}\\le u_n\\le1$, puis donner un minorant et un majorant explicites.",
+     "sol": "La somme a $n$ termes et pour $n\\le k\\le2n-1$ : $\\frac1{2n-1}\\le\\frac1k\\le\\frac1n$. Donc $\\frac n{2n-1}\\le u_n\\le n\\cdot\\frac1n=1$. Comme $\\frac n{2n-1}\\ge\\frac12$ ($2n\\ge2n-1$), on a $\\frac12\\le u_n\\le1$ : $(u_n)$ est bornée.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 2.2-2.3",
+     "formules": "somme de $p$ termes : $p\\times\\min\\le\\sum\\le p\\times\\max$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "bo5",
+     "enonce": "Montrer que $u_n=\\frac{\\cos n+2\\sin(3n)}{n+1}$ est bornée.",
+     "sol": "$|\\cos n+2\\sin 3n|\\le1+2=3$ et $n+1\\ge1$, donc $|u_n|\\le3$.",
+     "duree": 2,
+     "formules": "$|a+b|\\le|a|+|b|$ · $|\\cos|\\le1$, $|\\sin|\\le1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Limites usuelles",
+   "notions": [
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "li1",
+     "enonce": "Limite de $\\frac{3n^2+1}{n^2+5}$ ?",
+     "ans": "3",
+     "sol": "$\\frac{n^2(3+1/n^2)}{n^2(1+5/n^2)}\\to3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{2n^2-1}{4n^2+n}$ ?",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac{n^2(2-1/n^2)}{n^2(4+1/n)}\\to\\frac24=\\frac12$."
+      }
+     ],
+     "formules": "factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré",
+     "type": "value"
+    },
+    {
+     "id": "li2",
+     "enonce": "Limite de $\\frac{2n+1}{n^2+1}$ ?",
+     "ans": "0",
+     "sol": "$\\frac{n(2+1/n)}{n^2(1+1/n^2)}=\\frac1n\\cdot\\frac{2+1/n}{1+1/n^2}\\to0$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{3n+2}{n^3+1}$ ?",
+       "ans": "0",
+       "sol": "$\\frac1{n^2}\\cdot\\frac{3+2/n}{1+1/n^3}\\to0$."
+      }
+     ],
+     "formules": "factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré",
+     "type": "value"
+    },
+    {
+     "id": "li3",
+     "enonce": "Limite de $\\frac{n^3-2n}{5n^2+1}$ ?",
+     "ans": "oo",
+     "sol": "$\\frac{n^3(1-2/n^2)}{n^2(5+1/n^2)}=n\\cdot\\frac{1-2/n^2}{5+1/n^2}\\to+\\infty$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{n^4+1}{2n^2+3}$ ?",
+       "ans": "oo",
+       "sol": "$n^2\\cdot\\frac{1+1/n^4}{2+3/n^2}\\to+\\infty$."
+      }
+     ],
+     "formules": "factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré",
+     "type": "value"
+    },
+    {
+     "id": "li4",
+     "enonce": "Limite de $n^2e^{-n}$ ?",
+     "ans": "0",
+     "sol": "Croissances comparées : $\\frac{n^2}{e^n}\\to0$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $n^3e^{-n}$ ?",
+       "ans": "0",
+       "sol": "Croissances comparées : $\\frac{n^3}{e^n}\\to0$."
+      }
+     ],
+     "formules": "$\\frac{n^a}{q^n}\\to0$ ($q>1$), avec $q=e$",
+     "type": "value"
+    },
+    {
+     "id": "li5",
+     "enonce": "Limite de $\\frac{3^n+2^n}{3^n}$ ?",
+     "ans": "1",
+     "sol": "$1+\\left(\\frac23\\right)^n\\to1$ car $\\left|\\frac23\\right|<1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{5^n-4^n}{5^n}$ ?",
+       "ans": "1",
+       "sol": "$1-\\left(\\frac45\\right)^n\\to1$."
+      }
+     ],
+     "formules": "$q^n\\to0$ si $|q|<1$",
+     "type": "value"
+    },
+    {
+     "id": "li6",
+     "enonce": "Limite de $n^5\\left(\\frac23\\right)^n$ ?",
+     "ans": "0",
+     "sol": "$n^5\\left(\\frac23\\right)^n=\\frac{n^5}{(3/2)^n}$ et $\\frac{n^a}{q^n}\\to0$ pour $q=\\frac32>1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $n^3\\left(\\frac12\\right)^n$ ?",
+       "ans": "0",
+       "sol": "$\\frac{n^3}{2^n}\\to0$ : l'exponentielle gagne."
+      }
+     ],
+     "formules": "$\\frac{n^a}{q^n}\\to0$ ($q>1$)",
+     "type": "value"
+    },
+    {
+     "id": "li7",
+     "enonce": "Limite de $\\frac{(\\ln n)^3}{\\sqrt n}$ ?",
+     "ans": "0",
+     "sol": "$\\frac{(\\ln n)^a}{n^b}\\to0$ avec $a=3$, $b=\\frac12$ : le logarithme perd contre toute puissance.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{(\\ln n)^2}{n}$ ?",
+       "ans": "0",
+       "sol": "$\\frac{(\\ln n)^a}{n^b}\\to0$ avec $a=2$, $b=1$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ ($b>0$)",
+     "type": "value"
+    },
+    {
+     "id": "li8",
+     "enonce": "Limite de $\\frac{5^n}{n!}$ ?",
+     "ans": "0",
+     "sol": "$\\frac{q^n}{n!}\\to0$ pour tout $q$ : la factorielle gagne contre l'exponentielle.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{10^n}{n!}$ ?",
+       "ans": "0",
+       "sol": "$\\frac{q^n}{n!}\\to0$ pour tout $q$."
+      }
+     ],
+     "formules": "$\\frac{q^n}{n!}\\to0$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Formes indéterminées",
+   "notions": [
+    "fi",
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "fi1",
+     "enonce": "Limite de $\\sqrt{n+1}-\\sqrt n$ ?",
+     "ans": "0",
+     "sol": "Quantité conjuguée : $\\frac{1}{\\sqrt{n+1}+\\sqrt n}\\to0$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Limite de $\\sqrt{n+3}-\\sqrt n$ ?",
+       "ans": "0",
+       "sol": "Quantité conjuguée : $\\frac3{\\sqrt{n+3}+\\sqrt n}\\to0$."
+      }
+     ],
+     "formules": "quantité conjuguée : $\\sqrt a-\\sqrt b=\\frac{a-b}{\\sqrt a+\\sqrt b}$",
+     "type": "value"
+    },
+    {
+     "id": "fi2",
+     "enonce": "Limite de $\\sqrt{n^2+n}-n$ ?",
+     "ans": "Rational(1,2)",
+     "sol": "$\\frac{n}{\\sqrt{n^2+n}+n}=\\frac{1}{\\sqrt{1+1/n}+1}\\to\\frac12$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Limite de $\\sqrt{n^2+4n}-n$ ?",
+       "ans": "2",
+       "sol": "$\\frac{4n}{\\sqrt{n^2+4n}+n}=\\frac4{\\sqrt{1+4/n}+1}\\to2$."
+      }
+     ],
+     "formules": "quantité conjuguée : $\\sqrt a-\\sqrt b=\\frac{a-b}{\\sqrt a+\\sqrt b}$",
+     "type": "value"
+    },
+    {
+     "id": "fi3",
+     "enonce": "Limite de $\\left(1+\\frac1n\\right)^n$ ?",
+     "ans": "E",
+     "sol": "$e^{n\\ln(1+1/n)}$ et $n\\ln\\left(1+\\frac1n\\right)=\\frac{\\ln(1+x)}x$ avec $x=\\frac1n\\to0$, donc $\\to1$ : la limite est $e$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\left(1+\\frac2n\\right)^n$ ?",
+       "ans": "exp(2)",
+       "sol": "$e^{n\\ln(1+2/n)}$ et $n\\ln\\left(1+\\frac2n\\right)=2\\cdot\\frac{\\ln(1+x)}x$ avec $x=\\frac2n\\to0$ : limite $e^2$."
+      }
+     ],
+     "formules": "$a^b=e^{b\\ln a}$ · $\\frac{\\ln(1+x)}{x}\\xrightarrow[x\\to0]{}1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fi4",
+     "enonce": "Limite de $n\\sin\\frac1n$ ?",
+     "ans": "1",
+     "sol": "$\\frac{\\sin x}{x}$ avec $x=\\frac1n\\to0$ : limite $1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Limite de $n\\sin\\frac3n$ ?",
+       "ans": "3",
+       "sol": "$3\\cdot\\frac{\\sin x}x$ avec $x=\\frac3n\\to0$ : limite $3$."
+      }
+     ],
+     "formules": "$\\frac{\\sin x}{x}\\xrightarrow[x\\to0]{}1$",
+     "type": "value"
+    },
+    {
+     "id": "fi5",
+     "enonce": "Limite de $\\frac{2^n-3^n}{2^n+3^n}$ ?",
+     "ans": "-1",
+     "sol": "Diviser par $3^n$ : $\\frac{(2/3)^n-1}{(2/3)^n+1}\\to\\frac{-1}{1}=-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{2\\cdot3^n+2^n}{3^n+1}$ ?",
+       "ans": "2",
+       "sol": "Diviser par $3^n$ : $\\frac{2+(2/3)^n}{1+3^{-n}}\\to2$."
+      }
+     ],
+     "formules": "factoriser par la plus grande puissance · $q^n\\to0$ si $|q|<1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Gendarmes et comparaison",
+   "notions": [
+    "gendarmes"
+   ],
+   "exos": [
+    {
+     "id": "ge1",
+     "enonce": "Montrer que $\\frac{\\sin n}{n}\\to0$.",
+     "sol": "$-\\frac1n\\le\\frac{\\sin n}n\\le\\frac1n$ et $\\pm\\frac1n\\to0$ : par le théorème des gendarmes, la limite est $0$.",
+     "duree": 2,
+     "formules": "gendarmes : $v_n\\le u_n\\le w_n$, $v_n\\to\\ell$ et $w_n\\to\\ell$ $\\Rightarrow u_n\\to\\ell$ · $-1\\le\\sin n\\le1$",
+     "type": "open"
+    },
+    {
+     "id": "ge2",
+     "enonce": "Limite de $\\frac{n+\\cos n}{n}$ ? (justifier par encadrement)",
+     "ans": "1",
+     "sol": "$1-\\frac1n\\le\\frac{n+\\cos n}n\\le1+\\frac1n$, les deux bornes tendent vers $1$ : limite $1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{2n+\\sin n}{n}$ ? (justifier par encadrement)",
+       "ans": "2",
+       "sol": "$2-\\frac1n\\le\\frac{2n+\\sin n}n\\le2+\\frac1n$ : limite $2$."
+      }
+     ],
+     "formules": "gendarmes : $v_n\\le u_n\\le w_n$, $v_n\\to\\ell$ et $w_n\\to\\ell$ $\\Rightarrow u_n\\to\\ell$ · $-1\\le\\cos n\\le1$",
+     "type": "value"
+    },
+    {
+     "id": "ge3",
+     "enonce": "Soit $u_n=\\sum_{k=1}^{n}\\frac{n}{n^2+k}$. Encadrer $u_n$ et en déduire sa limite.",
+     "sol": "Pour $1\\le k\\le n$ : $\\frac n{n^2+n}\\le\\frac n{n^2+k}\\le\\frac n{n^2+1}$. Avec $n$ termes : $\\frac{n^2}{n^2+n}\\le u_n\\le\\frac{n^2}{n^2+1}$. Les deux bornes tendent vers $1$ : $u_n\\to1$.",
+     "formules": "somme de $p$ termes : $p\\times\\min\\le\\sum\\le p\\times\\max$ · gendarmes : $v_n\\le u_n\\le w_n$, $v_n\\to\\ell$ et $w_n\\to\\ell$ $\\Rightarrow u_n\\to\\ell$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ge4",
+     "enonce": "Montrer que $u_n=n+(-1)^n\\sqrt n$ tend vers $+\\infty$.",
+     "sol": "$u_n\\ge n-\\sqrt n=\\sqrt n(\\sqrt n-1)$ et $\\sqrt n(\\sqrt n-1)\\to+\\infty$ : par comparaison, $u_n\\to+\\infty$.",
+     "duree": 3,
+     "formules": "comparaison : $u_n\\ge v_n$ et $v_n\\to+\\infty$ $\\Rightarrow u_n\\to+\\infty$ · $(-1)^n\\ge-1$",
+     "type": "open"
+    },
+    {
+     "id": "ge5",
+     "enonce": "Soit $u_n=\\frac{\\lfloor n\\sqrt2\\rfloor}{n}$. Montrer que $u_n\\to\\sqrt2$.",
+     "sol": "$n\\sqrt2-1<\\lfloor n\\sqrt2\\rfloor\\le n\\sqrt2$, donc $\\sqrt2-\\frac1n<u_n\\le\\sqrt2$. Gendarmes : $u_n\\to\\sqrt2$.",
+     "duree": 3,
+     "formules": "$x-1<\\lfloor x\\rfloor\\le x$ · gendarmes : $v_n\\le u_n\\le w_n$, $v_n\\to\\ell$ et $w_n\\to\\ell$ $\\Rightarrow u_n\\to\\ell$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Suites arithmético-géométriques",
+   "notions": [
+    "arith-geo-rec",
+    "arith-geo"
+   ],
+   "exos": [
+    {
+     "id": "rg1",
+     "enonce": "$u_0=5$, $u_{n+1}=2u_n-3$. Trouver $u_n$ en fonction de $n$ puis calculer $u_5$.",
+     "ans": "67",
+     "sol": "Point fixe $\\ell=2\\ell-3$, $\\ell=3$. $v_n=u_n-3$ vérifie $v_{n+1}=2v_n$, $v_0=2$, donc $u_n=3+2^{n+1}$ et $u_5=67$.",
+     "variants": [
+      {
+       "enonce": "$u_0=4$, $u_{n+1}=3u_n-4$. Trouver $u_n$ en fonction de $n$ puis calculer $u_4$.",
+       "ans": "164",
+       "sol": "Point fixe $\\ell=2$ ; $v_n=u_n-2$ est géométrique de raison $3$, $v_0=2$ : $u_n=2+2\\cdot3^n$, $u_4=164$."
+      }
+     ],
+     "formules": "$u_{n+1}=au_n+b$ : point fixe $\\ell=a\\ell+b$, puis $u_n-\\ell=a^n(u_0-\\ell)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "rg2",
+     "enonce": "$u_0=0$, $u_{n+1}=\\frac{u_n}2+1$. Limite de $(u_n)$ ?",
+     "ans": "2",
+     "sol": "$\\ell=\\frac\\ell2+1$ donne $\\ell=2$ ; $u_n-2=\\left(\\frac12\\right)^n(u_0-2)=-2\\left(\\frac12\\right)^n\\to0$, donc $u_n\\to2$.",
+     "variants": [
+      {
+       "enonce": "$u_0=1$, $u_{n+1}=\\frac{u_n}3+2$. Limite de $(u_n)$ ?",
+       "ans": "3",
+       "sol": "$\\ell=\\frac\\ell3+2$ donne $\\ell=3$ ; $u_n-3=-2\\left(\\frac13\\right)^n\\to0$, donc $u_n\\to3$."
+      }
+     ],
+     "formules": "$u_{n+1}=au_n+b$ : point fixe $\\ell=a\\ell+b$, puis $u_n-\\ell=a^n(u_0-\\ell)$ · $q^n\\to0$ si $|q|<1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "rg3",
+     "enonce": "$u_0=0$, $u_{n+1}=3u_n+2$. Exprimer $u_n$ puis calculer $u_4$.",
+     "ans": "80",
+     "sol": "$\\ell=3\\ell+2$, $\\ell=-1$ ; $u_n+1=3^n(u_0+1)$, donc $u_n=3^n-1$ et $u_4=80$.",
+     "variants": [
+      {
+       "enonce": "$u_0=1$, $u_{n+1}=2u_n+1$. Exprimer $u_n$ puis calculer $u_5$.",
+       "ans": "63",
+       "sol": "$\\ell=-1$ ; $u_n+1=2^n(u_0+1)=2^{n+1}$, donc $u_n=2^{n+1}-1$ et $u_5=63$."
+      }
+     ],
+     "formules": "$u_{n+1}=au_n+b$ : point fixe $\\ell=a\\ell+b$, puis $u_n-\\ell=a^n(u_0-\\ell)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "rg4",
+     "enonce": "$u_0=1$, $u_{n+1}=\\frac{u_n}{u_n+8}$ (on admet $u_n>0$). Soit $v_n=1+\\frac7{u_n}$. Montrer que $(v_n)$ est géométrique de raison $8$, puis exprimer $v_n$ et $u_n$ en fonction de $n$.",
+     "sol": "$\\frac1{u_{n+1}}=\\frac{u_n+8}{u_n}=1+\\frac8{u_n}$, donc $v_{n+1}=1+7+\\frac{56}{u_n}=8\\left(1+\\frac7{u_n}\\right)=8v_n$. $v_0=8$, donc $v_n=8^{n+1}$ et $u_n=\\frac{7}{v_n-1}=\\frac{7}{8^{n+1}-1}$ (on vérifie $u_0=1$, $u_1=\\frac19$). Donc $u_n\\to0$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 5.2",
+     "formules": "géométrique : $v_{n+1}=q\\,v_n$, alors $v_n=v_0q^n$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "rg5",
+     "enonce": "$u_0=2$, $v_0=3$, $u_{n+1}=\\frac{3u_n+2v_n}5$, $v_{n+1}=\\frac{2u_n+3v_n}5$. Soit $x_n=u_n+v_n$. Exprimer $x_{n+1}$ en fonction de $x_n$, puis $x_n$ en fonction de $n$.",
+     "sol": "$x_{n+1}=\\frac{5u_n+5v_n}5=x_n$ : $(x_n)$ est constante, $x_n=x_0=5$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 1.4a",
+     "duree": 3,
+     "formules": "calculer $x_{n+1}$ en fonction de $x_n$ · suite constante : $x_n=x_0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Théorème de la limite monotone",
+   "notions": [
+    "monotone",
+    "variation",
+    "bornee"
+   ],
+   "exos": [
+    {
+     "id": "lm1",
+     "enonce": "Soit $u_n=\\sum_{k=1}^{n}\\frac1{k^2}$. En utilisant $\\frac1{k^2}\\le\\frac1{k-1}-\\frac1k$ pour $k\\ge2$, montrer que $(u_n)$ converge.",
+     "sol": "$(u_n)$ est croissante ($u_{n+1}-u_n=\\frac1{(n+1)^2}>0$). Pour $n\\ge2$, par télescopage $u_n\\le1+\\sum_{k=2}^n\\left(\\frac1{k-1}-\\frac1k\\right)=2-\\frac1n<2$. Croissante et majorée : $(u_n)$ converge (vers une limite $\\le2$).",
+     "formules": "limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · télescopage : $\\sum_{k=2}^{n}\\left(\\frac1{k-1}-\\frac1k\\right)=1-\\frac1n$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "lm2",
+     "enonce": "Soit $u_n=\\sum_{k=0}^{n}\\frac1{k!}$. Montrer que $(u_n)$ converge (utiliser $k!\\ge2^{k-1}$ pour $k\\ge1$).",
+     "sol": "Croissante : $u_{n+1}-u_n=\\frac1{(n+1)!}>0$. Majorée : $u_n\\le1+\\sum_{k=1}^n\\frac1{2^{k-1}}=1+\\frac{1-(1/2)^n}{1/2}<3$. Croissante et majorée : converge.",
+     "formules": "limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · $\\sum_{k=0}^{n}q^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\ne1$)",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "lm3",
+     "enonce": "Soit $u_n=\\sum_{k=n}^{2n-1}\\frac1k$. On sait que $(u_n)$ est décroissante et que $\\frac12\\le u_n\\le1$. Converge-t-elle ? Encadrer sa limite $\\ell$.",
+     "sol": "Décroissante et minorée par $\\frac12$ : $(u_n)$ converge. En passant à la limite dans $\\frac n{2n-1}\\le u_n\\le1$ : $\\frac12\\le\\ell\\le1$. Plus précis : la suite décroît, donc $\\ell\\le u_n$ pour tout $n$, par exemple $\\ell\\le u_2=\\frac12+\\frac13=\\frac56$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 2.4",
+     "duree": 3,
+     "formules": "limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · passage à la limite dans une inégalité large : $a\\le u_n\\le b\\Rightarrow a\\le\\ell\\le b$",
+     "type": "open"
+    },
+    {
+     "id": "lm4",
+     "enonce": "Énoncer le théorème de la limite monotone pour une suite croissante (les deux cas).",
+     "sol": "Une suite croissante et majorée converge (vers la borne supérieure de ses termes). Une suite croissante non majorée tend vers $+\\infty$.",
+     "duree": 2,
+     "formules": "croissante et majorée $\\Rightarrow$ converge · croissante non majorée $\\Rightarrow+\\infty$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Suites adjacentes",
+   "notions": [
+    "adjacentes",
+    "arith-geo"
+   ],
+   "exos": [
+    {
+     "id": "ad1",
+     "enonce": "Rappeler la définition de deux suites adjacentes et montrer que $u_n=1-\\frac1n$ et $v_n=1+\\frac1{n^2}$ ($n\\ge1$) sont adjacentes.",
+     "sol": "$(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$. Ici $u_{n+1}-u_n=\\frac1n-\\frac1{n+1}>0$, $v_{n+1}-v_n=\\frac1{(n+1)^2}-\\frac1{n^2}<0$ et $v_n-u_n=\\frac1n+\\frac1{n^2}\\to0$.",
+     "duree": 3,
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$",
+     "type": "open"
+    },
+    {
+     "id": "ad2",
+     "enonce": "Soit $u_n=\\sum_{k=0}^{n}\\frac1{k!}$ et $v_n=u_n+\\frac1{n!}$ pour $n\\ge2$. Après avoir rappelé la définition, montrer que $(u_n)$ et $(v_n)$ sont adjacentes. $(u_n)$ converge-t-elle ? Est-elle majorée ?",
+     "sol": "$u_{n+1}-u_n=\\frac1{(n+1)!}>0$. $v_{n+1}-v_n=\\frac2{(n+1)!}-\\frac1{n!}=\\frac{2-(n+1)}{(n+1)!}=\\frac{1-n}{(n+1)!}<0$ pour $n\\ge2$. $v_n-u_n=\\frac1{n!}\\to0$. Adjacentes, donc elles convergent vers la même limite $\\ell$. $(u_n)$ est majorée par $v_2=\\frac52+\\frac12=3$ (car $u_n\\le\\ell\\le v_n\\le v_2$).",
+     "src": "Examen B2-ASI janv. 2024, ex. 2",
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ad3",
+     "enonce": "$u_0=2$, $v_0=3$, $u_{n+1}=\\frac{3u_n+2v_n}5$, $v_{n+1}=\\frac{2u_n+3v_n}5$, $w_n=v_n-u_n$. Montrer que $(w_n)$ est géométrique, exprimer $w_n$ et donner son signe.",
+     "sol": "$w_{n+1}=\\frac{2u_n+3v_n-3u_n-2v_n}5=\\frac{v_n-u_n}5=\\frac15w_n$ : géométrique de raison $\\frac15$, $w_0=1$, $w_n=\\left(\\frac15\\right)^n>0$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 1.1",
+     "formules": "géométrique : $w_{n+1}=q\\,w_n$, alors $w_n=w_0q^n$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ad4",
+     "enonce": "Mêmes suites. Montrer que $(u_n)$ et $(v_n)$ sont adjacentes et donner leur limite (on sait $u_n+v_n=5$).",
+     "sol": "$u_{n+1}-u_n=\\frac{2(v_n-u_n)}5=\\frac25w_n>0$ : croissante. $v_{n+1}-v_n=-\\frac25w_n<0$ : décroissante. $v_n-u_n=\\left(\\frac15\\right)^n\\to0$. Adjacentes : même limite $\\ell$, et $2\\ell=\\lim(u_n+v_n)=5$, donc $\\ell=\\frac52$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 1.2-1.4",
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ad5",
+     "enonce": "Montrer que $u_n=\\sum_{k=1}^{n}\\frac1{k^2}$ et $v_n=u_n+\\frac1n$ sont adjacentes.",
+     "sol": "$u$ croissante. $v_{n+1}-v_n=\\frac1{(n+1)^2}+\\frac1{n+1}-\\frac1n=\\frac1{(n+1)^2}-\\frac1{n(n+1)}=\\frac{-1}{n(n+1)^2}<0$. $v_n-u_n=\\frac1n\\to0$.",
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Suites récurrentes",
+   "notions": [
+    "recurrentes",
+    "monotone"
+   ],
+   "exos": [
+    {
+     "id": "re1",
+     "enonce": "$u_0=0$, $u_{n+1}=\\sqrt{2+u_n}$. Montrer que $0\\le u_n\\le2$, que $(u_n)$ est croissante, puis trouver sa limite.",
+     "sol": "Récurrence : $u_0=0\\in[0,2]$ ; si $0\\le u_n\\le2$ alors $\\sqrt2\\le u_{n+1}\\le2$. Monotonie : $u_{n+1}^2-u_n^2=2+u_n-u_n^2=(2-u_n)(1+u_n)\\ge0$ et les termes sont positifs, donc $u_{n+1}\\ge u_n$. Croissante majorée : converge vers $\\ell\\in[0,2]$ avec $\\ell=\\sqrt{2+\\ell}$, soit $\\ell^2-\\ell-2=0$, $\\ell=2$ ($\\ell=-1$ exclu).",
+     "formules": "récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "re2",
+     "enonce": "$u_0=1$, $u_{n+1}=\\frac{u_n}{u_n+8}$. (a) Montrer par récurrence que $u_n>0$. (b) Si $(u_n)$ converge vers $\\ell$, quelles valeurs possibles ? (c) Monotonie. (d) Convergence et limite.",
+     "sol": "(a) $u_0=1>0$ ; si $u_n>0$, numérateur et dénominateur sont $>0$. (b) $\\ell=\\frac\\ell{\\ell+8}$ donne $\\ell^2+7\\ell=0$ : $\\ell\\in\\{0,-7\\}$ ; comme $u_n>0$, $\\ell\\ge0$ donc $\\ell=0$. (c) $\\frac{u_{n+1}}{u_n}=\\frac1{u_n+8}<1$ : strictement décroissante. (d) Décroissante, minorée par $0$ : converge, et la seule limite possible est $0$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 5.1",
+     "formules": "récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$ · si $u_n>0$ : $\\frac{u_{n+1}}{u_n}<1$ $\\Rightarrow$ décroissante · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "re3",
+     "enonce": "$u_0=\\frac32$, $u_{n+1}=1+\\frac{u_n^2}4$. (1) Monotonie (factoriser). (2) Montrer par récurrence $1<u_n<2$. (3) Comportement en $+\\infty$.",
+     "sol": "(1) $u_{n+1}-u_n=\\frac{u_n^2}4-u_n+1=\\left(\\frac{u_n}2-1\\right)^2=\\frac{(u_n-2)^2}4\\ge0$ : croissante. (2) $1<\\frac32<2$ ; si $1<u_n<2$ alors $\\frac14<\\frac{u_n^2}4<1$, donc $\\frac54<u_{n+1}<2$. (3) Croissante, majorée par $2$ : converge vers $\\ell\\in[1,2]$ et $\\ell=1+\\frac{\\ell^2}4$, $(\\ell-2)^2=0$, $\\ell=2$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 5",
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante · récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "re4",
+     "enonce": "$u_0=\\frac12$, $u_{n+1}=u_n-u_n^2$. Montrer que $0<u_n\\le\\frac12$, que $(u_n)$ décroît et trouver sa limite.",
+     "sol": "Si $0<u_n\\le\\frac12$ : $u_{n+1}=u_n(1-u_n)$ avec $1-u_n\\in[\\frac12,1[$, donc $0<u_{n+1}<u_n\\le\\frac12$. Cela donne aussi la décroissance ($u_{n+1}-u_n=-u_n^2<0$). Minorée par $0$ : converge, $\\ell=\\ell-\\ell^2$, $\\ell=0$.",
+     "formules": "récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "re5",
+     "enonce": "$u_{n+1}=\\frac{u_n^2+6}5$. Quelles sont les limites possibles de $(u_n)$ ?",
+     "sol": "$\\ell=\\frac{\\ell^2+6}5\\iff\\ell^2-5\\ell+6=0\\iff\\ell\\in\\{2,3\\}$. Ce sont les seules limites finies possibles ; la suite peut aussi diverger selon $u_0$.",
+     "duree": 3,
+     "formules": "si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Suites extraites",
+   "notions": [
+    "extraites"
+   ],
+   "exos": [
+    {
+     "id": "ex1",
+     "enonce": "$u_n=\\sin\\frac{n\\pi}3$. Que vaut $(u_{3n})$ ? Vers quoi converge $(u_{6n+1})$ ? $(u_n)$ converge-t-elle ?",
+     "sol": "$u_{3n}=\\sin(n\\pi)=0$. $u_{6n+1}=\\sin\\left(2n\\pi+\\frac\\pi3\\right)=\\frac{\\sqrt3}2$. Deux suites extraites ont des limites différentes ($0\\ne\\frac{\\sqrt3}2$) ; or si $(u_n)$ convergeait vers $\\ell$, toute suite extraite tendrait vers $\\ell$. Donc $(u_n)$ diverge.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 6",
+     "formules": "deux suites extraites de limites différentes $\\Rightarrow$ $(u_n)$ diverge · $\\sin(x+2n\\pi)=\\sin x$, $\\sin(n\\pi)=0$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ex2",
+     "enonce": "$u_n=\\frac1n\\sum_{k=0}^{n-1}(-1)^k$ ($n\\ge1$). Exprimer $u_{2n}$ et $u_{2n+1}$ ; $(u_n)$ converge-t-elle ?",
+     "sol": "Les termes s'annulent deux par deux : $\\sum_{k=0}^{2n-1}(-1)^k=0$ et $\\sum_{k=0}^{2n}(-1)^k=1$. Donc $u_{2n}=0$ et $u_{2n+1}=\\frac1{2n+1}$. Les deux tendent vers $0$ : $(u_n)$ converge vers $0$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 6",
+     "formules": "$u_{2n}\\to\\ell$ et $u_{2n+1}\\to\\ell\\Rightarrow u_n\\to\\ell$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ex3",
+     "enonce": "$u_n=(-1)^n\\frac{n}{n+1}$ converge-t-elle ?",
+     "sol": "$u_{2n}=\\frac{2n}{2n+1}\\to1$ et $u_{2n+1}=-\\frac{2n+1}{2n+2}\\to-1$ : deux limites différentes, $(u_n)$ diverge.",
+     "duree": 3,
+     "formules": "deux suites extraites de limites différentes $\\Rightarrow$ $(u_n)$ diverge",
+     "type": "open"
+    },
+    {
+     "id": "ex4",
+     "enonce": "$u_n=\\cos\\frac{n\\pi}2$ converge-t-elle ?",
+     "sol": "$u_{4n}=\\cos(2n\\pi)=1$ et $u_{4n+2}=\\cos(2n\\pi+\\pi)=-1$ : $(u_n)$ diverge.",
+     "duree": 2,
+     "formules": "deux suites extraites de limites différentes $\\Rightarrow$ $(u_n)$ diverge · $\\cos(x+2n\\pi)=\\cos x$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Comparaison : o, O, équivalents",
+   "notions": [
+    "landau",
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "la1",
+     "enonce": "Soient $(u_n)$, $(v_n)$ ne s'annulant pas. Rappeler les définitions de $u_n=o(v_n)$, $u_n=O(v_n)$ et $u_n\\sim v_n$.",
+     "sol": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$. $u_n=O(v_n)$ : $\\left(\\frac{u_n}{v_n}\\right)$ est bornée. $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 3.1",
+     "duree": 2,
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$",
+     "type": "open"
+    },
+    {
+     "id": "la2",
+     "enonce": "Comparer $u_n=-n^3+n-2$ et $v_n=-2n^2+n$ (toutes les relations).",
+     "sol": "$\\frac{v_n}{u_n}=\\frac{-2n^2+n}{-n^3+n-2}\\sim\\frac{-2n^2}{-n^3}=\\frac2n\\to0$. Donc $v_n=o(u_n)$, d'où $v_n=O(u_n)$. $\\frac{u_n}{v_n}\\to+\\infty$ : ni $u=O(v)$, ni $u\\sim v$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 3.2a",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "la3",
+     "enonce": "Comparer $u_n=e^n+\\sqrt n$ et $v_n=e^n+e^{-n}$.",
+     "sol": "$\\frac{u_n}{v_n}=\\frac{1+\\sqrt ne^{-n}}{1+e^{-2n}}\\to1$ (croissances comparées). Donc $u_n\\sim v_n$, $u_n=O(v_n)$ et $v_n=O(u_n)$ ; pas de $o$.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 3.2b",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · croissances comparées : $\\ln n\\ll n^a\\ll q^n\\ll n!$ ($a>0$, $q>1$)",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "la4",
+     "enonce": "Comparer $u_n=3^n+6$ et $v_n=5^n-1$.",
+     "sol": "$\\frac{u_n}{v_n}=\\frac{(3/5)^n+6/5^n}{1-1/5^n}\\to0$. Donc $u_n=o(v_n)$ et $u_n=O(v_n)$ ; $v_n$ n'est pas $O(u_n)$, pas d'équivalence.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 3.2c",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · $q^n\\to0$ si $|q|<1$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "la5",
+     "enonce": "Comparer $u_n=1-2n^2$ et $v_n=-2n^2+n-3$.",
+     "sol": "$\\frac{u_n}{v_n}=\\frac{-2+1/n^2}{-2+1/n-3/n^2}\\to1$ : $u_n\\sim v_n$, $u=O(v)$ et $v=O(u)$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 3.1",
+     "duree": 3,
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré",
+     "type": "open"
+    },
+    {
+     "id": "la6",
+     "enonce": "Comparer $u_n=e^{2n}-\\sqrt n$ et $v_n=n+1$, puis $u_n=4^n+1$ et $v_n=5^n$.",
+     "sol": "$\\frac{v_n}{u_n}=\\frac{n+1}{e^{2n}-\\sqrt n}\\to0$ : $v_n=o(u_n)$, $v_n=O(u_n)$. Puis $\\frac{4^n+1}{5^n}=\\left(\\frac45\\right)^n+\\frac1{5^n}\\to0$ : $u_n=o(v_n)$, $u_n=O(v_n)$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 3.2-3.3",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · croissances comparées : $\\ln n\\ll n^a\\ll q^n\\ll n!$ ($a>0$, $q>1$) · $q^n\\to0$ si $|q|<1$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Démonstrations du cours",
+   "notions": [
+    "demos",
+    "gendarmes",
+    "bornee"
+   ],
+   "exos": [
+    {
+     "id": "de1",
+     "enonce": "Montrer : $(u_n)$ converge $\\Rightarrow(u_n)$ bornée. La réciproque est-elle vraie ? Énoncer la contraposée.",
+     "sol": "Soit $\\ell$ la limite. Avec $\\varepsilon=1$ : $\\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le1$, donc $|u_n|\\le|\\ell|+1$. Alors $M=\\max(|u_0|,\\dots,|u_{N-1}|,|\\ell|+1)$ majore tous les $|u_n|$. Réciproque fausse : $(-1)^n$ est bornée et diverge. Contraposée : si $(u_n)$ n'est pas bornée, alors elle diverge.",
+     "src": "Examen S1B2-SR janv. 2025, ex. 4",
+     "formules": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$ avec $\\varepsilon=1$ · $|u_n|\\le|u_n-\\ell|+|\\ell|$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "de2",
+     "enonce": "Énoncer rigoureusement puis démontrer le théorème des gendarmes.",
+     "sol": "Si $v_n\\le u_n\\le w_n$ à partir d'un rang $n_0$ et $v_n\\to\\ell$, $w_n\\to\\ell$, alors $u_n\\to\\ell$. Preuve : soit $\\varepsilon>0$. $\\exists N_1,\\ n\\ge N_1\\Rightarrow v_n\\ge\\ell-\\varepsilon$ ; $\\exists N_2,\\ n\\ge N_2\\Rightarrow w_n\\le\\ell+\\varepsilon$. Pour $n\\ge\\max(n_0,N_1,N_2)$ : $\\ell-\\varepsilon\\le v_n\\le u_n\\le w_n\\le\\ell+\\varepsilon$, donc $|u_n-\\ell|\\le\\varepsilon$.",
+     "src": "Examen B2-ASI janv. 2024, ex. 4",
+     "formules": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$ · $N=\\max(n_0,N_1,N_2)$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "de3",
+     "enonce": "Montrer l'unicité de la limite d'une suite convergente.",
+     "sol": "Supposons $u_n\\to\\ell$ et $u_n\\to\\ell'$ avec $\\ell\\ne\\ell'$. Prenons $\\varepsilon=\\frac{|\\ell-\\ell'|}3>0$. Pour $n$ assez grand, $|u_n-\\ell|\\le\\varepsilon$ et $|u_n-\\ell'|\\le\\varepsilon$, donc $|\\ell-\\ell'|\\le|\\ell-u_n|+|u_n-\\ell'|\\le\\frac23|\\ell-\\ell'|$ : contradiction.",
+     "formules": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$ · inégalité triangulaire : $|\\ell-\\ell'|\\le|\\ell-u_n|+|u_n-\\ell'|$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "de4",
+     "enonce": "Écrire la définition de $u_n\\to\\ell$ et l'utiliser pour montrer que $\\frac1n\\to0$.",
+     "sol": "$\\forall\\varepsilon>0,\\ \\exists N\\in\\mathbb N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$. Soit $\\varepsilon>0$ ; prenons $N=\\lfloor1/\\varepsilon\\rfloor+1>\\frac1\\varepsilon$. Pour $n\\ge N$ : $\\left|\\frac1n-0\\right|=\\frac1n\\le\\frac1N<\\varepsilon$.",
+     "duree": 3,
+     "formules": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Niveau examen : annales complètes",
+   "notions": [
+    "adjacentes",
+    "recurrentes",
+    "landau",
+    "extraites"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "sx1",
+     "src": "Examen S1B2-SR janv. 2025, ex. 1 (7 points)",
+     "enonce": "$u_0=2$, $v_0=3$, $u_{n+1}=\\frac{3u_n+2v_n}5$, $v_{n+1}=\\frac{2u_n+3v_n}5$, $w_n=v_n-u_n$.\n1. Montrer que $(w_n)$ est géométrique ; exprimer $w_n$ ; son signe.\n2. Montrer que $(u_n)$ et $(v_n)$ sont adjacentes ; conséquence en $+\\infty$.\n3. $x_n=u_n+v_n$ : exprimer $x_{n+1}$ en fonction de $x_n$, puis $x_n$ ; en déduire les limites.",
+     "sol": "**1.** $w_{n+1}=\\frac{2u_n+3v_n-3u_n-2v_n}5=\\frac{v_n-u_n}5=\\frac15w_n$ : géométrique de raison $\\frac15$, $w_0=1$, $w_n=\\left(\\frac15\\right)^n>0$.\n\n**2.** $u_{n+1}-u_n=\\frac{2(v_n-u_n)}5=\\frac25w_n>0$ : croissante. $v_{n+1}-v_n=-\\frac25w_n<0$ : décroissante. $v_n-u_n=\\left(\\frac15\\right)^n\\to0$. Adjacentes : même limite $\\ell$, et $2\\ell=\\lim(u_n+v_n)=5$, donc $\\ell=\\frac52$.\n\n**3.** $x_{n+1}=\\frac{5u_n+5v_n}5=x_n$ : $(x_n)$ est constante, $x_n=x_0=5$.",
+     "formules": "géométrique : $w_{n+1}=q\\,w_n$, alors $w_n=w_0q^n$ · adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$ · calculer $x_{n+1}$ en fonction de $x_n$ · suite constante : $x_n=x_0$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "sx2",
+     "src": "Examen S1B2-SR janv. 2025, ex. 2 (5 points)",
+     "enonce": "$u_n=\\sum_{k=n}^{2n-1}\\frac1k$, $n\\ge1$.\n1. Monotonie. 2. Montrer $\\frac n{2n-1}\\le u_n\\le1$ ; minorant et majorant.\n3. $(u_n)$ converge-t-elle ? Encadrer sa limite.",
+     "sol": "**1.** $u_{n+1}=\\sum_{k=n+1}^{2n+1}\\frac1k$. Les termes $k=n+1,\\dots,2n-1$ sont communs, donc $u_{n+1}-u_n=\\frac1{2n}+\\frac1{2n+1}-\\frac1n=\\frac1{2n+1}-\\frac1{2n}=\\frac{-1}{2n(2n+1)}<0$ : $(u_n)$ est strictement décroissante.\n\n**2.** La somme a $n$ termes et pour $n\\le k\\le2n-1$ : $\\frac1{2n-1}\\le\\frac1k\\le\\frac1n$. Donc $\\frac n{2n-1}\\le u_n\\le n\\cdot\\frac1n=1$. Comme $\\frac n{2n-1}\\ge\\frac12$ ($2n\\ge2n-1$), on a $\\frac12\\le u_n\\le1$ : $(u_n)$ est bornée.\n\n**3.** Décroissante et minorée par $\\frac12$ : $(u_n)$ converge. En passant à la limite dans $\\frac n{2n-1}\\le u_n\\le1$ : $\\frac12\\le\\ell\\le1$. Plus précis : la suite décroît, donc $\\ell\\le u_n$ pour tout $n$, par exemple $\\ell\\le u_2=\\frac12+\\frac13=\\frac56$.",
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante · somme de $p$ termes : $p\\times\\min\\le\\sum\\le p\\times\\max$ · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · passage à la limite dans une inégalité large : $a\\le u_n\\le b\\Rightarrow a\\le\\ell\\le b$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "sx3",
+     "src": "Examen S1B2-SR janv. 2025, ex. 3 (7,5 points)",
+     "enonce": "1. Définitions de $o$, $O$, $\\sim$.\n2. Comparer : (a) $-n^3+n-2$ et $-2n^2+n$ ; (b) $e^n+\\sqrt n$ et $e^n+e^{-n}$ ; (c) $3^n+6$ et $5^n-1$.",
+     "sol": "**1.** $u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$. $u_n=O(v_n)$ : $\\left(\\frac{u_n}{v_n}\\right)$ est bornée. $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$.\n\n**2.** $\\frac{v_n}{u_n}=\\frac{-2n^2+n}{-n^3+n-2}\\sim\\frac{-2n^2}{-n^3}=\\frac2n\\to0$. Donc $v_n=o(u_n)$, d'où $v_n=O(u_n)$. $\\frac{u_n}{v_n}\\to+\\infty$ : ni $u=O(v)$, ni $u\\sim v$.\n\n**3.** $\\frac{u_n}{v_n}=\\frac{1+\\sqrt ne^{-n}}{1+e^{-2n}}\\to1$ (croissances comparées). Donc $u_n\\sim v_n$, $u_n=O(v_n)$ et $v_n=O(u_n)$ ; pas de $o$.\n\n**4.** $\\frac{u_n}{v_n}=\\frac{(3/5)^n+6/5^n}{1-1/5^n}\\to0$. Donc $u_n=o(v_n)$ et $u_n=O(v_n)$ ; $v_n$ n'est pas $O(u_n)$, pas d'équivalence.",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré · croissances comparées : $\\ln n\\ll n^a\\ll q^n\\ll n!$ ($a>0$, $q>1$) · $q^n\\to0$ si $|q|<1$",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "sx4",
+     "src": "Examen B2-ASI janv. 2024, ex. 5 (10 points)",
+     "enonce": "$u_0=1$, $u_{n+1}=\\frac{u_n}{u_n+8}$.\n1. (a) $u_n>0$ par récurrence. (b) Limites possibles. (c) Monotonie. (d) Convergence, limite.\n2. $v_n=1+\\frac7{u_n}$ : géométrique de raison $8$ ; $v_n$ puis $u_n$ en fonction de $n$ ; retrouver la limite.",
+     "sol": "**1.** (a) $u_0=1>0$ ; si $u_n>0$, numérateur et dénominateur sont $>0$. (b) $\\ell=\\frac\\ell{\\ell+8}$ donne $\\ell^2+7\\ell=0$ : $\\ell\\in\\{0,-7\\}$ ; comme $u_n>0$, $\\ell\\ge0$ donc $\\ell=0$. (c) $\\frac{u_{n+1}}{u_n}=\\frac1{u_n+8}<1$ : strictement décroissante. (d) Décroissante, minorée par $0$ : converge, et la seule limite possible est $0$.\n\n**2.** $\\frac1{u_{n+1}}=\\frac{u_n+8}{u_n}=1+\\frac8{u_n}$, donc $v_{n+1}=1+7+\\frac{56}{u_n}=8\\left(1+\\frac7{u_n}\\right)=8v_n$. $v_0=8$, donc $v_n=8^{n+1}$ et $u_n=\\frac{7}{v_n-1}=\\frac{7}{8^{n+1}-1}$ (on vérifie $u_0=1$, $u_1=\\frac19$). Donc $u_n\\to0$.",
+     "formules": "récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$ · si $u_n>0$ : $\\frac{u_{n+1}}{u_n}<1$ $\\Rightarrow$ décroissante · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · géométrique : $v_{n+1}=q\\,v_n$, alors $v_n=v_0q^n$",
+     "duree": 10,
+     "type": "multi"
+    },
+    {
+     "id": "sx5",
+     "src": "Examen S1B2-SR janv. 2025, ex. 4-6 (10,5 points)",
+     "enonce": "1. (cours) Convergente $\\Rightarrow$ bornée ; réciproque ; contraposée.\n2. $u_0=\\frac32$, $u_{n+1}=1+\\frac{u_n^2}4$ : monotonie, $1<u_n<2$, limite.\n3. $u_n=\\sin\\frac{n\\pi}3$ : $u_{3n}$, $u_{6n+1}$, convergence.",
+     "sol": "**1.** Soit $\\ell$ la limite. Avec $\\varepsilon=1$ : $\\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le1$, donc $|u_n|\\le|\\ell|+1$. Alors $M=\\max(|u_0|,\\dots,|u_{N-1}|,|\\ell|+1)$ majore tous les $|u_n|$. Réciproque fausse : $(-1)^n$ est bornée et diverge. Contraposée : si $(u_n)$ n'est pas bornée, alors elle diverge.\n\n**2.** (1) $u_{n+1}-u_n=\\frac{u_n^2}4-u_n+1=\\left(\\frac{u_n}2-1\\right)^2=\\frac{(u_n-2)^2}4\\ge0$ : croissante. (2) $1<\\frac32<2$ ; si $1<u_n<2$ alors $\\frac14<\\frac{u_n^2}4<1$, donc $\\frac54<u_{n+1}<2$. (3) Croissante, majorée par $2$ : converge vers $\\ell\\in[1,2]$ et $\\ell=1+\\frac{\\ell^2}4$, $(\\ell-2)^2=0$, $\\ell=2$.\n\n**3.** $u_{3n}=\\sin(n\\pi)=0$. $u_{6n+1}=\\sin\\left(2n\\pi+\\frac\\pi3\\right)=\\frac{\\sqrt3}2$. Deux suites extraites ont des limites différentes ($0\\ne\\frac{\\sqrt3}2$) ; or si $(u_n)$ convergeait vers $\\ell$, toute suite extraite tendrait vers $\\ell$. Donc $(u_n)$ diverge.",
+     "formules": "$u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$ avec $\\varepsilon=1$ · $|u_n|\\le|u_n-\\ell|+|\\ell|$ · signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante · récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$ · deux suites extraites de limites différentes $\\Rightarrow$ $(u_n)$ diverge · $\\sin(x+2n\\pi)=\\sin x$, $\\sin(n\\pi)=0$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "sx6",
+     "src": "Examen B2-ASI janv. 2024, ex. 2-4 et 6 (14 points)",
+     "enonce": "1. $u_n=\\sum_{k=0}^n\\frac1{k!}$, $v_n=u_n+\\frac1{n!}$ : adjacentes, convergence, majorant.\n2. Comparer $1-2n^2$ et $-2n^2+n-3$ ; $e^{2n}-\\sqrt n$ et $n+1$ ; $4^n+1$ et $5^n$.\n3. Énoncer et démontrer le théorème des gendarmes.\n4. $u_n=\\frac1n\\sum_{k=0}^{n-1}(-1)^k$ : $u_{2n}$, $u_{2n+1}$, convergence.",
+     "sol": "**1.** $u_{n+1}-u_n=\\frac1{(n+1)!}>0$. $v_{n+1}-v_n=\\frac2{(n+1)!}-\\frac1{n!}=\\frac{2-(n+1)}{(n+1)!}=\\frac{1-n}{(n+1)!}<0$ pour $n\\ge2$. $v_n-u_n=\\frac1{n!}\\to0$. Adjacentes, donc elles convergent vers la même limite $\\ell$. $(u_n)$ est majorée par $v_2=\\frac52+\\frac12=3$ (car $u_n\\le\\ell\\le v_n\\le v_2$).\n\n**2.** $\\frac{u_n}{v_n}=\\frac{-2+1/n^2}{-2+1/n-3/n^2}\\to1$ : $u_n\\sim v_n$, $u=O(v)$ et $v=O(u)$.\n\n**3.** $\\frac{v_n}{u_n}=\\frac{n+1}{e^{2n}-\\sqrt n}\\to0$ : $v_n=o(u_n)$, $v_n=O(u_n)$. Puis $\\frac{4^n+1}{5^n}=\\left(\\frac45\\right)^n+\\frac1{5^n}\\to0$ : $u_n=o(v_n)$, $u_n=O(v_n)$.\n\n**4.** Si $v_n\\le u_n\\le w_n$ à partir d'un rang $n_0$ et $v_n\\to\\ell$, $w_n\\to\\ell$, alors $u_n\\to\\ell$. Preuve : soit $\\varepsilon>0$. $\\exists N_1,\\ n\\ge N_1\\Rightarrow v_n\\ge\\ell-\\varepsilon$ ; $\\exists N_2,\\ n\\ge N_2\\Rightarrow w_n\\le\\ell+\\varepsilon$. Pour $n\\ge\\max(n_0,N_1,N_2)$ : $\\ell-\\varepsilon\\le v_n\\le u_n\\le w_n\\le\\ell+\\varepsilon$, donc $|u_n-\\ell|\\le\\varepsilon$.\n\n**5.** Les termes s'annulent deux par deux : $\\sum_{k=0}^{2n-1}(-1)^k=0$ et $\\sum_{k=0}^{2n}(-1)^k=1$. Donc $u_{2n}=0$ et $u_{2n+1}=\\frac1{2n+1}$. Les deux tendent vers $0$ : $(u_n)$ converge vers $0$.",
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$ · $u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · factoriser par le terme dominant : $\\frac{P(n)}{Q(n)}$ se comporte comme le quotient des termes de plus haut degré · croissances comparées : $\\ln n\\ll n^a\\ll q^n\\ll n!$ ($a>0$, $q>1$) · $q^n\\to0$ si $|q|<1$ · $u_n\\to\\ell\\iff\\forall\\varepsilon>0,\\ \\exists N,\\ \\forall n\\ge N,\\ |u_n-\\ell|\\le\\varepsilon$ · $N=\\max(n_0,N_1,N_2)$ · $u_{2n}\\to\\ell$ et $u_{2n+1}\\to\\ell\\Rightarrow u_n\\to\\ell$",
+     "duree": 25,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "recurrentes",
+    "adjacentes",
+    "landau",
+    "fi"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "sh1",
+     "enonce": "$u_n=\\sum_{k=1}^{n}\\frac1{n+k}$. Étudier la monotonie, montrer $\\frac12\\le u_n<1$ et conclure sur la convergence.",
+     "sol": "$u_{n+1}-u_n=\\frac1{2n+1}+\\frac1{2n+2}-\\frac1{n+1}=\\frac1{2n+1}-\\frac1{2n+2}>0$ : croissante. $n$ termes compris entre $\\frac1{2n}$ et $\\frac1{n+1}$ : $\\frac12\\le u_n\\le\\frac n{n+1}<1$. Croissante et majorée : converge, vers $\\ell\\in[\\frac12,1]$ (en fait $\\ln2$).",
+     "formules": "signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante · somme de $p$ termes : $p\\times\\min\\le\\sum\\le p\\times\\max$ · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "sh2",
+     "enonce": "$u_0=\\frac32$, $u_{n+1}=\\frac{u_n^2+2}3$. Montrer que $1<u_n<2$, étudier la monotonie et trouver la limite.",
+     "sol": "Points fixes : $\\ell^2-3\\ell+2=0$, $\\ell\\in\\{1,2\\}$. Si $1<u_n<2$ : $1<u_n^2<4$, $1<u_{n+1}<2$. $u_{n+1}-u_n=\\frac{u_n^2-3u_n+2}3=\\frac{(u_n-1)(u_n-2)}3<0$ : décroissante. Minorée par $1$ : converge vers $\\ell\\in[1,\\frac32]$, donc $\\ell=1$.",
+     "formules": "récurrence : initialisation, puis hérédité ($P(n)\\Rightarrow P(n+1)$) · signe de $u_{n+1}-u_n$ : $\\ge0$ croissante, $\\le0$ décroissante · limite monotone : croissante et majorée $\\Rightarrow$ converge · décroissante et minorée $\\Rightarrow$ converge · si $u_n\\to\\ell$ et $f$ continue en $\\ell$ : $\\ell=f(\\ell)$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "sh3",
+     "enonce": "Comparer $u_n=\\ln(n^2+1)$ et $v_n=\\ln n$ ($n\\ge2$).",
+     "sol": "$\\ln(n^2+1)=2\\ln n+\\ln\\left(1+\\frac1{n^2}\\right)$, donc $\\frac{u_n}{v_n}=2+\\frac{\\ln(1+1/n^2)}{\\ln n}\\to2$. $u=O(v)$ et $v=O(u)$ ; $u\\sim2v$ mais pas $u\\sim v$ ; pas de $o$.",
+     "formules": "$u_n=o(v_n)$ : $\\frac{u_n}{v_n}\\to0$ · $u_n=O(v_n)$ : $\\frac{u_n}{v_n}$ bornée · $u_n\\sim v_n$ : $\\frac{u_n}{v_n}\\to1$ · $\\ln(ab)=\\ln a+\\ln b$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "sh4",
+     "enonce": "$u_n=\\sum_{k=1}^{n}\\frac{(-1)^{k+1}}k$. Montrer que $(u_{2n})$ et $(u_{2n+1})$ sont adjacentes et en déduire que $(u_n)$ converge.",
+     "sol": "$u_{2n+2}-u_{2n}=\\frac1{2n+1}-\\frac1{2n+2}>0$ ; $u_{2n+3}-u_{2n+1}=-\\frac1{2n+2}+\\frac1{2n+3}<0$ ; $u_{2n+1}-u_{2n}=\\frac1{2n+1}\\to0$. Adjacentes : même limite $\\ell$. Les termes pairs et impairs tendent vers $\\ell$, donc $u_n\\to\\ell$.",
+     "formules": "adjacentes : $(u_n)$ croissante, $(v_n)$ décroissante, $v_n-u_n\\to0$ $\\Rightarrow$ même limite $\\ell$, et $u_n\\le\\ell\\le v_n$ · $u_{2n}\\to\\ell$ et $u_{2n+1}\\to\\ell\\Rightarrow u_n\\to\\ell$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "sh5",
+     "enonce": "Limite de $\\sqrt{n^2+3n}-\\sqrt{n^2+n}$ ?",
+     "ans": "1",
+     "sol": "$\\frac{2n}{\\sqrt{n^2+3n}+\\sqrt{n^2+n}}=\\frac{2}{\\sqrt{1+3/n}+\\sqrt{1+1/n}}\\to1$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\sqrt{n^2+5n}-\\sqrt{n^2+n}$ ?",
+       "ans": "2",
+       "sol": "$\\frac{4n}{\\sqrt{n^2+5n}+\\sqrt{n^2+n}}=\\frac4{\\sqrt{1+5/n}+\\sqrt{1+1/n}}\\to2$."
+      }
+     ],
+     "formules": "quantité conjuguée : $\\sqrt a-\\sqrt b=\\frac{a-b}{\\sqrt a+\\sqrt b}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

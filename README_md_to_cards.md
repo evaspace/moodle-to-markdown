@@ -1,4 +1,4 @@
-# md_to_cards.py — Convertisseur Markdown EPITA → cartes MathsDoomscroll
+# md_to_cards.py — Convertisseur Markdown EPITA → cartes EpitaDoomscrolling
 
 Convertit les Markdown locaux (`EPITA_Moodle_Notes_MD/`, **jamais envoyés
 au serveur**) en blocs de cartes au format texte interprété par
@@ -168,10 +168,10 @@ Même infrastructure de rotation/429/fallback/verification que la Pass C.
 
 ```bash
 df -h /opt                                                    # espace serveur
-rsync --dry-run -av --delete Generated_QCMs/ hetzner:/opt/pierref/mathsdoomscroll/import_queue/
-ssh hetzner "cp /opt/pierref/mathsdoomscroll/cards.db /opt/pierref/mathsdoomscroll/backups/cards_\$(date +%Y%m%d_%H%M%S).db"
+rsync --dry-run -av --delete Generated_QCMs/ hetzner:/opt/pierref/epitadoomscrolling/import_queue/
+ssh hetzner "cp /opt/pierref/epitadoomscrolling/cards.db /opt/pierref/epitadoomscrolling/backups/cards_\$(date +%Y%m%d_%H%M%S).db"
 ./sync_to_server.sh                                           # rsync + docker exec ingest_all.py
-ssh hetzner "rm /opt/pierref/mathsdoomscroll/import_queue/*.done && df -h /opt"
+ssh hetzner "rm /opt/pierref/epitadoomscrolling/import_queue/*.done && df -h /opt"
 ```
 
 Jamais de `make sync-md` (les Markdown ne doivent PAS monter sur le serveur).

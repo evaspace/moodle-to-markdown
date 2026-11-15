@@ -1,0 +1,1034 @@
+{
+ "subject": {
+  "id": "maths-s2-alm",
+  "ordre": 230,
+  "matiere": "maths",
+  "semestre": "S2",
+  "ecue": "ALM",
+  "titre": "Applications linéaires et matrices",
+  "chapitres_moodle": [
+   "09_Cours 5 - Applications linéaires",
+   "10_Cours 6 - Matrices",
+   "11_7 - Résolution de systèmes linéaires"
+  ],
+  "td": "TD applications linéaires et matrices (S2 2030)",
+  "examens": [
+   "Examen S2-B4 ALM (avant l'été)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "lineaire",
+   "titre": "Application linéaire",
+   "formule": "$f$ linéaire $\\iff\\forall(u,v),\\ \\forall\\lambda,\\ f(\\lambda u+v)=\\lambda f(u)+f(v)$ · alors $f(0)=0$ · $u=\\sum x_ie_i\\Rightarrow f(u)=\\sum x_if(e_i)$",
+   "exemple": "$f(x,y)=(x+1,y)$ n'est pas linéaire : $f(0,0)=(1,0)\\ne0$",
+   "cours": "Pour dire non : $f(0)\\ne0$ ou $f(2u)\\ne2f(u)$ sur un exemple. Pour dire oui : vérifier $f(\\lambda u+v)=\\lambda f(u)+f(v)$. Une application linéaire est entièrement déterminée par l'image d'une base."
+  },
+  {
+   "id": "noyau",
+   "titre": "Noyau, injectivité",
+   "formule": "$\\mathrm{Ker}f=\\{u\\in E,\\ f(u)=0_F\\}$, sev de $E$ · $f$ injective $\\iff\\mathrm{Ker}f=\\{0_E\\}$",
+   "exemple": "$f(x,y)=(x-y,2x-2y)$ : $\\mathrm{Ker}f=\\mathrm{Vect}((1,1))$",
+   "cours": "Résoudre le système $f(u)=0$, puis écrire l'ensemble des solutions sous forme de Vect. Le nombre de paramètres libres est la dimension du noyau."
+  },
+  {
+   "id": "image",
+   "titre": "Image, surjectivité",
+   "formule": "$\\mathrm{Im}f=\\{f(u),\\ u\\in E\\}=\\mathrm{Vect}(f(e_1),\\dots,f(e_n))$, sev de $F$ · $\\mathrm{rg}f=\\dim\\mathrm{Im}f$ · $f$ surjective $\\iff\\mathrm{Im}f=F\\iff\\mathrm{rg}f=\\dim F$",
+   "exemple": "$f(x,y)=(x-y,2x-2y)$ : $\\mathrm{Im}f=\\mathrm{Vect}((1,2))$, rang $1$",
+   "cours": "Les images des vecteurs d'une base engendrent l'image : on en extrait une base en retirant ceux qui sont combinaisons des autres. Sur une matrice : l'image est engendrée par les colonnes, le rang est le nombre de colonnes indépendantes."
+  },
+  {
+   "id": "rang",
+   "titre": "Théorème du rang",
+   "formule": "$E$ de dimension finie, $f\\in\\mathcal L(E,F)$ : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · si $\\dim E=\\dim F$ : injective $\\iff$ surjective $\\iff$ bijective",
+   "exemple": "$f:\\mathbb R^3\\to\\mathbb R^2$ : $\\mathrm{rg}f\\le2$, donc $\\dim\\mathrm{Ker}f\\ge1$ : jamais injective",
+   "cours": "$\\dim E>\\dim F$ : pas injective. $\\dim E<\\dim F$ : pas surjective. On calcule le plus facile des deux (noyau ou image) et on déduit la dimension de l'autre."
+  },
+  {
+   "id": "matrice",
+   "titre": "Matrice d'une application linéaire",
+   "formule": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · taille $(\\dim F)\\times(\\dim E)$ · coordonnées de l'image : $Y=AX$",
+   "exemple": "$f(x,y)=(2x-3y,-2x+y)$ : $\\begin{pmatrix}2&-3\\\\-2&1\\end{pmatrix}$",
+   "cours": "Calculer l'image de chaque vecteur de la base de départ, l'exprimer dans la base d'arrivée, ranger en colonnes. Base canonique de $\\mathbb R_2[X]$ : $(1,X,X^2)$."
+  },
+  {
+   "id": "produit",
+   "titre": "Produit matriciel, transposée",
+   "formule": "$AB$ défini si (colonnes de $A$) = (lignes de $B$) : $n\\times p$ par $p\\times q$ donne $n\\times q$ · $(AB)_{ij}=\\sum_ka_{ik}b_{kj}$ · $AB\\ne BA$ en général · ${}^t(AB)={}^tB\\,{}^tA$",
+   "exemple": "$\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}=\\begin{pmatrix}2&1\\\\4&3\\end{pmatrix}$",
+   "cours": "Coefficient $(i,j)$ : ligne $i$ de $A$ contre colonne $j$ de $B$. Le produit correspond à la composition des applications linéaires. Si $AB=BA$ : binôme $(A+B)^n=\\sum\\binom nkA^kB^{n-k}$."
+  },
+  {
+   "id": "systeme",
+   "titre": "Systèmes linéaires, pivot de Gauss",
+   "formule": "opérations $L_i\\leftarrow L_i+\\lambda L_j$, $L_i\\leftrightarrow L_j$, $L_i\\leftarrow\\lambda L_i$ ($\\lambda\\ne0$) · système échelonné puis remontée · $0=c\\ne0$ : pas de solution · inconnues libres : infinité de solutions",
+   "exemple": "$x+y=3$, $x-y=1$ : $L_2\\leftarrow L_2-L_1$ donne $-2y=-2$, $y=1$, $x=2$",
+   "cours": "Éliminer la première inconnue dans toutes les lignes sauf la première, puis recommencer sur le sous-système. Écrire chaque opération. Vérifier la solution dans le système de départ."
+  },
+  {
+   "id": "inverse",
+   "titre": "Inverse d'une matrice",
+   "formule": "$A$ inversible $\\iff\\exists B,\\ AB=BA=I_n$ (matrice carrée) · $2\\times2$ : $\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1}=\\frac1{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$ si $ad-bc\\ne0$ · résoudre $AU=V$ par pivot : $U=A^{-1}V$",
+   "exemple": "$\\begin{pmatrix}2&1\\\\5&3\\end{pmatrix}^{-1}=\\begin{pmatrix}3&-1\\\\-5&2\\end{pmatrix}$",
+   "cours": "Méthode du système : résoudre $AU=V$ avec $V=(X,Y,Z)$ quelconque, lire $A^{-1}$ dans $U=A^{-1}V$. Toujours vérifier $AA^{-1}=I_n$. Une matrice non carrée n'est jamais inversible."
+  },
+  {
+   "id": "changement",
+   "titre": "Changement de base",
+   "formule": "$P$ = matrice de passage : colonnes = vecteurs de la nouvelle base dans l'ancienne · $X=PX'$, $X'=P^{-1}X$ · $\\mathrm{Mat}_{\\mathcal B'}(f)=P^{-1}AP$ · $A=PDP^{-1}\\Rightarrow A^n=PD^nP^{-1}$",
+   "exemple": "$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$, $P=\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$ : $P^{-1}AP=\\mathrm{diag}(3,1)$",
+   "cours": "Si $f(u_i)=\\lambda_iu_i$ pour une base $(u_i)$, la matrice de $f$ dans cette base est diagonale. Bases différentes au départ et à l'arrivée : exprimer chaque $f(e_j)$ dans la base d'arrivée."
+  },
+  {
+   "id": "projecteur",
+   "titre": "Projecteurs et symétries",
+   "formule": "$p$ projecteur $\\iff p\\circ p=p$ · alors $E=\\mathrm{Ker}p\\oplus\\mathrm{Im}p$, $p=id$ sur $\\mathrm{Im}p$ · $E=F\\oplus G$, $u=v+w$ : projection sur $F$ parallèlement à $G$ : $u\\mapsto v$ ; symétrie : $u\\mapsto v-w$, $s\\circ s=id$, $s=2p-id$",
+   "exemple": "$p(x,y)=(x,0)$ : projection sur l'axe des abscisses parallèlement à l'axe des ordonnées",
+   "cours": "Dans une base adaptée à $E=F\\oplus G$, la matrice de la projection sur $F$ est $\\mathrm{diag}(1,\\dots,1,0,\\dots,0)$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "lineaire",
+   "type": "vf",
+   "q": "Si $f$ est linéaire alors $f(0)=0$.",
+   "bonne": true
+  },
+  {
+   "notion": "lineaire",
+   "type": "vf",
+   "q": "Si $f(0)=0$ alors $f$ est linéaire.",
+   "bonne": false
+  },
+  {
+   "notion": "noyau",
+   "type": "qcm",
+   "q": "$f$ linéaire est injective si et seulement si :",
+   "choix": [
+    "$\\mathrm{Ker}f=\\{0_E\\}$",
+    "$\\mathrm{Im}f=F$",
+    "$\\mathrm{Ker}f=E$",
+    "$f(0)=0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "image",
+   "type": "qcm",
+   "q": "$\\mathrm{Im}f$ est engendrée par :",
+   "choix": [
+    "les images des vecteurs d'une base de $E$",
+    "les vecteurs d'une base de $E$",
+    "les vecteurs du noyau",
+    "les lignes de la matrice"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rang",
+   "type": "qcm",
+   "q": "Théorème du rang pour $f\\in\\mathcal L(E,F)$ :",
+   "choix": [
+    "$\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$",
+    "$\\dim F=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$",
+    "$\\dim E=\\dim F+\\mathrm{rg}f$",
+    "$\\mathrm{rg}f=\\dim E+\\dim\\mathrm{Ker}f$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rang",
+   "type": "vf",
+   "q": "Une application linéaire de $\\mathbb R^3$ dans $\\mathbb R^2$ n'est jamais injective.",
+   "bonne": true
+  },
+  {
+   "notion": "matrice",
+   "type": "qcm",
+   "q": "La colonne $j$ de la matrice de $f$ contient :",
+   "choix": [
+    "les coordonnées de $f(e_j)$ dans la base d'arrivée",
+    "les coordonnées de $e_j$",
+    "les antécédents de $e_j$",
+    "la ligne $j$ du système"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "produit",
+   "type": "vf",
+   "q": "Pour toutes matrices carrées $A$, $B$ de même taille, $AB=BA$.",
+   "bonne": false
+  },
+  {
+   "notion": "produit",
+   "type": "qcm",
+   "q": "$A$ est de taille $2\\times3$ et $B$ de taille $3\\times4$. $AB$ est de taille :",
+   "choix": [
+    "$2\\times4$",
+    "$3\\times3$",
+    "$4\\times2$",
+    "non défini"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "systeme",
+   "type": "vf",
+   "q": "Si le pivot de Gauss donne une ligne $0=1$, le système n'a pas de solution.",
+   "bonne": true
+  },
+  {
+   "notion": "inverse",
+   "type": "qcm",
+   "q": "$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}$ est inversible si et seulement si :",
+   "choix": [
+    "$ad-bc\\ne0$",
+    "$ad+bc\\ne0$",
+    "$a\\ne0$ et $d\\ne0$",
+    "$ab-cd\\ne0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "inverse",
+   "type": "vf",
+   "q": "Une matrice non carrée peut être inversible.",
+   "bonne": false
+  },
+  {
+   "notion": "changement",
+   "type": "qcm",
+   "q": "Si $P$ est la matrice de passage de $\\mathcal B$ à $\\mathcal B'$ et $A=\\mathrm{Mat}_{\\mathcal B}(f)$, alors $\\mathrm{Mat}_{\\mathcal B'}(f)=$",
+   "choix": [
+    "$P^{-1}AP$",
+    "$PAP^{-1}$",
+    "$AP$",
+    "$P^{-1}A$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "projecteur",
+   "type": "qcm",
+   "q": "$p$ est un projecteur si et seulement si :",
+   "choix": [
+    "$p\\circ p=p$",
+    "$p\\circ p=id$",
+    "$p\\circ p=0$",
+    "$p$ est bijective"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Reconnaître une application linéaire",
+   "notions": [
+    "lineaire"
+   ],
+   "exos": [
+    {
+     "id": "al1",
+     "enonce": "$f:\\mathbb R^2\\to\\mathbb R^2$, $f(x,y)=(x+y,2x)$ est-elle linéaire ?",
+     "sol": "Oui. Pour $u=(x,y)$, $v=(x',y')$ : $f(\\lambda u+v)=(\\lambda x+x'+\\lambda y+y',\\ 2\\lambda x+2x')=\\lambda(x+y,2x)+(x'+y',2x')=\\lambda f(u)+f(v)$.",
+     "duree": 3,
+     "formules": "$f$ linéaire $\\iff f(\\lambda u+v)=\\lambda f(u)+f(v)$",
+     "type": "open"
+    },
+    {
+     "id": "al2",
+     "enonce": "$f:\\mathbb R^2\\to\\mathbb R^2$, $f(x,y)=(x+1,y)$ est-elle linéaire ?",
+     "sol": "Non : $f(0,0)=(1,0)\\ne(0,0)$.",
+     "duree": 2,
+     "formules": "$f$ linéaire $\\Rightarrow f(0)=0$ et $f(2u)=2f(u)$ (conditions nécessaires)",
+     "type": "open"
+    },
+    {
+     "id": "al3",
+     "enonce": "$f:\\mathbb R\\to\\mathbb R$, $f(x)=x^2$ est-elle linéaire ?",
+     "sol": "Non : $f(2\\times1)=4\\ne2=2f(1)$.",
+     "duree": 2,
+     "formules": "$f$ linéaire $\\Rightarrow f(0)=0$ et $f(2u)=2f(u)$ (conditions nécessaires)",
+     "type": "open"
+    },
+    {
+     "id": "al4",
+     "enonce": "Montrer que la dérivation $D:\\mathbb R[X]\\to\\mathbb R[X]$, $P\\mapsto P'$ est linéaire.",
+     "sol": "$(\\lambda P+Q)'=\\lambda P'+Q'$, donc $D(\\lambda P+Q)=\\lambda D(P)+D(Q)$.",
+     "duree": 2,
+     "formules": "$f$ linéaire $\\iff f(\\lambda u+v)=\\lambda f(u)+f(v)$ · $(\\lambda P+Q)'=\\lambda P'+Q'$",
+     "type": "open"
+    },
+    {
+     "id": "al5",
+     "enonce": "$f:\\mathbb R^2\\to\\mathbb R^2$ est linéaire, $f(e_1)=(1,2)$ et $f(e_2)=(0,-1)$. Calculer $f(3,4)$.",
+     "ans": "Matrix([3,2])",
+     "sol": "$f(3,4)=3f(e_1)+4f(e_2)=(3,6)+(0,-4)=(3,2)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f:\\mathbb R^2\\to\\mathbb R^2$ est linéaire, $f(e_1)=(2,1)$ et $f(e_2)=(1,-1)$. Calculer $f(2,3)$.",
+       "ans": "Matrix([7,-1])",
+       "sol": "$2f(e_1)+3f(e_2)=(4,2)+(3,-3)=(7,-1)$."
+      }
+     ],
+     "formules": "$u=\\sum x_ie_i\\Rightarrow f(u)=\\sum x_if(e_i)$",
+     "type": "value"
+    },
+    {
+     "id": "al6",
+     "enonce": "Existe-t-il une application linéaire $f:\\mathbb R^2\\to\\mathbb R^2$ telle que $f(1,0)=(1,1)$, $f(0,1)=(2,0)$ et $f(1,1)=(0,0)$ ?",
+     "sol": "Non. $(1,1)=(1,0)+(0,1)$, donc par linéarité $f(1,1)=(1,1)+(2,0)=(3,1)\\ne(0,0)$. Les vecteurs donnés sont liés : les images doivent vérifier la même relation.",
+     "duree": 3,
+     "formules": "$u=\\sum x_ie_i\\Rightarrow f(u)=\\sum x_if(e_i)$ · si les vecteurs donnés sont liés, les images doivent vérifier la même relation",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Noyau",
+   "notions": [
+    "noyau"
+   ],
+   "exos": [
+    {
+     "id": "an1",
+     "enonce": "$f(x,y)=(x-y,\\ 2x-2y)$. Déterminer $\\mathrm{Ker}f$.",
+     "sol": "$f(x,y)=0\\iff x=y$ : $\\mathrm{Ker}f=\\{(x,x)\\}=\\mathrm{Vect}((1,1))$.",
+     "duree": 3,
+     "formules": "$\\mathrm{Ker}f$ : résoudre $f(u)=0$",
+     "type": "open"
+    },
+    {
+     "id": "an2",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R_2[X]$, $(a,b,c)\\mapsto(a-b)X^2+(a+b-c)X-2a+2b$. Trouver la dimension du noyau de $f$, en précisant une base.",
+     "sol": "$\\mathrm{Ker}f=\\{(a,b,c),\\ a-b=0,\\ a+b-c=0,\\ -2a+2b=0\\}=\\{(a,a,2a)\\}=\\mathrm{Vect}(u=(1,1,2))$. $u\\ne0$ : $(u)$ est une base, $\\dim\\mathrm{Ker}f=1$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 2.1",
+     "formules": "$\\mathrm{Ker}f$ : résoudre $f(u)=0$ · un polynôme est nul $\\iff$ tous ses coefficients sont nuls · un vecteur non nul forme une base de la droite qu'il engendre",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "an3",
+     "enonce": "$f(x,y)=(x+y,\\ x-y)$ est-elle injective ?",
+     "sol": "$f(x,y)=0\\iff x+y=0$ et $x-y=0\\iff x=y=0$. $\\mathrm{Ker}f=\\{0\\}$ : $f$ est injective.",
+     "duree": 3,
+     "formules": "$\\mathrm{Ker}f$ : résoudre $f(u)=0$ · injective $\\iff\\mathrm{Ker}f=\\{0\\}$",
+     "type": "open"
+    },
+    {
+     "id": "an4",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R^2$ a pour matrice $\\begin{pmatrix}1&2&3\\\\2&4&6\\end{pmatrix}$. Quelle est la dimension de $\\mathrm{Ker}f$ ?",
+     "ans": "2",
+     "sol": "$L_2=2L_1$ : une seule équation $x+2y+3z=0$, deux paramètres libres. $\\dim\\mathrm{Ker}f=2$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$f:\\mathbb R^3\\to\\mathbb R^2$ a pour matrice $\\begin{pmatrix}1&0&1\\\\0&1&1\\end{pmatrix}$. Quelle est la dimension de $\\mathrm{Ker}f$ ?",
+       "ans": "1",
+       "sol": "$x=-z$, $y=-z$ : $\\mathrm{Vect}((-1,-1,1))$, dimension $1$."
+      }
+     ],
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · rang = nombre de lignes indépendantes",
+     "type": "value"
+    },
+    {
+     "id": "an5",
+     "enonce": "Déterminer le noyau de la dérivation $D:\\mathbb R_2[X]\\to\\mathbb R_2[X]$, $P\\mapsto P'$. $D$ est-elle injective ?",
+     "sol": "$P'=0\\iff P$ constant : $\\mathrm{Ker}D=\\mathrm{Vect}(1)$. $\\mathrm{Ker}D\\ne\\{0\\}$ : $D$ n'est pas injective.",
+     "duree": 3,
+     "formules": "$\\mathrm{Ker}f$ : résoudre $f(u)=0$ · injective $\\iff\\mathrm{Ker}f=\\{0\\}$ · $P'=0\\iff P$ constant",
+     "type": "open"
+    },
+    {
+     "id": "an6",
+     "enonce": "Soit $f\\in\\mathcal L(E,F)$. Montrer que $f$ est injective si et seulement si $\\mathrm{Ker}f=\\{0_E\\}$.",
+     "sol": "Si $f$ est injective et $f(x)=0=f(0)$, alors $x=0$. Réciproquement, si $\\mathrm{Ker}f=\\{0\\}$ et $f(x)=f(y)$ : $f(x-y)=f(x)-f(y)=0$, donc $x-y\\in\\mathrm{Ker}f$, $x=y$.",
+     "formules": "injective $\\iff\\mathrm{Ker}f=\\{0\\}$ · $f(x)-f(y)=f(x-y)$ · $f(0)=0$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Image et rang",
+   "notions": [
+    "image"
+   ],
+   "exos": [
+    {
+     "id": "ai1",
+     "enonce": "$f(x,y)=(x-y,\\ 2x-2y)$. Déterminer $\\mathrm{Im}f$ et le rang de $f$.",
+     "sol": "$\\mathrm{Im}f=\\mathrm{Vect}(f(e_1),f(e_2))=\\mathrm{Vect}((1,2),(-1,-2))=\\mathrm{Vect}((1,2))$. Rang $1$.",
+     "duree": 3,
+     "formules": "$\\mathrm{Im}f=\\mathrm{Vect}(f(e_1),\\dots,f(e_n))$",
+     "type": "open"
+    },
+    {
+     "id": "ai2",
+     "enonce": "Quel est le rang de $\\begin{pmatrix}1&2\\\\3&6\\end{pmatrix}$ ?",
+     "ans": "1",
+     "sol": "$C_2=2C_1$ : une seule colonne indépendante. Rang $1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Quel est le rang de $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$ ?",
+       "ans": "2",
+       "sol": "Les colonnes ne sont pas colinéaires : rang $2$."
+      }
+     ],
+     "formules": "rang = nombre de colonnes indépendantes",
+     "type": "value"
+    },
+    {
+     "id": "ai3",
+     "enonce": "Quel est le rang de $\\begin{pmatrix}1&0&1\\\\0&1&1\\\\1&1&2\\end{pmatrix}$ ?",
+     "ans": "2",
+     "sol": "$C_3=C_1+C_2$, et $C_1$, $C_2$ ne sont pas colinéaires. Rang $2$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Quel est le rang de $\\begin{pmatrix}1&2&3\\\\2&4&6\\\\1&1&1\\end{pmatrix}$ ?",
+       "ans": "2",
+       "sol": "$L_2=2L_1$, et $L_1$, $L_3$ ne sont pas colinéaires : rang $2$."
+      }
+     ],
+     "formules": "rang = nombre de colonnes indépendantes",
+     "type": "value"
+    },
+    {
+     "id": "ai4",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R_2[X]$, $(a,b,c)\\mapsto(a-b)X^2+(a+b-c)X-2a+2b$, de rang $2$. Trouver une base de $\\mathrm{Im}f$.",
+     "sol": "$\\mathrm{Im}f=\\{a(X^2+X-2)+b(-X^2+X+2)+c(-X)\\}=\\mathrm{Vect}(P_1,P_2,P_3)$ avec $P_1+P_2=2X=-2P_3$, donc $\\mathrm{Im}f=\\mathrm{Vect}(P_1,P_2)$. Famille génératrice de cardinal $2=\\dim\\mathrm{Im}f$ : $(P_1=X^2+X-2,\\ P_2=-X^2+X+2)$ est une base.",
+     "src": "Examen S2-B4 ALM 2026, ex. 2.3",
+     "formules": "$\\mathrm{Im}f=\\mathrm{Vect}(f(e_1),\\dots,f(e_n))$ · famille génératrice de cardinal $\\dim$ = base",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ai5",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R^2$, $f(x,y,z)=(x+y,\\ y+z)$ est-elle surjective ?",
+     "sol": "$f(e_1)=(1,0)$ et $f(e_2)=(1,1)$ ne sont pas colinéaires : $\\mathrm{rg}f=2=\\dim\\mathbb R^2$. $f$ est surjective.",
+     "duree": 3,
+     "formules": "$\\mathrm{Im}f=\\mathrm{Vect}(f(e_1),\\dots,f(e_n))$ · surjective $\\iff\\mathrm{rg}f=\\dim F$",
+     "type": "open"
+    },
+    {
+     "id": "ai6",
+     "enonce": "$f\\in\\mathcal L(\\mathbb R^3,\\mathbb R_2[X])$ a pour matrice dans les bases canoniques $A=\\begin{pmatrix}1&2&-1\\\\-2&1&2\\\\1&0&-1\\end{pmatrix}$. En raisonnant sur les colonnes, trouver le rang de $A$, une base de l'image et une base du noyau de $f$.",
+     "sol": "$C_3=-C_1$, donc $\\mathrm{Im}f=\\mathrm{Vect}(C_1,C_2)$, soit $\\mathrm{Vect}(1-2X+X^2,\\ 2+X)$. Ces deux polynômes ne sont pas colinéaires : base de $\\mathrm{Im}f$, rang $2$. Théorème du rang : $\\dim\\mathrm{Ker}f=3-2=1$. $C_1+C_3=0$ donne $f(1,0,1)=0$ : $u=(1,0,1)$, non nul, est une base de $\\mathrm{Ker}f$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 5 (5 points)",
+     "duree": 7,
+     "formules": "$\\mathrm{Im}f$ = Vect des colonnes · théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · une relation entre colonnes donne un vecteur du noyau",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Théorème du rang",
+   "notions": [
+    "rang"
+   ],
+   "exos": [
+    {
+     "id": "at0",
+     "enonce": "Énoncer rigoureusement le théorème du rang.",
+     "sol": "Soient $E$ un espace vectoriel de dimension finie et $f\\in\\mathcal L(E,F)$. Alors $\\dim E=\\dim\\mathrm{Ker}f+\\dim\\mathrm{Im}f$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 2.2",
+     "duree": 2,
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$",
+     "type": "open"
+    },
+    {
+     "id": "at1",
+     "enonce": "$f:\\mathbb R^5\\to\\mathbb R^3$ est linéaire et surjective. Quelle est la dimension de $\\mathrm{Ker}f$ ?",
+     "ans": "2",
+     "sol": "$\\mathrm{rg}f=3$, donc $\\dim\\mathrm{Ker}f=5-3=2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f:\\mathbb R^4\\to\\mathbb R^2$ est linéaire et surjective. Quelle est la dimension de $\\mathrm{Ker}f$ ?",
+       "ans": "2",
+       "sol": "$4-2=2$."
+      }
+     ],
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · surjective $\\iff\\mathrm{rg}f=\\dim F$",
+     "type": "value"
+    },
+    {
+     "id": "at2",
+     "enonce": "$f$ est un endomorphisme de $\\mathbb R^4$ et $\\dim\\mathrm{Ker}f=1$. Quel est le rang de $f$ ?",
+     "ans": "3",
+     "sol": "$\\mathrm{rg}f=4-1=3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f$ est un endomorphisme de $\\mathbb R^5$ et $\\dim\\mathrm{Ker}f=2$. Quel est le rang de $f$ ?",
+       "ans": "3",
+       "sol": "$5-2=3$."
+      }
+     ],
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$",
+     "type": "value"
+    },
+    {
+     "id": "at3",
+     "enonce": "Une application linéaire $f:\\mathbb R^3\\to\\mathbb R^2$ peut-elle être injective ?",
+     "sol": "Non. $\\mathrm{rg}f\\le2$, donc $\\dim\\mathrm{Ker}f=3-\\mathrm{rg}f\\ge1$ : $\\mathrm{Ker}f\\ne\\{0\\}$.",
+     "duree": 3,
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · $\\mathrm{rg}f\\le\\dim F$ · injective $\\iff\\mathrm{Ker}f=\\{0\\}$",
+     "type": "open"
+    },
+    {
+     "id": "at4",
+     "enonce": "Une application linéaire $f:\\mathbb R^2\\to\\mathbb R^3$ peut-elle être surjective ?",
+     "sol": "Non. $\\mathrm{rg}f=2-\\dim\\mathrm{Ker}f\\le2<3$ : $\\mathrm{Im}f\\ne\\mathbb R^3$.",
+     "duree": 3,
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · surjective $\\iff\\mathrm{rg}f=\\dim F$",
+     "type": "open"
+    },
+    {
+     "id": "at5",
+     "enonce": "Soit $f$ un endomorphisme de $E$ de dimension finie $n$. Montrer que $f$ injective $\\iff f$ surjective.",
+     "sol": "Injective $\\iff\\dim\\mathrm{Ker}f=0\\iff\\mathrm{rg}f=n$ (théorème du rang) $\\iff\\mathrm{Im}f=E$ (sev de même dimension que $E$) $\\iff$ surjective.",
+     "duree": 4,
+     "formules": "théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · injective $\\iff\\mathrm{Ker}f=\\{0\\}$ · $F\\subset E$ et $\\dim F=\\dim E\\Rightarrow F=E$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Matrice d'une application linéaire",
+   "notions": [
+    "matrice"
+   ],
+   "exos": [
+    {
+     "id": "am1",
+     "enonce": "$f:\\mathbb R^2\\to\\mathbb R^2$, $(x,y)\\mapsto(2x-3y,\\ -2x+y)$. Écrire la matrice de $f$ dans la base canonique.",
+     "sol": "$f(e_1)=(2,-2)$, $f(e_2)=(-3,1)$, rangés en colonnes : $\\begin{pmatrix}2&-3\\\\-2&1\\end{pmatrix}$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 3.1 (a)",
+     "duree": 2,
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée",
+     "type": "open"
+    },
+    {
+     "id": "am2",
+     "enonce": "Écrire la matrice de la dérivation $D:\\mathbb R_2[X]\\to\\mathbb R_2[X]$ dans la base canonique $(1,X,X^2)$.",
+     "sol": "$D(1)=0$, $D(X)=1$, $D(X^2)=2X$ : $\\begin{pmatrix}0&1&0\\\\0&0&2\\\\0&0&0\\end{pmatrix}$.",
+     "duree": 3,
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · base canonique de $\\mathbb R_2[X]$ : $(1,X,X^2)$",
+     "type": "open"
+    },
+    {
+     "id": "am3",
+     "enonce": "$f$ a pour matrice $A=\\begin{pmatrix}1&2\\\\0&-1\\end{pmatrix}$ dans la base canonique. Calculer $f(3,1)$.",
+     "ans": "Matrix([5,-1])",
+     "sol": "$Y=AX$ : $(3+2,\\ -1)=(5,-1)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f$ a pour matrice $A=\\begin{pmatrix}2&-1\\\\1&3\\end{pmatrix}$ dans la base canonique. Calculer $f(1,2)$.",
+       "ans": "Matrix([0,7])",
+       "sol": "$(2-2,\\ 1+6)=(0,7)$."
+      }
+     ],
+     "formules": "coordonnées de l'image : $Y=AX$",
+     "type": "value"
+    },
+    {
+     "id": "am4",
+     "enonce": "Quelle est la taille de la matrice d'une application linéaire de $\\mathbb R^3$ dans $\\mathbb R^2$ ?",
+     "sol": "$2$ lignes ($\\dim$ arrivée) et $3$ colonnes ($\\dim$ départ) : $2\\times3$.",
+     "duree": 2,
+     "formules": "taille $(\\dim$ arrivée$)\\times(\\dim$ départ$)$",
+     "type": "open"
+    },
+    {
+     "id": "am5",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R^2$, $f(x,y,z)=(x+y,\\ y-z)$. Écrire sa matrice dans les bases canoniques.",
+     "sol": "$f(e_1)=(1,0)$, $f(e_2)=(1,1)$, $f(e_3)=(0,-1)$ : $\\begin{pmatrix}1&1&0\\\\0&1&-1\\end{pmatrix}$.",
+     "duree": 3,
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Produit matriciel",
+   "notions": [
+    "produit"
+   ],
+   "exos": [
+    {
+     "id": "ap1",
+     "enonce": "Calculer $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$.",
+     "ans": "Matrix([[2,1],[4,3]])",
+     "sol": "$\\begin{pmatrix}2&1\\\\4&3\\end{pmatrix}$ : multiplier à droite par cette matrice échange les colonnes.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$.",
+       "ans": "Matrix([[1,3],[3,7]])",
+       "sol": "$\\begin{pmatrix}1&3\\\\3&7\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$(AB)_{ij}=\\sum_ka_{ik}b_{kj}$",
+     "type": "value"
+    },
+    {
+     "id": "ap2",
+     "enonce": "$A=\\begin{pmatrix}-2&1&2\\\\-1&3&-1\\end{pmatrix}$ et $B=\\begin{pmatrix}2&1\\\\1&-2\\end{pmatrix}$. Les produits $AB$ et $BA$ sont-ils définis ? Effectuer celui qui l'est.",
+     "ans": "Matrix([[-5,5,3],[0,-5,4]])",
+     "sol": "$A$ a $3$ colonnes et $B$ a $2$ lignes : $AB$ n'est pas défini. $B$ a $2$ colonnes et $A$ a $2$ lignes : $BA$ est défini ($2\\times3$), $BA=\\begin{pmatrix}-5&5&3\\\\0&-5&4\\end{pmatrix}$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 1.1",
+     "formules": "$AB$ défini si (colonnes de $A$) = (lignes de $B$) : $n\\times p$ par $p\\times q$ donne $n\\times q$ · $(AB)_{ij}=\\sum_ka_{ik}b_{kj}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ap3",
+     "enonce": "$A=\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$. Calculer $A^3$.",
+     "ans": "Matrix([[1,3],[0,1]])",
+     "sol": "$A^2=\\begin{pmatrix}1&2\\\\0&1\\end{pmatrix}$, $A^3=\\begin{pmatrix}1&3\\\\0&1\\end{pmatrix}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$A=\\begin{pmatrix}2&0\\\\1&1\\end{pmatrix}$. Calculer $A^2$.",
+       "ans": "Matrix([[4,0],[3,1]])",
+       "sol": "$A^2=\\begin{pmatrix}4&0\\\\3&1\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$(AB)_{ij}=\\sum_ka_{ik}b_{kj}$",
+     "type": "value"
+    },
+    {
+     "id": "ap4",
+     "enonce": "$A=\\begin{pmatrix}1&2\\\\0&1\\end{pmatrix}$ et $B=\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}$. Calculer $AB-BA$. Les matrices commutent-elles ?",
+     "ans": "Matrix([[2,0],[0,-2]])",
+     "sol": "$AB=\\begin{pmatrix}3&2\\\\1&1\\end{pmatrix}$, $BA=\\begin{pmatrix}1&2\\\\1&3\\end{pmatrix}$, $AB-BA=\\begin{pmatrix}2&0\\\\0&-2\\end{pmatrix}\\ne0$ : elles ne commutent pas.",
+     "formules": "$(AB)_{ij}=\\sum_ka_{ik}b_{kj}$ · $AB\\ne BA$ en général",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ap5",
+     "enonce": "$A=\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$. Calculer ${}^tA\\,A$.",
+     "ans": "Matrix([[10,14],[14,20]])",
+     "sol": "${}^tA=\\begin{pmatrix}1&3\\\\2&4\\end{pmatrix}$, ${}^tA\\,A=\\begin{pmatrix}10&14\\\\14&20\\end{pmatrix}$ (symétrique).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$A=\\begin{pmatrix}1&0\\\\2&1\\end{pmatrix}$. Calculer ${}^tA\\,A$.",
+       "ans": "Matrix([[5,2],[2,1]])",
+       "sol": "${}^tA=\\begin{pmatrix}1&2\\\\0&1\\end{pmatrix}$, ${}^tA\\,A=\\begin{pmatrix}5&2\\\\2&1\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$({}^tA)_{ij}=a_{ji}$ · $(AB)_{ij}=\\sum_ka_{ik}b_{kj}$",
+     "type": "value"
+    },
+    {
+     "id": "ap6",
+     "enonce": "$U=\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}$. Calculer ${}^tU\\,U$.",
+     "ans": "14",
+     "sol": "${}^tU\\,U=1^2+2^2+3^2=14$ (un scalaire ; $U\\,{}^tU$ serait une matrice $3\\times3$).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$U=\\begin{pmatrix}2\\\\-1\\\\2\\end{pmatrix}$. Calculer ${}^tU\\,U$.",
+       "ans": "9",
+       "sol": "$4+1+4=9$."
+      }
+     ],
+     "formules": "${}^tUU=\\sum x_i^2$ (scalaire)",
+     "type": "value"
+    },
+    {
+     "id": "ap7",
+     "enonce": "$A=\\begin{pmatrix}-3&7&-1\\\\-1&2&0\\end{pmatrix}$ et $B=\\begin{pmatrix}-2&5\\\\-1&3\\\\-2&6\\end{pmatrix}$. Calculer $AB$. La matrice $A$ est-elle inversible ?",
+     "ans": "Matrix([[1,0],[0,1]])",
+     "sol": "$AB=I_2$. Mais $A$ n'est pas carrée : elle n'est pas inversible.",
+     "src": "Examen S2-B4 ALM 2026, ex. 1.2",
+     "formules": "$(AB)_{ij}=\\sum_ka_{ik}b_{kj}$ · seule une matrice carrée peut être inversible",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Systèmes linéaires",
+   "notions": [
+    "systeme"
+   ],
+   "exos": [
+    {
+     "id": "as1",
+     "enonce": "Résoudre $\\begin{cases}x+y=3\\\\x-y=1\\end{cases}$",
+     "ans": "Matrix([2,1])",
+     "sol": "$L_2\\leftarrow L_2-L_1$ : $-2y=-2$, $y=1$, puis $x=2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $\\begin{cases}2x+y=4\\\\x-y=5\\end{cases}$",
+       "ans": "Matrix([3,-2])",
+       "sol": "$L_1+L_2$ : $3x=9$, $x=3$, puis $y=x-5=-2$."
+      }
+     ],
+     "formules": "pivot de Gauss : $L_i\\leftarrow L_i+\\lambda L_j$, puis remontée",
+     "type": "value"
+    },
+    {
+     "id": "as2",
+     "enonce": "Résoudre $\\begin{cases}x+y+z=6\\\\x-y+z=2\\\\x+y-z=0\\end{cases}$",
+     "ans": "Matrix([1,2,3])",
+     "sol": "$L_2\\leftarrow L_2-L_1$ : $-2y=-4$, $y=2$. $L_3\\leftarrow L_3-L_1$ : $-2z=-6$, $z=3$. Puis $x=6-2-3=1$.",
+     "variants": [
+      {
+       "enonce": "Résoudre $\\begin{cases}x+y+z=3\\\\x-y+z=1\\\\x+y-z=1\\end{cases}$",
+       "ans": "Matrix([1,1,1])",
+       "sol": "$L_2\\leftarrow L_2-L_1$ : $-2y=-2$, $y=1$. $L_3\\leftarrow L_3-L_1$ : $-2z=-2$, $z=1$. Puis $x=1$."
+      }
+     ],
+     "formules": "pivot de Gauss : $L_i\\leftarrow L_i+\\lambda L_j$, puis remontée",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "as3",
+     "enonce": "Résoudre $\\begin{cases}x+y=1\\\\2x+2y=3\\end{cases}$",
+     "sol": "$L_2\\leftarrow L_2-2L_1$ : $0=1$. Le système n'a pas de solution.",
+     "duree": 2,
+     "formules": "pivot de Gauss : $L_i\\leftarrow L_i+\\lambda L_j$, puis remontée · $0=c\\ne0$ : pas de solution",
+     "type": "open"
+    },
+    {
+     "id": "as4",
+     "enonce": "Résoudre $\\begin{cases}x+y+z=1\\\\x-y=0\\end{cases}$",
+     "sol": "$y=x$ puis $z=1-2x$ : une infinité de solutions, $\\{(t,\\ t,\\ 1-2t),\\ t\\in\\mathbb R\\}$.",
+     "duree": 3,
+     "formules": "pivot de Gauss : $L_i\\leftarrow L_i+\\lambda L_j$, puis remontée · inconnue libre : infinité de solutions",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Inverse d'une matrice",
+   "notions": [
+    "inverse",
+    "systeme"
+   ],
+   "exos": [
+    {
+     "id": "av1",
+     "enonce": "Calculer l'inverse de $\\begin{pmatrix}2&1\\\\5&3\\end{pmatrix}$.",
+     "ans": "Matrix([[3,-1],[-5,2]])",
+     "sol": "$ad-bc=6-5=1$ : $A^{-1}=\\begin{pmatrix}3&-1\\\\-5&2\\end{pmatrix}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer l'inverse de $\\begin{pmatrix}3&2\\\\1&1\\end{pmatrix}$.",
+       "ans": "Matrix([[1,-2],[-1,3]])",
+       "sol": "$ad-bc=1$ : $\\begin{pmatrix}1&-2\\\\-1&3\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1}=\\frac1{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$",
+     "type": "value"
+    },
+    {
+     "id": "av2",
+     "enonce": "Calculer l'inverse de $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$.",
+     "ans": "Matrix([[-2,1],[Rational(3,2),Rational(-1,2)]])",
+     "sol": "$ad-bc=4-6=-2$ : $A^{-1}=-\\frac12\\begin{pmatrix}4&-2\\\\-3&1\\end{pmatrix}=\\begin{pmatrix}-2&1\\\\\\frac32&-\\frac12\\end{pmatrix}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer l'inverse de $\\begin{pmatrix}1&1\\\\1&3\\end{pmatrix}$.",
+       "ans": "Matrix([[3,-1],[-1,1]])/2",
+       "sol": "$ad-bc=2$ : $\\frac12\\begin{pmatrix}3&-1\\\\-1&1\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1}=\\frac1{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$",
+     "type": "value"
+    },
+    {
+     "id": "av3",
+     "enonce": "La matrice $\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$ est-elle inversible ?",
+     "sol": "Non : $ad-bc=4-4=0$ (les colonnes sont colinéaires, le rang vaut $1$).",
+     "duree": 2,
+     "formules": "$2\\times2$ inversible $\\iff ad-bc\\ne0$",
+     "type": "open"
+    },
+    {
+     "id": "av4",
+     "enonce": "Soit $A=\\begin{pmatrix}1&2&3\\\\1&3&7\\\\-3&-7&-14\\end{pmatrix}$. On admet que $A$ est inversible. Trouver $A^{-1}$ en détaillant les calculs, et expliquer comment vérifier le résultat.",
+     "ans": "Matrix([[-7, -7, -5], [7, 5, 4], [-2, -1, -1]])",
+     "sol": "$AU=V$ avec $U=(x,y,z)$, $V=(X,Y,Z)$. $L_2\\leftarrow L_2-L_1$, $L_3\\leftarrow L_3+3L_1$ : $y+4z=Y-X$, $-y-5z=Z+3X$. $L_3\\leftarrow L_3+L_2$ : $-z=2X+Y+Z$. En remontant : $z=-2X-Y-Z$, $y=7X+5Y+4Z$, $x=-7X-7Y-5Z$. $A^{-1}=\\begin{pmatrix}-7&-7&-5\\\\7&5&4\\\\-2&-1&-1\\end{pmatrix}$. Vérification : calculer $AA^{-1}$ et trouver $I_3$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 1.3",
+     "duree": 10,
+     "formules": "résoudre $AU=V$ par pivot de Gauss : $U=A^{-1}V$ · vérifier $AA^{-1}=I_n$",
+     "type": "value"
+    },
+    {
+     "id": "av5",
+     "enonce": "Calculer l'inverse de $\\begin{pmatrix}1&1&0\\\\0&1&1\\\\0&0&1\\end{pmatrix}$.",
+     "ans": "Matrix([[1,-1,1],[0,1,-1],[0,0,1]])",
+     "sol": "$x+y=X$, $y+z=Y$, $z=Z$ : $z=Z$, $y=Y-Z$, $x=X-Y+Z$. $A^{-1}=\\begin{pmatrix}1&-1&1\\\\0&1&-1\\\\0&0&1\\end{pmatrix}$.",
+     "variants": [
+      {
+       "enonce": "Calculer l'inverse de $\\begin{pmatrix}1&2&0\\\\0&1&0\\\\0&0&2\\end{pmatrix}$.",
+       "ans": "Matrix([[1,-2,0],[0,1,0],[0,0,Rational(1,2)]])",
+       "sol": "$x+2y=X$, $y=Y$, $2z=Z$ : $x=X-2Y$, $y=Y$, $z=\\frac Z2$. $A^{-1}=\\begin{pmatrix}1&-2&0\\\\0&1&0\\\\0&0&\\frac12\\end{pmatrix}$."
+      }
+     ],
+     "formules": "résoudre $AU=V$ par remontée : $U=A^{-1}V$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Changement de base",
+   "notions": [
+    "changement",
+    "matrice"
+   ],
+   "exos": [
+    {
+     "id": "ab1",
+     "enonce": "Dans $\\mathbb R^2$, nouvelle base $\\mathcal B'=((1,1),(1,-1))$. Donner les coordonnées $X'$ dans $\\mathcal B'$ du vecteur de coordonnées $X=(3,1)$ dans la base canonique.",
+     "ans": "Matrix([2,1])",
+     "sol": "$P=\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$, $X=PX'$ : $a+b=3$, $a-b=1$, donc $X'=(2,1)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Dans $\\mathbb R^2$, nouvelle base $\\mathcal B'=((1,1),(1,-1))$. Donner les coordonnées dans $\\mathcal B'$ du vecteur de coordonnées $(4,-2)$ dans la base canonique.",
+       "ans": "Matrix([1,3])",
+       "sol": "$a+b=4$, $a-b=-2$ : $X'=(1,3)$."
+      }
+     ],
+     "formules": "$X=PX'$, $P$ = matrice de passage (colonnes = nouveaux vecteurs dans l'ancienne base) · $X'=P^{-1}X$",
+     "type": "value"
+    },
+    {
+     "id": "ab2",
+     "enonce": "$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ est la matrice de $f$ dans la base canonique. Donner la matrice de $f$ dans la base $\\mathcal B'=((1,1),(1,-1))$.",
+     "ans": "Matrix([[3,0],[0,1]])",
+     "sol": "$f(1,1)=(3,3)=3(1,1)$ et $f(1,-1)=(1,-1)$ : $P^{-1}AP=\\begin{pmatrix}3&0\\\\0&1\\end{pmatrix}$.",
+     "variants": [
+      {
+       "enonce": "$A=\\begin{pmatrix}1&2\\\\2&1\\end{pmatrix}$ est la matrice de $f$ dans la base canonique. Donner la matrice de $f$ dans la base $\\mathcal B'=((1,1),(1,-1))$.",
+       "ans": "Matrix([[3,0],[0,-1]])",
+       "sol": "$f(1,1)=(3,3)$ et $f(1,-1)=(-1,1)=-(1,-1)$ : $\\begin{pmatrix}3&0\\\\0&-1\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$\\mathrm{Mat}_{\\mathcal B'}(f)=P^{-1}AP$ · $f(u_i)=\\lambda_iu_i\\Rightarrow D=\\mathrm{diag}(\\lambda_i)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ab3",
+     "enonce": "$f(x,y)=(2x-3y,\\ -2x+y)$, $\\mathcal B$ base canonique, $\\mathcal B'=(\\varepsilon_1=(2,1),\\ \\varepsilon_2=(1,1))$. Écrire la matrice de $f$ avec $\\mathcal B'$ au départ et $\\mathcal B$ à l'arrivée.",
+     "ans": "Matrix([[1,-1],[-3,-1]])",
+     "sol": "$f(\\varepsilon_1)=(1,-3)$, $f(\\varepsilon_2)=(-1,-1)$, en colonnes : $\\begin{pmatrix}1&-1\\\\-3&-1\\end{pmatrix}$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 3.1 (b)",
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ab4",
+     "enonce": "$f(x,y)=(2x-3y,\\ -2x+y)$, $\\mathcal B$ base canonique, $\\mathcal B'=(\\varepsilon_1=(2,1),\\ \\varepsilon_2=(1,1))$. Écrire la matrice de $f$ avec $\\mathcal B$ au départ et $\\mathcal B'$ à l'arrivée.",
+     "ans": "Matrix([[4,-4],[-6,5]])",
+     "sol": "$f(e_1)=(2,-2)=4\\varepsilon_1-6\\varepsilon_2$ et $f(e_2)=(-3,1)=-4\\varepsilon_1+5\\varepsilon_2$ : $\\begin{pmatrix}4&-4\\\\-6&5\\end{pmatrix}$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 3.1 (c)",
+     "duree": 6,
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · exprimer $f(e_j)$ dans $\\mathcal B'$ : résoudre $f(e_j)=a\\varepsilon_1+b\\varepsilon_2$",
+     "type": "value"
+    },
+    {
+     "id": "ab5",
+     "enonce": "$\\mathcal B=(u_1=(1,2),\\ u_2=(-1,-1))$ base de $\\mathbb R^2$, $\\mathcal B'=(P_1=2,\\ P_2=X-1,\\ P_3=(X+1)^2)$ base de $\\mathbb R_2[X]$. $f$ a pour matrice $A=\\begin{pmatrix}1&2\\\\-1&-4\\\\0&-2\\end{pmatrix}$ ($\\mathcal B$ au départ, $\\mathcal B'$ à l'arrivée). Pour $u=(0,1)$, trouver $(a,b,c)$ tel que $f(u)=aX^2+bX+c$.",
+     "sol": "$u=(0,1)=u_1+u_2$ : $U=\\begin{pmatrix}1\\\\1\\end{pmatrix}$, $AU=\\begin{pmatrix}3\\\\-5\\\\-2\\end{pmatrix}$. $f(u)=3P_1-5P_2-2P_3=6-5(X-1)-2(X+1)^2=-2X^2-9X+9$. $a=-2$, $b=-9$, $c=9$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 3.2",
+     "duree": 7,
+     "formules": "coordonnées de $u$ dans $\\mathcal B$ · $Y=AX$ · $f(u)=\\sum y_iP_i$",
+     "type": "open"
+    },
+    {
+     "id": "ab6",
+     "enonce": "$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}=PDP^{-1}$ avec $P=\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$ et $D=\\mathrm{diag}(3,1)$. Calculer $A^3$.",
+     "ans": "Matrix([[14,13],[13,14]])",
+     "sol": "$A^3=PD^3P^{-1}$ avec $D^3=\\mathrm{diag}(27,1)$ et $P^{-1}=\\frac12\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$ : $A^3=\\frac12\\begin{pmatrix}28&26\\\\26&28\\end{pmatrix}=\\begin{pmatrix}14&13\\\\13&14\\end{pmatrix}$.",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "$A=\\begin{pmatrix}1&2\\\\2&1\\end{pmatrix}=PDP^{-1}$ avec $P=\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$ et $D=\\mathrm{diag}(3,-1)$. Calculer $A^3$.",
+       "ans": "Matrix([[13,14],[14,13]])",
+       "sol": "$D^3=\\mathrm{diag}(27,-1)$ : $A^3=\\frac12\\begin{pmatrix}26&28\\\\28&26\\end{pmatrix}=\\begin{pmatrix}13&14\\\\14&13\\end{pmatrix}$."
+      }
+     ],
+     "formules": "$A=PDP^{-1}\\Rightarrow A^n=PD^nP^{-1}$ · $D^n=\\mathrm{diag}(\\lambda_i^n)$ · $\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1}=\\frac1{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Projecteurs et symétries",
+   "notions": [
+    "projecteur"
+   ],
+   "exos": [
+    {
+     "id": "aj1",
+     "enonce": "$p(x,y)=(x,0)$. Montrer que $p$ est un projecteur et donner $\\mathrm{Ker}p$ et $\\mathrm{Im}p$.",
+     "sol": "$p(p(x,y))=p(x,0)=(x,0)$ : $p\\circ p=p$. $\\mathrm{Ker}p=\\{(0,y)\\}=\\mathrm{Vect}(e_2)$, $\\mathrm{Im}p=\\mathrm{Vect}(e_1)$.",
+     "duree": 3,
+     "formules": "projecteur $\\iff p\\circ p=p$ · $\\mathrm{Ker}f$ : résoudre $f(u)=0$",
+     "type": "open"
+    },
+    {
+     "id": "aj2",
+     "enonce": "$p(x,y)=\\left(\\dfrac{4x+2y}5,\\ \\dfrac{2x+y}5\\right)$ a pour matrice $M=\\frac15\\begin{pmatrix}4&2\\\\2&1\\end{pmatrix}$. Calculer $M^2$. Qu'en déduit-on ?",
+     "ans": "Matrix([[4,2],[2,1]])/5",
+     "sol": "$M^2=\\frac1{25}\\begin{pmatrix}20&10\\\\10&5\\end{pmatrix}=M$ : $p\\circ p=p$, $p$ est un projecteur.",
+     "duree": 4,
+     "formules": "projecteur $\\iff p\\circ p=p$ · $(AB)_{ij}=\\sum_ka_{ik}b_{kj}$",
+     "type": "value"
+    },
+    {
+     "id": "aj3",
+     "enonce": "Dans $\\mathbb R^2$, $F=\\mathrm{Vect}(\\varepsilon_1)$, $G=\\mathrm{Vect}(\\varepsilon_2)$ avec $\\varepsilon_1=(2,1)$, $\\varepsilon_2=(-1,2)$. 1. Montrer que $F\\cap G=\\{0\\}$. 2. Pour $u=(x,y)$, montrer que $v=\\left(\\frac{2y+4x}5,\\frac{y+2x}5\\right)\\in F$ et $w=\\left(\\frac{-2y+x}5,\\frac{4y-2x}5\\right)\\in G$. 3. En déduire $E=F\\oplus G$.",
+     "sol": "1. $u\\in F\\cap G$ : $u=(2\\alpha,\\alpha)=(-\\beta,2\\beta)$, d'où $\\alpha=2\\beta$ et $2\\alpha=-\\beta$, soit $\\alpha=\\beta=0$. 2. $v=\\frac{y+2x}5(2,1)\\in F$ et $w=\\frac{2y-x}5(-1,2)\\in G$. 3. $v+w=(x,y)=u$ donc $E=F+G$, et $F\\cap G=\\{0\\}$ : $E=F\\oplus G$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 4.1 à 4.3",
+     "duree": 7,
+     "formules": "$E=F\\oplus G\\iff F\\cap G=\\{0\\}$ et $E=F+G$ · $u\\in\\mathrm{Vect}(\\varepsilon)\\iff u=\\lambda\\varepsilon$",
+     "type": "open"
+    },
+    {
+     "id": "aj4",
+     "enonce": "Avec $\\varepsilon_1=(2,1)$, $\\varepsilon_2=(-1,2)$, $\\mathcal B=(\\varepsilon_1,\\varepsilon_2)$ et $p$ la projection sur $F=\\mathrm{Vect}(\\varepsilon_1)$ parallèlement à $G=\\mathrm{Vect}(\\varepsilon_2)$ : 1. donner $p(u)$ pour $u=(3,4)$ dans la base canonique et dans $\\mathcal B$ ; 2. $p(\\varepsilon_1)$ et $p(\\varepsilon_2)$ ; 3. la matrice de $p$ dans $\\mathcal B$ ; 4. l'expression de $p(x,y)$.",
+     "sol": "1. $u=2\\varepsilon_1+\\varepsilon_2$, donc $p(u)=2\\varepsilon_1=(4,2)$ : coordonnées $(2,0)$ dans $\\mathcal B$. 2. $p(\\varepsilon_1)=\\varepsilon_1$, $p(\\varepsilon_2)=0$. 3. $\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$. 4. $p(x,y)=v=\\left(\\frac{2y+4x}5,\\frac{y+2x}5\\right)$.",
+     "src": "Examen S2-B4 ALM 2026, ex. 4.4",
+     "duree": 7,
+     "formules": "projection sur $F$ parallèlement à $G$ : $u=v+w\\mapsto v$ · colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · matrice dans une base adaptée : $\\mathrm{diag}(1,0)$",
+     "type": "open"
+    },
+    {
+     "id": "aj5",
+     "enonce": "Soit $p$ un projecteur de $E$ et $s=2p-id$. Montrer que $s\\circ s=id$.",
+     "sol": "$s\\circ s=(2p-id)\\circ(2p-id)=4p\\circ p-4p+id=4p-4p+id=id$.",
+     "duree": 3,
+     "formules": "projecteur $\\iff p\\circ p=p$ · $s=2p-id$ · $s\\circ s=id$",
+     "type": "open"
+    },
+    {
+     "id": "aj6",
+     "enonce": "Soit $p$ un projecteur de $E$. Montrer que $E=\\mathrm{Ker}p\\oplus\\mathrm{Im}p$.",
+     "sol": "Si $x\\in\\mathrm{Ker}p\\cap\\mathrm{Im}p$ : $x=p(y)$ et $0=p(x)=p(p(y))=p(y)=x$. Tout $x$ s'écrit $x=(x-p(x))+p(x)$ avec $p(x-p(x))=p(x)-p(x)=0$, donc $x-p(x)\\in\\mathrm{Ker}p$, et $p(x)\\in\\mathrm{Im}p$.",
+     "duree": 6,
+     "formules": "projecteur $\\iff p\\circ p=p$ · $E=F\\oplus G\\iff F\\cap G=\\{0\\}$ et $E=F+G$ · $x=(x-p(x))+p(x)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Niveau examen : annale complète",
+   "notions": [
+    "produit",
+    "inverse",
+    "rang",
+    "changement",
+    "projecteur"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "ax1",
+     "src": "Examen S2-B4 ALM 2026, ex. 1 (8 points)",
+     "enonce": "1. $A=\\begin{pmatrix}-2&1&2\\\\-1&3&-1\\end{pmatrix}$, $B=\\begin{pmatrix}2&1\\\\1&-2\\end{pmatrix}$ : $AB$ et $BA$ sont-ils définis ? Effectuer le produit défini.\n2. $A=\\begin{pmatrix}-3&7&-1\\\\-1&2&0\\end{pmatrix}$, $B=\\begin{pmatrix}-2&5\\\\-1&3\\\\-2&6\\end{pmatrix}$ : calculer $AB$. $A$ est-elle inversible ?\n3. $A=\\begin{pmatrix}1&2&3\\\\1&3&7\\\\-3&-7&-14\\end{pmatrix}$ : trouver $A^{-1}$ en détaillant, et expliquer comment vérifier.",
+     "sol": "**1.** $A$ a $3$ colonnes et $B$ a $2$ lignes : $AB$ n'est pas défini. $B$ a $2$ colonnes et $A$ a $2$ lignes : $BA$ est défini ($2\\times3$), $BA=\\begin{pmatrix}-5&5&3\\\\0&-5&4\\end{pmatrix}$.\n\n**2.** $AB=I_2$. Mais $A$ n'est pas carrée : elle n'est pas inversible.\n\n**3.** $AU=V$ avec $U=(x,y,z)$, $V=(X,Y,Z)$. $L_2\\leftarrow L_2-L_1$, $L_3\\leftarrow L_3+3L_1$ : $y+4z=Y-X$, $-y-5z=Z+3X$. $L_3\\leftarrow L_3+L_2$ : $-z=2X+Y+Z$. En remontant : $z=-2X-Y-Z$, $y=7X+5Y+4Z$, $x=-7X-7Y-5Z$. $A^{-1}=\\begin{pmatrix}-7&-7&-5\\\\7&5&4\\\\-2&-1&-1\\end{pmatrix}$. Vérification : calculer $AA^{-1}$ et trouver $I_3$.",
+     "formules": "$AB$ défini si (colonnes de $A$) = (lignes de $B$) : $n\\times p$ par $p\\times q$ donne $n\\times q$ · $(AB)_{ij}=\\sum_ka_{ik}b_{kj}$ · seule une matrice carrée peut être inversible · résoudre $AU=V$ par pivot de Gauss : $U=A^{-1}V$ · vérifier $AA^{-1}=I_n$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "ax2",
+     "src": "Examen S2-B4 ALM 2026, ex. 2 (10 points)",
+     "enonce": "$f:\\mathbb R^3\\to\\mathbb R_2[X]$, $(a,b,c)\\mapsto(a-b)X^2+(a+b-c)X-2a+2b$.\n1. Dimension du noyau de $f$, avec une base.\n2. Énoncer le théorème du rang. En déduire la dimension de l'image.\n3. Trouver une base de $\\mathrm{Im}f$.",
+     "sol": "**1.** $\\mathrm{Ker}f=\\{(a,b,c),\\ a-b=0,\\ a+b-c=0,\\ -2a+2b=0\\}=\\{(a,a,2a)\\}=\\mathrm{Vect}(u=(1,1,2))$. $u\\ne0$ : $(u)$ est une base, $\\dim\\mathrm{Ker}f=1$.\n\n**2.** Soient $E$ un espace vectoriel de dimension finie et $f\\in\\mathcal L(E,F)$. Alors $\\dim E=\\dim\\mathrm{Ker}f+\\dim\\mathrm{Im}f$.\n\n**3.** $\\mathrm{Im}f=\\{a(X^2+X-2)+b(-X^2+X+2)+c(-X)\\}=\\mathrm{Vect}(P_1,P_2,P_3)$ avec $P_1+P_2=2X=-2P_3$, donc $\\mathrm{Im}f=\\mathrm{Vect}(P_1,P_2)$. Famille génératrice de cardinal $2=\\dim\\mathrm{Im}f$ : $(P_1=X^2+X-2,\\ P_2=-X^2+X+2)$ est une base.",
+     "formules": "$\\mathrm{Ker}f$ : résoudre $f(u)=0$ · un polynôme est nul $\\iff$ tous ses coefficients sont nuls · un vecteur non nul forme une base de la droite qu'il engendre · théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · $\\mathrm{Im}f=\\mathrm{Vect}(f(e_1),\\dots,f(e_n))$ · famille génératrice de cardinal $\\dim$ = base",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "ax3",
+     "src": "Examen S2-B4 ALM 2026, ex. 3 (7 points)",
+     "enonce": "1. $f(x,y)=(2x-3y,-2x+y)$, $\\mathcal B$ canonique, $\\mathcal B'=(\\varepsilon_1=(2,1),\\varepsilon_2=(1,1))$. Matrice de $f$ : (a) dans $\\mathcal B$ ; (b) $\\mathcal B'$ au départ, $\\mathcal B$ à l'arrivée ; (c) $\\mathcal B$ au départ, $\\mathcal B'$ à l'arrivée.\n2. $\\mathcal B=((1,2),(-1,-1))$, $\\mathcal B'=(2,\\ X-1,\\ (X+1)^2)$, $A=\\begin{pmatrix}1&2\\\\-1&-4\\\\0&-2\\end{pmatrix}$, $u=(0,1)$ : trouver $f(u)=aX^2+bX+c$.",
+     "sol": "**1.** $f(e_1)=(2,-2)$, $f(e_2)=(-3,1)$, rangés en colonnes : $\\begin{pmatrix}2&-3\\\\-2&1\\end{pmatrix}$.\n\n**2.** $f(\\varepsilon_1)=(1,-3)$, $f(\\varepsilon_2)=(-1,-1)$, en colonnes : $\\begin{pmatrix}1&-1\\\\-3&-1\\end{pmatrix}$.\n\n**3.** $f(e_1)=(2,-2)=4\\varepsilon_1-6\\varepsilon_2$ et $f(e_2)=(-3,1)=-4\\varepsilon_1+5\\varepsilon_2$ : $\\begin{pmatrix}4&-4\\\\-6&5\\end{pmatrix}$.\n\n**4.** $u=(0,1)=u_1+u_2$ : $U=\\begin{pmatrix}1\\\\1\\end{pmatrix}$, $AU=\\begin{pmatrix}3\\\\-5\\\\-2\\end{pmatrix}$. $f(u)=3P_1-5P_2-2P_3=6-5(X-1)-2(X+1)^2=-2X^2-9X+9$. $a=-2$, $b=-9$, $c=9$.",
+     "formules": "colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · exprimer $f(e_j)$ dans $\\mathcal B'$ : résoudre $f(e_j)=a\\varepsilon_1+b\\varepsilon_2$ · coordonnées de $u$ dans $\\mathcal B$ · $Y=AX$ · $f(u)=\\sum y_iP_i$",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "ax4",
+     "src": "Examen S2-B4 ALM 2026, ex. 4 et 5 (15 points)",
+     "enonce": "1. $F=\\mathrm{Vect}(\\varepsilon_1=(2,1))$, $G=\\mathrm{Vect}(\\varepsilon_2=(-1,2))$ : $F\\cap G=\\{0\\}$ ; $v=\\left(\\frac{2y+4x}5,\\frac{y+2x}5\\right)\\in F$, $w=\\left(\\frac{-2y+x}5,\\frac{4y-2x}5\\right)\\in G$ ; $E=F\\oplus G$.\n2. $p$ projection sur $F$ parallèlement à $G$ : $p(3,4)$ dans la base canonique et dans $\\mathcal B=(\\varepsilon_1,\\varepsilon_2)$ ; $p(\\varepsilon_1)$, $p(\\varepsilon_2)$ ; matrice de $p$ dans $\\mathcal B$ ; expression de $p(x,y)$.\n3. $A=\\begin{pmatrix}1&2&-1\\\\-2&1&2\\\\1&0&-1\\end{pmatrix}$ (bases canoniques de $\\mathbb R^3$ et $\\mathbb R_2[X]$) : rang, base de l'image, base du noyau, en raisonnant sur les colonnes.",
+     "sol": "**1.** 1. $u\\in F\\cap G$ : $u=(2\\alpha,\\alpha)=(-\\beta,2\\beta)$, d'où $\\alpha=2\\beta$ et $2\\alpha=-\\beta$, soit $\\alpha=\\beta=0$. 2. $v=\\frac{y+2x}5(2,1)\\in F$ et $w=\\frac{2y-x}5(-1,2)\\in G$. 3. $v+w=(x,y)=u$ donc $E=F+G$, et $F\\cap G=\\{0\\}$ : $E=F\\oplus G$.\n\n**2.** 1. $u=2\\varepsilon_1+\\varepsilon_2$, donc $p(u)=2\\varepsilon_1=(4,2)$ : coordonnées $(2,0)$ dans $\\mathcal B$. 2. $p(\\varepsilon_1)=\\varepsilon_1$, $p(\\varepsilon_2)=0$. 3. $\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$. 4. $p(x,y)=v=\\left(\\frac{2y+4x}5,\\frac{y+2x}5\\right)$.\n\n**3.** $C_3=-C_1$, donc $\\mathrm{Im}f=\\mathrm{Vect}(C_1,C_2)$, soit $\\mathrm{Vect}(1-2X+X^2,\\ 2+X)$. Ces deux polynômes ne sont pas colinéaires : base de $\\mathrm{Im}f$, rang $2$. Théorème du rang : $\\dim\\mathrm{Ker}f=3-2=1$. $C_1+C_3=0$ donne $f(1,0,1)=0$ : $u=(1,0,1)$, non nul, est une base de $\\mathrm{Ker}f$.",
+     "formules": "$E=F\\oplus G\\iff F\\cap G=\\{0\\}$ et $E=F+G$ · $u\\in\\mathrm{Vect}(\\varepsilon)\\iff u=\\lambda\\varepsilon$ · projection sur $F$ parallèlement à $G$ : $u=v+w\\mapsto v$ · colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée · matrice dans une base adaptée : $\\mathrm{diag}(1,0)$ · $\\mathrm{Im}f$ = Vect des colonnes · théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · une relation entre colonnes donne un vecteur du noyau",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "noyau",
+    "image",
+    "produit"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "ay1",
+     "enonce": "Soit $f$ un endomorphisme de $E$ de dimension finie $n$. Montrer que $f\\circ f=0\\iff\\mathrm{Im}f\\subset\\mathrm{Ker}f$, et qu'alors $\\mathrm{rg}f\\le\\frac n2$.",
+     "sol": "Si $f\\circ f=0$ et $y=f(x)\\in\\mathrm{Im}f$ : $f(y)=f(f(x))=0$, donc $y\\in\\mathrm{Ker}f$. Réciproquement, si $\\mathrm{Im}f\\subset\\mathrm{Ker}f$ : $f(x)\\in\\mathrm{Ker}f$, donc $f(f(x))=0$ pour tout $x$. Alors $\\mathrm{rg}f\\le\\dim\\mathrm{Ker}f=n-\\mathrm{rg}f$, d'où $\\mathrm{rg}f\\le\\frac n2$.",
+     "duree": 10,
+     "formules": "$\\mathrm{Im}f=\\{f(x)\\}$ · $\\mathrm{Ker}f=\\{x,\\ f(x)=0\\}$ · théorème du rang : $\\dim E=\\dim\\mathrm{Ker}f+\\mathrm{rg}f$ · $F\\subset G\\Rightarrow\\dim F\\le\\dim G$",
+     "type": "open"
+    },
+    {
+     "id": "ay2",
+     "enonce": "$A=\\begin{pmatrix}1&1&0\\\\0&1&1\\\\0&0&1\\end{pmatrix}=I+N$. Calculer $N^2$, $N^3$, puis $A^5$ avec la formule du binôme.",
+     "ans": "Matrix([[1,5,10],[0,1,5],[0,0,1]])",
+     "sol": "$N=\\begin{pmatrix}0&1&0\\\\0&0&1\\\\0&0&0\\end{pmatrix}$, $N^2=\\begin{pmatrix}0&0&1\\\\0&0&0\\\\0&0&0\\end{pmatrix}$, $N^3=0$. $I$ et $N$ commutent : $A^5=I+5N+\\binom52N^2=\\begin{pmatrix}1&5&10\\\\0&1&5\\\\0&0&1\\end{pmatrix}$.",
+     "duree": 10,
+     "formules": "$N$ nilpotente : $N^3=0$ · si $AB=BA$ : $(A+B)^n=\\sum_k\\binom nkA^kB^{n-k}$ · $(I+N)^n=I+nN+\\binom n2N^2$",
+     "type": "value"
+    },
+    {
+     "id": "ay3",
+     "enonce": "Soit $f$ un endomorphisme de $E$. Montrer que $\\mathrm{Ker}f\\subset\\mathrm{Ker}f^2$ et $\\mathrm{Im}f^2\\subset\\mathrm{Im}f$.",
+     "sol": "Si $x\\in\\mathrm{Ker}f$ : $f^2(x)=f(f(x))=f(0)=0$, donc $x\\in\\mathrm{Ker}f^2$. Si $y\\in\\mathrm{Im}f^2$ : $y=f^2(x)=f(f(x))\\in\\mathrm{Im}f$.",
+     "duree": 6,
+     "formules": "$\\mathrm{Ker}f=\\{x,\\ f(x)=0\\}$ · $\\mathrm{Im}f=\\{f(x)\\}$ · $f(0)=0$ · $f^2(x)=f(f(x))$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

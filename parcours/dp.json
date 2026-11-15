@@ -1,0 +1,1802 @@
+{
+ "subject": {
+  "id": "maths-s1-dp",
+  "ordre": 110,
+  "matiere": "maths",
+  "semestre": "S1",
+  "ecue": "DP",
+  "titre": "Dénombrement et probabilités",
+  "chapitres_moodle": [
+   "06_Cours 1 - Dénombrement - ECUE DP",
+   "07_Cours 2 - Probabilités finies - ECUE DP",
+   "08_Espaces probabilisés",
+   "09_Probabilités conditionnelles",
+   "10_Variables aléatoires"
+  ],
+  "td": "S12026_TD1_Dénombrement, S12026_TD2_Probabilités",
+  "examens": [
+   "Examen B1-DP (fin octobre)",
+   "Rattrapage B1"
+  ]
+ },
+ "notions": [
+  {
+   "id": "cardinal",
+   "titre": "Cardinal d'une union",
+   "formule": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|\\bar A|=|E|-|A|$ · $|A\\times B|=|A|\\,|B|$",
+   "exemple": "18 au foot, 12 au tennis, 5 aux deux : $18+12-5=25$ font un sport",
+   "cours": "Si $A$ et $B$ sont disjoints, $|A\\cup B|=|A|+|B|$. Sinon on retire l'intersection comptée deux fois. Preuve : $A\\cup B=(A\\setminus B)\\cup B$ (union disjointe) et $|A\\setminus B|=|A|-|A\\cap B|$ car $A=(A\\setminus B)\\cup(A\\cap B)$."
+  },
+  {
+   "id": "modele",
+   "titre": "Quel outil de comptage ?",
+   "formule": "Ordre + répétition : $n^p$ · Ordre sans répétition : $\\frac{n!}{(n-p)!}$ · Sans ordre : $\\binom np$",
+   "exemple": "Podium (ordre, distincts) : $20\\times19\\times18$ ; 3 vélos identiques : $\\binom{20}3$",
+   "cours": "Deux questions à se poser : l'ordre compte-t-il (podium, code) ou non (comité, main de cartes, tirage simultané) ? Les répétitions sont-elles permises (code, tirage avec remise) ? Ordre + répétition : $p$-liste, $n^p$. Ordre sans répétition : arrangement, $A_n^p=\\frac{n!}{(n-p)!}$. Sans ordre ni répétition : combinaison, $\\binom np=\\frac{n!}{p!(n-p)!}$. Permutations de $n$ objets : $n!$."
+  },
+  {
+   "id": "p-listes",
+   "titre": "Principe multiplicatif",
+   "formule": "Choix successifs : on multiplie · $p$-listes de $E$ ($|E|=n$) : $n^p$",
+   "exemple": "Code = 1 lettre parmi 3 puis 3 chiffres : $3\\times10^3=3000$",
+   "cours": "Si un choix se fait en étapes indépendantes ayant $n_1, n_2,\\dots$ possibilités, le total est $n_1n_2\\cdots$. Nombre d'applications d'un ensemble à $p$ éléments dans un ensemble à $n$ éléments : $n^p$. Nombre de parties d'un ensemble à $n$ éléments : $2^n$."
+  },
+  {
+   "id": "arrangements",
+   "titre": "Arrangements",
+   "formule": "$A_n^p=n(n-1)\\cdots(n-p+1)=\\frac{n!}{(n-p)!}$",
+   "exemple": "Podiums parmi 20 : $A_{20}^3=6840$",
+   "cours": "Nombre de façons de choisir $p$ objets **distincts** parmi $n$ **en tenant compte de l'ordre**. Cas $p=n$ : $n!$ permutations. Réflexe : on remplit les places une par une, chaque place a une possibilité de moins que la précédente."
+  },
+  {
+   "id": "combinaisons",
+   "titre": "Combinaisons",
+   "formule": "$\\binom np=\\frac{n!}{p!\\,(n-p)!}=\\frac{A_n^p}{p!}$ · $\\binom np=\\binom n{n-p}$ · $\\binom n0=\\binom nn=1$, $\\binom n1=n$",
+   "exemple": "Comités de 3 parmi 10 : $\\binom{10}3=120$",
+   "cours": "Nombre de parties à $p$ éléments d'un ensemble à $n$ éléments (sans ordre, sans répétition). On divise les arrangements par $p!$ car chaque groupe est compté une fois par ordre. Symétrie : $\\binom np=\\binom n{n-p}$. Choix dans plusieurs groupes : on multiplie, par exemple $\\binom42\\binom{28}3$ pour exactement 2 as dans une main de 5 cartes parmi 32."
+  },
+  {
+   "id": "complementaire",
+   "titre": "« Au moins un » : le complémentaire",
+   "formule": "$|\\text{au moins un}|=|\\text{total}|-|\\text{aucun}|$",
+   "exemple": "Codes de 3 chiffres avec au moins un 4 : $10^3-9^3=271$",
+   "cours": "Dès que l'énoncé dit « au moins », compter le contraire (« aucun ») est presque toujours plus simple. « $A$ ou $B$ » : total moins « ni $A$ ni $B$ ». « $A$ mais pas $B$ » : on retire $B$ de l'ensemble de choix puis on impose $A$."
+  },
+  {
+   "id": "binome",
+   "titre": "Pascal et binôme de Newton",
+   "formule": "$\\binom{n}{p}+\\binom{n}{p+1}=\\binom{n+1}{p+1}$ · $(a+b)^n=\\sum_{k=0}^n\\binom nk a^kb^{n-k}$",
+   "exemple": "$\\sum_{k=0}^n\\binom nk=2^n$ ; coefficient de $x^3$ dans $(2x+1)^5$ : $\\binom53 2^3=80$",
+   "cours": "Pascal, preuve ensembliste : on fixe un élément $a$ ; les parties à $p+1$ éléments le contiennent ($\\binom np$) ou non ($\\binom n{p+1}$). Binôme avec $a=b=1$ : $\\sum\\binom nk=2^n$."
+  },
+  {
+   "id": "vandermonde",
+   "titre": "Identités par double comptage",
+   "formule": "$\\sum_{i=0}^k\\binom pi\\binom n{k-i}=\\binom{n+p}k$ · $\\binom np\\binom pk=\\binom nk\\binom{n-k}{p-k}$",
+   "exemple": "$\\sum_{i=0}^4\\binom4i\\binom7{4-i}=\\binom{11}4=330$",
+   "cours": "Méthode : compter le même ensemble de deux façons. Vandermonde : tirer $k$ boules parmi $p$ vertes et $n$ rouges, en classant selon le nombre $i$ de vertes. Pour $\\binom np\\binom pk$ : choisir $p$ jetons puis $k$ d'entre eux, ou choisir d'abord les $k$ puis les $p-k$ autres parmi $n-k$. Par le calcul : écrire les factorielles et simplifier."
+  },
+  {
+   "id": "equiprobabilite",
+   "titre": "Équiprobabilité",
+   "formule": "$P(A)=\\frac{|A|}{|\\Omega|}$ si toutes les issues ont la même probabilité",
+   "exemple": "Somme 7 avec deux dés : $\\frac6{36}=\\frac16$",
+   "cours": "Décrire $\\Omega$ (issues), vérifier l'équiprobabilité (dés équilibrés, tirage au hasard), puis compter avec le dénombrement. $P(\\bar A)=1-P(A)$, utile pour « au moins un »."
+  },
+  {
+   "id": "conditionnelle",
+   "titre": "Probabilité conditionnelle",
+   "formule": "$P_A(B)=\\frac{P(A\\cap B)}{P(A)}$ donc $P(A\\cap B)=P(A)\\,P_A(B)$",
+   "exemple": "$P(C)=\\frac25$, $P_C(V)=\\frac45$ : $P(C\\cap V)=\\frac8{25}$",
+   "cours": "Sur un arbre, une branche porte une probabilité conditionnelle, et la probabilité d'un chemin est le produit des branches. Les branches issues d'un même nœud somment à 1. Première étape d'un exercice : traduire l'énoncé avec des événements nommés."
+  },
+  {
+   "id": "totales",
+   "titre": "Probabilités totales",
+   "formule": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · avec une partition $(A_i)$ : $P(B)=\\sum_iP(A_i)P_{A_i}(B)$",
+   "exemple": "$\\frac1{10}\\cdot\\frac45+\\frac9{10}\\cdot\\frac3{10}=\\frac7{20}$",
+   "cours": "Valable pour tout système complet d'événements $(A_1,\\dots,A_n)$ : $P(B)=\\sum P(A_i)P_{A_i}(B)$. Sur l'arbre : somme des chemins qui mènent à $B$. Pour trouver une probabilité inconnue $p$, on écrit $P(B)$ en fonction de $p$ et on résout l'inéquation."
+  },
+  {
+   "id": "bayes",
+   "titre": "Formule de Bayes",
+   "formule": "$P_B(A)=\\frac{P(A)\\,P_A(B)}{P(B)}=\\frac{P(A)\\,P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$",
+   "exemple": "$P_V(S)=\\frac{8/100}{35/100}=\\frac8{35}$",
+   "cours": "On « remonte » l'arbre : probabilité de la cause sachant la conséquence. Numérateur : le chemin $A$ puis $B$. Dénominateur : $P(B)$ par les probabilités totales."
+  },
+  {
+   "id": "independance",
+   "titre": "Indépendance",
+   "formule": "$A,B$ indépendants $\\iff P(A\\cap B)=P(A)P(B)$",
+   "exemple": "3 tirs indépendants à $0{,}7$ : $P(\\text{au moins un})=1-0{,}3^3$",
+   "cours": "Si $P(A)\\neq0$ : indépendance $\\iff P_A(B)=P(B)$. Incompatibles ($A\\cap B=\\emptyset$) ne veut pas dire indépendants. Si $A,B$ indépendants, $\\bar A,\\bar B$ le sont aussi."
+  },
+  {
+   "id": "esperance",
+   "titre": "Loi, espérance, variance",
+   "formule": "$\\sum P(X=x_i)=1$ · $E(X)=\\sum x_iP(X=x_i)$ · $E(X^2)=\\sum x_i^2P(X=x_i)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sigma(X)=\\sqrt{V(X)}$",
+   "exemple": "Urne $0,1,1,2$ : $E(X)=1$, $E(X^2)=\\frac32$, $V(X)=\\frac12$",
+   "cours": "Loi : les valeurs $x_i$ et les $P(X=x_i)$, qui somment à 1. $V(X)=E\\big((X-E(X))^2\\big)=E(X^2)-E(X)^2$ (König-Huygens) ; écart type $\\sigma=\\sqrt{V(X)}$. Détailler les calculs : à l'examen, un résultat parachuté ne rapporte rien."
+  },
+  {
+   "id": "lineaire",
+   "titre": "Transformation affine",
+   "formule": "$E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $E(X+Y)=E(X)+E(Y)$",
+   "exemple": "$V(X)=4$ : $V(-3X+1)=36$",
+   "cours": "Preuve de $E(aX+b)$ : $\\sum(ax_i+b)P(X=x_i)=a\\sum x_iP(X=x_i)+b\\sum P(X=x_i)=aE(X)+b$. Pour $V$ : $aX+b-E(aX+b)=a(X-E(X))$, donc $V(aX+b)=E(a^2(X-E(X))^2)=a^2V(X)$. La constante $b$ disparaît, le signe de $a$ aussi."
+  },
+  {
+   "id": "binomiale",
+   "titre": "Bernoulli et binomiale",
+   "formule": "$\\mathcal B(p)$ : $E=p$, $V=p(1-p)$ · $\\mathcal B(n,p)$ : $P(X=k)=\\binom nk p^k(1-p)^{n-k}$, $E=np$, $V=np(1-p)$",
+   "exemple": "20 questions au hasard, $p=\\frac14$ : $E=5$, $V=\\frac{15}4$",
+   "cours": "Une somme de $n$ variables de Bernoulli indépendantes de même paramètre $p$ suit $\\mathcal B(n,p)$. Justification attendue : répétition de $n$ épreuves identiques et indépendantes à deux issues. Vérification : $\\sum_k P(X=k)=(p+1-p)^n=1$ (binôme). Espérance et variance par linéarité et indépendance."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "modele",
+   "type": "qcm",
+   "q": "Nombre de podiums (3 places) parmi 10 coureurs ?",
+   "choix": [
+    "$10\\times9\\times8$",
+    "$\\binom{10}3$",
+    "$10^3$",
+    "$3!$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "modele",
+   "type": "qcm",
+   "q": "Nombre de mains de 4 cartes parmi 32 ?",
+   "choix": [
+    "$\\binom{32}4$",
+    "$32^4$",
+    "$\\frac{32!}{28!}$",
+    "$4!\\binom{32}4$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "modele",
+   "type": "vf",
+   "q": "Un code à 4 chiffres pouvant se répéter : $\\binom{10}4$ possibilités.",
+   "bonne": false
+  },
+  {
+   "notion": "cardinal",
+   "type": "vf",
+   "q": "$|A\\cup B|=|A|+|B|$ pour tous ensembles finis $A$, $B$.",
+   "bonne": false
+  },
+  {
+   "notion": "p-listes",
+   "type": "qcm",
+   "q": "Nombre d'applications de $\\{1,2,3\\}$ dans $\\{a,b\\}$ ?",
+   "choix": [
+    "$8$",
+    "$9$",
+    "$6$",
+    "$3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "arrangements",
+   "type": "qcm",
+   "q": "$A_n^p=$ ?",
+   "choix": [
+    "$\\frac{n!}{(n-p)!}$",
+    "$\\frac{n!}{p!(n-p)!}$",
+    "$n^p$",
+    "$p!$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "combinaisons",
+   "type": "qcm",
+   "q": "$\\binom{n}{p}=$ ?",
+   "choix": [
+    "$\\frac{n!}{p!(n-p)!}$",
+    "$\\frac{n!}{(n-p)!}$",
+    "$\\frac{p!}{n!}$",
+    "$n^p$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "combinaisons",
+   "type": "vf",
+   "q": "$\\binom{n}{p}=\\binom{n}{n-p}$",
+   "bonne": true
+  },
+  {
+   "notion": "complementaire",
+   "type": "qcm",
+   "q": "Codes à 3 chiffres contenant au moins un 0 ?",
+   "choix": [
+    "$10^3-9^3$",
+    "$3\\times10^2$",
+    "$9^3$",
+    "$10^3-1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "binome",
+   "type": "qcm",
+   "q": "$\\sum_{k=0}^{n}\\binom nk=$ ?",
+   "choix": [
+    "$2^n$",
+    "$n!$",
+    "$n^2$",
+    "$2n$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "binome",
+   "type": "vf",
+   "q": "$\\binom{n}{p}+\\binom{n}{p+1}=\\binom{n+1}{p+1}$",
+   "bonne": true
+  },
+  {
+   "notion": "vandermonde",
+   "type": "qcm",
+   "q": "$\\sum_{i=0}^{k}\\binom pi\\binom n{k-i}=$ ?",
+   "choix": [
+    "$\\binom{n+p}{k}$",
+    "$\\binom{np}{k}$",
+    "$2^{n+p}$",
+    "$\\binom nk\\binom pk$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "equiprobabilite",
+   "type": "qcm",
+   "q": "Deux dés : probabilité d'un double ?",
+   "choix": [
+    "$\\frac16$",
+    "$\\frac1{36}$",
+    "$\\frac1{12}$",
+    "$\\frac13$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "conditionnelle",
+   "type": "qcm",
+   "q": "$P_A(B)=$ ?",
+   "choix": [
+    "$\\frac{P(A\\cap B)}{P(A)}$",
+    "$\\frac{P(A\\cap B)}{P(B)}$",
+    "$P(A)P(B)$",
+    "$\\frac{P(A)}{P(B)}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "totales",
+   "type": "vf",
+   "q": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$",
+   "bonne": true
+  },
+  {
+   "notion": "bayes",
+   "type": "qcm",
+   "q": "$P_B(A)=$ ?",
+   "choix": [
+    "$\\frac{P(A)P_A(B)}{P(B)}$",
+    "$\\frac{P(B)P_B(A)}{P(A)}$",
+    "$P_A(B)$",
+    "$1-P_A(B)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "independance",
+   "type": "vf",
+   "q": "Deux événements incompatibles de probabilités non nulles sont indépendants.",
+   "bonne": false
+  },
+  {
+   "notion": "independance",
+   "type": "qcm",
+   "q": "$A$, $B$ indépendants si et seulement si :",
+   "choix": [
+    "$P(A\\cap B)=P(A)P(B)$",
+    "$A\\cap B=\\emptyset$",
+    "$P(A\\cup B)=P(A)+P(B)$",
+    "$P(A)=P(B)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "esperance",
+   "type": "qcm",
+   "q": "König-Huygens : $V(X)=$ ?",
+   "choix": [
+    "$E(X^2)-E(X)^2$",
+    "$E(X)^2-E(X^2)$",
+    "$E(X^2)$",
+    "$E((X-1)^2)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lineaire",
+   "type": "qcm",
+   "q": "$V(2X+3)=$ ?",
+   "choix": [
+    "$4V(X)$",
+    "$2V(X)+3$",
+    "$4V(X)+3$",
+    "$2V(X)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lineaire",
+   "type": "vf",
+   "q": "$E(aX+b)=aE(X)+b$",
+   "bonne": true
+  },
+  {
+   "notion": "binomiale",
+   "type": "qcm",
+   "q": "$X\\sim\\mathcal B(n,p)$ : $V(X)=$ ?",
+   "choix": [
+    "$np(1-p)$",
+    "$np$",
+    "$p(1-p)$",
+    "$n^2p$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "binomiale",
+   "type": "vf",
+   "q": "$P(X=k)=\\binom nk p^k(1-p)^{n-k}$ pour $X\\sim\\mathcal B(n,p)$.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Cardinaux",
+   "notions": [
+    "cardinal"
+   ],
+   "exos": [
+    {
+     "id": "c1",
+     "enonce": "$|A|=12$, $|B|=8$, $|A\\cap B|=3$. Calculer $|A\\cup B|$.",
+     "ans": "17",
+     "sol": "$12+8-3=17$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$|A|=15$, $|B|=9$, $|A\\cap B|=4$. Calculer $|A\\cup B|$.",
+       "ans": "20",
+       "sol": "$15+9-4=20$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$",
+     "type": "value"
+    },
+    {
+     "id": "c2",
+     "enonce": "Dans une classe de 35 élèves, 18 jouent au foot, 12 au tennis et 5 aux deux. Combien ne pratiquent aucun des deux ?",
+     "ans": "10",
+     "sol": "$|F\\cup T|=18+12-5=25$, donc $35-25=10$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Dans un groupe de 30 étudiants, 14 font du vélo, 11 de la natation et 6 les deux. Combien ne pratiquent aucun des deux ?",
+       "ans": "11",
+       "sol": "$|V\\cup N|=14+11-6=19$, donc $30-19=11$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|\\bar A|=|E|-|A|$",
+     "type": "value"
+    },
+    {
+     "id": "c3",
+     "enonce": "$|A|=4$, $|B|=6$. Combien d'éléments a $A\\times B$ ?",
+     "ans": "24",
+     "sol": "$|A\\times B|=|A|\\,|B|=24$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$|A|=5$, $|B|=7$. Combien d'éléments a $A\\times B$ ?",
+       "ans": "35",
+       "sol": "$|A\\times B|=|A|\\,|B|=35$."
+      }
+     ],
+     "formules": "$|A\\times B|=|A|\\times|B|$",
+     "type": "value"
+    },
+    {
+     "id": "c4",
+     "enonce": "$E$ a 30 éléments, $A\\subset E$ en a 12, $B\\subset E$ en a 10 et $|A\\cap B|=4$. Combien d'éléments n'appartiennent ni à $A$ ni à $B$ ?",
+     "ans": "12",
+     "sol": "$|\\overline{A\\cup B}|=30-(12+10-4)=12$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$E$ a 50 éléments, $A\\subset E$ en a 20, $B\\subset E$ en a 15 et $|A\\cap B|=6$. Combien d'éléments ne sont ni dans $A$ ni dans $B$ ?",
+       "ans": "21",
+       "sol": "$50-(20+15-6)=21$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|\\bar A|=|E|-|A|$",
+     "type": "value"
+    },
+    {
+     "id": "c5",
+     "enonce": "Soient $A,B$ deux parties d'un ensemble fini $E$. À l'aide d'une partition de $A$, relier $|A|$, $|A\\setminus B|$ et $|A\\cap B|$, puis démontrer $|A\\cup B|=|A|+|B|-|A\\cap B|$.",
+     "sol": "$A=(A\\setminus B)\\cup(A\\cap B)$, union disjointe : $|A|=|A\\setminus B|+|A\\cap B|$. Puis $A\\cup B=(A\\setminus B)\\cup B$, union disjointe : $|A\\cup B|=|A\\setminus B|+|B|=|A|-|A\\cap B|+|B|$.",
+     "src": "Examen B1 nov. 2023, ex. 1",
+     "formules": "union disjointe : $|A\\cup B|=|A|+|B|$ · $A=(A\\setminus B)\\cup(A\\cap B)$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Principe multiplicatif, p-listes",
+   "notions": [
+    "p-listes",
+    "modele"
+   ],
+   "exos": [
+    {
+     "id": "pl1",
+     "enonce": "Combien de mots de 4 lettres (avec ou sans sens) peut-on écrire avec les 26 lettres de l'alphabet ?",
+     "ans": "456976",
+     "sol": "Ordre et répétition : $26^4=456976$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien de mots de 3 lettres (avec ou sans sens) peut-on écrire avec les 26 lettres ?",
+       "ans": "17576",
+       "sol": "Ordre et répétition : $26^3=17576$."
+      }
+     ],
+     "formules": "ordre et répétition : $n^p$ ($p$-listes)",
+     "type": "value"
+    },
+    {
+     "id": "pl2",
+     "enonce": "Un code est formé d'une lettre parmi A, B, C suivie de 3 chiffres (de 0 à 9) qui peuvent se répéter. Combien de codes ?",
+     "ans": "3000",
+     "sol": "$3\\times10\\times10\\times10=3000$.",
+     "src": "Examen B1-DP oct. 2024, ex. 2.2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un code est une lettre parmi A, B, C, D suivie de 4 chiffres qui peuvent se répéter. Combien de codes ?",
+       "ans": "40000",
+       "sol": "$4\\times10^4=40000$."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · ordre et répétition : $n^p$ ($p$-listes)",
+     "type": "value"
+    },
+    {
+     "id": "pl3",
+     "enonce": "Combien y a-t-il d'applications d'un ensemble à 3 éléments dans un ensemble à 5 éléments ?",
+     "ans": "125",
+     "sol": "Chaque élément de départ a 5 images possibles : $5^3=125$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien y a-t-il d'applications d'un ensemble à 4 éléments dans un ensemble à 3 éléments ?",
+       "ans": "81",
+       "sol": "Chaque élément de départ a 3 images possibles : $3^4=81$."
+      }
+     ],
+     "formules": "nombre d'applications de $E$ dans $F$ : $|F|^{|E|}$",
+     "type": "value"
+    },
+    {
+     "id": "pl4",
+     "enonce": "Combien un ensemble à 6 éléments a-t-il de parties ?",
+     "ans": "64",
+     "sol": "Chaque élément est dedans ou non : $2^6=64$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien un ensemble à 8 éléments a-t-il de parties ?",
+       "ans": "256",
+       "sol": "$2^8=256$."
+      }
+     ],
+     "formules": "$|\\mathcal P(E)|=2^{|E|}$",
+     "type": "value"
+    },
+    {
+     "id": "pl5",
+     "enonce": "Une plaque est formée de 2 lettres, 3 chiffres puis 2 lettres (répétitions permises). Combien de plaques ?",
+     "ans": "456976000",
+     "sol": "$26^2\\times10^3\\times26^2=456\\,976\\,000$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Une plaque est formée de 3 lettres puis 4 chiffres (répétitions permises). Combien de plaques ?",
+       "ans": "175760000",
+       "sol": "$26^3\\times10^4=175\\,760\\,000$."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · ordre et répétition : $n^p$ ($p$-listes)",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Arrangements et permutations",
+   "notions": [
+    "arrangements",
+    "modele"
+   ],
+   "exos": [
+    {
+     "id": "ar1",
+     "enonce": "Une course oppose 20 cyclistes. Le podium est le classement des 3 premiers. Combien de podiums possibles ?",
+     "ans": "6840",
+     "sol": "Ordre, sans répétition : $20\\times19\\times18=6840$.",
+     "src": "Examen B1 nov. 2023, ex. 2.1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Une course oppose 15 coureurs. Combien de podiums (3 premiers, dans l'ordre) possibles ?",
+       "ans": "2730",
+       "sol": "Ordre, sans répétition : $15\\times14\\times13=2730$."
+      }
+     ],
+     "formules": "ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "type": "value"
+    },
+    {
+     "id": "ar2",
+     "enonce": "Même course : combien de podiums où Jade est première ?",
+     "ans": "342",
+     "sol": "Jade fixée à la 1re place, puis $19\\times18=342$.",
+     "src": "Examen B1 nov. 2023, ex. 2.2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Une course oppose 15 coureurs dont Jade. Combien de podiums où Jade est première ?",
+       "ans": "182",
+       "sol": "Jade fixée, puis $14\\times13=182$."
+      }
+     ],
+     "formules": "ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "type": "value"
+    },
+    {
+     "id": "ar3",
+     "enonce": "Un code est une lettre parmi A, B, C suivie de 3 chiffres **distincts**. Combien de codes ?",
+     "ans": "2160",
+     "sol": "$3\\times10\\times9\\times8=2160$.",
+     "src": "Examen B1-DP oct. 2024, ex. 2.1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un code est une lettre parmi A, B, C, D suivie de 3 chiffres **distincts**. Combien de codes ?",
+       "ans": "2880",
+       "sol": "$4\\times10\\times9\\times8=2880$."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "type": "value"
+    },
+    {
+     "id": "ar4",
+     "enonce": "Paul connaît la lettre du code ; il sait que les 3 chiffres sont distincts et impairs. Combien de possibilités ?",
+     "ans": "60",
+     "sol": "5 chiffres impairs, ordre, distincts : $5\\times4\\times3=60$.",
+     "src": "Examen B1-DP oct. 2024, ex. 2.3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Paul connaît la lettre du code ; il sait que les 4 chiffres sont distincts et pairs. Combien de possibilités ?",
+       "ans": "120",
+       "sol": "5 chiffres pairs (0, 2, 4, 6, 8), ordre, distincts : $5\\times4\\times3\\times2=120$."
+      }
+     ],
+     "formules": "ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "type": "value"
+    },
+    {
+     "id": "ar5",
+     "enonce": "Combien d'anagrammes du mot MATHS ?",
+     "ans": "120",
+     "sol": "5 lettres distinctes : $5!=120$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien d'anagrammes du mot NOMBRE ?",
+       "ans": "720",
+       "sol": "6 lettres distinctes : $6!=720$."
+      }
+     ],
+     "formules": "permutations de $n$ objets distincts : $n!$",
+     "type": "value"
+    },
+    {
+     "id": "ar6",
+     "enonce": "Le code a changé, lettre comprise ; Paul sait seulement que les 3 chiffres sont 6, 2 et 9. Combien de possibilités ?",
+     "ans": "18",
+     "sol": "3 lettres possibles, $3!$ ordres des chiffres : $3\\times6=18$.",
+     "src": "Examen B1-DP oct. 2024, ex. 2.4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un code est une lettre inconnue parmi A, B, C, D suivie des chiffres 1, 5 et 8 dans un ordre inconnu. Combien de possibilités ?",
+       "ans": "24",
+       "sol": "$4\\times3!=24$."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · permutations de $n$ objets distincts : $n!$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Combinaisons",
+   "notions": [
+    "combinaisons",
+    "modele"
+   ],
+   "exos": [
+    {
+     "id": "co1",
+     "enonce": "Combien de comités de 3 personnes peut-on former dans un groupe de 10 ?",
+     "ans": "120",
+     "sol": "Sans ordre : $\\binom{10}3=120$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien de comités de 4 personnes peut-on former dans un groupe de 12 ?",
+       "ans": "495",
+       "sol": "$\\binom{12}4=495$."
+      }
+     ],
+     "formules": "sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "type": "value"
+    },
+    {
+     "id": "co2",
+     "enonce": "L'organisateur offre un vélo identique à chacun des 3 premiers, sans distinction. Combien de récompenses possibles parmi 20 coureurs ?",
+     "ans": "1140",
+     "sol": "L'ordre ne compte plus : $\\binom{20}3=1140$.",
+     "src": "Examen B1 nov. 2023, ex. 2.6",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "25 coureurs ; un vélo identique est offert à chacun des 3 premiers. Combien de récompenses possibles ?",
+       "ans": "2300",
+       "sol": "Sans ordre : $\\binom{25}3=2300$."
+      }
+     ],
+     "formules": "sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "type": "value"
+    },
+    {
+     "id": "co3",
+     "enonce": "On tire simultanément 5 cartes d'un jeu de 32. Combien de tirages ?",
+     "ans": "201376",
+     "sol": "$\\binom{32}5=201376$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On tire simultanément 4 cartes d'un jeu de 32. Combien de tirages ?",
+       "ans": "35960",
+       "sol": "$\\binom{32}4=35960$."
+      }
+     ],
+     "formules": "sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "type": "value"
+    },
+    {
+     "id": "co4",
+     "enonce": "Combien de mains de 5 cartes (jeu de 32) contiennent exactement 2 as ?",
+     "ans": "19656",
+     "sol": "2 as parmi 4 et 3 autres cartes parmi 28 : $\\binom42\\binom{28}3=6\\times3276=19656$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Combien de mains de 5 cartes (jeu de 32) contiennent exactement 1 roi ?",
+       "ans": "81900",
+       "sol": "$\\binom41\\binom{28}4=4\\times20475=81900$."
+      }
+     ],
+     "formules": "sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$ · principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie",
+     "type": "value"
+    },
+    {
+     "id": "co5",
+     "enonce": "Sur un quadrillage, combien de chemins de $(0,0)$ à $(4,3)$ en pas « droite » ou « haut » ?",
+     "ans": "35",
+     "sol": "7 pas dont on choisit les 3 « haut » : $\\binom73=35$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Combien de chemins de $(0,0)$ à $(5,3)$ en pas « droite » ou « haut » ?",
+       "ans": "56",
+       "sol": "8 pas dont 3 « haut » : $\\binom83=56$."
+      }
+     ],
+     "formules": "sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$ : choisir la place des $p$ pas « haut » parmi les $n$ pas",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Contraintes : au moins, mais pas",
+   "notions": [
+    "complementaire",
+    "arrangements"
+   ],
+   "exos": [
+    {
+     "id": "ct1",
+     "enonce": "Course de 20 cyclistes dont Pierre et Jade. Combien de podiums sans Pierre ni Jade ?",
+     "ans": "4896",
+     "sol": "On choisit parmi les 18 autres : $18\\times17\\times16=4896$.",
+     "src": "Examen B1 nov. 2023, ex. 2.3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Course de 15 coureurs dont Pierre et Jade. Combien de podiums sans Pierre ni Jade ?",
+       "ans": "1716",
+       "sol": "$13\\times12\\times11=1716$."
+      }
+     ],
+     "formules": "ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "type": "value"
+    },
+    {
+     "id": "ct2",
+     "enonce": "Combien de podiums contiennent Pierre mais pas Jade ?",
+     "ans": "918",
+     "sol": "3 places pour Pierre, puis $18\\times17$ pour les 2 autres places (sans Jade) : 918.",
+     "src": "Examen B1 nov. 2023, ex. 2.4",
+     "variants": [
+      {
+       "enonce": "Course de 15 coureurs dont Pierre et Jade. Combien de podiums avec Pierre mais sans Jade ?",
+       "ans": "468",
+       "sol": "3 places pour Pierre, puis $13\\times12$ : 468."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ct3",
+     "enonce": "Combien de podiums contiennent au moins Jade ou Pierre ?",
+     "ans": "1944",
+     "sol": "Complémentaire : $6840-4896=1944$.",
+     "src": "Examen B1 nov. 2023, ex. 2.5",
+     "variants": [
+      {
+       "enonce": "Course de 15 coureurs dont Pierre et Jade. Combien de podiums contiennent au moins l'un des deux ?",
+       "ans": "1014",
+       "sol": "Complémentaire : $2730-1716=1014$."
+      }
+     ],
+     "formules": "« au moins un » : total $-$ « aucun » · ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ct4",
+     "enonce": "Code = lettre parmi A, B, C (inconnue) + 3 chiffres pouvant se répéter, avec au moins un 4. Combien de possibilités ?",
+     "ans": "813",
+     "sol": "$3\\times(10^3-9^3)=3\\times271=813$.",
+     "src": "Examen B1-DP oct. 2024, ex. 2.5",
+     "variants": [
+      {
+       "enonce": "Code = lettre parmi A, B, C + 4 chiffres pouvant se répéter, avec au moins un 0. Combien de possibilités ?",
+       "ans": "10317",
+       "sol": "$3\\times(10^4-9^4)=3\\times3439=10317$."
+      }
+     ],
+     "formules": "« au moins un » : total $-$ « aucun » · ordre et répétition : $n^p$ ($p$-listes)",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ct5",
+     "enonce": "Classe de 12 filles et 10 garçons. On forme un groupe : un chef (fille), un sous-chef (garçon) et deux assistants (une fille et un garçon), sans cumul. Combien de groupes ?",
+     "ans": "11880",
+     "sol": "Chef $12$, sous-chef $10$, assistante parmi 11 filles restantes, assistant parmi 9 garçons restants : $11880$.",
+     "variants": [
+      {
+       "enonce": "8 filles et 6 garçons. Un chef (fille), un sous-chef (garçon), une assistante et un assistant, sans cumul. Combien de groupes ?",
+       "ans": "1680",
+       "sol": "$8\\times6\\times7\\times5=1680$."
+      }
+     ],
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ct6",
+     "enonce": "Comités de 4 parmi 6 filles et 5 garçons, avec au moins une fille ?",
+     "ans": "325",
+     "sol": "$\\binom{11}4-\\binom54=330-5=325$.",
+     "variants": [
+      {
+       "enonce": "Comités de 3 parmi 5 filles et 4 garçons, avec au moins une fille ?",
+       "ans": "80",
+       "sol": "$\\binom93-\\binom43=84-4=80$."
+      }
+     ],
+     "formules": "« au moins un » : total $-$ « aucun » · sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Pascal, binôme, double comptage",
+   "notions": [
+    "binome",
+    "vandermonde"
+   ],
+   "exos": [
+    {
+     "id": "id1",
+     "enonce": "Calculer $\\sum_{k=0}^{7}\\binom7k$.",
+     "ans": "128",
+     "sol": "Binôme avec $a=b=1$ : $2^7=128$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{9}\\binom9k$.",
+       "ans": "512",
+       "sol": "$2^9=512$."
+      }
+     ],
+     "formules": "binôme : $(a+b)^n=\\sum_{k=0}^n\\binom nka^kb^{n-k}$, avec $a=b=1$ : $\\sum_{k=0}^n\\binom nk=2^n$",
+     "type": "value"
+    },
+    {
+     "id": "id2",
+     "enonce": "Coefficient de $x^3$ dans $(2x+1)^5$ ?",
+     "ans": "80",
+     "sol": "$\\binom53 2^3=80$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans $(3x+1)^4$ ?",
+       "ans": "54",
+       "sol": "$\\binom42 3^2=54$."
+      }
+     ],
+     "formules": "binôme : $(a+b)^n=\\sum_{k=0}^n\\binom nka^kb^{n-k}$",
+     "type": "value"
+    },
+    {
+     "id": "id3",
+     "enonce": "Calculer $\\sum_{i=0}^{4}\\binom4i\\binom7{4-i}$ sous la forme d'un entier.",
+     "ans": "330",
+     "sol": "Vandermonde : $\\binom{11}4=330$.",
+     "src": "Examen B1 nov. 2023, ex. 3.4",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{i=0}^{3}\\binom5i\\binom6{3-i}$.",
+       "ans": "165",
+       "sol": "Vandermonde : $\\binom{11}3=165$."
+      }
+     ],
+     "formules": "Vandermonde : $\\sum_{i=0}^{p}\\binom ni\\binom m{p-i}=\\binom{n+m}p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "id4",
+     "enonce": "Calculer $\\binom94+\\binom95$.",
+     "ans": "252",
+     "sol": "Pascal : $\\binom{10}5=252$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\binom83+\\binom84$.",
+       "ans": "126",
+       "sol": "Pascal : $\\binom94=126$."
+      }
+     ],
+     "formules": "Pascal : $\\binom np+\\binom n{p+1}=\\binom{n+1}{p+1}$",
+     "type": "value"
+    },
+    {
+     "id": "id5",
+     "enonce": "Pour $0\\le k\\le p\\le n$, démontrer par le calcul $\\binom np\\binom pk=\\binom nk\\binom{n-k}{p-k}$.",
+     "sol": "$\\binom np\\binom pk=\\frac{n!}{p!(n-p)!}\\cdot\\frac{p!}{k!(p-k)!}=\\frac{n!}{(n-p)!\\,k!\\,(p-k)!}$ et $\\binom nk\\binom{n-k}{p-k}=\\frac{n!}{k!(n-k)!}\\cdot\\frac{(n-k)!}{(p-k)!(n-p)!}$ : même résultat.",
+     "src": "Examen B1-DP oct. 2024, ex. 3.3",
+     "formules": "$\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "id6",
+     "enonce": "Calculer $S_3=\\sum_{k=0}^{3}\\binom6k\\binom{6-k}{3-k}$.",
+     "ans": "160",
+     "sol": "$\\binom6k\\binom{6-k}{3-k}=\\binom63\\binom3k$ donc $S_3=\\binom63\\sum\\binom3k=20\\times2^3=160$.",
+     "src": "Examen B1-DP oct. 2024, ex. 3.4",
+     "variants": [
+      {
+       "enonce": "Calculer $S_2=\\sum_{k=0}^{2}\\binom5k\\binom{5-k}{2-k}$.",
+       "ans": "40",
+       "sol": "$\\binom5k\\binom{5-k}{2-k}=\\binom52\\binom2k$, donc $S_2=10\\times2^2=40$."
+      }
+     ],
+     "formules": "$\\binom np\\binom pk=\\binom nk\\binom{n-k}{p-k}$ · $\\sum_{k=0}^n\\binom nk=2^n$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Équiprobabilité",
+   "notions": [
+    "equiprobabilite"
+   ],
+   "exos": [
+    {
+     "id": "eq1",
+     "enonce": "On lance deux dés équilibrés. Probabilité que la somme fasse 7 ?",
+     "ans": "Rational(1,6)",
+     "sol": "6 couples sur 36 : $\\frac16$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On lance deux dés équilibrés. Probabilité que la somme fasse 8 ?",
+       "ans": "Rational(5,36)",
+       "sol": "(2,6), (3,5), (4,4), (5,3), (6,2) : $\\frac5{36}$."
+      }
+     ],
+     "formules": "équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$",
+     "type": "value"
+    },
+    {
+     "id": "eq2",
+     "enonce": "On tire 5 cartes d'un jeu de 32. Probabilité d'avoir exactement 2 as (fraction simplifiée) ?",
+     "ans": "Rational(19656,201376)",
+     "sol": "$\\frac{\\binom42\\binom{28}3}{\\binom{32}5}=\\frac{19656}{201376}=\\frac{351}{3596}$.",
+     "variants": [
+      {
+       "enonce": "On tire 5 cartes d'un jeu de 32. Probabilité d'avoir exactement 1 as ?",
+       "ans": "Rational(81900,201376)",
+       "sol": "$\\frac{4\\binom{28}4}{\\binom{32}5}=\\frac{81900}{201376}$."
+      }
+     ],
+     "formules": "équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$ · sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "eq3",
+     "enonce": "On écrit une anagramme de MATHS au hasard. Probabilité qu'elle commence par M ?",
+     "ans": "Rational(1,5)",
+     "sol": "$\\frac{4!}{5!}=\\frac15$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On écrit une anagramme de NOMBRE au hasard. Probabilité qu'elle commence par N ?",
+       "ans": "Rational(1,6)",
+       "sol": "$\\frac{5!}{6!}=\\frac16$."
+      }
+     ],
+     "formules": "équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$ · permutations : $n!$",
+     "type": "value"
+    },
+    {
+     "id": "eq4",
+     "enonce": "On lance 3 pièces. Probabilité d'au moins un pile ?",
+     "ans": "Rational(7,8)",
+     "sol": "$1-\\left(\\frac12\\right)^3=\\frac78$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On lance 4 pièces. Probabilité d'au moins un pile ?",
+       "ans": "Rational(15,16)",
+       "sol": "$1-\\frac1{2^4}=\\frac{15}{16}$."
+      }
+     ],
+     "formules": "$P(\\bar A)=1-P(A)$ · équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$",
+     "type": "value"
+    },
+    {
+     "id": "eq5",
+     "enonce": "Un code de 3 chiffres (répétitions permises) est tiré au hasard. Probabilité qu'il contienne au moins un 4 ?",
+     "ans": "Rational(271,1000)",
+     "sol": "$1-\\frac{9^3}{10^3}=\\frac{271}{1000}$.",
+     "variants": [
+      {
+       "enonce": "Un code de 4 chiffres (répétitions permises) est tiré au hasard. Probabilité qu'il contienne au moins un 4 ?",
+       "ans": "Rational(3439,10000)",
+       "sol": "$1-\\frac{9^4}{10^4}=\\frac{3439}{10000}$."
+      }
+     ],
+     "formules": "$P(\\bar A)=1-P(A)$ · équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Probabilités conditionnelles",
+   "notions": [
+    "conditionnelle"
+   ],
+   "exos": [
+    {
+     "id": "pc1",
+     "enonce": "$P(A)=0{,}4$ et $P_A(B)=0{,}8$. Calculer $P(A\\cap B)$.",
+     "ans": "Rational(8,25)",
+     "sol": "$0{,}4\\times0{,}8=\\frac8{25}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$P(A)=0{,}6$ et $P_A(B)=0{,}5$. Calculer $P(A\\cap B)$.",
+       "ans": "Rational(3,10)",
+       "sol": "$0{,}6\\times0{,}5=\\frac3{10}$."
+      }
+     ],
+     "formules": "$P(A\\cap B)=P(A)\\,P_A(B)$",
+     "type": "value"
+    },
+    {
+     "id": "pc2",
+     "enonce": "Urne : 3 boules rouges, 2 vertes. Deux tirages sans remise. Probabilité de 2 rouges ?",
+     "ans": "Rational(3,10)",
+     "sol": "$\\frac35\\times\\frac24=\\frac3{10}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Urne : 4 boules rouges, 3 vertes. Deux tirages sans remise. Probabilité de 2 rouges ?",
+       "ans": "Rational(2,7)",
+       "sol": "$\\frac47\\times\\frac36=\\frac27$."
+      }
+     ],
+     "formules": "$P(A\\cap B)=P(A)\\,P_A(B)$",
+     "type": "value"
+    },
+    {
+     "id": "pc3",
+     "enonce": "$P(A\\cap B)=\\frac16$ et $P(A)=\\frac12$. Calculer $P_A(B)$.",
+     "ans": "Rational(1,3)",
+     "sol": "$\\frac{1/6}{1/2}=\\frac13$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$P(A\\cap B)=\\frac1{10}$ et $P(A)=\\frac25$. Calculer $P_A(B)$.",
+       "ans": "Rational(1,4)",
+       "sol": "$\\frac{1/10}{2/5}=\\frac14$."
+      }
+     ],
+     "formules": "$P_A(B)=\\frac{P(A\\cap B)}{P(A)}$",
+     "type": "value"
+    },
+    {
+     "id": "pc4",
+     "enonce": "Une famille a deux enfants ; on sait qu'il y a au moins un garçon. Probabilité que ce soient deux garçons ?",
+     "ans": "Rational(1,3)",
+     "sol": "$\\Omega=\\{GG,GF,FG,FF\\}$ ; $P(GG\\mid\\text{au moins un }G)=\\frac{1/4}{3/4}=\\frac13$.",
+     "variants": [
+      {
+       "enonce": "Une famille a trois enfants ; on sait qu'il y a au moins un garçon. Probabilité que ce soient trois garçons ?",
+       "ans": "Rational(1,7)",
+       "sol": "$P(GGG\\mid\\text{au moins un }G)=\\frac{1/8}{7/8}=\\frac17$."
+      }
+     ],
+     "formules": "$P_A(B)=\\frac{P(A\\cap B)}{P(A)}$ · équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Probabilités totales",
+   "notions": [
+    "totales",
+    "conditionnelle"
+   ],
+   "exos": [
+    {
+     "id": "ba1",
+     "enonce": "10 % des élèves viennent en soutien ($S$). Avec soutien, ils valident ($V$) à 80 %, sinon à 30 %. Calculer $P(V)$ (fraction simplifiée).",
+     "ans": "Rational(7,20)",
+     "sol": "$P(V)=P(S)P_S(V)+P(\\bar S)P_{\\bar S}(V)=\\frac8{100}+\\frac{27}{100}=\\frac7{20}$.",
+     "src": "Examen B1 nov. 2023, ex. 4.2",
+     "variants": [
+      {
+       "enonce": "20 % des élèves viennent en soutien ($S$). Avec soutien, ils valident ($V$) à 90 %, sinon à 40 %. Calculer $P(V)$.",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac15\\cdot\\frac9{10}+\\frac45\\cdot\\frac25=\\frac{18}{100}+\\frac{32}{100}=\\frac12$."
+      }
+     ],
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ba4",
+     "enonce": "40 % des élèves apprennent leur cours ($C$). Ils valident ($V$) à 80 %, les autres à 20 %. Calculer $P(V)$.",
+     "ans": "Rational(11,25)",
+     "sol": "$\\frac25\\cdot\\frac45+\\frac35\\cdot\\frac15=\\frac{11}{25}$.",
+     "src": "Examen B1-DP oct. 2024, ex. 4.2",
+     "variants": [
+      {
+       "enonce": "30 % des élèves apprennent leur cours ($C$). Ils valident ($V$) à 90 %, les autres à 10 %. Calculer $P(V)$.",
+       "ans": "Rational(17,50)",
+       "sol": "$\\frac{27}{100}+\\frac7{100}=\\frac{17}{50}$."
+      }
+     ],
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ba3",
+     "enonce": "Avec $P_S(V)=0{,}8$ et $P_{\\bar S}(V)=0{,}3$, quelle probabilité minimale $p=P(S)$ pour que $P(V)\\ge0{,}75$ ?",
+     "ans": "Rational(9,10)",
+     "sol": "$0{,}8p+0{,}3(1-p)\\ge0{,}75\\iff0{,}5p\\ge0{,}45\\iff p\\ge\\frac9{10}$.",
+     "src": "Examen B1 nov. 2023, ex. 4.4",
+     "variants": [
+      {
+       "enonce": "Avec $P_S(V)=0{,}9$ et $P_{\\bar S}(V)=0{,}4$, quelle probabilité minimale $p=P(S)$ pour que $P(V)\\ge0{,}7$ ?",
+       "ans": "Rational(3,5)",
+       "sol": "$0{,}9p+0{,}4(1-p)\\ge0{,}7\\iff0{,}5p\\ge0{,}3\\iff p\\ge\\frac35$."
+      }
+     ],
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · résoudre l'inéquation en $p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ba6",
+     "enonce": "Avec $P_C(V)=0{,}8$ et $P_{\\bar C}(V)=0{,}2$, quelle proportion minimale $p$ d'élèves qui apprennent pour que 60 % valident ?",
+     "ans": "Rational(2,3)",
+     "sol": "$0{,}8p+0{,}2(1-p)\\ge0{,}6\\iff0{,}6p\\ge0{,}4\\iff p\\ge\\frac23$.",
+     "src": "Examen B1-DP oct. 2024, ex. 4.4",
+     "variants": [
+      {
+       "enonce": "Avec $P_C(V)=0{,}9$ et $P_{\\bar C}(V)=0{,}1$, quelle proportion minimale $p$ d'élèves qui apprennent pour que 50 % valident ?",
+       "ans": "Rational(1,2)",
+       "sol": "$0{,}9p+0{,}1(1-p)\\ge0{,}5\\iff0{,}8p\\ge0{,}4\\iff p\\ge\\frac12$."
+      }
+     ],
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · résoudre l'inéquation en $p$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Formule de Bayes",
+   "notions": [
+    "bayes",
+    "totales"
+   ],
+   "exos": [
+    {
+     "id": "ba2",
+     "enonce": "Avec les données du soutien ($P(S)=0{,}1$, $P_S(V)=0{,}8$, $P_{\\bar S}(V)=0{,}3$) : un élève a validé. Probabilité qu'il soit venu en soutien ?",
+     "ans": "Rational(8,35)",
+     "sol": "$P_V(S)=\\frac{8/100}{35/100}=\\frac8{35}$.",
+     "src": "Examen B1 nov. 2023, ex. 4.3",
+     "variants": [
+      {
+       "enonce": "$P(S)=0{,}2$, $P_S(V)=0{,}9$, $P_{\\bar S}(V)=0{,}4$. Un élève a validé : probabilité qu'il soit venu en soutien ?",
+       "ans": "Rational(9,25)",
+       "sol": "$P(V)=\\frac12$, $P_V(S)=\\frac{18/100}{1/2}=\\frac9{25}$."
+      }
+     ],
+     "formules": "Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ba5",
+     "enonce": "Avec $P(C)=0{,}4$, $P_C(V)=0{,}8$, $P_{\\bar C}(V)=0{,}2$ : un élève valide. Probabilité qu'il ait appris son cours ?",
+     "ans": "Rational(8,11)",
+     "sol": "$\\frac{8/25}{11/25}=\\frac8{11}$.",
+     "src": "Examen B1-DP oct. 2024, ex. 4.3",
+     "variants": [
+      {
+       "enonce": "$P(C)=0{,}3$, $P_C(V)=0{,}9$, $P_{\\bar C}(V)=0{,}1$ : un élève valide. Probabilité qu'il ait appris son cours ?",
+       "ans": "Rational(27,34)",
+       "sol": "$\\frac{27/100}{34/100}=\\frac{27}{34}$."
+      }
+     ],
+     "formules": "Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "ba7",
+     "enonce": "Une maladie touche 1 % de la population. Un test est positif chez 99 % des malades et chez 5 % des non-malades. Un test est positif : probabilité d'être malade ?",
+     "ans": "Rational(1,6)",
+     "sol": "$\\frac{0{,}0099}{0{,}0099+0{,}0495}=\\frac16$.",
+     "variants": [
+      {
+       "enonce": "Une maladie touche 2 % de la population. Un test est positif chez 90 % des malades et chez 10 % des non-malades. Un test est positif : probabilité d'être malade ?",
+       "ans": "Rational(9,58)",
+       "sol": "$\\frac{0{,}018}{0{,}018+0{,}098}=\\frac{18}{116}=\\frac9{58}$."
+      }
+     ],
+     "formules": "Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Indépendance",
+   "notions": [
+    "independance"
+   ],
+   "exos": [
+    {
+     "id": "in1",
+     "enonce": "$A$ et $B$ indépendants, $P(A)=\\frac12$, $P(B)=\\frac13$. Calculer $P(A\\cup B)$.",
+     "ans": "Rational(2,3)",
+     "sol": "$P(A\\cap B)=\\frac16$, donc $P(A\\cup B)=\\frac12+\\frac13-\\frac16=\\frac23$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$A$ et $B$ indépendants, $P(A)=\\frac14$, $P(B)=\\frac13$. Calculer $P(A\\cup B)$.",
+       "ans": "Rational(1,2)",
+       "sol": "$P(A\\cap B)=\\frac1{12}$, donc $\\frac14+\\frac13-\\frac1{12}=\\frac12$."
+      }
+     ],
+     "formules": "indépendants : $P(A\\cap B)=P(A)P(B)$ · $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$",
+     "type": "value"
+    },
+    {
+     "id": "in2",
+     "enonce": "Dé équilibré, $A$ = « pair », $B$ = « $\\le2$ ». Calculer $P(A\\cap B)-P(A)P(B)$ et conclure.",
+     "ans": "0",
+     "sol": "$P(A\\cap B)=P(\\{2\\})=\\frac16=\\frac12\\cdot\\frac13$ : différence nulle, $A$ et $B$ sont indépendants.",
+     "variants": [
+      {
+       "enonce": "Dé équilibré, $A$ = « pair », $B$ = « $\\le3$ ». Calculer $P(A\\cap B)-P(A)P(B)$ et conclure.",
+       "ans": "-Rational(1,12)",
+       "sol": "$P(A\\cap B)=P(\\{2\\})=\\frac16\\ne\\frac14$ : différence $-\\frac1{12}$, $A$ et $B$ ne sont pas indépendants."
+      }
+     ],
+     "formules": "indépendants : $P(A\\cap B)=P(A)P(B)$ · équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "in3",
+     "enonce": "Trois tirs indépendants réussissent chacun avec probabilité $0{,}7$. Probabilité d'au moins une réussite ?",
+     "ans": "Rational(973,1000)",
+     "sol": "$1-0{,}3^3=0{,}973$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Quatre tirs indépendants réussissent chacun avec probabilité $0{,}6$. Probabilité d'au moins une réussite ?",
+       "ans": "Rational(609,625)",
+       "sol": "$1-0{,}4^4=1-\\frac{16}{625}=\\frac{609}{625}$."
+      }
+     ],
+     "formules": "$P(\\bar A)=1-P(A)$ · indépendants : $P(A\\cap B)=P(A)P(B)$",
+     "type": "value"
+    },
+    {
+     "id": "in4",
+     "enonce": "$A,B$ indépendants, $P(A)=0{,}3$, $P(B)=0{,}5$. Calculer $P(\\bar A\\cap\\bar B)$.",
+     "ans": "Rational(7,20)",
+     "sol": "$\\bar A,\\bar B$ indépendants : $0{,}7\\times0{,}5=\\frac7{20}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$A,B$ indépendants, $P(A)=0{,}2$, $P(B)=0{,}6$. Calculer $P(\\bar A\\cap\\bar B)$.",
+       "ans": "Rational(8,25)",
+       "sol": "$0{,}8\\times0{,}4=\\frac8{25}$."
+      }
+     ],
+     "formules": "$A$, $B$ indépendants $\\Rightarrow\\bar A$, $\\bar B$ indépendants · $P(\\bar A)=1-P(A)$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Loi, espérance, variance",
+   "notions": [
+    "esperance"
+   ],
+   "exos": [
+    {
+     "id": "va1",
+     "enonce": "Une urne contient 4 boules numérotées 0, 1, 1, 2. $X$ = numéro tiré. Calculer $E(X)$.",
+     "ans": "1",
+     "sol": "Loi : $P(X=0)=\\frac14$, $P(X=1)=\\frac12$, $P(X=2)=\\frac14$. $E(X)=0+\\frac12+\\frac12=1$.",
+     "src": "Examen B1-DP oct. 2024, ex. 6.1",
+     "variants": [
+      {
+       "enonce": "Une urne contient 4 boules numérotées 0, 1, 2, 2. $X$ = numéro tiré. Calculer $E(X)$.",
+       "ans": "Rational(5,4)",
+       "sol": "$P(X=0)=P(X=1)=\\frac14$, $P(X=2)=\\frac12$ : $E(X)=\\frac14+1=\\frac54$."
+      }
+     ],
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "va2",
+     "enonce": "Même urne : calculer $V(X)$.",
+     "ans": "Rational(1,2)",
+     "sol": "$E(X^2)=\\frac12+1=\\frac32$, $V(X)=\\frac32-1=\\frac12$.",
+     "src": "Examen B1-DP oct. 2024, ex. 6.1",
+     "variants": [
+      {
+       "enonce": "Une urne contient 4 boules numérotées 0, 1, 2, 2. $X$ = numéro tiré. Calculer $V(X)$.",
+       "ans": "Rational(11,16)",
+       "sol": "$E(X)=\\frac54$, $E(X^2)=\\frac14+2=\\frac94$, $V(X)=\\frac94-\\frac{25}{16}=\\frac{11}{16}$."
+      }
+     ],
+     "formules": "$V(X)=E(X^2)-E(X)^2$ · $E(X^2)=\\sum_ix_i^2P(X=x_i)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "va3",
+     "enonce": "$X$ = résultat d'un dé équilibré. $E(X)$ ?",
+     "ans": "Rational(7,2)",
+     "sol": "$\\frac{1+\\dots+6}6=\\frac72$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$X$ = résultat d'un dé équilibré à 4 faces (1 à 4). $E(X)$ ?",
+       "ans": "Rational(5,2)",
+       "sol": "$\\frac{1+2+3+4}4=\\frac52$."
+      }
+     ],
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$",
+     "type": "value"
+    },
+    {
+     "id": "va4",
+     "enonce": "$X$ = résultat d'un dé équilibré. $V(X)$ ?",
+     "ans": "Rational(35,12)",
+     "sol": "$E(X^2)=\\frac{91}6$, $V=\\frac{91}6-\\frac{49}4=\\frac{35}{12}$.",
+     "variants": [
+      {
+       "enonce": "$X$ = résultat d'un dé équilibré à 4 faces (1 à 4). $V(X)$ ?",
+       "ans": "Rational(5,4)",
+       "sol": "$E(X^2)=\\frac{30}4$, $V=\\frac{30}4-\\frac{25}4=\\frac54$."
+      }
+     ],
+     "formules": "$V(X)=E(X^2)-E(X)^2$ · $E(X^2)=\\sum_ix_i^2P(X=x_i)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "va5",
+     "enonce": "Un jeu rapporte 5 € avec probabilité $\\frac14$ et fait perdre 1 € sinon. Espérance du gain ?",
+     "ans": "Rational(1,2)",
+     "sol": "$\\frac54-\\frac34=\\frac12$ €.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un jeu rapporte 10 € avec probabilité $\\frac15$ et fait perdre 2 € sinon. Espérance du gain ?",
+       "ans": "Rational(2,5)",
+       "sol": "$2-\\frac85=\\frac25$ €."
+      }
+     ],
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "E(aX+b), V(aX+b), König-Huygens",
+   "notions": [
+    "lineaire",
+    "esperance"
+   ],
+   "exos": [
+    {
+     "id": "pr1",
+     "enonce": "$E(X)=3$. Calculer $E(2X+5)$.",
+     "ans": "11",
+     "sol": "$2\\times3+5=11$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E(X)=-2$. Calculer $E(3X-4)$.",
+       "ans": "-10",
+       "sol": "$3\\times(-2)-4=-10$."
+      }
+     ],
+     "formules": "$E(aX+b)=aE(X)+b$",
+     "type": "value"
+    },
+    {
+     "id": "pr2",
+     "enonce": "$V(X)=4$. Calculer $V(-3X+1)$.",
+     "ans": "36",
+     "sol": "$(-3)^2\\times4=36$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$V(X)=5$. Calculer $V(2X-7)$.",
+       "ans": "20",
+       "sol": "$2^2\\times5=20$ : la constante ne change pas la variance."
+      }
+     ],
+     "formules": "$V(aX+b)=a^2V(X)$",
+     "type": "value"
+    },
+    {
+     "id": "pr3",
+     "enonce": "$E(X)=2$ et $E(X^2)=7$. Calculer $V(X)$.",
+     "ans": "3",
+     "sol": "$7-4=3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E(X)=3$ et $E(X^2)=13$. Calculer $V(X)$.",
+       "ans": "4",
+       "sol": "$13-9=4$."
+      }
+     ],
+     "formules": "$V(X)=E(X^2)-E(X)^2$",
+     "type": "value"
+    },
+    {
+     "id": "pr7",
+     "enonce": "On lance deux dés équilibrés, $X$ et $Y$ leurs résultats. Calculer $E(X+Y)$.",
+     "ans": "7",
+     "sol": "$E(X+Y)=E(X)+E(Y)=\\frac72+\\frac72=7$, sans calculer la loi de $X+Y$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On lance trois dés équilibrés. Espérance de la somme ?",
+       "ans": "Rational(21,2)",
+       "sol": "Linéarité : $3\\times\\frac72=\\frac{21}2$."
+      }
+     ],
+     "formules": "$E(X+Y)=E(X)+E(Y)$",
+     "type": "value"
+    },
+    {
+     "id": "pr4",
+     "enonce": "Exprimer $E(aX+b)$ en fonction de $a$, $b$, $E(X)$ et le démontrer.",
+     "sol": "$E(aX+b)=\\sum_i(ax_i+b)P(X=x_i)=a\\sum_ix_iP(X=x_i)+b\\sum_iP(X=x_i)=aE(X)+b$ car $\\sum_iP(X=x_i)=1$.",
+     "src": "Examen B1-DP oct. 2024, ex. 5.2",
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$ · $\\sum_iP(X=x_i)=1$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "pr5",
+     "enonce": "Exprimer $V(aX+b)$ en fonction de $a$, $b$, $V(X)$ et le démontrer.",
+     "sol": "$aX+b-E(aX+b)=a(X-E(X))$ donc $V(aX+b)=E\\big(a^2(X-E(X))^2\\big)=a^2V(X)$.",
+     "src": "Examen B1-DP oct. 2024, ex. 5.3",
+     "formules": "$V(X)=E\\big((X-E(X))^2\\big)$ · $E(aX+b)=aE(X)+b$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "pr6",
+     "enonce": "En utilisant $E(X+Y)=E(X)+E(Y)$ et $E(aX+b)=aE(X)+b$, montrer que $V(X)=E(X^2)-E(X)^2$.",
+     "sol": "$V(X)=E\\big((X-m)^2\\big)$ avec $m=E(X)$. $(X-m)^2=X^2-2mX+m^2$ donc $V(X)=E(X^2)-2mE(X)+m^2=E(X^2)-m^2$.",
+     "src": "Examen B1 nov. 2023, ex. 5.2",
+     "formules": "$V(X)=E\\big((X-E(X))^2\\big)$ · $E(X+Y)=E(X)+E(Y)$ · $E(aX+b)=aE(X)+b$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Bernoulli et loi binomiale",
+   "notions": [
+    "binomiale",
+    "lineaire"
+   ],
+   "exos": [
+    {
+     "id": "bi1",
+     "enonce": "Urne 0, 1, 1, 2, tirage avec remise. On gagne 1 € si la boule porte 0 ou 1, sinon rien. $Y_k$ = gain au $k$-ième tirage. $E(Y_k)$ et $V(Y_k)$ ? (donner $V$)",
+     "ans": "Rational(3,16)",
+     "sol": "$Y_k\\sim\\mathcal B\\left(\\frac34\\right)$ : $E=\\frac34$, $V=\\frac34\\cdot\\frac14=\\frac3{16}$.",
+     "src": "Examen B1-DP oct. 2024, ex. 6.2",
+     "variants": [
+      {
+       "enonce": "Urne 0, 1, 2, 2, tirage avec remise. On gagne 1 € si la boule porte 2, sinon rien. $Y_k$ = gain au $k$-ième tirage. $V(Y_k)$ ?",
+       "ans": "Rational(1,4)",
+       "sol": "$Y_k\\sim\\mathcal B\\left(\\frac12\\right)$ : $V=\\frac12\\cdot\\frac12=\\frac14$."
+      }
+     ],
+     "formules": "Bernoulli $\\mathcal B(p)$ : $E(X)=p$, $V(X)=p(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "bi2",
+     "enonce": "$Z$ = gain total sur 20 tirages indépendants. $E(Z)$ ?",
+     "ans": "15",
+     "sol": "$Z=\\sum Y_k\\sim\\mathcal B\\left(20,\\frac34\\right)$ : $E(Z)=15$, $V(Z)=20\\cdot\\frac34\\cdot\\frac14=\\frac{15}4$.",
+     "src": "Examen B1-DP oct. 2024, ex. 6.3",
+     "variants": [
+      {
+       "enonce": "Urne 0, 1, 1, 2 ; on gagne 1 € si la boule porte 0 ou 1. $Z$ = gain total sur 40 tirages avec remise. $E(Z)$ ?",
+       "ans": "30",
+       "sol": "$Z\\sim\\mathcal B\\left(40,\\frac34\\right)$ : $E(Z)=30$."
+      }
+     ],
+     "formules": "somme de $n$ Bernoulli indépendantes de paramètre $p$ : $\\mathcal B(n,p)$ · $X\\sim\\mathcal B(n,p)$ : $E(X)=np$, $V(X)=np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "bi3",
+     "enonce": "Avec $Z\\sim\\mathcal B\\left(20,\\frac34\\right)$, calculer $P(Z=20)$.",
+     "ans": "Rational(3,4)**20",
+     "sol": "$\\left(\\frac34\\right)^{20}$.",
+     "variants": [
+      {
+       "enonce": "$Z\\sim\\mathcal B\\left(10,\\frac23\\right)$. Calculer $P(Z=10)$.",
+       "ans": "Rational(2,3)**10",
+       "sol": "$\\left(\\frac23\\right)^{10}$."
+      }
+     ],
+     "formules": "$X\\sim\\mathcal B(n,p)$ : $P(X=k)=\\binom nkp^k(1-p)^{n-k}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "bi4",
+     "enonce": "QCM de 20 questions, réponses au hasard indépendantes, juste avec probabilité $\\frac14$. $Y$ = note sur 20. $V(Y)$ ?",
+     "ans": "Rational(15,4)",
+     "sol": "$Y\\sim\\mathcal B\\left(20,\\frac14\\right)$ : $E(Y)=5$, $V(Y)=\\frac{15}4$.",
+     "src": "Examen B1 nov. 2023, ex. 6.2",
+     "variants": [
+      {
+       "enonce": "QCM de 10 questions, réponses au hasard indépendantes, justes avec probabilité $\\frac14$. $Y$ = nombre de bonnes réponses. $V(Y)$ ?",
+       "ans": "Rational(15,8)",
+       "sol": "$Y\\sim\\mathcal B\\left(10,\\frac14\\right)$ : $V(Y)=\\frac{15}8$."
+      }
+     ],
+     "formules": "$X\\sim\\mathcal B(n,p)$ : $E(X)=np$, $V(X)=np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "bi5",
+     "enonce": "10 lancers d'une pièce équilibrée. Probabilité d'exactement 4 piles ?",
+     "ans": "Rational(105,512)",
+     "sol": "$\\binom{10}4\\frac1{2^{10}}=\\frac{210}{1024}=\\frac{105}{512}$.",
+     "variants": [
+      {
+       "enonce": "8 lancers d'une pièce équilibrée. Probabilité d'exactement 3 piles ?",
+       "ans": "Rational(7,32)",
+       "sol": "$\\binom83\\frac1{2^8}=\\frac{56}{256}=\\frac7{32}$."
+      }
+     ],
+     "formules": "$X\\sim\\mathcal B(n,p)$ : $P(X=k)=\\binom nkp^k(1-p)^{n-k}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "bi6",
+     "enonce": "$X$ suit la loi de Bernoulli de paramètre $0{,}3$. Calculer $E(X)$.",
+     "ans": "Rational(3,10)",
+     "sol": "$E(X)=1\\cdot p+0\\cdot(1-p)=p=0{,}3$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "$X$ suit la loi de Bernoulli de paramètre $0{,}7$. Calculer $E(X)$.",
+       "ans": "Rational(7,10)",
+       "sol": "$E(X)=p=0{,}7$."
+      }
+     ],
+     "formules": "Bernoulli $\\mathcal B(p)$ : $E(X)=p$, $V(X)=p(1-p)$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Niveau examen : annales complètes",
+   "notions": [
+    "modele",
+    "bayes",
+    "binomiale"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "dx1",
+     "src": "Examen B1-DP oct. 2024, ex. 2 (6 points)",
+     "enonce": "Digicode : une lettre parmi A, B, C suivie de 3 chiffres.\n1. Combien de codes à chiffres distincts ?\n2. Combien si les chiffres peuvent se répéter ?\n3. Paul connaît la lettre ; chiffres distincts et impairs. Combien de possibilités ?\n4. Nouveau code (lettre comprise) ; les chiffres sont 6, 2, 9. Combien ?\n5. Nouveau code ; chiffres répétables, au moins un 4. Combien ?",
+     "sol": "**1.** $3\\times10\\times9\\times8=2160$.\n\n**2.** $3\\times10\\times10\\times10=3000$.\n\n**3.** 5 chiffres impairs, ordre, distincts : $5\\times4\\times3=60$.\n\n**4.** 3 lettres possibles, $3!$ ordres des chiffres : $3\\times6=18$.\n\n**5.** $3\\times(10^3-9^3)=3\\times271=813$.",
+     "formules": "principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$ · ordre et répétition : $n^p$ ($p$-listes) · permutations de $n$ objets distincts : $n!$ · « au moins un » : total $-$ « aucun »",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "dx2",
+     "src": "Examen B1 nov. 2023, ex. 2 (7 points)",
+     "enonce": "Course de 20 cyclistes, dont Pierre et Jade. Podium = 3 premiers classés.\n1. Nombre de podiums ?\n2. Jade première ?\n3. Sans Pierre ni Jade ?\n4. Avec Pierre mais pas Jade ?\n5. Au moins Jade ou Pierre ?\n6. Un vélo identique à chacun des 3 premiers : nombre de récompenses ?",
+     "sol": "**1.** Ordre, sans répétition : $20\\times19\\times18=6840$.\n\n**2.** Jade fixée à la 1re place, puis $19\\times18=342$.\n\n**3.** On choisit parmi les 18 autres : $18\\times17\\times16=4896$.\n\n**4.** 3 places pour Pierre, puis $18\\times17$ pour les 2 autres places (sans Jade) : 918.\n\n**5.** Complémentaire : $6840-4896=1944$.\n\n**6.** L'ordre ne compte plus : $\\binom{20}3=1140$.",
+     "formules": "ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$ · principe multiplicatif : choix successifs $\\Rightarrow$ on multiplie · « au moins un » : total $-$ « aucun » · sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "duree": 30,
+     "type": "multi"
+    },
+    {
+     "id": "dx3",
+     "src": "Examen B1 nov. 2023, ex. 4 (5 points)",
+     "enonce": "10 % des élèves viennent en soutien ($S$) ; ils valident ($V$) à 80 %, les autres à 30 %. Fractions simplifiées.\n1. Traduire l'énoncé. 2. $P(V)$ ? 3. Un élève a validé : probabilité qu'il soit venu en soutien ?\n4. Quelle probabilité $p$ de venir en soutien pour que $P(V)\\ge75\\,\\%$ ?",
+     "sol": "**1.** $P(V)=P(S)P_S(V)+P(\\bar S)P_{\\bar S}(V)=\\frac8{100}+\\frac{27}{100}=\\frac7{20}$.\n\n**2.** $P_V(S)=\\frac{8/100}{35/100}=\\frac8{35}$.\n\n**3.** $0{,}8p+0{,}3(1-p)\\ge0{,}75\\iff0{,}5p\\ge0{,}45\\iff p\\ge\\frac9{10}$.",
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$ · résoudre l'inéquation en $p$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "dx4",
+     "src": "Examen B1-DP oct. 2024, ex. 4 (6,5 points)",
+     "enonce": "40 % des élèves apprennent leur cours ($C$) ; ils valident ($V$) à 80 %, les autres à 20 %.\n1. Traduire l'énoncé. 2. $P(V)$ ? 3. Un élève valide : probabilité qu'il ait appris ?\n4. Proportion minimale $p$ pour que 60 % valident ?",
+     "sol": "**1.** $\\frac25\\cdot\\frac45+\\frac35\\cdot\\frac15=\\frac{11}{25}$.\n\n**2.** $\\frac{8/25}{11/25}=\\frac8{11}$.\n\n**3.** $0{,}8p+0{,}2(1-p)\\ge0{,}6\\iff0{,}6p\\ge0{,}4\\iff p\\ge\\frac23$.",
+     "formules": "probabilités totales : $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)}$ · résoudre l'inéquation en $p$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "dx5",
+     "src": "Examen B1-DP oct. 2024, ex. 6 (9 points)",
+     "enonce": "Urne : boules 0, 1, 1, 2. 20 tirages indépendants avec remise.\n1. $X_k$ = numéro au $k$-ième tirage : loi, $E(X_k)$, $V(X_k)$.\n2. On gagne 1 € si la boule porte 0 ou 1. $Y_k$ = gain au tirage $k$ : loi, $E$, $V$.\n3. $Z$ = gain sur 20 tirages : écrire $Z$ avec les $Y_k$, loi de $Z$, vérifier $\\sum P(Z=i)=1$, $E(Z)$ et $V(Z)$.",
+     "sol": "**1.** Loi : $P(X=0)=\\frac14$, $P(X=1)=\\frac12$, $P(X=2)=\\frac14$. $E(X)=0+\\frac12+\\frac12=1$.\n\n**2.** $E(X^2)=\\frac12+1=\\frac32$, $V(X)=\\frac32-1=\\frac12$.\n\n**3.** $Y_k\\sim\\mathcal B\\left(\\frac34\\right)$ : $E=\\frac34$, $V=\\frac34\\cdot\\frac14=\\frac3{16}$.\n\n**4.** $Z=\\sum Y_k\\sim\\mathcal B\\left(20,\\frac34\\right)$ : $E(Z)=15$, $V(Z)=20\\cdot\\frac34\\cdot\\frac14=\\frac{15}4$.",
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$ · $V(X)=E(X^2)-E(X)^2$ · $E(X^2)=\\sum_ix_i^2P(X=x_i)$ · Bernoulli $\\mathcal B(p)$ : $E(X)=p$, $V(X)=p(1-p)$ · somme de $n$ Bernoulli indépendantes de paramètre $p$ : $\\mathcal B(n,p)$ · $X\\sim\\mathcal B(n,p)$ : $E(X)=np$, $V(X)=np(1-p)$",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "dx6",
+     "src": "Examen B1-DP oct. 2024, ex. 5 (6 points)",
+     "enonce": "1. Rappeler $E(X)$ et $V(X)$.\n2. Exprimer $E(aX+b)$ et le démontrer.\n3. Exprimer $V(aX+b)$ et le démontrer.",
+     "sol": "**1.** $E(aX+b)=\\sum_i(ax_i+b)P(X=x_i)=a\\sum_ix_iP(X=x_i)+b\\sum_iP(X=x_i)=aE(X)+b$ car $\\sum_iP(X=x_i)=1$.\n\n**2.** $aX+b-E(aX+b)=a(X-E(X))$ donc $V(aX+b)=E\\big(a^2(X-E(X))^2\\big)=a^2V(X)$.",
+     "formules": "$E(X)=\\sum_ix_iP(X=x_i)$ · $\\sum_iP(X=x_i)=1$ · $V(X)=E\\big((X-E(X))^2\\big)$ · $E(aX+b)=aE(X)+b$",
+     "duree": 10,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "complementaire",
+    "bayes",
+    "binomiale"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "dh1",
+     "enonce": "Combien de mains de 5 cartes (jeu de 32) contiennent au moins un as ?",
+     "ans": "103096",
+     "sol": "$\\binom{32}5-\\binom{28}5=201376-98280=103096$.",
+     "variants": [
+      {
+       "enonce": "Combien de mains de 4 cartes (jeu de 32) contiennent au moins un roi ?",
+       "ans": "15485",
+       "sol": "$\\binom{32}4-\\binom{28}4=35960-20475=15485$."
+      }
+     ],
+     "formules": "« au moins un » : total $-$ « aucun » · sans ordre, sans répétition : $\\binom np=\\frac{n!}{p!(n-p)!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "dh2",
+     "enonce": "Trois urnes : $U_1$ (2 rouges, 3 noires), $U_2$ (4 rouges, 1 noire), $U_3$ (5 rouges). On choisit une urne au hasard puis une boule : elle est rouge. Probabilité qu'elle vienne de $U_2$ ?",
+     "ans": "Rational(4,11)",
+     "sol": "$P(R)=\\frac13\\left(\\frac25+\\frac45+1\\right)=\\frac{11}{15}$ ; $P_R(U_2)=\\frac{4/15}{11/15}=\\frac4{11}$.",
+     "variants": [
+      {
+       "enonce": "Trois urnes : $U_1$ (1 rouge, 4 noires), $U_2$ (3 rouges, 2 noires), $U_3$ (5 rouges). Urne au hasard puis une boule : elle est rouge. Probabilité qu'elle vienne de $U_2$ ?",
+       "ans": "Rational(1,3)",
+       "sol": "$P(R)=\\frac13\\cdot\\frac95=\\frac35$ ; $P_R(U_2)=\\frac{1/5}{3/5}=\\frac13$."
+      }
+     ],
+     "formules": "probabilités totales : $P(B)=\\sum_iP(A_i)P_{A_i}(B)$ · Bayes : $P_B(A_k)=\\frac{P(A_k)P_{A_k}(B)}{P(B)}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "dh3",
+     "enonce": "$X$ = nombre de piles en 3 lancers, $Y=2X-3$. Calculer $V(Y)$.",
+     "ans": "3",
+     "sol": "$X\\sim\\mathcal B\\left(3,\\frac12\\right)$, $V(X)=\\frac34$, $V(Y)=4\\cdot\\frac34=3$ (et $E(Y)=0$).",
+     "variants": [
+      {
+       "enonce": "$X$ = nombre de piles en 4 lancers, $Y=3X-2$. Calculer $V(Y)$.",
+       "ans": "9",
+       "sol": "$V(X)=4\\cdot\\frac14=1$, $V(Y)=9$."
+      }
+     ],
+     "formules": "$X\\sim\\mathcal B(n,p)$ : $E(X)=np$, $V(X)=np(1-p)$ · $V(aX+b)=a^2V(X)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "dh4",
+     "enonce": "Calculer $\\sum_{k=0}^{6}k\\binom6k$.",
+     "ans": "192",
+     "sol": "$k\\binom nk=n\\binom{n-1}{k-1}$ donc la somme vaut $n2^{n-1}=6\\times32=192$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{5}k\\binom5k$.",
+       "ans": "80",
+       "sol": "$n2^{n-1}=5\\times16=80$."
+      }
+     ],
+     "formules": "$k\\binom nk=n\\binom{n-1}{k-1}$ · $\\sum_{k=0}^n\\binom nk=2^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "dh5",
+     "enonce": "5 personnes, mois de naissance indépendants et équiprobables. Probabilité qu'au moins deux aient le même mois ?",
+     "ans": "Rational(89,144)",
+     "sol": "$1-\\frac{12\\cdot11\\cdot10\\cdot9\\cdot8}{12^5}=1-\\frac{55}{144}=\\frac{89}{144}$.",
+     "variants": [
+      {
+       "enonce": "4 personnes, mois de naissance indépendants et équiprobables. Probabilité qu'au moins deux aient le même mois ?",
+       "ans": "Rational(41,96)",
+       "sol": "$1-\\frac{12\\cdot11\\cdot10\\cdot9}{12^4}=1-\\frac{55}{96}=\\frac{41}{96}$."
+      }
+     ],
+     "formules": "$P(\\bar A)=1-P(A)$ · équiprobabilité : $P(A)=\\frac{|A|}{|\\Omega|}$ · ordre, sans répétition : $A_n^p=\\frac{n!}{(n-p)!}=n(n-1)\\cdots(n-p+1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "dh6",
+     "enonce": "On lance deux dés ; $M$ = le plus grand des deux résultats. Calculer $E(M)$.",
+     "ans": "Rational(161,36)",
+     "sol": "$P(M\\le k)=\\frac{k^2}{36}$ donc $P(M=k)=\\frac{2k-1}{36}$ ; $E(M)=\\sum_{k=1}^6k\\frac{2k-1}{36}=\\frac{161}{36}$.",
+     "variants": [
+      {
+       "enonce": "On lance deux dés ; $m$ = le plus petit des deux résultats. Calculer $E(m)$.",
+       "ans": "Rational(91,36)",
+       "sol": "$P(m\\ge k)=\\left(\\frac{7-k}6\\right)^2$ et $E(m)=\\sum_{k=1}^6P(m\\ge k)=\\frac{36+25+16+9+4+1}{36}=\\frac{91}{36}$."
+      }
+     ],
+     "formules": "$P(M=k)=P(M\\le k)-P(M\\le k-1)$ · $E(X)=\\sum_ix_iP(X=x_i)$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

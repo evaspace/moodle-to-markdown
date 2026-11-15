@@ -1,5 +1,5 @@
 # ==============================================================================
-# MathsDoomscroll - Unified Requirements (Web App + Content Pipeline)
+# EpitaDoomscrolling - Unified Requirements (Web App + Content Pipeline)
 # ==============================================================================
 
 # Web Application & API Platform

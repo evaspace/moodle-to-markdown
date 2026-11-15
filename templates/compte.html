@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Compte · Epita Doomscrolling</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/niveaux.css?v=8">
+</head>
+<body class="lv-page">
+<div class="lv-wrap">
+  <nav class="lv-bar"><a href="/">← Fil de révision</a><a href="/niveaux">Niveaux</a></nav>
+  {% if username %}
+    <h1>Connecté : {{ username }}</h1>
+    <div class="lv-row">
+      <a class="lv-btn primary" href="/niveaux">Mes niveaux</a>
+      <a class="lv-btn" href="/stats">Mes stats</a>
+      <button class="lv-btn" id="logout" type="button">Se déconnecter</button>
+    </div>
+    <form class="lv-form" id="email-form" novalidate>
+      <label>E-mail pour récupérer le mot de passe (facultatif)
+        <input name="email" type="email" autocomplete="email" value="{{ email or '' }}">
+      </label>
+      <p class="lv-error" id="email-msg" role="status"></p>
+      <button class="lv-btn" type="submit">Enregistrer l'e-mail</button>
+    </form>
+  {% elif reset_token %}
+    <h1>Nouveau mot de passe</h1>
+    <form class="lv-form" id="reset-form" data-token="{{ reset_token }}" novalidate>
+      <label>Nouveau mot de passe
+        <input name="password" type="password" autocomplete="new-password" required minlength="6">
+      </label>
+      <p class="lv-error" id="reset-error" role="alert"></p>
+      <button class="lv-btn primary" type="submit">Changer le mot de passe</button>
+    </form>
+  {% else %}
+    <h1>Ton compte</h1>
+    <p>Un identifiant et un mot de passe suffisent. Ta progression est enregistrée sur le serveur.</p>
+    <div class="lv-tabs" role="tablist">
+      <button type="button" role="tab" id="tab-login" aria-selected="true">Connexion</button>
+      <button type="button" role="tab" id="tab-register" aria-selected="false">Créer un compte</button>
+    </div>
+    <form class="lv-form" id="account-form" novalidate>
+      <label>Identifiant
+        <input name="username" autocomplete="username" required minlength="3" maxlength="32" aria-describedby="hint-user">
+      </label>
+      <span class="lv-muted" id="hint-user">3 à 32 caractères : lettres, chiffres, point, tiret, tiret bas</span>
+      <label>Mot de passe
+        <input name="password" type="password" autocomplete="current-password" required minlength="6" aria-describedby="hint-pw">
+      </label>
+      <span class="lv-muted" id="hint-pw">6 caractères minimum</span>
+      <label id="email-field" hidden>E-mail (facultatif, seulement pour récupérer le mot de passe)
+        <input name="email" type="email" autocomplete="email">
+      </label>
+      <p class="lv-error" id="form-error" role="alert"></p>
+      <button class="lv-btn primary" type="submit" id="submit">Se connecter</button>
+    </form>
+    <details class="lv-forgot">
+      <summary>Mot de passe oublié</summary>
+      <form class="lv-form" id="forgot-form" novalidate>
+        <label>Identifiant ou e-mail
+          <input name="who" autocomplete="username" required>
+        </label>
+        <p class="lv-error" id="forgot-msg" role="status"></p>
+        <button class="lv-btn" type="submit">Recevoir un lien par e-mail</button>
+      </form>
+    </details>
+  {% endif %}
+</div>
+<script src="/static/niveaux.js?v=4"></script>
+</body>
+</html>

@@ -128,8 +128,9 @@ function formatMathMarkdown(text) {
 
 let session = 0;
 let isFetching = false;
-let currentCat = null;
+let currentCat = null;   // one category id or an array of ids (merged duplicates)
 let currentSub = null;
+let currentTheme = null; // theme id: doomscroll every module of a theme
 let currentCardToSave = null;
 let uidCounter = 0;
 let catTimer = null;
@@ -151,424 +152,12 @@ const shuffle = a => {
 
 const elapsed = uid => cardTimers[uid] ? Date.now() - cardTimers[uid] : 0;
 
-// ------------------------------------------------------------ MOTEUR D'ANIMATION DU CHAT ----
-/**
- * Machine d'états du Chat en Pixel Art
- * Sprites PNG transparents (removebg-preview) :
- * 1. REST : laying-cat-removebg-preview.png (Allongé au calme, respiration douce)
- * 2. WAKE : eyes-open-cat-removebg-preview.png (Yeux écarquillés, attentif & curieux)
- * 3. STAND : stand-up-cat-removebg-preview.png (Debout, concentré, idle actif)
- * 4. CLAP : clapping-cat-removebg-preview.png (Bonne réponse, applaudit et saute de joie !)
- * 5. ANGRY : angry-cat-removebg-preview.png (Mauvaise réponse : Phase 1 - Colère rouge intense)
- * 6. EXPLODE_1 : first-explosing-cat-removebg-preview.png (Mauvaise réponse : Phase 2 - Surcharge critique)
- * 7. EXPLODE_2 : seconde-explosing-cat-removebg-preview.png (Mauvaise réponse : Phase 3 - Détonation explosive)
- */
-class CatMascotEngine {
-    constructor(elements = []) {
-        this.elements = (Array.isArray(elements) ? elements : [elements]).filter(Boolean);
-        this.state = 'REST';
-        this.sequenceTimeouts = [];
-        this.expireTimeout = null;
-        this.isLocked = false; // Verrouillé pendant la séquence d'explosion
-
-        this.spriteSources = {
-            REST: '/static/laying-cat-removebg-preview.png',
-            WAKE: '/static/eyes-open-cat-removebg-preview.png',
-            STAND: '/static/stand-up-cat-removebg-preview.png',
-            CLAP: '/static/clapping-cat-removebg-preview.png',
-            ANGRY: '/static/angry-cat-removebg-preview.png',
-            EXPLODE_1: '/static/first-explosing-cat-removebg-preview.png',
-            EXPLODE_2: '/static/seconde-explosing-cat-removebg-preview.png'
-        };
-
-        // Rétrocompatibilité avec les anciens alias
-        this.spriteSources.TRANSITION = this.spriteSources.WAKE;
-        this.spriteSources.JUMP_CLAP = this.spriteSources.CLAP;
-        this.spriteSources.OVERHEAT = this.spriteSources.EXPLODE_1;
-        this.spriteSources.EXPLOSION = this.spriteSources.EXPLODE_2;
-
-        this.loadedSprites = {};
-        this.preloadSprites();
-    }
-
-    preloadSprites() {
-        Object.entries(this.spriteSources).forEach(([key, src]) => {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => { this.loadedSprites[key] = src; };
-        });
-    }
-
-    clearSequence() {
-        this.sequenceTimeouts.forEach(t => clearTimeout(t));
-        this.sequenceTimeouts = [];
-        clearTimeout(this.expireTimeout);
-        this.expireTimeout = null;
-    }
-
-    schedule(fn, delay) {
-        const t = setTimeout(fn, delay);
-        this.sequenceTimeouts.push(t);
-        return t;
-    }
-
-    applySprite(stateKey) {
-        const src = this.spriteSources[stateKey] || this.spriteSources.REST;
-        this.elements.forEach(el => {
-            if (el && !el.src.endsWith(src)) {
-                el.src = src;
-            }
-        });
-    }
-
-    setState(newState, duration = 0, onExpire = null) {
-        clearTimeout(this.expireTimeout);
-        this.expireTimeout = null;
-        this.state = newState;
-
-        const classMap = {
-            REST: 'state-rest',
-            WAKE: 'state-wake',
-            TRANSITION: 'state-wake',
-            STAND: 'state-stand',
-            CLAP: 'state-clap',
-            JUMP_CLAP: 'state-clap',
-            ANGRY: 'state-angry',
-            EXPLODE_1: 'state-explode-1',
-            OVERHEAT: 'state-explode-1',
-            EXPLODE_2: 'state-explode-2',
-            EXPLOSION: 'state-explode-2',
-            RESPAWN: 'state-respawn',
-            HIDDEN: 'state-hidden'
-        };
-
-        const targetClass = classMap[newState] || 'state-rest';
-        const spriteKey = (newState === 'RESPAWN') ? 'REST' : newState;
-        this.applySprite(spriteKey);
-
-        this.elements.forEach(el => {
-            if (!el) return;
-            const baseClass = el.id === 'landing-cat-img' ? 'landing-cat-img' : 'mascot-cat-img';
-            el.className = `${baseClass} ${targetClass}`;
-        });
-
-        if (duration > 0) {
-            this.expireTimeout = setTimeout(() => {
-                if (onExpire) {
-                    onExpire();
-                } else {
-                    this.setState('REST');
-                }
-            }, duration);
-        }
-    }
-
-    onFeedEntered() {
-        if (this.isLocked) return;
-        this.setState('STAND');
-    }
-
-    onHomeEntered() {
-        if (this.isLocked) return;
-        this.setState('REST');
-    }
-
-    onCardView() {
-        if (this.isLocked) return;
-        if (this.state === 'REST') {
-            this.setState('WAKE', 3200, () => {
-                this.setState('REST');
-            });
-        }
-    }
-
-    onCorrectAnswer(streak = 0) {
-        this.clearSequence();
-        this.isLocked = false;
-        // Enchaînement : Danse et applaudissements victorieux (2200ms)
-        this.setState('CLAP', 2200, () => {
-            // Si une série est active, le chat reste debout et fier !
-            if (streak > 0) {
-                this.setState('STAND');
-            } else {
-                this.setState('REST');
-            }
-        });
-    }
-
-    onWrongAnswer(onImpactCallback) {
-        this.clearSequence();
-        this.isLocked = true;
-
-        // Phase 1 : Colère rouge vive (300ms)
-        this.setState('ANGRY');
-
-        // Phase 2 : Montée en surcharge critique (250ms)
-        this.schedule(() => {
-            this.setState('EXPLODE_1');
-        }, 300);
-
-        // Phase 3 : Flash de détonation (150ms)
-        this.schedule(() => {
-            this.setState('EXPLODE_2');
-        }, 550);
-
-        // Phase 4 : IMPACT MAJEUR ! Le chat DISPARAÎT et EXPLOSE EN SANG ! (700ms)
-        this.schedule(() => {
-            this.setState('HIDDEN');
-            if (onImpactCallback) onImpactCallback();
-        }, 700);
-
-        // Phase 5 : Renaissance du chat après que le sang a coulé (4200ms)
-        this.schedule(() => {
-            this.isLocked = false;
-            this.setState('RESPAWN', 800, () => {
-                this.setState('REST');
-            });
-            showCatBubble("Pouf... 😿 Je renais de mes pixels !", 2400);
-        }, 4200);
-    }
-
-    onPet() {
-        if (this.isLocked) return;
-        this.clearSequence();
-        // Si le chat dormait, il ouvre les yeux puis se réjouit en applaudissant !
-        if (this.state === 'REST') {
-            this.setState('WAKE');
-            this.schedule(() => {
-                this.setState('CLAP', 1800, () => {
-                    const isFeed = $('feed-screen') && $('feed-screen').classList.contains('visible');
-                    this.setState(isFeed ? 'STAND' : 'REST');
-                });
-            }, 250);
-        } else {
-            this.setState('CLAP', 1800, () => {
-                const isFeed = $('feed-screen') && $('feed-screen').classList.contains('visible');
-                this.setState(isFeed ? 'STAND' : 'REST');
-            });
-        }
-    }
-}
-
-// ------------------------------------------------------------ MOTEUR PIXEL GORE FX ----
-/**
- * Animation d'explosion rétro en Pixel Art avec sang qui gicle et coule le long des bords (Gravity Drop)
- */
-class PixelGoreFX {
-    constructor(canvas, container) {
-        this.canvas = canvas;
-        this.container = container;
-        this.ctx = canvas ? canvas.getContext('2d') : null;
-        this.particles = [];
-        this.bloodDrips = [];
-        this.shockwaves = [];
-        this.animId = null;
-        this.init();
-    }
-
-    init() {
-        if (!this.canvas) return;
-        this.resize();
-        window.addEventListener('resize', () => this.resize());
-    }
-
-    resize() {
-        if (!this.canvas || !this.container) return;
-        const rect = this.container.getBoundingClientRect();
-        this.canvas.width = rect.width;
-        this.canvas.height = rect.height;
-    }
-
-    explode(originX, originY) {
-        this.resize();
-        if (!this.ctx) return;
-        cancelAnimationFrame(this.animId);
-
-        this.particles = [];
-        this.bloodDrips = [];
-        this.shockwaves = [];
-
-        const w = this.canvas.width;
-        const h = this.canvas.height;
-
-        // Onde de choc géométrique (cercles concentriques pixelisés centrés sur le chat)
-        this.shockwaves.push({ x: originX, y: originY, r: 6, maxR: 90, lw: 8, color: '#FF3344', alpha: 1 });
-        this.shockwaves.push({ x: originX, y: originY, r: 14, maxR: 140, lw: 5, color: '#FFFFFF', alpha: 0.9 });
-        this.shockwaves.push({ x: originX, y: originY, r: 24, maxR: 200, lw: 4, color: '#8B0000', alpha: 0.85 });
-
-        // Palette gore pixel art : sang cramoisi, bordeaux, sang artériel vif
-        const bloodColors = ['#8B0000', '#B22222', '#DC143C', '#FF0033', '#660000', '#990000'];
-        const furColors = ['#FF8800', '#CC5500', '#FFAA33'];
-        const boneColors = ['#FFFFFF', '#FFCCCC'];
-
-        // 160 pixels projetés violemment dans toutes les directions
-        const count = 160;
-        for (let i = 0; i < count; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const speed = 5 + Math.random() * 19;
-            const isBlood = Math.random() < 0.75;
-            const color = isBlood 
-                ? bloodColors[Math.floor(Math.random() * bloodColors.length)]
-                : (Math.random() < 0.6 ? furColors[Math.floor(Math.random() * furColors.length)] : boneColors[Math.floor(Math.random() * boneColors.length)]);
-            const size = (Math.floor(Math.random() * 3) + 1) * 3; // Tailles rétro : 3px, 6px, 9px
-
-            this.particles.push({
-                x: originX,
-                y: originY,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                size: size,
-                color: color,
-                isBlood: isBlood,
-                alpha: 1,
-                gravity: 0.22,
-                stuck: false
-            });
-        }
-
-        // Screen shake intense sur le viewport
-        if (this.container) {
-            this.container.classList.add('viewport-screen-shake');
-            setTimeout(() => this.container.classList.remove('viewport-screen-shake'), 450);
-        }
-
-        this.renderLoop();
-    }
-
-    renderLoop() {
-        if (!this.ctx) return;
-        const w = this.canvas.width;
-        const h = this.canvas.height;
-
-        this.ctx.clearRect(0, 0, w, h);
-
-        // A. Ondes de choc géométriques pixelisées
-        for (let i = this.shockwaves.length - 1; i >= 0; i--) {
-            const sw = this.shockwaves[i];
-            sw.r += 7;
-            sw.alpha -= 0.035;
-            if (sw.alpha <= 0) {
-                this.shockwaves.splice(i, 1);
-                continue;
-            }
-            this.ctx.save();
-            this.ctx.globalAlpha = Math.max(0, sw.alpha);
-            this.ctx.strokeStyle = sw.color;
-            this.ctx.lineWidth = sw.lw;
-            this.ctx.beginPath();
-            this.ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
-            this.ctx.stroke();
-            this.ctx.restore();
-        }
-
-        // B. Particules de l'explosion
-        for (let i = this.particles.length - 1; i >= 0; i--) {
-            const p = this.particles[i];
-
-            if (!p.stuck) {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += p.gravity;
-
-                // Collision violente avec les 4 bords intérieurs de l'écran (Éclaboussures)
-                let hitEdge = false;
-                let dripX = p.x;
-                let dripY = p.y;
-
-                if (p.x <= 12) {
-                    p.x = 2 + Math.floor(Math.random() * 6);
-                    p.stuck = true;
-                    hitEdge = true;
-                    dripX = p.x;
-                    dripY = p.y;
-                } else if (p.x >= w - 16) {
-                    p.x = w - 14 - Math.floor(Math.random() * 6);
-                    p.stuck = true;
-                    hitEdge = true;
-                    dripX = p.x;
-                    dripY = p.y;
-                } else if (p.y <= 14) {
-                    p.y = 2 + Math.floor(Math.random() * 6);
-                    p.stuck = true;
-                    hitEdge = true;
-                    dripX = p.x;
-                    dripY = p.y;
-                } else if (p.y >= h - 16) {
-                    p.y = h - 14;
-                    p.stuck = true;
-                    hitEdge = true;
-                    dripX = p.x;
-                    dripY = p.y;
-                }
-
-                if (hitEdge && p.isBlood) {
-                    // Création d'une coulure de sang qui glisse le long du bord (Gravity Drop)
-                    this.bloodDrips.push({
-                        x: Math.round(dripX / 3) * 3, // Snap sur la grille de pixels
-                        y: Math.round(dripY / 3) * 3,
-                        size: p.size,
-                        length: 0,
-                        maxLength: 35 + Math.random() * 110, // Traînée plus longue et visible
-                        dripSpeed: 0.8 + Math.random() * 1.8,
-                        color: p.color,
-                        alpha: 1
-                    });
-                }
-            }
-
-            // Dessin du bloc pixel
-            this.ctx.fillStyle = p.color;
-            this.ctx.globalAlpha = Math.max(0, p.alpha);
-            const px = Math.floor(p.x / 3) * 3;
-            const py = Math.floor(p.y / 3) * 3;
-            this.ctx.fillRect(px, py, p.size, p.size);
-
-            if (p.stuck) {
-                p.alpha -= 0.0035; // Les éclaboussures disparaissent lentement
-                if (p.alpha <= 0) this.particles.splice(i, 1);
-            }
-        }
-
-        // C. Glissement du sang le long des bords (Gravity Drop)
-        for (let i = this.bloodDrips.length - 1; i >= 0; i--) {
-            const d = this.bloodDrips[i];
-            if (d.length < d.maxLength) {
-                d.length += d.dripSpeed;
-            } else {
-                d.alpha -= 0.004;
-            }
-
-            this.ctx.fillStyle = d.color;
-            this.ctx.globalAlpha = Math.max(0, d.alpha);
-
-            // Traînée verticale de pixels rétro
-            const curLen = Math.floor(d.length / 3) * 3;
-            this.ctx.fillRect(d.x, d.y, d.size, curLen);
-
-            // Goutte de sang plus épaisse au bas de la coulure
-            this.ctx.fillRect(d.x - 1, d.y + curLen, d.size + 2, 4);
-
-            if (d.alpha <= 0) {
-                this.bloodDrips.splice(i, 1);
-            }
-        }
-
-        this.ctx.globalAlpha = 1;
-
-        // Boucle d'animation tant qu'il reste des éléments
-        if (this.particles.length > 0 || this.bloodDrips.length > 0 || this.shockwaves.length > 0) {
-            this.animId = requestAnimationFrame(() => this.renderLoop());
-        } else {
-            this.ctx.clearRect(0, 0, w, h);
-        }
-    }
-}
-
 // Initialisation des instances moteurs
 const landingCat = $('landing-cat-img');
 const landingCatBubble = $('landing-cat-bubble');
 const catMascot = new CatMascotEngine([chillCat, landingCat]);
 const pixelGore = new PixelGoreFX(goreCanvas, appViewport);
+catMascot.startIdleLife();
 
 function getMascotCenter(el) {
     if (!el) {
@@ -694,7 +283,7 @@ function triggerFeedback(correct) {
 // ------------------------------------------------------------ PARTAGE (LE PETIT CHAT) ----
 async function shareApp() {
     const shareData = {
-        title: "Maths Doomscrolling",
+        title: "Epita Doomscrolling",
         text: "Doomscrolle des maths au lieu de scroller TikTok ! 🧠🐱",
         url: window.location.origin
     };
@@ -715,29 +304,74 @@ async function shareApp() {
         showToast("Lien copié dans le presse-papier ! 🐱");
         showCatBubble("Lien copié ! Fais tourner à tes potes 🐾", 2500);
     } catch (e) {
-        showToast("mathsdoomscrolling.pierref.eu");
+        showToast("epitadoomscrolling.pierref.eu");
     }
 }
 
 // ------------------------------------------------------------ CHARGEMENT CATÉGORIES ----
 async function loadCategories() {
     try {
-        const res = await fetch('/api/categories', { headers: { 'Accept': 'application/json' } });
+        const res = await fetch('/api/themes', { headers: { 'Accept': 'application/json' } });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const cats = await res.json();
+        const themes = await res.json();
         catList.innerHTML = '';
 
-        if (!cats || !cats.length) {
+        if (!themes || !themes.length) {
             catList.innerHTML = '<div class="loading-state">Aucun module pour le moment.</div>';
             return;
         }
 
-        cats.forEach((cat, index) => {
+        themes.forEach(theme => catList.appendChild(buildThemeSection(theme)));
+    } catch (e) {
+        console.error('loadCategories error:', e);
+        catList.innerHTML = `
+            <div class="loading-state" role="alert">
+                Impossible de charger les cours. Vérifie la connexion puis réessaie.
+                <button type="button" class="subcat-btn" onclick="loadCategories()">Réessayer</button>
+            </div>`;
+    }
+}
+
+// Un thème (Maths, Physique...) : en-tête repliable + bouton « tout le thème » + ses modules
+function buildThemeSection(theme) {
+    const section = document.createElement('section');
+    section.className = 'theme-section';
+
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'theme-header-btn';
+    header.innerHTML = `
+        <span class="theme-title"><span class="theme-icon">${esc(theme.icon)}</span>${esc(theme.label)}</span>
+        <span class="cat-right-badge">
+            <span class="cat-count">${theme.n}</span>
+            <span class="cat-chevron">›</span>
+        </span>`;
+    header.onclick = () => section.classList.toggle('expanded');
+
+    const body = document.createElement('div');
+    body.className = 'theme-body';
+
+    const allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'theme-all-btn';
+    allBtn.innerHTML = `<span>⚡ Doomscroller tout le thème</span> <span>${theme.n} cartes →</span>`;
+    allBtn.onclick = () => launchFeed(null, null, theme.id);
+    body.appendChild(allBtn);
+
+    theme.categories.forEach((cat, index) => body.appendChild(buildCategoryCard(cat, index)));
+
+    section.appendChild(header);
+    section.appendChild(body);
+    return section;
+}
+
+function buildCategoryCard(cat, index) {
             const card = document.createElement('div');
             card.className = 'category-card';
 
             const numStr = String(index + 1).padStart(2, '0');
             const totalCount = cat.n || 0;
+            const catIds = cat.ids && cat.ids.length ? cat.ids : [cat.id];
 
             const headerBtn = document.createElement('button');
             headerBtn.className = 'category-header-btn';
@@ -762,9 +396,18 @@ async function loadCategories() {
             allSubBtn.innerHTML = `<span>→ Tout le module</span> <span class="subcat-count">${totalCount} cartes</span>`;
             allSubBtn.onclick = (e) => {
                 e.stopPropagation();
-                launchFeed(cat.id, null);
+                launchFeed(catIds, null);
             };
             subDropdown.appendChild(allSubBtn);
+
+            // Accès direct au cours complet du module
+            if (cat.source_url) {
+                const courseLink = document.createElement('a');
+                courseLink.className = 'subcat-btn subcat-course-link';
+                courseLink.href = cat.source_url;
+                courseLink.innerHTML = '<span>📖 Lire le cours complet</span> <span class="subcat-count">→</span>';
+                subDropdown.appendChild(courseLink);
+            }
 
             // Sous-catégories individuelles
             if (cat.subcategories && cat.subcategories.length) {
@@ -774,7 +417,7 @@ async function loadCategories() {
                     subBtn.innerHTML = `<span>→ ${esc(sub.name)}</span> <span class="subcat-count">${sub.n} cartes</span>`;
                     subBtn.onclick = (e) => {
                         e.stopPropagation();
-                        launchFeed(cat.id, sub.id);
+                        launchFeed(catIds, sub.id);
                     };
                     subDropdown.appendChild(subBtn);
                 });
@@ -790,22 +433,33 @@ async function loadCategories() {
 
             card.appendChild(headerBtn);
             card.appendChild(subDropdown);
-            catList.appendChild(card);
-        });
-    } catch (e) {
-        console.error('loadCategories error:', e);
-        catList.innerHTML = `
-            <div class="loading-state" role="alert">
-                Impossible de charger les cours. Vérifie la connexion puis réessaie.
-                <button type="button" class="subcat-btn" onclick="loadCategories()">Réessayer</button>
-            </div>`;
-    }
+            return card;
 }
 
 // ------------------------------------------------------------ NAVIGATION ----
-function launchFeed(catId, subId) {
+// The feed has its own URL (/?cat=..&sub=..&theme=..) so the browser back button
+// returns to the module list instead of leaving the site, and a reload keeps the feed.
+function feedUrl(catId, subId, themeId) {
+    const qs = new URLSearchParams();
+    if (themeId) qs.set('theme', themeId);
+    if (catId) qs.set('cat', [].concat(catId).join(','));
+    if (subId) qs.set('sub', subId);
+    return '/?' + (qs.toString() || 'feed=all');
+}
+
+function feedFromUrl() {
+    const qs = new URLSearchParams(location.search);
+    if (!['cat', 'sub', 'theme', 'feed'].some(k => qs.has(k))) return null;
+    const cat = (qs.get('cat') || '').split(',').filter(x => /^\d+$/.test(x)).map(Number);
+    const sub = /^\d+$/.test(qs.get('sub') || '') ? Number(qs.get('sub')) : null;
+    return [cat.length ? cat : null, sub, qs.get('theme')];
+}
+
+function launchFeed(catId, subId, themeId = null, fromHistory = false) {
+    if (!fromHistory) history.pushState({ feed: true }, '', feedUrl(catId, subId, themeId));
     session++;
     isFetching = false;
+    currentTheme = themeId;
     currentCat = catId;
     currentSub = subId;
     seenIds.clear();
@@ -825,7 +479,10 @@ function launchFeed(catId, subId) {
     feed.focus();
 }
 
-function goHome() {
+function goHome(fromHistory = false) {
+    // header ← button: undo our own pushState so browser history stays consistent
+    if (!fromHistory && history.state && history.state.feed) { history.back(); return; }
+    if (!fromHistory && location.search) history.replaceState(null, '', '/');
     session++;
     isFetching = false;
     observer.disconnect();
@@ -928,8 +585,9 @@ async function loadCards() {
 
     try {
         const qs = new URLSearchParams();
-        if (currentCat) qs.set('cat', currentCat);
+        if (currentCat) qs.set('cat', [].concat(currentCat).join(','));
         if (currentSub) qs.set('sub', currentSub);
+        if (currentTheme) qs.set('theme', currentTheme);
         if (seenIds.size) qs.set('exclude', [...seenIds].slice(-300).join(','));
 
         const res = await fetch('/api/cards?' + qs, { headers: { 'Accept': 'application/json' } });
@@ -950,14 +608,19 @@ async function loadCards() {
             return;
         }
 
-        cards.forEach(c => {
-            if (!seenIds.has(c.id)) {
-                seenIds.add(c.id);
-                const card = buildCard(c, ++uidCounter);
-                feed.appendChild(card);
-                renderMath(card);
-                observer.observe(card);
-            }
+        // Scroll infini : si tout le lot a déjà été vu (pool épuisé), on recycle
+        // les cartes au lieu de bloquer le feed.
+        let toAdd = cards.filter(c => !seenIds.has(c.id));
+        if (!toAdd.length && cards.length) {
+            seenIds.clear();
+            toAdd = cards;
+        }
+        toAdd.forEach(c => {
+            seenIds.add(c.id);
+            const card = buildCard(c, ++uidCounter);
+            feed.appendChild(card);
+            renderMath(card);
+            observer.observe(card);
         });
         // If all returned cards were duplicates and we got some, maybe still need more? but avoid infinite loop
         if (cards.length > 0 && feed.querySelectorAll('.card').length < 5 && !isFetching) {
@@ -1008,6 +671,7 @@ function buildCard(c, uid) {
             <button class="action-btn flip-btn" title="Explication" aria-label="Voir l'explication">
                 💡
             </button>
+            ${c.source_url ? `<a class="action-btn course-btn" href="${esc(c.source_url)}" title="Lire le cours de ce chapitre" aria-label="Lire le cours de ce chapitre">📖</a>` : ''}
         </div>
 
         <div class="card-body">
@@ -1539,6 +1203,14 @@ window.addEventListener('keydown', e => {
     }
 });
 
+window.addEventListener('popstate', () => {
+    const f = feedFromUrl();
+    if (f) launchFeed(f[0], f[1], f[2], true);
+    else goHome(true);
+});
+
 // INITIALISATION
 loadCategories();
+const initialFeed = feedFromUrl();
+if (initialFeed) launchFeed(initialFeed[0], initialFeed[1], initialFeed[2], true);
 fetchUserState();

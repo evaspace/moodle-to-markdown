@@ -1,0 +1,146 @@
+0 8 ./S1/Finals/Maths PC/2020/final-2020-s1-maths-subject-en.pdf
+0 8 ./S1/Finals/Maths PC/2020/final-2020-s1-maths-subject-fr.pdf
+3802 3 ./S1/Finals/Maths PC/2021/final-2021-s1-maths-correction-fr.pdf
+0 7 ./S1/Finals/Maths PC/2021/final-2021-s1-maths-subject-en.pdf
+0 7 ./S1/Finals/Maths PC/2021/final-2021-s1-maths-subject-fr.pdf
+2769 3 ./S1/Finals/Maths PC/2022/final-2022-s1-maths-correction-fr.pdf
+1966 7 ./S1/Finals/Maths PC/2022/final-2022-s1-maths-subject-fr.pdf
+3383 3 ./S1/Finals/Maths PC/2024/final-2024-s1-maths-correction-fr.pdf
+2571 10 ./S1/Finals/Maths PC/2024/final-2024-s1-maths-subject-fr.pdf
+6437 4 ./S1/Finals/Maths PC/2025/final-2025-s1-maths-correction-fr.pdf
+3545 10 ./S1/Finals/Maths PC/2025/final-2025-s1-maths-subject-fr.pdf
+7576 5 ./S1/Finals/Maths PC/2026/final-2026-s1-maths-correction-fr.pdf
+3552 10 ./S1/Finals/Maths PC/2026/final-2026-s1-maths-subject-fr.pdf
+8867 5 ./S1/Finals/Maths PC/2027/final-2027-s1-maths-correction-fr.pdf
+34886 10 ./S1/Finals/Maths PC/2027/final-2027-s1-maths-subject-fr.pdf
+2943 3 ./S1/Finals/Maths PC/2028/PA/S1PA_B2_COR_GEPNC.pdf
+4280 4 ./S1/Finals/Maths PC/2028/PA/S1PA_B2_COR_PIELD.pdf
+3779 2 ./S1/Finals/Maths PC/2028/PC/ARITH/final-2028-s1-maths-correction-fr.pdf
+13958 4 ./S1/Finals/Maths PC/2028/PC/ARITH/final-2028-s1-maths-subject-fr.pdf
+4781 3 ./S1/Finals/Maths PC/2028/PC/ASI/final-2028-s1-maths-correction-fr.pdf
+22470 6 ./S1/Finals/Maths PC/2028/PC/ASI/final-2028-s1-maths-subject-fr.pdf
+27151 8 ./S1/Finals/Maths PC/2029/PC/ARITH/final-2029-s1-maths-subject-fr.pdf
+28838 8 ./S1/Finals/Maths PC/2029/PC/SR/final-2029-s1-maths-subject-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-01-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-02-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-03-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-04-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-05-fr.pdf
+0 3 ./S1/MCQs/2028/Maths PA/PA-mcq-maths-2028-s1-06-fr.pdf
+1694 2 ./S1/Midterms/Maths PC/2021/midterm-2021-s1-maths-correction-fr.pdf
+1901 3 ./S1/Midterms/Maths PC/2022/midterm-2022-s1-maths-correction-fr.pdf
+0 8 ./S1/Midterms/Maths PC/2022/midterm-2022-s1-maths-subject-en.pdf
+0 8 ./S1/Midterms/Maths PC/2022/midterm-2022-s1-maths-subject-fr.pdf
+0 6 ./S1/Midterms/Maths PC/2023/midterm-2023-s1-maths-subject-fr.pdf
+5791 2 ./S1/Midterms/Maths PC/2024/midterm-2024-s1-maths-correction-fr.pdf
+7832 8 ./S1/Midterms/Maths PC/2024/midterm-2024-s1-maths-subject-fr.pdf
+3289 8 ./S1/Midterms/Maths PC/2025/midterm-2025-s1-maths-correction-fr.pdf
+3289 8 ./S1/Midterms/Maths PC/2025/midterm-2025-s1-maths-subject-fr.pdf
+6895 5 ./S1/Midterms/Maths PC/2026/midterm-2026-s1-maths-correction-fr.pdf
+9072 9 ./S1/Midterms/Maths PC/2026/midterm-2026-s1-maths-subject-en.pdf
+4151 9 ./S1/Midterms/Maths PC/2026/midterm-2026-s1-maths-subject-fr.pdf
+9786 5 ./S1/Midterms/Maths PC/2027/midterm-2027-s1-maths-correction-fr.pdf
+34718 10 ./S1/Midterms/Maths PC/2027/midterm-2027-s1-maths-subject.pdf
+4067 3 ./S1/Midterms/Maths PC/2028/PA/S1PA_2023_B1_FCT_COR.pdf
+3008 2 ./S1/Midterms/Maths PC/2028/PA/S1PA_2023_B1_SR_COR.pdf
+7005 4 ./S1/Midterms/Maths PC/2028/PC/DP/midterm-2028-s1-maths-correction-en.pdf
+6811 3 ./S1/Midterms/Maths PC/2028/PC/DP/midterm-2028-s1-maths-correction-fr.pdf
+15527 6 ./S1/Midterms/Maths PC/2028/PC/DP/midterm-2028-s1-maths-subject-fr.pdf
+2762 2 ./S1/Midterms/Maths PC/2028/PC/LE/midterm-2028-s1-maths-correction-en.pdf
+2767 2 ./S1/Midterms/Maths PC/2028/PC/LE/midterm-2028-s1-maths-correction-fr.pdf
+11767 5 ./S1/Midterms/Maths PC/2028/PC/LE/midterm-2028-s1-maths-subject-fr.pdf
+26331 9 ./S1/Midterms/Maths PC/2029/PC/DP/midterm-2029-s1-maths-subject-fr.pdf
+27220 10 ./S1/Midterms/Maths PC/2029/PC/OBM/midterm-2029-s1-maths-subject-fr.pdf
+0 2 ./S1/TDs/2023/td1-2023-s1-maths-subject-fr.pdf
+772 2 ./S1/TDs/2025/td1-2025-s1-maths-subject-fr.pdf
+1698 2 ./S1/TDs/2025/td2-2025-s1-maths-subject-fr.pdf
+0 2 ./S1/TDs/2026/td1-2026-s1-maths-correction-fr.pdf
+0 2 ./S1/TDs/2026/td1-2026-s1-maths-subject-fr.pdf
+0 2 ./S1/TDs/2026/td2-2026-s1-maths-correction-fr.pdf
+0 2 ./S1/TDs/2026/td2-2026-s1-maths-subject-fr.pdf
+11317 3 ./S1/TDs/2027/td1-2027-s1-maths-subject-fr.pdf
+10708 3 ./S1/TDs/2027/td2-2027-s1-maths-subject-fr.pdf
+9890 3 ./S1/TDs/2028/td1-2028-s1-maths-subject-fr.pdf
+0 3 ./S1/TDs/2028/td1-2028-s1-maths_PA-subject-fr.pdf
+10785 3 ./S1/TDs/2028/td2-2028-s1-maths-subject-fr.pdf
+0 3 ./S1/TDs/2028/td2-2028-s1-maths_PA-subject-fr.pdf
+9959 3 ./S1/TDs/2029/td2-2029-s1-maths-subject-fr.pdf
+0 10 ./S2/Finals/Maths PC/2021/final-2021-s2-maths-subject-en.pdf
+0 10 ./S2/Finals/Maths PC/2021/final-2021-s2-maths-subject-fr.pdf
+7191 3 ./S2/Finals/Maths PC/2022/final-2022-s2-maths-correction-fr.pdf
+0 9 ./S2/Finals/Maths PC/2022/final-2022-s2-maths-subject-en.pdf
+0 9 ./S2/Finals/Maths PC/2022/final-2022-s2-maths-subject-fr.pdf
+5113 2 ./S2/Finals/Maths PC/2024#/final-2024#-s2-maths-correction-fr.pdf
+1885 2 ./S2/Finals/Maths PC/2024#/final-2024#-s2-maths-subject-fr.pdf
+0 5 ./S2/Finals/Maths PC/2025/final-2025-s2-maths-correction-fr.pdf
+3729 10 ./S2/Finals/Maths PC/2025/final-2025-s2-maths-subject-en.pdf
+0 10 ./S2/Finals/Maths PC/2025/final-2025-s2-maths-subject-fr.pdf
+8029 5 ./S2/Finals/Maths PC/2026/final-2026-s2-maths-correction-fr.pdf
+123914 11 ./S2/Finals/Maths PC/2026/final-2026-s2-maths-subject-en.pdf
+42321 11 ./S2/Finals/Maths PC/2026/final-2026-s2-maths-subject-fr.pdf
+8254 5 ./S2/Finals/Maths PC/2027/final-2027-s2-maths-correction-fr.pdf
+33018 10 ./S2/Finals/Maths PC/2027/final-2027-s2-maths-subject-fr.pdf
+4593 3 ./S2/Finals/Maths PC/2028/PA/S2PA_2024_B4_COR_ARITH_Exam.pdf
+5094 4 ./S2/Finals/Maths PC/2028/PA/S2PA_2024_B4_COR_CCISR.pdf
+4964 3 ./S2/Finals/Maths PC/2028/PC/ALM/final-2028-s2-maths-correction-fr.pdf
+20490 7 ./S2/Finals/Maths PC/2028/PC/ALM/final-2028-s2-maths-subject-fr.pdf
+3435 2 ./S2/Finals/Maths PC/2028/PC/EV/final-2028-s2-maths-correction-fr.pdf
+19447 6 ./S2/Finals/Maths PC/2028/PC/EV/final-2028-s2-maths-subject-fr.pdf
+24146 8 ./S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-subject-fr.pdf
+15648 6 ./S2/Finals/Maths PC/2029/PC/EV/midterm-2029-s2-maths-subject-fr.pdf
+6248 4 ./S2/Finals/Maths PC/2030/PC/ALM/final-2030-s2-alm-correction-fr.pdf
+25395 8 ./S2/Finals/Maths PC/2030/PC/ALM/final-2030-s2-alm-subject-fr.pdf
+4789 3 ./S2/Finals/Maths PC/2030/PC/EV/final-2030-s2-ev-correction-fr.pdf
+28455 7 ./S2/Finals/Maths PC/2030/PC/EV/final-2030-s2-ev-subject-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-01-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-02-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-03-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-04-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-05-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-06-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-07-fr.pdf
+0 3 ./S2/MCQs/2028/Maths PA/PA-mcq-maths-2028-s2-08-fr.pdf
+3516 3 ./S2/Midterms/Maths PC/2021/midterm-2021-s2-maths-correction-en.pdf
+0 6 ./S2/Midterms/Maths PC/2021/midterm-2021-s2-maths-subject-en.pdf
+0 6 ./S2/Midterms/Maths PC/2021/midterm-2021-s2-maths-subject-fr.pdf
+2658 3 ./S2/Midterms/Maths PC/2022/midterm-2022-s2-maths-correction-fr.pdf
+2057 9 ./S2/Midterms/Maths PC/2022/midterm-2022-s2-maths-subject-fr.pdf
+6988 5 ./S2/Midterms/Maths PC/2025/midterm-2025-s2-maths-correction-fr.pdf
+3006 10 ./S2/Midterms/Maths PC/2025/midterm-2025-s2-maths-subject-fr.pdf
+0 7 ./S2/Midterms/Maths PC/2026/midterm-2026-s2-maths-correction-en.pdf
+6910 4 ./S2/Midterms/Maths PC/2026/midterm-2026-s2-maths-correction-fr.pdf
+99618 9 ./S2/Midterms/Maths PC/2026/midterm-2026-s2-maths-subject-en.pdf
+34250 9 ./S2/Midterms/Maths PC/2026/midterm-2026-s2-maths-subject-fr.pdf
+8216 5 ./S2/Midterms/Maths PC/2027/midterm-2027-s2-maths-correction-en.pdf
+8343 5 ./S2/Midterms/Maths PC/2027/midterm-2027-s2-maths-correction-fr.pdf
+0 10 ./S2/Midterms/Maths PC/2027/midterm-2027-s2-maths-subject-fr.pdf
+861 1 ./S2/Midterms/Maths PC/2028/PA/S2PA_2024_B3_COR_CCISR.pdf
+7334 5 ./S2/Midterms/Maths PC/2028/PA/S2PA_2024_B3_COR_EFDP.pdf
+6028 4 ./S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-correction-fr.pdf
+24978 8 ./S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-subject-fr.pdf
+3313 2 ./S2/Midterms/Maths PC/2028/PC/EV/midterm-2028-s2-maths-correction-fr.pdf
+11815 5 ./S2/Midterms/Maths PC/2028/PC/EV/midterm-2028-s2-maths-subject-fr.pdf
+21975 8 ./S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-subject-fr.pdf
+13291 6 ./S2/Midterms/Maths PC/2029/PC/EV/midterm-2029-s2-maths-subject-fr.pdf
+6407 4 ./S2/Midterms/Maths PC/2030/PC/APEF/midterms-2030-s2-apef-correction-fr.pdf
+4608 4 ./S2/Midterms/Maths PC/2030/PC/EV/midterms-2030-s2-ev-correction-fr.pdf
+776 2 ./S2/TDs/2022/td3-2022-s2-maths-subject-fr.pdf
+736 2 ./S2/TDs/2022/td4-2022-s2-maths-subject-fr.pdf
+4142 2 ./S2/TDs/2024/td4-2024-s2-maths-subject-fr.pdf
+1995 2 ./S2/TDs/2025/td3-2025-s2-lyon-maths-correction-fr.pdf
+1850 2 ./S2/TDs/2025/td3-2025-s2-maths-correction-fr.pdf
+817 2 ./S2/TDs/2025/td3-2025-s2-maths-subject-fr.pdf
+947 2 ./S2/TDs/2025/td4-2025-s2-maths-subject-fr.pdf
+10713 3 ./S2/TDs/2027/td3-2027-s2-maths-subject-fr.pdf
+12590 3 ./S2/TDs/2027/td4-2027-s2-maths-subject-fr.pdf
+0 3 ./S2/TDs/2028/td3-2028-s2-maths-PA-subject-fr.pdf
+0 3 ./S2/TDs/2028/td3-2028-s2-maths-subject-fr.pdf
+0 4 ./S2/TDs/2028/td4-2028-s2-maths-PA-subject-fr.pdf
+9897 3 ./S2/TDs/2029/td3-2029-s2-maths-subject-fr.pdf
+15085 4 ./S2/TDs/2029/td4-2029-s2-maths-subject-fr.pdf
+12786 6 ./S2/TDs/2030/Maths/td1-2030-s2-maths-subject-fr.pdf
+4445 4 ./S2/TDs/2030/Maths/td2-2030-s2-maths-subject-fr.pdf
+10756 7 ./S2/TDs/2030/Maths/td3-2030-s2-maths-subject-fr.pdf
+19977 11 ./S2/TDs/2030/Maths/td4-2030-s2-maths-subject-fr.pdf
+12758 8 ./S2/TDs/2030/Maths/td5-2030-s2-maths-subject-fr.pdf
+15595 9 ./S2/TDs/2030/Maths/td6-2030-s2-maths-subject-fr.pdf

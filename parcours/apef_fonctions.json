@@ -1,0 +1,1033 @@
+{
+ "subject": {
+  "id": "maths-s2-apef-fonctions",
+  "ordre": 210,
+  "matiere": "maths",
+  "semestre": "S2",
+  "ecue": "APEF",
+  "titre": "Fonctions : étude locale, développements limités",
+  "chapitres_moodle": [
+   "06_Cours 2 - Fonctions - étude locale"
+  ],
+  "td": "TD étude locale (S2 2030)",
+  "examens": [
+   "Examen S2-B3 APEF (avant les vacances de printemps)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "continuite",
+   "titre": "Continuité en un point",
+   "formule": "$f$ continue en $a$ $\\iff\\lim_{x\\to a}f(x)=f(a)$ $\\iff\\lim_{a^-}f=\\lim_{a^+}f=f(a)$",
+   "exemple": "$f(x)=\\frac{x^2-1}{x-1}$ se prolonge par continuité en $1$ avec $f(1)=2$",
+   "cours": "Les fonctions usuelles sont continues sur leur domaine. Pour une fonction définie par morceaux, calculer la limite à gauche et à droite au point de raccord et comparer à la valeur. Encadrement : $|f(x)|\\le g(x)\\to0$ donne $f\\to0$."
+  },
+  {
+   "id": "tvi",
+   "titre": "Théorème des valeurs intermédiaires",
+   "formule": "$f$ continue sur $[a,b]$, $k$ entre $f(a)$ et $f(b)$ $\\Rightarrow\\exists c\\in[a,b],\\ f(c)=k$ · si $f(a)f(b)<0$ : $\\exists c\\in\\,]a,b[,\\ f(c)=0$",
+   "exemple": "$x^3+x-1$ s'annule sur $]0,1[$ : $f(0)=-1$, $f(1)=1$",
+   "cours": "Trois choses à écrire : $f$ est continue sur $[a,b]$, les valeurs $f(a)$ et $f(b)$, la conclusion. L'unicité demande en plus la stricte monotonie. Pour une équation $f(x)=g(x)$, appliquer le TVI à $f-g$."
+  },
+  {
+   "id": "negligeable",
+   "titre": "Négligeabilité : petit o",
+   "formule": "$f=o(g)\\iff\\frac fg\\to0\\iff f=g\\,\\varepsilon$ avec $\\varepsilon\\to0$ · en $0$ : $o(x^p)+o(x^q)=o(x^{\\min(p,q)})$, $x^p\\,o(x^q)=o(x^{p+q})$, $o(x^p)\\,o(x^q)=o(x^{p+q})$",
+   "exemple": "en $0$ : $x^2=o(x)$ ; en $+\\infty$ : $x=o(x^2)$",
+   "cours": "En $0$, les grandes puissances sont négligeables devant les petites ; en $+\\infty$ c'est l'inverse. Croissances comparées en $+\\infty$ : $\\ln x\\ll x^a\\ll e^x$. Un $o(x^3)$ est aussi un $o(x^2)$ en $0$, pas l'inverse."
+  },
+  {
+   "id": "equivalent",
+   "titre": "Équivalents",
+   "formule": "$f\\sim g\\iff\\frac fg\\to1\\iff f=g(1+\\varepsilon)$, $\\varepsilon\\to0$ · en $0$ : $\\sin x\\sim x$, $e^x-1\\sim x$, $\\ln(1+x)\\sim x$, $1-\\cos x\\sim\\frac{x^2}2$ · polynôme : terme de plus bas degré en $0$, de plus haut degré en $\\pm\\infty$",
+   "exemple": "$\\frac{\\sin 3x}x\\sim\\frac{3x}x=3$ en $0$",
+   "cours": "Les équivalents se multiplient, se divisent, s'élèvent à une puissance fixe. **Jamais** de somme, d'exponentielle ni de logarithme d'équivalents : pour une somme, passer par les DL. $f\\sim g$ donne la même limite. $f\\sim$ le premier terme non nul de son DL."
+  },
+  {
+   "id": "taylor-young",
+   "titre": "Formule de Taylor-Young",
+   "formule": "$f(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k+o\\big((x-a)^n\\big)$",
+   "exemple": "$\\ln x=(x-1)-\\frac{(x-1)^2}2+o\\big((x-1)^2\\big)$ en $1$",
+   "cours": "Le DL à l'ordre $n$ est unique : on lit $f(a)$, $f'(a)$, $\\frac{f''(a)}2$… sur ses coefficients. En $a\\ne0$, poser $h=x-a$."
+  },
+  {
+   "id": "dl-usuels",
+   "titre": "DL usuels en 0",
+   "formule": "$e^x=1+x+\\frac{x^2}2+\\frac{x^3}6+o(x^3)$ · $\\cos x=1-\\frac{x^2}2+\\frac{x^4}{24}+o(x^5)$ · $\\sin x=x-\\frac{x^3}6+\\frac{x^5}{120}+o(x^6)$ · $\\ln(1+x)=x-\\frac{x^2}2+\\frac{x^3}3+o(x^3)$ · $\\frac1{1-x}=1+x+x^2+x^3+o(x^3)$ · $(1+x)^\\alpha=1+\\alpha x+\\frac{\\alpha(\\alpha-1)}2x^2+o(x^2)$",
+   "exemple": "$\\sqrt{1+x}=1+\\frac x2-\\frac{x^2}8+o(x^2)$ ($\\alpha=\\frac12$)",
+   "cours": "À connaître par cœur. $\\cos$ est paire (puissances paires), $\\sin$ impaire. Remplacer $x$ par $-x$, $2x$, $x^2$ donne $e^{-x}$, $\\frac1{1+x}$, $\\frac1{1+x^2}$… tant que la quantité substituée tend vers $0$."
+  },
+  {
+   "id": "dl-operations",
+   "titre": "Opérations sur les DL",
+   "formule": "somme : à l'ordre le plus petit des deux · produit : multiplier les parties régulières et tronquer à l'ordre $n$ · composition : poser $u\\to0$, calculer $u$, $u^2$, $u^3$ tronqués à l'ordre $n$",
+   "exemple": "$e^x\\sin x=(1+x+\\frac{x^2}2)(x-\\frac{x^3}6)+o(x^3)=x+x^2+\\frac{x^3}3+o(x^3)$",
+   "cours": "Toujours rappeler les DL usuels utilisés. Dans un produit, ne garder que les termes de degré $\\le n$. Pour $\\ln(a+\\dots)$, factoriser $a$ : $\\ln a+\\ln(1+u)$. Pour un quotient, écrire $\\frac1{1+u}$."
+  },
+  {
+   "id": "limite-dl",
+   "titre": "Limites par DL et équivalents",
+   "formule": "forme $\\frac00$ : DL du numérateur et du dénominateur jusqu'au premier terme non nul, puis quotient des équivalents · $a^b=e^{b\\ln a}$ · en $+\\infty$ : poser $X=\\frac1x\\to0$",
+   "exemple": "$\\frac{e^x-1-x}{x^2}\\sim\\frac{x^2/2}{x^2}\\to\\frac12$",
+   "cours": "Pousser le DL assez loin pour que les termes ne se compensent pas tous. Pour $u^v$, toujours revenir à $e^{v\\ln u}$ et chercher la limite de l'exposant."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "continuite",
+   "type": "qcm",
+   "q": "$f$ est continue en $a$ si et seulement si :",
+   "choix": [
+    "$\\lim_{x\\to a}f(x)=f(a)$",
+    "$f$ est définie en $a$",
+    "$f$ est dérivable en $a$",
+    "$\\lim_{a^-}f=\\lim_{a^+}f$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "continuite",
+   "type": "vf",
+   "q": "Toute fonction continue en $a$ est dérivable en $a$.",
+   "bonne": false
+  },
+  {
+   "notion": "tvi",
+   "type": "vf",
+   "q": "Si $f$ est continue sur $[a,b]$ et $f(a)f(b)<0$, alors $f$ s'annule sur $]a,b[$.",
+   "bonne": true
+  },
+  {
+   "notion": "tvi",
+   "type": "vf",
+   "q": "Le TVI donne l'unicité de la solution.",
+   "bonne": false
+  },
+  {
+   "notion": "negligeable",
+   "type": "qcm",
+   "q": "Au voisinage de $0$, $o(x^2)+o(x^3)=$",
+   "choix": [
+    "$o(x^2)$",
+    "$o(x^3)$",
+    "$o(x^5)$",
+    "$o(x)$ seulement"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "negligeable",
+   "type": "vf",
+   "q": "Au voisinage de $+\\infty$, $x^2=o(x^3)$.",
+   "bonne": true
+  },
+  {
+   "notion": "equivalent",
+   "type": "vf",
+   "q": "Si $f\\sim g$ et $u\\sim v$ alors $f+u\\sim g+v$.",
+   "bonne": false
+  },
+  {
+   "notion": "equivalent",
+   "type": "qcm",
+   "q": "En $0$, $e^x-1$ est équivalent à :",
+   "choix": [
+    "$x$",
+    "$1$",
+    "$\\frac{x^2}2$",
+    "$e^x$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "equivalent",
+   "type": "vf",
+   "q": "Si $f\\sim g$ alors $e^f\\sim e^g$.",
+   "bonne": false
+  },
+  {
+   "notion": "taylor-young",
+   "type": "qcm",
+   "q": "Dans le DL de $f$ en $0$, le coefficient de $x^2$ vaut :",
+   "choix": [
+    "$\\frac{f''(0)}2$",
+    "$f''(0)$",
+    "$2f''(0)$",
+    "$\\frac{f'(0)}2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-usuels",
+   "type": "qcm",
+   "q": "DL de $\\ln(1+x)$ en $0$ à l'ordre $2$ :",
+   "choix": [
+    "$x-\\frac{x^2}2+o(x^2)$",
+    "$x+\\frac{x^2}2+o(x^2)$",
+    "$1+x+\\frac{x^2}2+o(x^2)$",
+    "$x-x^2+o(x^2)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-usuels",
+   "type": "qcm",
+   "q": "DL de $\\cos x$ en $0$ à l'ordre $2$ :",
+   "choix": [
+    "$1-\\frac{x^2}2+o(x^2)$",
+    "$1+\\frac{x^2}2+o(x^2)$",
+    "$x-\\frac{x^2}2+o(x^2)$",
+    "$1-x^2+o(x^2)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-operations",
+   "type": "vf",
+   "q": "Pour un DL à l'ordre $3$ d'un produit, on peut jeter les termes de degré $>3$.",
+   "bonne": true
+  },
+  {
+   "notion": "limite-dl",
+   "type": "qcm",
+   "q": "Pour étudier $u(x)^{v(x)}$ on écrit :",
+   "choix": [
+    "$e^{v\\ln u}$",
+    "$e^{u\\ln v}$",
+    "$v\\ln u$",
+    "$u^v\\sim u$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Continuité en un point",
+   "notions": [
+    "continuite"
+   ],
+   "exos": [
+    {
+     "id": "fc1",
+     "enonce": "$f(x)=\\dfrac{x^2-1}{x-1}$ pour $x\\ne1$. Quelle valeur donner à $f(1)$ pour que $f$ soit continue en $1$ ?",
+     "ans": "2",
+     "sol": "$\\frac{x^2-1}{x-1}=x+1\\to2$. Il faut $f(1)=2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f(x)=\\dfrac{x^2-4}{x-2}$ pour $x\\ne2$. Quelle valeur donner à $f(2)$ pour que $f$ soit continue en $2$ ?",
+       "ans": "4",
+       "sol": "$\\frac{x^2-4}{x-2}=x+2\\to4$."
+      }
+     ],
+     "formules": "$a^2-b^2=(a-b)(a+b)$ · prolongement par continuité : $f(a)=\\lim_af$",
+     "type": "value"
+    },
+    {
+     "id": "fc2",
+     "enonce": "$f(x)=\\dfrac{\\sin x}x$ pour $x\\ne0$. Quelle valeur donner à $f(0)$ pour que $f$ soit continue en $0$ ?",
+     "ans": "1",
+     "sol": "$\\sin x\\sim x$ en $0$, donc $\\frac{\\sin x}x\\to1$. Il faut $f(0)=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f(x)=\\dfrac{\\sin 2x}x$ pour $x\\ne0$. Quelle valeur donner à $f(0)$ pour que $f$ soit continue en $0$ ?",
+       "ans": "2",
+       "sol": "$\\sin2x\\sim2x$ : $f(0)=2$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ en $0$ · prolongement par continuité : $f(a)=\\lim_af$",
+     "type": "value"
+    },
+    {
+     "id": "fc3",
+     "enonce": "$f(x)=x+a$ si $x<1$ et $f(x)=x^2+1$ si $x\\ge1$. Pour quelle valeur de $a$ la fonction $f$ est-elle continue en $1$ ?",
+     "ans": "1",
+     "sol": "$\\lim_{1^-}f=1+a$ et $\\lim_{1^+}f=f(1)=2$. Continue $\\iff1+a=2\\iff a=1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$f(x)=x+a$ si $x<2$ et $f(x)=x^2-1$ si $x\\ge2$. Pour quelle valeur de $a$ la fonction $f$ est-elle continue en $2$ ?",
+       "ans": "1",
+       "sol": "$2+a=3\\iff a=1$."
+      }
+     ],
+     "formules": "$f$ continue en $a$ $\\iff\\lim_{a^-}f=\\lim_{a^+}f=f(a)$",
+     "type": "value"
+    },
+    {
+     "id": "fc4",
+     "enonce": "$f(x)=x\\sin\\frac1x$ pour $x\\ne0$ et $f(0)=0$. La fonction $f$ est-elle continue en $0$ ?",
+     "sol": "Oui. $|f(x)|\\le|x|\\to0$, donc $\\lim_0f=0=f(0)$.",
+     "duree": 3,
+     "formules": "$|\\sin|\\le1$ · $|f|\\le g$ et $g\\to0\\Rightarrow f\\to0$ · $f$ continue en $a$ $\\iff\\lim_af=f(a)$",
+     "type": "open"
+    },
+    {
+     "id": "fc5",
+     "enonce": "La fonction partie entière $x\\mapsto\\lfloor x\\rfloor$ est-elle continue en $1$ ?",
+     "sol": "Non. $\\lim_{1^-}\\lfloor x\\rfloor=0$ et $\\lim_{1^+}\\lfloor x\\rfloor=1$ : les limites à gauche et à droite diffèrent.",
+     "duree": 2,
+     "formules": "$f$ continue en $a$ $\\iff\\lim_{a^-}f=\\lim_{a^+}f=f(a)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Théorème des valeurs intermédiaires",
+   "notions": [
+    "tvi"
+   ],
+   "exos": [
+    {
+     "id": "ft1",
+     "enonce": "Montrer que l'équation $x^3+x-1=0$ a une unique solution dans $]0,1[$.",
+     "sol": "$f(x)=x^3+x-1$ est continue sur $[0,1]$, $f(0)=-1<0$, $f(1)=1>0$ : par le TVI, $f$ s'annule sur $]0,1[$. $f'(x)=3x^2+1>0$ : $f$ est strictement croissante, la solution est unique.",
+     "duree": 4,
+     "formules": "TVI : $f$ continue sur $[a,b]$ et $f(a)f(b)<0$ $\\Rightarrow\\exists c\\in\\,]a,b[,\\ f(c)=0$ · strictement monotone $\\Rightarrow$ au plus une solution",
+     "type": "open"
+    },
+    {
+     "id": "ft2",
+     "enonce": "Montrer que l'équation $\\cos x=x$ a une solution dans $\\left[0,\\frac\\pi2\\right]$.",
+     "sol": "$g(x)=\\cos x-x$ est continue sur $\\left[0,\\frac\\pi2\\right]$, $g(0)=1>0$, $g\\left(\\frac\\pi2\\right)=-\\frac\\pi2<0$. Par le TVI, $g$ s'annule.",
+     "duree": 4,
+     "formules": "TVI : $f$ continue sur $[a,b]$ et $f(a)f(b)<0$ $\\Rightarrow\\exists c\\in\\,]a,b[,\\ f(c)=0$ · $\\cos0=1$, $\\cos\\frac\\pi2=0$",
+     "type": "open"
+    },
+    {
+     "id": "ft3",
+     "enonce": "Soit $f:[0,1]\\to[0,1]$ continue. Montrer que $f$ a un point fixe : $\\exists c\\in[0,1],\\ f(c)=c$.",
+     "sol": "$g(x)=f(x)-x$ est continue sur $[0,1]$. $g(0)=f(0)\\ge0$ et $g(1)=f(1)-1\\le0$. Par le TVI, $\\exists c$, $g(c)=0$, soit $f(c)=c$.",
+     "formules": "TVI : $f$ continue sur $[a,b]$ et $f(a)f(b)<0$ $\\Rightarrow\\exists c\\in\\,]a,b[,\\ f(c)=0$ (appliqué à $g(x)=f(x)-x$)",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ft4",
+     "enonce": "Montrer que tout polynôme réel de degré $3$ a au moins une racine réelle.",
+     "sol": "Quitte à diviser par le coefficient dominant, $P(x)\\sim x^3$ : $\\lim_{-\\infty}P=-\\infty$ et $\\lim_{+\\infty}P=+\\infty$. Il existe donc $a < b$ avec $P(a)<0$ et $P(b)>0$ ; $P$ est continue sur $[a,b]$ : par le TVI, $P$ s'annule.",
+     "formules": "TVI : $f$ continue sur $[a,b]$ et $f(a)f(b)<0$ $\\Rightarrow\\exists c\\in\\,]a,b[,\\ f(c)=0$ · polynôme $\\sim$ terme de plus haut degré en $\\pm\\infty$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ft5",
+     "enonce": "Vrai ou faux : si $f$ est continue sur $[a,b]$ et $f(a)f(b)>0$, alors $f$ ne s'annule pas sur $[a,b]$.",
+     "sol": "Faux. $f(x)=x^2-1$ sur $[-2,2]$ : $f(-2)f(2)=9>0$ mais $f(1)=0$. Le TVI donne une condition suffisante, pas nécessaire.",
+     "duree": 3,
+     "formules": "TVI : $f$ continue sur $[a,b]$ et $f(a)f(b)<0$ $\\Rightarrow\\exists c\\in\\,]a,b[,\\ f(c)=0$ · un contre-exemple suffit",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Petit o",
+   "notions": [
+    "negligeable"
+   ],
+   "exos": [
+    {
+     "id": "fo1",
+     "enonce": "A-t-on $x^2=o(x)$ au voisinage de $0$ ? Au voisinage de $+\\infty$ ?",
+     "sol": "$\\frac{x^2}x=x$. En $0$ : $x\\to0$, donc oui. En $+\\infty$ : $x\\to+\\infty$, donc non (c'est $x=o(x^2)$).",
+     "duree": 2,
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$",
+     "type": "open"
+    },
+    {
+     "id": "fo2",
+     "enonce": "Simplifier au voisinage de $0$ : $o(x^2)+o(x^3)$ ; $x\\cdot o(x^2)$ ; $o(x)\\times o(x^2)$.",
+     "sol": "$o(x^2)+o(x^3)=o(x^2)$ ; $x\\cdot o(x^2)=o(x^3)$ ; $o(x)\\times o(x^2)=o(x^3)$.",
+     "duree": 3,
+     "formules": "en $0$ : $o(x^p)+o(x^q)=o(x^{\\min(p,q)})$ · $x^p\\,o(x^q)=o(x^{p+q})$ · $o(x^p)\\,o(x^q)=o(x^{p+q})$",
+     "type": "open"
+    },
+    {
+     "id": "fo3",
+     "enonce": "Classer avec le symbole $\\ll$ au voisinage de $+\\infty$ : $x^2$, $\\ln x$, $e^x$, $\\sqrt x$.",
+     "sol": "$\\ln x\\ll\\sqrt x\\ll x^2\\ll e^x$ (croissances comparées).",
+     "duree": 2,
+     "formules": "croissances comparées en $+\\infty$ : $\\ln x\\ll x^a\\ll e^x$ ($a>0$) · $x^a\\ll x^b\\iff a < b$",
+     "type": "open"
+    },
+    {
+     "id": "fo4",
+     "enonce": "La notation $f=o(g)$ s'écrit aussi $f\\ll g$. Compléter par $\\ll$, $\\gg$ ou $\\sim$ : $2x^2\\dots x$ ; $(x^3-3x^2+x)\\dots x$ ; $(x^3-3x^2+x)\\dots x^3$, au voisinage de $0$ puis de $+\\infty$.",
+     "sol": "En $0$ : $2x^2\\ll x$ ; $x^3-3x^2+x\\sim x$ ; $x^3-3x^2+x\\gg x^3$.\n\nEn $+\\infty$ : $2x^2\\gg x$ ; $x^3-3x^2+x\\gg x$ ; $x^3-3x^2+x\\sim x^3$.",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 3.2",
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$ · $f\\sim g\\iff\\frac fg\\to1$ · polynôme : équivalent au terme de plus bas degré en $0$, de plus haut degré en $+\\infty$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "fo5",
+     "enonce": "Au voisinage de $0$ : si $f=o(x^3)$, a-t-on $f=o(x^2)$ ? Et la réciproque ?",
+     "sol": "Oui : $\\frac f{x^2}=x\\cdot\\frac f{x^3}\\to0$. Réciproque fausse : $f(x)=x^3$ est un $o(x^2)$ mais pas un $o(x^3)$ ($\\frac{x^3}{x^3}=1$).",
+     "duree": 3,
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$ · $o(x^3)\\Rightarrow o(x^2)$ en $0$ (pas l'inverse)",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Équivalents",
+   "notions": [
+    "equivalent"
+   ],
+   "exos": [
+    {
+     "id": "fe1",
+     "enonce": "Donner un équivalent simple de $x^3-3x^2+x$ en $0$, puis en $+\\infty$.",
+     "sol": "En $0$ : terme de plus bas degré, $x$. En $+\\infty$ : terme de plus haut degré, $x^3$.",
+     "duree": 2,
+     "formules": "polynôme : équivalent au terme de plus bas degré en $0$, de plus haut degré en $\\pm\\infty$",
+     "type": "open"
+    },
+    {
+     "id": "fe2",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\sin 3x}x$.",
+     "ans": "3",
+     "sol": "$\\sin 3x\\sim3x$, donc $\\frac{\\sin3x}x\\sim3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\sin 5x}{2x}$.",
+       "ans": "Rational(5,2)",
+       "sol": "$\\sin5x\\sim5x$ : limite $\\frac52$."
+      }
+     ],
+     "formules": "en $0$ : $\\sin x\\sim x$, $e^x-1\\sim x$, $\\ln(1+x)\\sim x$ · équivalent d'un quotient = quotient des équivalents",
+     "type": "value"
+    },
+    {
+     "id": "fe3",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^{2x}-1}{\\ln(1+x)}$.",
+     "ans": "2",
+     "sol": "$e^{2x}-1\\sim2x$ et $\\ln(1+x)\\sim x$ : le quotient est équivalent à $2$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^{3x}-1}{\\sin x}$.",
+       "ans": "3",
+       "sol": "$e^{3x}-1\\sim3x$ et $\\sin x\\sim x$ : limite $3$."
+      }
+     ],
+     "formules": "en $0$ : $\\sin x\\sim x$, $e^x-1\\sim x$, $\\ln(1+x)\\sim x$ · équivalent d'un quotient = quotient des équivalents",
+     "type": "value"
+    },
+    {
+     "id": "fe4",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\frac{3x^2+x}{2x^2-1}$.",
+     "ans": "Rational(3,2)",
+     "sol": "Quotient des termes de plus haut degré : $\\frac{3x^2}{2x^2}=\\frac32$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\frac{x^3+2}{4x^3-x}$.",
+       "ans": "Rational(1,4)",
+       "sol": "$\\frac{x^3}{4x^3}=\\frac14$."
+      }
+     ],
+     "formules": "fraction rationnelle en $\\pm\\infty$ : quotient des termes de plus haut degré",
+     "type": "value"
+    },
+    {
+     "id": "fe5",
+     "enonce": "Peut-on additionner des équivalents ? Tester avec $f(x)=x+x^2$, $g(x)=-x$ en $0$.",
+     "sol": "Non. $f\\sim x$ et $g\\sim-x$, mais $f+g=x^2$ n'est pas équivalent à $x+(-x)=0$. Pour une somme, on passe par les DL.",
+     "duree": 3,
+     "formules": "$\\sim$ compatible avec produit, quotient, puissance ; PAS avec la somme",
+     "type": "open"
+    },
+    {
+     "id": "fe6",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{1-\\cos x}{x^2}$.",
+     "ans": "Rational(1,2)",
+     "sol": "$\\cos x=1-\\frac{x^2}2+o(x^2)$, donc $1-\\cos x\\sim\\frac{x^2}2$ : limite $\\frac12$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{1-\\cos 2x}{x^2}$.",
+       "ans": "2",
+       "sol": "$1-\\cos2x\\sim\\frac{(2x)^2}2=2x^2$ : limite $2$."
+      }
+     ],
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Formule de Taylor-Young",
+   "notions": [
+    "taylor-young"
+   ],
+   "exos": [
+    {
+     "id": "fy1",
+     "enonce": "$f(0)=1$, $f'(0)=2$, $f''(0)=-4$. Donner la partie régulière du DL de $f$ en $0$ à l'ordre $2$.",
+     "ans": "1+2*x-2*x**2",
+     "sol": "$f(x)=f(0)+f'(0)x+\\frac{f''(0)}2x^2+o(x^2)=1+2x-2x^2+o(x^2)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f(0)=3$, $f'(0)=-1$, $f''(0)=2$. Donner la partie régulière du DL de $f$ en $0$ à l'ordre $2$.",
+       "ans": "3-x+x**2",
+       "sol": "$3-x+\\frac22x^2=3-x+x^2$."
+      }
+     ],
+     "formules": "$f(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k+o\\big((x-a)^n\\big)$",
+     "type": "value"
+    },
+    {
+     "id": "fy2",
+     "enonce": "Avec la formule de Taylor-Young, donner le DL de $e^x$ en $0$ à l'ordre $3$.",
+     "ans": "1+x+x**2/2+x**3/6",
+     "sol": "Toutes les dérivées valent $1$ en $0$ : $e^x=1+x+\\frac{x^2}2+\\frac{x^3}6+o(x^3)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Avec la formule de Taylor-Young, donner le DL de $e^{-x}$ en $0$ à l'ordre $3$.",
+       "ans": "1-x+x**2/2-x**3/6",
+       "sol": "$f^{(k)}(0)=(-1)^k$ : $e^{-x}=1-x+\\frac{x^2}2-\\frac{x^3}6+o(x^3)$."
+      }
+     ],
+     "formules": "$f(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k+o\\big((x-a)^n\\big)$ · $(e^x)'=e^x$",
+     "type": "value"
+    },
+    {
+     "id": "fy3",
+     "enonce": "Donner le DL de $\\ln x$ en $1$ à l'ordre $2$.",
+     "ans": "(x-1)-(x-1)**2/2",
+     "sol": "$f(1)=0$, $f'(1)=1$, $f''(1)=-1$ : $\\ln x=(x-1)-\\frac{(x-1)^2}2+o\\big((x-1)^2\\big)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Donner le DL de $\\dfrac1x$ en $1$ à l'ordre $2$.",
+       "ans": "1-(x-1)+(x-1)**2",
+       "sol": "$f(1)=1$, $f'(1)=-1$, $f''(1)=2$ : $\\frac1x=1-(x-1)+(x-1)^2+o\\big((x-1)^2\\big)$."
+      }
+     ],
+     "formules": "$f(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k+o\\big((x-a)^n\\big)$ · $(\\ln x)'=\\frac1x$",
+     "type": "value"
+    },
+    {
+     "id": "fy4",
+     "enonce": "Avec la formule de Taylor-Young, donner le DL de $\\sqrt{1+x}$ en $0$ à l'ordre $2$.",
+     "ans": "1+x/2-x**2/8",
+     "sol": "$f(0)=1$, $f'(0)=\\frac12$, $f''(0)=-\\frac14$ : $\\sqrt{1+x}=1+\\frac x2-\\frac{x^2}8+o(x^2)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Avec la formule de Taylor-Young, donner le DL de $(1+x)^{1/3}$ en $0$ à l'ordre $2$.",
+       "ans": "1+x/3-x**2/9",
+       "sol": "$f'(0)=\\frac13$, $f''(0)=-\\frac29$ : $1+\\frac x3-\\frac{x^2}9+o(x^2)$."
+      }
+     ],
+     "formules": "$f(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k+o\\big((x-a)^n\\big)$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "value"
+    },
+    {
+     "id": "fy5",
+     "enonce": "On sait que $f(x)=2-x+3x^2+o(x^2)$ en $0$ et que $f$ est deux fois dérivable. Que vaut $f''(0)$ ?",
+     "ans": "6",
+     "sol": "Par unicité du DL, $\\frac{f''(0)}2=3$, donc $f''(0)=6$ (et $f'(0)=-1$).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On sait que $f(x)=1+4x-x^2+o(x^2)$ en $0$ et que $f$ est deux fois dérivable. Que vaut $f''(0)$ ?",
+       "ans": "-2",
+       "sol": "$\\frac{f''(0)}2=-1$, donc $f''(0)=-2$."
+      }
+     ],
+     "formules": "unicité du DL : coefficient de $x^k$ = $\\frac{f^{(k)}(0)}{k!}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "DL usuels",
+   "notions": [
+    "dl-usuels"
+   ],
+   "exos": [
+    {
+     "id": "fu1",
+     "enonce": "DL de $\\sin x$ en $0$ à l'ordre $5$.",
+     "ans": "x-x**3/6+x**5/120",
+     "sol": "$\\sin x=x-\\frac{x^3}6+\\frac{x^5}{120}+o(x^5)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "DL de $\\sin 2x$ en $0$ à l'ordre $3$.",
+       "ans": "2*x-4*x**3/3",
+       "sol": "$2x-\\frac{(2x)^3}6=2x-\\frac43x^3+o(x^3)$."
+      }
+     ],
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$",
+     "type": "value"
+    },
+    {
+     "id": "fu2",
+     "enonce": "DL de $\\cos x$ en $0$ à l'ordre $4$.",
+     "ans": "1-x**2/2+x**4/24",
+     "sol": "$\\cos x=1-\\frac{x^2}2+\\frac{x^4}{24}+o(x^4)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "DL de $\\cos 2x$ en $0$ à l'ordre $4$.",
+       "ans": "1-2*x**2+2*x**4/3",
+       "sol": "$1-\\frac{(2x)^2}2+\\frac{(2x)^4}{24}=1-2x^2+\\frac23x^4+o(x^4)$."
+      }
+     ],
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$",
+     "type": "value"
+    },
+    {
+     "id": "fu3",
+     "enonce": "DL de $\\ln(1+x)$ en $0$ à l'ordre $4$.",
+     "ans": "x-x**2/2+x**3/3-x**4/4",
+     "sol": "$\\ln(1+x)=x-\\frac{x^2}2+\\frac{x^3}3-\\frac{x^4}4+o(x^4)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "DL de $\\ln(1-x)$ en $0$ à l'ordre $3$.",
+       "ans": "-x-x**2/2-x**3/3",
+       "sol": "$\\ln(1+u)$ avec $u=-x$ : $-x-\\frac{x^2}2-\\frac{x^3}3+o(x^3)$."
+      }
+     ],
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$",
+     "type": "value"
+    },
+    {
+     "id": "fu4",
+     "enonce": "DL de $\\dfrac1{1-x}$ en $0$ à l'ordre $3$.",
+     "ans": "1+x+x**2+x**3",
+     "sol": "$\\frac1{1-x}=1+x+x^2+x^3+o(x^3)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "DL de $\\dfrac1{1-2x}$ en $0$ à l'ordre $3$.",
+       "ans": "1+2*x+4*x**2+8*x**3",
+       "sol": "$1+2x+4x^2+8x^3+o(x^3)$."
+      }
+     ],
+     "formules": "$\\frac1{1-u}=1+u+u^2+u^3+o(u^3)$",
+     "type": "value"
+    },
+    {
+     "id": "fu5",
+     "enonce": "DL de $\\dfrac1{\\sqrt{1+x}}$ en $0$ à l'ordre $2$.",
+     "ans": "1-x/2+3*x**2/8",
+     "sol": "$(1+x)^\\alpha$ avec $\\alpha=-\\frac12$ : $1-\\frac x2+\\frac{(-\\frac12)(-\\frac32)}2x^2=1-\\frac x2+\\frac{3x^2}8+o(x^2)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "DL de $\\sqrt{1+x}$ en $0$ à l'ordre $3$.",
+       "ans": "1+x/2-x**2/8+x**3/16",
+       "sol": "$1+\\frac x2-\\frac{x^2}8+\\frac{x^3}{16}+o(x^3)$."
+      }
+     ],
+     "formules": "$(1+u)^\\alpha=1+\\alpha u+\\frac{\\alpha(\\alpha-1)}2u^2+o(u^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fu6",
+     "enonce": "DL de $e^{-2x}$ en $0$ à l'ordre $3$.",
+     "ans": "1-2*x+2*x**2-4*x**3/3",
+     "sol": "$e^u$ avec $u=-2x$ : $1-2x+\\frac{4x^2}2-\\frac{8x^3}6=1-2x+2x^2-\\frac43x^3+o(x^3)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "DL de $e^{3x}$ en $0$ à l'ordre $3$.",
+       "ans": "1+3*x+9*x**2/2+9*x**3/2",
+       "sol": "$1+3x+\\frac{9x^2}2+\\frac{27x^3}6=1+3x+\\frac92x^2+\\frac92x^3+o(x^3)$."
+      }
+     ],
+     "formules": "$e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$",
+     "type": "value"
+    },
+    {
+     "id": "fu7",
+     "enonce": "DL de $\\dfrac1{1+x}$ en $0$ à l'ordre $3$.",
+     "ans": "1-x+x**2-x**3",
+     "sol": "$\\frac1{1-u}$ avec $u=-x$ : $1-x+x^2-x^3+o(x^3)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "DL de $\\dfrac1{1+3x}$ en $0$ à l'ordre $2$.",
+       "ans": "1-3*x+9*x**2",
+       "sol": "$1-3x+9x^2+o(x^2)$."
+      }
+     ],
+     "formules": "$\\frac1{1-u}=1+u+u^2+u^3+o(u^3)$ avec $u=-x$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Somme et produit de DL",
+   "notions": [
+    "dl-operations",
+    "dl-usuels"
+   ],
+   "exos": [
+    {
+     "id": "fp1",
+     "enonce": "DL de $e^x+\\cos x$ en $0$ à l'ordre $3$.",
+     "ans": "2+x+x**3/6",
+     "sol": "$\\left(1+x+\\frac{x^2}2+\\frac{x^3}6\\right)+\\left(1-\\frac{x^2}2\\right)+o(x^3)=2+x+\\frac{x^3}6+o(x^3)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "DL de $e^x-\\cos x$ en $0$ à l'ordre $3$.",
+       "ans": "x+x**2+x**3/6",
+       "sol": "$\\left(1+x+\\frac{x^2}2+\\frac{x^3}6\\right)-\\left(1-\\frac{x^2}2\\right)=x+x^2+\\frac{x^3}6+o(x^3)$."
+      }
+     ],
+     "formules": "$e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$",
+     "type": "value"
+    },
+    {
+     "id": "fp2",
+     "enonce": "Donner le développement limité en $0$ à l'ordre $3$ de $f(x)=\\cos(x)e^{-2x}$.",
+     "ans": "1-2*x+3*x**2/2-x**3/3",
+     "sol": "$\\left(1-\\frac{x^2}2+o(x^3)\\right)\\left(1-2x+2x^2-\\frac43x^3+o(x^3)\\right)=1-2x+\\frac{3x^2}2-\\frac{x^3}3+o(x^3)$.",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 4.1",
+     "duree": 5,
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · produit de DL : tronquer à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fp3",
+     "enonce": "DL de $e^x\\sin x$ en $0$ à l'ordre $3$.",
+     "ans": "x+x**2+x**3/3",
+     "sol": "$\\left(1+x+\\frac{x^2}2\\right)\\left(x-\\frac{x^3}6\\right)+o(x^3)=x+x^2+\\frac{x^3}2-\\frac{x^3}6+o(x^3)=x+x^2+\\frac{x^3}3+o(x^3)$.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "DL de $e^x\\cos x$ en $0$ à l'ordre $3$.",
+       "ans": "1+x-x**3/3",
+       "sol": "$\\left(1+x+\\frac{x^2}2+\\frac{x^3}6\\right)\\left(1-\\frac{x^2}2\\right)=1+x+\\left(\\frac16-\\frac12\\right)x^3+o(x^3)=1+x-\\frac{x^3}3+o(x^3)$."
+      }
+     ],
+     "formules": "$e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · $\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · produit de DL : tronquer à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fp4",
+     "enonce": "DL de $\\dfrac{\\ln(1+x)}{1-x}$ en $0$ à l'ordre $3$.",
+     "ans": "x+x**2/2+5*x**3/6",
+     "sol": "$\\left(x-\\frac{x^2}2+\\frac{x^3}3\\right)(1+x+x^2)+o(x^3)=x+\\frac{x^2}2+\\left(1-\\frac12+\\frac13\\right)x^3+o(x^3)=x+\\frac{x^2}2+\\frac{5x^3}6+o(x^3)$.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "DL de $\\dfrac{\\sin x}{1-x}$ en $0$ à l'ordre $3$.",
+       "ans": "x+x**2+5*x**3/6",
+       "sol": "$\\left(x-\\frac{x^3}6\\right)(1+x+x^2)+o(x^3)=x+x^2+\\frac{5x^3}6+o(x^3)$."
+      }
+     ],
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · $\\frac1{1-u}=1+u+u^2+u^3+o(u^3)$ · produit de DL : tronquer à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fp5",
+     "enonce": "Au voisinage de $0$ : $f(x)=x-\\frac{x^2}2+o(x^2)$ et $g(x)=-1+x+3x^2-x^3+o(x^3)$. A-t-on assez d'informations pour donner le DL de $f+g$ à l'ordre $1$ ? $2$ ? $3$ ? Le donner quand c'est possible.",
+     "sol": "Ordre 1 : $f+g=-1+2x+o(x)$. Ordre 2 : $f+g=-1+2x+\\frac{5x^2}2+o(x^2)$. Ordre 3 : non, on ne connaît pas le DL de $f$ à l'ordre $3$.",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 3.3 (c)",
+     "formules": "$o(x^p)+o(x^q)=o(x^{\\min(p,q)})$ : la somme n'est connue qu'à l'ordre le plus petit",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Composition de DL",
+   "notions": [
+    "dl-operations",
+    "dl-usuels"
+   ],
+   "exos": [
+    {
+     "id": "fk1",
+     "enonce": "DL de $e^{\\sin x}$ en $0$ à l'ordre $3$.",
+     "ans": "1+x+x**2/2",
+     "sol": "$u=\\sin x=x-\\frac{x^3}6+o(x^3)$, $u^2=x^2+o(x^3)$, $u^3=x^3+o(x^3)$. $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6=1+x+\\frac{x^2}2+o(x^3)$ (les termes en $x^3$ se compensent).",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "DL de $e^{x+x^2}$ en $0$ à l'ordre $2$.",
+       "ans": "1+x+3*x**2/2",
+       "sol": "$u=x+x^2$, $u^2=x^2+o(x^2)$ : $1+u+\\frac{u^2}2=1+x+\\frac32x^2+o(x^2)$."
+      }
+     ],
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fk2",
+     "enonce": "DL de $\\ln(\\cos x)$ en $0$ à l'ordre $4$.",
+     "ans": "-x**2/2-x**4/12",
+     "sol": "$\\cos x=1+u$ avec $u=-\\frac{x^2}2+\\frac{x^4}{24}$, $u^2=\\frac{x^4}4+o(x^4)$. $\\ln(1+u)=u-\\frac{u^2}2=-\\frac{x^2}2+\\frac{x^4}{24}-\\frac{x^4}8=-\\frac{x^2}2-\\frac{x^4}{12}+o(x^4)$.",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "DL de $\\ln(1+\\sin x)$ en $0$ à l'ordre $3$.",
+       "ans": "x-x**2/2+x**3/6",
+       "sol": "$u=x-\\frac{x^3}6$, $u^2=x^2$, $u^3=x^3$ : $u-\\frac{u^2}2+\\frac{u^3}3=x-\\frac{x^2}2+\\frac{x^3}6+o(x^3)$."
+      }
+     ],
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fk3",
+     "enonce": "Donner le développement limité en $0$ à l'ordre $4$ de $g(x)=\\dfrac1{\\sqrt{1+x^2}}$.",
+     "ans": "1-x**2/2+3*x**4/8",
+     "sol": "$(1+u)^{-1/2}$ avec $u=x^2$ : $1-\\frac12x^2+\\frac{(-\\frac12)(-\\frac32)}2x^4+o(x^4)=1-\\frac{x^2}2+\\frac{3x^4}8+o(x^4)$.",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 4.2 (a)",
+     "duree": 5,
+     "formules": "$(1+u)^\\alpha=1+\\alpha u+\\frac{\\alpha(\\alpha-1)}2u^2+o(u^2)$ avec $u=x^2$, $\\alpha=-\\frac12$",
+     "type": "value"
+    },
+    {
+     "id": "fk4",
+     "enonce": "On donne $g(x)=\\dfrac1{\\sqrt{1+x^2}}=1-\\dfrac{x^2}2+\\dfrac{3x^4}8+o(x^4)$. Donner le développement limité en $0$ à l'ordre $4$ de $h(x)=\\ln(1+g(x))$.",
+     "ans": "log(2)-x**2/4+5*x**4/32",
+     "sol": "$h(x)=\\ln\\left(2-\\frac{x^2}2+\\frac{3x^4}8\\right)=\\ln2+\\ln(1+u)$ avec $u=-\\frac{x^2}4+\\frac{3x^4}{16}\\to0$ et $u^2=\\frac{x^4}{16}+o(x^4)$. $h(x)=\\ln2-\\frac{x^2}4+\\frac{3x^4}{16}-\\frac{x^4}{32}+o(x^4)=\\ln2-\\frac{x^2}4+\\frac{5x^4}{32}+o(x^4)$.",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 4.2 (b)",
+     "duree": 7,
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fk5",
+     "enonce": "DL de $\\sqrt{1+\\sin x}$ en $0$ à l'ordre $2$.",
+     "ans": "1+x/2-x**2/8",
+     "sol": "$u=\\sin x=x+o(x^2)$ : $\\sqrt{1+u}=1+\\frac u2-\\frac{u^2}8=1+\\frac x2-\\frac{x^2}8+o(x^2)$.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "DL de $\\dfrac1{1+\\sin x}$ en $0$ à l'ordre $2$.",
+       "ans": "1-x+x**2",
+       "sol": "$u=\\sin x=x+o(x^2)$ : $\\frac1{1+u}=1-u+u^2=1-x+x^2+o(x^2)$."
+      }
+     ],
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · $\\sqrt{1+u}=1+\\frac u2-\\frac{u^2}8+o(u^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fk6",
+     "enonce": "DL de $\\tan x$ en $0$ à l'ordre $3$.",
+     "ans": "x+x**3/3",
+     "sol": "$\\tan x=\\frac{\\sin x}{\\cos x}=\\left(x-\\frac{x^3}6\\right)\\left(1+\\frac{x^2}2\\right)+o(x^3)=x+\\frac{x^3}3+o(x^3)$, car $\\frac1{\\cos x}=\\frac1{1-\\frac{x^2}2}=1+\\frac{x^2}2+o(x^3)$.",
+     "duree": 6,
+     "formules": "$\\tan=\\frac{\\sin}{\\cos}$ · $\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $\\frac1{1-u}=1+u+u^2+u^3+o(u^3)$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Limites par DL",
+   "notions": [
+    "limite-dl",
+    "equivalent"
+   ],
+   "exos": [
+    {
+     "id": "fl1",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^x-1-x}{x^2}$.",
+     "ans": "Rational(1,2)",
+     "sol": "$e^x-1-x=\\frac{x^2}2+o(x^2)\\sim\\frac{x^2}2$ : limite $\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^{2x}-1-2x}{x^2}$.",
+       "ans": "2",
+       "sol": "$e^{2x}-1-2x=\\frac{(2x)^2}2+o(x^2)=2x^2+o(x^2)$ : limite $2$."
+      }
+     ],
+     "formules": "$e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · $f\\sim g\\Rightarrow$ même limite",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fl2",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\sin x-x}{x^3}$.",
+     "ans": "Rational(-1,6)",
+     "sol": "$\\sin x-x=-\\frac{x^3}6+o(x^3)$ : limite $-\\frac16$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{x-\\sin x}{x^3}$.",
+       "ans": "Rational(1,6)",
+       "sol": "$x-\\sin x=\\frac{x^3}6+o(x^3)$ : limite $\\frac16$."
+      }
+     ],
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fl3",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\ln(1+x)-x}{x^2}$.",
+     "ans": "Rational(-1,2)",
+     "sol": "$\\ln(1+x)-x=-\\frac{x^2}2+o(x^2)$ : limite $-\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\ln(1+x)-x+\\frac{x^2}2}{x^3}$.",
+       "ans": "Rational(1,3)",
+       "sol": "$\\ln(1+x)=x-\\frac{x^2}2+\\frac{x^3}3+o(x^3)$ : limite $\\frac13$."
+      }
+     ],
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fl4",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(1+\\frac1x\\right)^x$.",
+     "ans": "E",
+     "sol": "$\\left(1+\\frac1x\\right)^x=e^{x\\ln(1+\\frac1x)}$ et $x\\ln\\left(1+\\frac1x\\right)=x\\left(\\frac1x+o\\left(\\frac1x\\right)\\right)\\to1$. Limite : $e$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(1+\\frac2x\\right)^x$.",
+       "ans": "E**2",
+       "sol": "$x\\ln\\left(1+\\frac2x\\right)=x\\left(\\frac2x+o\\left(\\frac1x\\right)\\right)\\to2$. Limite : $e^2$."
+      }
+     ],
+     "formules": "$a^b=e^{b\\ln a}$ · $\\ln(1+u)\\sim u$ en $0$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fl5",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{\\cos x-1}{x\\sin x}$.",
+     "ans": "Rational(-1,2)",
+     "sol": "$\\cos x-1\\sim-\\frac{x^2}2$ et $x\\sin x\\sim x^2$ : limite $-\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{1-\\cos x}{x\\ln(1+x)}$.",
+       "ans": "Rational(1,2)",
+       "sol": "$1-\\cos x\\sim\\frac{x^2}2$ et $x\\ln(1+x)\\sim x^2$ : limite $\\frac12$."
+      }
+     ],
+     "formules": "$1-\\cos x\\sim\\frac{x^2}2$ · $\\sin x\\sim x$ · équivalent d'un quotient = quotient des équivalents",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "fl6",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^x-\\cos x-x}{x^2}$.",
+     "ans": "1",
+     "sol": "$e^x-\\cos x-x=\\left(1+x+\\frac{x^2}2\\right)-\\left(1-\\frac{x^2}2\\right)-x+o(x^2)=x^2+o(x^2)$ : limite $1$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^x+e^{-x}-2}{x^2}$.",
+       "ans": "1",
+       "sol": "$e^x+e^{-x}=2+x^2+o(x^2)$ : limite $1$."
+      }
+     ],
+     "formules": "$e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Niveau examen : annale complète",
+   "notions": [
+    "negligeable",
+    "equivalent",
+    "dl-operations",
+    "limite-dl"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "fx1",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 3 (étude locale)",
+     "enonce": "1. Soient $f$ et $g$ définies au voisinage de $x_0$ et ne s'y annulant pas. Donner deux définitions de chacune des notations $f=o(g)$ et $f\\sim g$ au voisinage de $x_0$.\n2. Compléter par $\\ll$, $\\gg$ ou $\\sim$ : $2x^2\\dots x$ ; $(x^3-3x^2+x)\\dots x$ ; $(x^3-3x^2+x)\\dots x^3$, en $0$ puis en $+\\infty$.\n3. En $0$ : $f(x)=x-\\frac{x^2}2+o(x^2)$ et $g(x)=-1+x+3x^2-x^3+o(x^3)$. (a) Équivalent simple de $f$, en repartant de la définition. (b) Équivalent de $g(x)+1$ et de $h(x)=\\sin(x)\\,f(x)\\,(g(x)+1)$. (c) DL de $f+g$ aux ordres $1$, $2$, $3$ quand c'est possible.",
+     "sol": "**1.** $f\\sim g\\iff\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}=1\\iff f(x)=g(x)(1+\\varepsilon(x))$ avec $\\lim_{x_0}\\varepsilon=0$.\n\n$f=o(g)\\iff\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}=0\\iff f(x)=g(x)\\varepsilon(x)$ avec $\\lim_{x_0}\\varepsilon=0$.\n\n**2.** En $0$ : $2x^2\\ll x$ ; $x^3-3x^2+x\\sim x$ ; $x^3-3x^2+x\\gg x^3$.\n\nEn $+\\infty$ : $2x^2\\gg x$ ; $x^3-3x^2+x\\gg x$ ; $x^3-3x^2+x\\sim x^3$.\n\n**3.** (a) $f(x)=x-\\frac{x^2}2+x^2\\varepsilon(x)$, donc $\\frac{f(x)}x=1-\\frac x2+x\\varepsilon(x)\\to1$ : $f(x)\\sim x$. (b) $g(x)+1\\sim x$ ; $h(x)\\sim x\\times x\\times x=x^3$.\n\n**4.** Ordre 1 : $f+g=-1+2x+o(x)$. Ordre 2 : $f+g=-1+2x+\\frac{5x^2}2+o(x^2)$. Ordre 3 : non, on ne connaît pas le DL de $f$ à l'ordre $3$.",
+     "formules": "$f=o(g)\\iff\\frac fg\\to0$ $\\iff f=g\\,\\varepsilon$, $\\varepsilon\\to0$ · $f\\sim g\\iff\\frac fg\\to1\\iff f=g(1+\\varepsilon)$, $\\varepsilon\\to0$ · $f=o(g)\\iff\\frac fg\\to0$ · $f\\sim g\\iff\\frac fg\\to1$ · polynôme : équivalent au terme de plus bas degré en $0$, de plus haut degré en $+\\infty$ · $f\\sim$ premier terme non nul du DL · $o(x^2)=x^2\\varepsilon(x)$ · $\\sin x\\sim x$ · équivalent d'un produit = produit des équivalents · $o(x^p)+o(x^q)=o(x^{\\min(p,q)})$ : la somme n'est connue qu'à l'ordre le plus petit",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "fx2",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 4 (développements limités)",
+     "enonce": "Rappeler les DL usuels utilisés.\n1. DL en $0$ à l'ordre $3$ de $f(x)=\\cos(x)e^{-2x}$.\n2. (a) DL en $0$ à l'ordre $4$ de $g(x)=\\frac1{\\sqrt{1+x^2}}$. (b) DL en $0$ à l'ordre $4$ de $h(x)=\\ln(1+g(x))$.",
+     "sol": "**1.** $\\left(1-\\frac{x^2}2+o(x^3)\\right)\\left(1-2x+2x^2-\\frac43x^3+o(x^3)\\right)=1-2x+\\frac{3x^2}2-\\frac{x^3}3+o(x^3)$.\n\n**2.** $(1+u)^{-1/2}$ avec $u=x^2$ : $1-\\frac12x^2+\\frac{(-\\frac12)(-\\frac32)}2x^4+o(x^4)=1-\\frac{x^2}2+\\frac{3x^4}8+o(x^4)$.\n\n**3.** $h(x)=\\ln\\left(2-\\frac{x^2}2+\\frac{3x^4}8\\right)=\\ln2+\\ln(1+u)$ avec $u=-\\frac{x^2}4+\\frac{3x^4}{16}\\to0$ et $u^2=\\frac{x^4}{16}+o(x^4)$. $h(x)=\\ln2-\\frac{x^2}4+\\frac{3x^4}{16}-\\frac{x^4}{32}+o(x^4)=\\ln2-\\frac{x^2}4+\\frac{5x^4}{32}+o(x^4)$.",
+     "formules": "$\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$ · produit de DL : tronquer à l'ordre voulu · $(1+u)^\\alpha=1+\\alpha u+\\frac{\\alpha(\\alpha-1)}2u^2+o(u^2)$ avec $u=x^2$, $\\alpha=-\\frac12$ · $\\ln(ab)=\\ln a+\\ln b$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "fx3",
+     "src": "Examen S2-B3 APEF mars 2026, ex. 5 (calcul de limites)",
+     "enonce": "1. Calculer $\\displaystyle\\lim_{x\\to0}\\frac{-1+x+\\ln(1-x)+\\cos x}{1-(1-x)^\\pi}$.\n2. Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(1+\\sin\\frac1x\\right)^x$.",
+     "sol": "**1.** $N(x)=-1+x-x-\\frac{x^2}2+1-\\frac{x^2}2+o(x^2)=-x^2+o(x^2)\\sim-x^2$. $D(x)=1-(1-\\pi x+o(x))\\sim\\pi x$. $\\frac ND\\sim-\\frac x\\pi\\to0$.\n\n**2.** $\\left(1+\\sin\\frac1x\\right)^x=e^{x\\ln(1+\\sin\\frac1x)}=e^{x\\ln(1+\\frac1x+o(\\frac1x))}=e^{x(\\frac1x+o(\\frac1x))}=e^{1+o(1)}$. La limite vaut $e$.",
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $(1+u)^\\alpha=1+\\alpha u+o(u)$ · équivalent d'un quotient = quotient des équivalents · $a^b=e^{b\\ln a}$ · $\\sin u=u+o(u)$ · $\\ln(1+u)=u+o(u)$",
+     "duree": 10,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "limite-dl",
+    "dl-operations"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "fz1",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}\\frac{e^x-\\sqrt{1+2x}}{x^2}$.",
+     "ans": "1",
+     "sol": "$\\sqrt{1+2x}=1+x-\\frac{x^2}2+o(x^2)$ et $e^x=1+x+\\frac{x^2}2+o(x^2)$. Différence : $x^2+o(x^2)$. Limite $1$.",
+     "duree": 7,
+     "formules": "$\\sqrt{1+u}=1+\\frac u2-\\frac{u^2}8+o(u^2)$ · $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$",
+     "type": "value"
+    },
+    {
+     "id": "fz2",
+     "enonce": "DL de $\\ln(1+x\\sin x)$ en $0$ à l'ordre $4$.",
+     "ans": "x**2-2*x**4/3",
+     "sol": "$u=x\\sin x=x^2-\\frac{x^4}6+o(x^4)$, $u^2=x^4+o(x^4)$. $\\ln(1+u)=u-\\frac{u^2}2=x^2-\\frac{x^4}6-\\frac{x^4}2=x^2-\\frac{2x^4}3+o(x^4)$.",
+     "duree": 7,
+     "formules": "$\\sin u=u-\\frac{u^3}6+\\frac{u^5}{120}+o(u^5)$ · $\\ln(1+u)=u-\\frac{u^2}2+\\frac{u^3}3-\\frac{u^4}4+o(u^4)$ · composition : poser $u\\to0$, calculer $u^2$, $u^3$ à l'ordre voulu",
+     "type": "value"
+    },
+    {
+     "id": "fz3",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to+\\infty}\\left(x^2\\left(e^{1/x}-1\\right)-x\\right)$.",
+     "ans": "Rational(1,2)",
+     "sol": "Avec $X=\\frac1x\\to0$ : $e^X-1=X+\\frac{X^2}2+o(X^2)$, donc $x^2\\left(e^{1/x}-1\\right)=x+\\frac12+o(1)$. Limite $\\frac12$.",
+     "duree": 7,
+     "formules": "poser $X=\\frac1x\\to0$ · $e^u=1+u+\\frac{u^2}2+\\frac{u^3}6+o(u^3)$",
+     "type": "value"
+    },
+    {
+     "id": "fz4",
+     "enonce": "Calculer $\\displaystyle\\lim_{x\\to0}(\\cos x)^{1/x^2}$.",
+     "ans": "exp(Rational(-1,2))",
+     "sol": "$(\\cos x)^{1/x^2}=e^{\\frac{\\ln\\cos x}{x^2}}$ et $\\ln\\cos x=\\ln\\left(1-\\frac{x^2}2+o(x^2)\\right)\\sim-\\frac{x^2}2$. L'exposant tend vers $-\\frac12$ : limite $e^{-1/2}=\\frac1{\\sqrt e}$.",
+     "duree": 7,
+     "formules": "$a^b=e^{b\\ln a}$ · $\\cos u=1-\\frac{u^2}2+\\frac{u^4}{24}+o(u^4)$ · $\\ln(1+u)\\sim u$ en $0$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

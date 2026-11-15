@@ -1367,3 +1367,97 @@ button {
     color: var(--text-muted);
     font-size: 0.85rem;
 }
+
+/* ---------------------------------------------------------- THÈMES (accueil) ---- */
+.theme-section {
+    border: 2px solid var(--border-color);
+    background: var(--bg-color);
+}
+
+.theme-header-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.1rem;
+    background: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.theme-header-btn .cat-count {
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--bg-color);
+}
+
+.theme-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-icon {
+    width: 1.6rem;
+    text-align: center;
+}
+
+.theme-section.expanded > .theme-header-btn .cat-chevron {
+    transform: rotate(90deg);
+}
+
+.theme-body {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+}
+
+.theme-section.expanded > .theme-body {
+    display: flex;
+}
+
+.theme-all-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: var(--accent-color);
+    color: #FFF;
+    border: 2px solid var(--border-color);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.theme-all-btn:hover {
+    background: var(--accent-hover);
+}
+
+.subcat-course-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 800;
+}
+
+.course-btn {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Home: paper levels (red) and full course (blue), same shape as "Tout doomscroller" */
+a.quick-all-btn { text-decoration: none; box-sizing: border-box; }
+.quick-action-wrap .quick-all-btn + .quick-all-btn { margin-top: 10px; }
+.quick-all-btn.quick-red { background: var(--accent-color); border-color: var(--accent-color); }
+.quick-all-btn.quick-red:hover { background: var(--accent-hover); }
+.quick-all-btn.quick-blue { background: #2563C9; border-color: #2563C9; }
+.quick-all-btn.quick-blue:hover { background: #1D4FA3; }
+
+/* Scroll du cours (scroll.js) : formule sous le titre */
+.card-front .formule { font-weight: 400; margin-top: 1rem; }
+.card-back hr { border: 0; margin: 0.75rem 0; }

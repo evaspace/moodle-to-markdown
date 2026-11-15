@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Niveau {{ lvl.n }} · {{ subject.titre }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/niveaux.css?v=10">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="lv-page">
+<div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}">
+  <nav class="lv-bar"><a href="/niveaux">← Mes niveaux</a>{% if mix %}<span class="lv-muted">Tout confondu · {{ subject.ecue }}</span>{% endif %}<span class="lv-muted"><strong id="xp">{{ xp }}</strong> pts · {{ percent }} %</span></nav>
+  <h1>Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
+  <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"
+       aria-label="Progression totale {{ subject.titre }}"><span id="total-bar" style="width: {{ percent }}%"></span></div>
+  <p class="lv-muted"><span id="total-pct">{{ percent }}</span> % de toutes les formules de « {{ subject.titre }} » réussies</p>
+  <p>Formules du niveau <span class="lv-squares" role="img" aria-label="{{ squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ squares|length }}">{% for q in squares %}<i class="{{ q.state }}{{ ' cur' if q.id == exo.id }}" data-exo="{{ q.id }}"></i>{% endfor %}</span>
+    <span class="lv-muted">toutes en vert = niveau validé</span></p>
+  {% if practice %}
+    <p class="lv-practice">Entraînement libre : ce niveau ne change pas ta progression. Ton niveau actuel est le {{ current }}.
+      <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
+  {% endif %}
+
+  <div class="lv-statement">{{ exo.enonce|safe }}</div>
+  {% if exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
+
+  <div class="lv-row">
+    <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
+    <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
+    <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
+  </div>
+  <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
+
+  <p class="lv-muted" id="timer-note" role="status"></p>
+
+  <section class="lv-notions lv-fiche" id="fiche" hidden>
+    <h2 class="lv-notions-title">Fiche du chapitre : {{ subject.titre }}</h2>
+    {% for n in chapter %}
+    <div class="lv-notion"><h3>{{ n.titre }}</h3><div class="formule">{{ n.formule|safe }}</div></div>
+    {% endfor %}
+    {% if fiche %}<h3>Toutes les formules des annales, par type d'exercice</h3>{{ fiche|safe }}{% endif %}
+  </section>
+
+  <section class="lv-notions" id="notions" hidden>
+    <h2 class="lv-notions-title">Formules de la solution</h2>
+    {% if exo.formules %}<div class="lv-notion"><div class="formule">{{ exo.formules|safe }}</div></div>
+    <h3>Rappel de cours du niveau</h3>{% endif %}
+    {% for n in notions %}
+    <div class="lv-notion">
+      <h3>{{ n.titre }}</h3>
+      <div class="formule">{{ n.formule|safe }}</div>
+      <div class="lv-muted">{{ n.exemple|safe }}</div>
+      <details><summary>Aller au cours</summary>{{ n.cours|safe }}</details>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section class="lv-solution" id="solution" hidden>
+    <h2>Correction</h2>
+    {{ exo.sol|safe }}
+  </section>
+
+  <p class="lv-muted" id="verdict-hint">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p>
+  <div class="lv-row">
+    <button class="lv-btn ok" type="button" id="btn-ok" disabled>Réussi</button>
+    <button class="lv-btn primary" type="button" id="btn-ko" disabled>Raté</button>
+  </div>
+  <div id="feedback" role="status"></div>
+  <div class="lv-row" id="next" hidden><a class="lv-btn primary" href="{{ mix or '/niveaux/' ~ subject.id ~ ('?n=' ~ lvl.n if practice else '') }}">Exercice suivant</a></div>
+</div>
+<canvas id="gore-canvas" class="gore-canvas lv-gore" aria-hidden="true"></canvas>
+<div class="bottom-cat-wrap lv-cat">
+  <div id="cat-bubble" class="cat-speech-bubble hidden"></div>
+  <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
+</div>
+<script src="/static/cat.js?v=20261114b"></script>
+<script src="/static/niveaux.js?v=7"></script>
+</body>
+</html>

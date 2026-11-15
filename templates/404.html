@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Page introuvable · Epita Doomscrolling</title>
+  <link rel="icon" type="image/jpeg" href="/static/cat.jpg">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/niveaux.css?v=5">
+</head>
+<body class="lv-page">
+<div class="lv-wrap">
+  <nav class="lv-bar"><a href="/">← Fil de révision</a></nav>
+  <h1>404 : cette page n'existe pas</h1>
+  <p>Le chat l'a cherchée partout. Il n'a pas supporté.</p>
+  <p class="lv-muted">Adresse demandée : <strong>{{ path }}</strong></p>
+  <div class="lv-row">
+    <a class="lv-btn primary" href="/niveaux">Mes niveaux</a>
+    <a class="lv-btn" href="/">Fil de révision</a>
+    <a class="lv-btn" href="/cours/">Cours</a>
+  </div>
+</div>
+<canvas id="gore-canvas" class="gore-canvas lv-gore" aria-hidden="true"></canvas>
+<div class="bottom-cat-wrap lv-cat">
+  <div id="cat-bubble" class="cat-speech-bubble hidden"></div>
+  <div class="mascot-frame"><img src="/static/angry-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-angry" alt="Le chat, furieux"></div>
+</div>
+<script src="/static/cat.js?v=20261114b"></script>
+<script>
+  (function () {
+    const img = document.getElementById('chill-cat'), canvas = document.getElementById('gore-canvas');
+    const cat = new CatMascotEngine([img]), gore = new PixelGoreFX(canvas, canvas);
+    let t = null;
+    window.showCatBubble = (text, ms) => {
+      const b = document.getElementById('cat-bubble');
+      b.textContent = text; b.classList.remove('hidden');
+      clearTimeout(t); t = setTimeout(() => b.classList.add('hidden'), ms || 1800);
+    };
+    const boom = () => {
+      const r = img.getBoundingClientRect();
+      cat.onWrongAnswer(() => gore.explode(r.left + r.width / 2, r.top + r.height / 2));
+    };
+    img.onclick = boom;
+    setTimeout(boom, 600);
+    setTimeout(() => cat.startIdleLife(), 2500);
+  })();
+</script>
+</body>
+</html>

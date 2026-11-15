@@ -46,3 +46,12 @@ READMEcourse2markdown.md
 .idea/
 .DS_Store
 *.swp
+
+# Flask session key (generated)
+.secret_key
+
+# Heavy / local artefacts
+annales/raw/
+backups/
+*.bak-*
+*.bak

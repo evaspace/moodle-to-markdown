@@ -1,5 +1,5 @@
 # ==============================================================================
-# 🐱 MATHSDOOMSCROLL ++ — Makefile Haute Performance
+# 🐱 EPITADOOMSCROLLING ++ — Makefile Haute Performance
 # Architecture unifiée : Plateforme Web Flask + Scraper Moodle + Pipeline IA Mistral
 # Support officiel Promo 2030 (Blocs B1, B2, B3, B4 & ECUEs)
 # ==============================================================================
@@ -53,8 +53,8 @@ CONFIG_FILE   ?= selected_courses.json
 
 # Serveur distant Hetzner
 REMOTE_HOST       ?= hetzner
-REMOTE_APP_DIR    ?= /opt/pierref/mathsdoomscroll
-REMOTE_CONTAINER  ?= mathsdoomscroll_app
+REMOTE_APP_DIR    ?= /opt/pierref/epitadoomscrolling
+REMOTE_CONTAINER  ?= epitadoomscrolling_app
 
 # Arguments dynamiques Scraper
 SCRAPE_ARGS := --url "$(URL)" --output "$(OUTPUT)"
@@ -93,7 +93,7 @@ all: help
 help:
 	@echo ""
 	@echo "$(BOLD)$(CYAN)==============================================================================$(RESET)"
-	@echo "$(BOLD)$(YELLOW)  🐱 MATHSDOOMSCROLL ++ — Contrôle & Déploiement Intégral$(RESET)"
+	@echo "$(BOLD)$(YELLOW)  🐱 EPITADOOMSCROLLING ++ — Contrôle & Déploiement Intégral$(RESET)"
 	@echo "$(BOLD)$(CYAN)==============================================================================$(RESET)"
 	@echo "  $(BOLD)Plateforme Web :$(RESET) Flask / SQLite / Docker / Spaced Repetition"
 	@echo "  $(BOLD)Pipeline IA    :$(RESET) Mistral AI ($(QCM_MODEL)) -> QCM & Flashcards LaTeX"
@@ -191,7 +191,7 @@ check-env:
 	@$(PYTHON) -c "import os; from dotenv import load_dotenv; load_dotenv(); k = os.getenv('MISTRAL_API_KEY'); print('  ' + ('$(GREEN)✔ Clé MISTRAL_API_KEY détectée (' + str(len(k)) + ' cars)$(RESET)' if k else '$(RED)✘ MISTRAL_API_KEY absente$(RESET)'))"
 
 info:
-	@echo "$(BOLD)$(CYAN)Informations Système & MathsDoomscroll :$(RESET)"
+	@echo "$(BOLD)$(CYAN)Informations Système & EpitaDoomscrolling :$(RESET)"
 	@echo "  Python   : $$($(PYTHON) --version 2>/dev/null || echo 'Non installé')"
 	@echo "  Dossier  : $$(pwd)"
 	@echo "  Base DB  : $(DB_PATH) ($$([ -f $(DB_PATH) ] && ls -lh $(DB_PATH) | awk '{print $$5}' || echo 'inexistante'))"
@@ -202,7 +202,7 @@ info:
 # ==============================================================================
 
 serve: setup
-	@echo "$(BOLD)$(GREEN)🌐 Lancement du serveur Web MathsDoomscroll...$(RESET)"
+	@echo "$(BOLD)$(GREEN)🌐 Lancement du serveur Web EpitaDoomscrolling...$(RESET)"
 	@echo "👉 Rendez-vous sur : $(BOLD)$(CYAN)http://localhost:$(PORT)$(RESET)"
 	@$(PYTHON) app.py
 
@@ -224,7 +224,7 @@ docker-build:
 	docker compose build
 
 docker-up:
-	@echo "$(BOLD)$(GREEN)🚀 Démarrage du conteneur MathsDoomscroll...$(RESET)"
+	@echo "$(BOLD)$(GREEN)🚀 Démarrage du conteneur EpitaDoomscrolling...$(RESET)"
 	docker compose up -d
 	@echo "👉 Application accessible sur : $(BOLD)$(CYAN)http://localhost:5080$(RESET)"
 
@@ -238,7 +238,7 @@ docker-logs:
 	docker compose logs -f app
 
 docker-shell:
-	docker exec -it mathsdoomscroll_app /bin/bash
+	docker exec -it epitadoomscrolling_app /bin/bash
 
 # ==============================================================================
 # GÉNÉRATION QCM & FLASHCARDS (MISTRAL AI)

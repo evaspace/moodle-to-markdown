@@ -1,0 +1,14 @@
+/* Footer identique à morgan.pierref.eu (morgan/templates/v2.html + static/css/v2.css) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&display=swap');
+.morgan-footer { container-type: inline-size; padding: 6rem 0 2rem; background: #fff; text-align: center; overflow: hidden; position: relative; z-index: 5; font-family: 'Space Grotesk', sans-serif !important; text-transform: none; }
+.morgan-footer *:not(.pierref-review-widget *) { font-family: inherit; }
+.morgan-footer-nav { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; padding: 0 1rem; font-size: .95rem; font-weight: 700; letter-spacing: .05em; }
+.morgan-footer-nav a { color: #111827; text-decoration: none; transition: color .2s; padding: .5rem 0; }
+.morgan-footer-nav a.mf-muted { color: #6b7280; }
+.morgan-footer-nav a.mf-credits { color: #ec6a11; font-weight: 800; border-bottom: 2px solid #ec6a11; padding-bottom: 2px; }
+.morgan-footer-nav a:hover { color: #ec6a11; }
+.morgan-footer .pierref-review-widget { max-width: 520px; margin: 0 auto 2.5rem; }
+.mf-huge { font-weight: 900; font-size: 15cqw; line-height: .8; color: transparent; -webkit-text-stroke: 2px #e5e7eb; opacity: .5; transition: color .3s, opacity .3s; user-select: none; }
+.mf-huge:hover { color: #111827; -webkit-text-stroke: 0; opacity: 1; }
+.mf-copy { margin: 1.5rem 1rem 0; font-size: .8rem; color: #6b7280; letter-spacing: .1em; text-transform: uppercase; }
+#landing-screen .morgan-footer { margin: 2.5rem -1.25rem calc(-1.5rem - var(--safe-bottom)); }

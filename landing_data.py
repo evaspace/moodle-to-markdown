@@ -280,10 +280,10 @@ PROJECTS = [
         "cta": "STAY_FOCUSED"
     },
     {
-        "id": "mathsdoomscroll",
-        "image": "mathsdoomscroll_landing_page.png",
-        "name": "Maths Doomscrolling",
-        "url": "https://mathsdoomscrolling.pierref.eu",
+        "id": "epitadoomscrolling",
+        "image": "epitadoomscrolling_landing_page.png",
+        "name": "Epita Doomscrolling",
+        "url": "https://epitadoomscrolling.pierref.eu",
         "category": "DEPLOYMENTS",
         "badge": "EdTech_Gamification",
         "year": "2026",

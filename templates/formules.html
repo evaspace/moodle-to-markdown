@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Fiche des formules · Epita Doomscrolling</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/niveaux.css?v=9">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="lv-page">
+<div class="lv-wrap">
+  <nav class="lv-bar"><a href="/niveaux">← Mes niveaux</a></nav>
+  <h1>Fiche des formules</h1>
+  <p>Toutes les formules qui servent à résoudre les annales de maths, par type d'exercice. Le nombre entre parenthèses compte les exercices d'annales de ce type.</p>
+  <ul class="lv-levels">
+    {% for s in sections %}<li><a href="#{{ s.id }}"><span>{{ s.titre }}</span></a></li>{% endfor %}
+  </ul>
+  {% for s in sections %}
+  <section class="lv-fiche" id="{{ s.id }}">
+    <h2>{{ s.titre }}</h2>
+    {{ s.html|safe }}
+  </section>
+  {% endfor %}
+</div>
+<script>
+window.addEventListener('load', () => window.renderMathInElement && renderMathInElement(document.body, {
+  delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }], throwOnError: false }));
+</script>
+</body>
+</html>

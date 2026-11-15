@@ -1,0 +1,118 @@
+{
+ "_doc": "Single source of truth: subject > semester > ECUE > Moodle chapters > level paths > past exams > exam period. Checked by parcours/build.py (every path must exist). Promo 2031. Exam dates are not published: usually just before each holiday; past January exams in annales are B2.",
+ "promo": 2031,
+ "annales_root": "annales/raw",
+ "moodle_root": "EPITA_Moodle_Notes_MD",
+ "matieres": [
+  {
+   "id": "maths",
+   "titre": "Mathématiques",
+   "semestres": [
+    {
+     "id": "S1",
+     "moodle": "S1-MATHS-2031",
+     "ecues": [
+      {
+       "id": "OBM",
+       "titre": "Outils de base mathématiques",
+       "bloc": "B1",
+       "periode_examen": "fin octobre (avant la Toussaint), rattrapage ensuite",
+       "chapitres": ["24_Cours 6 - compléments Séminaire - ECUE OBM", "25_Logique", "26_Raisonnements", "27_Ensembles", "28_Ensembles finis", "29_Applications - image directe, image réciproque, antécédents", "30_Injections, surjections, bijections"],
+       "parcours": ["maths-s1-obm"],
+       "a_faire": [],
+       "hors_programme_2031": ["nombres complexes (présents au B1-OBM 2024, absents de l'OBM 2031)"],
+       "annales": [
+        "S1/Midterms/Maths PC/2029/PC/OBM/midterm-2029-s1-maths-subject-fr.pdf",
+        "S1/Midterms/Maths PC/2028/PC/LE/midterm-2028-s1-maths-subject-fr.pdf",
+        "S1/Midterms/Maths PC/2028/PC/LE/midterm-2028-s1-maths-correction-fr.pdf"
+       ]
+      },
+      {
+       "id": "DP",
+       "titre": "Dénombrement et probabilités",
+       "bloc": "B1",
+       "periode_examen": "fin octobre (avant la Toussaint), rattrapage ensuite",
+       "chapitres": ["06_Cours 1 - Dénombrement - ECUE DP", "07_Cours 2 - Probabilités finies - ECUE DP", "08_Espaces probabilisés", "09_Probabilités conditionnelles", "10_Variables aléatoires", "11_Démonstrations à connaître"],
+       "parcours": ["maths-s1-dp"],
+       "a_faire": [],
+       "annales": [
+        "S1/Midterms/Maths PC/2029/PC/DP/midterm-2029-s1-maths-subject-fr.pdf",
+        "S1/Midterms/Maths PC/2028/PC/DP/midterm-2028-s1-maths-subject-fr.pdf",
+        "S1/Midterms/Maths PC/2028/PC/DP/midterm-2028-s1-maths-correction-fr.pdf"
+       ]
+      },
+      {
+       "id": "APIS",
+       "titre": "Analyse : primitives, intégrales, suites",
+       "bloc": "B2",
+       "periode_examen": "tests à distance 16 nov. et 7 déc. 2026 ; examen B2 avant Noël ou en janvier (les annales B2 sont de janvier)",
+       "chapitres": ["12_Cours 3 - Primitives et intégrales - ECUE APIS", "13_Primitive et intégrale d'une fonction - révisions", "14_Intégration par parties et changement de variable", "15_Cours 4 - Suites numériques - ECUE APIS", "16_Introduction aux suites numériques", "17_Limite d'une suite numérique", "18_Exemples remarquables", "19_Théorèmes de convergence", "20_Suites récurrentes", "21_Comparaisons de suites", "22_Démonstrations à connaître", "23_Cours 5 - Equations différentielles (S2)"],
+       "parcours": ["maths-s1-apis-integrales", "maths-s1-apis-suites", "maths-s1-apis-edo"],
+       "a_faire": [],
+       "annales": [
+        "S1/Finals/Maths PC/2028/PC/ASI/final-2028-s1-maths-subject-fr.pdf",
+        "S1/Finals/Maths PC/2028/PC/ASI/final-2028-s1-maths-correction-fr.pdf",
+        "S1/Finals/Maths PC/2029/PC/SR/final-2029-s1-maths-subject-fr.pdf",
+        "S1/Finals/Maths PC/2027/final-2027-s1-maths-subject-fr.pdf",
+        "S1/Finals/Maths PC/2027/final-2027-s1-maths-correction-fr.pdf",
+        "S1/Finals/Maths PC/2025/final-2025-s1-maths-subject-fr.pdf",
+        "S1/Finals/Maths PC/2024/final-2024-s1-maths-subject-fr.pdf"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "S2",
+     "moodle": "S2-MATHS-2030",
+     "_note": "Moodle S2 2031 not published yet: structure of promo 2030.",
+     "ecues": [
+      {
+       "id": "APEF",
+       "titre": "Analyse : polynômes, EDO, fonctions",
+       "bloc": "B3",
+       "periode_examen": "avant les vacances de printemps",
+       "chapitres": ["05_Cours 1 - Equations différentielles linéaires", "06_Cours 2 - Fonctions - étude locale"],
+       "parcours": ["maths-s2-apef-polynomes", "maths-s2-apef-fonctions"],
+       "a_faire": [],
+       "annales": [
+        "S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-subject-fr.pdf",
+        "S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-subject-fr.pdf",
+        "S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-correction-fr.pdf",
+        "S2/Midterms/Maths PC/2030/PC/APEF/midterms-2030-s2-apef-correction-fr.pdf"
+       ]
+      },
+      {
+       "id": "EV",
+       "titre": "Espaces vectoriels",
+       "bloc": "B3/B4",
+       "periode_examen": "avant les vacances de printemps puis avant l'été",
+       "chapitres": ["07_Cours 3 - Espaces vectoriels", "08_Cours 4 - Base et dimension d'un espace vectoriel"],
+       "parcours": ["maths-s2-ev"],
+       "a_faire": [],
+       "annales": [
+        "S2/Midterms/Maths PC/2029/PC/EV/midterm-2029-s2-maths-subject-fr.pdf",
+        "S2/Midterms/Maths PC/2028/PC/EV/midterm-2028-s2-maths-subject-fr.pdf",
+        "S2/Finals/Maths PC/2028/PC/EV/final-2028-s2-maths-subject-fr.pdf",
+        "S2/Finals/Maths PC/2030/PC/EV/final-2030-s2-ev-subject-fr.pdf"
+       ]
+      },
+      {
+       "id": "ALM",
+       "titre": "Applications linéaires et matrices",
+       "bloc": "B4",
+       "periode_examen": "avant l'été",
+       "chapitres": ["09_Cours 5 - Applications linéaires", "10_Cours 6 - Matrices", "11_7 - Résolution de systèmes linéaires"],
+       "parcours": ["maths-s2-alm"],
+       "a_faire": [],
+       "annales": [
+        "S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-subject-fr.pdf",
+        "S2/Finals/Maths PC/2028/PC/ALM/final-2028-s2-maths-subject-fr.pdf",
+        "S2/Finals/Maths PC/2030/PC/ALM/final-2030-s2-alm-subject-fr.pdf"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

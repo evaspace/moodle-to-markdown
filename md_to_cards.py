@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-md_to_cards.py — Convertisseur Markdown EPITA → blocs de cartes MathsDoomscroll.
+md_to_cards.py — Convertisseur Markdown EPITA → blocs de cartes EpitaDoomscrolling.
 
 Cible : le format texte interprété par parse_blocks() (app.py:71).
 L'application NE LIT AUCUN JSON de cartes ; le LaTeX reste en texte brut.
@@ -77,7 +77,7 @@ SELECTED_COURSES = "selected_courses.json"
 SYLLABUS = "SYLLABUS_ORGANISATION.md"
 MAX_CHUNK_CHARS = 14000  # generate_qcms.py:295 — troncature sécurisée tokens
 REMOTE_HOST = "hetzner"
-REMOTE_CONTAINER = "mathsdoomscroll_app"
+REMOTE_CONTAINER = "epitadoomscrolling_app"
 REMOTE_DB = "/app/cards.db"
 
 # ------------------------------------------------------- Pass C v2 — modèles --
@@ -528,6 +528,34 @@ def disambiguate_front(block: CardBlock, index: CourseIndex,
 
 
 # ------------------------------------------------------- validation parseur --
+def filter_valid_blocks(raw: str) -> tuple[str, int, int]:
+    """Nettoie la sortie LLM puis ne garde que les blocs valides (un par un).
+
+    Retire le gras Markdown et les blocs vides, rejette les QCM dont deux choix
+    sont identiques. Retourne (texte_filtré, n_gardés, n_rejetés).
+    """
+    from app import parse_blocks
+    raw = re.sub(r"```[a-zA-Z]*", "", raw).replace("**", "")
+    kept, dropped = [], 0
+    for block in re.split(r"(?m)^\s*---\s*$", raw):
+        block = block.strip()
+        if not block:
+            continue
+        n, errors = validate_with_parse_blocks(block, strict_generated=True)
+        if errors or n != 1:
+            dropped += 1
+            continue
+        card = parse_blocks(block)[0][0]
+        if card.get("type") == "QCM":
+            texts = [re.sub(r"\s+", " ", c.get("text", "")).strip().lower()
+                     for c in json.loads(card["payload"]).get("choices", [])]
+            if len(set(texts)) != len(texts):
+                dropped += 1
+                continue
+        kept.append(block)
+    return "\n---\n".join(kept) + ("\n---" if kept else ""), len(kept), dropped
+
+
 def validate_with_parse_blocks(text: str, strict_generated: bool = False) -> tuple[int, list[str]]:
     """Passe le .txt généré dans le VRAI parseur de l'application (app.py:71).
 
@@ -559,6 +587,18 @@ def validate_with_parse_blocks(text: str, strict_generated: bool = False) -> tup
 
 
 # ----------------------------------------------------------- backends LLM --
+def force_cat(raw: str, category: str, subcategory: str) -> str:
+    """Impose la catégorie/sous-catégorie du resolver (le LLM les réécrit parfois)."""
+    return re.sub(r"(?m)^CAT:.*$", lambda _m: f"CAT: {category} / {subcategory}", raw)
+
+
+def clean_course_output(raw: str) -> str:
+    """Le LLM écrit parfois « --- Intuition : … » : ce « --- » casserait le découpage
+    en blocs. On le retire (la phrase reste dans R:), et on enlève le gras Markdown."""
+    raw = raw.replace("**", "")
+    return re.sub(r"(?m)^---[ \t]+(?=\S)", "", raw)
+
+
 SYSTEM_PROMPT_COURSE = (
     "Tu es un professeur d'école d'ingénieurs (EPITA). Tu résumes un chapitre "
     "de cours sous forme de cartes au FORMAT TEXTE STRICT ci-dessous.\n\n"
@@ -575,7 +615,7 @@ SYSTEM_PROMPT_COURSE = (
     "2. LaTeX standard : $...$ inline et $$...$$ pour les équations.\n"
     "3. Une carte COURSE = une idée atomique ; titre court et réponse concise.\n"
     "4. Utilise uniquement les informations du texte fourni. N'invente aucune formule, hypothèse, valeur ou lien ; ignore les notions ambiguës/incomplètes.\n"
-    "5. Dans R:, ajoute une intuition utile (pourquoi le résultat est vrai, quand l'utiliser, ou le piège à éviter), sans dépasser 600 caractères.\n"
+    "5. Dans R:, ajoute une intuition utile (pourquoi le résultat est vrai, quand l'utiliser, ou le piège à éviter), sans dépasser 600 caractères. Écris cette intuition sur la ligne suivante du R:, SANS la faire commencer par \"---\" (réservé au séparateur de cartes).\n"
 )
 # La grammaire ci-dessus reprend SYSTEM_PROMPT de generate_qcms.py:30-61
 # (format texte brut, blocs séparés par ---), adaptée aux cartes COURSE.
@@ -965,6 +1005,8 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
                              subcategory=subcategory, error=str(e)[:200])
         return "FAILED", None
 
+    raw = force_cat(clean_course_output(raw), category, subcategory)
+
     # Validation 1 : parse_blocks (grammaire stricte)
     n_cards, errors = validate_with_parse_blocks(raw, strict_generated=True)
     if errors or n_cards == 0:
@@ -1005,16 +1047,26 @@ def ensure_course_card(category: str, subcategory: str, chapter_path: Path,
     return "GENERATED", block
 
 
+MIN_KEPT_QCM = 4  # cartes valides minimum pour accepter une génération
+MIN_QCM_PER_CHAPTER = 8  # en dessous, le chapitre est complété (Passe D)
+
+
+def count_qcm_rows(index, category: str, subcategory: str) -> int:
+    return sum(1 for r in index.rows
+               if r.get("type") in ("QCM", "TF")
+               and r.get("category") == category
+               and r.get("subcategory") == subcategory)
+
+
 SYSTEM_PROMPT_QCM = (
-    "Tu es un professeur d'école d'ingénieurs (EPITA). Génère des cartes QCM "
-    "et Vrai/Faux qui testent la COMPRÉHENSION CONCRÈTE, pas la mémoire factuelle. "
-    "Chaque QCM doit demander de raisonner, appliquer ou analyser — jamais de "
-    "calculer un PGCD ou une racine.\n\n"
+    "Tu es un professeur d'école d'ingénieurs (EPITA). Génère BEAUCOUP de cartes "
+    "QCM et Vrai/Faux FACILES et ÉVIDENTES, pour réviser vite en doomscrollant : "
+    "on doit pouvoir répondre en quelques secondes si on a juste compris le cours.\n\n"
     "IMPORTANT : ne réponds qu'avec les blocs de cartes, aucun texte hors-format.\n\n"
     "Format (blocs séparés par ---) :\n\n"
     "CAT: {Matière} / {Chapitre}\n"
-    "Q: [QCM] {question conceptuelle}\n"
-    "R: {explication concise pourquoi la réponse est correcte}\n"
+    "Q: [QCM] {question courte et claire}\n"
+    "R: {explication en 1-2 phrases}\n"
     "C1: {choix A}\n"
     "C2: {choix B}\n"
     "C3: [x] {choix C juste}\n"
@@ -1022,19 +1074,26 @@ SYSTEM_PROMPT_QCM = (
     "---\n\n"
     "Pour les questions Vrai/Faux:\n\n"
     "CAT: {Matière} / {Chapitre}\n"
-    "Q: [TF] {affirmation à évaluer}\n"
-    "R: {explication}\n"
+    "Q: [TF] {affirmation courte}\n"
+    "R: {explication en 1-2 phrases}\n"
     "A: vrai\n"
     "---\n\n"
     "Règles :\n"
     "1. Chaque bloc commence par CAT: puis Q: avec [QCM] ou [TF].\n"
     "2. LaTeX standard : $...$ inline, $$...$$ display.\n"
-    "3. QCM : exactement 4 choix (C1-C4), exactement un seul [x] = bonne réponse.\n"
-    "4. TF : une ligne A: vrai ou A: faux.\n"
-    "5. Génère 2-3 QCM et 1-2 TF par bloc de réponse.\n"
-    "6. Questions de NIVEAU difficile : application, analyse, synthèse.\n"
-    "7. Utilise uniquement le contenu fourni ; n'invente aucune formule, hypothèse ou valeur.\n"
-    "8. Chaque R: explique brièvement le raisonnement et l'intuition, en 600 caractères maximum.\n"
+    "3. QCM : exactement 4 choix (C1-C4), exactement un seul [x] = bonne réponse. "
+    "Varie la position du [x] (pas toujours C3).\n"
+    "4. TF : une ligne A: vrai ou A: faux. Mets environ la moitié de faux.\n"
+    "5. Génère 6 à 8 QCM et 6 à 8 TF au total pour le contenu fourni.\n"
+    "6. NIVEAU FACILE : uniquement des notions universelles du chapitre — "
+    "définitions de base, propriétés connues, vocabulaire, exemples évidents, "
+    "ordres de grandeur simples. Une personne qui a lu le cours une fois doit "
+    "répondre juste. Pas de piège, pas de calcul long, pas de cas limite, "
+    "pas de détail obscur.\n"
+    "7. Les mauvais choix doivent être clairement faux pour qui a compris "
+    "(pas de quasi-synonymes ni de réponses ambiguës).\n"
+    "8. Utilise uniquement le contenu fourni ; n'invente aucune formule, hypothèse ou valeur.\n"
+    "9. Chaque R: tient en 300 caractères maximum.\n"
 )
 
 
@@ -1059,13 +1118,7 @@ def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
     key = chapter_key(folder, chapter)
 
     # Vérifier si des QCM existent déjà sur le serveur
-    has_qcm = any(
-        r.get("type") in ("QCM", "TF") and
-        r.get("category") == category and
-        r.get("subcategory") == subcategory
-        for r in index.rows
-    )
-    if has_qcm:
+    if count_qcm_rows(index, category, subcategory) >= MIN_QCM_PER_CHAPTER:
         tracker.mark_chapter(key, "SKIPPED_EXISTS_QCM", category=category,
                              subcategory=subcategory)
         return "SKIPPED_EXISTS", 0
@@ -1084,8 +1137,8 @@ def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
         return "PENDING_LLM", 0
 
     user_prompt = (
-        f"Génère des cartes QCM et Vrai/Faux pour le chapitre suivant.\n"
-        f"Objectif : tester la COMPRÉHENSION CONCRÈTE (raisonner, appliquer, analyser).\n"
+        f"Génère 6 à 8 QCM et 6 à 8 Vrai/Faux FACILES pour le chapitre suivant.\n"
+        f"Objectif : vérifier les notions de base et évidentes du cours (niveau facile).\n"
         f"Matière : {category}\nChapitre : {clean_chapter_title(chapter)}\n\n"
         f"--- CONTENU COURS (EXTRAITS) ---\n{content[:MAX_CHUNK_CHARS]}"
     )
@@ -1107,12 +1160,13 @@ def ensure_qcm_cards(category: str, subcategory: str, chapter_path: Path,
                              subcategory=subcategory, error=str(e)[:200])
         return "FAILED", 0
 
-    # Validation parse_blocks
-    n_cards, errors = validate_with_parse_blocks(raw, strict_generated=True)
-    if errors or n_cards == 0:
+    # Validation bloc par bloc : on garde les cartes valides, on jette les autres
+    raw, n_cards, n_dropped = filter_valid_blocks(raw)
+    raw = force_cat(raw, category, subcategory)
+    if n_cards < MIN_KEPT_QCM:
         tracker.mark_chapter(key, "FAILED", category=category,
                              subcategory=subcategory,
-                             error="parse_blocks QCM : " + "; ".join(errors[:3]),
+                             error=f"QCM : seulement {n_cards} cartes valides ({n_dropped} rejetées)",
                              model=gen_model)
         return "FAILED", 0
 
@@ -1176,13 +1230,7 @@ def run_pass_d(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
                 continue
 
         # Vérifier si le serveur a déjà un QCM pour ce chapitre
-        has_qcm = any(
-            r.get("type") in ("QCM", "TF") and
-            r.get("category") == category and
-            r.get("subcategory") == subcategory
-            for r in index.rows
-        )
-        if has_qcm:
+        if count_qcm_rows(index, category, subcategory) >= MIN_QCM_PER_CHAPTER:
             stats["skipped_exists"] += 1
             continue
 
@@ -1391,6 +1439,9 @@ def run_pass_c(md_root: Path, resolver: CategoryResolver, index: CourseIndex,
         if key in qcm_chapters:
             stats["chapters_with_qcm"] += 1
         category, subcategory = resolver.resolve(folder, chapter)
+        only_cat = getattr(args, "only_cat", "")
+        if only_cat and only_cat.lower() not in category.lower():
+            continue
 
         # Reprise : FAILED peut être retenté avec --retry-failed
         prev = tracker.data.get("chapters", {}).get(key)
@@ -1448,6 +1499,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--refresh-index", action="store_true",
                     help="reconstruire course_index.json depuis le serveur")
     ap.add_argument("--tracker", default=TRACKER_FILE)
+    ap.add_argument("--only-cat", default="",
+                    help="passe C : ne traiter que les catégories contenant SUBSTR")
     ap.add_argument("--pass-c-limit", type=int, default=0,
                     help="nombre max de chapitres COURSE à générer en LLM (0 = illimité)")
     ap.add_argument("--pass-d-limit", type=int, default=0,
@@ -1482,6 +1535,7 @@ def main(argv: list[str] | None = None) -> int:
 
     tracker = Tracker(args.tracker)
     report: dict = {}
+    backend = None
 
     if "b" in args.only_pass:
         print("\n===== PASSE B — QCM déterministes =====")

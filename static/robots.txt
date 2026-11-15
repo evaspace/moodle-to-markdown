@@ -35,4 +35,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://mathsdoomscrolling.pierref.eu/sitemap.xml
+Sitemap: https://epitadoomscrolling.pierref.eu/sitemap.xml

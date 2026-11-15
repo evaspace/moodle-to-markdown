@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 stage_name="${1:?staged database filename required}"
-container="${REMOTE_CONTAINER:-mathsdoomscroll_app}"
+container="${REMOTE_CONTAINER:-epitadoomscrolling_app}"
 cd "$(dirname "$0")"
 
 mkdir -p backups

@@ -1,4 +1,4 @@
-# RAPPORT — Mission PORT (MathsDoomscroll) — tout ce qui a été dit/fait
+# RAPPORT — Mission PORT (EpitaDoomscrolling) — tout ce qui a été dit/fait
 
 _Dernière mise à jour : 2026-10-13. Fichier de synthèse non versionné._
 
@@ -23,9 +23,9 @@ _Dernière mise à jour : 2026-10-13. Fichier de synthèse non versionné._
 - Pipeline existant : `main.py` (scrape Moodle) → `batch_convert.py` (MarkItDown) →
   `EPITA_Moodle_Notes_MD/` (**4 241 .md, 26 Mo — jamais envoyés au serveur**) →
   `generate_qcms.py` (Mistral) → `Generated_QCMs/*.txt` → `sync_to_server.sh` →
-  `import_queue/` → `ingest_all.py` (`docker exec mathsdoomscroll_app`) → `cards.db`.
-- Serveur : `ssh hetzner`, `/opt/pierref/mathsdoomscroll` (alias symlinks
-  `mathsdoomscrolling`, `doomscrolling`), conteneur `mathsdoomscroll_app` (port 5080),
+  `import_queue/` → `ingest_all.py` (`docker exec epitadoomscrolling_app`) → `cards.db`.
+- Serveur : `ssh hetzner`, `/opt/pierref/epitadoomscrolling` (alias symlinks
+  `epitadoomscrolling`, `doomscrolling`), conteneur `epitadoomscrolling_app` (port 5080),
   **926 Mo libres (98 % plein)**.
 
 ## 2. Découverte critique sur les exports QCM Moodle
