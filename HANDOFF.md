@@ -138,3 +138,13 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 - Branch `feat/prerequisite-links` (from `fix/md-to-cards-tests`, from `feat/corriges-s2`). Nothing pushed, main untouched.
 ## Open
 - Code colour per subject (needs a second subject); other subjects (Programmation, Physique, Archi) — ask the user; delete QA account qa_feed1 (needs user OK).
+
+# Handoff — 2026-11-15 (suite 10)
+## Done
+- 2028/2029 S2 exam levels added: EV level 12, APEF polynômes level 11, APEF fonctions level 12, ALM level 13 (branch `feat/prerequisite-links`).
+- First physics path `parcours/src/phys_meca.py` (`physique-s1-meca`, S1 mécanique du point: 15 levels, 73 exos, 13 notions, 22 quiz, variants, FORMULES). Syllabus: matière `physique` (Moodle « Physique - Promo 2030 »), `PATHS` in `build.py`, `FICHE_SECTION` in `levels.py`. Branch `feat/physique-meca`. Tests 26/26, 15 levels checked at 390 px with a QA account (deleted).
+- Decisions (user): subject order physique > archi > électronique > algo > prog > anglais > méthodo; keep complex numbers; do not merge branches; never delete client accounts.
+## Next steps
+1. Physics S2: thermodynamique (B3, `Cours_thermodynamique_V2.pdf`, TD1-3, annales `S2/*/Phys`) then électromagnétisme (B4, `Cours_Electromagnétisme_V1.pdf`, TD3-5). PDFs already downloaded in `annales/raw/S{1,2}/*/Phys` and `S2/TDs/2030/Physique` (32 are scans).
+2. Transcribe physics annales to `annales/md` (not done) and add `FORMULES.md` section « Mécanique » for the course sheet.
+3. Code colour per subject (now two subjects exist). Then Archi.
