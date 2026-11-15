@@ -232,6 +232,21 @@
         "S2/Finals/Phys/2025/final-2025-s2-phys-subject-fr.pdf",
         "S2/Midterms/Phys/2030/midterms-2030-s2-phys-correction-fr.pdf"
        ]
+      },
+      {
+       "id": "Électromagnétisme",
+       "titre": "Électromagnétisme",
+       "bloc": "B4",
+       "periode_examen": "partiel en mai",
+       "chapitres": [
+        "02_Cours",
+        "03_TD_Electromagnétisme"
+       ],
+       "parcours": [
+        "physique-s2-em"
+       ],
+       "a_faire": [],
+       "annales": []
       }
      ]
     }

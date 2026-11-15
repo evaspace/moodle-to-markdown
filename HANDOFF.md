@@ -157,3 +157,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 2. Transcribe S2 physics annales (`annales/raw/S2/*/Phys`, mostly scans) to `annales/md`, add a `Thermodynamique` section in `annales/tools/formules.py`/`index.py` `ORDER`, then `FICHE_SECTION['physique-s2-thermo']` in `levels.py`.
 3. Électromagnétisme path (B4, `Cours_Electromagnétisme_V1.pdf`, TD1&2-5 in `annales/raw/S2/TDs/2030/Physique/B4`).
 4. Code colour per subject; then Archi.
+
+# Handoff — 2026-11-16 (suite)
+## Done
+- Électromagnétisme path `physique-s2-em` (`parcours/src/phys_em.py`): 14 levels, 65 exos (13-14 exam), 8 notions, 16 quiz, 10 variants, FORMULES. Source: course `Cours_Electromagnétisme_V1` + TD1-5 (B4, read as images); no S2 EM exam transcribed. In `PATHS` and `syllabus.json` (S2, B4). Build OK, 26/26 tests, 429 formulas 0 KaTeX error, page 200. Branch `feat/physique-thermo`.
+- Pitfall again: `$0<x<d$` opens a tag; write `0 < x < d`.
+## Next steps
+1. Readings to verify: TD5 ex.2 numbers (q, v, B, E read on scan), TD1 ex.1 circle charge signs (A−, B−, C+, D+).
+2. S2 physics exams also cover mechanics (work, kinetic energy theorem, mechanical energy, Newton with pulley): a mechanics-S2 path is missing.
+3. Transcribe S2 physics annales, add `FICHE_SECTION` for the 3 new physics paths. Browser check at 390 px.
