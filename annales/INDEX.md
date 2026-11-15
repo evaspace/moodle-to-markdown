@@ -1,6 +1,6 @@
-# Index des annales de maths (S1 et S2)
+# Index des annales (maths et physique)
 
-183 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1190 exercices.
+204 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1268 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -369,6 +369,113 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4 : cours (3 points) | démonstration de cours (convergente implique bornée) | APIS (suites) | maths-s1-apis-suites/13 |
 | Exercice 5 : suite récurrente (4,5 points) | suite récurrente $u_{n+1} = f(u_n)$ | APIS (suites) | maths-s1-apis-suites/10 |
 | Exercice 6 : suites extraites (3 points) | suites extraites et divergence | APIS (suites) | maths-s1-apis-suites/11 |
+
+### Partiel n°1 S1 — janvier 2016 (sujet, FR)
+
+`md/S1/Finals/Phys/2020/final-2020-s1-phys-subject-fr.md` — date réelle : janvier 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Cinématique (7 points) | Frenet (vitesse, accélération) et spirale logarithmique en polaires | Mécanique | physique-s1-meca/13 |
+| Exercice 2. Système en équilibre (7 points) | barre contre un mur avec frottement au sol (bilan, moments, réaction, coefficient de frottement statique) | Mécanique | physique-s1-meca/12 |
+| Exercice 3. Cinématique (6 points) | hélice circulaire (cartésiennes puis cylindriques : vitesse, accélération, nature du mouvement) | Mécanique | physique-s1-meca/8 |
+
+### Partiel n°1 S1 — janvier 2017 (sujet, FR)
+
+`md/S1/Finals/Phys/2021/final-2021-s1-phys-subject-fr.md` — date réelle : janvier 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Mouvement en cycloïde (7 points) | cycloïde puis spirale (vitesse, normes, tracé, polaires, rayon de courbure) | Mécanique | physique-s1-meca/3 |
+| Exercice 2. Système en équilibre (6 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 3 (7 points) | piste circulaire puis horizontale avec frottement (théorème de l'énergie cinétique, force de frottement, vitesse, réaction) | Mécanique | physique-s1-meca/13 |
+
+### Partiel 1 S1 — janvier 2018 (corrigé, FR)
+
+`md/S1/Finals/Phys/2022/final-2022-s1-phys-correction-fr.md` — date réelle : janvier 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (6 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 2 (5 points) | bille sur une sphère (Newton en base de Frenet, équation du mouvement, réaction) | Mécanique | physique-s1-meca/13 |
+| Exercice 3 (5 points) | glissement avec frottement sur un guide hémicylindrique (énergie cinétique, énergie potentielle, énergie mécanique, travail de frottement) | Mécanique | physique-s1-meca/13 |
+
+### Partiel 1 S1 — janvier 2018 (sujet, FR)
+
+`md/S1/Finals/Phys/2022/final-2022-s1-phys-subject-fr.md` — date réelle : janvier 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (6 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 2 (5 points) | bille sur une sphère (Newton en base de Frenet, équation du mouvement, réaction) | Mécanique | physique-s1-meca/13 |
+| Exercice 3 (5 points) | glissement avec frottement sur un guide hémicylindrique (énergie cinétique, énergie potentielle, énergie mécanique, travail de frottement) | Mécanique | physique-s1-meca/13 |
+
+### Partiel S1 — juin 2018 (corrigé, FR)
+
+`md/S1/Finals/Phys/2023#/final-2023#-s1-phys-correction-fr.md` — date réelle : juin 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (4 points) | mouvement circulaire à vitesse variable (abscisse curviligne, tour complet, composantes de Frenet) | Mécanique | physique-s1-meca/13 |
+| Exercice 2 (6 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 3 (6 points) | boucle (looping) : énergie mécanique, vitesse, réaction normale | Mécanique | physique-s1-meca/13 |
+
+### Partiel S1 — juin 2018 (sujet, FR)
+
+`md/S1/Finals/Phys/2023#/final-2023#-s1-phys-subject-fr.md` — date réelle : juin 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (4 points) | mouvement circulaire à vitesse variable (abscisse curviligne, tour complet, composantes de Frenet) | Mécanique | physique-s1-meca/13 |
+| Exercice 2 (6 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 3 (6 points) | boucle (looping) : énergie mécanique, vitesse, réaction normale | Mécanique | physique-s1-meca/13 |
+
+### Partiel 1 S1 — janvier 2020 (corrigé, FR)
+
+`md/S1/Finals/Phys/2024/final-2024-s1-phys-correction-fr.md` — date réelle : janvier 2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (5 points) | plan incliné et poulie (Newton sur deux masses, accélération, tension, réaction) | Mécanique | physique-s1-meca/10 |
+| Exercice 2 (5 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 3 (6 points) | solide sur une gouttière en quart de cercle (Newton en base de Frenet, réaction, décollement) | Mécanique | physique-s1-meca/13 |
+
+### Partiel 1 S1 — janvier 2020 (sujet, FR)
+
+`md/S1/Finals/Phys/2024/final-2024-s1-phys-subject-fr.md` — date réelle : janvier 2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 1 (5 points) | plan incliné et poulie (Newton sur deux masses, accélération, tension, réaction) | Mécanique | physique-s1-meca/10 |
+| Exercice 2 (5 points) | équilibre d'une poutre articulée (câble, charge, réaction du mur) | Mécanique | physique-s1-meca/12 |
+| Exercice 3 (6 points) | solide sur une gouttière en quart de cercle (Newton en base de Frenet, réaction, décollement) | Mécanique | physique-s1-meca/13 |
+
+### Partiel S1 — janvier 2022 (sujet, FR)
+
+`md/S1/Finals/Phys/2026/final-2026-s1-phys-subject-fr.md` — date réelle : janvier 2022
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 2. Coordonnées cartésiennes et base de Frenet (11 points) | mouvement circulaire accéléré en cartésien (norme, Frenet, abscisse curviligne, tour complet) | Mécanique | physique-s1-meca/13 |
+| Exercice 3. Coordonnées polaires (6 points) | cercle décrit en polaires (ρ, θ, position, vitesse) | Mécanique | physique-s1-meca/6 |
+
+### Partiel de physique S1 — décembre 2022 (sujet, FR)
+
+`md/S1/Finals/Phys/2027/final-2027-s1-phys-subject-fr.md` — date réelle : décembre 2022
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (6 points, pas de points négatifs pour le QCM) | QCM de statique et d'énergie (moments, travail, théorèmes énergétiques) | Mécanique | physique-s1-meca/12 |
+| Exercice 2. Mouvement elliptique (5,5 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 3. Étude des forces et des moments sur un plongeoir (4,5 points) | plongeoir sur deux appuis (forces, équilibre de translation et de rotation, réactions) | Mécanique | physique-s1-meca/12 |
+| Exercice 4. Condition d'équilibre d'une masse accrochée à deux fils (4 + 2 points) | masse suspendue à deux fils (moments, équilibre de rotation, équation en $\cos\theta$) | Mécanique | physique-s1-meca/12 |
 
 ## S1 — QCM
 
@@ -837,6 +944,124 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 4 : relations (4 points) | propriétés d'une relation, négation, contraposée | OBM | maths-s1-obm/11 |
 | Exercice 5 : intégrales (6 points) | primitive $u'/u$, IPP trigonométrique, changement de variable vers arctan | APIS (intégrales) | maths-s1-apis-integrales/13 |
 | Exercice 6 : nombres complexes (10 points) | nombres complexes (cours, forme algébrique, module, forme exponentielle, équation) | HP (nombres complexes, hors programme 2031) | — |
+
+### Contrôle 1 S1 — novembre 2017 (sujet, FR)
+
+`md/S1/Midterms/Phys/2022/midterm-2022-s1-phys-subject-fr.md` — date réelle : novembre 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (4 points) | mouvement circulaire en cartésien (vitesse, accélération, trajectoire) | Mécanique | physique-s1-meca/7 |
+| Exercice 2 (6 points) | spirale logarithmique en polaires (vitesse, accélération, Frenet) | Mécanique | physique-s1-meca/6 |
+| Exercice 3 (6 points) | base de Frenet (démonstration, abscisse curviligne, rayon de courbure) | Mécanique | physique-s1-meca/13 |
+
+### Contrôle S1 — mai 2018 (corrigé, FR)
+
+`md/S1/Midterms/Phys/2023#/midterm-2023#-s1-phys-correction-fr.md` — date réelle : mai 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (5 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (6 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (9 points) | hélice circulaire (cartésiennes puis cylindriques : vitesse, accélération, nature du mouvement) | Mécanique | physique-s1-meca/8 |
+
+### Contrôle S1 — mai 2018 (sujet, FR)
+
+`md/S1/Midterms/Phys/2023#/midterm-2023#-s1-phys-subject-fr.md` — date réelle : mai 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (5 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (6 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (9 points) | hélice circulaire (cartésiennes puis cylindriques : vitesse, accélération, nature du mouvement) | Mécanique | physique-s1-meca/8 |
+
+### Contrôle 1 S1 — année 2018/2019 (sujet, FR)
+
+`md/S1/Midterms/Phys/2023/midterm-2023-s1-phys-subject-fr.md` — date réelle : année 2018/2019
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (4 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (8 points) | spirale sur un cône en cylindriques (vitesse, accélération, passage en cartésien) | Mécanique | physique-s1-meca/8 |
+| Exercice 3 (4 points) | mouvement circulaire (trajectoire, vitesse, accélération, composantes de Frenet, rayon de courbure) | Mécanique | physique-s1-meca/13 |
+
+### Contrôle 1 S1 — année 2019/2020 (corrigé, FR)
+
+`md/S1/Midterms/Phys/2024/midterm-2024-s1-phys-correction-fr.md` — date réelle : année 2019/2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (6 points) | cycloïde (vitesse, accélération, normes, tracé) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (6 points) | hélice circulaire (cartésiennes puis cylindriques : vitesse, accélération, nature du mouvement) | Mécanique | physique-s1-meca/8 |
+| Exercice 3 (4 points) | mouvement circulaire à vitesse variable (abscisse curviligne, tour complet, composantes de Frenet) | Mécanique | physique-s1-meca/13 |
+
+### Contrôle 1 S1 — année 2019/2020 (sujet, FR)
+
+`md/S1/Midterms/Phys/2024/midterm-2024-s1-phys-subject-fr.md` — date réelle : année 2019/2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (6 points) | cycloïde (vitesse, accélération, normes, tracé) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (6 points) | hélice circulaire (cartésiennes puis cylindriques : vitesse, accélération, nature du mouvement) | Mécanique | physique-s1-meca/8 |
+| Exercice 3 (4 points) | mouvement circulaire à vitesse variable (abscisse curviligne, tour complet, composantes de Frenet) | Mécanique | physique-s1-meca/13 |
+
+### Contrôle 1 S1 — année 2020/2021 (corrigé, FR)
+
+`md/S1/Midterms/Phys/2025/midterm-2025-s1-phys-correction-fr.md` — date réelle : année 2020/2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (5 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (5 points) | mouvement rectiligne oscillant en cartésien (trajectoire, tracé, vitesse) | Mécanique | physique-s1-meca/3 |
+| Exercice 3. Base cylindrique, base de Frenet (6 points) | hélice en cylindriques et Frenet (vitesse, abscisse curviligne, accélération, rayon de courbure) | Mécanique | physique-s1-meca/8 |
+
+### Contrôle 1 S1 — année 2020/2021 (sujet, FR)
+
+`md/S1/Midterms/Phys/2025/midterm-2025-s1-phys-subject-fr.md` — date réelle : année 2020/2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 1 (5 points) | mouvement elliptique en cartésien (trajectoire, vitesse, accélération, $\vec a = -\omega^2\overrightarrow{OM}$) | Mécanique | physique-s1-meca/3 |
+| Exercice 2 (5 points) | mouvement rectiligne oscillant en cartésien (trajectoire, tracé, vitesse) | Mécanique | physique-s1-meca/3 |
+| Exercice 3. Base cylindrique, base de Frenet (6 points) | hélice en cylindriques et Frenet (vitesse, abscisse curviligne, accélération, rayon de courbure) | Mécanique | physique-s1-meca/8 |
+
+### Contrôle S1 — novembre 2021 (corrigé, FR)
+
+`md/S1/Midterms/Phys/2026/midterm-2026-s1-phys-correction-fr.md` — date réelle : novembre 2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (2,5 points, pas de points négatifs) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/2 |
+| Exercice 2. Coordonnées cartésiennes et polaires (8 points) | base polaire (vecteurs unitaires, dérivées, position, vitesse) | Mécanique | physique-s1-meca/6 |
+| Exercice 3. Mouvement d'un projectile (5,5 points) | projectile (équations horaires, trajectoire, vitesse, flèche) | Mécanique | physique-s1-meca/5 |
+| Exercice 4. Accélération en coordonnées polaires (4 points) | accélération polaire (mouvement circulaire, circulaire uniforme) | Mécanique | physique-s1-meca/6 |
+
+### Contrôle S1 — novembre 2021 (sujet, FR)
+
+`md/S1/Midterms/Phys/2026/midterm-2026-s1-phys-subject-fr.md` — date réelle : novembre 2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (2,5 points, pas de points négatifs) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/2 |
+| Exercice 2. Coordonnées cartésiennes et polaires (8 points) | base polaire (vecteurs unitaires, dérivées, position, vitesse) | Mécanique | physique-s1-meca/6 |
+| Exercice 3. Mouvement d'un projectile (5,5 points) | projectile (équations horaires, trajectoire, vitesse, flèche) | Mécanique | physique-s1-meca/5 |
+| Exercice 4. Accélération en coordonnées polaires (4 points) | accélération polaire (mouvement circulaire, circulaire uniforme) | Mécanique | physique-s1-meca/6 |
+
+### Contrôle de physique S1 — octobre 2022 (sujet, FR)
+
+`md/S1/Midterms/Phys/2027/midterm-2027-s1-phys-subject-fr.md` — date réelle : octobre 2022
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (6 points, pas de points négatifs pour le QCM) | QCM de cinématique (vecteurs, polaires, Frenet, trajectoire) | Mécanique | physique-s1-meca/1 |
+| Exercice 2. Cinématique en coordonnées cartésiennes (8 points) | projectile lancé d'une hauteur $h$ (équations horaires, trajectoire, vitesse, accélération, sommet) | Mécanique | physique-s1-meca/5 |
+| Exercice 3. Cinématique en coordonnées polaires et cartésiennes (6 points) | vilebrequin (polaires puis cartésiennes : position, vitesse, accélération du piston) | Mécanique | physique-s1-meca/6 |
 
 ## S1 — Contrôles de TD et feuilles de TD
 
