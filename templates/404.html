@@ -7,11 +7,12 @@
   <title>Page introuvable · Epita Doomscrolling</title>
   <link rel="icon" type="image/jpeg" href="/static/cat.jpg">
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/niveaux.css?v=5">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
+  <link rel="stylesheet" href="/static/niveaux.css?v=11">
 </head>
 <body class="lv-page">
+{% set active = '' %}{% include 'nav.html' %}
 <div class="lv-wrap">
-  <nav class="lv-bar"><a href="/">← Fil de révision</a></nav>
   <h1>404 : cette page n'existe pas</h1>
   <p>Le chat l'a cherchée partout. Il n'a pas supporté.</p>
   <p class="lv-muted">Adresse demandée : <strong>{{ path }}</strong></p>
@@ -46,5 +47,6 @@
     setTimeout(() => cat.startIdleLife(), 2500);
   })();
 </script>
+{% include 'footer.html' %}
 </body>
 </html>

@@ -143,3 +143,13 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .lv-fiche ul { padding-left: 1.2em; margin: 4px 0 20px; }
 .lv-fiche li { line-height: 1.7; overflow-x: auto; overflow-y: hidden; }
 .lv-fiche p { margin-top: 16px; }
+
+/* Navbar commune */
+.app-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; padding: 10px 16px; background: var(--bg-color); border-bottom: 2px solid var(--border-color); }
+.app-nav a { color: var(--text-color); text-decoration: none; font-weight: 700; }
+.app-nav a:hover, .app-nav a:focus-visible, .app-nav a[aria-current] { color: var(--accent-color); }
+.app-nav-brand { margin-right: auto; }
+.app-nav-links { display: flex; gap: 16px; flex-wrap: wrap; }
+.app-nav-me, .app-nav-acc { font-size: 14px; font-weight: 600 !important; color: var(--text-muted) !important; }
+.app-nav-me strong { color: var(--text-color); }
+@media (max-width: 640px) { .app-nav { padding: 8px 12px; } .app-nav-links { order: 3; width: 100%; } }

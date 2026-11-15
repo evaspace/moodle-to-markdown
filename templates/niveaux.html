@@ -6,11 +6,12 @@
   <meta name="robots" content="noindex">
   <title>Mes niveaux · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/niveaux.css?v=8">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
+  <link rel="stylesheet" href="/static/niveaux.css?v=11">
 </head>
 <body class="lv-page">
+{% set active = 'niveaux' %}{% include 'nav.html' %}
 <div class="lv-wrap">
-  <nav class="lv-bar"><a href="/">← Fil de révision</a><span><a href="/formules">Formules</a> · <a href="/stats">Mes stats</a> · <a class="lv-user" href="/compte">{{ username }} · {{ xp }} pts</a></span></nav>
   <h1>Mes niveaux</h1>
   <p>Exercices sur papier, un par formule. Un niveau est validé quand toutes ses formules sont en vert ; un raté passe en rouge, revient plus tard, et fait redescendre d'un niveau (les verts restent acquis).</p>
 
@@ -51,5 +52,6 @@
   {% endfor %}
 </div>
 <script>document.querySelectorAll('.lv-pick input, .lv-pick select').forEach(e => e.addEventListener('change', () => e.form.submit()));</script>
+{% include 'footer.html' %}
 </body>
 </html>

@@ -6,14 +6,15 @@
   <meta name="robots" content="noindex">
   <title>Niveau {{ lvl.n }} · {{ subject.titre }}</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/niveaux.css?v=10">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
+  <link rel="stylesheet" href="/static/niveaux.css?v=11">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="lv-page">
+{% set active = 'niveaux' %}{% include 'nav.html' %}
 <div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}">
-  <nav class="lv-bar"><a href="/niveaux">← Mes niveaux</a>{% if mix %}<span class="lv-muted">Tout confondu · {{ subject.ecue }}</span>{% endif %}<span class="lv-muted"><strong id="xp">{{ xp }}</strong> pts · {{ percent }} %</span></nav>
   <h1>Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
   <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"
        aria-label="Progression totale {{ subject.titre }}"><span id="total-bar" style="width: {{ percent }}%"></span></div>
@@ -79,5 +80,6 @@
 </div>
 <script src="/static/cat.js?v=20261114b"></script>
 <script src="/static/niveaux.js?v=7"></script>
+{% include 'footer.html' %}
 </body>
 </html>

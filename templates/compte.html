@@ -6,11 +6,12 @@
   <meta name="robots" content="noindex">
   <title>Compte · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/niveaux.css?v=8">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
+  <link rel="stylesheet" href="/static/niveaux.css?v=11">
 </head>
 <body class="lv-page">
+{% set active = '' %}{% include 'nav.html' %}
 <div class="lv-wrap">
-  <nav class="lv-bar"><a href="/">← Fil de révision</a><a href="/niveaux">Niveaux</a></nav>
   {% if username %}
     <h1>Connecté : {{ username }}</h1>
     <div class="lv-row">
@@ -69,5 +70,6 @@
   {% endif %}
 </div>
 <script src="/static/niveaux.js?v=4"></script>
+{% include 'footer.html' %}
 </body>
 </html>

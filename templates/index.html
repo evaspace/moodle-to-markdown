@@ -41,10 +41,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
     <!-- Styles & App -->
-    <link rel="stylesheet" href="/static/style.css?v=20261114">
+    <link rel="stylesheet" href="/static/style.css?v=20261115">
     <link rel="stylesheet" href="/static/footer.css?v=20261114">
     <script defer src="/static/cat.js?v=20261114b"></script>
-    <script defer src="/static/app.js?v=20261114b"></script>
+    <script defer src="/static/app.js?v=20261115"></script>
 <!-- geo-head -->
 <meta name="description" content="Apprends les maths et la programmation en scrollant : un fil infini d&#x27;exercices, et les notes de cours EPITA.">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "EpitaDoomscrolling", "url": "https://epitadoomscrolling.pierref.eu/", "description": "Math and programming learning as an endless scroll feed, plus EPITA course notes.", "applicationCategory": "EducationalApplication", "operatingSystem": "Web", "inLanguage": "fr", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "author": {"@type": "Person", "name": "Morgan Pierrefeu", "url": "https://pierref.eu/", "email": "morgan@pierref.eu", "jobTitle": "Engineering student and independent developer", "alumniOf": {"@type": "CollegeOrUniversity", "name": "EPITA"}, "address": {"@type": "PostalAddress", "addressLocality": "Lyon", "addressCountry": "FR"}, "sameAs": ["https://www.linkedin.com/in/morgan-pierrefeu", "https://github.com/evaspace", "https://morgan.pierref.eu/"]}, "creator": {"@type": "Person", "name": "Morgan Pierrefeu", "url": "https://pierref.eu/", "email": "morgan@pierref.eu", "jobTitle": "Engineering student and independent developer", "alumniOf": {"@type": "CollegeOrUniversity", "name": "EPITA"}, "address": {"@type": "PostalAddress", "addressLocality": "Lyon", "addressCountry": "FR"}, "sameAs": ["https://www.linkedin.com/in/morgan-pierrefeu", "https://github.com/evaspace", "https://morgan.pierref.eu/"]}}</script>
@@ -67,8 +67,8 @@
 
             <div class="header-center">
                 <div id="stats-panel" class="stats-badge">
-                    <span id="streak-counter" class="streak-pill" title="Série en cours">🔥 <span id="streak-val">0</span></span>
-                    <span id="level-display" class="level-pill" title="Niveau">LVL <span id="level-val">1</span></span>
+                    <a id="me-pill" class="level-pill me-pill" href="/compte" title="Connexion">Connexion</a>
+                    <span id="streak-counter" class="streak-pill feed-only" title="Bonnes réponses d'affilée dans le fil">Combo <span id="streak-val">0</span></span>
                 </div>
             </div>
 
@@ -116,8 +116,9 @@
                 </div>
 
                 <div class="quick-action-wrap">
-                    <a class="quick-all-btn quick-red" href="/niveaux"><span>📝 NIVEAUX SUR PAPIER</span><span class="quick-all-arrow">→</span></a>
-                    <a class="quick-all-btn quick-blue" href="/cours/"><span>📚 LIRE LE COURS COMPLET</span><span class="quick-all-arrow">→</span></a>
+                    <a class="quick-all-btn quick-red" href="/niveaux"><span>NIVEAUX SUR PAPIER</span><span class="quick-all-arrow">→</span></a>
+                    <a class="quick-all-btn" href="/stats"><span>MES STATS</span><span class="quick-all-arrow">→</span></a>
+                    <a class="quick-all-btn quick-blue" href="/cours/"><span>LIRE LE COURS COMPLET</span><span class="quick-all-arrow">→</span></a>
                 </div>
 
                 <!-- LISTE DES MODULES DIRECTE (SANS TITRE NI TEXTE INTERMÉDIAIRE) -->

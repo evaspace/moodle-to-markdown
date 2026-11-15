@@ -6,7 +6,6 @@ const chillCat = $('chill-cat');
 const catBubble = $('cat-bubble');
 const streakVal = $('streak-val');
 const streakPill = $('streak-counter');
-const levelVal = $('level-val');
 const heartAnim = $('like-animation');
 const folderModal = $('folder-modal');
 const folderList = $('folder-list');
@@ -500,15 +499,22 @@ function goHome(fromHistory = false) {
 }
 
 function renderState(s) {
-    if (!s) return;
-    if (streakVal) streakVal.textContent = s.streak;
-    if (levelVal) levelVal.textContent = s.level;
+    // combo = correct answers in a row in the feed (local to the page)
+    if (s && streakVal && s.streak !== undefined) streakVal.textContent = s.streak;
 }
 
+// Navbar pill: paper levels validated (the figure that matters), links to /stats
 async function fetchUserState() {
+    const pill = $('me-pill');
     try {
-        const res = await fetch('/api/user_state');
-        renderState(await res.json());
+        const me = await (await fetch('/api/me')).json();
+        if (pill && me.logged) {
+            pill.href = '/stats';
+            pill.title = `${me.username} : ${me.xp} pts` + (me.streak ? `, ${me.streak} jour(s) d'affilée` : '');
+            pill.textContent = `${me.levels_done}/${me.levels_total} niveaux`;
+        }
+        const st = await (await fetch('/api/user_state')).json();
+        renderState(st);
     } catch (e) {}
 }
 

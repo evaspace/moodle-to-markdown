@@ -6,11 +6,12 @@
   <meta name="robots" content="noindex">
   <title>Mes stats · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/niveaux.css?v=8">
+  <link rel="stylesheet" href="/static/footer.css?v=20261114">
+  <link rel="stylesheet" href="/static/niveaux.css?v=11">
 </head>
 <body class="lv-page">
+{% set active = 'stats' %}{% include 'nav.html' %}
 <div class="lv-wrap">
-  <nav class="lv-bar"><a href="/niveaux">← Niveaux</a><a class="lv-user" href="/compte">{{ username }} · {{ xp }} pts</a></nav>
   <h1>Mes stats</h1>
   {% if not s.done %}
     <p>Rien encore : fais un premier exercice et tes stats apparaîtront ici.</p>
@@ -64,5 +65,6 @@
   {% endif %}
 </div>
 <script>for (const el of document.querySelectorAll('.st-heat-scroll')) el.scrollLeft = el.scrollWidth;</script>
+{% include 'footer.html' %}
 </body>
 </html>

@@ -420,9 +420,40 @@ def reset_confirm():
     return jsonify(ok=True, username=row['username'])
 
 
+def nav_state():
+    """What the navbar shows for the logged-in user: validated paper levels, points, day streak."""
+    uid = session.get('uid')
+    if not uid:
+        return {'logged': False}
+    from datetime import datetime, timedelta, timezone
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo(TZ)
+    paths = _paths_meta()
+    with db() as conn:
+        best = {r['subject']: r['best'] for r in conn.execute(
+            'SELECT subject, best FROM level_progress WHERE account_id=?', (uid,))}
+        points = xp(conn, uid)
+        hours = [r[0] for r in conn.execute('SELECT DISTINCT substr(at, 1, 13) FROM exo_log WHERE account_id=?', (uid,))]
+    days = {datetime.fromisoformat(h + ':00:00').replace(tzinfo=timezone.utc).astimezone(tz).date() for h in hours}
+    today = datetime.now(tz).date()
+    day = today if today in days else today - timedelta(days=1)
+    streak = 0
+    while day in days:
+        streak, day = streak + 1, day - timedelta(days=1)
+    total = sum(len(d['levels']) for _, d in paths)
+    done = sum(min(best.get(sid, 0), len(d['levels'])) for sid, d in paths)
+    return {'logged': True, 'username': session['username'], 'xp': points, 'streak': streak,
+            'levels_done': done, 'levels_total': total, 'percent': percent(done, total)}
+
+
+@bp.app_context_processor
+def inject_nav():
+    return {'nav': nav_state()}
+
+
 @bp.route('/api/me')
 def me():
-    return jsonify(username=session.get('username'))
+    return jsonify(username=session.get('username'), **nav_state())
 
 
 # --------------------------------------------------------------- pages ----

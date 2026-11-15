@@ -1,0 +1,18 @@
+<header class="app-nav">
+  <a class="app-nav-brand" href="/">Epita Doomscrolling</a>
+  <nav class="app-nav-links" aria-label="Navigation">
+    <a href="/niveaux"{% if active == 'niveaux' %} aria-current="page"{% endif %}>Niveaux</a>
+    <a href="/stats"{% if active == 'stats' %} aria-current="page"{% endif %}>Stats</a>
+    <a href="/formules"{% if active == 'formules' %} aria-current="page"{% endif %}>Formules</a>
+    <a href="/cours/">Cours</a>
+    <a href="/">Fil</a>
+  </nav>
+  {% if nav.logged %}
+  <a class="app-nav-me" href="/stats" title="Niveaux sur papier validés, points, jours d'affilée">
+    <strong>{{ nav.levels_done }}/{{ nav.levels_total }}</strong> niveaux · {{ nav.xp }} pts{% if nav.streak %} · {{ nav.streak }} j{% endif %}
+  </a>
+  <a class="app-nav-acc" href="/compte">{{ nav.username }}</a>
+  {% else %}
+  <a class="app-nav-acc" href="/compte">Connexion</a>
+  {% endif %}
+</header>
