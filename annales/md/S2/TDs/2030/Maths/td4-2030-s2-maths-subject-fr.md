@@ -1,7 +1,7 @@
 # Feuille de TD — Espaces vectoriels (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td4-2030-s2-maths-subject-fr.pdf` (11 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE EV. Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE EV. Pas de corrigé dans les annales. Corrigé rédigé : `td4-2030-s2-maths-correction-fr.md` (même dossier).
 - Seuls les exercices sont transcrits, avec les définitions à connaître. Les exercices marqués ⋆ sont plus difficiles.
 
 Définitions à connaître (somme directe, supplémentaires). Soient $E$ un $\mathbb{R}$-espace vectoriel et $F$, $G$ deux sous-espaces vectoriels de $E$.

@@ -1,7 +1,7 @@
 # Feuille de TD — Applications linéaires (S2 2026) (sujet, FR)
 
 - Source : `raw/S2/TDs/2030/Maths/td5-2030-s2-maths-subject-fr.pdf` (8 pages)
-- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE ALM. Pas de corrigé dans les annales.
+- Date réelle : S2 2026 (dossier promo 2030). Feuille de TD, ECUE ALM. Pas de corrigé dans les annales. Corrigé rédigé : `td5-2030-s2-maths-correction-fr.md` (même dossier).
 - Seuls les exercices sont transcrits. Les exercices marqués ⋆ sont plus difficiles. Le théorème du rang n'a pas de MiMo : à apprendre par cœur.
 
 ## Exercice 1.1
