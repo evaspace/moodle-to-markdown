@@ -7,7 +7,7 @@
   <title>Mes stats · Epita Doomscrolling</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261114">
-  <link rel="stylesheet" href="/static/niveaux.css?v=11">
+  <link rel="stylesheet" href="/static/niveaux.css?v=12">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -25,6 +25,24 @@
     <div><dt>Temps passé</dt><dd>{{ s.minutes // 60 }} h {{ '%02d' % (s.minutes % 60) }}</dd></div>
     <div><dt>Points</dt><dd>{{ xp }}</dd></div>
   </dl>
+
+  <h2>Ta progression sur papier</h2>
+  <ul class="st-subjects">
+    {% for x in s.paths %}<li><a href="/niveaux/{{ x.id }}">{{ x.titre }}</a><span class="lv-muted">{{ x.best }}/{{ x.n }} niveaux validés · {{ x.green }}/{{ x.total }} formules en vert</span>
+      <div class="lv-meter"><span style="width:{{ x.percent }}%"></span></div></li>{% endfor %}
+  </ul>
+
+  <h2>Ta réussite semaine après semaine</h2>
+  <div class="st-chart" role="img" aria-label="Taux de réussite par semaine">
+    {% for w in s.weeks_rate %}<div title="{{ w.label }} : {% if w.n %}{{ w.rate }} % sur {{ w.n }} exercices{% else %}rien{% endif %}"><span style="height:{{ w.rate or 0 }}%"></span></div>{% endfor %}
+  </div>
+  <div class="st-axis lv-muted"><span>il y a 7 sem.</span><span>cette semaine</span></div>
+  <p class="lv-muted">Temps moyen par exercice : {{ s.avg_secs // 60 }} min {{ '%02d' % (s.avg_secs % 60) }} s.</p>
+
+  {% if s.weak %}<h2>À retravailler</h2>
+  <ul class="st-subjects">
+    {% for w in s.weak %}<li><a href="/niveaux/{{ w.id }}">{{ w.subject }}, niveau {{ w.level }}</a><span class="lv-muted">{{ w.rate }} % réussis sur {{ w.n }} essais</span></li>{% endfor %}
+  </ul>{% endif %}
 
   <h2>Ton année</h2>
   <p class="lv-muted">{{ s.active_days }} jour{{ 's' if s.active_days > 1 }} de travail. Vert : journée réussie, rouge : journée ratée.</p>

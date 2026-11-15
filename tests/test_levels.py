@@ -127,6 +127,20 @@ class Api(unittest.TestCase):
         self.assertEqual(self.c.post('/api/login', json={'username': 'bob', 'password': 'secret1'}).status_code, 200)
         self.assertEqual(self.c.get('/niveaux').status_code, 200)
 
+    def test_nav_state_and_footer_everywhere(self):
+        self.assertFalse(self.c.get('/api/me').get_json()['logged'])
+        self.register('navuser')
+        me = self.c.get('/api/me').get_json()
+        self.assertEqual((me['username'], me['levels_done'], me['xp']), ('navuser', 0, 0))
+        self.assertGreater(me['levels_total'], 0)
+        for path in ('/niveaux', '/stats', '/formules', '/compte', f'/niveaux/{SUBJECT}', '/inconnu'):
+            html = self.c.get(path).get_data(as_text=True)
+            self.assertIn('morgan-footer', html, path)
+            self.assertIn('app-nav', html, path)
+        self.answer(1, True)
+        self.assertEqual(self.c.get('/api/me').get_json()['streak'], 1)
+        self.assertEqual(self.c.get('/stats').status_code, 200)
+
     def test_progress_up_down_and_isolation(self):
         self.register('alice')
         n1 = len(self.data['levels'][0]['exos'])

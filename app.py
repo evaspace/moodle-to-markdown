@@ -218,6 +218,28 @@ def admin():
     return render_template('admin.html', result=result)
 
 
+@app.route('/admin/stats')
+@admin_required
+def admin_stats_page():
+    from admin_stats import compute
+    from datetime import datetime, timezone
+    from zoneinfo import ZoneInfo
+    from levels import TZ, db as levels_db, load_parcours
+    tz = ZoneInfo(TZ)
+    local = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(tz)
+    with levels_db() as conn:
+        accounts = [{'id': r['id'], 'created': local(r['created_at']).date(), 'email': r['email']}
+                    for r in conn.execute('SELECT id, created_at, email FROM account')]
+        logs = [dict(r, at=local(r['at'])) for r in conn.execute(
+            'SELECT account_id, subject, level, exo_id, ok, secs, peek, timeout, at FROM exo_log')]
+        progress = [dict(r) for r in conn.execute('SELECT account_id, subject, level, best FROM level_progress')]
+    paths = {sid: {'titre': d['subject']['titre'], 'levels': len(d['levels'])} for sid, d in load_parcours().items()}
+    stats = compute(accounts, logs, progress, paths, datetime.now(tz).date())
+    if request.args.get('format') == 'json':
+        return jsonify(stats)
+    return render_template('admin_stats.html', s=stats)
+
+
 # ------------------------------------------------------------------ API ----
 def fetch_batch(conn, cat=None, sub=None, exclude=None):
     """cat: one category id or a list of ids (merged duplicates, or a whole theme)."""

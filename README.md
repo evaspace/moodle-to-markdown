@@ -408,3 +408,8 @@ hue from red = all failed to green = all passed, grey = no work), minutes per da
 best day, first-try rate, "revenges" (failed then passed), favourite hour, most failed exercise, timeouts,
 and a per-subject bar. Times are shown in Europe/Paris; one attempt counts at most 30 min (`MAX_SECS`).
 Linked from `/niveaux` and `/compte`.
+
+
+## Navbar, stats et admin (2026-11-15)
+- `templates/nav.html` : navbar commune, alimentée par `levels.nav_state()` (processeur de contexte `nav`, route `/api/me`). Footer `footer.html` inclus sur toutes les pages sauf les fils plein écran.
+- `/stats` : stats personnelles. `/admin/stats` (HTTP Basic `ADMIN_PASSWORD`, `?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).

@@ -153,3 +153,13 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .app-nav-me, .app-nav-acc { font-size: 14px; font-weight: 600 !important; color: var(--text-muted) !important; }
 .app-nav-me strong { color: var(--text-color); }
 @media (max-width: 640px) { .app-nav { padding: 8px 12px; } .app-nav-links { order: 3; width: 100%; } }
+
+/* admin stats */
+.lv-wide { max-width: 960px; }
+.st-hours { gap: 2px; }
+.st-funnel { height: 48px; margin-top: 8px; }
+.st-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.st-table th, .st-table td { border: 1px solid var(--border-color); padding: 6px 8px; text-align: left; }
+.st-table th { background: var(--text-color); color: #fff; }
+.st-subjects a { color: var(--text-color); font-weight: 700; text-decoration: none; }
+.st-subjects a:hover { color: var(--accent-color); }

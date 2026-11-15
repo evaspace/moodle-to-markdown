@@ -453,7 +453,7 @@ def inject_nav():
 
 @bp.route('/api/me')
 def me():
-    return jsonify(username=session.get('username'), **nav_state())
+    return jsonify({'username': None, **nav_state()})
 
 
 # --------------------------------------------------------------- pages ----
@@ -701,7 +701,23 @@ def compute_stats(rows, today, titles=None):
              for d, m in zip(last30, minutes)]
     best_day = max(days.items(), key=lambda kv: (kv[1][1], kv[1][0]), default=None)
     hard = fails.most_common(1)
+    # success rate per week (last 8) and weakest levels (>= 3 attempts)
+    wk = defaultdict(lambda: [0, 0])
+    lvl = defaultdict(lambda: [0, 0])
+    for r in rows:
+        age = (today - r['at'].date()).days // 7
+        if age < 8:
+            wk[age][0] += 1
+            wk[age][1] += r['ok']
+        lvl[(r['subject'], r['level'])][0] += 1
+        lvl[(r['subject'], r['level'])][1] += r['ok']
+    weeks_rate = [{'label': 'cette semaine' if i == 0 else f'il y a {i} sem.', 'n': wk[i][0],
+                   'rate': round(100 * wk[i][1] / wk[i][0]) if wk[i][0] else None} for i in range(7, -1, -1)]
+    weak = sorted(((k, v) for k, v in lvl.items() if v[0] >= 3 and v[1] < v[0]), key=lambda kv: (kv[1][1] / kv[1][0], -kv[1][0]))[:5]
     return {
+        'weeks_rate': weeks_rate,
+        'weak': [{'id': k[0], 'subject': titles.get(k[0], k[0]), 'level': k[1], 'n': v[0], 'rate': round(100 * v[1] / v[0])} for k, v in weak],
+        'avg_secs': round(sum(min(r['secs'] or 0, MAX_SECS) for r in rows) / done) if done else 0,
         'done': done, 'ok': ok, 'ko': done - ok, 'rate': round(100 * ok / done) if done else 0,
         'minutes': round(sum(v[2] for v in days.values()) / 60),
         'week_minutes': sum(minutes[-7:]), 'chart': chart, 'weeks': weeks, 'months': months,
@@ -754,6 +770,16 @@ def stats_page():
         total_xp = xp(conn, session['uid'])
     for r in rows:  # sqlite CURRENT_TIMESTAMP is UTC
         r['at'] = datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(tz)
-    titles = {sid: d['subject']['titre'] for sid, d in load_parcours().items()}
+    paths = _paths_meta()
+    titles = {sid: d['subject']['titre'] for sid, d in paths}
     s = compute_stats(rows, datetime.now(tz).date(), titles)
+    with db() as conn:
+        s['paths'] = []
+        for sid, data in paths:
+            _, _, best = progress(conn, session['uid'], sid)
+            st = statuses(conn, session['uid'], sid)
+            green = sum(1 for l in data['levels'] for e in l['exos'] if st.get((l['n'], e['id'])) == 1)
+            s['paths'].append({'id': sid, 'titre': data['subject']['titre'], 'best': best, 'n': len(data['levels']),
+                               'green': green, 'total': sum(len(l['exos']) for l in data['levels']),
+                               'percent': total_percent(st, data)})
     return render_template('stats.html', s=s, username=session['username'], xp=total_xp)
