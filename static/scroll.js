@@ -39,8 +39,15 @@
     badge.append(el('span', 'card-type-tag'), el('span', 'card-subcat-tag'));
     badge.children[0].textContent = `[ ${tag} ]`;
     badge.children[1].textContent = notion || '';
+    const bar = el('div', 'card-action-bar');
+    const ia = el('button', 'action-btn ia-btn', 'IA');
+    ia.type = 'button';
+    ia.title = 'Copier pour une IA';
+    ia.setAttribute('aria-label', 'Copier la carte pour une IA');
+    ia.onclick = () => copyCardForLLM(card, ia, `${document.title.replace('Scroll · ', '')} : ${notion || tag}`);
+    bar.append(ia);
     const body = el('div', 'card-body');
-    card.append(badge, body);
+    card.append(badge, bar, body);
     return [card, body];
   }
 

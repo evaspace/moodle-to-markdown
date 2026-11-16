@@ -117,7 +117,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
   - [x] Maths : page d'exercice sur papier (`templates/niveau.html`)
   - [x] Toutes les autres matières sur papier (physique, archi, électronique : même page)
   - [ ] Ajouter les dates S1 janvier et S2 au calendrier quand Auriga les publie
-  - [ ] Cartes du scroll `/scroll/<parcours>` et du fil d'accueil
+  - [x] Cartes du scroll `/scroll/<parcours>` et du fil d'accueil (bouton « IA », 2026-11-16)
 - [ ] Footer : « PIERREFEU » noir au survol (pas seulement au clic)
 - [x] Blogbot branché sur epitadoomscrolling (contexte complet : addictif + exact)
 - [x] Calendrier : tous les mois cliquables

@@ -638,6 +638,11 @@ button {
     transition: background-color 0.1s;
 }
 
+.action-btn.ia-btn {
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
 .action-btn:hover {
     background: #F0F0F0;
 }

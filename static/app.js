@@ -677,6 +677,7 @@ function buildCard(c, uid) {
             <button class="action-btn flip-btn" title="Explication" aria-label="Voir l'explication">
                 💡
             </button>
+            <button class="action-btn ia-btn" title="Copier pour une IA" aria-label="Copier la carte pour une IA">IA</button>
             ${c.source_url ? `<a class="action-btn course-btn" href="${esc(c.source_url)}" title="Lire le cours de ce chapitre" aria-label="Lire le cours de ce chapitre">📖</a>` : ''}
         </div>
 
@@ -741,6 +742,11 @@ function buildCard(c, uid) {
             renderMath(card);
         };
     }
+
+    card.querySelector('.ia-btn').onclick = (e) => {
+        e.stopPropagation();
+        copyCardForLLM(card, e.currentTarget, subcatName);
+    };
 
     const revBtn = card.querySelector('.reveal-btn');
     if (revBtn) {

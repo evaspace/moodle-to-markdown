@@ -264,3 +264,10 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 - Scroll: confetti on right answers (`pixelConfetti` moved to `static/cat.js`), swipe T/F. Checked in Chromium with QA account (deleted). 32 tests OK. Branch `feat/calendrier-copie-ia`.
 ## Open
 - Footer « PIERREFEU » hover: works in Chromium headless on every page tested (black on hover). Ask the user which browser/page.
+
+# Handoff — 2026-11-16 (copie IA sur les cartes)
+## Done
+- « IA » button on home feed and scroll cards (`static/card-copy.js`, `app.js`, `scroll.js`, `style.css` `.ia-btn`, templates load `copy-for-llm.js`). Checked in Chromium at 390 px (LaTeX exact, source line, no overflow, no JS error), QA account `qa_ia1` deleted. Offline tests OK. Deployed. Branch `feat/calendrier-copie-ia`.
+## Open
+- Footer « PIERREFEU » hover: ask the user which browser/page. Delete `qa_feed1` (needs user OK). S1 January / S2 exam dates when Auriga publishes them. Next subject: algo.
+- `python -m unittest discover` runs `test_md_to_cards`, which calls the Mistral API (free tier, 429s): run the named offline tests instead.
