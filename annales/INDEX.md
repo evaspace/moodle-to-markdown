@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-223 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1330 exercices.
+225 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1336 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2300,6 +2300,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : cours sur les sev | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 4 : somme de sous-espaces vectoriels | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 5 : cours 2 sur les familles | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+
+### Contrôle 2 de physique S2 — février 2017 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2021/midterm-2021-s2-phys-correction-fr.md` — date réelle : février 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Solide dans une glissière (7 points) | glissière inclinée puis circulaire (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet, énergie minimale) | Mécanique | physique-s2-energie/6 |
+| Exercice 2. Étude d'une oscillation amortie (6 points) | oscillation amortie sur un demi-cercle (Newton en Frenet, réaction, petites oscillations, régimes) | Mécanique | — |
+| Exercice 3. Calorimétrie (7 points, questions indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
+
+### Contrôle 2 de physique S2 — février 2017 (sujet, FR)
+
+`md/S2/Midterms/Phys/2021/midterm-2021-s2-phys-subject-fr.md` — date réelle : février 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Solide dans une glissière (7 points) | glissière inclinée puis circulaire (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet, énergie minimale) | Mécanique | physique-s2-energie/6 |
+| Exercice 2. Étude d'une oscillation amortie (6 points) | oscillation amortie sur un demi-cercle (Newton en Frenet, réaction, petites oscillations, régimes) | Mécanique | — |
+| Exercice 3. Calorimétrie (7 points, questions indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
 
 ### Contrôle 2 de physique S2 — mars 2020 (corrigé, FR)
 

@@ -176,6 +176,23 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\Delta E_c = \sum W$
 - $f = \dfrac{mv_A^2}{2x}$
 
+**glissière inclinée puis circulaire (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet, énergie minimale)** (2)
+
+- $\Delta E_c = \sum W$
+- $W(\vec P) = mgh$ en descente, $W(\vec R_N) = 0$ sans frottement
+- $E_m = \tfrac12mv^2 + mgz$ conservée
+- Frenet : $m\dfrac{v^2}{R} = \sum F_N$
+- $z = R\cos\alpha + R\cos\beta$ au-dessus du point bas de la pente
+
+**oscillation amortie sur un demi-cercle (Newton en Frenet, réaction, petites oscillations, régimes)** (2)
+
+- $\sum\vec F_{ext} = m\vec a$
+- Frenet : $a_T = \dfrac{dv}{dt}$, $a_N = \dfrac{v^2}{R}$
+- $v = R\dot\theta$
+- $\sin\theta \approx \theta$
+- $r^2 + \dfrac\alpha m r + \dfrac gR = 0$, $\Delta = \left(\dfrac\alpha m\right)^2 - \dfrac{4g}R$
+- $\Delta > 0$ apériodique, $\Delta = 0$ critique, $\Delta < 0$ pseudopériodique
+
 **QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique)** (2)
 
 - $m\ddot x + \alpha\dot x + kx = 0$
@@ -512,6 +529,15 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - isobare : $W = -P(V_f - V_i)$
 - isochore : $W = 0$
 - sur un cycle : $\sum W + \sum Q = \Delta U = 0$
+
+**calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau)** (2)
+
+- enceinte isolée : $\sum Q_i = 0$
+- $Q = mc(\theta_f - \theta_i)$
+- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
+- fusion : $Q = mL_f$
+- chemin fictif glace $\theta_2 \to 0$ °C $\to$ fusion $\to$ eau $0 \to \theta_e$
+- $m = \rho V$
 
 **calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion)** (1)
 
