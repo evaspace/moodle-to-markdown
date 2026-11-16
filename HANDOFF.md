@@ -366,3 +366,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 2. S2 algo arbres de recherche (B4): TDs `S2/TDs/2030/Algo/B4` (tas, ABR, AVL, correction AVL), final `S2/Finals/Algo/2030` (scan) and older finals with corrections.
 3. Prog: `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`: recalibrate `prog_c_debut`.
 4. Anglais, méthodo: need material from the user.
+
+# Handoff — 2026-11-16 (algo S2 matrices)
+## Done
+- `algo-s2-matrices` (`parcours/src/algo_matrices.py`): 11 levels, 38 exos, 9 notions, 18 quiz; levels 10-11 = B3 Matrices 12 Mar 2024 and 5 Mar 2025. Reuses `algo_abg._w/_api` and `algo_python.pr`. Syllabus: algo S2 ECUE `Matrices` (B3). Build OK (29 paths), offline tests OK, 43 statements/solutions rendered at 390 px (0 KaTeX error, no overflow). Deployed. Branch `feat/algo-s2-matrices` (from `feat/algo-s2-abg`).
+## Next steps
+1. S2 algo arbres de recherche (B4): TDs `S2/TDs/2030/Algo/B4` (tas, ABR, AVL + AVL correction), final `S2/Finals/Algo/2030` (scan), older finals with corrections (2019-2025). Tree figures: reuse `algo_abg.fig`.
+2. Prog: recalibrate `prog_c_debut` on `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`.
+3. Anglais, méthodo: need material from the user.

@@ -587,6 +587,23 @@
      "_note": "No Moodle course for S2 algo on the server: calibrated on Past-Exams (TDs 2030, B3 exams 2024-2026).",
      "ecues": [
       {
+       "id": "Matrices",
+       "titre": "Matrices en Python : listes de listes, parcours, recherches, constructions",
+       "bloc": "B3",
+       "periode_examen": "début mars (examen écrit B3, Python, 45 min)",
+       "chapitres": [],
+       "parcours": [
+        "algo-s2-matrices"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S2/Midterms/Algo/2028/MATRICES/midterm-2028-s2-algo-subject-fr.pdf",
+        "S2/Midterms/Algo/2029/MATRICES/midterm-2029-s2-algo-subject-fr.pdf",
+        "S2/Midterms/Algo/2024/midterm-2024-s2-algo-correction-fr.pdf",
+        "S2/Midterms/Algo/2023/midterm-2023-s2-algo-correction-fr.pdf"
+       ]
+      },
+      {
        "id": "Arbres binaires et généraux",
        "titre": "Arbres binaires et généraux : récursion, mesures, parcours, constructions",
        "bloc": "B3",
