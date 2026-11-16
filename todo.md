@@ -44,3 +44,11 @@ Modifier apply_result (levels.py:156) : un raté ne fait descendre que s'il suit
 Je n'ai pas testé le mode Scroll : aucun lien /scroll n'apparaissait sur la page testée. Les captures viennent d'une copie locale de la base, avec un compte jetable zz_council. La production n'a pas été touchée.
 
 
+
+---
+# Conseil n° 2 (2026-11-16), avec le vrai but : grind addictif + apprendre le plus vite
+
+Accord des 5 : pas de session de 10 (le grind est la boucle) ; pas de classement ni de prédiction de note ; « sans papier » à la main = trop cher ; traducteur franglais = pas de première étape tant que le besoin n'est pas défini ; flashcards ratées du scroll dans la file à revoir = petit et utile ; vraie version PC = utile mais après.
+Priorité commune : l'anti-blocage (bouton « Trop dur, passer » sans pénalité, qui sert un exercice plus facile de la même notion) et une jauge honnête « % de l'examen couvert » par bloc, qui dit ce qui manque (anglais, méthodo, prog).
+Désaccord : sympy. Contrarian et Expansionist : l'auto-notation rend la difficulté adaptative fictive, vérifier au moins les primitives. Outsider, First Principles, Executor : pas avant l'examen.
+Déjà dans l'appli (les conseillers ne l'ont pas vu) : niveaux adaptatifs par parcours, chrono rallongé de 50 % après un temps écoulé, formules et liens vers les prérequis affichés après un raté, % par parcours.
