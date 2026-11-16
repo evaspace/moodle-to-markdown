@@ -200,6 +200,28 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - plan incliné : $k(x_e - L_0) = mg\sin\alpha$
 - $X = x - x_e$, $\ddot X + \dfrac kmX = 0$
 
+**QCM de dynamique (unité du newton, tension, poulie, machine d'Atwood)** (2)
+
+- $1\ \text{N} = 1\ \text{kg·m·s}^{-2}$
+- équilibre : $T = mg$
+- $T - mg = ma$ (montée)
+- fil et poulie idéaux : même tension aux deux bouts
+- Atwood : $a = g\dfrac{m_2 - m_1}{m_1 + m_2}$
+
+**trois masses reliées par des fils (suspendue, table, plan incliné) : accélération et équilibre** (2)
+
+- $\sum\vec F_{ext} = m\vec a$ pour chaque masse
+- $T_1 = T_2$, $T_2' = T_3$ (fils et poulies idéaux)
+- $a = g\dfrac{m_1 - m_3\sin\alpha}{m_1 + m_2 + m_3}$
+- équilibre : $m_1 = m_3\sin\alpha$
+
+**véhicule sur une bosse circulaire (base polaire, réaction normale, condition de contact)** (2)
+
+- base polaire $(\vec u_r, \vec u_\theta)$ centrée en O
+- $\vec a = \begin{pmatrix} -v^2/R \\ R\ddot\theta \end{pmatrix}$
+- $\vec P = \begin{pmatrix} -mg\cos\theta \\ mg\sin\theta \end{pmatrix}$, $\vec R_N = \begin{pmatrix} R_N \\ 0 \end{pmatrix}$
+- contact $\iff R_N > 0 \iff v^2 < gR\cos\theta$
+
 **QCM de cinématique (unité de force, position, vitesse, norme, intégration)** (2)
 
 - $1\ \text{N} = 1\ \text{kg·m·s}^{-2}$

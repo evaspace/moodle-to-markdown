@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-221 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1324 exercices.
+223 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1330 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2320,6 +2320,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | QCM (4 points, sans points négatifs) | QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique) | Mécanique | — |
 | Exercice 1. Palet sur une piste (6 points) | énergie sur une piste avec propulsion (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet) | Mécanique | physique-s2-energie/6 |
 | Exercice 2. Oscillateurs (11 points) | oscillateur ressort amorti puis ressort sur plan incliné (équation différentielle, énergie, équilibre) | Mécanique | — |
+
+### Contrôle de physique S2 : lois de Newton — février 2023 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Phys/2027/midterm-2027-s2-phys-correction-fr.md` — date réelle : février 2023
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (6 points, pas de points négatifs) | QCM de dynamique (unité du newton, tension, poulie, machine d'Atwood) | Mécanique | physique-s2-energie/9 |
+| Exercice 2. Lois de Newton : trois masses (8 points) | trois masses reliées par des fils (suspendue, table, plan incliné) : accélération et équilibre | Mécanique | physique-s2-energie/9 |
+| Exercice 3. Lois de Newton : franchir une bosse (6 points) | véhicule sur une bosse circulaire (base polaire, réaction normale, condition de contact) | Mécanique | physique-s1-meca/6 |
+
+### Contrôle de physique S2 : lois de Newton — février 2023 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Phys/2027/midterm-2027-s2-phys-subject-fr.md` — date réelle : février 2023
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (6 points, pas de points négatifs) | QCM de dynamique (unité du newton, tension, poulie, machine d'Atwood) | Mécanique | physique-s2-energie/9 |
+| Exercice 2. Lois de Newton : trois masses (8 points) | trois masses reliées par des fils (suspendue, table, plan incliné) : accélération et équilibre | Mécanique | physique-s2-energie/9 |
+| Exercice 3. Lois de Newton : franchir une bosse (6 points) | véhicule sur une bosse circulaire (base polaire, réaction normale, condition de contact) | Mécanique | physique-s1-meca/6 |
 
 ### Examen de physique S2 : mécanique — mars 2024 (corrigé, FR)
 
