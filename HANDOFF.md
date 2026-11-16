@@ -166,3 +166,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Readings to verify: TD5 ex.2 numbers (q, v, B, E read on scan), TD1 ex.1 circle charge signs (A−, B−, C+, D+).
 2. S2 physics exams also cover mechanics (work, kinetic energy theorem, mechanical energy, Newton with pulley): a mechanics-S2 path is missing.
 3. Transcribe S2 physics annales, add `FICHE_SECTION` for the 3 new physics paths. Browser check at 390 px.
+
+# Handoff — 2026-11-16 (nuit, autonomous)
+## Done
+- Path `physique-s2-energie` (`parcours/src/phys_energie.py`): 11 levels, 64 exos (10-11 exam), 9 notions, 18 quiz, variants, FORMULES. In `PATHS`, `syllabus.json` (S2 ECUE « Travail et énergie »), `FICHE_SECTION` (→ « Mécanique »). Build OK, 26/26 tests, 11 levels checked at 390 px (0 KaTeX error, no overflow), QA account deleted. Branch `feat/physique-thermo`.
+- Colour per subject: dropped on purpose (palette rule: one accent).
+## Next steps
+1. Transcribe S2 physics annales (mostly scans) to `annales/md`, add Thermodynamique / Électromagnétisme sections.
+2. TD5 ex.2 and TD1 ex.1 readings to verify; Archi path (next subject in the user's order).

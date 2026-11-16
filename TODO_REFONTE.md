@@ -66,12 +66,13 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Scroll adaptatif `/scroll/<parcours>` (`scroll.py`, 1 carte cours sur 4, QCM 1–2 cartes après, erreurs qui reviennent), tests `tests/test_scroll.py`
 - [x] (2026-11-15, état par compte) Brancher aussi le fil d'accueil (cartes `cards.db`, état global non lié aux comptes) sur les parcours
 - [x] Page « mes niveaux » avec % et liste cliquable des niveaux
-- [ ] Code couleur par matière (il y a maintenant maths et physique)
+- [x] Code couleur par matière : abandonné volontairement (règle de palette : un seul accent ; la matière est déjà écrite dans le titre de chaque parcours)
 - [x] Tests `tests/test_levels.py` (8 OK), déployé le 2026-11-14, test de bout en bout en HTTPS OK
 - [x] Bouton retour : le fil a sa propre URL (`/?cat=..`), retour navigateur = liste des modules (testé dans Chrome headless)
 - [x] Les 4 tests de `tests/test_md_to_cards.py` en erreur réparés (signature de `FakeV2Backend.verify`) et le test de vérif mis à jour : la vérification LLM est désormais bloquante (2026-11-15)
 
 ## Journal
+- 2026-11-16 (nuit) : parcours physique S2 « Travail et énergie » (11 niveaux, 64 exos), vérifié à 390 px (0 erreur KaTeX, pas de débordement), 26 tests OK.
 - 2026-11-15 (suite 10) : niveaux d'examen S2 2028/2029 ajoutés (EV, APEF ×2, ALM). Premier parcours de physique : mécanique du point S1 (15 niveaux, 73 exos). Ordre des matières décidé : physique, archi, électronique, algo, prog, anglais, méthodo.
 - 2026-11-15 (suite 5) : navbar commune `templates/nav.html` (Niveaux, Stats, Formules, Cours, Fil + niveaux sur papier validés / points / jours d'affilée via `/api/me`), pastille de l'accueil dynamique et cliquable vers `/stats`, footer PIERREFEU sur toutes les pages sauf le fil plein écran (`/scroll`, fil d'accueil). `/stats` : progression par parcours, réussite par semaine, niveaux à retravailler. `/admin/stats` (+ `?format=json`) : audience, activation, rétention, funnel par parcours, exercices les plus ratés (`admin_stats.py`). Branche `feat/navbar-stats-admin`.
 - 2026-11-15 (suite 4) : parcours S2 en ligne. APEF polynômes (10 niveaux, 43 exos), APEF fonctions (11, 57), EV (11, 60), ALM (12, 64), calés sur les examens 2026 de la promo 2030, sans nombres complexes. `build.py` vérifie aussi les réponses polynomiales, les DL et les matrices. 394 exercices d'annales S2 rattachés à un niveau. 23 tests OK, 3725 formules rendues sans erreur KaTeX, 44 niveaux vus à 390 px sur le site.

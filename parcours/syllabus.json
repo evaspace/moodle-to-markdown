@@ -215,6 +215,23 @@
      "moodle": "Physique - Promo 2030",
      "ecues": [
       {
+       "id": "Travail et énergie",
+       "titre": "Travail et énergie",
+       "bloc": "B3",
+       "periode_examen": "partiel en mai",
+       "chapitres": [
+        "02_Cours"
+       ],
+       "parcours": [
+        "physique-s2-energie"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S2/Finals/Phys/2026/final-2026-s2-phys-subject-fr.pdf",
+        "S2/Midterms/Phys/2026/midterm-2026-s2-phys-subject-fr.pdf"
+       ]
+      },
+      {
        "id": "Thermodynamique",
        "titre": "Thermodynamique",
        "bloc": "B3",
