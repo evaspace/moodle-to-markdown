@@ -186,7 +186,6 @@
       $('solution').hidden = false;
       $('btn-correction').disabled = true;
       renderMath($('solution'));
-      $('copy-ia').hidden = false;  // only after the correction: asking an AI before answering is cheating
     };
     $('timer-left').textContent = fmt(left);
     clearInterval(tick);
@@ -254,6 +253,7 @@
           gore.explode(r.left + r.width / 2, r.top + r.height / 2);
           if (navigator.vibrate) navigator.vibrate([150, 50, 200]);
         });
+        $('copy-ia').hidden = false;  // only after a miss: the AI explains the correction not understood
         // show the formulas of the failed level
         $('notions').hidden = false;
         $('btn-formules').setAttribute('aria-expanded', 'true');
@@ -276,6 +276,8 @@
       const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
       const fresh = doc.getElementById('exo');
       if (!fresh) throw new Error('no #exo');
+      const js = (d) => d.querySelector('script[src*="niveaux.js"]')?.getAttribute('src');
+      if (js(doc) !== js(document)) { location.href = r.url; return; }  // new deploy: reload the code too
       $('exo').replaceWith(document.adoptNode(fresh));
       document.title = doc.title;
       if (r.url !== location.href) history.pushState(null, '', r.url);

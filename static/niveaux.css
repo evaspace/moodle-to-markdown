@@ -280,6 +280,7 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
   .cal-paths li { grid-template-columns: 1fr 48px 36px; }
 }
 .lv-copy { margin: 4px 0 16px; }
+.lv-btn.ia { background: #1f5fbf; border-color: #1f5fbf; color: #fff; }  /* user's choice: blue, apart from the red/green answer buttons */
 .lv-copy .lv-muted { display: block; margin-top: 6px; }
 .cal-month.done { color: var(--text-muted); }
 .cal-sec { scroll-margin-top: 16px; }

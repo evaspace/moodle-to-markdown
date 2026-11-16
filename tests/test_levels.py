@@ -196,6 +196,22 @@ class Api(unittest.TestCase):
             uid = conn.execute("SELECT id FROM account WHERE username='skipper'").fetchone()[0]
             self.assertEqual(conn.execute('SELECT COUNT(*) FROM exo_log WHERE account_id=?', (uid,)).fetchone()[0], 0)
 
+    def test_grind_review_stays_in_the_same_subject(self):
+        self.register('reviewer')
+        with levels.db() as conn:
+            uid = conn.execute("SELECT id FROM account WHERE username='reviewer'").fetchone()[0]
+            miss = lambda s, e: conn.execute("INSERT INTO exo_log (account_id, subject, level, exo_id, ok, practice, at) "
+                                             "VALUES (?, ?, 1, ?, 0, 1, datetime('now', '-1 day'))", (uid, s, e))
+            miss('physique-s2-thermo', 'he1')   # another subject: never served in the maths grind
+        with self.c.session_transaction() as sess:
+            sess['grind_n'] = levels.REVIEW_EVERY
+        self.assertEqual(self.c.get(f'/niveaux/{SUBJECT}').status_code, 200)
+        with levels.db() as conn:
+            miss('maths-s1-apis-suites', 'ag1')  # another chapter of the same subject: fine
+        with self.c.session_transaction() as sess:
+            sess['grind_n'] = levels.REVIEW_EVERY
+        self.assertIn('/niveaux/maths-s1-apis-suites?', self.c.get(f'/niveaux/{SUBJECT}').headers['Location'])
+
     def test_progress_up_down_and_isolation(self):
         self.register('alice')
         n1 = len(self.data['levels'][0]['exos'])

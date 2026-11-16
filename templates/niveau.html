@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=22">
+  <link rel="stylesheet" href="/static/niveaux.css?v=23">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -71,7 +71,7 @@
     <div id="solution-body">{{ exo.sol|safe }}</div>
   </section>
   <div class="lv-copy" id="copy-ia" hidden>
-    <button class="lv-btn" type="button" id="btn-copy-ia"
+    <button class="lv-btn ia" type="button" id="btn-copy-ia"
       data-copy-llm="#exo-statement|Énoncé; #solution-body|Correction"
       data-copy-title="{{ subject.titre }}, niveau {{ lvl.n }} : {{ lvl.titre }}"
       data-copy-prompt="Je révise un examen de prépa EPITA ({{ subject.titre }}). Voici un exercice et sa correction. Je n'ai pas compris la correction : explique-la étape par étape, détaille chaque calcul, nomme chaque formule ou théorème utilisé et dis pourquoi on l'utilise à cet endroit. Les formules sont écrites en LaTeX. Termine par la méthode à retenir pour ce type d'exercice et un exercice semblable pour m'entraîner, sans sa solution."
@@ -93,7 +93,7 @@
   <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
 </div>
 <script src="/static/cat.js?v=20261116b"></script>
-<script src="/static/niveaux.js?v=17"></script>
+<script src="/static/niveaux.js?v=18"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

@@ -646,7 +646,9 @@ def level_page(subject):
     uid, n_levels = session['uid'], len(data['levels'])
     if not request.args and session.get('grind_n', 0) >= REVIEW_EVERY:  # plain grind page: interleave a review
         with db() as conn:
-            queue = review_queue(conn, uid, _today())
+            paths, mat = load_parcours(), data['subject']['matiere']
+            # same subject only (another chapter is fine): a review must not pull the user out of maths
+            queue = [q for q in review_queue(conn, uid, _today()) if paths[q[0]]['subject']['matiere'] == mat]
         if queue:
             session['grind_n'] = 0
             s, k, e = queue[0]
