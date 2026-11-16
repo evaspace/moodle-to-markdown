@@ -44,6 +44,7 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 /* exercise */
 .lv-statement { font-size: 18px; line-height: 1.6; padding: 20px; background: #F4F5F7; margin: 16px 0; overflow-x: auto; }
 .lv-statement p + p { margin-top: 8px; }
+.lv-statement img, .lv-solution img { display: block; max-width: 100%; height: auto; margin: 12px 0; }
 .lv-solution, .lv-notions { padding: 20px; border: 2px solid var(--border-color); margin: 16px 0; overflow-x: auto; }
 .lv-statement pre, .lv-solution pre, .lv-notions pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .lv-notion + .lv-notion { margin-top: 20px; }

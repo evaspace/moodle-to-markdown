@@ -72,6 +72,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Les 4 tests de `tests/test_md_to_cards.py` en erreur réparés (signature de `FakeV2Backend.verify`) et le test de vérif mis à jour : la vérification LLM est désormais bloquante (2026-11-15)
 
 ## Journal
+- 2026-11-16 : parcours algo S2 arbres binaires et généraux (16 niveaux, 72 exos, niveaux 14-16 = examens B3 de mars 2024, 2025, 2026). Figures d'arbres en SVG générées par le build (`static/arbres/`), toutes les réponses calculées depuis les arbres. 82 énoncés/solutions vus à 390 px.
 - 2026-11-16 : parcours algo Caml et récursivité (14 niveaux, 90 exos, niveaux 13-14 = examens B1 oct. 2023 et oct. 2024). Chaque phrase Caml est rejouée dans un vrai OCaml 4.14 par `parcours/check_caml.py` (102/102 OK). 14 niveaux vus à 390 px.
 - 2026-11-16 (nuit, suite) : première matière Archi S1 : numération (14 niveaux, 75 exos) et algèbre de Boole (12 niveaux, 69 exos), réponses vérifiées par `build.py` (nouveaux helpers). 26 tests OK, 26 niveaux vus à 390 px (0 erreur KaTeX).
 - 2026-11-16 (nuit) : parcours physique S2 « Travail et énergie » (11 niveaux, 64 exos), vérifié à 390 px (0 erreur KaTeX, pas de débordement), 26 tests OK.
@@ -111,7 +112,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
    - [x] Liste de formules par exercice (champ `formules` dans `parcours/src/*.py`) pour le bouton « Formules de la solution » ; aujourd'hui : formules du niveau. (dict `FORMULES`, 358 puis 582 exercices)
    - [x] Corrigés rédigés pour tous les sujets sans corrigé officiel (2026-11-15).
    - [x] Lectures incertaines vérifiées sur les PDF (2026-11-15) : td4-2030 ex. 1.1 = $-\frac12u$, td5-2030 = $\int_0^1$, td3-2028 cours 2 q5 c illisible mais sans effet (cubique toujours réductible).
-4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières : physique (S1 méca, S2 énergie, thermo, EM), archi (S1 ×3, S2 ×2), électronique S1 (B1 circuits, B2 régime sinusoïdal) et S2 (filtres, régimes transitoires) faits, électronique S2 diodes fait, algo TAA, Caml et Python faits (2026-11-16) ; restent prog, anglais, méthodo.
+4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières : physique (S1 méca, S2 énergie, thermo, EM), archi (S1 ×3, S2 ×2), électronique S1 (B1 circuits, B2 régime sinusoïdal) et S2 (filtres, régimes transitoires) faits, électronique S2 diodes fait, algo TAA, Caml et Python faits (2026-11-16), algo S2 arbres binaires et généraux fait (2026-11-16) ; restent algo S2 matrices et arbres de recherche (tas, ABR, AVL), prog, anglais, méthodo.
 5. [x] Scroll adaptatif. [x] Accueil maths dans l'ordre du syllabus (2031, S1, S2).
 6. [x] Mail de réinitialisation depuis `morgan@pierref.eu` (via `/opt/pierref/mailer` ; accord donné le 2026-11-14).
 

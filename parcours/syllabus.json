@@ -580,6 +580,30 @@
        ]
       }
      ]
+    },
+    {
+     "id": "S2",
+     "moodle": ".",
+     "_note": "No Moodle course for S2 algo on the server: calibrated on Past-Exams (TDs 2030, B3 exams 2024-2026).",
+     "ecues": [
+      {
+       "id": "Arbres binaires et généraux",
+       "titre": "Arbres binaires et généraux : récursion, mesures, parcours, constructions",
+       "bloc": "B3",
+       "periode_examen": "début mars (examen écrit B3, Python, 1 h 30 à 2 h)",
+       "chapitres": [],
+       "parcours": [
+        "algo-s2-abg"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S2/Midterms/Algo/2028/BST & GENERAL TREES/midterm-2028-s2-algo-subject-fr.pdf",
+        "S2/Midterms/Algo/2029/BST & GENERAL TREES/midterm-2029-s2-algo-subject-fr.pdf",
+        "S2/Midterms/Algo/2030/midterm-2030-s2-algo-subject-fr.pdf",
+        "S2/TDs/2030/Algo/B3/td2-2030-s2-b3-algo-subject-fr.pdf"
+       ]
+      }
+     ]
     }
    ]
   },

@@ -1,0 +1,1134 @@
+{
+ "subject": {
+  "id": "algo-s2-abg",
+  "ordre": 630,
+  "matiere": "algo",
+  "semestre": "S2",
+  "ecue": "Arbres binaires et généraux",
+  "titre": "Arbres binaires et généraux : récursion, mesures, parcours, constructions",
+  "chapitres_moodle": [],
+  "td": "TD Algo-S2-ABG de janvier 2026 (récursion, arbres binaires et généraux), examens B3 de 2024, 2025 et 2026",
+  "examens": [
+   "Examen écrit B3 d'algorithmique, arbres binaires et généraux (Python, 1 h 30 à 2 h, début mars)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "recursion",
+   "titre": "Récursion : cas d'arrêt, valeur retournée, paramètres",
+   "formule": "cas d'arrêt d'abord · chaque branche fait `return` · un paramètre est local : le modifier ne change rien chez l'appelant · renvoyer un couple pour remonter deux résultats",
+   "exemple": "`fibo_calls(4)` renvoie `(5, 9)` : valeur et nombre d'appels",
+   "cours": "Une fonction récursive s'appelle sur un problème plus petit jusqu'au cas d'arrêt. Le résultat d'un appel récursif est perdu s'il n'est ni retourné ni utilisé. Un compteur passé en paramètre ne remonte pas : on le renvoie avec la valeur (couple)."
+  },
+  {
+   "id": "vocabulaire",
+   "titre": "Vocabulaire : racine, fils, feuilles, points simples et doubles",
+   "formule": "$B=\\langle r, G, D\\rangle$ · point double : deux fils (nœud interne) · point simple à gauche / à droite : un seul fils (nœud interne) · feuille : aucun fils (nœud externe) · branche : chemin racine $\\to$ feuille · autant de branches que de feuilles · bord gauche : liens gauches depuis la racine",
+   "exemple": "`⟨1, ⟨2, _, _⟩, _⟩` : $1$ est un point simple à gauche, $2$ une feuille",
+   "cours": "Un arbre binaire est vide ou formé d'une racine et de deux sous-arbres $G$ et $D$. Le nœud racine de $G$ est le fils gauche. Les nœuds internes ont au moins un fils, les nœuds externes (feuilles) aucun."
+  },
+  {
+   "id": "mesures",
+   "titre": "Mesures : taille, hauteur, cheminements, profondeurs moyennes",
+   "formule": "$T(B)$ : nombre de nœuds · $H(\\text{racine})=0$, $H(x)=1+H(\\text{père})$ · $H(B)=\\max H(x)$ (arbre vide : $-1$) · $LC=\\sum H(x)$ · $LCE$ : sur les feuilles · $LCI$ : sur les nœuds internes · $LC=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+   "exemple": "$\\langle 1, 2, 3\\rangle$ : $T=3$, $H=1$, $LC=2$, $LCE=2$, $LCI=0$, $PME=1$",
+   "cours": "La profondeur (hauteur, niveau) d'un nœud compte les liens depuis la racine. La profondeur moyenne externe sert à mesurer le coût moyen d'une recherche qui aboutit à une feuille."
+  },
+  {
+   "id": "particuliers",
+   "titre": "Arbres particuliers : dégénéré, complet, parfait, localement complet",
+   "formule": "dégénéré : chaque nœud a au plus un fils, $T=H+1$ · complet : tous les niveaux pleins, $T=2^{H+1}-1$, $2^H$ feuilles · parfait : niveaux pleins sauf le dernier, rempli à gauche, $H=\\lfloor\\log_2 T\\rfloor$ · localement complet : aucun point simple, $T=2N_e-1$ · pour tout arbre : $\\lfloor\\log_2 T\\rfloor\\le H\\le T-1$",
+   "exemple": "un arbre complet de hauteur $3$ a $15$ nœuds et $8$ feuilles",
+   "cours": "Dans un arbre parfait, les numéros hiérarchiques des nœuds sont exactement $1, 2, \\dots, T$ : on peut le ranger dans un tableau sans trou (c'est le tas du module suivant)."
+  },
+  {
+   "id": "hierarchique",
+   "titre": "Numérotation hiérarchique et occurrences",
+   "formule": "racine : $1$ · fils gauche de $i$ : $2i$ · fils droit : $2i+1$ · père : $\\lfloor i/2\\rfloor$ · niveau de $i$ : $\\lfloor\\log_2 i\\rfloor$ · occurrence : racine $\\varepsilon$, puis $0$ à gauche et $1$ à droite",
+   "exemple": "le fils droit du nœud $6$ est $13$ ; son occurrence est $101$",
+   "cours": "Le numéro hiérarchique est l'indice du nœud dans le parcours en largeur d'un arbre complet. Vecteur hiérarchique : case $i$ = clé du nœud $i$, `None` si absent (case $0$ inutilisée)."
+  },
+  {
+   "id": "profondeur",
+   "titre": "Parcours en profondeur : ordres préfixe, infixe, suffixe",
+   "formule": "main gauche : chaque nœud est rencontré $3$ fois · préfixe : 1re rencontre (avant $G$) · infixe : 2e (entre $G$ et $D$) · suffixe : 3e (après $D$) · rang de la racine : préfixe $1$, infixe $T(G)+1$, suffixe $T(B)$",
+   "exemple": "$\\langle 1, 2, 3\\rangle$ : préfixe $1, 2, 3$ ; infixe $2, 1, 3$ ; suffixe $2, 3, 1$",
+   "cours": "Le parcours profondeur est récursif : traitement préfixe, appel sur le fils gauche, traitement infixe, appel sur le fils droit, traitement suffixe. Il coûte $O(T)$."
+  },
+  {
+   "id": "largeur",
+   "titre": "Parcours en largeur avec une file",
+   "formule": "enfiler la racine · tant que la file n'est pas vide : défiler, traiter, enfiler les fils non vides · changement de niveau : marqueur `None` (ou deux files)",
+   "exemple": "$\\langle 1, \\langle 2, 4, \\_\\rangle, 3\\rangle$ : $1, 2, 3, 4$",
+   "cours": "Le parcours largeur (ordre hiérarchique) est itératif. Pour travailler niveau par niveau (largeur, sommes), on enfile `None` après chaque niveau : quand on le défile, le niveau est fini et on le réenfile si la file n'est pas vide."
+  },
+  {
+   "id": "construction",
+   "titre": "Construire et tester des arbres",
+   "formule": "construire : `BinTree(clé, construire(G), construire(D))` · ne jamais réutiliser un nœud d'entrée si l'énoncé l'interdit · test : `and` paresseux, s'arrête au premier échec · remonter plusieurs infos : renvoyer un couple",
+   "exemple": "`transpose(B)` : `BinTree(2 * B.key, transpose(B.right), transpose(B.left))`",
+   "cours": "Une construction récursive crée un nœud par appel et renvoie l'arbre construit. Un test récursif renvoie `False` dès qu'un nœud viole la propriété ; un paramètre supplémentaire (clé du père, niveau, longueur courante) transporte l'information qui descend."
+  },
+  {
+   "id": "generaux",
+   "titre": "Arbres généraux : premier fils - frère droit",
+   "formule": "$A=\\langle o, A_1, \\dots, A_n\\rangle$ · lien gauche $=$ premier fils · lien droit $=$ frère droit · mêmes nœuds (bijection) · préfixe général $=$ préfixe du binaire · suffixe général $=$ infixe du binaire · nœud interne : au moins un fils",
+   "exemple": "`⟨A, B, C⟩` devient `⟨A, ⟨B, _, ⟨C, _, _⟩⟩, _⟩`",
+   "cours": "Un arbre général a un nombre quelconque de fils (une forêt). Sa forme binaire premier fils - frère droit permet de réutiliser les algorithmes des arbres binaires. Les mesures (taille, hauteur, cheminements) sont celles de l'arbre général, pas de sa forme binaire."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "recursion",
+   "type": "qcm",
+   "q": "Une fonction récursive dont la branche récursive n'a pas de `return` renvoie :",
+   "choix": [
+    "`None`",
+    "le résultat de l'appel",
+    "`0`",
+    "une erreur à la compilation"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "recursion",
+   "type": "vf",
+   "q": "`nb_calls += 1` sur un paramètre entier modifie le compteur de l'appelant.",
+   "bonne": false
+  },
+  {
+   "notion": "vocabulaire",
+   "type": "qcm",
+   "q": "Un nœud n'ayant qu'un fils gauche est :",
+   "choix": [
+    "un point simple à gauche",
+    "une feuille",
+    "un point double",
+    "un nœud externe"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "vocabulaire",
+   "type": "vf",
+   "q": "Un arbre binaire a autant de branches que de feuilles.",
+   "bonne": true
+  },
+  {
+   "notion": "mesures",
+   "type": "qcm",
+   "q": "$PMI$ vaut :",
+   "choix": [
+    "$LCI$ / nombre de nœuds internes",
+    "$LCI$ / taille",
+    "$LC$ / nombre de feuilles",
+    "$LCE$ / nombre de nœuds internes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "mesures",
+   "type": "vf",
+   "q": "La hauteur d'un arbre réduit à sa racine est $1$.",
+   "bonne": false
+  },
+  {
+   "notion": "particuliers",
+   "type": "qcm",
+   "q": "Un arbre complet de hauteur $4$ a :",
+   "choix": [
+    "$31$ nœuds",
+    "$16$ nœuds",
+    "$32$ nœuds",
+    "$15$ nœuds"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "particuliers",
+   "type": "vf",
+   "q": "Tout arbre parfait est complet.",
+   "bonne": false
+  },
+  {
+   "notion": "hierarchique",
+   "type": "qcm",
+   "q": "Le père du nœud de numéro $27$ est :",
+   "choix": [
+    "$13$",
+    "$14$",
+    "$26$",
+    "$54$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "hierarchique",
+   "type": "vf",
+   "q": "L'occurrence $0110$ désigne un nœud de niveau $4$.",
+   "bonne": true
+  },
+  {
+   "notion": "profondeur",
+   "type": "qcm",
+   "q": "Dans un arbre binaire de recherche, l'ordre qui donne les clés triées est :",
+   "choix": [
+    "infixe",
+    "préfixe",
+    "suffixe",
+    "hiérarchique"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "profondeur",
+   "type": "vf",
+   "q": "En ordre suffixe, la racine est rencontrée en dernier.",
+   "bonne": true
+  },
+  {
+   "notion": "largeur",
+   "type": "qcm",
+   "q": "Le parcours largeur utilise :",
+   "choix": [
+    "une file",
+    "une pile",
+    "la récursion seule",
+    "un tri"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "largeur",
+   "type": "vf",
+   "q": "Avec un marqueur `None` de fin de niveau, on le réenfile même si la file est vide.",
+   "bonne": false
+  },
+  {
+   "notion": "construction",
+   "type": "qcm",
+   "q": "`add_trees(B1, None)` doit renvoyer :",
+   "choix": [
+    "une copie de `B1`",
+    "`B1` lui-même",
+    "`None`",
+    "une erreur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "construction",
+   "type": "vf",
+   "q": "Pour tester qu'un arbre est partiellement ordonné, on peut passer la clé du père en paramètre.",
+   "bonne": true
+  },
+  {
+   "notion": "generaux",
+   "type": "qcm",
+   "q": "Dans la forme premier fils - frère droit, le lien droit d'un nœud mène à :",
+   "choix": [
+    "son frère suivant",
+    "son dernier fils",
+    "son père",
+    "son premier fils"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "generaux",
+   "type": "vf",
+   "q": "L'ordre suffixe d'un arbre général est l'ordre infixe de sa forme binaire premier fils - frère droit.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Récursion : retour, paramètres, compteurs",
+   "notions": [
+    "recursion"
+   ],
+   "exos": [
+    {
+     "id": "a11",
+     "enonce": "Valeur de `OUTPUT` après l'exécution du programme ? Si une erreur se produit, préciser sa nature.\n\n```python\ndef fact(n):\n    if n < 2:\n        return 1\n    else:\n        fact(n - 1)\nOUTPUT = fact(4)\n```",
+     "sol": "**`OUTPUT` vaut** `None`.\n\nLa branche récursive appelle `fact(n - 1)` sans `return` : le résultat est perdu et la fonction renvoie `None`.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    },
+    {
+     "id": "a12",
+     "enonce": "Valeur de `OUTPUT` après l'exécution du programme ? Si une erreur se produit, préciser sa nature.\n\n```python\ndef rec_fact(n, res):\n    if n < 2:\n        return res\n    else:\n        res = res * rec_fact(n - 1, res)\ndef fact(n):\n    res = 1\n    rec_fact(n, res)\nOUTPUT = fact(4)\n```",
+     "sol": "**Erreur :** `TypeError: unsupported operand type(s) for *: 'int' and 'NoneType'`.\n\n`rec_fact(1, 1)` renvoie `1`, mais `rec_fact(2, 1)` n'a pas de `return` dans sa branche récursive : il renvoie `None`, et `rec_fact(3, 1)` calcule `1 * None`.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 3,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    },
+    {
+     "id": "a13",
+     "enonce": "Valeur de `OUTPUT` après l'exécution du programme ? Si une erreur se produit, préciser sa nature.\n\n```python\ndef rec_fact(n, res):\n    if n < 2:\n        return res\n    else:\n        res = res * rec_fact(n - 1, res)\n        return res\ndef fact(n):\n    res = 1\n    return rec_fact(n, res)\nOUTPUT = fact(4)\n```",
+     "sol": "**`OUTPUT` vaut** `1`.\n\n`res` vaut $1$ à chaque appel : on calcule $1\\times1\\times1\\times1$. Il faudrait multiplier par `n` : `return n * rec_fact(n - 1, res)`, ou accumuler `rec_fact(n - 1, res * n)`.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 3,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    },
+    {
+     "id": "a14",
+     "enonce": "Écrire la fonction `fibo_calls(n)` qui renvoie le couple `(value, nb_calls)` : $\\mathrm{fibo}(n)$ (avec $\\mathrm{fibo}(n)=1$ si $n\\le1$) et le nombre total d'appels récursifs effectués.\n\nExemples d'applications :\n\n```\n>>> fibo_calls(0)\n(1, 1)\n>>> fibo_calls(1)\n(1, 1)\n>>> fibo_calls(4)\n(5, 9)\n```",
+     "sol": "```python\ndef fibo_calls(n):\n    if n < 2:\n        return (1, 1)\n    else:\n        (a, c1) = fibo_calls(n - 1)\n        (b, c2) = fibo_calls(n - 2)\n        return (a + b, c1 + c2 + 1)\n```\n\nUn compteur passé en paramètre (`nb_calls += 1`) ne modifie que la copie locale : chaque appel renvoie son propre nombre d'appels, et l'appelant fait la somme $+1$. Le TD affiche `(3, 9)` pour $n=4$ : c'est une coquille, $\\mathrm{fibo}(4)=5$.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 6,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    },
+    {
+     "id": "a15",
+     "enonce": "Écrire la fonction récursive `reverse(n)` qui renvoie le nombre formé par les chiffres de l'entier $n$ dans l'ordre inverse (le signe est conservé).\n\nExemples d'applications :\n\n```\n>>> reverse(1234)\n4321\n>>> reverse(5089)\n9805\n>>> reverse(-5089)\n-9805\n>>> reverse(0)\n0\n```",
+     "sol": "```python\ndef _reverse(n, acc):\n    \"\"\"n >= 0: digits of n appended in reverse order after acc\"\"\"\n    if n == 0:\n        return acc\n    else:\n        return _reverse(n // 10, acc * 10 + n % 10)\n\ndef reverse(n):\n    if n < 0:\n        return -_reverse(-n, 0)\n    else:\n        return _reverse(n, 0)\n```\n\nL'accumulateur reçoit les chiffres de droite à gauche : `acc * 10 + n % 10`.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 6,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    },
+    {
+     "id": "a16",
+     "enonce": "La version du TD de la recherche dichotomique récursive (`right` exclu, appel initial `(0, len(L))`) oublie le `return` devant les appels récursifs et teste `left > right`. Écrire la version correcte `binary_search(L, x)` : indice de `x` dans la liste triée `L`, $-1$ s'il est absent.\n\nExemples d'applications :\n\n```\n>>> binary_search([1, 3, 5, 8], 5)\n2\n>>> binary_search([1, 3, 5, 8], 9)\n-1\n>>> binary_search([], 4)\n-1\n```",
+     "sol": "```python\ndef _bs(L, x, left, right):\n    \"\"\"search x in L[left:right], right excluded\"\"\"\n    if left >= right:\n        return -1\n    else:\n        mid = left + (right - left) // 2\n        if x == L[mid]:\n            return mid\n        elif x < L[mid]:\n            return _bs(L, x, left, mid)\n        else:\n            return _bs(L, x, mid + 1, right)\n\ndef binary_search(L, x):\n    return _bs(L, x, 0, len(L))\n```\n\nSans `return`, le résultat de l'appel récursif est perdu (`None`). Avec `right` exclu, l'intervalle est vide dès que `left == right` : avec `left > right`, on lit `L[len(L)]` (`IndexError`) en cherchant une valeur plus grande que toutes.",
+     "src": "TD 1 récursion, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 6,
+     "formules": "cas d'arrêt · `return` dans chaque branche · couple `(valeur, compteur)` · accumulateur",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Vocabulaire des arbres binaires",
+   "notions": [
+    "vocabulaire"
+   ],
+   "exos": [
+    {
+     "id": "a21",
+     "enonce": "Combien l'arbre $B$ ci-dessous a-t-il de feuilles ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nFeuilles (aucun fils) : $4, 11, 15$. Autant de branches que de feuilles.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien l'arbre $T$ a-t-il de feuilles ?\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nNœuds sans fils."
+      }
+     ],
+     "formules": "point double : 2 fils · point simple : 1 fils · feuille : 0 fils · branches $=$ feuilles · $\\langle r, G, D\\rangle$",
+     "type": "value"
+    },
+    {
+     "id": "a22",
+     "enonce": "Combien l'arbre $B$ a-t-il de points simples ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nUn seul fils : $-1, 0, 12, 1, -2$. Points doubles : $5, 2$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "formules": "point double : 2 fils · point simple : 1 fils · feuille : 0 fils · branches $=$ feuilles · $\\langle r, G, D\\rangle$",
+     "type": "value"
+    },
+    {
+     "id": "a23",
+     "enonce": "Donner le bord gauche et le bord droit de l'arbre $T$.\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+     "sol": "Bord gauche (liens gauches depuis la racine) : A, B, D. Bord droit : A, C, F, I.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "formules": "point double : 2 fils · point simple : 1 fils · feuille : 0 fils · branches $=$ feuilles · $\\langle r, G, D\\rangle$",
+     "type": "open"
+    },
+    {
+     "id": "a24",
+     "enonce": "Dans l'arbre $T$, donner les branches, puis les nœuds internes et les nœuds externes.\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+     "sol": "Branches : (A, B, D), (A, B, E, G), (A, C, F, H), (A, C, F, I) : 4 branches pour 4 feuilles.\n\nNœuds internes : A, B, E, C, F. Externes (feuilles) : D, G, H, I.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 3,
+     "formules": "point double : 2 fils · point simple : 1 fils · feuille : 0 fils · branches $=$ feuilles · $\\langle r, G, D\\rangle$",
+     "type": "open"
+    },
+    {
+     "id": "a25",
+     "enonce": "Donner l'arbre $T$ sous la forme ⟨r, G, D⟩, avec \\_ pour l'arbre vide.\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+     "sol": "`⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩`",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 3,
+     "formules": "point double : 2 fils · point simple : 1 fils · feuille : 0 fils · branches $=$ feuilles · $\\langle r, G, D\\rangle$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Mesures : taille, hauteur, cheminements",
+   "notions": [
+    "mesures"
+   ],
+   "exos": [
+    {
+     "id": "a31",
+     "enonce": "Hauteur de l'arbre $B$ ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nLa feuille $15$ est à la profondeur $4$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Hauteur de l'arbre $T$ ?\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nProfondeur de la feuille la plus basse."
+      }
+     ],
+     "formules": "$H(\\text{racine})=0$ · $LC=\\sum H(x)=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+     "type": "value"
+    },
+    {
+     "id": "a32",
+     "enonce": "Longueur de cheminement $LC$ de l'arbre $B$ ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "21",
+     "sol": "**Réponse :** $21$\n\nProfondeurs : feuilles $LCE=10$ sur $N_e=3$ feuilles, nœuds internes $LCI=11$ sur $N_i=7$, $LC=21$, $T=10$, $H=4$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Longueur de cheminement $LC$ de l'arbre $T$ ?\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+       "ans": "17",
+       "sol": "**Réponse :** $17$\n\nProfondeurs : feuilles $LCE=11$ sur $N_e=4$ feuilles, nœuds internes $LCI=6$ sur $N_i=5$, $LC=17$, $T=9$, $H=3$."
+      }
+     ],
+     "formules": "$H(\\text{racine})=0$ · $LC=\\sum H(x)=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+     "type": "value"
+    },
+    {
+     "id": "a33",
+     "enonce": "Profondeur moyenne externe $PME$ de l'arbre $B$ (fraction) ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "10/3",
+     "sol": "**Réponse :** $10/3$\n\n$PME=LCE/N_e$ : feuilles $4, 11, 15$ aux profondeurs $3, 3, 4$, soit $\\dfrac{10}{3} \\approx 3.33$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Profondeur moyenne externe $PME$ de l'arbre $T$ (fraction) ?\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+       "ans": "11/4",
+       "sol": "**Réponse :** $11/4$\n\nProfondeurs : feuilles $LCE=11$ sur $N_e=4$ feuilles, nœuds internes $LCI=6$ sur $N_i=5$, $LC=17$, $T=9$, $H=3$."
+      }
+     ],
+     "formules": "$H(\\text{racine})=0$ · $LC=\\sum H(x)=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+     "type": "value"
+    },
+    {
+     "id": "a34",
+     "enonce": "Profondeur moyenne interne $PMI$ de l'arbre $T$ (fraction) ?\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+     "ans": "6/5",
+     "sol": "**Réponse :** $6/5$\n\nNœuds internes : points simples et doubles. $\\dfrac{6}{5} \\approx 1.20$. Profondeurs : feuilles $LCE=11$ sur $N_e=4$ feuilles, nœuds internes $LCI=6$ sur $N_i=5$, $LC=17$, $T=9$, $H=3$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 3,
+     "formules": "$H(\\text{racine})=0$ · $LC=\\sum H(x)=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+     "type": "value"
+    },
+    {
+     "id": "a35",
+     "enonce": "Profondeur moyenne $PM$ de l'arbre $T$ (fraction) ?\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+     "ans": "17/9",
+     "sol": "**Réponse :** $17/9$\n\n$PM=LC/T$ : $\\dfrac{17}{9} \\approx 1.89$. Profondeurs : feuilles $LCE=11$ sur $N_e=4$ feuilles, nœuds internes $LCI=6$ sur $N_i=5$, $LC=17$, $T=9$, $H=3$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 3,
+     "formules": "$H(\\text{racine})=0$ · $LC=\\sum H(x)=LCE+LCI$ · $PM=LC/T$ · $PME=LCE/N_e$ · $PMI=LCI/N_i$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Arbres particuliers",
+   "notions": [
+    "particuliers",
+    "mesures"
+   ],
+   "exos": [
+    {
+     "id": "a41",
+     "enonce": "Taille d'un arbre binaire complet de hauteur $5$ ?",
+     "ans": "63",
+     "sol": "**Réponse :** $63$\n\n$T=2^{H+1}-1=2^6-1$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Nombre de feuilles d'un arbre binaire complet de hauteur $6$ ?",
+       "ans": "64",
+       "sol": "**Réponse :** $64$\n\n$2^H$ feuilles."
+      }
+     ],
+     "formules": "complet : $T=2^{H+1}-1$, $2^H$ feuilles · parfait : $H=\\lfloor\\log_2 T\\rfloor$ · dégénéré : $H=T-1$ · localement complet : $T=2N_e-1$",
+     "type": "value"
+    },
+    {
+     "id": "a42",
+     "enonce": "Hauteur d'un arbre binaire parfait de $100$ nœuds ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\n$2^6=64\\le100<128=2^7$ : $H=\\lfloor\\log_2 100\\rfloor$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Hauteur d'un arbre binaire parfait de $1000$ nœuds ?",
+       "ans": "9",
+       "sol": "**Réponse :** $9$\n\n$2^9=512\\le1000<1024$."
+      }
+     ],
+     "formules": "complet : $T=2^{H+1}-1$, $2^H$ feuilles · parfait : $H=\\lfloor\\log_2 T\\rfloor$ · dégénéré : $H=T-1$ · localement complet : $T=2N_e-1$",
+     "type": "value"
+    },
+    {
+     "id": "a43",
+     "enonce": "Hauteur maximale, puis minimale, d'un arbre binaire de $20$ nœuds ? (donner la maximale)",
+     "ans": "19",
+     "sol": "**Réponse :** $19$\n\nMaximale : arbre dégénéré, $H=T-1=19$. Minimale : arbre parfait, $\\lfloor\\log_2 20\\rfloor=4$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "formules": "complet : $T=2^{H+1}-1$, $2^H$ feuilles · parfait : $H=\\lfloor\\log_2 T\\rfloor$ · dégénéré : $H=T-1$ · localement complet : $T=2N_e-1$",
+     "type": "value"
+    },
+    {
+     "id": "a44",
+     "enonce": "Un arbre localement complet a $12$ feuilles. Combien a-t-il de nœuds ?",
+     "ans": "23",
+     "sol": "**Réponse :** $23$\n\nChaque point double ajoute une feuille : $N_e=N_i+1$, donc $T=2N_e-1=23$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "formules": "complet : $T=2^{H+1}-1$, $2^H$ feuilles · parfait : $H=\\lfloor\\log_2 T\\rfloor$ · dégénéré : $H=T-1$ · localement complet : $T=2N_e-1$",
+     "type": "value"
+    },
+    {
+     "id": "a45",
+     "enonce": "Pour chacun des arbres, dire s'il est dégénéré, complet, parfait, localement complet.\n\n![T3 = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, ⟨10, _, _⟩, ⟨11, _, _⟩⟩⟩, ⟨3, ⟨6, ⟨12, _, _⟩, ⟨13, _, _⟩⟩, ⟨7, ⟨14, _, _⟩, ⟨15, _, _⟩⟩⟩⟩ ; T4 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩ ; T5 = ⟨1, _, ⟨2, ⟨3, _, ⟨4, _, _⟩⟩, _⟩⟩ ; T6 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, ⟨6, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨3, _, _⟩⟩](/static/arbres/abg-e93edc63a9ed.svg)",
+     "sol": "**T3** : complet, parfait, localement complet\n\n**T4** : parfait\n\n**T5** : dégénéré\n\n**T6** : localement complet\n\nUn arbre complet est aussi parfait et localement complet.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 4,
+     "formules": "complet : $T=2^{H+1}-1$, $2^H$ feuilles · parfait : $H=\\lfloor\\log_2 T\\rfloor$ · dégénéré : $H=T-1$ · localement complet : $T=2N_e-1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Numérotation hiérarchique et occurrences",
+   "notions": [
+    "hierarchique"
+   ],
+   "exos": [
+    {
+     "id": "a51",
+     "enonce": "Numéro hiérarchique du nœud $15$ dans l'arbre $B$ ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "29",
+     "sol": "**Réponse :** $29$\n\nChemin $5\\to12\\to1\\to-2\\to15$ : droite, gauche, gauche, droite. $1\\to3\\to6\\to12\\to25$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Numéro hiérarchique du nœud $11$ dans l'arbre $B$ ?\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+       "ans": "11",
+       "sol": "**Réponse :** $11$\n\nGauche, droite, droite : $1\\to2\\to5\\to11$."
+      }
+     ],
+     "formules": "fils $2i$, $2i+1$ · père $\\lfloor i/2\\rfloor$ · niveau $\\lfloor\\log_2 i\\rfloor$ · occurrence : $0$ gauche, $1$ droite",
+     "type": "value"
+    },
+    {
+     "id": "a52",
+     "enonce": "Donner la liste des numéros hiérarchiques des nœuds de l'arbre $T$, dans l'ordre croissant.\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+     "sol": "1, 2, 3, 4, 5, 7, 10, 11, 14",
+     "src": "Contrôle C2, 4 mars 2019, corrigé officiel (Past-Exams S2/Midterms/Algo/2023)",
+     "duree": 4,
+     "formules": "fils $2i$, $2i+1$ · père $\\lfloor i/2\\rfloor$ · niveau $\\lfloor\\log_2 i\\rfloor$ · occurrence : $0$ gauche, $1$ droite",
+     "type": "open"
+    },
+    {
+     "id": "a53",
+     "enonce": "Dans la numérotation hiérarchique, quel est le numéro du père du nœud $45$ ? (puis son niveau)",
+     "ans": "22",
+     "sol": "**Réponse :** $22$\n\nPère : $\\lfloor 45/2\\rfloor=22$. Niveau de $45$ : $\\lfloor\\log_2 45\\rfloor=5$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Numéro hiérarchique du fils droit du fils gauche du nœud $9$ ?",
+       "ans": "37",
+       "sol": "**Réponse :** $37$\n\n$2\\times9=18$, puis $2\\times18+1=37$."
+      }
+     ],
+     "formules": "fils $2i$, $2i+1$ · père $\\lfloor i/2\\rfloor$ · niveau $\\lfloor\\log_2 i\\rfloor$ · occurrence : $0$ gauche, $1$ droite",
+     "type": "value"
+    },
+    {
+     "id": "a54",
+     "enonce": "Donner la liste d'occurrences de l'arbre $T$ (racine $\\varepsilon$, $0$ à gauche, $1$ à droite).\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+     "sol": "A : ε, B : 0, D : 00, E : 01, G : 010, C : 1, F : 11, H : 110, I : 111",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "fils $2i$, $2i+1$ · père $\\lfloor i/2\\rfloor$ · niveau $\\lfloor\\log_2 i\\rfloor$ · occurrence : $0$ gauche, $1$ droite",
+     "type": "open"
+    },
+    {
+     "id": "a55",
+     "enonce": "Dessiner l'arbre dont le vecteur hiérarchique (case $0$ inutilisée) est :\n\n```\n[None, 'A', 'B', 'C', None, 'D', 'E', None, None, None, 'F']\n```",
+     "sol": "![ = ⟨A, ⟨B, _, ⟨D, ⟨F, _, _⟩, _⟩⟩, ⟨C, ⟨E, _, _⟩, _⟩⟩](/static/arbres/abg-b8bb80e81ad8.svg)\n\nCase $i$ : fils en $2i$ et $2i+1$. $F$ en case $10$ est le fils gauche de $D$ (case $5$).",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "fils $2i$, $2i+1$ · père $\\lfloor i/2\\rfloor$ · niveau $\\lfloor\\log_2 i\\rfloor$ · occurrence : $0$ gauche, $1$ droite",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Parcours profondeur : les trois ordres",
+   "notions": [
+    "profondeur"
+   ],
+   "exos": [
+    {
+     "id": "a61",
+     "enonce": "Donner les ordres préfixe, infixe et suffixe de l'arbre $T$.\n\n![T = ⟨A, ⟨B, ⟨D, _, _⟩, ⟨E, ⟨G, _, _⟩, _⟩⟩, ⟨C, _, ⟨F, ⟨H, _, _⟩, ⟨I, _, _⟩⟩⟩⟩](/static/arbres/abg-dde1b9dfff40.svg)",
+     "sol": "Préfixe : A, B, D, E, G, C, F, H, I\n\nInfixe : D, B, G, E, A, C, H, F, I\n\nSuffixe : D, G, E, B, H, I, F, C, A",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "préfixe : r G D · infixe : G r D · suffixe : G D r · linéaire `(rGD)`, vide `()`",
+     "type": "open"
+    },
+    {
+     "id": "a62",
+     "enonce": "Donner l'ordre infixe de l'arbre $T$. Que remarque-t-on ?\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)",
+     "sol": "Infixe : 1, 3, 4, 6, 7, 8, 10, 13, 14. Croissant : c'est un arbre binaire de recherche.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 3,
+     "formules": "préfixe : r G D · infixe : G r D · suffixe : G D r · linéaire `(rGD)`, vide `()`",
+     "type": "open"
+    },
+    {
+     "id": "a63",
+     "enonce": "Donner la représentation linéaire de $B$ : vide `()`, sinon `(rGD)`.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "sol": "`(5(2(-1(4()())())(0()(11()())))(12()(1(-2()(15()()))())))`",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "préfixe : r G D · infixe : G r D · suffixe : G D r · linéaire `(rGD)`, vide `()`",
+     "type": "open"
+    },
+    {
+     "id": "a64",
+     "enonce": "Dessiner l'arbre de représentation linéaire `(5(4(11(0()())(2()()))())(8(13()())(4(7()())(1()()))))`.",
+     "sol": "![ = ⟨5, ⟨4, ⟨11, ⟨0, _, _⟩, ⟨2, _, _⟩⟩, _⟩, ⟨8, ⟨13, _, _⟩, ⟨4, ⟨7, _, _⟩, ⟨1, _, _⟩⟩⟩⟩](/static/arbres/abg-71c85528c145.svg)",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "préfixe : r G D · infixe : G r D · suffixe : G D r · linéaire `(rGD)`, vide `()`",
+     "type": "open"
+    },
+    {
+     "id": "a65",
+     "enonce": "Rang de la racine dans l'ordre suffixe, puis infixe, de l'arbre $B$ ? (donner le rang infixe)\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nInfixe : tout $G$ avant la racine : $T(G)+1=6$. Suffixe : en dernier, rang $T(B)=10$.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 2,
+     "formules": "préfixe : r G D · infixe : G r D · suffixe : G D r · linéaire `(rGD)`, vide `()`",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Écrire les mesures en Python",
+   "notions": [
+    "mesures",
+    "recursion"
+   ],
+   "exos": [
+    {
+     "id": "a71",
+     "enonce": "Écrire la fonction `size(B)` qui renvoie la taille de l'arbre binaire `B`.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> size(None)\n0\n>>> size(B)\n10\n```",
+     "sol": "```python\ndef size(B):\n    if B == None:\n        return 0\n    else:\n        return 1 + size(B.left) + size(B.right)\n```\n\nAxiomes : $T(\\text{vide})=0$, $T(\\langle r, G, D\\rangle)=1+T(G)+T(D)$.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 3,
+     "formules": "`size` : $1+T(G)+T(D)$ · `height` : $1+\\max$, vide $-1$ · feuille : deux fils `None` · couple `(taille, LC)`",
+     "type": "open"
+    },
+    {
+     "id": "a72",
+     "enonce": "Écrire la fonction `height(B)` (arbre vide : $-1$).\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> height(None)\n-1\n>>> height(B)\n4\n```",
+     "sol": "```python\ndef height(B):\n    if B == None:\n        return -1\n    else:\n        return 1 + max(height(B.left), height(B.right))\n```\n\n`max` sur deux entiers est autorisé.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Écrire `height(B)` (arbre vide : $-1$).\n\n![T = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, ⟨10, _, _⟩, ⟨11, _, _⟩⟩⟩, ⟨3, ⟨6, ⟨12, _, _⟩, ⟨13, _, _⟩⟩, ⟨7, ⟨14, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-54496be7803b.svg)\n\nExemples d'applications :\n\n```\n>>> height(T)\n3\n```",
+       "sol": "```python\ndef height(B):\n    if B == None:\n        return -1\n    else:\n        return 1 + max(height(B.left), height(B.right))\n```"
+      }
+     ],
+     "formules": "`size` : $1+T(G)+T(D)$ · `height` : $1+\\max$, vide $-1$ · feuille : deux fils `None` · couple `(taille, LC)`",
+     "type": "open"
+    },
+    {
+     "id": "a73",
+     "enonce": "Écrire la fonction `leaves(B)` qui renvoie le nombre de feuilles de `B`.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> leaves(None)\n0\n>>> leaves(B)\n3\n```",
+     "sol": "```python\ndef leaves(B):\n    if B == None:\n        return 0\n    elif B.left == None and B.right == None:\n        return 1\n    else:\n        return leaves(B.left) + leaves(B.right)\n```\n\nCorrigé officiel : le test `B.left == B.right` marche aussi (deux `None`).",
+     "src": "Contrôle C2, 4 mars 2019, corrigé officiel (Past-Exams S2/Midterms/Algo/2023)",
+     "duree": 4,
+     "formules": "`size` : $1+T(G)+T(D)$ · `height` : $1+\\max$, vide $-1$ · feuille : deux fils `None` · couple `(taille, LC)`",
+     "type": "open"
+    },
+    {
+     "id": "a74",
+     "enonce": "Écrire la fonction `average_depth(B)` : profondeur moyenne $LC/T$ de l'arbre non vide `B`, en un seul parcours.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> average_depth(B)\n2.1\n```",
+     "sol": "```python\ndef _size_lc(B, d):\n    \"\"\"(size, path length) of B whose root is at depth d\"\"\"\n    if B == None:\n        return (0, 0)\n    else:\n        (s1, l1) = _size_lc(B.left, d + 1)\n        (s2, l2) = _size_lc(B.right, d + 1)\n        return (1 + s1 + s2, d + l1 + l2)\n\ndef average_depth(B):\n    (s, lc) = _size_lc(B, 0)\n    return lc / s\n```\n\nLe niveau descend en paramètre ; taille et cheminement remontent dans un couple.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 8,
+     "formules": "`size` : $1+T(G)+T(D)$ · `height` : $1+\\max$, vide $-1$ · feuille : deux fils `None` · couple `(taille, LC)`",
+     "type": "open"
+    },
+    {
+     "id": "a75",
+     "enonce": "Écrire la fonction `nb_simple(B)` : nombre de points simples de `B`.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> nb_simple(None)\n0\n>>> nb_simple(B)\n5\n```",
+     "sol": "```python\ndef nb_simple(B):\n    if B == None:\n        return 0\n    else:\n        n = nb_simple(B.left) + nb_simple(B.right)\n        if (B.left == None) != (B.right == None):\n            n = n + 1\n        return n\n```\n\nExactement un fils vide : les deux tests diffèrent.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 5,
+     "formules": "`size` : $1+T(G)+T(D)$ · `height` : $1+\\max$, vide $-1$ · feuille : deux fils `None` · couple `(taille, LC)`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Parcours profondeur en Python",
+   "notions": [
+    "profondeur",
+    "recursion"
+   ],
+   "exos": [
+    {
+     "id": "a81",
+     "enonce": "Écrire la fonction `prefix_list(B)` qui renvoie la liste des clés de `B` en ordre préfixe.\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)\n\nExemples d'applications :\n\n```\n>>> prefix_list(None)\n[]\n>>> prefix_list(T)\n[8, 3, 1, 6, 4, 7, 10, 14, 13]\n```",
+     "sol": "```python\ndef _prefix(B, L):\n    \"\"\"appends the keys of B to L, prefix order\"\"\"\n    if B != None:\n        L.append(B.key)\n        _prefix(B.left, L)\n        _prefix(B.right, L)\n\ndef prefix_list(B):\n    L = []\n    _prefix(B, L)\n    return L\n```\n\nPas de `+` sur les listes : une seule liste remplie par `append`.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Écrire `infix_list(B)` : clés de `B` en ordre infixe.\n\n![T = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-33fe231a0ec4.svg)\n\nExemples d'applications :\n\n```\n>>> infix_list(T)\n[1, 3, 4, 6, 7, 8, 10, 13, 14]\n```",
+       "sol": "```python\ndef _infix(B, L):\n    if B != None:\n        _infix(B.left, L)\n        L.append(B.key)\n        _infix(B.right, L)\n\ndef infix_list(B):\n    L = []\n    _infix(B, L)\n    return L\n```"
+      }
+     ],
+     "formules": "liste remplie par `append` dans une fonction auxiliaire · chaînes : `+` permis · `equal` : `and` paresseux",
+     "type": "open"
+    },
+    {
+     "id": "a82",
+     "enonce": "Écrire la fonction `to_linear(B)` qui renvoie la représentation linéaire de `B` (chaîne) : `()` pour l'arbre vide, `(rGD)` sinon.\n\n![T = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-c7733e738bfc.svg)\n\nExemples d'applications :\n\n```\n>>> to_linear(None)\n'()'\n>>> to_linear(T)\n'(1(2(4()())(5()()))(3(6()())()))'\n```",
+     "sol": "```python\ndef to_linear(B):\n    if B == None:\n        return \"()\"\n    else:\n        return \"(\" + str(B.key) + to_linear(B.left) + to_linear(B.right) + \")\"\n```\n\nLe `+` porte sur des chaînes, pas sur des listes.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "liste remplie par `append` dans une fonction auxiliaire · chaînes : `+` permis · `equal` : `and` paresseux",
+     "type": "open"
+    },
+    {
+     "id": "a83",
+     "enonce": "Écrire la fonction `equal(B1, B2)` qui teste si deux arbres binaires sont identiques (mêmes clés aux mêmes places).\n\n![B1 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩ ; B2 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, _, ⟨6, _, _⟩⟩⟩](/static/arbres/abg-27ad6c525a49.svg)\n\nExemples d'applications :\n\n```\n>>> equal(None, None)\nTrue\n>>> equal(B1, B2)\nFalse\n>>> equal(B1, B1)\nTrue\n```",
+     "sol": "```python\ndef equal(B1, B2):\n    if B1 == None or B2 == None:\n        return B1 == B2\n    else:\n        return B1.key == B2.key and equal(B1.left, B2.left) and equal(B1.right, B2.right)\n```\n\nSi l'un est vide, ils sont égaux seulement si les deux le sont. `and` s'arrête au premier échec.",
+     "src": "Contrôle C2, 4 mars 2019, corrigé officiel (Past-Exams S2/Midterms/Algo/2023)",
+     "duree": 5,
+     "formules": "liste remplie par `append` dans une fonction auxiliaire · chaînes : `+` permis · `equal` : `and` paresseux",
+     "type": "open"
+    },
+    {
+     "id": "a84",
+     "enonce": "Écrire la fonction `print_tree(B)` qui renvoie la chaîne `<r, G, D>` de `B`, avec `_` pour l'arbre vide.\n\n![T = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-c7733e738bfc.svg)\n\nExemples d'applications :\n\n```\n>>> print_tree(T)\n'<1, <2, <4, _, _>, <5, _, _>>, <3, <6, _, _>, _>>'\n```",
+     "sol": "```python\ndef print_tree(B):\n    if B == None:\n        return \"_\"\n    else:\n        return \"<\" + str(B.key) + \", \" + print_tree(B.left) + \", \" + print_tree(B.right) + \">\"\n```",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "liste remplie par `append` dans une fonction auxiliaire · chaînes : `+` permis · `equal` : `and` paresseux",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Parcours largeur avec une file",
+   "notions": [
+    "largeur"
+   ],
+   "exos": [
+    {
+     "id": "a91",
+     "enonce": "Donner l'ordre hiérarchique (parcours largeur) de l'arbre $B$.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)",
+     "sol": "5, 2, 12, -1, 0, 1, 4, 11, -2, 15",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 2,
+     "formules": "`Queue()`, `enqueue`, `dequeue`, `isempty` · marqueur `None` de fin de niveau, réenfilé si la file n'est pas vide",
+     "type": "open"
+    },
+    {
+     "id": "a92",
+     "enonce": "Écrire la fonction `bfs_list(B)` : liste des clés de `B` en ordre hiérarchique.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> bfs_list(None)\n[]\n>>> bfs_list(B)\n[5, 2, 12, -1, 0, 1, 4, 11, -2, 15]\n```",
+     "sol": "```python\ndef bfs_list(B):\n    L = []\n    if B != None:\n        q = Queue()\n        q.enqueue(B)\n        while not q.isempty():\n            B = q.dequeue()\n            L.append(B.key)\n            if B.left != None:\n                q.enqueue(B.left)\n            if B.right != None:\n                q.enqueue(B.right)\n    return L\n```\n\nAnnexe de l'examen : arbre vide `None`, sinon `BinTree` (`key`, `left`, `right`) ; file `Queue()` avec `enqueue`, `dequeue`, `isempty` ; seuls `len`, `range`, `append`, et `min`/`max` sur deux entiers.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 5,
+     "formules": "`Queue()`, `enqueue`, `dequeue`, `isempty` · marqueur `None` de fin de niveau, réenfilé si la file n'est pas vide",
+     "type": "open"
+    },
+    {
+     "id": "a93",
+     "enonce": "Écrire la fonction `width(B)` : largeur de `B`, nombre maximal de nœuds sur un même niveau ($0$ si vide).\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩ ; T = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, ⟨10, _, _⟩, ⟨11, _, _⟩⟩⟩, ⟨3, ⟨6, ⟨12, _, _⟩, ⟨13, _, _⟩⟩, ⟨7, ⟨14, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-3b3d4106621a.svg)\n\nExemples d'applications :\n\n```\n>>> width(None)\n0\n>>> width(B)\n3\n>>> width(T)\n8\n```",
+     "sol": "```python\ndef width(B):\n    w_max = 0\n    if B != None:\n        q = Queue()\n        q.enqueue(B)\n        q.enqueue(None)\n        w = 0\n        while not q.isempty():\n            B = q.dequeue()\n            if B == None:\n                w_max = max(w, w_max)\n                if not q.isempty():\n                    q.enqueue(None)\n                w = 0\n            else:\n                w = w + 1\n                if B.left != None:\n                    q.enqueue(B.left)\n                if B.right != None:\n                    q.enqueue(B.right)\n    return w_max\n```\n\nCorrigé officiel : le marqueur `None` sépare les niveaux ; on le réenfile seulement si la file n'est pas vide (sinon boucle infinie).",
+     "src": "Contrôle C2, 2 mars 2020, corrigé officiel (Past-Exams S2/Midterms/Algo/2024)",
+     "duree": 8,
+     "formules": "`Queue()`, `enqueue`, `dequeue`, `isempty` · marqueur `None` de fin de niveau, réenfilé si la file n'est pas vide",
+     "type": "open"
+    },
+    {
+     "id": "a94",
+     "enonce": "Écrire la fonction `get_node(B, lvl, n)` : clé du $n$-ième nœud (base $0$) du niveau `lvl` de `B`, `None` s'il n'existe pas.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> print(get_node(None, 0, 0))\nNone\n>>> get_node(B, 0, 0)\n5\n>>> get_node(B, 2, 2)\n1\n>>> print(get_node(B, 2, 5))\nNone\n>>> get_node(B, 4, 0)\n15\n```",
+     "sol": "```python\ndef get_node(B, lvl, n):\n    if B == None:\n        return None\n    q = Queue()\n    q.enqueue(B)\n    q.enqueue(None)\n    (cur, i) = (0, 0)\n    while not q.isempty() and cur <= lvl:\n        B = q.dequeue()\n        if B == None:\n            (cur, i) = (cur + 1, 0)\n            if not q.isempty():\n                q.enqueue(None)\n        else:\n            if cur == lvl and i == n:\n                return B.key\n            i = i + 1\n            if B.left != None:\n                q.enqueue(B.left)\n            if B.right != None:\n                q.enqueue(B.right)\n    return None\n```\n\nOn s'arrête dès que le nœud est trouvé ou que le niveau `lvl` est dépassé.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 10,
+     "formules": "`Queue()`, `enqueue`, `dequeue`, `isempty` · marqueur `None` de fin de niveau, réenfilé si la file n'est pas vide",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Tests sur les arbres",
+   "notions": [
+    "construction",
+    "particuliers"
+   ],
+   "exos": [
+    {
+     "id": "a101",
+     "enonce": "Écrire la fonction `degenerate(B)` : vrai si chaque nœud de `B` a au plus un fils (l'arbre vide est dégénéré).\n\n![T5 = ⟨1, _, ⟨2, ⟨3, _, ⟨4, _, _⟩⟩, _⟩⟩ ; T4 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-5becf3cdefcf.svg)\n\nExemples d'applications :\n\n```\n>>> degenerate(None)\nTrue\n>>> degenerate(T5)\nTrue\n>>> degenerate(T4)\nFalse\n```",
+     "sol": "```python\ndef degenerate(B):\n    while B != None and (B.left == None or B.right == None):\n        if B.left == None:\n            B = B.right\n        else:\n            B = B.left\n    return B == None\n```\n\nUn seul chemin à suivre : une boucle suffit. On sort sur `None` (dégénéré) ou sur un point double.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 5,
+     "formules": "dégénéré : une boucle · complet : hauteurs égales, échec $-2$ · partiellement ordonné : clé du père en paramètre",
+     "type": "open"
+    },
+    {
+     "id": "a102",
+     "enonce": "Écrire la fonction `complete(B)` : vrai si `B` est complet, sans calculer la hauteur à part (un seul parcours).\n\n![T3 = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, ⟨10, _, _⟩, ⟨11, _, _⟩⟩⟩, ⟨3, ⟨6, ⟨12, _, _⟩, ⟨13, _, _⟩⟩, ⟨7, ⟨14, _, _⟩, ⟨15, _, _⟩⟩⟩⟩ ; T4 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-8b0a337d7f4c.svg)\n\nExemples d'applications :\n\n```\n>>> complete(None)\nTrue\n>>> complete(T3)\nTrue\n>>> complete(T4)\nFalse\n```",
+     "sol": "```python\ndef _complete(B):\n    \"\"\"height of B if B is complete, -2 otherwise\"\"\"\n    if B == None:\n        return -1\n    hl = _complete(B.left)\n    if hl == -2:\n        return -2\n    hr = _complete(B.right)\n    if hr != hl:\n        return -2\n    return hl + 1\n\ndef complete(B):\n    return _complete(B) != -2\n```\n\nComplet : les deux sous-arbres sont complets et de même hauteur. La valeur $-2$ signale l'échec et coupe le parcours.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 8,
+     "formules": "dégénéré : une boucle · complet : hauteurs égales, échec $-2$ · partiellement ordonné : clé du père en paramètre",
+     "type": "open"
+    },
+    {
+     "id": "a103",
+     "enonce": "Écrire la fonction `priority(B)` : vrai si l'arbre `B` (clés entières $>0$) est partiellement ordonné, chaque nœud étant inférieur ou égal à ses fils.\n\n![T3 = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, ⟨10, _, _⟩, ⟨11, _, _⟩⟩⟩, ⟨3, ⟨6, ⟨12, _, _⟩, ⟨13, _, _⟩⟩, ⟨7, ⟨14, _, _⟩, ⟨15, _, _⟩⟩⟩⟩ ; T2 = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-1d3f6034055a.svg)\n\nExemples d'applications :\n\n```\n>>> priority(None)\nTrue\n>>> priority(T3)\nTrue\n>>> priority(T2)\nFalse\n```",
+     "sol": "```python\ndef _test(B, p):\n    \"\"\"p: key of B's parent\"\"\"\n    if B == None:\n        return True\n    elif B.key < p:\n        return False\n    else:\n        return _test(B.left, B.key) and _test(B.right, B.key)\n\ndef priority(B):\n    return _test(B, 0)\n```\n\nCorrigé officiel : la clé du père descend en paramètre ($0$ pour la racine, les clés étant $>0$).",
+     "src": "Contrôle C2, 2 mars 2020, corrigé officiel (Past-Exams S2/Midterms/Algo/2024)",
+     "duree": 6,
+     "formules": "dégénéré : une boucle · complet : hauteurs égales, échec $-2$ · partiellement ordonné : clé du père en paramètre",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Construire des arbres",
+   "notions": [
+    "construction"
+   ],
+   "exos": [
+    {
+     "id": "a111",
+     "enonce": "Écrire la fonction `transpose(B)` : arbre dont la racine vaut $2r$, le sous-arbre gauche est le transposé de $D$ et le droit le transposé de $G$.\n\n![B = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-61297dd8b0c4.svg)\n\nRésultats attendus :\n\n![transpose(B) = ⟨2, ⟨6, _, ⟨12, _, _⟩⟩, ⟨4, ⟨10, _, _⟩, ⟨8, _, _⟩⟩⟩](/static/arbres/abg-a46fa99fc18f.svg)",
+     "sol": "```python\ndef transpose(B):\n    if B == None:\n        return None\n    else:\n        return BinTree(2 * B.key, transpose(B.right), transpose(B.left))\n```\n\nUn nœud créé par appel ; les sous-arbres sont échangés.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "`BinTree(k, f(G), f(D))` · vecteur hiérarchique : fils $2i$, $2i+1$ · taille calculée après les fils",
+     "type": "open"
+    },
+    {
+     "id": "a112",
+     "enonce": "Écrire la fonction `from_hier(V)` qui construit l'arbre (`BinTree`) dont `V` est le vecteur hiérarchique (case $0$ inutilisée, `None` pour un nœud absent).\n\nRésultats attendus :\n\n![from_hier((None, 'A', 'B', 'C', None, 'D', 'E', None, None, None, 'F')) = ⟨A, ⟨B, _, ⟨D, ⟨F, _, _⟩, _⟩⟩, ⟨C, ⟨E, _, _⟩, _⟩⟩](/static/arbres/abg-b8fe01a295a5.svg)",
+     "sol": "```python\ndef _build(V, i):\n    if i >= len(V) or V[i] == None:\n        return None\n    else:\n        return BinTree(V[i], _build(V, 2 * i), _build(V, 2 * i + 1))\n\ndef from_hier(V):\n    return _build(V, 1)\n```\n\nLe nœud $i$ a ses fils en $2i$ et $2i+1$ ; hors du vecteur, l'arbre est vide.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 5,
+     "formules": "`BinTree(k, f(G), f(D))` · vecteur hiérarchique : fils $2i$, $2i+1$ · taille calculée après les fils",
+     "type": "open"
+    },
+    {
+     "id": "a113",
+     "enonce": "Écrire la fonction `to_hier(B)` qui renvoie le vecteur hiérarchique de `B` (case $0$ à `None`, taille juste suffisante).\n\n![T = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩](/static/arbres/abg-c7733e738bfc.svg)\n\nExemples d'applications :\n\n```\n>>> to_hier(None)\n[None]\n>>> to_hier(T)\n[None, 1, 2, 3, 4, 5, 6]\n```",
+     "sol": "```python\ndef _hmax(B, i):\n    \"\"\"largest hierarchical number in B, whose root is number i\"\"\"\n    if B == None:\n        return 0\n    else:\n        return max(i, max(_hmax(B.left, 2 * i), _hmax(B.right, 2 * i + 1)))\n\ndef _fill(B, V, i):\n    if B != None:\n        V[i] = B.key\n        _fill(B.left, V, 2 * i)\n        _fill(B.right, V, 2 * i + 1)\n\ndef to_hier(B):\n    V = []\n    for i in range(_hmax(B, 1) + 1):\n        V.append(None)\n    _fill(B, V, 1)\n    return V\n```\n\nD'abord la taille (plus grand numéro), puis le remplissage par un parcours.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 8,
+     "formules": "`BinTree(k, f(G), f(D))` · vecteur hiérarchique : fils $2i$, $2i+1$ · taille calculée après les fils",
+     "type": "open"
+    },
+    {
+     "id": "a114",
+     "enonce": "Écrire la fonction `copy_with_size(B)` qui renvoie une copie de `B` en `BinTreeSize(key, left, right, size)`, chaque nœud contenant la taille de son sous-arbre.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> C = copy_with_size(B)\n>>> C.size\n10\n>>> C.left.size\n5\n>>> C.right.right.size\n3\n```",
+     "sol": "```python\ndef copy_with_size(B):\n    if B == None:\n        return None\n    else:\n        l = copy_with_size(B.left)\n        r = copy_with_size(B.right)\n        s = 1\n        if l != None:\n            s = s + l.size\n        if r != None:\n            s = s + r.size\n        return BinTreeSize(B.key, l, r, s)\n```\n\nLa taille d'un nœud se calcule après celles de ses fils (traitement suffixe), sans second parcours.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 6,
+     "formules": "`BinTree(k, f(G), f(D))` · vecteur hiérarchique : fils $2i$, $2i+1$ · taille calculée après les fils",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Chercher dans un arbre : numéros, parenté, codes",
+   "notions": [
+    "hierarchique",
+    "profondeur"
+   ],
+   "exos": [
+    {
+     "id": "a121",
+     "enonce": "Écrire la fonction `search_hier(B, x)` : numéro hiérarchique de `x` dans `B` (clés distinctes), `None` s'il est absent.\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> print(search_hier(B, 10))\nNone\n>>> search_hier(B, 5)\n1\n>>> search_hier(B, 15)\n29\n```",
+     "sol": "```python\ndef _sh(B, x, n):\n    if B == None:\n        return None\n    elif B.key == x:\n        return n\n    else:\n        r = _sh(B.left, x, 2 * n)\n        if r == None:\n            r = _sh(B.right, x, 2 * n + 1)\n        return r\n\ndef search_hier(B, x):\n    return _sh(B, x, 1)\n```\n\nLe numéro descend en paramètre ; on ne cherche à droite que si la gauche a échoué.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 6,
+     "formules": "numéro en paramètre ($2n$, $2n+1$) · chercher à droite seulement si échec à gauche · code : gauche $0$, droite $1$",
+     "type": "open"
+    },
+    {
+     "id": "a122",
+     "enonce": "Le degré de parenté de deux nœuds est le nombre de liens qui les séparent. Écrire `get_kinship(B, x, y)` : degré de parenté des nœuds de clés `x` et `y` s'ils sont sur une même branche, $-1$ sinon (clés distinctes).\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, _, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-3a79f9477a74.svg)\n\nExemples d'applications :\n\n```\n>>> get_kinship(B, 4, 11)\n-1\n>>> get_kinship(B, 42, 0)\n-1\n>>> get_kinship(B, 12, 15)\n3\n>>> get_kinship(B, -1, 5)\n2\n```",
+     "sol": "```python\ndef _find(B, x):\n    \"\"\"subtree of B whose root is x, None if absent\"\"\"\n    if B == None or B.key == x:\n        return B\n    else:\n        r = _find(B.left, x)\n        if r == None:\n            r = _find(B.right, x)\n        return r\n\ndef _depth(B, y):\n    \"\"\"depth of y in B, -1 if absent\"\"\"\n    if B == None:\n        return -1\n    elif B.key == y:\n        return 0\n    else:\n        d = _depth(B.left, y)\n        if d == -1:\n            d = _depth(B.right, y)\n        if d == -1:\n            return -1\n        return d + 1\n\ndef get_kinship(B, x, y):\n    A = _find(B, x)\n    if A != None:\n        d = _depth(A, y)\n        if d != -1:\n            return d\n    A = _find(B, y)\n    if A != None:\n        return _depth(A, x)\n    return -1\n```\n\nMême branche : l'un est ancêtre de l'autre. On cherche `y` sous `x`, sinon `x` sous `y`.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 10,
+     "formules": "numéro en paramètre ($2n$, $2n+1$) · chercher à droite seulement si échec à gauche · code : gauche $0$, droite $1$",
+     "type": "open"
+    },
+    {
+     "id": "a123",
+     "enonce": "Code préfixe : a = 0, f = 1100, H = 111, m = 1101, n = 101, u = 100. Décoder `1111001100110011010101`.",
+     "sol": "**Huffman**\n\nAucun code n'est préfixe d'un autre : on lit bit à bit jusqu'à reconnaître un code. L'arbre du code (gauche = 0, droite = 1) :\n\n![HT = ⟨None, ⟨a, _, _⟩, ⟨None, ⟨None, ⟨u, _, _⟩, ⟨n, _, _⟩⟩, ⟨None, ⟨None, ⟨f, _, _⟩, ⟨m, _, _⟩⟩, ⟨H, _, _⟩⟩⟩⟩](/static/arbres/abg-a2bf339940f0.svg)",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 4,
+     "formules": "numéro en paramètre ($2n$, $2n+1$) · chercher à droite seulement si échec à gauche · code : gauche $0$, droite $1$",
+     "type": "open"
+    },
+    {
+     "id": "a124",
+     "enonce": "L'arbre `HT` d'un code préfixe est localement complet, ses feuilles portent les lettres (gauche = 0, droite = 1). Écrire `search_code(T, c)` : code de la lettre `c`, `None` si elle est absente.\n\n![HT = ⟨None, ⟨a, _, _⟩, ⟨None, ⟨None, ⟨u, _, _⟩, ⟨n, _, _⟩⟩, ⟨None, ⟨None, ⟨f, _, _⟩, ⟨m, _, _⟩⟩, ⟨H, _, _⟩⟩⟩⟩](/static/arbres/abg-a2bf339940f0.svg)\n\nExemples d'applications :\n\n```\n>>> search_code(HT, 'a')\n'0'\n>>> search_code(HT, 'm')\n'1101'\n>>> print(search_code(HT, 'w'))\nNone\n```",
+     "sol": "```python\ndef search_code(T, c):\n    if T.left == None:\n        if T.key == c:\n            return \"\"\n        else:\n            return None\n    else:\n        r = search_code(T.left, c)\n        if r != None:\n            return \"0\" + r\n        r = search_code(T.right, c)\n        if r != None:\n            return \"1\" + r\n        return None\n```\n\nLocalement complet : un nœud sans fils gauche est une feuille. Le code se construit en remontant.",
+     "src": "TD Algo-S2-ABG, janvier 2026 (Past-Exams S2/TDs/2030/Algo/B3)",
+     "duree": 8,
+     "formules": "numéro en paramètre ($2n$, $2n+1$) · chercher à droite seulement si échec à gauche · code : gauche $0$, droite $1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Arbres généraux",
+   "notions": [
+    "generaux",
+    "mesures"
+   ],
+   "exos": [
+    {
+     "id": "a131",
+     "enonce": "Donner l'arbre général $A$ sous forme binaire premier fils - frère droit.\n\n![A = ('R', (('S', ('U', 'V')), 'T', ('W', (('X', ('Z')), 'Y'))))](/static/arbres/abg-f60c8196d68f.svg)",
+     "sol": "![ = ⟨R, ⟨S, ⟨U, _, ⟨V, _, _⟩⟩, ⟨T, _, ⟨W, ⟨X, ⟨Z, _, _⟩, ⟨Y, _, _⟩⟩, _⟩⟩⟩, _⟩](/static/arbres/abg-923208b936f9.svg)\n\nLien gauche : premier fils ; lien droit : frère suivant.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 4,
+     "formules": "gauche : premier fils · droite : frère droit · préfixe identique · suffixe $=$ infixe binaire · mesures sur l'arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a132",
+     "enonce": "Donner les ordres préfixe, suffixe et hiérarchique de l'arbre général $A$.\n\n![A = ('R', (('S', ('U', 'V')), 'T', ('W', (('X', ('Z')), 'Y'))))](/static/arbres/abg-f60c8196d68f.svg)",
+     "sol": "Préfixe : R, S, U, V, T, W, X, Z, Y\n\nSuffixe : U, V, S, T, Z, X, Y, W, R\n\nHiérarchique : R, S, T, W, U, V, X, Y, Z\n\nSur la forme binaire, le préfixe est le même et le suffixe général est l'infixe : U, V, S, T, Z, X, Y, W, R.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 4,
+     "formules": "gauche : premier fils · droite : frère droit · préfixe identique · suffixe $=$ infixe binaire · mesures sur l'arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a133",
+     "enonce": "Longueur de cheminement interne $LCI$ de l'arbre général $A$ ?\n\n![A = ('R', (('S', ('U', 'V')), 'T', ('W', (('X', ('Z')), 'Y'))))](/static/arbres/abg-f60c8196d68f.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nNœuds internes (au moins un fils) et leurs profondeurs : R (0), S (1), W (1), X (2). Les mesures se prennent sur l'arbre général, pas sur sa forme binaire.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 3,
+     "formules": "gauche : premier fils · droite : frère droit · préfixe identique · suffixe $=$ infixe binaire · mesures sur l'arbre général",
+     "type": "value"
+    },
+    {
+     "id": "a134",
+     "enonce": "Dessiner l'arbre général $A$ dont la forme premier fils - frère droit est :\n\n![ = ⟨E, ⟨B, ⟨I, _, ⟨G, _, _⟩⟩, ⟨D, _, ⟨K, ⟨A, _, ⟨F, _, ⟨J, _, _⟩⟩⟩, ⟨C, ⟨H, _, _⟩, _⟩⟩⟩⟩, _⟩](/static/arbres/abg-98df80cf7baf.svg)",
+     "sol": "![A = ('E', (('B', ('I', 'G')), 'D', ('K', ('A', 'F', 'J')), ('C', ('H'))))](/static/arbres/abg-e92d4eee3350.svg)\n\nLa racine $E$ n'a pas de frère ; ses fils sont $B$ et toute la chaîne des liens droits : $D$, $K$, $C$.",
+     "src": "Examen B3, 5 mars 2025 (Past-Exams S2/Midterms/Algo/2029), pas de corrigé officiel",
+     "duree": 4,
+     "formules": "gauche : premier fils · droite : frère droit · préfixe identique · suffixe $=$ infixe binaire · mesures sur l'arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a135",
+     "enonce": "Les ordres préfixe et suffixe d'un arbre général sont : préfixe R S U V T W X Z Y, suffixe U V S T Z X Y W R. Dessiner l'arbre.",
+     "sol": "![A = ('R', (('S', ('U', 'V')), 'T', ('W', (('X', ('Z')), 'Y'))))](/static/arbres/abg-f60c8196d68f.svg)\n\nLe préfixe donne la racine (R) puis son premier fils (S) ; dans le suffixe, ce qui précède S (U V) est le sous-arbre de S, et ainsi de suite.",
+     "src": "Calé sur le TD Algo-S2-ABG (janvier 2026) et les examens B3 (Past-Exams S2/Midterms/Algo)",
+     "duree": 5,
+     "formules": "gauche : premier fils · droite : frère droit · préfixe identique · suffixe $=$ infixe binaire · mesures sur l'arbre général",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Examen B3 du 12 mars 2024",
+   "notions": [
+    "largeur",
+    "construction",
+    "profondeur",
+    "generaux"
+   ],
+   "exos": [
+    {
+     "id": "a141",
+     "enonce": "**Exercice 1 (Croissant, 7 points).** Écrire la fonction `increasing(B)` qui vérifie que chaque niveau de l'arbre binaire `B` contient strictement plus de nœuds que le niveau précédent.\n\n![B4 = ⟨1, ⟨2, _, _⟩, ⟨3, _, _⟩⟩ ; B5 = ⟨1, ⟨2, _, _⟩, ⟨3, ⟨6, _, _⟩, _⟩⟩ ; B6 = ⟨1, ⟨2, ⟨4, _, _⟩, ⟨5, _, _⟩⟩, ⟨3, _, ⟨7, _, _⟩⟩⟩](/static/arbres/abg-4e838135175f.svg)\n\nExemples d'applications :\n\n```\n>>> increasing(None)\nTrue\n>>> increasing(B4)\nTrue\n>>> increasing(B5)\nFalse\n>>> increasing(B6)\nTrue\n```",
+     "sol": "```python\ndef increasing(B):\n    if B == None:\n        return True\n    q = Queue()\n    q.enqueue(B)\n    q.enqueue(None)\n    (prev, cur) = (0, 0)\n    ok = True\n    while ok and not q.isempty():\n        B = q.dequeue()\n        if B == None:\n            ok = cur > prev\n            (prev, cur) = (cur, 0)\n            if not q.isempty():\n                q.enqueue(None)\n        else:\n            cur = cur + 1\n            if B.left != None:\n                q.enqueue(B.left)\n            if B.right != None:\n                q.enqueue(B.right)\n    return ok\n```\n\nParcours largeur avec marqueur de niveau ; on s'arrête au premier niveau qui ne grandit pas.",
+     "src": "Examen B3, 12 mars 2024 (Past-Exams S2/Midterms/Algo/2028), pas de corrigé officiel",
+     "duree": 15,
+     "formules": "largeur par niveau (marqueur) · test récursif des points doubles · `mystery` : compter · préfixe + suffixe $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a142",
+     "enonce": "**Exercice 2 (Somme, 7 points).** Écrire la fonction `check_sum(B)` qui vérifie si chaque point double de l'arbre binaire `B` contient la somme des clés de ses deux fils. Le **parcours profondeur** doit obligatoirement être utilisé.\n\n![B1 = ⟨8, ⟨6, _, _⟩, ⟨2, _, _⟩⟩ ; B2 = ⟨8, ⟨6, ⟨5, _, _⟩, _⟩, ⟨2, ⟨1, _, _⟩, ⟨1, _, _⟩⟩⟩ ; B3 = ⟨8, ⟨6, ⟨5, _, _⟩, ⟨3, _, _⟩⟩, ⟨2, ⟨1, _, _⟩, ⟨1, _, _⟩⟩⟩](/static/arbres/abg-fc0ba6cc24a3.svg)\n\nExemples d'applications :\n\n```\n>>> check_sum(None)\nTrue\n>>> check_sum(B1)\nTrue\n>>> check_sum(B2)\nTrue\n>>> check_sum(B3)\nFalse\n```",
+     "sol": "```python\ndef check_sum(B):\n    if B == None:\n        return True\n    elif B.left != None and B.right != None and B.key != B.left.key + B.right.key:\n        return False\n    else:\n        return check_sum(B.left) and check_sum(B.right)\n```\n\nUn point simple n'est pas testé (dans `B2`, $6$ n'a qu'un fils). Arrêt au premier point double faux.",
+     "src": "Examen B3, 12 mars 2024 (Past-Exams S2/Midterms/Algo/2028), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "largeur par niveau (marqueur) · test récursif des points doubles · `mystery` : compter · préfixe + suffixe $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a143",
+     "enonce": "**Exercice 3 (Mystery, 3 points).** Dessiner l'arbre résultat de l'application de `mystery(Bquid)`.\n\n```python\ndef mystery(B):\n    if B == None:\n        return (None, 0)\n    else:\n        C = BinTree(0, None, None)\n        C.left, b = mystery(B.left)\n        if B.left != None:\n            if B.right != None:\n                b = b + 1\n        C.right, d = mystery(B.right)\n        C.key = b + d\n        return (C, C.key)\n```\n\n![Bquid = ⟨V, ⟨D, ⟨I, ⟨Q, _, ⟨U, _, _⟩⟩, _⟩, ⟨S, ⟨E, _, _⟩, ⟨T, _, _⟩⟩⟩, ⟨I, ⟨E, _, ⟨R, _, _⟩⟩, ⟨A, ⟨T, _, _⟩, ⟨S, _, _⟩⟩⟩⟩](/static/arbres/abg-8668d821fcbe.svg)",
+     "sol": "![ = ⟨5, ⟨2, ⟨0, ⟨0, _, ⟨0, _, _⟩⟩, _⟩, ⟨1, ⟨0, _, _⟩, ⟨0, _, _⟩⟩⟩, ⟨2, ⟨0, _, ⟨0, _, _⟩⟩, ⟨1, ⟨0, _, _⟩, ⟨0, _, _⟩⟩⟩⟩](/static/arbres/abg-004ba76da341.svg)\n\n`mystery` recopie la forme de l'arbre ; chaque nœud reçoit le nombre de points doubles de son sous-arbre (le `b + 1` n'a lieu que si le nœud a deux fils).",
+     "src": "Examen B3, 12 mars 2024 (Past-Exams S2/Midterms/Algo/2028), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "largeur par niveau (marqueur) · test récursif des points doubles · `mystery` : compter · préfixe + suffixe $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a144",
+     "enonce": "**Exercice 4 (Arbre général, 3 points).** Les traitements préfixe et suffixe du parcours profondeur d'un arbre général A affichent : préfixe E D J I C H A B F G ; suffixe J I C D H B G F A E. Dessiner A, puis sa forme binaire premier fils - frère droit.",
+     "sol": "![A = ('E', (('D', ('J', 'I', 'C')), 'H', ('A', ('B', ('F', ('G'))))))](/static/arbres/abg-b653a4c74888.svg)\n\n![premier fils - frère droit = ⟨E, ⟨D, ⟨J, _, ⟨I, _, ⟨C, _, _⟩⟩⟩, ⟨H, _, ⟨A, ⟨B, _, ⟨F, ⟨G, _, _⟩, _⟩⟩, _⟩⟩⟩, _⟩](/static/arbres/abg-4ec5e2403be8.svg)",
+     "src": "Examen B3, 12 mars 2024 (Past-Exams S2/Midterms/Algo/2028), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "largeur par niveau (marqueur) · test récursif des points doubles · `mystery` : compter · préfixe + suffixe $\\to$ arbre général",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examen B3 du 5 mars 2025",
+   "notions": [
+    "largeur",
+    "profondeur",
+    "generaux"
+   ],
+   "exos": [
+    {
+     "id": "a151",
+     "enonce": "**Exercice 1 (Liste, 6 points).** Écrire la fonction `list_sum_limit(B, limit)` qui prend un arbre binaire `B` d'entiers positifs et un entier `limit`, et renvoie la liste des sommes des niveaux, chacune seulement si elle est strictement plus petite que `limit`.\n\n![B5 = ⟨8, ⟨6, ⟨5, _, _⟩, _⟩, ⟨2, ⟨1, _, _⟩, ⟨4, _, ⟨7, _, _⟩⟩⟩⟩ ; B7 = ⟨12, ⟨1, _, ⟨10, ⟨6, _, _⟩, ⟨5, _, _⟩⟩⟩, ⟨19, _, ⟨5, _, _⟩⟩⟩](/static/arbres/abg-082816f7487a.svg)\n\nExemples d'applications :\n\n```\n>>> list_sum_limit(None, 42)\n[]\n>>> list_sum_limit(B5, 5)\n[]\n>>> list_sum_limit(B5, 8)\n[7]\n>>> list_sum_limit(B5, 10)\n[8, 8, 7]\n>>> list_sum_limit(B5, 12)\n[8, 8, 10, 7]\n>>> list_sum_limit(B7, 13)\n[12, 11]\n>>> list_sum_limit(B7, 40)\n[12, 20, 15, 11]\n```",
+     "sol": "```python\ndef list_sum_limit(B, limit):\n    L = []\n    if B != None:\n        q = Queue()\n        q.enqueue(B)\n        q.enqueue(None)\n        s = 0\n        while not q.isempty():\n            B = q.dequeue()\n            if B == None:\n                if s < limit:\n                    L.append(s)\n                s = 0\n                if not q.isempty():\n                    q.enqueue(None)\n            else:\n                s = s + B.key\n                if B.left != None:\n                    q.enqueue(B.left)\n                if B.right != None:\n                    q.enqueue(B.right)\n    return L\n```\n\nSomme par niveau avec le marqueur `None` ; la somme est testée à la fin de chaque niveau.",
+     "src": "Examen B3, 5 mars 2025 (Past-Exams S2/Midterms/Algo/2029), pas de corrigé officiel",
+     "duree": 15,
+     "formules": "somme par niveau · premier point simple en préfixe · rangs $(1, T(G)+1, T(B))$ · premier fils - frère droit $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a152",
+     "enonce": "**Exercice 2 (Point simple, 6 points).** Écrire la fonction `get_first_single(B)` qui renvoie la clé du premier point simple rencontré dans l'arbre binaire `B` (entiers positifs) et $-1$ s'il n'y en a pas. Le **parcours profondeur** doit obligatoirement être utilisé.\n\n![B1 = ⟨8, ⟨6, _, _⟩, ⟨2, _, _⟩⟩ ; B2 = ⟨8, ⟨6, ⟨5, _, _⟩, _⟩, ⟨2, ⟨1, _, _⟩, ⟨4, _, _⟩⟩⟩ ; B4 = ⟨8, ⟨6, ⟨5, _, _⟩, ⟨3, _, _⟩⟩, ⟨2, _, ⟨4, _, _⟩⟩⟩](/static/arbres/abg-d371e4871676.svg)\n\nExemples d'applications :\n\n```\n>>> get_first_single(None)\n-1\n>>> get_first_single(B1)\n-1\n>>> get_first_single(B2)\n6\n>>> get_first_single(B4)\n2\n```",
+     "sol": "```python\ndef get_first_single(B):\n    if B == None:\n        return -1\n    elif (B.left == None) != (B.right == None):\n        return B.key\n    else:\n        k = get_first_single(B.left)\n        if k == -1:\n            k = get_first_single(B.right)\n        return k\n```\n\nPremier rencontré : ordre préfixe. On ne descend à droite que si rien n'a été trouvé à gauche.",
+     "src": "Examen B3, 5 mars 2025 (Past-Exams S2/Midterms/Algo/2029), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "somme par niveau · premier point simple en préfixe · rangs $(1, T(G)+1, T(B))$ · premier fils - frère droit $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a153",
+     "enonce": "**Exercice 3 (Ordres, 4 points).** Écrire la fonction `get_root_order(B)` qui renvoie le rang de rencontre de la racine dans les trois ordres induits du parcours profondeur, sous la forme `(préfixe, infixe, suffixe)`, et `None` si l'arbre est vide.\n\n![B1 = ⟨8, ⟨6, _, _⟩, ⟨2, _, _⟩⟩ ; B2 = ⟨8, ⟨6, ⟨5, _, _⟩, _⟩, ⟨2, ⟨1, _, _⟩, ⟨4, _, _⟩⟩⟩ ; B3 = ⟨8, ⟨6, ⟨5, _, _⟩, ⟨3, _, _⟩⟩, ⟨2, ⟨1, _, _⟩, ⟨4, _, _⟩⟩⟩](/static/arbres/abg-fe108f92ff8d.svg)\n\nExemples d'applications :\n\n```\n>>> print(get_root_order(None))\nNone\n>>> get_root_order(B1)\n(1, 2, 3)\n>>> get_root_order(B2)\n(1, 3, 6)\n>>> get_root_order(B3)\n(1, 4, 7)\n```",
+     "sol": "```python\ndef size(B):\n    if B == None:\n        return 0\n    else:\n        return 1 + size(B.left) + size(B.right)\n\ndef get_root_order(B):\n    if B == None:\n        return None\n    else:\n        s = size(B.left)\n        return (1, s + 1, s + 1 + size(B.right))\n```\n\nPréfixe : toujours $1$. Infixe : après tout le sous-arbre gauche. Suffixe : en dernier, rang $T(B)$.",
+     "src": "Examen B3, 5 mars 2025 (Past-Exams S2/Midterms/Algo/2029), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "somme par niveau · premier point simple en préfixe · rangs $(1, T(G)+1, T(B))$ · premier fils - frère droit $\\to$ arbre général",
+     "type": "open"
+    },
+    {
+     "id": "a154",
+     "enonce": "**Exercice 4 (Arbre général, 4 points).** Soit l'arbre général $A$ représenté sous la forme binaire premier fils - frère droit. Donner sa taille, sa hauteur, sa profondeur moyenne interne, ses ordres préfixe et suffixe.\n\n![A = ⟨E, ⟨B, ⟨I, _, ⟨G, _, _⟩⟩, ⟨D, _, ⟨K, ⟨A, _, ⟨F, _, ⟨J, _, _⟩⟩⟩, ⟨C, ⟨H, _, _⟩, _⟩⟩⟩⟩, _⟩](/static/arbres/abg-c137ab89040d.svg)",
+     "sol": "L'arbre général :\n\n![A = ('E', (('B', ('I', 'G')), 'D', ('K', ('A', 'F', 'J')), ('C', ('H'))))](/static/arbres/abg-e92d4eee3350.svg)\n\nTaille : $11$. Hauteur : $2$. Nœuds internes E (0), B (1), K (1), C (1) : $PMI=\\dfrac{3}{4} \\approx 0.75$.\n\nPréfixe : E, B, I, G, D, K, A, F, J, C, H\n\nSuffixe : I, G, B, D, A, F, J, K, H, C, E\n\nPas de corrigé officiel : $PMI$ suit la définition du cours, $LCI$ divisé par le nombre de nœuds internes.",
+     "src": "Examen B3, 5 mars 2025 (Past-Exams S2/Midterms/Algo/2029), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "somme par niveau · premier point simple en préfixe · rangs $(1, T(G)+1, T(B))$ · premier fils - frère droit $\\to$ arbre général",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "titre": "Examen B3 du 10 mars 2026",
+   "notions": [
+    "largeur",
+    "construction",
+    "recursion"
+   ],
+   "exos": [
+    {
+     "id": "a161",
+     "enonce": "**Exercice 1 (5 points).** Écrire la fonction `size_levels(B, level, k)` qui renvoie `True` si le nombre de nœuds de `B` situés aux niveaux supérieurs ou égaux à `level` est strictement supérieur à `k`, `False` sinon (niveau de la racine : $0$).\n\n![B1 = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, ⟨4, _, _⟩, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-80469e4379a8.svg)\n\nExemples d'applications :\n\n```\n>>> size_levels(None, 0, 0)\nFalse\n>>> size_levels(B1, 0, 0)\nTrue\n>>> size_levels(B1, 0, 5)\nTrue\n>>> size_levels(B1, 0, 11)\nFalse\n>>> size_levels(B1, 2, 5)\nTrue\n>>> size_levels(B1, 2, 8)\nFalse\n>>> size_levels(B1, 3, 0)\nTrue\n>>> size_levels(B1, 3, 5)\nFalse\n```",
+     "sol": "```python\ndef _count(B, depth, level):\n    \"\"\"number of nodes of B at levels >= level, B's root being at depth\"\"\"\n    if B == None:\n        return 0\n    else:\n        c = _count(B.left, depth + 1, level) + _count(B.right, depth + 1, level)\n        if depth >= level:\n            c = c + 1\n        return c\n\ndef size_levels(B, level, k):\n    return _count(B, 0, level) > k\n```\n\nLe niveau courant descend en paramètre. Plus économe : passer `k` et s'arrêter dès que le compte le dépasse.",
+     "src": "Examen B3, 10 mars 2026 (Past-Exams S2/Midterms/Algo/2030), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "niveau en paramètre · nouveau nœud à chaque appel · longueur courante en paramètre · `a` diminue d'un niveau à l'autre",
+     "type": "open"
+    },
+    {
+     "id": "a162",
+     "enonce": "**Exercice 2 (5 points).** Écrire la fonction `add_trees(B1, B2)` qui « additionne » deux arbres binaires d'entiers : si deux nœuds se superposent, le nœud résultat vaut leur somme ; sinon le nœud non vide est utilisé. Chaque nœud du nouvel arbre doit être créé (aucun nœud de `B1` ou `B2` réutilisé). Approche **récursive** obligatoire.\n\n![B1 = ⟨-1, ⟨2, ⟨12, ⟨-1, _, _⟩, _⟩, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, _, _⟩⟩ ; B2 = ⟨-1, ⟨2, _, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, ⟨15, _, ⟨1, _, _⟩⟩, ⟨-5, _, _⟩⟩⟩ ; B3 = ⟨2, ⟨3, _, _⟩, _⟩](/static/arbres/abg-348d58fe796c.svg)\n\nRésultats attendus :\n\n![add_trees(B1, B2) = ⟨-2, ⟨4, ⟨12, ⟨-1, _, _⟩, _⟩, ⟨-16, _, ⟨-20, _, _⟩⟩⟩, ⟨16, ⟨15, _, ⟨1, _, _⟩⟩, ⟨-5, _, _⟩⟩⟩ ; add_trees(B1, B3) = ⟨1, ⟨5, ⟨12, ⟨-1, _, _⟩, _⟩, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, _, _⟩⟩ ; add_trees(B2, B3) = ⟨1, ⟨5, _, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, ⟨15, _, ⟨1, _, _⟩⟩, ⟨-5, _, _⟩⟩⟩](/static/arbres/abg-991ee7c83beb.svg)",
+     "sol": "```python\ndef add_trees(B1, B2):\n    if B1 == None and B2 == None:\n        return None\n    elif B1 == None:\n        return BinTree(B2.key, add_trees(None, B2.left), add_trees(None, B2.right))\n    elif B2 == None:\n        return BinTree(B1.key, add_trees(B1.left, None), add_trees(B1.right, None))\n    else:\n        return BinTree(B1.key + B2.key, add_trees(B1.left, B2.left), add_trees(B1.right, B2.right))\n```\n\nQuand un seul arbre est non vide, on continue à le recopier nœud par nœud (`add_trees(None, …)`) : renvoyer directement `B2` réutiliserait ses nœuds.",
+     "src": "Examen B3, 10 mars 2026 (Past-Exams S2/Midterms/Algo/2030), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "niveau en paramètre · nouveau nœud à chaque appel · longueur courante en paramètre · `a` diminue d'un niveau à l'autre",
+     "type": "open"
+    },
+    {
+     "id": "a163",
+     "enonce": "**Exercice 3 (7 points).** Écrire la fonction `positive_sequence(B, k)` ($k>0$) qui renvoie `True` s'il n'existe **aucune** séquence successive de nœuds strictement positifs de longueur supérieure ou égale à `k` dans `B`, `False` sinon. Une séquence successive est un chemin d'un nœud vers l'un de ses descendants dont tous les nœuds sont strictement positifs. Approche **récursive** obligatoire.\n\n![B1 = ⟨-1, ⟨2, ⟨12, ⟨-1, _, _⟩, _⟩, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, _, _⟩⟩ ; B2 = ⟨-1, ⟨2, _, ⟨-8, _, ⟨-10, _, _⟩⟩⟩, ⟨8, ⟨15, _, ⟨1, _, _⟩⟩, ⟨-5, _, _⟩⟩⟩](/static/arbres/abg-45e6b263c765.svg)\n\nExemples d'applications :\n\n```\n>>> positive_sequence(B1, 1)\nFalse\n>>> positive_sequence(B1, 2)\nFalse\n>>> positive_sequence(B1, 3)\nTrue\n>>> positive_sequence(B2, 1)\nFalse\n>>> positive_sequence(B2, 2)\nFalse\n>>> positive_sequence(B2, 3)\nFalse\n>>> positive_sequence(B2, 4)\nTrue\n```",
+     "sol": "```python\ndef _pos(B, cur, k):\n    \"\"\"cur: length of the positive sequence ending at B's parent\"\"\"\n    if B == None:\n        return True\n    if B.key > 0:\n        cur = cur + 1\n    else:\n        cur = 0\n    if cur >= k:\n        return False\n    return _pos(B.left, cur, k) and _pos(B.right, cur, k)\n\ndef positive_sequence(B, k):\n    return _pos(B, 0, k)\n```\n\nLa longueur de la séquence en cours descend en paramètre et repart à $0$ sur un nœud négatif ou nul. Arrêt dès qu'elle atteint $k$.",
+     "src": "Examen B3, 10 mars 2026 (Past-Exams S2/Midterms/Algo/2030), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "niveau en paramètre · nouveau nœud à chaque appel · longueur courante en paramètre · `a` diminue d'un niveau à l'autre",
+     "type": "open"
+    },
+    {
+     "id": "a164",
+     "enonce": "**Exercice 4 (Mystery, 3 points).** Dessiner l'arbre résultat de `mystery(B, 3)`.\n\n```python\ndef aux_mystery(B, a):\n    if B.left == None:\n        if B.right == None:\n            if a == 0:\n                return None\n            else:\n                return B\n        else:\n            if a == 0:\n                return B.right\n            else:\n                B.right = aux_mystery(B.right, a-1)\n    else:\n        if B.right == None:\n            if a == 0:\n                return B.left\n            else:\n                B.left = aux_mystery(B.left, a-1)\n        else:\n            B.left = aux_mystery(B.left, a-1)\n            B.right = aux_mystery(B.right, a-1)\n    return B\n\ndef mystery(B, a):\n    if B == None:\n        return None\n    else:\n        return aux_mystery(B, a)\n```\n\n![B = ⟨5, ⟨2, ⟨-1, ⟨4, _, _⟩, _⟩, ⟨0, _, ⟨11, _, _⟩⟩⟩, ⟨12, ⟨4, _, _⟩, ⟨1, ⟨-2, _, ⟨15, _, _⟩⟩, _⟩⟩⟩](/static/arbres/abg-22d7ec90c7f0.svg)",
+     "sol": "![mystery(B, 3) = ⟨5, ⟨2, ⟨-1, _, _⟩, ⟨0, _, _⟩⟩, ⟨12, ⟨4, _, _⟩, ⟨1, ⟨15, _, _⟩, _⟩⟩⟩](/static/arbres/abg-bcfcb21a81cd.svg)\n\n`a` diminue de $1$ à chaque niveau. Sur un nœud du niveau $3$ (`a == 0`), une feuille est supprimée et un point simple est remplacé par son unique fils ; un point double est gardé (la descente continue avec `a` négatif, sans plus rien changer). Ici : $4$ et $11$ disparaissent, $-2$ est remplacé par $15$. Avec `mystery(B, 2)`, c'est le niveau $2$ qui est touché :\n\n![mystery(B, 2) = ⟨5, ⟨2, ⟨4, _, _⟩, ⟨11, _, _⟩⟩, ⟨12, _, ⟨-2, _, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-239a5fc706b7.svg)",
+     "src": "Examen B3, 10 mars 2026 (Past-Exams S2/Midterms/Algo/2030), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "niveau en paramètre · nouveau nœud à chaque appel · longueur courante en paramètre · `a` diminue d'un niveau à l'autre",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
