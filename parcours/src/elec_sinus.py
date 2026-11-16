@@ -2,9 +2,11 @@
 
 Calibrated on the Moodle course « S1 - Electronique - Promo 2030 » (`Kit de Survie Régime Sinusoïdal`), TD 4 (réseaux
 linéaires en régime sinusoïdal forcé, with its correction) and the B2 exams of January 2025 (`Examen B2 Elec`, filters)
-and January 2026 (`Examen 2 Elec`). Circuit figures cannot be rendered: circuits are described in words.
+and January 2026 (`Examen 2 Elec`). Circuits are described in words and drawn as SVG (`schema.py`, `FIGS` at the end).
 Symbolic answers use the sympy symbols R, L, C, w (w = omega) and I (imaginary unit j); they are compared at sample points.
 """
+from .schema import Fil, Point, R, SrcI, SrcU, ajoute, courant, fig, schema_echelle, tension
+
 
 SUBJECT = {
     "id": "elec-s1-sinus",
@@ -297,3 +299,49 @@ FORMULES = {
     "xa1": _Z + " · " + _F, "xa2": _T + " · " + _S, "xa3": _L + " · " + _D, "xa4": _T + " · " + _D + " · " + _1, "xa5": _1, "xa6": _L, "xa7": _D + " · " + _S, "xa8": _2,
     "xb1": _Z + " · " + _S, "xb2": _T + " · " + _D, "xb3": _T, "xb4": _T, "xb5": _A, "xb6": _T + " · " + _S, "xb7": _D + " · " + _T,
 }
+
+
+# ---------------------------------------------------------------- circuit figures (`schema.py`)
+
+def _fig26_1(d):
+    """Exam January 2026, ex. 2, figure 1 (U = -6/11 (R I0 + E), checked with sympy)."""
+    d += R().endpoints((0, 3), (0, 0)).label("$R$")
+    d += (s := SrcI().endpoints((2, 0), (2, 3)))
+    courant(d, s, "$I_0$", debut=False)
+    d += Fil().endpoints((0, 3), (2, 3))
+    d += R().endpoints((2, 3), (5, 3)).label("$R$")
+    d += (s := SrcU().endpoints((8, 3), (5, 3)))
+    tension(d, s, "$E$")
+    d += R().endpoints((8, 3), (8, 0)).label("$6R$", loc="bottom")
+    d += Fil().endpoints((8, 3), (13, 3))
+    d += (s := SrcI().endpoints((10.5, 3), (10.5, 0)))
+    courant(d, s, "$I_0$")
+    d += Point().at((13, 3)).label("$A$", loc="right")
+    d += (r := R().endpoints((13, 3), (13, 0)).label("$4R$", loc="top"))
+    tension(d, r, "$U$", sens=-1)
+    d += Point().at((13, 0)).label("$B$", loc="right")
+    d += Fil().endpoints((0, 0), (13, 0))
+
+
+FIG_RL = schema_echelle("e(t)", [("s", "R", "R"), ("s", "L", "L")])
+FIG_RC = schema_echelle("e(t)", [("s", "R", "R"), ("p", "C", "C")], "u(t)")
+FIG_RLs = schema_echelle("e(t)", [("s", "R", "R"), ("p", "L", "L")], "u(t)")
+FIG_C_RL = schema_echelle("e(t)", [("s", "C", "C"), ("p", "R", "R"), ("p", "L", "L")], "u(t)")
+FIG_Q78 = (schema_echelle("v_e(t)", [("s", "R", "2R"), ("p", "C", "C"), ("p", "R", "R")], "u(t)") + "\n\n"
+           + schema_echelle("\\underline{E}_{th}", [("s", "Z", "\\underline{Z}_{th}"), ("p", "R", "R")], "\\underline{U}"))
+FIG_EX2 = schema_echelle("v_e(t)", [("s", "R", "6R"), ("p", "R", "6R"), ("s", "L", "L"), ("p", "R", "2R")], "v_s(t)")
+FIG_EX3 = schema_echelle("v_e(t)", [("s", "C", "C"), ("p", "R", "4R"), ("p", "L", "L")], "v_s(t)")
+FIG_F3 = schema_echelle("v_e(t)", [("s", "R", "2R"), ("p", "R", "4R"), ("s", "C", "C"), ("p", "L", "L")], "v_s(t)")
+FIG_Q2 = (schema_echelle("E", [("s", "R", "R"), ("s", "R", "R"), ("p", "R", "R"), ("p", "R", "R_4")], "U") + "\n\n"
+          + schema_echelle("E_{th}", [("s", "R", "R_{th}"), ("p", "R", "R_4")], "U"))
+FIG_F1 = fig(_fig26_1, "Schéma : R et source de courant I0 à gauche, R puis source E sur le fil du haut, 6R, source de courant I0 vers le bas et 4R (tension U) entre A et B")
+
+FIGS = {**dict.fromkeys(["s41", "s42", "s43", "s45", "s46"], FIG_RL),
+        **dict.fromkeys(["s51", "s52", "s53"], FIG_RC), "s54": FIG_RLs,
+        **dict.fromkeys(["s55", "s56"], FIG_C_RL),
+        **dict.fromkeys(["s61", "s62", "xa2"], FIG_Q78),
+        **dict.fromkeys(["s64", "s71", "s72", "s73", "s86", "s93", "s94", "s95", "xa3", "xa4", "xa5"], FIG_EX2),
+        **dict.fromkeys(["s74", "s75", "sa1", "sa3", "sa4", "xa6", "xa7", "xa8"], FIG_EX3),
+        **dict.fromkeys(["s65", "s66", "s76", "sa6", "xb6", "xb7"], FIG_F3),
+        "xb2": FIG_Q2, "xb3": FIG_F1, "xb4": FIG_F1}
+ajoute(LEVELS, FIGS)

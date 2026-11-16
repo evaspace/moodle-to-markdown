@@ -330,7 +330,7 @@
     },
     {
      "id": "t22",
-     "enonce": "$E=10$ V, $R$ et $C$ en série, interrupteur fermé depuis longtemps. $u_C(\\infty)$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E=10$ V, $R$ et $C$ en série, interrupteur fermé depuis longtemps. $u_C(\\infty)$ (en V) ?",
      "ans": "10",
      "sol": "$i=0$, pas de tension sur $R$ : $u_C=E=10$ V.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
@@ -340,14 +340,14 @@
     },
     {
      "id": "t23",
-     "enonce": "$E=12$ V, $R=4$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
+     "enonce": "![Schéma : source E, R en série, L en parallèle, sortie u_L](/static/schemas/elec-0236d52d8d13.svg)\n\n$E=12$ V, $R=4$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
      "ans": "3",
      "sol": "Bobine $=$ fil : $i=E/R=3$ A, $u_L=0$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
      "duree": 1,
      "variants": [
       {
-       "enonce": "$E=15$ V, $R=5$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
+       "enonce": "![Schéma : source E, R en série, L en parallèle, sortie u_L](/static/schemas/elec-0236d52d8d13.svg)\n\n$E=15$ V, $R=5$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
        "ans": "3",
        "sol": "$i=3$ A."
       }
@@ -357,7 +357,7 @@
     },
     {
      "id": "t24",
-     "enonce": "$E$, $R$ en série, puis $R$ en parallèle avec ($R$ en série avec $C$). $E=12$ V. $u_C(\\infty)$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, R en parallèle, R en série, C en parallèle, sortie u_C](/static/schemas/elec-5a5471eaef25.svg)\n\n$E$, $R$ en série, puis $R$ en parallèle avec ($R$ en série avec $C$). $E=12$ V. $u_C(\\infty)$ (en V) ?",
      "ans": "6",
      "sol": "Aucun courant dans la branche de $C$ : diviseur $\\dfrac{R}{R+R}E=6$ V, et $u_C=u$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
@@ -367,7 +367,7 @@
     },
     {
      "id": "t25",
-     "enonce": "$E=10$ V, $R$ en série, puis $R$ et $L$ en parallèle. $u_L(\\infty)$ (en V) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\n$E=10$ V, $R$ en série, puis $R$ et $L$ en parallèle. $u_L(\\infty)$ (en V) ?",
      "ans": "0",
      "sol": "Bobine $=$ fil : $u_L=0$ (et tout le courant $E/R$ passe dans $L$).",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -377,7 +377,7 @@
     },
     {
      "id": "t26",
-     "enonce": "Même circuit, $R=5$ Ω : $i_L(\\infty)$ (en A) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nMême circuit, $R=5$ Ω : $i_L(\\infty)$ (en A) ?",
      "ans": "2",
      "sol": "La bobine court-circuite la résistance de droite : $i=i_L=E/R=2$ A.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -387,7 +387,7 @@
     },
     {
      "id": "t27",
-     "enonce": "$E$, $R$, $C$ en série. Courant final (en A) ?",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E$, $R$, $C$ en série. Courant final (en A) ?",
      "ans": "0",
      "sol": "Condensateur $=$ interrupteur ouvert : $i(\\infty)=0$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
@@ -407,7 +407,7 @@
    "exos": [
     {
      "id": "t31",
-     "enonce": "Contrôle 2023, ex. 2 : $E$, $K$, $R$ en série, puis $R$ et $L$ en parallèle, courants nuls avant. $u_L(0^+)$ en fonction de $E$ ($E=10$ V) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nContrôle 2023, ex. 2 : $E$, $K$, $R$ en série, puis $R$ et $L$ en parallèle, courants nuls avant. $u_L(0^+)$ en fonction de $E$ ($E=10$ V) ?",
      "ans": "5",
      "sol": "$i_L(0^+)=0$ : la bobine est ouverte, diviseur $R$, $R$ : $u_L=\\dfrac E2=5$ V.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -417,7 +417,7 @@
     },
     {
      "id": "t32",
-     "enonce": "Même circuit, $R=1$ kΩ : $i(0^+)$ (en mA) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nMême circuit, $R=1$ kΩ : $i(0^+)$ (en mA) ?",
      "ans": "5",
      "sol": "$i=i_R=\\dfrac E{2R}=5$ mA.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -447,14 +447,14 @@
     },
     {
      "id": "t35",
-     "enonce": "$E=10$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=2$ kΩ (en mA) ?",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E=10$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=2$ kΩ (en mA) ?",
      "ans": "5",
      "sol": "$u_C(0^+)=0$ : toute la tension est sur $R$, $i=\\dfrac ER=5$ mA.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=12$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=4$ kΩ (en mA) ?",
+       "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E=12$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=4$ kΩ (en mA) ?",
        "ans": "3",
        "sol": "$i=E/R=3$ mA."
       }
@@ -464,14 +464,14 @@
     },
     {
      "id": "t36",
-     "enonce": "$E=10$ V, $R=2$ kΩ, $C$ chargé sous $U_0=4$ V. $i(0^+)$ (en mA) ?",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E=10$ V, $R=2$ kΩ, $C$ chargé sous $U_0=4$ V. $i(0^+)$ (en mA) ?",
      "ans": "3",
      "sol": "$i(0^+)=\\dfrac{E-U_0}{R}=3$ mA.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1.2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=12$ V, $R=3$ kΩ, $C$ chargé sous $U_0=3$ V. $i(0^+)$ (en mA) ?",
+       "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E=12$ V, $R=3$ kΩ, $C$ chargé sous $U_0=3$ V. $i(0^+)$ (en mA) ?",
        "ans": "3",
        "sol": "$\\dfrac{E-U_0}R=3$ mA."
       }
@@ -481,7 +481,7 @@
     },
     {
      "id": "t37",
-     "enonce": "Contrôle 2023, ex. 2 : remplir le tableau $i$, $i_R$, $i_L$, $u_L$ à $t=0^+$ et $t\\to\\infty$.",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nContrôle 2023, ex. 2 : remplir le tableau $i$, $i_R$, $i_L$, $u_L$ à $t=0^+$ et $t\\to\\infty$.",
      "sol": "$t=0^+$ : $i=\\dfrac E{2R}$, $i_R=\\dfrac E{2R}$, $i_L=0$, $u_L=\\dfrac E2$. $t\\to\\infty$ : $i=\\dfrac ER$, $i_R=0$, $i_L=\\dfrac ER$, $u_L=0$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
      "duree": 6,
@@ -500,14 +500,14 @@
    "exos": [
     {
      "id": "t41",
-     "enonce": "$E$, $R$, $C$ en série : $\\dfrac{du_C}{dt}+\\dfrac1{RC}u_C=\\dfrac E{RC}$. Constante de temps avec $R=10$ kΩ, $C=100$ nF (en ms) ?",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\n$E$, $R$, $C$ en série : $\\dfrac{du_C}{dt}+\\dfrac1{RC}u_C=\\dfrac E{RC}$. Constante de temps avec $R=10$ kΩ, $C=100$ nF (en ms) ?",
      "ans": "1",
      "sol": "$\\tau=RC=10^4\\times10^{-7}=10^{-3}$ s.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Constante de temps RC avec $R=2$ kΩ, $C=500$ nF (en ms) ?",
+       "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\nConstante de temps RC avec $R=2$ kΩ, $C=500$ nF (en ms) ?",
        "ans": "1",
        "sol": "$\\tau=10^{-3}$ s."
       }
@@ -517,14 +517,14 @@
     },
     {
      "id": "t42",
-     "enonce": "$E$, $R$, $L$ en série : $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$. $\\tau$ avec $L=20$ mH, $R=10$ Ω (en ms) ?",
+     "enonce": "![Schéma : source E, R en série, L en parallèle, sortie u_L](/static/schemas/elec-0236d52d8d13.svg)\n\n$E$, $R$, $L$ en série : $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$. $\\tau$ avec $L=20$ mH, $R=10$ Ω (en ms) ?",
      "ans": "2",
      "sol": "$\\tau=\\dfrac LR=2$ ms.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$\\tau=L/R$ avec $L=50$ mH, $R=25$ Ω (en ms) ?",
+       "enonce": "![Schéma : source E, R en série, L en parallèle, sortie u_L](/static/schemas/elec-0236d52d8d13.svg)\n\n$\\tau=L/R$ avec $L=50$ mH, $R=25$ Ω (en ms) ?",
        "ans": "2",
        "sol": "$2$ ms."
       }
@@ -562,7 +562,7 @@
     },
     {
      "id": "t46",
-     "enonce": "Établir l'équation différentielle de $u_C$ pour $E$, $R$, $C$ en série.",
+     "enonce": "![Schéma : source E, R en série, C en parallèle, sortie u_C](/static/schemas/elec-3d203693a7d3.svg)\n\nÉtablir l'équation différentielle de $u_C$ pour $E$, $R$, $C$ en série.",
      "sol": "Mailles : $E=Ri+u_C$. Condensateur : $i=C\\dfrac{du_C}{dt}$. D'où $RC\\dfrac{du_C}{dt}+u_C=E$, soit $\\dfrac{du_C}{dt}+\\dfrac1{RC}u_C=\\dfrac E{RC}$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
      "duree": 4,
@@ -571,7 +571,7 @@
     },
     {
      "id": "t47",
-     "enonce": "Établir l'équation différentielle de $i$ pour $E$, $R$, $L$ en série.",
+     "enonce": "![Schéma : source E, R en série, L en parallèle, sortie u_L](/static/schemas/elec-0236d52d8d13.svg)\n\nÉtablir l'équation différentielle de $i$ pour $E$, $R$, $L$ en série.",
      "sol": "Mailles : $E=Ri+u_L$ avec $u_L=L\\dfrac{di}{dt}$. D'où $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
      "duree": 4,
@@ -750,7 +750,7 @@
    "exos": [
     {
      "id": "t71",
-     "enonce": "$E=12$ V, $R=6$ Ω, $L$ en série, fermeture à $t=0$. $i(\\infty)$ (en A) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\n$E=12$ V, $R=6$ Ω, $L$ en série, fermeture à $t=0$. $i(\\infty)$ (en A) ?",
      "ans": "2",
      "sol": "$i(\\infty)=\\dfrac ER=2$ A.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
@@ -760,14 +760,14 @@
     },
     {
      "id": "t72",
-     "enonce": "Même circuit, $L=30$ mH. $\\tau$ (en ms) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\nMême circuit, $L=30$ mH. $\\tau$ (en ms) ?",
      "ans": "5",
      "sol": "$\\tau=\\dfrac LR=5$ ms.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$L=60$ mH, $R=12$ Ω. $\\tau$ (en ms) ?",
+       "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\n$L=60$ mH, $R=12$ Ω. $\\tau$ (en ms) ?",
        "ans": "5",
        "sol": "$5$ ms."
       }
@@ -777,7 +777,7 @@
     },
     {
      "id": "t73",
-     "enonce": "Même circuit : $i(t)$ en A, $t$ en ms ?",
+     "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\nMême circuit : $i(t)$ en A, $t$ en ms ?",
      "ans": "2*(1-exp(-t/5))",
      "sol": "$i(t)=\\dfrac ER\\left(1-e^{-Rt/L}\\right)=2(1-e^{-t/5})$.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
@@ -787,7 +787,7 @@
     },
     {
      "id": "t74",
-     "enonce": "Même circuit : $u_L(t)$ en V, $t$ en ms ?",
+     "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\nMême circuit : $u_L(t)$ en V, $t$ en ms ?",
      "ans": "12*exp(-t/5)",
      "sol": "$u_L=L\\dfrac{di}{dt}=Ee^{-t/\\tau}=12e^{-t/5}$ V.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
@@ -797,7 +797,7 @@
     },
     {
      "id": "t75",
-     "enonce": "Même circuit : $u_L(0^+)$ (en V) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, L en parallèle, sortie u_L](/static/schemas/elec-53d09b90497e.svg)\n\nMême circuit : $u_L(0^+)$ (en V) ?",
      "ans": "12",
      "sol": "$i(0^+)=0$ : pas de tension sur $R$, toute la tension $E$ est sur la bobine.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
@@ -923,7 +923,7 @@
    "exos": [
     {
      "id": "t91",
-     "enonce": "TD ex. 4 : $E$, $R$ en série, puis $R/2$ et $C$ en parallèle. $E_{th}$ vu par $C$ avec $E=9$ V (en V) ?",
+     "enonce": "![Schéma : source E, R en série, R/2 en parallèle, C en parallèle, sortie u](/static/schemas/elec-b2606cd9b082.svg)\n\nTD ex. 4 : $E$, $R$ en série, puis $R/2$ et $C$ en parallèle. $E_{th}$ vu par $C$ avec $E=9$ V (en V) ?",
      "ans": "3",
      "sol": "Diviseur $R$, $R/2$ : $E_{th}=\\dfrac E3=3$ V.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
@@ -933,14 +933,14 @@
     },
     {
      "id": "t92",
-     "enonce": "Même circuit : $R_{th}$ avec $R=3$ kΩ (en kΩ) ?",
+     "enonce": "![Schéma : source E, R en série, R/2 en parallèle, C en parallèle, sortie u](/static/schemas/elec-b2606cd9b082.svg)\n\nMême circuit : $R_{th}$ avec $R=3$ kΩ (en kΩ) ?",
      "ans": "1",
      "sol": "$R\\parallel\\dfrac R2=\\dfrac R3=1$ kΩ.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même circuit : $R_{th}$ avec $R=6$ kΩ (en kΩ) ?",
+       "enonce": "![Schéma : source E, R en série, R/2 en parallèle, C en parallèle, sortie u](/static/schemas/elec-b2606cd9b082.svg)\n\nMême circuit : $R_{th}$ avec $R=6$ kΩ (en kΩ) ?",
        "ans": "2",
        "sol": "$R/3=2$ kΩ."
       }
@@ -950,7 +950,7 @@
     },
     {
      "id": "t93",
-     "enonce": "Même circuit, $R=3$ kΩ, $C=1\\,\\mu$F : $\\tau'$ (en ms) ?",
+     "enonce": "![Schéma : source E, R en série, R/2 en parallèle, C en parallèle, sortie u](/static/schemas/elec-b2606cd9b082.svg)\n\nMême circuit, $R=3$ kΩ, $C=1\\,\\mu$F : $\\tau'$ (en ms) ?",
      "ans": "1",
      "sol": "$\\tau'=R_{th}C=\\dfrac{RC}3=1$ ms.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
@@ -960,7 +960,7 @@
     },
     {
      "id": "t94",
-     "enonce": "Même circuit, $C$ chargé sous $E=9$ V avant la fermeture de $K$. $u(t')$ en V, $t'$ en ms ($\\tau'=1$ ms) ?",
+     "enonce": "![Schéma : source E, R en série, R/2 en parallèle, C en parallèle, sortie u](/static/schemas/elec-b2606cd9b082.svg)\n\nMême circuit, $C$ chargé sous $E=9$ V avant la fermeture de $K$. $u(t')$ en V, $t'$ en ms ($\\tau'=1$ ms) ?",
      "ans": "3*(2*exp(-t)+1)",
      "sol": "$u(t')=\\dfrac E3+\\dfrac{2E}3e^{-t'/\\tau'}=3(2e^{-t'}+1)$ : décharge partielle de $9$ V vers $3$ V.",
      "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
@@ -970,7 +970,7 @@
     },
     {
      "id": "t95",
-     "enonce": "Contrôle 2023 : $E$, $R$ en série, puis $R\\parallel L$. $R_{th}$ vu par $L$ avec $R=2$ kΩ (en kΩ) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nContrôle 2023 : $E$, $R$ en série, puis $R\\parallel L$. $R_{th}$ vu par $L$ avec $R=2$ kΩ (en kΩ) ?",
      "ans": "1",
      "sol": "$E_{th}=\\dfrac E2$, $R_{th}=R\\parallel R=\\dfrac R2=1$ kΩ.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -980,7 +980,7 @@
     },
     {
      "id": "t96",
-     "enonce": "Même circuit, $L=0{,}1$ H, $R=100$ Ω : $\\tau$ (en ms) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nMême circuit, $L=0{,}1$ H, $R=100$ Ω : $\\tau$ (en ms) ?",
      "ans": "2",
      "sol": "$\\tau=\\dfrac{L}{R_{th}}=\\dfrac{2L}R=2$ ms.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -1087,7 +1087,7 @@
    "exos": [
     {
      "id": "t111",
-     "enonce": "Branches entre $A$ et la masse : $(2E,R)$, $(-E,2R)$, $R$ seule, et source $I$ entrant en $A$. $U$ en fonction de $E$, $R$, $I$ (symboles `V` pour $E$, `I0` pour $I$) ?",
+     "enonce": "![Schéma : entre A et B, les branches (2E, R), (-E, 2R), R seule (tension U) et une source de courant I en série avec 2R](/static/schemas/elec-c1c8989dd837.svg)\n\nBranches entre $A$ et la masse : $(2E,R)$, $(-E,2R)$, $R$ seule, et source $I$ entrant en $A$. $U$ en fonction de $E$, $R$, $I$ (symboles `V` pour $E$, `I0` pour $I$) ?",
      "ans": "(3*V+2*R*I0)/5",
      "sol": "$U=\\dfrac{\\frac{2E}R-\\frac E{2R}+I}{\\frac1R+\\frac1{2R}+\\frac1R}=\\dfrac{3E+2RI}{5}$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3.1",
@@ -1097,14 +1097,14 @@
     },
     {
      "id": "t112",
-     "enonce": "Même montage, $E=5$ V, $R=1$ kΩ, $I=5$ mA : $U$ (en V) ?",
+     "enonce": "![Schéma : entre A et B, les branches (2E, R), (-E, 2R), R seule (tension U) et une source de courant I en série avec 2R](/static/schemas/elec-c1c8989dd837.svg)\n\nMême montage, $E=5$ V, $R=1$ kΩ, $I=5$ mA : $U$ (en V) ?",
      "ans": "5",
      "sol": "$\\dfrac{15+10}5=5$ V.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3.1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même montage, $E=10$ V, $R=1$ kΩ, $I=10$ mA : $U$ (en V) ?",
+       "enonce": "![Schéma : entre A et B, les branches (2E, R), (-E, 2R), R seule (tension U) et une source de courant I en série avec 2R](/static/schemas/elec-c1c8989dd837.svg)\n\nMême montage, $E=10$ V, $R=1$ kΩ, $I=10$ mA : $U$ (en V) ?",
        "ans": "10",
        "sol": "$\\dfrac{30+20}5=10$ V."
       }
@@ -1114,7 +1114,7 @@
     },
     {
      "id": "t113",
-     "enonce": "Contrôle 2023, ex. 3.2 : $U=\\dfrac{-3E-6RI}{2}$ avec $E=2$ V, $R=1$ kΩ, $I=1$ mA. $U$ (en V) ?",
+     "enonce": "![Schéma : branche (R, E) et source 2E entre C et B ; 2R de C vers A ; entre A et B : source de courant 4I en série avec 4R, 4R, (4R, 2E) et source de courant I ; U entre A et B](/static/schemas/elec-fdf13eb25bfd.svg)\n\nContrôle 2023, ex. 3.2 : $U=\\dfrac{-3E-6RI}{2}$ avec $E=2$ V, $R=1$ kΩ, $I=1$ mA. $U$ (en V) ?",
      "ans": "-6",
      "sol": "$\\dfrac{-6-6}2=-6$ V.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3.2",
@@ -1124,7 +1124,7 @@
     },
     {
      "id": "t114",
-     "enonce": "Contrôle 2023, ex. 3.2 : comment utiliser Millman quand une branche contient la source $2E$ entre $B$ et $C$ ?",
+     "enonce": "![Schéma : branche (R, E) et source 2E entre C et B ; 2R de C vers A ; entre A et B : source de courant 4I en série avec 4R, 4R, (4R, 2E) et source de courant I ; U entre A et B](/static/schemas/elec-fdf13eb25bfd.svg)\n\nContrôle 2023, ex. 3.2 : comment utiliser Millman quand une branche contient la source $2E$ entre $B$ et $C$ ?",
      "sol": "Millman en $A$ : $U=\\dfrac{\\frac{V_C}{2R}-4I-\\frac{2E}{4R}+I}{\\frac1{2R}+\\frac1{4R}+\\frac1{4R}}=\\dfrac{V_C-6RI-E}{2}$. La source de gauche impose $2E=V_B-V_C$, soit $V_C=-2E$, d'où $U=\\dfrac{-3E-6RI}{2}$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3.2",
      "duree": 8,
@@ -1174,7 +1174,7 @@
     },
     {
      "id": "xd2",
-     "enonce": "Exercice 2.1 : tableau $i$, $i_R$, $i_L$, $u_L$ à $0^+$ et $t\\to\\infty$ ($E$, $K$, $R$, puis $R\\parallel L$).",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\nExercice 2.1 : tableau $i$, $i_R$, $i_L$, $u_L$ à $0^+$ et $t\\to\\infty$ ($E$, $K$, $R$, puis $R\\parallel L$).",
      "sol": "$0^+$ : $\\dfrac E{2R}$, $\\dfrac E{2R}$, $0$, $\\dfrac E2$. $\\infty$ : $\\dfrac ER$, $0$, $\\dfrac ER$, $0$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2 (10 points)",
      "duree": 6,
@@ -1183,7 +1183,7 @@
     },
     {
      "id": "xd3",
-     "enonce": "Exercice 2.2.a : $E_{th}$ vu par $L$, avec $E=12$ V (en V) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\n![Schéma : source E_th, R_th en série, L en parallèle, sortie u_L(t)](/static/schemas/elec-6848090db6da.svg)\n\nExercice 2.2.a : $E_{th}$ vu par $L$, avec $E=12$ V (en V) ?",
      "ans": "6",
      "sol": "Norton $\\dfrac ER$ avec $R\\parallel R=\\dfrac R2$ : $E_{th}=\\dfrac E2=6$ V, $R_{th}=\\dfrac R2$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -1193,7 +1193,7 @@
     },
     {
      "id": "xd4",
-     "enonce": "Exercice 2.2.b : $u_L(t)$ en fonction de $E$, $R$, $L$, $t$ (symbole `V` pour $E$) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\n![Schéma : source E_th, R_th en série, L en parallèle, sortie u_L(t)](/static/schemas/elec-6848090db6da.svg)\n\nExercice 2.2.b : $u_L(t)$ en fonction de $E$, $R$, $L$, $t$ (symbole `V` pour $E$) ?",
      "ans": "V/2*exp(-R*t/(2*L))",
      "sol": "Mailles : $E_{th}=R_{th}i_L+u_L$, on dérive : $\\dfrac{du_L}{dt}+\\dfrac{R}{2L}u_L=0$. $u_L(0^+)=\\dfrac E2$ : $u_L(t)=\\dfrac E2e^{-\\frac{R}{2L}t}$, $\\tau=\\dfrac{2L}R$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
@@ -1203,14 +1203,14 @@
     },
     {
      "id": "xd5",
-     "enonce": "Exercice 2 : $\\tau$ avec $L=50$ mH, $R=100$ Ω (en ms) ?",
+     "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\n![Schéma : source E_th, R_th en série, L en parallèle, sortie u_L(t)](/static/schemas/elec-6848090db6da.svg)\n\nExercice 2 : $\\tau$ avec $L=50$ mH, $R=100$ Ω (en ms) ?",
      "ans": "1",
      "sol": "$\\tau=\\dfrac{2L}R=1$ ms.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Exercice 2 : $\\tau$ avec $L=0{,}2$ H, $R=200$ Ω (en ms) ?",
+       "enonce": "![Schéma : source E, K en série, R en série, R en parallèle, L en parallèle, sortie u_L(t)](/static/schemas/elec-d17c9c23dea1.svg)\n\n![Schéma : source E_th, R_th en série, L en parallèle, sortie u_L(t)](/static/schemas/elec-6848090db6da.svg)\n\nExercice 2 : $\\tau$ avec $L=0{,}2$ H, $R=200$ Ω (en ms) ?",
        "ans": "2",
        "sol": "$\\dfrac{2L}R=2$ ms."
       }
@@ -1220,7 +1220,7 @@
     },
     {
      "id": "xd6",
-     "enonce": "Exercice 3.1 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`) ?",
+     "enonce": "![Schéma : entre A et B, les branches (2E, R), (-E, 2R), R seule (tension U) et une source de courant I en série avec 2R](/static/schemas/elec-c1c8989dd837.svg)\n\nExercice 3.1 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`) ?",
      "ans": "(3*V+2*R*I0)/5",
      "sol": "Millman en $A$ : $U=\\dfrac{3E+2RI}{5}$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3 (6 points)",
@@ -1230,7 +1230,7 @@
     },
     {
      "id": "xd7",
-     "enonce": "Exercice 3.2 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`), sachant $V_C=-2E$ ?",
+     "enonce": "![Schéma : branche (R, E) et source 2E entre C et B ; 2R de C vers A ; entre A et B : source de courant 4I en série avec 4R, 4R, (4R, 2E) et source de courant I ; U entre A et B](/static/schemas/elec-fdf13eb25bfd.svg)\n\nExercice 3.2 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`), sachant $V_C=-2E$ ?",
      "ans": "(-3*V-6*R*I0)/2",
      "sol": "$U=\\dfrac{V_C-6RI-E}{2}$ avec $V_C=-2E$ : $U=\\dfrac{-3E-6RI}{2}$.",
      "src": "Contrôle d'électronique S2, février 2023, ex. 3",

@@ -3,9 +3,12 @@
 Calibrated on the Moodle course « Electronique S2 - Études des régimes transitoires » (`Kit de Survie - Régimes
 transitoires`), the TD « Les régimes transitoires » (4 exercises + optional spark exercise, with its correction) and the
 February 2023 test (`Contrôle Elec - InfoS2 - Février 2023`, handwritten correction). No exam of promo 2030 is published.
-Circuit figures cannot be rendered: circuits are described in words. In `calc`, the source voltage is the symbol V
+Circuits are described in words and drawn as SVG
+(`schema.py`, `FIGS` at the end). In `calc`, the source voltage is the symbol V
 (E is Euler's number in build.NS) and t is time; s(t) = beta + (s0 - beta) exp(-t/tau) is the worked solution.
 """
+from .schema import Fil, Gap, Point, R, SrcI, SrcU, ajoute, courant, fig, schema_echelle, tension
+
 
 SUBJECT = {
     "id": "elec-s2-transitoires",
@@ -276,3 +279,76 @@ FORMULES = {
     "t111": _M, "t112": _M, "t113": _M, "t114": _M, "t115": _M, "t116": _M,
     "xd1": _C + " · " + _P, "xd2": _I + " · " + _P, "xd3": _H, "xd4": _S + " · " + _Q, "xd5": _H, "xd6": _M, "xd7": _M,
 }
+
+
+# ---------------------------------------------------------------- circuit figures (`schema.py`)
+
+def _m31(d):
+    """Contrôle 2023, ex. 3.1: branches (2E, R), (-E, 2R), R, and current source I behind 2R, between A and B."""
+    d += (s := SrcU().endpoints((0, 0), (0, 3)))
+    tension(d, s, "$2E$")
+    d += R().endpoints((0, 3), (3, 3)).label("$R$")
+    d += R().endpoints((3, 3), (3, 1.6)).label("$2R$", loc="bottom")
+    d += (s := SrcU().endpoints((3, 1.6), (3, 0)))
+    tension(d, s, "$E$", cote=False, ofst=0.5, length=1)
+    d += Fil().endpoints((3, 3), (8, 3))
+    d += Point().at((6, 3)).label("$A$", loc="top")
+    d += (r := R().endpoints((6, 3), (6, 0)).label("$R$", loc="bottom"))
+    tension(d, r, "$U$", sens=-1, cote=False, ofst=0.9)
+    d += R().endpoints((6, 3), (9, 3)).label("$2R$")
+    d += (s := SrcI().endpoints((9, 0), (9, 3)))
+    courant(d, s, "$I$", debut=False)
+    d += Point().at((6, 0)).label("$B$", loc="bottom")
+    d += Fil().endpoints((0, 0), (9, 0))
+
+
+def _m32(d):
+    """Contrôle 2023, ex. 3.2: (R, E) and 2E between C and B, 2R from C to A; at A: (4I, 4R), 4R, (4R, 2E), I."""
+    d += R().endpoints((0, 3), (0, 1.6)).label("$R$")
+    d += (s := SrcU().endpoints((0, 0), (0, 1.6)))
+    tension(d, s, "$E$", ofst=0.5, length=1)
+    d += Fil().endpoints((0, 3), (2, 3))
+    d += Point().at((2, 3)).label("$C$", loc="top")
+    d += (s := SrcU().endpoints((2, 3), (2, 0)))
+    tension(d, s, "$2E$")
+    d += R().endpoints((2, 3), (5, 3)).label("$2R$")
+    d += (s := SrcI().endpoints((5, 3), (5, 1.6)))
+    courant(d, s, "$4I$", debut=False)
+    d += R().endpoints((5, 1.6), (5, 0)).label("$4R$", loc="bottom")
+    d += Fil().endpoints((5, 3), (11, 3))
+    d += Point().at((7, 3)).label("$A$", loc="top")
+    d += R().endpoints((7, 3), (7, 0)).label("$4R$", loc="bottom")
+    d += R().endpoints((9, 3), (9, 1.6)).label("$4R$", loc="bottom")
+    d += (s := SrcU().endpoints((9, 1.6), (9, 0)))
+    tension(d, s, "$2E$", ofst=0.5, length=1)
+    d += (s := SrcI().endpoints((11, 0), (11, 3)))
+    courant(d, s, "$I$", debut=False)
+    d += Point().at((7, 0)).label("$B$", loc="bottom")
+    d += Fil().endpoints((0, 0), (11, 0))
+    d += Fil().endpoints((11, 3), (12.2, 3))
+    d += Fil().endpoints((11, 0), (12.2, 0))
+    d += (g := Gap().endpoints((12.2, 3), (12.2, 0)))
+    tension(d, g, "$U$", sens=-1, ofst=0.3)
+
+
+S, P = "s", "p"
+FIG_RC = schema_echelle("E", [(S, "R", "R"), (P, "C", "C")], "u_C")
+FIG_RL = schema_echelle("E", [(S, "R", "R"), (P, "L", "L")], "u_L")
+FIG_KRL = schema_echelle("E", [(S, "K", "K"), (S, "R", "R"), (P, "L", "L")], "u_L")
+FIG_RRRC = schema_echelle("E", [(S, "R", "R"), (P, "R", "R"), (S, "R", "R"), (P, "C", "C")], "u_C")
+FIG_EX2 = schema_echelle("E", [(S, "K", "K"), (S, "R", "R"), (P, "R", "R"), (P, "L", "L")], "u_L(t)")
+FIG_EX2B = schema_echelle("E_{th}", [(S, "R", "R_{th}"), (P, "L", "L")], "u_L(t)")
+FIG_TD4 = schema_echelle("E", [(S, "R", "R"), (P, "R", "R/2"), (P, "C", "C")], "u")
+FIG_M31 = fig(_m31, "Schéma : entre A et B, les branches (2E, R), (-E, 2R), R seule (tension U) et une source de courant I en série avec 2R")
+FIG_M32 = fig(_m32, "Schéma : branche (R, E) et source 2E entre C et B ; 2R de C vers A ; entre A et B : source de courant 4I en série avec 4R, 4R, (4R, 2E) et source de courant I ; U entre A et B")
+
+FIGS = {**dict.fromkeys(["t22", "t27", "t35", "t36", "t41", "t46"], FIG_RC),
+        **dict.fromkeys(["t23", "t42", "t47"], FIG_RL),
+        **dict.fromkeys(["t71", "t72", "t73", "t74", "t75"], FIG_KRL),
+        "t24": FIG_RRRC,
+        **dict.fromkeys(["t25", "t26", "t31", "t32", "t37", "t95", "t96", "xd2"], FIG_EX2),
+        **dict.fromkeys(["xd3", "xd4", "xd5"], FIG_EX2 + "\n\n" + FIG_EX2B),
+        **dict.fromkeys(["t91", "t92", "t93", "t94"], FIG_TD4),
+        **dict.fromkeys(["t111", "t112", "xd6"], FIG_M31),
+        **dict.fromkeys(["t113", "t114", "xd7"], FIG_M32)}
+ajoute(LEVELS, FIGS)

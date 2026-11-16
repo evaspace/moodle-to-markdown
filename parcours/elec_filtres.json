@@ -335,14 +335,14 @@
     },
     {
      "id": "f22",
-     "enonce": "$v_e$, $3R$ et $C$ en série, sortie sur $R$. Gain en THF ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\n$v_e$, $3R$ et $C$ en série, sortie sur $R$. Gain en THF ?",
      "ans": "Rational(1,4)",
      "sol": "$C\\to$ fil : diviseur $\\dfrac{R}{3R+R}=\\tfrac14$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$v_e$, $2R$ et $C$ en série, sortie sur $R$. Gain en THF ?",
+       "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\n$v_e$, $2R$ et $C$ en série, sortie sur $R$. Gain en THF ?",
        "ans": "Rational(1,3)",
        "sol": "$\\dfrac{R}{3R}=\\tfrac13$."
       }
@@ -352,7 +352,7 @@
     },
     {
      "id": "f23",
-     "enonce": "Même filtre : gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\nMême filtre : gain en TBF ?",
      "ans": "0",
      "sol": "$C\\to$ ouvert : aucun courant dans $R$, $v_s\\to0$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
@@ -362,14 +362,14 @@
     },
     {
      "id": "f24",
-     "enonce": "$v_e$, $R$ et $L$ en série, sortie sur $5R$. Gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), R en série, L en série, 5R en parallèle, sortie v_s(t)](/static/schemas/elec-b5303bd480c7.svg)\n\n$v_e$, $R$ et $L$ en série, sortie sur $5R$. Gain en TBF ?",
      "ans": "Rational(5,6)",
      "sol": "$L\\to$ fil : $\\dfrac{5R}{6R}=\\tfrac56$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$v_e$, $R$ et $L$ en série, sortie sur $3R$. Gain en TBF ?",
+       "enonce": "![Schéma : source v_e(t), R en série, L en série, 5R en parallèle, sortie v_s(t)](/static/schemas/elec-b5303bd480c7.svg)\n\n$v_e$, $R$ et $L$ en série, sortie sur $3R$. Gain en TBF ?",
        "ans": "Rational(3,4)",
        "sol": "$\\tfrac34$."
       }
@@ -379,7 +379,7 @@
     },
     {
      "id": "f25",
-     "enonce": "$v_e$, $R$ en série, puis $2R$ et $C$ en parallèle en sortie. Gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), R en série, 2R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-b0bb1bdd9509.svg)\n\n$v_e$, $R$ en série, puis $2R$ et $C$ en parallèle en sortie. Gain en TBF ?",
      "ans": "Rational(2,3)",
      "sol": "$C\\to$ ouvert : $\\dfrac{2R}{2R+R}=\\tfrac23$ ; en THF $C\\to$ fil, $G\\to0$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 3",
@@ -389,7 +389,7 @@
     },
     {
      "id": "f26",
-     "enonce": "$v_e$, $R_1$ en série, puis $R_2=R_1$ et $C$ en parallèle en sortie. Gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\n$v_e$, $R_1$ en série, puis $R_2=R_1$ et $C$ en parallèle en sortie. Gain en TBF ?",
      "ans": "Rational(1,2)",
      "sol": "$C$ ouvert : diviseur $\\dfrac{R}{2R}=\\tfrac12$ ; en THF $G\\to0$.",
      "src": "Contrôle d'électronique B3, mars 2026, Q8-Q9",
@@ -399,7 +399,7 @@
     },
     {
      "id": "f27",
-     "enonce": "$v_e$, $L$ et $R$ en série, $C$ en sortie. Gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\n$v_e$, $L$ et $R$ en série, $C$ en sortie. Gain en TBF ?",
      "ans": "1",
      "sol": "$L$ fil, $C$ ouvert : aucun courant, pas de chute dans $R$, $v_s=v_e$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 4",
@@ -419,7 +419,7 @@
    "exos": [
     {
      "id": "f31",
-     "enonce": "$v_e$, $3R$ et $C$ en série, sortie sur $R$ : nature du filtre ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\n$v_e$, $3R$ et $C$ en série, sortie sur $R$ : nature du filtre ?",
      "sol": "TBF : $G\\to0$. THF : $G\\to\\tfrac14$. Le gain croît : passe-haut (ordre $1$).",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
      "duree": 3,
@@ -428,7 +428,7 @@
     },
     {
      "id": "f32",
-     "enonce": "$v_e$, $C$ en série, puis $R$ et $L$ en parallèle en sortie : nature ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-ec07544e23d7.svg)\n\n$v_e$, $C$ en série, puis $R$ et $L$ en parallèle en sortie : nature ?",
      "sol": "TBF : $C$ ouvert, $G\\to0$. THF : $C$ fil, $L$ ouvert, $v_s=v_e$, $G\\to1$. Passe-haut d'ordre $2$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 5",
      "duree": 3,
@@ -437,7 +437,7 @@
     },
     {
      "id": "f33",
-     "enonce": "$v_e$, $R$ en série, puis $C$ et $L$ en parallèle en sortie : nature ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-7d35187271b2.svg)\n\n$v_e$, $R$ en série, puis $C$ et $L$ en parallèle en sortie : nature ?",
      "sol": "TBF : $L$ fil, $v_s=0$. THF : $C$ fil, $v_s=0$. Gain nul aux deux bouts : passe-bande d'ordre $2$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 6",
      "duree": 3,
@@ -456,7 +456,7 @@
     },
     {
      "id": "f35",
-     "enonce": "Filtre $v_e$, $R_1$ en série, $R_2\\parallel C$ en sortie. Quel filtre obtient-on si l'on remplace $R_2$ par une bobine ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nFiltre $v_e$, $R_1$ en série, $R_2\\parallel C$ en sortie. Quel filtre obtient-on si l'on remplace $R_2$ par une bobine ?",
      "sol": "TBF : la bobine est un fil, $v_s=0$. THF : le condensateur est un fil, $v_s=0$. Passe-bande.",
      "src": "Contrôle d'électronique B3, mars 2026, Q12",
      "duree": 3,
@@ -465,7 +465,7 @@
     },
     {
      "id": "f36",
-     "enonce": "Filtre passe-bas : $v_e$, $R$ en série, $C$ en parallèle, $L$ en série, $R$ en sortie. Que devient-il si l'on inverse la bobine et le condensateur ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nFiltre passe-bas : $v_e$, $R$ en série, $C$ en parallèle, $L$ en série, $R$ en sortie. Que devient-il si l'on inverse la bobine et le condensateur ?",
      "sol": "Les comportements en TBF et en THF sont inversés : le passe-bas devient un passe-haut.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",
      "duree": 3,
@@ -655,7 +655,7 @@
    "exos": [
     {
      "id": "f61",
-     "enonce": "$v_e$, $3R$ et $C$ en série, sortie sur $R$. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\n$v_e$, $3R$ et $C$ en série, sortie sur $R$. $\\underline H$ ?",
      "ans": "I*R*C*w/(1+4*I*R*C*w)",
      "sol": "Diviseur : $\\dfrac{R}{4R+\\frac1{jC\\omega}}$, on multiplie par $jC\\omega$ : $\\dfrac{jRC\\omega}{1+4jRC\\omega}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
@@ -665,7 +665,7 @@
     },
     {
      "id": "f62",
-     "enonce": "Même filtre : $G_{max}$ ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\nMême filtre : $G_{max}$ ?",
      "ans": "Rational(1,4)",
      "sol": "$\\underline H=\\dfrac14\\cdot\\dfrac{4jRC\\omega}{1+4jRC\\omega}$ : $G_{max}=G_{THF}=\\tfrac14$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
@@ -675,14 +675,14 @@
     },
     {
      "id": "f63",
-     "enonce": "Même filtre, $R=1$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\nMême filtre, $R=1$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
      "ans": "250",
      "sol": "$\\omega_c=\\dfrac1{4RC}=250$ rad/s.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même filtre, $R=500$ Ω, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), 3R en série, C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-fc12bee2048f.svg)\n\nMême filtre, $R=500$ Ω, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
        "ans": "500",
        "sol": "$\\dfrac1{4RC}=500$ rad/s."
       }
@@ -710,13 +710,13 @@
     },
     {
      "id": "f66",
-     "enonce": "$v_e$, $C$ en série, $R$ en sortie. $\\omega_c$ avec $R=10$ kΩ, $C=100$ nF (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-b7f69fb70873.svg)\n\n$v_e$, $C$ en série, $R$ en sortie. $\\omega_c$ avec $R=10$ kΩ, $C=100$ nF (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\underline H=\\dfrac{jRC\\omega}{1+jRC\\omega}$, $\\omega_c=\\dfrac1{RC}=1000$ rad/s.",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$v_e$, $C$ en série, $R$ en sortie. $\\omega_c$ avec $R=1$ kΩ, $C=10\\,\\mu$F (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-b7f69fb70873.svg)\n\n$v_e$, $C$ en série, $R$ en sortie. $\\omega_c$ avec $R=1$ kΩ, $C=10\\,\\mu$F (en rad/s) ?",
        "ans": "100",
        "sol": "$\\dfrac1{RC}=100$ rad/s."
       }
@@ -745,7 +745,7 @@
    "exos": [
     {
      "id": "f71",
-     "enonce": "$v_e$, $R$ et $L$ en série, sortie sur $5R$. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, L en série, 5R en parallèle, sortie v_s(t)](/static/schemas/elec-b5303bd480c7.svg)\n\n$v_e$, $R$ et $L$ en série, sortie sur $5R$. $\\underline H$ ?",
      "ans": "5*R/(6*R+I*L*w)",
      "sol": "Diviseur : $\\dfrac{5R}{6R+jL\\omega}=\\dfrac56\\cdot\\dfrac1{1+j\\frac{L}{6R}\\omega}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 2",
@@ -755,14 +755,14 @@
     },
     {
      "id": "f72",
-     "enonce": "Même filtre, $R=100$ Ω, $L=0{,}6$ H. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), R en série, L en série, 5R en parallèle, sortie v_s(t)](/static/schemas/elec-b5303bd480c7.svg)\n\nMême filtre, $R=100$ Ω, $L=0{,}6$ H. $\\omega_c$ (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\omega_c=\\dfrac{6R}L=1000$ rad/s, $G_{max}=\\tfrac56$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même filtre, $R=50$ Ω, $L=0{,}3$ H. $\\omega_c$ (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), R en série, L en série, 5R en parallèle, sortie v_s(t)](/static/schemas/elec-b5303bd480c7.svg)\n\nMême filtre, $R=50$ Ω, $L=0{,}3$ H. $\\omega_c$ (en rad/s) ?",
        "ans": "1000",
        "sol": "$\\dfrac{6R}{L}=1000$ rad/s."
       }
@@ -772,7 +772,7 @@
     },
     {
      "id": "f73",
-     "enonce": "$v_e$, $R$ en série, $2R\\parallel C$ en sortie. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, 2R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-b0bb1bdd9509.svg)\n\n$v_e$, $R$ en série, $2R\\parallel C$ en sortie. $\\underline H$ ?",
      "ans": "2/(3+2*I*R*C*w)",
      "sol": "$2R\\parallel C=\\dfrac{2R}{1+2jRC\\omega}$, diviseur : $\\dfrac{2}{3+2jRC\\omega}=\\dfrac23\\cdot\\dfrac1{1+\\frac23jRC\\omega}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 3",
@@ -782,7 +782,7 @@
     },
     {
      "id": "f74",
-     "enonce": "Même filtre, $R=1{,}5$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), R en série, 2R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-b0bb1bdd9509.svg)\n\nMême filtre, $R=1{,}5$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\omega_c=\\dfrac3{2RC}=1000$ rad/s.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 3",
@@ -792,7 +792,7 @@
     },
     {
      "id": "f75",
-     "enonce": "$v_e$, $R_1=R$ en série, $R_2=R$ et $C$ en parallèle en sortie. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\n$v_e$, $R_1=R$ en série, $R_2=R$ et $C$ en parallèle en sortie. $\\underline H$ ?",
      "ans": "1/(2+I*R*C*w)",
      "sol": "$\\dfrac{R/(1+jRC\\omega)}{R+R/(1+jRC\\omega)}=\\dfrac1{2+jRC\\omega}$.",
      "src": "Contrôle d'électronique B3, mars 2026, Q10",
@@ -802,14 +802,14 @@
     },
     {
      "id": "f76",
-     "enonce": "Même filtre, $R=2$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nMême filtre, $R=2$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\dfrac12\\cdot\\dfrac1{1+j\\frac{RC}2\\omega}$ : $\\omega_c=\\dfrac2{RC}=1000$ rad/s.",
      "src": "Contrôle d'électronique B3, mars 2026, Q11",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même filtre, $R=1$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nMême filtre, $R=1$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
        "ans": "2000",
        "sol": "$\\dfrac2{RC}=2000$ rad/s."
       }
@@ -838,7 +838,7 @@
    "exos": [
     {
      "id": "f81",
-     "enonce": "$v_e$, $L$ et $R$ en série, sortie sur $C$. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\n$v_e$, $L$ et $R$ en série, sortie sur $C$. $\\underline H$ ?",
      "ans": "1/(1+I*R*C*w-L*C*w**2)",
      "sol": "Diviseur, on multiplie par $jC\\omega$ : $\\dfrac1{1+jRC\\omega-LC\\omega^2}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 4",
@@ -848,14 +848,14 @@
     },
     {
      "id": "f82",
-     "enonce": "Même filtre, $L=10$ mH, $C=1\\,\\mu$F. $\\omega_0$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\nMême filtre, $L=10$ mH, $C=1\\,\\mu$F. $\\omega_0$ (en rad/s) ?",
      "ans": "10000",
      "sol": "$\\omega_0=\\dfrac1{\\sqrt{LC}}=10^4$ rad/s.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 4",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même filtre, $L=1$ mH, $C=100$ nF. $\\omega_0$ (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\nMême filtre, $L=1$ mH, $C=100$ nF. $\\omega_0$ (en rad/s) ?",
        "ans": "100000",
        "sol": "$LC=10^{-10}$, $\\omega_0=10^5$ rad/s."
       }
@@ -865,7 +865,7 @@
     },
     {
      "id": "f83",
-     "enonce": "Même filtre : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\nMême filtre : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
      "ans": "R*C/(2*sqrt(L*C))",
      "sol": "$2\\sigma\\dfrac\\omega{\\omega_0}=RC\\omega$ donc $\\sigma=\\dfrac{RC}2\\omega_0=\\dfrac{RC}{2\\sqrt{LC}}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 4",
@@ -875,13 +875,13 @@
     },
     {
      "id": "f84",
-     "enonce": "Même filtre, $R=100$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\nMême filtre, $R=100$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
      "ans": "Rational(1,2)",
      "sol": "$RC=10^{-4}$, $\\sqrt{LC}=10^{-4}$ : $\\sigma=0{,}5$.",
      "duree": 3,
      "variants": [
       {
-       "enonce": "Même filtre, $R=200$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
+       "enonce": "![Schéma : source v_e(t), L en série, R en série, C en parallèle, sortie v_s(t)](/static/schemas/elec-9edf0d74d6b7.svg)\n\nMême filtre, $R=200$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
        "ans": "1",
        "sol": "$RC=2\\times10^{-4}$, $\\sigma=1$."
       }
@@ -891,7 +891,7 @@
     },
     {
      "id": "f85",
-     "enonce": "$v_e$, $L$, $R$ en série, puis $R$ et $C$ en parallèle en sortie. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-39a18d81e753.svg)\n\n$v_e$, $L$, $R$ en série, puis $R$ et $C$ en parallèle en sortie. $\\underline H$ ?",
      "ans": "R/(2*R+I*R**2*C*w+I*L*w-R*L*C*w**2)",
      "sol": "$R\\parallel C=\\dfrac{R}{1+jRC\\omega}$, diviseur : $\\dfrac{R}{2R+jR^2C\\omega+jL\\omega-RLC\\omega^2}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 7",
@@ -901,7 +901,7 @@
     },
     {
      "id": "f86",
-     "enonce": "Même filtre : $\\omega_0$ en fonction de $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-39a18d81e753.svg)\n\nMême filtre : $\\omega_0$ en fonction de $L$, $C$ ?",
      "ans": "sqrt(2)/sqrt(L*C)",
      "sol": "$\\dfrac12\\cdot\\dfrac1{1+j\\frac12(RC+\\frac LR)\\omega-\\frac{LC}2\\omega^2}$ : $\\omega_0=\\sqrt{\\dfrac2{LC}}$, $G_0=\\tfrac12$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 7",
@@ -911,7 +911,7 @@
     },
     {
      "id": "f87",
-     "enonce": "Même filtre : $\\sigma$ ?",
+     "enonce": "![Schéma : source v_e(t), L en série, R en série, R en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-39a18d81e753.svg)\n\nMême filtre : $\\sigma$ ?",
      "ans": "sqrt(2)*(R*C+L/R)/(4*sqrt(L*C))",
      "sol": "$2\\sigma\\dfrac\\omega{\\omega_0}=\\dfrac12\\left(RC+\\dfrac LR\\right)\\omega$ donc $\\sigma=\\dfrac{\\omega_0}4\\left(RC+\\dfrac LR\\right)$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 7",
@@ -931,7 +931,7 @@
    "exos": [
     {
      "id": "f91",
-     "enonce": "$v_e$, $C$ en série, puis $R$ et $L$ en parallèle en sortie. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-ec07544e23d7.svg)\n\n$v_e$, $C$ en série, puis $R$ et $L$ en parallèle en sortie. $\\underline H$ ?",
      "ans": "-R*L*C*w**2/(R+I*L*w-R*L*C*w**2)",
      "sol": "$R\\parallel L=\\dfrac{jRL\\omega}{R+jL\\omega}$, diviseur : $\\dfrac{-RLC\\omega^2}{R+jL\\omega-RLC\\omega^2}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 5",
@@ -941,7 +941,7 @@
     },
     {
      "id": "f92",
-     "enonce": "Même filtre : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-ec07544e23d7.svg)\n\nMême filtre : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
      "ans": "L/(2*R*sqrt(L*C))",
      "sol": "$\\dfrac{-LC\\omega^2}{1+j\\frac LR\\omega-LC\\omega^2}$ : $G_0=1$, $\\omega_0=\\dfrac1{\\sqrt{LC}}$, $\\sigma=\\dfrac{L}{2R\\sqrt{LC}}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 5",
@@ -951,13 +951,13 @@
     },
     {
      "id": "f93",
-     "enonce": "Même filtre, $R=100$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-ec07544e23d7.svg)\n\nMême filtre, $R=100$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
      "ans": "Rational(1,2)",
      "sol": "$\\dfrac{0{,}01}{200\\times10^{-4}}=0{,}5$.",
      "duree": 3,
      "variants": [
       {
-       "enonce": "Même filtre, $R=50$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
+       "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-ec07544e23d7.svg)\n\nMême filtre, $R=50$ Ω, $L=10$ mH, $C=1\\,\\mu$F. $\\sigma$ ?",
        "ans": "1",
        "sol": "$\\dfrac{0{,}01}{100\\times10^{-4}}=1$."
       }
@@ -967,7 +967,7 @@
     },
     {
      "id": "f94",
-     "enonce": "$v_e$, $C$ en série, $R$ en parallèle, puis $R$ en série et $L$ en sortie. Norton puis Thévenin : $\\underline E_{th}/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, R en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-7841c5adfed4.svg)\n\n$v_e$, $C$ en série, $R$ en parallèle, puis $R$ en série et $L$ en sortie. Norton puis Thévenin : $\\underline E_{th}/\\underline V_E$ ?",
      "ans": "I*R*C*w/(1+I*R*C*w)",
      "sol": "Source $jC\\omega\\underline V_E$ en parallèle avec $\\dfrac{R}{1+jRC\\omega}$ : $\\underline E_{th}=\\dfrac{jRC\\omega}{1+jRC\\omega}\\underline V_E$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 8",
@@ -977,7 +977,7 @@
     },
     {
      "id": "f95",
-     "enonce": "Même filtre : $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, R en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-7841c5adfed4.svg)\n\nMême filtre : $\\underline H$ ?",
      "ans": "-R*L*C*w**2/(2*R+I*R**2*C*w+I*L*w-R*L*C*w**2)",
      "sol": "Diviseur sur $jL\\omega$ avec $\\underline Z_{th}=\\dfrac{R}{1+jRC\\omega}+R$ : $\\dfrac{-RLC\\omega^2}{2R+jR^2C\\omega+jL\\omega-RLC\\omega^2}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 8",
@@ -987,7 +987,7 @@
     },
     {
      "id": "f96",
-     "enonce": "Même filtre : $G_0=G_{THF}$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, R en parallèle, R en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-7841c5adfed4.svg)\n\nMême filtre : $G_0=G_{THF}$ ?",
      "ans": "1",
      "sol": "$\\dfrac{-\\frac{LC}2\\omega^2}{1+\\dots-\\frac{LC}2\\omega^2}\\to1$ : $G_0=1$, $\\omega_0=\\sqrt{\\dfrac2{LC}}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 8",
@@ -1016,7 +1016,7 @@
    "exos": [
     {
      "id": "fa1",
-     "enonce": "$v_e$, $R$ en série, puis $C$ et $L$ en parallèle en sortie. $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-7d35187271b2.svg)\n\n$v_e$, $R$ en série, puis $C$ et $L$ en parallèle en sortie. $\\underline H$ ?",
      "ans": "I*L*w/(R+I*L*w-R*L*C*w**2)",
      "sol": "$C\\parallel L=\\dfrac{jL\\omega}{1-LC\\omega^2}$, diviseur : $\\dfrac{jL\\omega}{R+jL\\omega-RLC\\omega^2}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 6",
@@ -1026,7 +1026,7 @@
     },
     {
      "id": "fa2",
-     "enonce": "Même filtre : gain à $\\omega_0=1/\\sqrt{LC}$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-7d35187271b2.svg)\n\nMême filtre : gain à $\\omega_0=1/\\sqrt{LC}$ ?",
      "ans": "1",
      "sol": "À $\\omega_0$, $RLC\\omega_0^2=R$ : $\\underline H=\\dfrac{jL\\omega_0}{jL\\omega_0}=1=G_0$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 6",
@@ -1036,7 +1036,7 @@
     },
     {
      "id": "fa3",
-     "enonce": "Même filtre : $\\sigma$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-7d35187271b2.svg)\n\nMême filtre : $\\sigma$ ?",
      "ans": "L/(2*R*sqrt(L*C))",
      "sol": "$\\dfrac{j\\frac LR\\omega}{1+j\\frac LR\\omega-LC\\omega^2}$ : $2\\sigma\\dfrac\\omega{\\omega_0}=\\dfrac LR\\omega$, $\\sigma=\\dfrac{L}{2R\\sqrt{LC}}$.",
      "src": "TD d'électronique S2 « Études des filtres », filtre 6",
@@ -1056,7 +1056,7 @@
     },
     {
      "id": "fa5",
-     "enonce": "Bonus 2 : $v_e$, $R_1$ en série, $(R_2,L,C)$ en parallèle en sortie. Gain maximal en fonction de $R_1$, $R_2$ ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, L en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-f9fedeaefeb0.svg)\n\nBonus 2 : $v_e$, $R_1$ en série, $(R_2,L,C)$ en parallèle en sortie. Gain maximal en fonction de $R_1$, $R_2$ ?",
      "ans": "R2/(R1+R2)",
      "sol": "$\\underline H=\\dfrac1{1+R_1\\underline Y_{eq}}$, maximal quand $C\\omega=\\dfrac1{L\\omega}$ : $G_{max}=\\dfrac{R_2}{R_1+R_2}$.",
      "src": "TD d'électronique S2 « Études des filtres », bonus 2",
@@ -1095,7 +1095,7 @@
    "exos": [
     {
      "id": "fb1",
-     "enonce": "$v_e$, $R$ en série, $C$ en parallèle, puis $L$ en série et $R$ en sortie. $\\underline E_{th}/\\underline V_E$ vu par la résistance de sortie (avec $L$) ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\n$v_e$, $R$ en série, $C$ en parallèle, puis $L$ en série et $R$ en sortie. $\\underline E_{th}/\\underline V_E$ vu par la résistance de sortie (avec $L$) ?",
      "ans": "1/(1+I*R*C*w)",
      "sol": "Norton $\\dfrac{\\underline V_E}R$, $R\\parallel C=\\dfrac{R}{1+jRC\\omega}$, retour en Thévenin : $\\underline E_{th}=\\dfrac{\\underline V_E}{1+jRC\\omega}$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",
@@ -1105,7 +1105,7 @@
     },
     {
      "id": "fb2",
-     "enonce": "Même circuit : $\\underline Z_{th}$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nMême circuit : $\\underline Z_{th}$ ?",
      "ans": "R/(1+I*R*C*w)+I*L*w",
      "sol": "$\\underline Z_{th}=\\dfrac{R}{1+jRC\\omega}+jL\\omega$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",
@@ -1115,7 +1115,7 @@
     },
     {
      "id": "fb3",
-     "enonce": "Même circuit : $\\underline H=\\underline V_S/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nMême circuit : $\\underline H=\\underline V_S/\\underline V_E$ ?",
      "ans": "R/(2*R+I*(L+R**2*C)*w-R*L*C*w**2)",
      "sol": "$\\dfrac{R}{\\underline Z_{th}+R}\\cdot\\dfrac1{1+jRC\\omega}=\\dfrac{R}{2R+j(L+R^2C)\\omega-RLC\\omega^2}$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",
@@ -1125,7 +1125,7 @@
     },
     {
      "id": "fb4",
-     "enonce": "Même circuit, $L=2$ mH, $C=1\\,\\mu$F. $\\omega_0=\\sqrt{2/(LC)}$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nMême circuit, $L=2$ mH, $C=1\\,\\mu$F. $\\omega_0=\\sqrt{2/(LC)}$ (en rad/s) ?",
      "ans": "10**Rational(9,2)",
      "sol": "$LC=2\\times10^{-9}$, $\\omega_0=\\sqrt{10^9}\\approx31\\,623$ rad/s.",
      "duree": 3,
@@ -1185,7 +1185,7 @@
     },
     {
      "id": "xc2",
-     "enonce": "Exercice 1, Q7-Q9 : $v_e$, $R_1$ en série, $R_2\\parallel C$ en sortie, $R_1=R_2=R$. Nature, gain en THF, gain en TBF ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nExercice 1, Q7-Q9 : $v_e$, $R_1$ en série, $R_2\\parallel C$ en sortie, $R_1=R_2=R$. Nature, gain en THF, gain en TBF ?",
      "sol": "Passe-bas. THF : $C$ fil, $G\\to0$. TBF : $C$ ouvert, $G=\\dfrac{R}{2R}=\\tfrac12$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 1",
      "duree": 4,
@@ -1194,7 +1194,7 @@
     },
     {
      "id": "xc3",
-     "enonce": "Exercice 1, Q10 : $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nExercice 1, Q10 : $\\underline H$ ?",
      "ans": "1/(2+I*R*C*w)",
      "sol": "$\\underline H=\\dfrac1{2+jRC\\omega}$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 1",
@@ -1204,14 +1204,14 @@
     },
     {
      "id": "xc4",
-     "enonce": "Exercice 1, Q11 : $\\omega_c$ avec $R=1$ kΩ, $C=2\\,\\mu$F (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nExercice 1, Q11 : $\\omega_c$ avec $R=1$ kΩ, $C=2\\,\\mu$F (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\omega_c=\\dfrac2{RC}=1000$ rad/s ; Q12 : $R_2$ remplacée par une bobine donne un passe-bande.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 1",
      "duree": 3,
      "variants": [
       {
-       "enonce": "Exercice 1, Q11 : $\\omega_c$ avec $R=4$ kΩ, $C=1\\,\\mu$F (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), R_1 en série, R_2 en parallèle, C en parallèle, sortie v_s(t)](/static/schemas/elec-90f69dcbf999.svg)\n\nExercice 1, Q11 : $\\omega_c$ avec $R=4$ kΩ, $C=1\\,\\mu$F (en rad/s) ?",
        "ans": "500",
        "sol": "$\\dfrac2{RC}=500$ rad/s."
       }
@@ -1221,7 +1221,7 @@
     },
     {
      "id": "xc5",
-     "enonce": "Exercice 2 (qualitatif) : $v_e$, $R$ en série, $C$ en parallèle, $L$ en série, $R$ en sortie. Gains limites, nature, filtre obtenu en inversant $L$ et $C$.",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nExercice 2 (qualitatif) : $v_e$, $R$ en série, $C$ en parallèle, $L$ en série, $R$ en sortie. Gains limites, nature, filtre obtenu en inversant $L$ et $C$.",
      "sol": "TBF : $C$ ouvert, $L$ fil, $G\\to\\tfrac12$. THF : $C$ fil, $G\\to0$. Passe-bas (ordre $2$). En inversant $L$ et $C$, TBF et THF s'inversent : passe-haut.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2 (13 points)",
      "duree": 8,
@@ -1230,7 +1230,7 @@
     },
     {
      "id": "xc6",
-     "enonce": "Exercice 2 (quantitatif) : $\\underline H$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nExercice 2 (quantitatif) : $\\underline H$ ?",
      "ans": "R/(2*R+I*(L+R**2*C)*w-R*L*C*w**2)",
      "sol": "$\\underline E_{th}=\\dfrac{\\underline V_E}{1+jRC\\omega}$, $\\underline Z_{th}=\\dfrac R{1+jRC\\omega}+jL\\omega$, diviseur : $\\dfrac{R}{2R+j(L+R^2C)\\omega-RLC\\omega^2}$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",
@@ -1240,7 +1240,7 @@
     },
     {
      "id": "xc7",
-     "enonce": "Exercice 2 : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), R en série, C en parallèle, L en série, R en parallèle, sortie v_s(t)](/static/schemas/elec-55c35d5a0c69.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie V_S](/static/schemas/elec-7910f2cf77cf.svg)\n\nExercice 2 : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
      "ans": "sqrt(2)*(L/R+R*C)/(4*sqrt(L*C))",
      "sol": "$\\dfrac12\\cdot\\dfrac1{1+j\\frac12\\left(\\frac LR+RC\\right)\\omega-\\frac{LC}2\\omega^2}$ : $G_0=\\tfrac12$, $\\omega_0=\\sqrt{\\dfrac2{LC}}$, $\\sigma=\\dfrac{\\omega_0}4\\left(\\dfrac LR+RC\\right)$.",
      "src": "Contrôle d'électronique B3, mars 2026, ex. 2",

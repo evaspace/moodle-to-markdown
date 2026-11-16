@@ -247,7 +247,7 @@
     },
     {
      "id": "d13",
-     "enonce": "$E=10$ V, diode idéale dans le sens de $E$, en série avec $R=100$ Ω. Tension $U_R$ (en V) ?",
+     "enonce": "![Schéma : source E, D en série, R en parallèle, sortie U_R](/static/schemas/elec-f0e5efd37aee.svg)\n\n$E=10$ V, diode idéale dans le sens de $E$, en série avec $R=100$ Ω. Tension $U_R$ (en V) ?",
      "ans": "10",
      "sol": "Diode passante (fil) : $U_R=E=10$ V.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), Q3",
@@ -257,7 +257,7 @@
     },
     {
      "id": "d14",
-     "enonce": "Même circuit, $R=1$ kΩ. $V_{AK}$ (en V) ?",
+     "enonce": "![Schéma : source E, D en série, R en parallèle, sortie U_R](/static/schemas/elec-f0e5efd37aee.svg)\n\nMême circuit, $R=1$ kΩ. $V_{AK}$ (en V) ?",
      "ans": "0",
      "sol": "Diode idéale passante : $V_{AK}=0$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), Q4",
@@ -267,7 +267,7 @@
     },
     {
      "id": "d15",
-     "enonce": "$E=10$ V, diode à seuil ($V_0=0{,}7$ V) montée en sens inverse, en série avec $R=100$ Ω. $U_R$ (en V) ?",
+     "enonce": "![Schéma : source E, D en série, R en parallèle, sortie U_R](/static/schemas/elec-a8d66f039f17.svg)\n\n$E=10$ V, diode à seuil ($V_0=0{,}7$ V) montée en sens inverse, en série avec $R=100$ Ω. $U_R$ (en V) ?",
      "ans": "0",
      "sol": "Diode bloquée : aucun courant, $U_R=0$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), Q5",
@@ -277,7 +277,7 @@
     },
     {
      "id": "d16",
-     "enonce": "Même circuit, $R=1$ kΩ. $V_{AK}$ (en V) ?",
+     "enonce": "![Schéma : source E, D en série, R en parallèle, sortie U_R](/static/schemas/elec-a8d66f039f17.svg)\n\nMême circuit, $R=1$ kΩ. $V_{AK}$ (en V) ?",
      "ans": "-10",
      "sol": "Pas de courant, $U_R=0$ : toute la tension est sur la diode, en inverse : $V_{AK}=-E=-10$ V.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), Q6",
@@ -315,14 +315,14 @@
     },
     {
      "id": "d22",
-     "enonce": "$E=5$ V, $R=10$ Ω, diode passante, modèle à seuil $V_0=0{,}7$ V. $I$ (en A) ?",
+     "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-88ec0def5925.svg)\n\n$E=5$ V, $R=10$ Ω, diode passante, modèle à seuil $V_0=0{,}7$ V. $I$ (en A) ?",
      "ans": "Rational(43,100)",
      "sol": "Mailles : $E-RI-V_0=0$, $I=\\dfrac{E-V_0}R=0{,}43$ A.",
      "src": "TD d'électronique S2 « Les diodes », ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=10$ V, $R=100$ Ω, modèle à seuil $V_0=0{,}7$ V. $I$ (en mA) ?",
+       "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-88ec0def5925.svg)\n\n$E=10$ V, $R=100$ Ω, modèle à seuil $V_0=0{,}7$ V. $I$ (en mA) ?",
        "ans": "93",
        "sol": "$\\dfrac{9{,}3}{100}$ A $=93$ mA."
       }
@@ -332,7 +332,7 @@
     },
     {
      "id": "d23",
-     "enonce": "Même circuit, modèle réel avec $r_D=1$ Ω. $I$ (en A, exact) ?",
+     "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-88ec0def5925.svg)\n\nMême circuit, modèle réel avec $r_D=1$ Ω. $I$ (en A, exact) ?",
      "ans": "Rational(43,110)",
      "sol": "$I=\\dfrac{E-V_0}{R+r_D}=\\dfrac{4{,}3}{11}\\approx0{,}39$ A.",
      "src": "TD d'électronique S2 « Les diodes », ex. 2",
@@ -342,14 +342,14 @@
     },
     {
      "id": "d24",
-     "enonce": "Même circuit avec $R=1$ kΩ, modèle à seuil. $I$ (en mA) ?",
+     "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-88ec0def5925.svg)\n\nMême circuit avec $R=1$ kΩ, modèle à seuil. $I$ (en mA) ?",
      "ans": "Rational(43,10)",
      "sol": "$\\dfrac{4{,}3}{1000}$ A $=4{,}3$ mA.",
      "src": "TD d'électronique S2 « Les diodes », ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=12$ V, $R=2$ kΩ, modèle à seuil. $I$ (en mA) ?",
+       "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-88ec0def5925.svg)\n\n$E=12$ V, $R=2$ kΩ, modèle à seuil. $I$ (en mA) ?",
        "ans": "Rational(113,20)",
        "sol": "$\\dfrac{11{,}3}{2}=5{,}65$ mA."
       }
@@ -398,7 +398,7 @@
    "exos": [
     {
      "id": "d31",
-     "enonce": "$E=10$ V, $R_1=50$ Ω en série, puis $R_2=100$ Ω en parallèle avec la diode ($A$ côté $R_1$). Diode supposée bloquée : $V_{AK}$ (en V) ?",
+     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, D en parallèle](/static/schemas/elec-51d379562cc0.svg)\n\n$E=10$ V, $R_1=50$ Ω en série, puis $R_2=100$ Ω en parallèle avec la diode ($A$ côté $R_1$). Diode supposée bloquée : $V_{AK}$ (en V) ?",
      "ans": "Rational(20,3)",
      "sol": "$R_1$, $R_2$ en série : $V_{AK}=\\dfrac{R_2}{R_1+R_2}E=\\dfrac{20}3\\approx6{,}7$ V $> V_0$ : absurde, la diode est passante.",
      "src": "TD d'électronique S2 « Les diodes », ex. 1",
@@ -408,7 +408,7 @@
     },
     {
      "id": "d32",
-     "enonce": "Même circuit, diode passante ($V_0=0{,}7$ V). $I_{AK}$ (en mA) ?",
+     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, D en parallèle](/static/schemas/elec-51d379562cc0.svg)\n\nMême circuit, diode passante ($V_0=0{,}7$ V). $I_{AK}$ (en mA) ?",
      "ans": "179",
      "sol": "$I_1=\\dfrac{E-V_0}{R_1}=186$ mA, $I_2=\\dfrac{V_0}{R_2}=7$ mA, $I_{AK}=I_1-I_2=179$ mA.",
      "src": "TD d'électronique S2 « Les diodes », ex. 1",
@@ -418,7 +418,7 @@
     },
     {
      "id": "d33",
-     "enonce": "$R_1=10$ kΩ, $R_2=10$ Ω. Diode supposée passante : $I_{AK}$ (en mA) ?",
+     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, D en parallèle](/static/schemas/elec-51d379562cc0.svg)\n\n$R_1=10$ kΩ, $R_2=10$ Ω. Diode supposée passante : $I_{AK}$ (en mA) ?",
      "ans": "-Rational(6907,100)",
      "sol": "$I_{AK}=\\dfrac{9{,}3}{10^4}-\\dfrac{0{,}7}{10}\\approx-69$ mA $< 0$ : absurde, la diode est bloquée.",
      "src": "TD d'électronique S2 « Les diodes », ex. 1",
@@ -428,7 +428,7 @@
     },
     {
      "id": "d34",
-     "enonce": "Même circuit, diode bloquée. Courant dans $R_2$ (en mA, exact) ?",
+     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, D en parallèle](/static/schemas/elec-51d379562cc0.svg)\n\nMême circuit, diode bloquée. Courant dans $R_2$ (en mA, exact) ?",
      "ans": "Rational(1000,1001)",
      "sol": "$R_1$, $R_2$ en série : $I_2=\\dfrac{E}{R_1+R_2}\\approx1$ mA.",
      "src": "TD d'électronique S2 « Les diodes », ex. 1",
@@ -475,7 +475,7 @@
    "exos": [
     {
      "id": "d41",
-     "enonce": "Examen 2025, ex. 2 : $E_2=20$ V alimente $R_2=1$ kΩ en série avec $R_3=1$ kΩ (nœud $N$ entre les deux). Diode supposée bloquée : $V_N$ (en V) ?",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nExamen 2025, ex. 2 : $E_2=20$ V alimente $R_2=1$ kΩ en série avec $R_3=1$ kΩ (nœud $N$ entre les deux). Diode supposée bloquée : $V_N$ (en V) ?",
      "ans": "10",
      "sol": "Diviseur : $V_N=\\dfrac{R_3}{R_2+R_3}E_2=10$ V.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2",
@@ -485,7 +485,7 @@
     },
     {
      "id": "d42",
-     "enonce": "Même circuit : la cathode de la diode est reliée au $+$ de $E_1=5$ V, dont le $-$ rejoint la masse par $R_1=2$ kΩ. Diode bloquée : $V_{AK}$ (en V) ?",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nMême circuit : la cathode de la diode est reliée au $+$ de $E_1=5$ V, dont le $-$ rejoint la masse par $R_1=2$ kΩ. Diode bloquée : $V_{AK}$ (en V) ?",
      "ans": "5",
      "sol": "Pas de courant dans $R_1$ : $V_K=E_1=5$ V, $V_{AK}=10-5=5$ V $> 0$ : absurde, la diode conduit.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2",
@@ -495,7 +495,7 @@
     },
     {
      "id": "d43",
-     "enonce": "Même circuit, diode idéale passante. Courant $I$ dans la diode (en mA) ?",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nMême circuit, diode idéale passante. Courant $I$ dans la diode (en mA) ?",
      "ans": "2",
      "sol": "$V_N=E_1+R_1I$ et nœud $N$ : $\\dfrac{E_2-V_N}{R_2}=I+\\dfrac{V_N}{R_3}$. Avec les kΩ et mA : $20-V_N=I+V_N$, $V_N=5+2I$, d'où $10=5I$, $I=2$ mA ($V_N=9$ V).",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2",
@@ -505,7 +505,7 @@
     },
     {
      "id": "d44",
-     "enonce": "Même circuit : $V_N$ (en V) ?",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nMême circuit : $V_N$ (en V) ?",
      "ans": "9",
      "sol": "$V_N=E_1+R_1I=9$ V, et le courant dans $R_2$ vaut $11$ mA.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2",
@@ -515,13 +515,13 @@
     },
     {
      "id": "d45",
-     "enonce": "$E=12$ V, $R=1$ kΩ, deux diodes à seuil ($V_0=0{,}7$ V) en série dans le sens passant. $I$ (en mA) ?",
+     "enonce": "![Schéma : source E, R en série, D_1 en série, D_2 en série](/static/schemas/elec-34ef239c0af5.svg)\n\n$E=12$ V, $R=1$ kΩ, deux diodes à seuil ($V_0=0{,}7$ V) en série dans le sens passant. $I$ (en mA) ?",
      "ans": "Rational(53,5)",
      "sol": "$I=\\dfrac{E-2V_0}{R}=10{,}6$ mA.",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=5$ V, $R=1$ kΩ, deux diodes à seuil en série. $I$ (en mA) ?",
+       "enonce": "![Schéma : source E, R en série, D_1 en série, D_2 en série](/static/schemas/elec-34ef239c0af5.svg)\n\n$E=5$ V, $R=1$ kΩ, deux diodes à seuil en série. $I$ (en mA) ?",
        "ans": "Rational(18,5)",
        "sol": "$3{,}6$ mA."
       }
@@ -540,7 +540,7 @@
     },
     {
      "id": "d47",
-     "enonce": "Examen 2025, ex. 2 : rédiger le raisonnement par l'absurde complet.",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nExamen 2025, ex. 2 : rédiger le raisonnement par l'absurde complet.",
      "sol": "Supposons la diode bloquée : $R_2$, $R_3$ en série, $V_N=10$ V ; aucun courant dans $R_1$, $V_K=E_1=5$ V ; $V_{AK}=5$ V $> 0$ : absurde. La diode est passante (fil) : $V_N=E_1+R_1I$, nœud $N$ : $\\dfrac{E_2-V_N}{R_2}=I+\\dfrac{V_N}{R_3}$, d'où $I=2$ mA $> 0$ (cohérent).",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2",
      "duree": 8,
@@ -559,7 +559,7 @@
    "exos": [
     {
      "id": "d51",
-     "enonce": "Écrêteur : $V$, $R$ série, puis $R_L$ en parallèle avec deux diodes tête-bêche. Les deux bloquées : $U$ en fonction de $V$ ($R=R_L$) ?",
+     "enonce": "![Schéma : source V, R en série, R_L en parallèle, D_1 en parallèle, D_2 en parallèle, sortie U](/static/schemas/elec-d7b22f5f6833.svg)\n\nÉcrêteur : $V$, $R$ série, puis $R_L$ en parallèle avec deux diodes tête-bêche. Les deux bloquées : $U$ en fonction de $V$ ($R=R_L$) ?",
      "ans": "V/2",
      "sol": "Diviseur : $U=\\dfrac{R_L}{R+R_L}V=\\dfrac V2$.",
      "src": "TD d'électronique S2 « Les diodes », ex. 3",
@@ -569,7 +569,7 @@
     },
     {
      "id": "d52",
-     "enonce": "Même écrêteur, modèle à seuil $V_0=0{,}7$ V, $R=R_L$ : valeur maximale de $V$ (en V) pour laquelle les deux diodes restent bloquées ?",
+     "enonce": "![Schéma : source V, R en série, R_L en parallèle, D_1 en parallèle, D_2 en parallèle, sortie U](/static/schemas/elec-d7b22f5f6833.svg)\n\nMême écrêteur, modèle à seuil $V_0=0{,}7$ V, $R=R_L$ : valeur maximale de $V$ (en V) pour laquelle les deux diodes restent bloquées ?",
      "ans": "Rational(7,5)",
      "sol": "Bloquées si $-V_0 < U < V_0$, soit $|V| < \\dfrac{R+R_L}{R_L}V_0=1{,}4$ V.",
      "src": "TD d'électronique S2 « Les diodes », ex. 3",
@@ -579,7 +579,7 @@
     },
     {
      "id": "d53",
-     "enonce": "Même écrêteur, modèle réel : $D_1$ passante. $U$ par Millman (symboles `V`, `V0`, `rD`, `R`, `RL`) ?",
+     "enonce": "![Schéma : source V, R en série, R_L en parallèle, D_1 en parallèle, D_2 en parallèle, sortie U](/static/schemas/elec-d7b22f5f6833.svg)\n\nMême écrêteur, modèle réel : $D_1$ passante. $U$ par Millman (symboles `V`, `V0`, `rD`, `R`, `RL`) ?",
      "ans": "RL*rD*V/(rD*RL+rD*R+R*RL) + RL*R*V0/(rD*RL+rD*R+R*RL)",
      "sol": "$U=\\dfrac{\\frac VR+\\frac{V_0}{r_D}}{\\frac1R+\\frac1{r_D}+\\frac1{R_L}}=\\dfrac{R_Lr_D}{r_DR_L+r_DR+RR_L}V+\\dfrac{R_LR}{r_DR_L+r_DR+RR_L}V_0$.",
      "src": "TD d'électronique S2 « Les diodes », ex. 3",
@@ -589,7 +589,7 @@
     },
     {
      "id": "d54",
-     "enonce": "Pourquoi les deux diodes tête-bêche de l'écrêteur ne peuvent-elles pas être passantes en même temps ?",
+     "enonce": "![Schéma : source V, R en série, R_L en parallèle, D_1 en parallèle, D_2 en parallèle, sortie U](/static/schemas/elec-d7b22f5f6833.svg)\n\nPourquoi les deux diodes tête-bêche de l'écrêteur ne peuvent-elles pas être passantes en même temps ?",
      "sol": "$D_1$ passante impose $V_{AK_1}\\geq V_0$. Les diodes sont tête-bêche : $V_{AK_2}=-V_{AK_1}\\leq-V_0$, donc $D_2$ est bloquée. Il reste trois cas : les deux bloquées, $D_1$ seule, $D_2$ seule.",
      "src": "TD d'électronique S2 « Les diodes », ex. 3",
      "duree": 4,
@@ -598,7 +598,7 @@
     },
     {
      "id": "d55",
-     "enonce": "Examen 2025, ex. 3 : $V$, puis ($R$ en parallèle avec une diode, anode côté sortie), puis $R$ en sortie. Diode bloquée : $U$ ?",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nExamen 2025, ex. 3 : $V$, puis ($R$ en parallèle avec une diode, anode côté sortie), puis $R$ en sortie. Diode bloquée : $U$ ?",
      "ans": "V/2",
      "sol": "Pas de courant dans la diode : diviseur, $U=\\dfrac V2$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3",
@@ -608,7 +608,7 @@
     },
     {
      "id": "d56",
-     "enonce": "Même circuit, diode passante (modèle à seuil) : $U$ en fonction de $V$, $V_0$ ?",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nMême circuit, diode passante (modèle à seuil) : $U$ en fonction de $V$, $V_0$ ?",
      "ans": "V+V0",
      "sol": "La diode impose $V_{AK}=U-V=V_0$, donc $U=V+V_0$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3",
@@ -618,7 +618,7 @@
     },
     {
      "id": "d57",
-     "enonce": "Même circuit : la diode est bloquée pour $V >$ ? (en fonction de $V_0$)",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nMême circuit : la diode est bloquée pour $V >$ ? (en fonction de $V_0$)",
      "ans": "-2*V0",
      "sol": "Bloquée si $V_{AK}=U-V=-\\dfrac V2 < V_0$, soit $V > -2V_0$. Pour $V\\leq-2V_0$ : $U=V+V_0$. La courbe est continue en $V=-2V_0$ ($U=-V_0$).",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3",
@@ -724,7 +724,7 @@
    "exos": [
     {
      "id": "d71",
-     "enonce": "$e(t)=E\\sqrt2\\sin(\\omega t)$, diode idéale et $R$ en série. $u$ quand $e < 0$ (en V) ?",
+     "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\n$e(t)=E\\sqrt2\\sin(\\omega t)$, diode idéale et $R$ en série. $u$ quand $e < 0$ (en V) ?",
      "ans": "0",
      "sol": "La diode est bloquée ($V_{AK}=e < 0$), aucun courant : $u=0$.",
      "src": "TD d'électronique S2 « Les diodes », ex. 5",
@@ -734,7 +734,7 @@
     },
     {
      "id": "d72",
-     "enonce": "Même montage, $e > 0$ : $u$ en fonction de $e$ (symbole `e`) ?",
+     "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\nMême montage, $e > 0$ : $u$ en fonction de $e$ (symbole `e`) ?",
      "ans": "e",
      "sol": "Diode passante (fil) : $u=e$.",
      "src": "TD d'électronique S2 « Les diodes », ex. 5",
@@ -744,7 +744,7 @@
     },
     {
      "id": "d73",
-     "enonce": "Modèle à seuil : $u$ quand la diode conduit (symboles `e`, `V0`) ?",
+     "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\nModèle à seuil : $u$ quand la diode conduit (symboles `e`, `V0`) ?",
      "ans": "e-V0",
      "sol": "$u=e-V_0$, pour $e > V_0$.",
      "src": "TD d'électronique S2 « Les diodes », ex. 5",
@@ -754,14 +754,14 @@
     },
     {
      "id": "d74",
-     "enonce": "$E\\sqrt2=10$ V, $V_0=0{,}7$ V. Valeur maximale de $u$ (en V) ?",
+     "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\n$E\\sqrt2=10$ V, $V_0=0{,}7$ V. Valeur maximale de $u$ (en V) ?",
      "ans": "Rational(93,10)",
      "sol": "$U_{max}=E\\sqrt2-V_0=9{,}3$ V.",
      "src": "TD d'électronique S2 « Les diodes », ex. 5",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E\\sqrt2=15$ V, $V_0=0{,}7$ V. $U_{max}$ (en V) ?",
+       "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\n$E\\sqrt2=15$ V, $V_0=0{,}7$ V. $U_{max}$ (en V) ?",
        "ans": "Rational(143,10)",
        "sol": "$14{,}3$ V."
       }
@@ -771,7 +771,7 @@
     },
     {
      "id": "d75",
-     "enonce": "Même montage, $E\\sqrt2=10$ V, modèle idéal. Tension inverse maximale aux bornes de la diode (en V) ?",
+     "enonce": "![Schéma : source e(t), D en série, R en parallèle, sortie u](/static/schemas/elec-8157d5febcad.svg)\n\nMême montage, $E\\sqrt2=10$ V, modèle idéal. Tension inverse maximale aux bornes de la diode (en V) ?",
      "ans": "-10",
      "sol": "Quand $e=-E\\sqrt2$, $u=0$ et $V_{AK}=e=-10$ V.",
      "duree": 2,
@@ -901,7 +901,7 @@
     },
     {
      "id": "d92",
-     "enonce": "$V$, $R$ série, Zéner en sortie (cathode en haut), modèles à seuil, $V_0=0{,}7$ V, $|V_Z|=4{,}3$ V. $V=3$ V : $U$ (en V) ?",
+     "enonce": "![Schéma : source V, R en série, D_Z en parallèle, sortie U](/static/schemas/elec-fe1f5f7a052a.svg)\n\n$V$, $R$ série, Zéner en sortie (cathode en haut), modèles à seuil, $V_0=0{,}7$ V, $|V_Z|=4{,}3$ V. $V=3$ V : $U$ (en V) ?",
      "ans": "3",
      "sol": "$-V_0 < V < |V_Z|$ : Zéner bloquée, pas de courant, $U=V=3$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 1",
@@ -911,14 +911,14 @@
     },
     {
      "id": "d93",
-     "enonce": "Même circuit, $V=10$ V : $U$ (en V) ?",
+     "enonce": "![Schéma : source V, R en série, D_Z en parallèle, sortie U](/static/schemas/elec-fe1f5f7a052a.svg)\n\nMême circuit, $V=10$ V : $U$ (en V) ?",
      "ans": "Rational(43,10)",
      "sol": "$V > |V_Z|$ : Zéner passante en inverse, $U=|V_Z|=4{,}3$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même circuit avec $|V_Z|=5{,}1$ V, $V=12$ V : $U$ (en V) ?",
+       "enonce": "![Schéma : source V, R en série, D_Z en parallèle, sortie U](/static/schemas/elec-fe1f5f7a052a.svg)\n\nMême circuit avec $|V_Z|=5{,}1$ V, $V=12$ V : $U$ (en V) ?",
        "ans": "Rational(51,10)",
        "sol": "$U=|V_Z|=5{,}1$ V."
       }
@@ -928,7 +928,7 @@
     },
     {
      "id": "d94",
-     "enonce": "Même circuit, $V=-5$ V : $U$ (en V) ?",
+     "enonce": "![Schéma : source V, R en série, D_Z en parallèle, sortie U](/static/schemas/elec-fe1f5f7a052a.svg)\n\nMême circuit, $V=-5$ V : $U$ (en V) ?",
      "ans": "-Rational(7,10)",
      "sol": "$V < -V_0$ : passante en direct, $U=-V_0=-0{,}7$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 1",
@@ -938,7 +938,7 @@
     },
     {
      "id": "d95",
-     "enonce": "Même circuit, modèle réel en inverse ($r_Z$) : $U$ par Millman (symboles `V`, `Vz`, `rz`, `R`) ?",
+     "enonce": "![Schéma : source V, R en série, D_Z en parallèle, sortie U](/static/schemas/elec-fe1f5f7a052a.svg)\n\nMême circuit, modèle réel en inverse ($r_Z$) : $U$ par Millman (symboles `V`, `Vz`, `rz`, `R`) ?",
      "ans": "rz*V/(R+rz) + R*Vz/(R+rz)",
      "sol": "$U=\\dfrac{\\frac VR+\\frac{|V_Z|}{r_Z}}{\\frac1R+\\frac1{r_Z}}=\\dfrac{r_Z}{R+r_Z}V+\\dfrac{R}{R+r_Z}|V_Z|$.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 1",
@@ -1063,14 +1063,14 @@
    "exos": [
     {
      "id": "d111",
-     "enonce": "$E=12$ V, $R=1$ kΩ, Zéner et $R_c=2{,}2$ kΩ en parallèle. $E_{th}$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, D_Z en parallèle, R_c en parallèle, sortie U](/static/schemas/elec-b4cdd0e3c209.svg)\n\n$E=12$ V, $R=1$ kΩ, Zéner et $R_c=2{,}2$ kΩ en parallèle. $E_{th}$ (en V) ?",
      "ans": "Rational(33,4)",
      "sol": "$E_{th}=\\dfrac{R_c}{R+R_c}E=\\dfrac{2{,}2}{3{,}2}\\times12=8{,}25$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 4",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=16$ V, $R=1$ kΩ, $R_c=3$ kΩ. $E_{th}$ (en V) ?",
+       "enonce": "![Schéma : source E, R en série, D_Z en parallèle, R_c en parallèle, sortie U](/static/schemas/elec-b4cdd0e3c209.svg)\n\n$E=16$ V, $R=1$ kΩ, $R_c=3$ kΩ. $E_{th}$ (en V) ?",
        "ans": "12",
        "sol": "$\\tfrac34\\times16=12$ V."
       }
@@ -1080,7 +1080,7 @@
     },
     {
      "id": "d112",
-     "enonce": "Même montage, $|V_Z|=6{,}2$ V : $U$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, D_Z en parallèle, R_c en parallèle, sortie U](/static/schemas/elec-b4cdd0e3c209.svg)\n\nMême montage, $|V_Z|=6{,}2$ V : $U$ (en V) ?",
      "ans": "Rational(31,5)",
      "sol": "$E_{th}=8{,}25$ V $\\geq|V_Z|$ : Zéner passante en inverse, $U=|V_Z|=6{,}2$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 4",
@@ -1090,7 +1090,7 @@
     },
     {
      "id": "d113",
-     "enonce": "Même montage avec $E=8$ V : $U$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, D_Z en parallèle, R_c en parallèle, sortie U](/static/schemas/elec-b4cdd0e3c209.svg)\n\nMême montage avec $E=8$ V : $U$ (en V) ?",
      "ans": "Rational(11,2)",
      "sol": "$E_{th}=5{,}5$ V $< 6{,}2$ V : Zéner bloquée, $U=E_{th}=5{,}5$ V.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 4",
@@ -1100,7 +1100,7 @@
     },
     {
      "id": "d114",
-     "enonce": "Même montage, $E=12$ V : $R_{th}$ (en kΩ) ?",
+     "enonce": "![Schéma : source E, R en série, D_Z en parallèle, R_c en parallèle, sortie U](/static/schemas/elec-b4cdd0e3c209.svg)\n\nMême montage, $E=12$ V : $R_{th}$ (en kΩ) ?",
      "ans": "Rational(11,16)",
      "sol": "$R_{th}=R\\parallel R_c=\\dfrac{2{,}2}{3{,}2}\\approx0{,}69$ kΩ.",
      "src": "TD d'électronique S2 « La diode Zéner », ex. 4",
@@ -1167,7 +1167,7 @@
     },
     {
      "id": "xe2",
-     "enonce": "Exercice 2 : $R_1=2$ kΩ, $R_2=R_3=1$ kΩ, $E_1=5$ V, $E_2=20$ V, diode idéale. Courant dans la diode (en mA) ?",
+     "enonce": "![Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1](/static/schemas/elec-0dbd055cec8f.svg)\n\nExercice 2 : $R_1=2$ kΩ, $R_2=R_3=1$ kΩ, $E_1=5$ V, $E_2=20$ V, diode idéale. Courant dans la diode (en mA) ?",
      "ans": "2",
      "sol": "Bloquée : $V_{AK}=10-5=5$ V $> 0$, absurde. Passante : $V_N=E_1+R_1I$ et $\\dfrac{E_2-V_N}{R_2}=I+\\dfrac{V_N}{R_3}$, donc $I=2$ mA.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 2 (5 points)",
@@ -1177,7 +1177,7 @@
     },
     {
      "id": "xe3",
-     "enonce": "Exercice 3.1 : $U$ quand la diode conduit (modèle à seuil) ?",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nExercice 3.1 : $U$ quand la diode conduit (modèle à seuil) ?",
      "ans": "V+V0",
      "sol": "$U-V=V_0$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3 (6 points)",
@@ -1187,7 +1187,7 @@
     },
     {
      "id": "xe4",
-     "enonce": "Exercice 3.2 : $U$ quand la diode est bloquée ?",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nExercice 3.2 : $U$ quand la diode est bloquée ?",
      "ans": "V/2",
      "sol": "Diviseur $R$, $R$ : $U=\\dfrac V2$.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3",
@@ -1197,7 +1197,7 @@
     },
     {
      "id": "xe5",
-     "enonce": "Exercice 3.3 : avec $V_0=0{,}7$ V, la diode est bloquée pour $V >$ (en V) ?",
+     "enonce": "![Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)](/static/schemas/elec-e9ba1e2eae03.svg)\n\nExercice 3.3 : avec $V_0=0{,}7$ V, la diode est bloquée pour $V >$ (en V) ?",
      "ans": "-Rational(7,5)",
      "sol": "$V_{AK}=-\\dfrac V2 < V_0$ donne $V > -2V_0=-1{,}4$ V.",
      "src": "Examen d'électronique « Diodes », mars 2025 (corrigé rédigé, non officiel), ex. 3",

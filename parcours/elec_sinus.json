@@ -549,14 +549,14 @@
    "exos": [
     {
      "id": "s41",
-     "enonce": "$E=20$ V efficaces aux bornes de $R=10$ Ω en série avec $L\\omega=10$ Ω. Courant efficace (en A) ?",
+     "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\n$E=20$ V efficaces aux bornes de $R=10$ Ω en série avec $L\\omega=10$ Ω. Courant efficace (en A) ?",
      "ans": "sqrt(2)",
      "sol": "$|\\underline Z|=10\\sqrt2$ Ω, $I=\\dfrac{20}{10\\sqrt2}=\\sqrt2$ A.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
      "duree": 2,
      "variants": [
       {
-       "enonce": "$E=30$ V efficaces aux bornes de $R=30$ Ω en série avec $L\\omega=40$ Ω. Courant efficace (en A) ?",
+       "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\n$E=30$ V efficaces aux bornes de $R=30$ Ω en série avec $L\\omega=40$ Ω. Courant efficace (en A) ?",
        "ans": "Rational(3,5)",
        "sol": "$|\\underline Z|=50$ Ω, $I=0{,}6$ A."
       }
@@ -566,7 +566,7 @@
     },
     {
      "id": "s42",
-     "enonce": "Même circuit : phase de $\\underline I$ par rapport à $\\underline E$ (en degrés) ?",
+     "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\nMême circuit : phase de $\\underline I$ par rapport à $\\underline E$ (en degrés) ?",
      "ans": "-45",
      "sol": "$\\arg\\underline I=\\arg\\underline E-\\arg\\underline Z=0-45°=-45°$ : le courant est en retard.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
@@ -576,7 +576,7 @@
     },
     {
      "id": "s43",
-     "enonce": "Même circuit : tension efficace aux bornes de la bobine (en V) ?",
+     "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\nMême circuit : tension efficace aux bornes de la bobine (en V) ?",
      "ans": "10*sqrt(2)",
      "sol": "$U_L=L\\omega\\,I=10\\sqrt2\\approx14{,}1$ V.",
      "duree": 2,
@@ -601,13 +601,13 @@
     },
     {
      "id": "s45",
-     "enonce": "$R$ et $L$ en série : $3$ V efficaces sur $R$, $4$ V efficaces sur $L$. Tension efficace totale (en V) ?",
+     "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\n$R$ et $L$ en série : $3$ V efficaces sur $R$, $4$ V efficaces sur $L$. Tension efficace totale (en V) ?",
      "ans": "5",
      "sol": "Les tensions sont déphasées de $90°$ : $\\underline U=3+4j$, $U=5$ V (et non $7$ V).",
      "duree": 3,
      "variants": [
       {
-       "enonce": "$R$ et $C$ en série : $6$ V efficaces sur $R$, $8$ V efficaces sur $C$. Tension efficace totale (en V) ?",
+       "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\n$R$ et $C$ en série : $6$ V efficaces sur $R$, $8$ V efficaces sur $C$. Tension efficace totale (en V) ?",
        "ans": "10",
        "sol": "$|6-8j|=10$ V."
       }
@@ -617,7 +617,7 @@
     },
     {
      "id": "s46",
-     "enonce": "TD 4, ex. 1 : $R$ et $L$ en série sous $e(t)=E\\sqrt2\\sin(\\omega t)$. $\\underline I/\\underline E$ en fonction de $R$, $L$, $\\omega$ ?",
+     "enonce": "![Schéma : source e(t), R en série, L en série](/static/schemas/elec-8e85589d9f2d.svg)\n\nTD 4, ex. 1 : $R$ et $L$ en série sous $e(t)=E\\sqrt2\\sin(\\omega t)$. $\\underline I/\\underline E$ en fonction de $R$, $L$, $\\omega$ ?",
      "ans": "(R-I*L*w)/(R**2+L**2*w**2)",
      "sol": "$\\underline I=\\dfrac{\\underline E}{R+jL\\omega}$ ; on peut aussi écrire $\\dfrac{R-jL\\omega}{R^2+L^2\\omega^2}\\underline E$.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
@@ -646,7 +646,7 @@
    "exos": [
     {
      "id": "s51",
-     "enonce": "TD 4, ex. 2 : $R$ en série avec $C$ sous $\\underline E$, sortie $\\underline U$ sur $C$. $\\underline U/\\underline E$ ?",
+     "enonce": "![Schéma : source e(t), R en série, C en parallèle, sortie u(t)](/static/schemas/elec-06cf6f86ac6e.svg)\n\nTD 4, ex. 2 : $R$ en série avec $C$ sous $\\underline E$, sortie $\\underline U$ sur $C$. $\\underline U/\\underline E$ ?",
      "ans": "1/(1+I*R*C*w)",
      "sol": "Diviseur de tension : $\\underline U=\\dfrac{\\frac1{jC\\omega}}{R+\\frac1{jC\\omega}}\\underline E=\\dfrac{1}{1+jRC\\omega}\\underline E$.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 2",
@@ -656,7 +656,7 @@
     },
     {
      "id": "s52",
-     "enonce": "Même montage avec $RC\\omega=1$ et $E=10$ V. Tension efficace $U$ (en V) ?",
+     "enonce": "![Schéma : source e(t), R en série, C en parallèle, sortie u(t)](/static/schemas/elec-06cf6f86ac6e.svg)\n\nMême montage avec $RC\\omega=1$ et $E=10$ V. Tension efficace $U$ (en V) ?",
      "ans": "5*sqrt(2)",
      "sol": "$U=\\dfrac{10}{|1+j|}=\\dfrac{10}{\\sqrt2}=5\\sqrt2$ V.",
      "duree": 2,
@@ -665,7 +665,7 @@
     },
     {
      "id": "s53",
-     "enonce": "Même montage avec $RC\\omega=1$. Déphasage de $u$ par rapport à $e$ (en degrés) ?",
+     "enonce": "![Schéma : source e(t), R en série, C en parallèle, sortie u(t)](/static/schemas/elec-06cf6f86ac6e.svg)\n\nMême montage avec $RC\\omega=1$. Déphasage de $u$ par rapport à $e$ (en degrés) ?",
      "ans": "-45",
      "sol": "$\\arg\\dfrac1{1+j}=-45°$.",
      "duree": 2,
@@ -674,7 +674,7 @@
     },
     {
      "id": "s54",
-     "enonce": "$R$ en série avec $L$, sortie sur $L$, $L\\omega=R$. Déphasage de la sortie par rapport à l'entrée (en degrés) ?",
+     "enonce": "![Schéma : source e(t), R en série, L en parallèle, sortie u(t)](/static/schemas/elec-df4fdb6e4978.svg)\n\n$R$ en série avec $L$, sortie sur $L$, $L\\omega=R$. Déphasage de la sortie par rapport à l'entrée (en degrés) ?",
      "ans": "45",
      "sol": "$\\dfrac{jL\\omega}{R+jL\\omega}=\\dfrac{j}{1+j}$ : $90°-45°=45°$.",
      "duree": 2,
@@ -683,7 +683,7 @@
     },
     {
      "id": "s55",
-     "enonce": "TD 4, ex. 3 : $C$ en série avec $R\\parallel L$ sous $\\underline E$ ; $\\underline U$ aux bornes de $R\\parallel L$. $\\underline U/\\underline E$ ?",
+     "enonce": "![Schéma : source e(t), C en série, R en parallèle, L en parallèle, sortie u(t)](/static/schemas/elec-d5278cafa32b.svg)\n\nTD 4, ex. 3 : $C$ en série avec $R\\parallel L$ sous $\\underline E$ ; $\\underline U$ aux bornes de $R\\parallel L$. $\\underline U/\\underline E$ ?",
      "ans": "-R*L*C*w**2/(R-R*L*C*w**2+I*L*w)",
      "sol": "$\\underline U=\\dfrac{\\frac{jRL\\omega}{R+jL\\omega}}{\\frac{jRL\\omega}{R+jL\\omega}+\\frac1{jC\\omega}}\\underline E=\\dfrac{-RLC\\omega^2}{R-RLC\\omega^2+jL\\omega}\\underline E$.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 3",
@@ -693,7 +693,7 @@
     },
     {
      "id": "s56",
-     "enonce": "Même circuit : courant $\\underline I_L$ dans la bobine, $\\underline I_L/\\underline E$ ?",
+     "enonce": "![Schéma : source e(t), C en série, R en parallèle, L en parallèle, sortie u(t)](/static/schemas/elec-d5278cafa32b.svg)\n\nMême circuit : courant $\\underline I_L$ dans la bobine, $\\underline I_L/\\underline E$ ?",
      "ans": "I*R*C*w/(R-R*L*C*w**2+I*L*w)",
      "sol": "$\\underline I_L=\\dfrac{\\underline U}{jL\\omega}=\\dfrac{jRC\\omega}{R-RLC\\omega^2+jL\\omega}\\underline E$ ; puis $\\underline I_R=\\underline U/R$ et $\\underline I=\\underline I_L+\\underline I_R$.",
      "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 3",
@@ -721,7 +721,7 @@
    "exos": [
     {
      "id": "s61",
-     "enonce": "$v_e$ en série avec $2R$, puis $C$ et $R$ en parallèle en sortie. Thévenin vu par $R$ : $\\underline E_{th}/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, C en parallèle, R en parallèle, sortie u(t)](/static/schemas/elec-715b4ae1a1e0.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie U](/static/schemas/elec-52fbb1ca601e.svg)\n\n$v_e$ en série avec $2R$, puis $C$ et $R$ en parallèle en sortie. Thévenin vu par $R$ : $\\underline E_{th}/\\underline V_E$ ?",
      "ans": "1/(1+2*I*R*C*w)",
      "sol": "On retire $R$ : diviseur $2R$, $C$ : $\\underline E_{th}=\\dfrac{1}{1+2jRC\\omega}\\underline V_E$.",
      "src": "Examen B2 d'électronique, janvier 2025, Q7",
@@ -731,7 +731,7 @@
     },
     {
      "id": "s62",
-     "enonce": "Même montage : $\\underline Z_{th}$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, C en parallèle, R en parallèle, sortie u(t)](/static/schemas/elec-715b4ae1a1e0.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie U](/static/schemas/elec-52fbb1ca601e.svg)\n\nMême montage : $\\underline Z_{th}$ ?",
      "ans": "2*R/(1+2*I*R*C*w)",
      "sol": "Source éteinte (fil) : $2R\\parallel C=\\dfrac{2R}{1+2jRC\\omega}$.",
      "src": "Examen B2 d'électronique, janvier 2025, Q8",
@@ -757,7 +757,7 @@
     },
     {
      "id": "s64",
-     "enonce": "$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ et $2R$ en série en sortie. Thévenin vu par $2R$ : $\\underline Z_{th}$ ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\n$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ et $2R$ en série en sortie. Thévenin vu par $2R$ : $\\underline Z_{th}$ ?",
      "ans": "3*R+I*L*w",
      "sol": "$6R\\parallel6R=3R$ en série avec $L$ : $\\underline Z_{th}=3R+jL\\omega$ (et $\\underline E_{th}=\\tfrac12\\underline V_E$).",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -767,7 +767,7 @@
     },
     {
      "id": "s65",
-     "enonce": "$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. $\\underline E_{th}/\\underline V_E$ vu par $L$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\n$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. $\\underline E_{th}/\\underline V_E$ vu par $L$ ?",
      "ans": "Rational(2,3)",
      "sol": "Norton : $\\dfrac{\\underline V_E}{2R}$ avec $2R\\parallel4R=\\tfrac{4R}3$, d'où $\\underline E_{th}=\\tfrac{4R}{3}\\cdot\\dfrac{\\underline V_E}{2R}=\\tfrac23\\underline V_E$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
@@ -777,7 +777,7 @@
     },
     {
      "id": "s66",
-     "enonce": "Même montage : $\\underline Z_{th}$ vu par $L$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\nMême montage : $\\underline Z_{th}$ vu par $L$ ?",
      "ans": "4*R/3+1/(I*C*w)",
      "sol": "$\\underline Z_{th}=\\dfrac{4R}3+\\dfrac1{jC\\omega}$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
@@ -805,7 +805,7 @@
    "exos": [
     {
      "id": "s71",
-     "enonce": "$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ en série et $2R$ en sortie. Limite de $A(\\omega)$ en TBF ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\n$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ en série et $2R$ en sortie. Limite de $A(\\omega)$ en TBF ?",
      "ans": "Rational(1,5)",
      "sol": "$L\\to$ fil : $6R\\parallel2R=1{,}5R$, $A=\\dfrac{1{,}5R}{6R+1{,}5R}=\\tfrac15$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -815,7 +815,7 @@
     },
     {
      "id": "s72",
-     "enonce": "Même filtre : limite de $A(\\omega)$ en THF ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nMême filtre : limite de $A(\\omega)$ en THF ?",
      "ans": "0",
      "sol": "$L\\to$ circuit ouvert : aucun courant dans $2R$, $v_s\\to0$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -825,7 +825,7 @@
     },
     {
      "id": "s73",
-     "enonce": "Même filtre : nature ? Et si l'on remplace la bobine par un condensateur ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nMême filtre : nature ? Et si l'on remplace la bobine par un condensateur ?",
      "sol": "$A$ décroît de $\\tfrac15$ à $0$ : passe-bas. Avec un condensateur, les comportements TBF et THF sont inversés : passe-haut.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
      "duree": 3,
@@ -834,7 +834,7 @@
     },
     {
      "id": "s74",
-     "enonce": "$v_e$, $C$ en série, puis $4R$ et $L$ en parallèle en sortie. Limite de $A(\\omega)$ en THF ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\n$v_e$, $C$ en série, puis $4R$ et $L$ en parallèle en sortie. Limite de $A(\\omega)$ en THF ?",
      "ans": "1",
      "sol": "$C\\to$ fil, $L\\to$ circuit ouvert : $v_s=v_e$, $A\\to1$ (en TBF $C$ ouvert : $A\\to0$). Passe-haut.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
@@ -844,7 +844,7 @@
     },
     {
      "id": "s75",
-     "enonce": "Même filtre : nature si l'on remplace le condensateur par une bobine ? Justifier.",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nMême filtre : nature si l'on remplace le condensateur par une bobine ? Justifier.",
      "sol": "TBF : la bobine de sortie est un fil, $v_s=0$. THF : la bobine série est ouverte, aucun courant dans $4R$, $v_s=0$. Amplification nulle aux deux bouts : passe-bande.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
      "duree": 4,
@@ -853,7 +853,7 @@
     },
     {
      "id": "s76",
-     "enonce": "$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. Limite de $A(\\omega)$ en THF ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\n$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. Limite de $A(\\omega)$ en THF ?",
      "ans": "Rational(2,3)",
      "sol": "$C\\to$ fil, $L\\to$ ouvert : $v_s$ est la tension sur $4R$, $A=\\dfrac{4R}{2R+4R}=\\tfrac23$ ; en TBF $C$ ouvert donne $A\\to0$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
@@ -942,7 +942,7 @@
     },
     {
      "id": "s86",
-     "enonce": "$\\underline T=\\dfrac{R}{5R+jL\\omega}$ à $\\omega=5R/L$. Amplification ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\n$\\underline T=\\dfrac{R}{5R+jL\\omega}$ à $\\omega=5R/L$. Amplification ?",
      "ans": "sqrt(2)/10",
      "sol": "$\\underline T=\\dfrac{1}{5+5j}$, $A=\\dfrac1{5\\sqrt2}=\\dfrac{\\sqrt2}{10}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -996,7 +996,7 @@
     },
     {
      "id": "s93",
-     "enonce": "Examen 2025, ex. 2 : diviseur de $\\underline E_{th}=\\tfrac12\\underline V_E$, $\\underline Z_{th}=3R+jL\\omega$ et $2R$. $\\underline T=\\underline V_S/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nExamen 2025, ex. 2 : diviseur de $\\underline E_{th}=\\tfrac12\\underline V_E$, $\\underline Z_{th}=3R+jL\\omega$ et $2R$. $\\underline T=\\underline V_S/\\underline V_E$ ?",
      "ans": "R/(5*R+I*L*w)",
      "sol": "$\\underline V_S=\\dfrac{2R}{3R+jL\\omega+2R}\\cdot\\dfrac{\\underline V_E}2$, donc $\\underline T=\\dfrac{R}{5R+jL\\omega}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -1006,7 +1006,7 @@
     },
     {
      "id": "s94",
-     "enonce": "Même filtre : $A_{max}$ ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nMême filtre : $A_{max}$ ?",
      "ans": "Rational(1,5)",
      "sol": "$\\underline T=\\dfrac15\\cdot\\dfrac{1}{1+j\\frac{L}{5R}\\omega}$ : $A_{max}=A_{TBF}=\\tfrac15$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -1016,14 +1016,14 @@
     },
     {
      "id": "s95",
-     "enonce": "Même filtre, $R=100$ Ω, $L=0{,}5$ H. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nMême filtre, $R=100$ Ω, $L=0{,}5$ H. $\\omega_c$ (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\omega_c=\\dfrac{5R}{L}=1000$ rad/s.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même filtre, $R=20$ Ω, $L=0{,}1$ H. $\\omega_c$ (en rad/s) ?",
+       "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nMême filtre, $R=20$ Ω, $L=0{,}1$ H. $\\omega_c$ (en rad/s) ?",
        "ans": "1000",
        "sol": "$5R/L=1000$ rad/s."
       }
@@ -1061,7 +1061,7 @@
    "exos": [
     {
      "id": "sa1",
-     "enonce": "Examen 2025, ex. 3 : $C$ en série, $4R\\parallel L$ en sortie. $\\underline T$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nExamen 2025, ex. 3 : $C$ en série, $4R\\parallel L$ en sortie. $\\underline T$ ?",
      "ans": "-4*R*L*C*w**2/(4*R+I*L*w-4*R*L*C*w**2)",
      "sol": "$4R\\parallel L=\\dfrac{j4RL\\omega}{4R+jL\\omega}$, diviseur : $\\underline T=\\dfrac{-4RLC\\omega^2}{4R+jL\\omega-4RLC\\omega^2}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
@@ -1087,7 +1087,7 @@
     },
     {
      "id": "sa3",
-     "enonce": "Même filtre que sa1 : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nMême filtre que sa1 : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
      "ans": "L/(8*R*sqrt(L*C))",
      "sol": "Forme normalisée : $\\dfrac{-LC\\omega^2}{1+j\\frac{L}{4R}\\omega-LC\\omega^2}$ ; $2\\sigma\\dfrac{\\omega}{\\omega_0}=\\dfrac{L}{4R}\\omega$ donc $\\sigma=\\dfrac{L}{8R}\\omega_0=\\dfrac{L}{8R\\sqrt{LC}}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
@@ -1097,7 +1097,7 @@
     },
     {
      "id": "sa4",
-     "enonce": "$L=10$ mH, $C=1\\,\\mu$F, $R=25$ Ω dans ce filtre. $\\sigma$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\n$L=10$ mH, $C=1\\,\\mu$F, $R=25$ Ω dans ce filtre. $\\sigma$ ?",
      "ans": "Rational(1,2)",
      "sol": "$\\sigma=\\dfrac{L\\omega_0}{8R}=\\dfrac{0{,}01\\times10^4}{200}=0{,}5$.",
      "duree": 3,
@@ -1115,7 +1115,7 @@
     },
     {
      "id": "sa6",
-     "enonce": "Examen 2026, ex. 3 : $\\underline E_{th}=\\tfrac23\\underline V_E$, $\\underline Z_{th}=\\tfrac{4R}3+\\tfrac1{jC\\omega}$, sortie sur $L$. $\\underline V_S/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\nExamen 2026, ex. 3 : $\\underline E_{th}=\\tfrac23\\underline V_E$, $\\underline Z_{th}=\\tfrac{4R}3+\\tfrac1{jC\\omega}$, sortie sur $L$. $\\underline V_S/\\underline V_E$ ?",
      "ans": "-2*L*C*w**2/(4*I*R*C*w+3-3*L*C*w**2)",
      "sol": "Diviseur : $\\dfrac{jL\\omega}{\\frac{4R}3+\\frac1{jC\\omega}+jL\\omega}\\cdot\\dfrac23$ ; on multiplie par $3jC\\omega$ : $\\dfrac{-2LC\\omega^2}{4jRC\\omega+3-3LC\\omega^2}$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
@@ -1157,7 +1157,7 @@
     },
     {
      "id": "xa2",
-     "enonce": "Exercice 1, Q7-Q8 : $v_e$, $2R$ en série, $C\\parallel R$ en sortie. $\\underline Z_{th}$ vu par $R$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, C en parallèle, R en parallèle, sortie u(t)](/static/schemas/elec-715b4ae1a1e0.svg)\n\n![Schéma : source E_th, Z_th en série, R en parallèle, sortie U](/static/schemas/elec-52fbb1ca601e.svg)\n\nExercice 1, Q7-Q8 : $v_e$, $2R$ en série, $C\\parallel R$ en sortie. $\\underline Z_{th}$ vu par $R$ ?",
      "ans": "2*R/(1+2*I*R*C*w)",
      "sol": "$\\underline E_{th}=\\dfrac{\\underline V_E}{1+2jRC\\omega}$, $\\underline Z_{th}=\\dfrac{2R}{1+2jRC\\omega}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 1",
@@ -1167,7 +1167,7 @@
     },
     {
      "id": "xa3",
-     "enonce": "Exercice 2 (qualitatif) : $v_e$, $6R$ en série, $6R$ en parallèle, $L$ en série, $2R$ en sortie. Limites TBF et THF de $A$, nature, et nature avec un condensateur à la place de $L$.",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nExercice 2 (qualitatif) : $v_e$, $6R$ en série, $6R$ en parallèle, $L$ en série, $2R$ en sortie. Limites TBF et THF de $A$, nature, et nature avec un condensateur à la place de $L$.",
      "sol": "TBF : $L$ fil, $A\\to\\tfrac15$. THF : $L$ ouvert, $A\\to0$. Passe-bas. Avec un condensateur : TBF et THF inversés, passe-haut.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2 (9 points)",
      "duree": 8,
@@ -1176,7 +1176,7 @@
     },
     {
      "id": "xa4",
-     "enonce": "Exercice 2 (quantitatif) : $\\underline T(\\omega)$ ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nExercice 2 (quantitatif) : $\\underline T(\\omega)$ ?",
      "ans": "R/(5*R+I*L*w)",
      "sol": "$\\underline E_{th}=\\tfrac12\\underline V_E$, $\\underline Z_{th}=3R+jL\\omega$, diviseur sur $2R$ : $\\underline T=\\dfrac{R}{5R+jL\\omega}=\\dfrac15\\cdot\\dfrac{1}{1+j\\frac{L}{5R}\\omega}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -1186,7 +1186,7 @@
     },
     {
      "id": "xa5",
-     "enonce": "Exercice 2 : $R=200$ Ω, $L=1$ H. $\\omega_c$ (en rad/s) ?",
+     "enonce": "![Schéma : source v_e(t), 6R en série, 6R en parallèle, L en série, 2R en parallèle, sortie v_s(t)](/static/schemas/elec-02bc41f36bb2.svg)\n\nExercice 2 : $R=200$ Ω, $L=1$ H. $\\omega_c$ (en rad/s) ?",
      "ans": "1000",
      "sol": "$\\omega_c=\\dfrac{5R}{L}=1000$ rad/s.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
@@ -1196,7 +1196,7 @@
     },
     {
      "id": "xa6",
-     "enonce": "Exercice 3 (qualitatif) : $v_e$, $C$ en série, $4R\\parallel L$ en sortie. Limites, nature, et nature avec une bobine à la place de $C$.",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nExercice 3 (qualitatif) : $v_e$, $C$ en série, $4R\\parallel L$ en sortie. Limites, nature, et nature avec une bobine à la place de $C$.",
      "sol": "TBF : $C$ ouvert, $A\\to0$. THF : $C$ fil et $L$ ouvert, $A\\to1$. Passe-haut. Avec une bobine à la place de $C$ : $A\\to0$ aux deux bouts, passe-bande.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3 (7 points)",
      "duree": 8,
@@ -1205,7 +1205,7 @@
     },
     {
      "id": "xa7",
-     "enonce": "Exercice 3 (quantitatif) : $\\underline T(\\omega)$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nExercice 3 (quantitatif) : $\\underline T(\\omega)$ ?",
      "ans": "-4*R*L*C*w**2/(4*R+I*L*w-4*R*L*C*w**2)",
      "sol": "$\\underline T=\\dfrac{-4RLC\\omega^2}{4R+jL\\omega-4RLC\\omega^2}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
@@ -1215,7 +1215,7 @@
     },
     {
      "id": "xa8",
-     "enonce": "Exercice 3 : $\\omega_0$ en fonction de $L$, $C$ ?",
+     "enonce": "![Schéma : source v_e(t), C en série, 4R en parallèle, L en parallèle, sortie v_s(t)](/static/schemas/elec-a97f4386aae4.svg)\n\nExercice 3 : $\\omega_0$ en fonction de $L$, $C$ ?",
      "ans": "(L*C)**Rational(-1,2)",
      "sol": "$\\left(\\dfrac\\omega{\\omega_0}\\right)^2=LC\\omega^2$ donc $\\omega_0=\\dfrac1{\\sqrt{LC}}$, puis $\\sigma=\\dfrac{L}{8R\\sqrt{LC}}$.",
      "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
@@ -1247,7 +1247,7 @@
     },
     {
      "id": "xb2",
-     "enonce": "Exercice 1, Q2 : $E$, $R$, $R$ en série, puis $R$ entre $A$ et $B$. $E=9$ V : $E_{th}$ (en V) ?",
+     "enonce": "![Schéma : source E, R en série, R en série, R en parallèle, R_4 en parallèle, sortie U](/static/schemas/elec-1f9bd79b3648.svg)\n\n![Schéma : source E_th, R_th en série, R_4 en parallèle, sortie U](/static/schemas/elec-098ccf308001.svg)\n\nExercice 1, Q2 : $E$, $R$, $R$ en série, puis $R$ entre $A$ et $B$. $E=9$ V : $E_{th}$ (en V) ?",
      "ans": "3",
      "sol": "Diviseur : $E_{th}=\\dfrac{R}{3R}E=\\dfrac E3=3$ V et $R_{th}=2R\\parallel R=\\dfrac{2R}3$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 1",
@@ -1257,7 +1257,7 @@
     },
     {
      "id": "xb3",
-     "enonce": "Exercice 2 (régime continu, figure 1 du sujet) : nombre de nœuds, de branches, de mailles ; méthode pour exprimer $U$ aux bornes de $4R$.",
+     "enonce": "![Schéma : R et source de courant I0 à gauche, R puis source E sur le fil du haut, 6R, source de courant I0 vers le bas et 4R (tension U) entre A et B](/static/schemas/elec-dba12af8983b.svg)\n\nExercice 2 (régime continu, figure 1 du sujet) : nombre de nœuds, de branches, de mailles ; méthode pour exprimer $U$ aux bornes de $4R$.",
      "sol": "$3$ nœuds, $6$ branches, $10$ mailles. On transforme $I_0$ et $R$ en source $RI_0$ en série avec $R$, on associe avec $E$ et $R$ ($RI_0-E$, $2R$), on repasse en Norton $\\dfrac{RI_0-E}{2R}$, on associe les sources de courant et $2R\\parallel6R\\parallel4R=\\dfrac{12R}{11}$, d'où $U=-\\dfrac{6}{11}(RI_0+E)$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 2 (7,5 points)",
      "duree": 15,
@@ -1266,14 +1266,14 @@
     },
     {
      "id": "xb4",
-     "enonce": "Exercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=1$ kΩ, $I_0=2$ mA, $E=9$ V. $U$ (en V) ?",
+     "enonce": "![Schéma : R et source de courant I0 à gauche, R puis source E sur le fil du haut, 6R, source de courant I0 vers le bas et 4R (tension U) entre A et B](/static/schemas/elec-dba12af8983b.svg)\n\nExercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=1$ kΩ, $I_0=2$ mA, $E=9$ V. $U$ (en V) ?",
      "ans": "-6",
      "sol": "$RI_0=2$ V, $U=-\\tfrac6{11}\\times11=-6$ V.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 2",
      "duree": 3,
      "variants": [
       {
-       "enonce": "Exercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=2$ kΩ, $I_0=1$ mA, $E=20$ V. $U$ (en V) ?",
+       "enonce": "![Schéma : R et source de courant I0 à gauche, R puis source E sur le fil du haut, 6R, source de courant I0 vers le bas et 4R (tension U) entre A et B](/static/schemas/elec-dba12af8983b.svg)\n\nExercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=2$ kΩ, $I_0=1$ mA, $E=20$ V. $U$ (en V) ?",
        "ans": "-12",
        "sol": "$RI_0+E=22$ V, $U=-12$ V."
       }
@@ -1292,7 +1292,7 @@
     },
     {
      "id": "xb6",
-     "enonce": "Exercice 3, Q5 : $\\underline Z_{th}$ vu par $L$ ($v_e$, $2R$ en série, $4R$ en parallèle, $C$ en série) ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\nExercice 3, Q5 : $\\underline Z_{th}$ vu par $L$ ($v_e$, $2R$ en série, $4R$ en parallèle, $C$ en série) ?",
      "ans": "4*R/3+1/(I*C*w)",
      "sol": "$\\underline E_{th}=\\tfrac23\\underline V_E$, $\\underline Z_{th}=\\dfrac{4R}3+\\dfrac1{jC\\omega}$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
@@ -1302,7 +1302,7 @@
     },
     {
      "id": "xb7",
-     "enonce": "Exercice 3, Q5 : $\\underline V_S/\\underline V_E$ ?",
+     "enonce": "![Schéma : source v_e(t), 2R en série, 4R en parallèle, C en série, L en parallèle, sortie v_s(t)](/static/schemas/elec-54e0fd9c075b.svg)\n\nExercice 3, Q5 : $\\underline V_S/\\underline V_E$ ?",
      "ans": "-2*L*C*w**2/(4*I*R*C*w+3-3*L*C*w**2)",
      "sol": "$\\underline V_S=\\dfrac{jL\\omega}{\\underline Z_{th}+jL\\omega}\\underline E_{th}=\\dfrac{-2LC\\omega^2}{4jRC\\omega+3-3LC\\omega^2}\\underline V_E$.",
      "src": "Examen 2 d'électronique, janvier 2026, ex. 3",

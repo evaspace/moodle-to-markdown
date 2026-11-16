@@ -436,7 +436,7 @@
    "exos": [
     {
      "id": "r31",
-     "enonce": "Au nœud $B$ : $I_3=I_2+I_4$ avec $I_3=2$ mA et $I_4=7$ mA. $I_2$ (en mA) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nAu nœud $B$ : $I_3=I_2+I_4$ avec $I_3=2$ mA et $I_4=7$ mA. $I_2$ (en mA) ?",
      "ans": "-5",
      "sol": "$I_2=I_3-I_4=-5$ mA : le courant circule en sens contraire de la flèche.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -446,7 +446,7 @@
     },
     {
      "id": "r32",
-     "enonce": "Même circuit : $R_2=2$ kΩ traversée par $I_2=-5$ mA. $U_2$ (en V) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême circuit : $R_2=2$ kΩ traversée par $I_2=-5$ mA. $U_2$ (en V) ?",
      "ans": "-10",
      "sol": "$U_2=R_2I_2=-10$ V.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -456,7 +456,7 @@
     },
     {
      "id": "r33",
-     "enonce": "Même circuit : $U_3=4$ V et $I_3=2$ mA. $R_3$ (en kΩ) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême circuit : $U_3=4$ V et $I_3=2$ mA. $R_3$ (en kΩ) ?",
      "ans": "2",
      "sol": "$R_3=U_3/I_3=2$ kΩ.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -466,7 +466,7 @@
     },
     {
      "id": "r34",
-     "enonce": "Même circuit : $E=6$ V et la maille $E\\to R_3\\to R_4$ donne $U_4+U_3-E=0$ ; $U_3=4$ V. $U_4$ (en V) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême circuit : $E=6$ V et la maille $E\\to R_3\\to R_4$ donne $U_4+U_3-E=0$ ; $U_3=4$ V. $U_4$ (en V) ?",
      "ans": "2",
      "sol": "$U_4=E-U_3=2$ V.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -571,7 +571,7 @@
     },
     {
      "id": "r45",
-     "enonce": "$R_1=R_2=2$ kΩ en parallèle, puis en série avec $R_3=R_4=1$ kΩ en parallèle. $R_{eq}$ (en kΩ) ?",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\n$R_1=R_2=2$ kΩ en parallèle, puis en série avec $R_3=R_4=1$ kΩ en parallèle. $R_{eq}$ (en kΩ) ?",
      "ans": "Rational(3,2)",
      "sol": "$R_{12}=1$ kΩ, $R_{34}=0{,}5$ kΩ, $R_{eq}=R_{12}+R_{34}=1{,}5$ kΩ.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2",
@@ -650,7 +650,7 @@
     },
     {
      "id": "r54",
-     "enonce": "$E=15$ V ; $R_1=R_2=2$ kΩ en parallèle, en série avec $R_3=R_4=1$ kΩ en parallèle. Tension $U$ aux bornes de $R_1\\parallel R_2$ (en V) ?",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\n$E=15$ V ; $R_1=R_2=2$ kΩ en parallèle, en série avec $R_3=R_4=1$ kΩ en parallèle. Tension $U$ aux bornes de $R_1\\parallel R_2$ (en V) ?",
      "ans": "10",
      "sol": "$U=\\dfrac{R_{12}}{R_{12}+R_{34}}E=\\dfrac{1}{1{,}5}\\times15=10$ V.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2",
@@ -660,7 +660,7 @@
     },
     {
      "id": "r55",
-     "enonce": "Même montage : courant $I_4$ dans $R_4$ (en mA) ?",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\nMême montage : courant $I_4$ dans $R_4$ (en mA) ?",
      "ans": "5",
      "sol": "Tension aux bornes de $R_3\\parallel R_4$ : $E-U=5$ V ; $I_4=5\\text{ V}/1\\text{ kΩ}=5$ mA.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2",
@@ -1123,7 +1123,7 @@
     },
     {
      "id": "rx2",
-     "enonce": "Exercice 2 : $R_1\\parallel R_2$ en série avec $R_3\\parallel R_4$ sous $E$. $R_1=R_2=2$ kΩ, $R_3=R_4=1$ kΩ, $E=15$ V. Tension aux bornes de $R_1\\parallel R_2$ (en V) ?",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\nExercice 2 : $R_1\\parallel R_2$ en série avec $R_3\\parallel R_4$ sous $E$. $R_1=R_2=2$ kΩ, $R_3=R_4=1$ kΩ, $E=15$ V. Tension aux bornes de $R_1\\parallel R_2$ (en V) ?",
      "ans": "10",
      "sol": "$R_{12}=1$ kΩ, $R_{34}=0{,}5$ kΩ : $U=\\dfrac{R_{12}}{R_{12}+R_{34}}E=10$ V.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2 (9 points)",
@@ -1133,7 +1133,7 @@
     },
     {
      "id": "rx3",
-     "enonce": "Même exercice : courant $I_4$ dans $R_4$ (en mA) ?",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\nMême exercice : courant $I_4$ dans $R_4$ (en mA) ?",
      "ans": "5",
      "sol": "$U'=E-U=5$ V aux bornes de $R_3\\parallel R_4$ ; $I_4=U'/R_4=5$ mA.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2",
@@ -1143,7 +1143,7 @@
     },
     {
      "id": "rx4",
-     "enonce": "Exercice 2 : nombre de nœuds, de branches et de mailles du circuit $E$, $R_1\\parallel R_2$, $R_3\\parallel R_4$ ; expression littérale de $U$ et $I_4$.",
+     "enonce": "![Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4](/static/schemas/elec-d66ae0976a48.svg)\n\nExercice 2 : nombre de nœuds, de branches et de mailles du circuit $E$, $R_1\\parallel R_2$, $R_3\\parallel R_4$ ; expression littérale de $U$ et $I_4$.",
      "sol": "$3$ nœuds, $5$ branches, $6$ mailles (au total). $U=\\dfrac{R_1R_2(R_3+R_4)}{R_1R_2(R_3+R_4)+R_3R_4(R_1+R_2)}E$ et $I_4=\\dfrac{R_3(R_1+R_2)}{R_1R_2(R_3+R_4)+R_3R_4(R_1+R_2)}E$.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 2",
      "duree": 15,
@@ -1152,7 +1152,7 @@
     },
     {
      "id": "rx5",
-     "enonce": "Exercice 3 : circuit avec deux interrupteurs $K_1$ et $K_2$ ; trouver $U_1,U_2,U_3$ pour chaque position (ouvert/fermé) en fonction de $E$.",
+     "enonce": "![Schéma : source E ; colonne du milieu 6R (U1) puis 2R (U3) ; colonne de droite 6R (U2) ; interrupteur K2 entre les milieux des colonnes, K1 entre les bas des colonnes](/static/schemas/elec-625bb348621a.svg)\n\nExercice 3 : circuit avec deux interrupteurs $K_1$ et $K_2$ ; trouver $U_1,U_2,U_3$ pour chaque position (ouvert/fermé) en fonction de $E$.",
      "sol": "Méthode : redessiner le circuit pour chacune des quatre positions, identifier les résistances en série (même courant) et utiliser un diviseur de tension. Résultats : $K_1,K_2$ ouverts : $U_1=\\tfrac34E$, $U_2=0$, $U_3=\\tfrac14E$ ; $K_1$ ouvert, $K_2$ fermé : $\\tfrac35E,\\tfrac35E,\\tfrac25E$ ; $K_1$ fermé, $K_2$ ouvert : $\\tfrac34E,E,\\tfrac14E$ ; tous fermés : $E,E,0$.",
      "src": "Examen B1 d'électronique, octobre 2025, ex. 3 (9 points)",
      "duree": 20,
@@ -1173,7 +1173,7 @@
    "exos": [
     {
      "id": "ry1",
-     "enonce": "Exercice 2 : $I_3=2$ mA, $U_3=4$ V. $R_3$ (en kΩ) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nExercice 2 : $I_3=2$ mA, $U_3=4$ V. $R_3$ (en kΩ) ?",
      "ans": "2",
      "sol": "$R_3=U_3/I_3=2$ kΩ.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2 (6,5 points)",
@@ -1183,7 +1183,7 @@
     },
     {
      "id": "ry2",
-     "enonce": "Même exercice : $I_2=I_3-I_4$ avec $I_4=7$ mA. $I_2$ (en mA) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême exercice : $I_2=I_3-I_4$ avec $I_4=7$ mA. $I_2$ (en mA) ?",
      "ans": "-5",
      "sol": "Loi des nœuds en $B$ : $I_2=-5$ mA.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -1193,7 +1193,7 @@
     },
     {
      "id": "ry3",
-     "enonce": "Même exercice : $U_2$ avec $R_2=2$ kΩ (en V) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême exercice : $U_2$ avec $R_2=2$ kΩ (en V) ?",
      "ans": "-10",
      "sol": "$U_2=R_2I_2=-10$ V.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -1203,7 +1203,7 @@
     },
     {
      "id": "ry4",
-     "enonce": "Même exercice : $E=6$ V, $U_4=E-U_3$ (en V) ?",
+     "enonce": "![Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'](/static/schemas/elec-f14ee00a5275.svg)\n\nMême exercice : $E=6$ V, $U_4=E-U_3$ (en V) ?",
      "ans": "2",
      "sol": "Loi des mailles : $U_4+U_3-E=0$ donc $U_4=2$ V.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 2",
@@ -1213,7 +1213,7 @@
     },
     {
      "id": "ry5",
-     "enonce": "Exercice 3.1 (schéma du sujet : source $2E$ avec $4R$, $2R$ et $R$, source de courant $I$ ; $U$ aux bornes de $2R$) : donner l'équivalent de Thévenin $(E_{th},R_{th})$ puis $U$.",
+     "enonce": "![Schéma : source de courant I, branche 2E en série avec 4R, R en parallèle avec la source de courant 2I sur le fil du bas, 2R entre A et B (tension U)](/static/schemas/elec-7dc6dcbbf86c.svg)\n\n![Schéma équivalent demandé : source Eth en série avec Rth, chargée par 2R entre A et B (tension U)](/static/schemas/elec-16fb69855fa1.svg)\n\nExercice 3.1 (schéma du sujet : source $2E$ avec $4R$, $2R$ et $R$, source de courant $I$ ; $U$ aux bornes de $2R$) : donner l'équivalent de Thévenin $(E_{th},R_{th})$ puis $U$.",
      "sol": "Norton/Thévenin enchaînés : $E_{th}=2RI-2E$ et $R_{th}=5R$. Diviseur de tension : $U=\\dfrac{2R}{2R+5R}E_{th}=\\dfrac27(2RI-2E)=\\dfrac47(RI-E)$.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 3 (11 points)",
      "duree": 15,
@@ -1222,7 +1222,7 @@
     },
     {
      "id": "ry6",
-     "enonce": "Exercice 3.2 (schéma du sujet : $E$ avec $4R$, $2R$, $4R$, $R$ et source de courant $I$) : donner $U$ en fonction de $E$, $I$ et $R$.",
+     "enonce": "![Schéma : source E en série avec 4R, 4R vers le bas, R vers A, R sur le fil du bas vers B, 2R entre A et B (tension U), source de courant I de A vers B](/static/schemas/elec-5828b103956e.svg)\n\nExercice 3.2 (schéma du sujet : $E$ avec $4R$, $2R$, $4R$, $R$ et source de courant $I$) : donner $U$ en fonction de $E$, $I$ et $R$.",
      "sol": "On transforme $E,4R$ en source de courant $E/(4R)$ en parallèle avec $4R$, on associe les résistances en parallèle, on revient en Thévenin puis un diviseur donne $U=\\dfrac{E-8RI}{6}$.",
      "src": "Examen B1 d'électronique, octobre 2024, ex. 3",
      "duree": 15,

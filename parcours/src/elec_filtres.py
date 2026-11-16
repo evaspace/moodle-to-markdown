@@ -3,9 +3,12 @@
 Calibrated on the Moodle course « Electronique S2 - Études des filtres » (`Kit de Survie Filtres`, `Le filtrage -
 Promo 2030`), the TD « Études des filtres » (8 circuits + 2 bonus, with its correction) and the B3 exam of March 2026
 (`Examen Elec - InfoS2 - B3 - Mars 2026`, with its correction). S2 vocabulary: H(w) transfer function, G(w) = |H(w)|
-gain, G_dB = 20 log G. Circuit figures cannot be rendered: circuits are described in words.
+gain, G_dB = 20 log G. Circuits are described in words and drawn as SVG
+(`schema.py`, `FIGS` at the end).
 Symbolic answers use the sympy symbols R, L, C, w (w = omega) and I (imaginary unit j); never E (Euler's number).
 """
+from .schema import ajoute, schema_echelle
+
 
 SUBJECT = {
     "id": "elec-s2-filtres",
@@ -282,3 +285,38 @@ FORMULES = {
     "fb1": _T + " · " + _P, "fb2": _T, "fb3": _D + " · " + _T, "fb4": _2, "fb5": _2, "fb6": _L + " · " + _D + " · " + _1 + " · " + _2, "fb7": _L,
     "xc1": _L, "xc2": _L + " · " + _N, "xc3": _P + " · " + _D, "xc4": _1, "xc5": _L + " · " + _N, "xc6": _T + " · " + _D, "xc7": _2,
 }
+
+
+# ---------------------------------------------------------------- circuit figures (`schema.py`)
+
+def _s(*br):
+    return schema_echelle("v_e(t)", list(br), "v_s(t)")
+
+
+S, P = "s", "p"
+FIG_3RC = _s((S, "R", "3R"), (S, "C", "C"), (P, "R", "R"))
+FIG_RL5 = _s((S, "R", "R"), (S, "L", "L"), (P, "R", "5R"))
+FIG_R2RC = _s((S, "R", "R"), (P, "R", "2R"), (P, "C", "C"))
+FIG_R1R2C = _s((S, "R", "R_1"), (P, "R", "R_2"), (P, "C", "C"))
+FIG_LRC = _s((S, "L", "L"), (S, "R", "R"), (P, "C", "C"))
+FIG_CRL = _s((S, "C", "C"), (P, "R", "R"), (P, "L", "L"))
+FIG_RCL = _s((S, "R", "R"), (P, "C", "C"), (P, "L", "L"))
+FIG_EX2 = (_s((S, "R", "R"), (P, "C", "C"), (S, "L", "L"), (P, "R", "R")) + "\n\n"
+           + schema_echelle("\\underline{E}_{th}", [(S, "Z", "\\underline{Z}_{th}"), (P, "R", "R")], "\\underline{V}_S"))
+FIG_LRRC = _s((S, "L", "L"), (S, "R", "R"), (P, "R", "R"), (P, "C", "C"))
+FIG_CRRL = _s((S, "C", "C"), (P, "R", "R"), (S, "R", "R"), (P, "L", "L"))
+FIG_R1RLC = _s((S, "R", "R_1"), (P, "R", "R_2"), (P, "L", "L"), (P, "C", "C"))
+FIG_CR = _s((S, "C", "C"), (P, "R", "R"))
+
+FIGS = {**dict.fromkeys(["f22", "f23", "f31", "f61", "f62", "f63"], FIG_3RC),
+        **dict.fromkeys(["f24", "f71", "f72"], FIG_RL5),
+        **dict.fromkeys(["f25", "f73", "f74"], FIG_R2RC),
+        **dict.fromkeys(["f26", "f35", "f75", "f76", "xc2", "xc3", "xc4"], FIG_R1R2C),
+        **dict.fromkeys(["f27", "f81", "f82", "f83", "f84"], FIG_LRC),
+        **dict.fromkeys(["f32", "f91", "f92", "f93"], FIG_CRL),
+        **dict.fromkeys(["f33", "fa1", "fa2", "fa3"], FIG_RCL),
+        **dict.fromkeys(["f36", "fb1", "fb2", "fb3", "fb4", "xc5", "xc6", "xc7"], FIG_EX2),
+        **dict.fromkeys(["f85", "f86", "f87"], FIG_LRRC),
+        **dict.fromkeys(["f94", "f95", "f96"], FIG_CRRL),
+        "fa5": FIG_R1RLC, "f66": FIG_CR}
+ajoute(LEVELS, FIGS)

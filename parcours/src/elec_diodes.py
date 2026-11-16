@@ -3,9 +3,12 @@
 Calibrated on the Moodle course « Electronique S2 - Diodes » (`Jonction PN et Diodes`, `Précisions et méthodes -
 Diode`), the TD « Les diodes » (6 exercises, typed correction), the TD « La diode Zéner » (4 exercises, handwritten
 correction) and the exam « Electronics Exam - Diodes » of March 2025 (English, no official correction: the answers of
-level 12 are our own, worked out and checked here). Circuit figures cannot be rendered: circuits are described in words.
+level 12 are our own, worked out and checked here). Circuits are described in words and drawn as SVG
+(`schema.py`, `FIGS` at the end).
 In `calc`, V0 is the threshold voltage, Vz the Zener voltage (absolute value), V the input voltage.
 """
+from .schema import D, Fil, Point, R, SrcU, ajoute, fig, schema_echelle, tension
+
 
 SUBJECT = {
     "id": "elec-s2-diodes",
@@ -279,3 +282,59 @@ FORMULES = {
     "d111": _S, "d112": _S, "d113": _S, "d114": _S + r" · $R_{th}=R\parallel R_c$", "d115": _S, "d116": _S, "d117": _S + " · " + _P,
     "xe1": _P + " · " + _M, "xe2": _A + " · " + _K, "xe3": _T + " · " + _M, "xe4": _T + " · " + _K, "xe5": _T + " · " + _A, "xe6": _R + " · " + _P, "xe7": _R,
 }
+
+
+# ---------------------------------------------------------------- circuit figures (`schema.py`)
+
+def _ex2(d):
+    """Exam March 2025, ex. 2: N between R2 (to E2+) and R3; diode from N (anode) to E1+ (cathode)."""
+    d += (s := SrcU().endpoints((0, 0), (0, 2.5)))
+    tension(d, s, "$E_1$")
+    d += Fil().endpoints((0, 2.5), (0, 3))
+    d += D().endpoints((4, 3), (0, 3)).label("$D$")
+    d += Point().at((4, 3)).label("$N$", loc="left")
+    d += R().endpoints((4, 6), (4, 3)).label("$R_2$")
+    d += R().endpoints((4, 3), (4, 0)).label("$R_3$")
+    d += R().endpoints((0, 0), (4, 0)).label("$R_1$", loc="bottom")
+    d += Fil().endpoints((4, 6), (7, 6))
+    d += (s := SrcU().endpoints((7, 0), (7, 6)))
+    tension(d, s, "$E_2$", cote=False)
+    d += Fil().endpoints((4, 0), (7, 0))
+
+
+def _ex3(d):
+    """Exam March 2025, ex. 3: R in parallel with a diode (anode on the output side), then R at the output."""
+    d += (s := SrcU().endpoints((0, 0), (0, 3)))
+    tension(d, s, "$V$")
+    d += R().endpoints((0, 3), (4, 3)).label("$R$", loc="bottom")
+    d += Fil().endpoints((0, 3), (0, 4.5))
+    d += D().endpoints((4, 4.5), (0, 4.5)).label("$D$")
+    d += Fil().endpoints((4, 4.5), (4, 3))
+    d += (r := R().endpoints((4, 3), (4, 0)).label("$R$", loc="top"))
+    tension(d, r, "$U$", sens=-1)
+    d += Fil().endpoints((0, 0), (4, 0))
+
+
+S, P = "s", "p"
+FIG_DIRECT = schema_echelle("E", [(S, "D", "D"), (P, "R", "R")], "U_R")
+FIG_INVERSE = schema_echelle("E", [(S, "D<", "D"), (P, "R", "R")], "U_R")
+FIG_SERIE = schema_echelle("E", [(S, "R", "R"), (S, "D", "D")])
+FIG_SHUNT = schema_echelle("E", [(S, "R", "R_1"), (P, "R", "R_2"), (P, "D", "D")])
+FIG_DEUX = schema_echelle("E", [(S, "R", "R"), (S, "D", "D_1"), (S, "D", "D_2")])
+FIG_ECRETEUR = schema_echelle("V", [(S, "R", "R"), (P, "R", "R_L"), (P, "D", "D_1"), (P, "D<", "D_2")], "U")
+FIG_REDRESSEUR = schema_echelle("e(t)", [(S, "D", "D"), (P, "R", "R")], "u")
+FIG_ZENER = schema_echelle("V", [(S, "R", "R"), (P, "DZ<", "D_Z")], "U")
+FIG_REGUL = schema_echelle("E", [(S, "R", "R"), (P, "DZ<", "D_Z"), (P, "R", "R_c")], "U")
+FIG_EX2 = fig(_ex2, "Schéma : E2 alimente R2 puis R3 (nœud N entre les deux) ; diode de N (anode) vers le + de E1 (cathode) ; le - de E1 rejoint la masse par R1")
+FIG_EX3 = fig(_ex3, "Schéma : source V, puis R en parallèle avec une diode (anode côté sortie), puis R en sortie (tension U)")
+
+FIGS = {**dict.fromkeys(["d13", "d14"], FIG_DIRECT), **dict.fromkeys(["d15", "d16"], FIG_INVERSE),
+        **dict.fromkeys(["d22", "d23", "d24"], FIG_SERIE),
+        **dict.fromkeys(["d31", "d32", "d33", "d34"], FIG_SHUNT), "d45": FIG_DEUX,
+        **dict.fromkeys(["d51", "d52", "d53", "d54"], FIG_ECRETEUR),
+        **dict.fromkeys(["d71", "d72", "d73", "d74", "d75"], FIG_REDRESSEUR),
+        **dict.fromkeys(["d92", "d93", "d94", "d95"], FIG_ZENER),
+        **dict.fromkeys(["d111", "d112", "d113", "d114"], FIG_REGUL),
+        **dict.fromkeys(["d41", "d42", "d43", "d44", "d47", "xe2"], FIG_EX2),
+        **dict.fromkeys(["d55", "d56", "d57", "xe3", "xe4", "xe5"], FIG_EX3)}
+ajoute(LEVELS, FIGS)

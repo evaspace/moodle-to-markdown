@@ -1,10 +1,12 @@
 """Level path: S1 electronics, circuit analysis tools (definitions, laws, theorems), promo 2031.
 
 Calibrated on the Moodle course « S1 - Electronique - Promo 2030 » (`Concepts de base`, `Kit de survie régime sinusoïdal`),
-TD1-4 and the B1 exams of October 2024 and October 2025 (`Examen1 Elec - InfoS1`). Circuit figures cannot be rendered in
-the statements: every circuit is described in words (series / parallel / node names) so that each answer can be computed.
+TD1-4 and the B1 exams of October 2024 and October 2025 (`Examen1 Elec - InfoS1`). Exam circuits are redrawn as SVG
+(`schema.py`, `FIGS`); every circuit is still described in words (series / parallel / node names) so that each
+answer can be computed and the copy-for-AI text stays complete.
 Units: V, A, Ω; k = 10^3 and m = 10^-3 are written inside the numbers (answers in the stated unit).
 """
+from .schema import Fil, Inter, Point, R, SrcI, SrcU, ajoute, courant, fig, tension
 
 SUBJECT = {
     "id": "elec-s1-circuits",
@@ -82,6 +84,119 @@ TD1 = "TD 1 d'électronique (lois fondamentales)"
 TD2 = "TD 2 d'électronique (Thévenin / Norton)"
 TD3 = "TD 3 d'électronique (théorème de Millman)"
 TD4 = "TD 4 d'électronique (régime sinusoïdal)"
+
+
+# ---------------------------------------------------------------- circuit figures (redrawn from the exam subjects)
+
+def _x24e2(d):
+    d += (s := SrcU().endpoints((0, 0), (0, 5)))
+    tension(d, s, "$2E$")
+    d += (w := Fil().endpoints((0, 5), (2, 5)))
+    courant(d, w, "$I$", debut=False)
+    d += (r1 := R().endpoints((2, 5), (6, 5)).label("$R_1$", loc="bottom"))
+    courant(d, r1, "$I_1$")
+    d += Point().at((6, 5)).label("$A$", loc="top")
+    d += (w := Fil().endpoints((9, 5), (6, 5)))
+    courant(d, w, "$I'$", debut=False)
+    d += (s := SrcU().endpoints((9, 0), (9, 5)))
+    tension(d, s, "$E$", cote=False)
+    d += (r3 := R().endpoints((6, 5), (6, 2.5)).label("$R_3$", loc="bottom"))
+    courant(d, r3, "$I_3$", loc="bottom")
+    d += Point().at((6, 2.5)).label("$B$", loc="right")
+    d += (r2 := R().endpoints((6, 2.5), (2, 2.5)).label("$R_2$"))
+    courant(d, r2, "$I_2$", debut=False)
+    d += Fil().endpoints((2, 2.5), (2, 5))
+    d += (r4 := R().endpoints((6, 2.5), (6, 0)).label("$R_4$", loc="bottom"))
+    courant(d, r4, "$I_4$", debut=False, loc="bottom")
+    d += Fil().endpoints((0, 0), (9, 0))
+
+
+def _x24e31(d):
+    d += (s := SrcI().endpoints((0, 0), (0, 5)))
+    courant(d, s, "$I$", debut=False)
+    d += Fil().endpoints((0, 5), (10, 5))
+    d += (s := SrcU().endpoints((2.5, 5), (2.5, 2.5)))
+    tension(d, s, "$2E$", cote=False)
+    d += R().endpoints((2.5, 2.5), (2.5, 0)).label("$4R$", loc="bottom")
+    d += Point().at((10, 5)).label("$A$", loc="right")
+    d += (r := R().endpoints((10, 5), (10, 0)).label("$2R$", loc="bottom"))
+    tension(d, r, "$U$", sens=-1)
+    d += Point().at((10, 0)).label("$B$", loc="right")
+    d += Fil().endpoints((0, 0), (4.5, 0))
+    d += (s := SrcI().endpoints((4.5, 0), (7.5, 0)).label("$2I$", loc="bottom"))
+    courant(d, s, "", debut=False)
+    d += Fil().endpoints((7.5, 0), (10, 0))
+    d += Fil().endpoints((4.5, 0), (4.5, 1.5))
+    d += R().endpoints((4.5, 1.5), (7.5, 1.5)).label("$R$")
+    d += Fil().endpoints((7.5, 1.5), (7.5, 0))
+
+
+def _x24e31_th(d):
+    d += (s := SrcU().endpoints((13, 0.5), (13, 4.5)))
+    tension(d, s, "$E_{th}$")
+    d += R().endpoints((13, 4.5), (17, 4.5)).label("$R_{th}$")
+    d += Point().at((17, 4.5)).label("$A$", loc="right")
+    d += (r := R().endpoints((17, 4.5), (17, 0.5)).label("$2R$", loc="bottom"))
+    tension(d, r, "$U$", sens=-1)
+    d += Point().at((17, 0.5)).label("$B$", loc="right")
+    d += Fil().endpoints((17, 0.5), (13, 0.5))
+
+
+def _x24e32(d):
+    d += (s := SrcU().endpoints((0, 0), (0, 4)))
+    tension(d, s, "$E$")
+    d += R().endpoints((0, 4), (3, 4)).label("$4R$", loc="bottom")
+    d += R().endpoints((3, 4), (3, 0)).label("$4R$", loc="bottom")
+    d += R().endpoints((3, 4), (6, 4)).label("$R$", loc="bottom")
+    d += Point().at((6, 4)).label("$A$", loc="top")
+    d += (r := R().endpoints((6, 4), (6, 0)).label("$2R$", loc="top"))
+    tension(d, r, "$U$", sens=-1)
+    d += Point().at((6, 0)).label("$B$", loc="bottom")
+    d += Fil().endpoints((6, 4), (9, 4))
+    d += (s := SrcI().endpoints((9, 4), (9, 0)))
+    courant(d, s, "$I$", debut=False)
+    d += Fil().endpoints((0, 0), (3, 0))
+    d += R().endpoints((3, 0), (6, 0)).label("$R$", loc="bottom")
+    d += Fil().endpoints((6, 0), (9, 0))
+
+
+def _x25e2(d):
+    d += (s := SrcU().endpoints((0, 0), (0, 2)))
+    tension(d, s, "$E$")
+    d += Fil().endpoints((0, 2), (0, 4))
+    d += (r1 := R().endpoints((0, 4), (5, 4)).label("$R_1$"))
+    tension(d, r1, "$U$", sens=-1, cote=False, ofst=0.35)
+    d += R().endpoints((0, 2.5), (5, 2.5)).label("$R_2$", loc="bottom")
+    d += Fil().endpoints((5, 2.5), (5, 4))
+    d += (w := Fil().endpoints((5, 4), (8, 4)))
+    courant(d, w, "$I_4$", debut=False)
+    d += R().endpoints((5, 2.5), (5, 0)).label("$R_3$", loc="bottom")
+    d += R().endpoints((8, 4), (8, 0)).label("$R_4$", loc="bottom")
+    d += Fil().endpoints((0, 0), (8, 0))
+
+
+def _x25e3(d):
+    d += (s := SrcU().endpoints((0, 0), (0, 6)))
+    tension(d, s, "$E$")
+    d += Fil().endpoints((0, 6), (8, 6))
+    d += (r := R().endpoints((4, 3), (4, 6)).label("$6R$", loc="bottom"))
+    tension(d, r, "$U_1$")
+    d += (r := R().endpoints((4, 0), (4, 3)).label("$2R$", loc="bottom"))
+    tension(d, r, "$U_3$")
+    d += (r := R().endpoints((8, 3), (8, 6)).label("$6R$", loc="bottom"))
+    tension(d, r, "$U_2$")
+    d += Inter().endpoints((4, 3), (8, 3)).label("$K_2$", loc="bottom")
+    d += Fil().endpoints((0, 0), (4, 0))
+    d += Inter().endpoints((4, 0), (8, 0)).label("$K_1$", loc="bottom")
+    d += Fil().endpoints((8, 0), (8, 3))
+
+
+FIG_X24E2 = fig(_x24e2, "Schéma : source 2E à gauche, R1 en haut vers le nœud A, R3 de A vers B, R2 de B vers la gauche, R4 de B vers le bas, source E à droite ; courants I, I1, I2, I3, I4, I'")
+FIG_X24E31 = (fig(_x24e31, "Schéma : source de courant I, branche 2E en série avec 4R, R en parallèle avec la source de courant 2I sur le fil du bas, 2R entre A et B (tension U)")
+              + "\n\n" + fig(_x24e31_th, "Schéma équivalent demandé : source Eth en série avec Rth, chargée par 2R entre A et B (tension U)"))
+FIG_X24E32 = fig(_x24e32, "Schéma : source E en série avec 4R, 4R vers le bas, R vers A, R sur le fil du bas vers B, 2R entre A et B (tension U), source de courant I de A vers B")
+FIG_X25E2 = fig(_x25e2, "Schéma : source E, R1 et R2 en parallèle (tension U), puis R3 et R4 en parallèle vers la masse ; courant I4 dans R4")
+FIG_X25E3 = fig(_x25e3, "Schéma : source E ; colonne du milieu 6R (U1) puis 2R (U3) ; colonne de droite 6R (U2) ; interrupteur K2 entre les milieux des colonnes, K1 entre les bas des colonnes")
 
 LEVELS = [
     {"n": 1, "titre": "Courant, tension, puissance", "notions": ["grandeurs"], "exos": [
@@ -205,6 +320,11 @@ LEVELS = [
 ]
 
 
+# statements that refer to an exam figure show it first
+FIGS = {**dict.fromkeys(["r31", "r32", "r33", "r34", "ry1", "ry2", "ry3", "ry4"], FIG_X24E2),
+        "ry5": FIG_X24E31, "ry6": FIG_X24E32, "rx5": FIG_X25E3,
+        **dict.fromkeys(["r45", "r54", "r55", "rx2", "rx3", "rx4"], FIG_X25E2)}
+
 def _v(enonce, calc, ans, sol):
     return {"enonce": enonce, "calc": calc, "ans": ans, "sol": sol}
 
@@ -280,3 +400,5 @@ FORMULES = {
     "rx1": _G + " · " + _K, "rx2": _V + " · " + _A, "rx3": _V + " · " + _D, "rx4": _V + " · " + _A, "rx5": _V + " · " + _A,
     "ry1": _D, "ry2": _K, "ry3": _D, "ry4": _K, "ry5": _T + " · " + _V, "ry6": _T + " · " + _V,
 }
+
+ajoute(LEVELS, FIGS)
