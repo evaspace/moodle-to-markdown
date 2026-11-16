@@ -5,6 +5,7 @@ import random
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 TMP = tempfile.mkdtemp()
@@ -63,10 +64,45 @@ class Api(unittest.TestCase):
         self.assertEqual(card['kind'], 'c')
         card = c.get('/api/scroll/maths-s1-dp/next').get_json()['card']
         self.assertEqual(card['kind'], 'q')
-        d = c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': 99}).get_json()
+        d = c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': len(card['choix']) - 1}).get_json()
+        if d['ok']:  # last position was right: the wrong-answer path below needs a miss
+            self.assertEqual(d['bonne'], len(card['choix']) - 1)
+            card = c.get('/api/scroll/maths-s1-dp/next').get_json()['card']
+            while card['kind'] != 'q':
+                card = c.get('/api/scroll/maths-s1-dp/next').get_json()['card']
+            d = c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': 0}).get_json()
+            if d['ok']:
+                self.skipTest('two lucky answers in a row')
         self.assertFalse(d['ok'])
         self.assertEqual(c.get('/api/scroll/maths-s1-dp/next').get_json()['card']['kind'], 'c')
         self.assertEqual(c.post('/api/scroll/maths-s1-dp/answer', json={'key': 'x'}).status_code, 400)
+
+
+    def test_qcm_choices_shuffled_and_mapped_back(self):
+        import app as app_module
+        import scroll
+        from levels import get_parcours
+        c = app_module.app.test_client()
+        c.post('/api/register', json={'username': 'shuffler', 'password': 'secret1'})
+        quiz = get_parcours('maths-s1-dp')['quiz']
+        rev = lambda r, k: list(reversed(r))  # deterministic "shuffle": last authored choice shown first
+        with mock.patch.object(scroll.random, 'sample', rev):
+            for _ in range(30):
+                card = c.get('/api/scroll/maths-s1-dp/next').get_json()['card']
+                if card['kind'] == 'q' and card['type'] == 'qcm':
+                    break
+                if card['kind'] == 'q':  # true/false: answer right so the scroll moves on
+                    good = 0 if quiz[int(card['key'])]['bonne'] else 1
+                    c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': good})
+            else:
+                self.skipTest('no QCM card reached')
+        q = quiz[int(card['key'])]
+        shown = len(q['choix']) - 1 - q['bonne']
+        d = c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': shown}).get_json()
+        self.assertTrue(d['ok'])
+        self.assertEqual(d['bonne'], shown)
+        # a screen position outside the shown choices is refused
+        self.assertEqual(c.post('/api/scroll/maths-s1-dp/answer', json={'key': card['key'], 'choice': 99}).status_code, 400)
 
 
 if __name__ == '__main__':

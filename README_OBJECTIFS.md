@@ -218,3 +218,8 @@ et des petits records (séries, meilleur jour, revanches, réussi du premier cou
 - Calendrier : **tous les mois** de la frise doivent être cliquables, même sans examen prévu.
 - **Outil** pour aller récupérer vite les dates sur Moodle, à lancer environ une fois par mois.
 - **Scroll des cartes de cours** (depuis les niveaux sur papier) : il doit garder la mécanique d'avant. Le chat explose ou il y a des confettis, comme quand on réussit un niveau sur papier, et on répond aux vrai/faux **en swipant à gauche ou à droite**.
+
+## Décision du 2026-11-16 : ordre des réponses
+- « Dans les scroll de cours, il faut changer l'ordre des réponses, sinon on fait de la mémoire musculaire et pas de la mémoire cérébrale. »
+- Les deux buts principaux de l'application : 1. apprendre le plus vite possible ; 2. en devenir addict.
+- Fait : les choix des QCM du scroll `/scroll/<parcours>` sont mélangés à chaque affichage (`scroll.py`, ordre gardé en session, vérifié par le serveur). Le fil d'accueil les mélangeait déjà. Vrai/Faux gardent leur côté (swipe droite = vrai).

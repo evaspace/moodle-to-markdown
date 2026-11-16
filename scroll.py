@@ -160,9 +160,13 @@ def scroll_next(subject):
                 'exemple': md(n['exemple']), 'cours': md(n['cours'])}
     else:
         q = data['quiz'][int(key)]
+        # QCM choices in a new random order each time: recall the answer, not its position (README_OBJECTIFS).
+        # The shown order stays in the session so the check is done on the server. Vrai/Faux keep their side (swipe).
+        perm = random.sample(range(len(q['choix'])), len(q['choix'])) if q['type'] == 'qcm' else [0, 1]
+        session['scroll_perm'] = [subject, key, perm]
         card = {'kind': 'q', 'key': key, 'type': q['type'], 'notion_titre': notions[q['notion']]['titre'],
                 'q': _inline(md, q['q']),
-                'choix': [_inline(md, c) for c in q['choix']] if q['type'] == 'qcm' else ['Vrai', 'Faux']}
+                'choix': [_inline(md, q['choix'][i]) for i in perm] if q['type'] == 'qcm' else ['Vrai', 'Faux']}
     return jsonify(card=card, progress=_progress(data, pts))
 
 
@@ -177,7 +181,14 @@ def scroll_answer(subject):
     except (TypeError, ValueError, IndexError):
         return jsonify(error='question inconnue'), 400
     good = q['bonne'] if q['type'] == 'qcm' else (0 if q['bonne'] else 1)  # vf: choice 0 = Vrai
-    ok = choice == good
+    sub, key, perm = session.get('scroll_perm') or [None, None, None]
+    if q['type'] == 'qcm':  # choice is a position on screen: map it back to the authored index
+        if (sub, key) != (subject, str(idx)) or not 0 <= choice < len(perm):
+            return jsonify(error='question expirée, recharge la page'), 400
+        choice, good = perm[choice], perm.index(good)
+        ok = choice == q['bonne']
+    else:
+        ok = choice == good
     uid = session['uid']
     with db() as conn:
         conn.execute('INSERT INTO scroll_log (account_id, subject, kind, key, notion, ok) VALUES (?, ?, ?, ?, ?, ?)',
