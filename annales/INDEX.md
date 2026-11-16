@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-229 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1352 exercices.
+231 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1358 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1721,6 +1721,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : coordonnées (6 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
 | Exercice 4 : sev engendrés (6 points) | sous-espaces engendrés, inclusion, dimension | EV | maths-s2-ev/4 |
 | Exercice 5 : sev supplémentaires ? (10 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+
+### Partiel 2 de physique S2 — mai 2017 (corrigé rédigé, FR)
+
+`md/S2/Finals/Phys/2021/final-2021-s2-phys-correction-fr.md` — date réelle : mai 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Calorimétrie (5 points, parties indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 2. Gaz parfait et premier principe (7 points, questions indépendantes) | gaz parfait (dU, dH, relation de Mayer, chaleur isobare, travail isobare et adiabatique) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 3. Cycle de Beau de Rochas (8 points) | cycle de Beau de Rochas (deux adiabatiques, deux isochores, rendement) | Thermodynamique | physique-s2-thermo/12 |
+
+### Partiel 2 de physique S2 — mai 2017 (sujet, FR)
+
+`md/S2/Finals/Phys/2021/final-2021-s2-phys-subject-fr.md` — date réelle : mai 2017
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Calorimétrie (5 points, parties indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 2. Gaz parfait et premier principe (7 points, questions indépendantes) | gaz parfait (dU, dH, relation de Mayer, chaleur isobare, travail isobare et adiabatique) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 3. Cycle de Beau de Rochas (8 points) | cycle de Beau de Rochas (deux adiabatiques, deux isochores, rendement) | Thermodynamique | physique-s2-thermo/12 |
 
 ### Partiel n° 2 S2 — mai 2019 (corrigé, FR)
 

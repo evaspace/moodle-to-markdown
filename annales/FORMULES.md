@@ -449,6 +449,32 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 
 ## Thermodynamique
 
+**calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau)** (4)
+
+- enceinte isolée : $\sum Q_i = 0$
+- $Q = mc(\theta_f - \theta_i)$
+- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
+- fusion : $Q = mL_f$
+- chemin fictif glace $\theta_2 \to 0$ °C $\to$ fusion $\to$ eau $0 \to \theta_e$
+- $m = \rho V$
+
+**gaz parfait (dU, dH, relation de Mayer, chaleur isobare, travail isobare et adiabatique)** (2)
+
+- $dU = nc_vdT$, $dH = nc_pdT$
+- $H = U + PV$, $PV = nRT$
+- Mayer : $C_p - C_v = nR$
+- $dU = \delta Q + \delta W$, $\delta W = -P\,dV$
+- isobare : $W = -P(V_B - V_A)$, $\delta Q_P = nc_pdT$
+- adiabatique : $Q = 0$, $W = \Delta U = nc_v(T_B - T_A)$
+
+**cycle de Beau de Rochas (deux adiabatiques, deux isochores, rendement)** (2)
+
+- Laplace : $TV^{\gamma-1} = \text{cte}$
+- isochore : $W = 0$, $Q = \Delta U = nc_v\Delta T$
+- adiabatique : $Q = 0$, $W = \Delta U = nc_v\Delta T$
+- $r = \dfrac{Q_{AB} + Q_{CD}}{Q_{AB}} = 1 - \dfrac{T_C - T_D}{T_B - T_A}$
+- $a = \dfrac{V_2}{V_1}$, $r = 1 - a^{1-\gamma}$
+
 **QCM de thermodynamique (enthalpie, transformations du gaz parfait, Laplace)** (2)
 
 - $H = U + PV$
@@ -555,15 +581,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - isobare : $W = -P(V_f - V_i)$
 - isochore : $W = 0$
 - sur un cycle : $\sum W + \sum Q = \Delta U = 0$
-
-**calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau)** (2)
-
-- enceinte isolée : $\sum Q_i = 0$
-- $Q = mc(\theta_f - \theta_i)$
-- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
-- fusion : $Q = mL_f$
-- chemin fictif glace $\theta_2 \to 0$ °C $\to$ fusion $\to$ eau $0 \to \theta_e$
-- $m = \rho V$
 
 **conduction thermique (flux, unités, résistances thermiques en série)** (2)
 
