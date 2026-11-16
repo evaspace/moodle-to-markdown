@@ -15,7 +15,7 @@ os.environ.update(DB_PATH=os.path.join(TMP, 'test.db'), COOKIE_INSECURE='1', SEC
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import levels  # noqa: E402
-from levels import apply_result, due_reviews, percent, pick_exo, score  # noqa: E402
+from levels import COMBO_GAP, apply_result, combo, due_reviews, percent, pick_exo, score  # noqa: E402
 from datetime import date  # noqa: E402
 
 SUBJECT = 'maths-s1-apis-integrales'
@@ -44,6 +44,13 @@ class Rules(unittest.TestCase):
         self.assertEqual(due_reviews(thrice, day(60)), {})  # learnt: leaves the queue
         self.assertEqual(due_reviews(thrice + [('a', 0, day(12))], day(13)), {'a': day(13)})  # a miss restarts
         self.assertEqual(due_reviews([('b', 1, d)], day(9)), {})  # never missed: never reviewed
+
+    def test_combo_halves_on_miss_and_resets_after_pause(self):
+        rows = [(1, 100), (1, 90), (1, 80), (1, 70), (1, 60), (1, 50)]  # newest first
+        self.assertEqual(combo(rows), 6)
+        self.assertEqual(combo([(0, 110)] + rows), 3)          # a miss halves, never zero
+        self.assertEqual(combo([(1, 120), (0, 110)] + rows), 4)
+        self.assertEqual(combo([(1, 100 + COMBO_GAP + 1)] + rows), 1)  # long pause: new run
 
     def test_last_level(self):
         self.assertEqual(apply_result(14, 13, True, True, 14), (14, 14, 'finished'))
@@ -186,6 +193,11 @@ class Api(unittest.TestCase):
         # the missed exercise is due tomorrow, not today
         self.assertNotIn('à revoir', self.c.get('/niveaux').get_data(as_text=True))
         self.assertIn('revu=1', self.c.get('/niveaux/revoir').headers['Location'])
+        # a review miss never demotes, even on the current level
+        for _ in range(2):
+            d = self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': 1, 'exo_id': self.data['levels'][0]['exos'][0]['id'],
+                                                                    'ok': False, 'revoir': True}).get_json()
+            self.assertEqual((d['event'], d['level']), ('review', 1))
         # practice on another level does not move progress
         exo = self.data['levels'][4]['exos'][0]['id']
         d = self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': 5, 'exo_id': exo, 'ok': True}).get_json()

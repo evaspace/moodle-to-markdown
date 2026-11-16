@@ -181,6 +181,7 @@ def pick_exo(exos, status, last_id=None, attempts=0):
     return others[attempts % len(others)]
 
 
+REVIEW_EVERY = 5  # in the grind, one due review is slipped in after this many answers (never blocks)
 REVIEW_DAYS = (1, 3, 7)  # a failed exercise comes back at D+1, then D+3, then D+7 after each success
 
 
@@ -271,6 +272,32 @@ def timing(conn, subject, lvl, exo):
     level_mean = sum(int(e.get('duree', 5)) * 60 for e in lvl['exos']) / len(lvl['exos'])
     ref = row[0] * authored / level_mean
     return round(ref), int(min(max(ref * 1.6, 60), 1800))
+
+
+COMBO_GAP = 30 * 60  # a pause longer than this (seconds) ends the combo
+
+
+def combo(rows):
+    """Combo: +1 per success, a miss HALVES it (never zero: an honest « Raté » must not cost the whole
+    combo, or self-grading turns into lying). A pause longer than COMBO_GAP starts a new run.
+    rows = (ok, unix time) newest first, across all paths. Computed by the server: survives reloads."""
+    run = []
+    for ok, at in rows:
+        if run and run[-1][1] - at > COMBO_GAP:
+            break
+        run.append((ok, at))
+    n = 0
+    for ok, _ in reversed(run):
+        n = n + 1 if ok else n // 2
+    return n
+
+
+def current_combo(conn, uid):
+    rows = conn.execute("SELECT ok, CAST(strftime('%s', at) AS INTEGER) FROM exo_log WHERE account_id=? "
+                        'ORDER BY id DESC LIMIT 200', (uid,)).fetchall()
+    if rows and time.time() - rows[0][1] > COMBO_GAP:
+        return 0
+    return combo(rows)
 
 
 def xp(conn, uid):
@@ -609,6 +636,13 @@ def level_page(subject):
     from app import render_markdown_with_math  # same Markdown + LaTeX renderer as the course pages
     data = get_parcours(subject)
     uid, n_levels = session['uid'], len(data['levels'])
+    if not request.args and session.get('grind_n', 0) >= REVIEW_EVERY:  # plain grind page: interleave a review
+        with db() as conn:
+            queue = review_queue(conn, uid, _today())
+        if queue:
+            session['grind_n'] = 0
+            s, k, e = queue[0]
+            return redirect(f'/niveaux/{s}?' + urlencode({'n': k, 'exo': e, 'revoir': 1, 'apres': subject}))
     with db() as conn:
         level, _, best = progress(conn, uid, subject)
         n = request.args.get('n', type=int) or level
@@ -628,6 +662,7 @@ def level_page(subject):
         bonus = time_bonus(conn, uid, subject, n, exo['id'])
         limit = round(limit * bonus)  # the reference (points) does not move: slower still means fewer points
         total_xp = xp(conn, uid)
+        streak_now = current_combo(conn, uid)
     # server-side clock: the time spent is measured from here, not sent by the browser
     session['exo_clock'] = [subject, n, exo['id'], time.time(), ref, limit, []]  # last: helps opened
     notions = {x['id']: x for x in data['notions']}
@@ -636,9 +671,10 @@ def level_page(subject):
         'niveau.html', subject=data['subject'], lvl=lvl, n_levels=n_levels, current=level,
         best=best, practice=(n != level), percent=total_percent(st, data), xp=total_xp,
         mix=('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
-            '/niveaux/revoir' if request.args.get('revoir') else None,
+            (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
+            if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),
-        squares=squares(lvl, status),
+        squares=squares(lvl, status), combo=streak_now,
         exo={'id': exo['id'], 'src': exo.get('src'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
              # one formula per line; the level notions stay below as course reminder
@@ -692,7 +728,10 @@ def level_result(subject):
         timeout = bool(body.get('timeout')) and not ok and len(clock) > 5 and secs >= hint_limit(clock[5], hints) - 5
     with db() as conn:
         level, _, best = progress(conn, uid, subject)
-        practice = n != level
+        review = bool(body.get('revoir'))
+        practice = n != level or review  # a review miss only puts the exercise back at D+1, never demotes
+        if not review:
+            session['grind_n'] = session.get('grind_n', 0) + 1
         prev = conn.execute('SELECT ok FROM exo_log WHERE account_id=? AND subject=? AND level=? AND practice=0 '
                             'ORDER BY id DESC LIMIT 1', (uid, subject, n)).fetchone()
         pts = score(ok, secs, ref, peek, n) if secs else 0  # no matching page view: no points
@@ -700,15 +739,16 @@ def level_result(subject):
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                      (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout)))
         total_xp = xp(conn, uid)
+        combo_now = current_combo(conn, uid)
         st = statuses(conn, uid, subject)
         status = level_status(st, data['levels'][n - 1])
         green = sum(1 for v in status.values() if v == 1)
-        extra = dict(points=pts, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
+        extra = dict(combo=combo_now, points=pts, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
                      percent=total_percent(st, data))
         if not ok:
             extra['prereq'] = [{'id': p, 'titre': get_parcours(p)['subject']['titre']} for p in PREREQ.get(subject, [])]
         if practice:  # practice on another level: logged (squares change), level unchanged
-            return jsonify(event='practice', level=level, best=best, **extra)
+            return jsonify(event='review' if review else 'practice', ok=ok, level=level, best=best, **extra)
         level, best, event = apply_result(level, best, ok, green == len(status), n_levels,
                                           prev_ko=bool(prev) and not prev['ok'])
         streak = green  # column kept for compatibility: greens on the level just answered

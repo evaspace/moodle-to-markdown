@@ -8,14 +8,14 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=20">
+  <link rel="stylesheet" href="/static/niveaux.css?v=21">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
-<div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}">
+<div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}" data-revoir="{{ 1 if review else 0 }}" data-combo="{{ combo }}">
   <h1 tabindex="-1">Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
   <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"
        aria-label="Progression totale {{ subject.titre }}"><span id="total-bar" style="width: {{ percent }}%"></span></div>
@@ -45,6 +45,7 @@
       data-copy-footer="Source : {{ public_url }}/niveaux/{{ subject.id }}?n={{ lvl.n }} (exercice d'Epita Doomscrolling, site gratuit d'entraînement aux examens de la prépa EPITA, créé par Morgan Pierrefeu : https://morgan.pierref.eu)">Copier pour une IA</button>
     <span class="lv-muted" id="copy-ia-note">Énoncé et formules en texte lisible, à coller dans ChatGPT, Claude ou Gemini</span>
   </div>
+  <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong>{% endif %}</p>
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
   <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p></details>
@@ -84,13 +85,14 @@
   <div id="feedback" role="status"></div>
   <div class="lv-row" id="next" hidden><a class="lv-btn primary" href="{{ mix or '/niveaux/' ~ subject.id ~ ('?n=' ~ lvl.n if practice else '') }}">Exercice suivant</a></div>
 </div>
+<div class="lv-slam" id="combo-slam" aria-hidden="true"></div>
 <canvas id="gore-canvas" class="gore-canvas lv-gore" aria-hidden="true"></canvas>
 <div class="bottom-cat-wrap lv-cat">
   <div id="cat-bubble" class="cat-speech-bubble hidden"></div>
   <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
 </div>
 <script src="/static/cat.js?v=20261116"></script>
-<script src="/static/niveaux.js?v=13"></script>
+<script src="/static/niveaux.js?v=14"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

@@ -236,3 +236,16 @@ Réponses de l'utilisateur au conseil (débat complet dans `todo.md`) :
 - Auto-notation Réussi/Raté : « je suis pas d'accord » avec la saisie de réponse, mais la garder en tête.
 - La réussite doit être plus satisfaisante que l'échec : effet sur chaque carré qui passe au vert, combo quand on enchaîne, effets « waouh ». Fait : carré qui grossit, confettis croissants avec le combo, bulle « Combo xN », flash vert du bord de l'écran dès 3 réussites d'affilée.
 - Chat qui chevauche le texte sur téléphone : chat réduit à 64 px sous 520 px, et les règles ne sont plus en bas de la page.
+
+## Décision du 2026-11-16 : réponses au conseil n° 2, avis des experts apprentissage et psychologie
+- Franglais : des contenus (exercices, certains textes) n'ont jamais été traduits ; la page générée en anglais mélange français et anglais. Il faut traduire ces contenus, pas seulement l'interface (pas encore fait).
+- Ce qui sert : les exercices papier. Le scroll n'est pas à jour et un peu foireux : on construit d'abord les exercices papier.
+- Je sais quoi travailler grâce aux stats (tout à 100 % sauf les primitives, ~30 %).
+- Saisie vérifiée par sympy : non (peur d'être refusé pour x2 au lieu de x², pas envie d'apprendre une syntaxe).
+- Bouton « Passer » : non. Passer = rater ; sinon on ne fait que les faciles et on se tape un mur de difficiles à la fin. Passer fait redescendre, c'est bien.
+- Exercice plus facile après un raté : pas nécessaire ; un exercice trop dur veut dire qu'on ne connaît pas la formule, et le cours s'affiche après le raté.
+- Les maths d'abord ; le reste plus tard. « C'est la première fois que j'arrive à travailler si longtemps sur des révisions, et j'ai vraiment l'impression de progresser. »
+- Combo : à faire tout de suite, très motivant, doit être très stylé.
+Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord sur les 6 points. Fait selon leurs règles :
+- Combo calculé par le serveur ; un raté le divise par 2 au lieu de le remettre à zéro (sinon on se ment en s'auto-notant) ; pas lié à la vitesse ; petit effet à chaque réussite, grosse animation plein écran seulement aux paliers 5, 10, 20, 30, 50, 75, 100… (sinon on s'habitue).
+- Révision espacée dans le grind : une révision due est glissée tous les 5 exercices du grind, jamais bloquante ; un raté en révision la remet à J+1 sans faire redescendre ; une révision réussie compte dans le combo.

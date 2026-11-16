@@ -79,7 +79,7 @@
     bubbleTimer = setTimeout(() => b.classList.add('hidden'), ms);
   };
   $('chill-cat').onclick = () => cat.onPet();
-  let combo = 0, tick = null;
+  let tick = null;
 
   const MESSAGES = {
     progress: (d) => `Bien joué. ${d.green}/${d.total} formules du niveau en vert.`,
@@ -88,22 +88,56 @@
     warn: (d) => `Raté. Relis les formules ci-dessus. Un deuxième raté d'affilée sur ce niveau te ferait redescendre${d.level > 1 ? ` au niveau ${d.level - 1}` : ''}.`,
     down: (d) => `Deux ratés d'affilée : retour au niveau ${d.level}. Relis les formules ci-dessus avant de continuer.`,
     retry: () => 'Raté : relis les formules ci-dessus, puis réessaie avec un autre exercice.',
+    review: (d) => d.ok ? 'Récupéré : cet exercice revient plus tard, de plus en plus espacé.' : 'Pas encore acquis : il revient demain. Ton niveau ne bouge pas.',
     practice: () => 'Noté (entraînement libre, ta progression ne bouge pas).',
   };
 
-  // Success must feel better than failure: the square pops, and fast successes in a row build a combo.
+  // Combo (server count: +1 per success, a miss halves it). Small feedback on every success,
+  // the big slam only at milestones, so it does not wear off.
+  const MILESTONES = [5, 10, 20, 30, 50, 75, 100, 150, 200];
+  const TITLES = { 5: 'Bien lancé', 10: 'En feu', 20: 'Inarrêtable', 30: 'Machine', 50: 'Légende' };
+  const title = (n) => TITLES[Math.max(...Object.keys(TITLES).map(Number).filter((k) => k <= n))] || 'Légende';
+  function hud(n, from) {
+    const h = $('combo-hud');
+    if (!h) return;
+    h.className = 'lv-combo' + (n >= 2 ? ' on' : '') + (n >= 10 ? ' hot' : '');
+    h.replaceChildren();
+    if (from !== undefined && from > n && from >= 2) h.append(`Combo ×${from} → `);
+    if (n >= 2 || (from !== undefined && from >= 2)) {
+      if (from === undefined || from <= n) h.append('Combo ');
+      const b = document.createElement('strong');
+      b.textContent = '×' + n;
+      h.append(b);
+    }
+    h.classList.remove('bump'); void h.offsetWidth; h.classList.add('bump');
+  }
+  function slam(n) {
+    const s = $('combo-slam');
+    s.replaceChildren();
+    const big = document.createElement('strong'); big.textContent = '×' + n;
+    const sub = document.createElement('span'); sub.textContent = title(n);
+    s.append(big, sub);
+    s.className = 'lv-slam go' + (n >= 20 ? ' hot' : '');
+    const w = $('exo'); w.classList.remove('lv-shake'); void w.offsetWidth; w.classList.add('lv-shake');
+    setTimeout(() => { s.className = 'lv-slam'; }, 1400);
+  }
   function celebrate(d, sq) {
-    combo += 1;
+    const n = d.combo || 0;
     if (sq) { sq.classList.remove('pop'); void sq.offsetWidth; sq.classList.add('pop'); }
     const big = d.event === 'up' || d.event === 'finished';
+    const milestone = MILESTONES.includes(n);
+    hud(n);
     const canvas = $('gore-canvas');
-    pixelConfetti(canvas, big ? (d.event === 'finished' ? 14 : 7) : Math.min(1 + combo, 6));
-    showCatBubble(big ? 'Niveau validé !' : combo >= 2 ? `Combo x${combo} !` : 'Bien joué !', big || combo >= 3 ? 2600 : 2000);
-    if (combo >= 3 || big) {
+    if (big || milestone) {
+      pixelConfetti(canvas, d.event === 'finished' || n >= 20 ? 14 : 7);
       document.body.classList.remove('lv-flash'); void document.body.offsetWidth; document.body.classList.add('lv-flash');
+    } else {
+      pixelConfetti(canvas, 1);
     }
-    cat.onCorrectAnswer(Math.min(combo, 5));
-    if (navigator.vibrate) navigator.vibrate(combo >= 3 ? [30, 40, 30, 40, 60] : [40]);
+    if (milestone) slam(n);
+    showCatBubble(big ? 'Niveau validé !' : milestone ? `Combo ×${n} !` : 'Bien joué !', big || milestone ? 2600 : 1600);
+    cat.onCorrectAnswer(Math.min(1 + Math.floor(n / 5), 5));
+    if (navigator.vibrate) navigator.vibrate(milestone ? [30, 40, 30, 40, 80] : [40]);
   }
 
   function setup() {
@@ -164,7 +198,7 @@
 
     async function answer(ok, timeout = false) {
       $('btn-ok').disabled = $('btn-ko').disabled = true;
-      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout });
+      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, revoir: exo.dataset.revoir === '1' });
       const fb = $('feedback');
       if (!res.ok) {
         fb.className = 'lv-feedback bad';
@@ -198,10 +232,12 @@
       const sq = document.querySelector(`.lv-squares i[data-exo="${exo.dataset.exo}"]`);
       if (sq) sq.className = (ok ? 'ok' : 'ko') + ' cur';
       if (d.percent !== undefined) { $('total-bar').style.width = d.percent + '%'; $('total-pct').textContent = d.percent; }
+      const before = +(exo.dataset.combo || 0);
+      exo.dataset.combo = d.combo || 0;
       if (ok) {
         celebrate(d, sq);
       } else {
-        combo = 0;
+        hud(d.combo || 0, before);
         const r = $('chill-cat').getBoundingClientRect();
         showCatBubble('Raté... KABOOM', 1200);
         cat.onWrongAnswer(() => {
