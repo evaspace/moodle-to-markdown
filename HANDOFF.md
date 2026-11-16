@@ -197,3 +197,27 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Archi S2 B4 (microprocesseur: `Chapitre_3.pdf`, exam `b4_exam_fr.pdf`).
 2. Electronique, algo, prog, anglais, méthodo; S2 physics annales transcription.
+
+# Handoff — 2026-11-16 (suite, archi B4)
+## Done
+- `archi-s2-microprocesseur` (`parcours/src/archi_micro.py`): 13 levels, 85 exos (12-13 exam), 9 notions, 18 quiz, variants, FORMULES. In `PATHS`, `syllabus.json` (ECUE « Systèmes à microprocesseur », B4). Build OK, 26/26 tests, deployed (`docker restart`). Committed on `feat/physique-thermo`.
+## Next steps
+1. Browser check of the 13 levels at 390 px with a QA account (not done, delete it afterwards).
+2. Electronique (Moodle `S1 - Electronique - Promo 2030`, `Electronique S2 - ...`), then algo, prog, anglais, méthodo. TD5 archi (schematics) left in `a_faire`.
+3. Transcribe S2 physics annales.
+
+# Handoff — 2026-11-16 (électronique S1)
+## Done
+- `elec-s1-circuits` (`parcours/src/elec_circuits.py`): 12 levels, 80 exos (11-12 exam), variants, FORMULES; matière `electronique` added to `syllabus.json`; in `PATHS`. Build OK, 26/26 tests, deployed. Committed on `feat/physique-thermo`.
+## Next steps
+1. Browser check at 390 px of the archi-micro and elec levels with a QA account (not done).
+2. Electronique B2 (janvier: régime sinusoïdal forcé, puissance; exams Jan 2025/2026 `Examen B2`), then S2 (diodes, filtres, régimes transitoires: Moodle `Electronique S2 - ...`), then algo, prog, anglais, méthodo.
+
+# Handoff — 2026-11-16 (électronique B2)
+## Done
+- Browser check at 390 px of `archi-s2-microprocesseur` (13 levels) and `elec-s1-circuits` (12 levels): 0 KaTeX error, no overflow; QA account deleted.
+- `elec-s1-sinus` (`parcours/src/elec_sinus.py`): 12 levels, 85 exos (11-12 exam: B2 January 2025, January 2026), 10 notions, 20 quiz, variants, FORMULES. In `PATHS`, `syllabus.json` (same ECUE as `elec-s1-circuits`). Build OK, 26/26 tests, 408 formulas 0 KaTeX error, 12 levels at 390 px OK, QA account deleted, deployed. Branch `feat/elec-sinus` (from `feat/physique-thermo`), nothing pushed.
+## Next steps
+1. Électronique S2: Moodle `Electronique S2 - Diodes`, `- Études des filtres`, `- Études des régimes transitoires` (in `EPITA_Moodle_Notes_MD/`).
+2. Then algo, prog, anglais, méthodo (user order). Transcribe S2 physics annales.
+3. AC power is in no source (kit, TD4, exams): not covered.

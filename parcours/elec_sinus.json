@@ -1,0 +1,1316 @@
+{
+ "subject": {
+  "id": "elec-s1-sinus",
+  "ordre": 510,
+  "matiere": "electronique",
+  "semestre": "S1",
+  "ecue": "Outils d'analyse de circuits",
+  "titre": "Régime sinusoïdal forcé et filtres",
+  "chapitres_moodle": [
+   "01_Outils d'analyse de circuits - Définitions, Lois et Théorèmes [2526_I_INF_FISE_S01_CN_OAC]",
+   "02_Documents de cours",
+   "05_Travaux Dirigés"
+  ],
+  "td": "TD 4 d'électronique S1 (réseaux linéaires en régime sinusoïdal forcé)",
+  "examens": [
+   "Examen B2 d'électronique (janvier 2025)",
+   "Examen 2 d'électronique (janvier 2026)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "amplitude",
+   "titre": "Signal sinusoïdal et amplitude complexe",
+   "formule": "$s(t)=S\\sqrt2\\sin(\\omega t+\\varphi)$ · $S$ : valeur efficace · $\\omega=2\\pi f=\\dfrac{2\\pi}T$ · $\\underline S=S\\,e^{j\\varphi}$ : $|\\underline S|=S$, $\\arg\\underline S=\\varphi$ · $e^{j\\theta}=\\cos\\theta+j\\sin\\theta$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$",
+   "exemple": "$i(t)=I\\sqrt2\\cos(\\omega t)=I\\sqrt2\\sin(\\omega t+\\tfrac\\pi2)$ : $\\underline I=I\\,e^{j\\pi/2}=jI$",
+   "cours": "Une grandeur sinusoïdale de pulsation connue est entièrement décrite par sa valeur efficace et sa phase à l'origine : on la représente par un nombre complexe, son amplitude complexe. Tous les signaux d'un circuit doivent être écrits avec la même fonction (tout en sinus ou tout en cosinus) avant de passer en complexe."
+  },
+  {
+   "id": "impedances",
+   "titre": "Impédances complexes",
+   "formule": "$\\underline Z=\\dfrac{\\underline U}{\\underline I}$ (convention récepteur) · $\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}=-\\dfrac{j}{C\\omega}$ · $|\\underline Z|=\\dfrac UI$ · $\\arg\\underline Z$ : déphasage de $u$ par rapport à $i$ · $L\\omega$ en ohms, $C\\omega$ en siemens",
+   "exemple": "$L=20$ mH, $\\omega=500$ rad/s : $\\underline Z_L=10j$ Ω, $\\arg=+90°$",
+   "cours": "L'impédance d'un dipôle passif linéaire est le quotient des amplitudes complexes de sa tension et de son courant. Son module est le quotient des valeurs efficaces, son argument le déphasage de la tension sur le courant : $0$ pour une résistance, $+\\tfrac\\pi2$ pour une bobine, $-\\tfrac\\pi2$ pour un condensateur."
+  },
+  {
+   "id": "associations",
+   "titre": "Associations d'impédances",
+   "formule": "série : $\\underline Z=\\underline Z_1+\\underline Z_2$ · parallèle : $\\underline Z=\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$ · $R\\parallel C$ : $\\dfrac{R}{1+jRC\\omega}$ · $L\\parallel C$ : $\\dfrac{jL\\omega}{1-LC\\omega^2}$ · $R\\parallel L$ : $\\dfrac{jRL\\omega}{R+jL\\omega}$",
+   "exemple": "$R=3$ Ω, $L\\omega=8$ Ω, $\\tfrac1{C\\omega}=4$ Ω en série : $\\underline Z=3+4j$, $|\\underline Z|=5$ Ω",
+   "cours": "Les règles d'association des résistances restent valables avec des impédances complexes. On simplifie en multipliant numérateur et dénominateur pour faire disparaître les fractions emboîtées ($j^2=-1$)."
+  },
+  {
+   "id": "ohm_c",
+   "titre": "Loi d'Ohm généralisée",
+   "formule": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|\\,I$ (valeurs efficaces) · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$ · $i(t)=|\\underline I|\\sqrt2\\sin(\\omega t+\\arg\\underline I)$ · les valeurs efficaces ne s'additionnent pas",
+   "exemple": "$E=20$ V, $R=L\\omega=10$ Ω en série : $|\\underline I|=\\dfrac{20}{10\\sqrt2}=\\sqrt2$ A, en retard de $45°$",
+   "cours": "En représentation complexe, toutes les lois du continu (Ohm, nœuds, mailles) s'écrivent avec les amplitudes complexes et les impédances. On revient au signal réel en prenant le module (valeur efficace) et l'argument (phase à l'origine). Les lois des mailles s'appliquent aux complexes, pas aux valeurs efficaces : $3$ V sur $R$ et $4$ V sur $L$ donnent $5$ V au total."
+  },
+  {
+   "id": "diviseur_c",
+   "titre": "Diviseur de tension en complexe",
+   "formule": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ (même courant, pas de courant de sortie) · RC, sortie sur $C$ : $\\dfrac{1}{1+jRC\\omega}$ · RL, sortie sur $L$ : $\\dfrac{jL\\omega}{R+jL\\omega}$",
+   "exemple": "RC avec $RC\\omega=1$ : $\\left|\\dfrac{\\underline U}{\\underline E}\\right|=\\dfrac1{\\sqrt2}$, déphasage $-45°$",
+   "cours": "Le pont diviseur de tension s'applique tel quel à des impédances en série. C'est l'outil principal pour calculer une tension de sortie, souvent après avoir réduit le reste du circuit par associations ou par Thévenin/Norton."
+  },
+  {
+   "id": "thevenin_c",
+   "titre": "Thévenin et Norton en complexe",
+   "formule": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : impédance vue des bornes, sources éteintes · $\\underline I_N=\\dfrac{\\underline E_{th}}{\\underline Z_{th}}$ · $(\\underline E,\\underline Z)$ série $\\leftrightarrow$ $(\\underline E/\\underline Z,\\underline Z)$ parallèle",
+   "exemple": "$v_e$, $2R$ en série, $C$ en parallèle : $\\underline E_{th}=\\dfrac{\\underline V_E}{1+2jRC\\omega}$, $\\underline Z_{th}=\\dfrac{2R}{1+2jRC\\omega}$",
+   "cours": "Les équivalences de Thévenin et de Norton s'enchaînent comme en continu, avec des impédances. On transforme une source de tension avec son impédance série en source de courant avec la même impédance en parallèle, on associe les impédances en parallèle, puis on revient en Thévenin."
+  },
+  {
+   "id": "limites",
+   "titre": "Très basses et très hautes fréquences",
+   "formule": "TBF ($\\omega\\to0$) : condensateur $\\to$ circuit ouvert, bobine $\\to$ fil · THF ($\\omega\\to\\infty$) : condensateur $\\to$ fil, bobine $\\to$ circuit ouvert · $A$ décroissante : passe-bas · croissante : passe-haut · nulle aux deux bouts : passe-bande",
+   "exemple": "$C$ en série, $4R\\parallel L$ en sortie : TBF $A\\to0$, THF $A\\to1$, passe-haut",
+   "cours": "L'étude qualitative d'un filtre remplace chaque condensateur et chaque bobine par son comportement limite, puis calcule l'amplification sur le schéma simplifié (souvent un diviseur de résistances). Comparer les deux limites donne la nature du filtre."
+  },
+  {
+   "id": "transfert",
+   "titre": "Fonction de transfert, amplification, gain",
+   "formule": "$\\underline T(\\omega)=\\dfrac{\\underline V_S}{\\underline V_E}$ · amplification $A(\\omega)=|\\underline T(\\omega)|=\\dfrac{V_S}{V_E}$ (valeurs efficaces) · gain $G=20\\log_{10}A$ en dB · $\\arg\\underline T$ : déphasage de $v_s$ par rapport à $v_e$",
+   "exemple": "$A=\\dfrac1{\\sqrt2}$ : $G=-10\\log_{10}2\\approx-3$ dB",
+   "cours": "La fonction de transfert est le quotient des amplitudes complexes de sortie et d'entrée. Son module est l'amplification (quotient des valeurs efficaces), son argument le déphasage de la sortie sur l'entrée. Le gain est l'amplification en décibels."
+  },
+  {
+   "id": "ordre1",
+   "titre": "Filtres du premier ordre",
+   "formule": "passe-bas : $\\underline T=A_{max}\\dfrac1{1+j\\frac\\omega{\\omega_c}}$, $A_{max}=A_{TBF}$ · passe-haut : $\\underline T=A_{max}\\dfrac{j\\frac\\omega{\\omega_c}}{1+j\\frac\\omega{\\omega_c}}$, $A_{max}=A_{THF}$ · $A(\\omega_c)=\\dfrac{A_{max}}{\\sqrt2}$ · $f_c=\\dfrac{\\omega_c}{2\\pi}$",
+   "exemple": "$\\underline T=\\dfrac{R}{5R+jL\\omega}=\\dfrac15\\cdot\\dfrac1{1+j\\frac{L}{5R}\\omega}$ : $A_{max}=\\tfrac15$, $\\omega_c=\\dfrac{5R}L$",
+   "cours": "On met la fonction de transfert sous forme normalisée en factorisant le terme réel du dénominateur, puis on identifie avec la forme du cours. À la pulsation de coupure, l'amplification vaut $A_{max}/\\sqrt2$, soit un gain de $3$ dB sous le maximum."
+  },
+  {
+   "id": "ordre2",
+   "titre": "Filtres du second ordre",
+   "formule": "dénominateur $1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · passe-bas : numérateur $A_0$ · passe-haut : $-A_0\\left(\\frac\\omega{\\omega_0}\\right)^2$ · passe-bande : $A_0\\,2j\\sigma\\frac\\omega{\\omega_0}$ · $\\omega_0$ : pulsation propre · $\\sigma$ : coefficient d'amortissement",
+   "exemple": "$\\underline T=\\dfrac{-LC\\omega^2}{1+j\\frac{L}{4R}\\omega-LC\\omega^2}$ : $\\omega_0=\\dfrac1{\\sqrt{LC}}$, $\\sigma=\\dfrac{L}{8R}\\omega_0$",
+   "cours": "On identifie le terme en $\\omega^2$ du dénominateur pour obtenir $\\omega_0$ ($LC\\omega^2=(\\omega/\\omega_0)^2$), puis le terme en $j\\omega$ pour obtenir $\\sigma$. La forme du numérateur donne la nature du filtre."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "amplitude",
+   "type": "qcm",
+   "q": "Le module de l'amplitude complexe $\\underline U$ de $u(t)=U\\sqrt2\\sin(\\omega t+\\varphi)$ est :",
+   "choix": [
+    "$U$, la valeur efficace",
+    "$U\\sqrt2$",
+    "$\\omega$",
+    "$\\varphi$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "amplitude",
+   "type": "vf",
+   "q": "$\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$.",
+   "bonne": true
+  },
+  {
+   "notion": "impedances",
+   "type": "qcm",
+   "q": "L'unité du produit $C\\omega$ est :",
+   "choix": [
+    "le siemens",
+    "l'ohm",
+    "le hertz",
+    "l'ampère"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "impedances",
+   "type": "vf",
+   "q": "L'argument de $\\underline Z$ est le déphasage du courant par rapport à la tension.",
+   "bonne": false
+  },
+  {
+   "notion": "associations",
+   "type": "qcm",
+   "q": "$R$ en parallèle avec $C$ :",
+   "choix": [
+    "$\\dfrac{R}{1+jRC\\omega}$",
+    "$\\dfrac1R+jC\\omega$",
+    "$R+\\dfrac1{jC\\omega}$",
+    "$\\dfrac{jRC\\omega}{R+jC\\omega}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "associations",
+   "type": "vf",
+   "q": "$L$ et $C$ en parallèle se comportent comme un circuit ouvert à $\\omega=1/\\sqrt{LC}$.",
+   "bonne": true
+  },
+  {
+   "notion": "ohm_c",
+   "type": "qcm",
+   "q": "$3$ V efficaces sur $R$ et $4$ V efficaces sur $L$ en série donnent au total :",
+   "choix": [
+    "$5$ V",
+    "$7$ V",
+    "$1$ V",
+    "$12$ V"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ohm_c",
+   "type": "vf",
+   "q": "$|\\underline I|$ est la valeur efficace du courant $i(t)$.",
+   "bonne": true
+  },
+  {
+   "notion": "diviseur_c",
+   "type": "qcm",
+   "q": "RC série sous $\\underline E$, sortie sur $C$ :",
+   "choix": [
+    "$\\dfrac{\\underline E}{1+jRC\\omega}$",
+    "$\\dfrac{jRC\\omega\\,\\underline E}{1+jRC\\omega}$",
+    "$jRC\\omega\\,\\underline E$",
+    "$\\underline E$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "diviseur_c",
+   "type": "vf",
+   "q": "Le pont diviseur s'applique si un courant est prélevé entre les deux impédances.",
+   "bonne": false
+  },
+  {
+   "notion": "thevenin_c",
+   "type": "qcm",
+   "q": "$\\underline Z_{th}$ s'obtient :",
+   "choix": [
+    "sources éteintes, vu des bornes",
+    "en court-circuitant les bornes",
+    "en divisant $\\underline E_{th}$ par $\\underline V_E$",
+    "en ajoutant toutes les impédances"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "thevenin_c",
+   "type": "vf",
+   "q": "Une source $\\underline E$ en série avec $\\underline Z$ équivaut à $\\underline E/\\underline Z$ en parallèle avec $\\underline Z$.",
+   "bonne": true
+  },
+  {
+   "notion": "limites",
+   "type": "qcm",
+   "q": "En très haute fréquence, une bobine se comporte comme :",
+   "choix": [
+    "un circuit ouvert",
+    "un fil",
+    "une résistance",
+    "une source"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "limites",
+   "type": "vf",
+   "q": "Une amplification nulle en TBF et en THF indique un passe-bande.",
+   "bonne": true
+  },
+  {
+   "notion": "transfert",
+   "type": "qcm",
+   "q": "Le quotient $V_S/V_E$ des valeurs efficaces est :",
+   "choix": [
+    "l'amplification $A(\\omega)$",
+    "le gain $G(\\omega)$",
+    "la fonction de transfert $\\underline T(\\omega)$",
+    "le déphasage"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "transfert",
+   "type": "vf",
+   "q": "$A=1/\\sqrt2$ correspond à un gain d'environ $-3$ dB.",
+   "bonne": true
+  },
+  {
+   "notion": "ordre1",
+   "type": "qcm",
+   "q": "Pour un passe-bas du premier ordre, $A_{max}$ vaut :",
+   "choix": [
+    "$A_{TBF}$",
+    "$A_{THF}$",
+    "$A(\\omega_c)$",
+    "$1$ toujours"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ordre1",
+   "type": "vf",
+   "q": "À la pulsation de coupure, $A=A_{max}/2$.",
+   "bonne": false
+  },
+  {
+   "notion": "ordre2",
+   "type": "qcm",
+   "q": "Si $LC\\omega^2=(\\omega/\\omega_0)^2$, alors :",
+   "choix": [
+    "$\\omega_0=1/\\sqrt{LC}$",
+    "$\\omega_0=LC$",
+    "$\\omega_0=\\sqrt{LC}$",
+    "$\\omega_0=1/(LC)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ordre2",
+   "type": "vf",
+   "q": "Un numérateur en $-(\\omega/\\omega_0)^2$ indique un passe-haut du second ordre.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Amplitude complexe",
+   "notions": [
+    "amplitude"
+   ],
+   "exos": [
+    {
+     "id": "s11",
+     "enonce": "$u(t)=5\\sqrt2\\sin(\\omega t+\\tfrac\\pi3)$ (en V). Module de $\\underline U$ (en V) ?",
+     "ans": "5",
+     "sol": "$|\\underline U|$ est la valeur efficace : $5$ V.",
+     "src": "Kit de survie régime sinusoïdal",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "$u(t)=12\\sqrt2\\sin(\\omega t-\\tfrac\\pi6)$ (en V). Module de $\\underline U$ (en V) ?",
+       "ans": "12",
+       "sol": "Valeur efficace : $12$ V."
+      }
+     ],
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "value"
+    },
+    {
+     "id": "s12",
+     "enonce": "Même tension. Argument de $\\underline U$ (en rad) ?",
+     "ans": "pi/3",
+     "sol": "$\\arg\\underline U$ est la phase à l'origine : $\\tfrac\\pi3$.",
+     "src": "Kit de survie régime sinusoïdal",
+     "duree": 1,
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "value"
+    },
+    {
+     "id": "s13",
+     "enonce": "$i_1(t)=I\\sqrt2\\cos(\\omega t)$, les autres signaux du circuit sont en sinus. Argument de $\\underline I_1$ (en rad) ?",
+     "ans": "pi/2",
+     "sol": "$\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$, donc $\\underline I_1=I\\,e^{j\\pi/2}=jI$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 5",
+     "duree": 2,
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "value"
+    },
+    {
+     "id": "s14",
+     "enonce": "$\\underline U=3+4j$ V. Valeur efficace de $u(t)$ (en V) ?",
+     "ans": "5",
+     "sol": "$|\\underline U|=\\sqrt{3^2+4^2}=5$ V.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\underline U=6-8j$ V. Valeur efficace de $u(t)$ (en V) ?",
+       "ans": "10",
+       "sol": "$\\sqrt{36+64}=10$ V."
+      }
+     ],
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$ · $|a+jb|=\\sqrt{a^2+b^2}$",
+     "type": "value"
+    },
+    {
+     "id": "s15",
+     "enonce": "Même tension. Amplitude maximale de $u(t)$ (en V) ?",
+     "ans": "5*sqrt(2)",
+     "sol": "$U_m=U\\sqrt2=5\\sqrt2\\approx7{,}07$ V.",
+     "duree": 2,
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "value"
+    },
+    {
+     "id": "s16",
+     "enonce": "$\\underline I=2\\,e^{-j\\pi/4}$ A. Partie réelle de $\\underline I$ (en A) ?",
+     "ans": "sqrt(2)",
+     "sol": "$2\\cos(-\\tfrac\\pi4)=\\sqrt2$ A (et partie imaginaire $-\\sqrt2$).",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 5",
+     "duree": 2,
+     "formules": "$e^{j\\theta}=\\cos\\theta+j\\sin\\theta$",
+     "type": "value"
+    },
+    {
+     "id": "s17",
+     "enonce": "Pourquoi faut-il écrire $i_1(t)=I\\sqrt2\\cos(\\omega t)$, $i_2(t)=I\\sqrt2\\sin(\\omega t)$ et $e(t)=E\\sqrt2\\sin(\\omega t)$ avec la même fonction avant de passer en complexe ? Donner $\\underline I_1$, $\\underline I_2$, $\\underline E$.",
+     "sol": "L'amplitude complexe repose sur la phase à l'origine, définie par rapport à une seule fonction de référence. On réécrit $i_1(t)=I\\sqrt2\\sin(\\omega t+\\tfrac\\pi2)$, d'où $\\underline I_1=jI$, $\\underline I_2=I$, $\\underline E=E$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 5",
+     "duree": 4,
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Impédances complexes",
+   "notions": [
+    "impedances",
+    "amplitude"
+   ],
+   "exos": [
+    {
+     "id": "s21",
+     "enonce": "Bobine $L=20$ mH, $\\omega=500$ rad/s. Partie imaginaire de $\\underline Z_L$ (en Ω) ?",
+     "ans": "10",
+     "sol": "$\\underline Z_L=jL\\omega=10j$ Ω.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Bobine $L=50$ mH, $\\omega=200$ rad/s. Partie imaginaire de $\\underline Z_L$ (en Ω) ?",
+       "ans": "10",
+       "sol": "$L\\omega=10$ Ω."
+      }
+     ],
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s22",
+     "enonce": "Condensateur $C=10\\,\\mu$F, $\\omega=1000$ rad/s. Partie imaginaire de $\\underline Z_C$ (en Ω) ?",
+     "ans": "-100",
+     "sol": "$\\underline Z_C=\\dfrac1{jC\\omega}=-\\dfrac{j}{C\\omega}=-100j$ Ω.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Condensateur $C=20\\,\\mu$F, $\\omega=500$ rad/s. Partie imaginaire de $\\underline Z_C$ (en Ω) ?",
+       "ans": "-100",
+       "sol": "$-\\dfrac1{C\\omega}=-100$ Ω."
+      }
+     ],
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s23",
+     "enonce": "Argument de l'impédance d'une bobine idéale (en degrés) ?",
+     "ans": "90",
+     "sol": "$jL\\omega$ est imaginaire pur positif : $+90°$, la tension est en avance sur le courant.",
+     "duree": 1,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s24",
+     "enonce": "Argument de l'impédance d'un condensateur idéal (en degrés) ?",
+     "ans": "-90",
+     "sol": "$-\\dfrac{j}{C\\omega}$ : $-90°$, la tension est en retard sur le courant.",
+     "duree": 1,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s25",
+     "enonce": "Bobine $L=0{,}1$ H à $f=50$ Hz. $|\\underline Z_L|$ en unités de $\\pi$ Ω ?",
+     "ans": "10",
+     "sol": "$L\\omega=0{,}1\\times100\\pi=10\\pi\\approx31{,}4$ Ω.",
+     "duree": 2,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$ · $\\omega=2\\pi f$",
+     "type": "value"
+    },
+    {
+     "id": "s26",
+     "enonce": "Un dipôle sous $12$ V efficaces est traversé par $3$ A efficaces. $|\\underline Z|$ (en Ω) ?",
+     "ans": "4",
+     "sol": "$|\\underline Z|=U/I=4$ Ω.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Un dipôle sous $10$ V efficaces est traversé par $0{,}5$ A efficaces. $|\\underline Z|$ (en Ω) ?",
+       "ans": "20",
+       "sol": "$U/I=20$ Ω."
+      }
+     ],
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s27",
+     "enonce": "Que représente l'argument de l'impédance complexe $\\underline Z$ d'un dipôle (convention récepteur) ? Quelle est l'unité de $L\\omega$, de $C\\omega$ ?",
+     "sol": "$\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$ : le déphasage de la tension à ses bornes par rapport au courant qui le traverse. $L\\omega$ est en ohms (c'est $|\\underline Z_L|$), $C\\omega$ en siemens (c'est $1/|\\underline Z_C|$).",
+     "src": "Examen 2 d'électronique, janvier 2026, Q3-Q4",
+     "duree": 3,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Associations d'impédances",
+   "notions": [
+    "associations",
+    "impedances"
+   ],
+   "exos": [
+    {
+     "id": "s31",
+     "enonce": "$R=3$ Ω, $L\\omega=8$ Ω et $\\tfrac1{C\\omega}=4$ Ω en série. $|\\underline Z|$ (en Ω) ?",
+     "ans": "5",
+     "sol": "$\\underline Z=3+8j-4j=3+4j$, $|\\underline Z|=5$ Ω.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$R=6$ Ω, $L\\omega=12$ Ω et $\\tfrac1{C\\omega}=4$ Ω en série. $|\\underline Z|$ (en Ω) ?",
+       "ans": "10",
+       "sol": "$6+8j$, module $10$ Ω."
+      }
+     ],
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$ · $\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s32",
+     "enonce": "$R=10$ Ω en parallèle avec $L\\omega=10$ Ω. $|\\underline Z|$ (en Ω) ?",
+     "ans": "5*sqrt(2)",
+     "sol": "$\\underline Z=\\dfrac{100j}{10+10j}=5+5j$, $|\\underline Z|=5\\sqrt2$ Ω.",
+     "duree": 3,
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s33",
+     "enonce": "$R$ en parallèle avec $C$. $\\underline Z$ en fonction de $R$, $C$, $\\omega$ (écrire $j$ = `I`, $\\omega$ = `w`) ?",
+     "ans": "R/(1+I*R*C*w)",
+     "sol": "$\\underline Z=\\dfrac{R\\cdot\\frac1{jC\\omega}}{R+\\frac1{jC\\omega}}=\\dfrac{R}{1+jRC\\omega}$ (on multiplie par $jC\\omega$).",
+     "src": "Examen 2 d'électronique, janvier 2026, Q5",
+     "duree": 3,
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$ · $\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s34",
+     "enonce": "$L$ en parallèle avec $C$. $\\underline Z''$ en fonction de $L$, $C$, $\\omega$ ?",
+     "ans": "I*L*w/(1-L*C*w**2)",
+     "sol": "$\\underline Z''=\\dfrac{jL\\omega\\cdot\\frac1{jC\\omega}}{jL\\omega+\\frac1{jC\\omega}}=\\dfrac{jL\\omega}{1-LC\\omega^2}$.",
+     "src": "Examen 2 d'électronique, janvier 2026, Q6",
+     "duree": 3,
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$ · $\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s35",
+     "enonce": "$L=10$ mH en parallèle avec $C=100\\,\\mu$F. Pulsation (en rad/s) pour laquelle $|\\underline Z''|\\to\\infty$ ?",
+     "ans": "1000",
+     "sol": "Le dénominateur $1-LC\\omega^2$ s'annule pour $\\omega=\\dfrac1{\\sqrt{LC}}=1000$ rad/s : l'ensemble se comporte comme un circuit ouvert.",
+     "duree": 3,
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$ · $\\omega_0=1/\\sqrt{LC}$",
+     "type": "value"
+    },
+    {
+     "id": "s36",
+     "enonce": "$R$ en parallèle avec $L$ (TD 4, ex. 3). $\\underline Z$ en fonction de $R$, $L$, $\\omega$ ?",
+     "ans": "I*R*L*w/(R+I*L*w)",
+     "sol": "$\\underline Z=\\dfrac{R\\cdot jL\\omega}{R+jL\\omega}$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 3",
+     "duree": 2,
+     "formules": "série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s37",
+     "enonce": "Quel est le déphasage de la tension aux bornes de $\\underline Z''=\\dfrac{jL\\omega}{1-LC\\omega^2}$ par rapport au courant qui le traverse ? Justifier.",
+     "sol": "$\\underline Z''$ est imaginaire pur, le signe de sa partie imaginaire est celui de $1-LC\\omega^2$. Déphasage $+\\tfrac\\pi2$ si $1-LC\\omega^2 > 0$ et $-\\tfrac\\pi2$ si $1-LC\\omega^2 < 0$.",
+     "src": "Examen 2 d'électronique, janvier 2026, question bonus",
+     "duree": 4,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Loi d'Ohm généralisée",
+   "notions": [
+    "ohm_c",
+    "associations"
+   ],
+   "exos": [
+    {
+     "id": "s41",
+     "enonce": "$E=20$ V efficaces aux bornes de $R=10$ Ω en série avec $L\\omega=10$ Ω. Courant efficace (en A) ?",
+     "ans": "sqrt(2)",
+     "sol": "$|\\underline Z|=10\\sqrt2$ Ω, $I=\\dfrac{20}{10\\sqrt2}=\\sqrt2$ A.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E=30$ V efficaces aux bornes de $R=30$ Ω en série avec $L\\omega=40$ Ω. Courant efficace (en A) ?",
+       "ans": "Rational(3,5)",
+       "sol": "$|\\underline Z|=50$ Ω, $I=0{,}6$ A."
+      }
+     ],
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s42",
+     "enonce": "Même circuit : phase de $\\underline I$ par rapport à $\\underline E$ (en degrés) ?",
+     "ans": "-45",
+     "sol": "$\\arg\\underline I=\\arg\\underline E-\\arg\\underline Z=0-45°=-45°$ : le courant est en retard.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
+     "duree": 2,
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$",
+     "type": "value"
+    },
+    {
+     "id": "s43",
+     "enonce": "Même circuit : tension efficace aux bornes de la bobine (en V) ?",
+     "ans": "10*sqrt(2)",
+     "sol": "$U_L=L\\omega\\,I=10\\sqrt2\\approx14{,}1$ V.",
+     "duree": 2,
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$",
+     "type": "value"
+    },
+    {
+     "id": "s44",
+     "enonce": "$230$ V efficaces aux bornes de $\\underline Z=30+40j$ Ω. Courant efficace (en A) ?",
+     "ans": "Rational(23,5)",
+     "sol": "$|\\underline Z|=50$ Ω, $I=230/50=4{,}6$ A.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$100$ V efficaces aux bornes de $\\underline Z=60-80j$ Ω. Courant efficace (en A) ?",
+       "ans": "1",
+       "sol": "$|\\underline Z|=100$ Ω, $I=1$ A."
+      }
+     ],
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$",
+     "type": "value"
+    },
+    {
+     "id": "s45",
+     "enonce": "$R$ et $L$ en série : $3$ V efficaces sur $R$, $4$ V efficaces sur $L$. Tension efficace totale (en V) ?",
+     "ans": "5",
+     "sol": "Les tensions sont déphasées de $90°$ : $\\underline U=3+4j$, $U=5$ V (et non $7$ V).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$R$ et $C$ en série : $6$ V efficaces sur $R$, $8$ V efficaces sur $C$. Tension efficace totale (en V) ?",
+       "ans": "10",
+       "sol": "$|6-8j|=10$ V."
+      }
+     ],
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$ · $|a+jb|=\\sqrt{a^2+b^2}$",
+     "type": "value"
+    },
+    {
+     "id": "s46",
+     "enonce": "TD 4, ex. 1 : $R$ et $L$ en série sous $e(t)=E\\sqrt2\\sin(\\omega t)$. $\\underline I/\\underline E$ en fonction de $R$, $L$, $\\omega$ ?",
+     "ans": "(R-I*L*w)/(R**2+L**2*w**2)",
+     "sol": "$\\underline I=\\dfrac{\\underline E}{R+jL\\omega}$ ; on peut aussi écrire $\\dfrac{R-jL\\omega}{R^2+L^2\\omega^2}\\underline E$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
+     "duree": 3,
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s47",
+     "enonce": "Une fois $\\underline I$ calculé, comment écrire le courant réel $i(t)$ ?",
+     "sol": "$i(t)=I\\sqrt2\\sin(\\omega t+\\varphi)$ avec $I=|\\underline I|$ (valeur efficace) et $\\varphi=\\arg\\underline I$ (phase à l'origine), en gardant la fonction de référence choisie (ici le sinus).",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 1",
+     "duree": 3,
+     "formules": "$\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$ · $\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Diviseur de tension en complexe",
+   "notions": [
+    "diviseur_c",
+    "associations"
+   ],
+   "exos": [
+    {
+     "id": "s51",
+     "enonce": "TD 4, ex. 2 : $R$ en série avec $C$ sous $\\underline E$, sortie $\\underline U$ sur $C$. $\\underline U/\\underline E$ ?",
+     "ans": "1/(1+I*R*C*w)",
+     "sol": "Diviseur de tension : $\\underline U=\\dfrac{\\frac1{jC\\omega}}{R+\\frac1{jC\\omega}}\\underline E=\\dfrac{1}{1+jRC\\omega}\\underline E$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 2",
+     "duree": 3,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · $\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$",
+     "type": "value"
+    },
+    {
+     "id": "s52",
+     "enonce": "Même montage avec $RC\\omega=1$ et $E=10$ V. Tension efficace $U$ (en V) ?",
+     "ans": "5*sqrt(2)",
+     "sol": "$U=\\dfrac{10}{|1+j|}=\\dfrac{10}{\\sqrt2}=5\\sqrt2$ V.",
+     "duree": 2,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s53",
+     "enonce": "Même montage avec $RC\\omega=1$. Déphasage de $u$ par rapport à $e$ (en degrés) ?",
+     "ans": "-45",
+     "sol": "$\\arg\\dfrac1{1+j}=-45°$.",
+     "duree": 2,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s54",
+     "enonce": "$R$ en série avec $L$, sortie sur $L$, $L\\omega=R$. Déphasage de la sortie par rapport à l'entrée (en degrés) ?",
+     "ans": "45",
+     "sol": "$\\dfrac{jL\\omega}{R+jL\\omega}=\\dfrac{j}{1+j}$ : $90°-45°=45°$.",
+     "duree": 2,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s55",
+     "enonce": "TD 4, ex. 3 : $C$ en série avec $R\\parallel L$ sous $\\underline E$ ; $\\underline U$ aux bornes de $R\\parallel L$. $\\underline U/\\underline E$ ?",
+     "ans": "-R*L*C*w**2/(R-R*L*C*w**2+I*L*w)",
+     "sol": "$\\underline U=\\dfrac{\\frac{jRL\\omega}{R+jL\\omega}}{\\frac{jRL\\omega}{R+jL\\omega}+\\frac1{jC\\omega}}\\underline E=\\dfrac{-RLC\\omega^2}{R-RLC\\omega^2+jL\\omega}\\underline E$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 3",
+     "duree": 5,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s56",
+     "enonce": "Même circuit : courant $\\underline I_L$ dans la bobine, $\\underline I_L/\\underline E$ ?",
+     "ans": "I*R*C*w/(R-R*L*C*w**2+I*L*w)",
+     "sol": "$\\underline I_L=\\dfrac{\\underline U}{jL\\omega}=\\dfrac{jRC\\omega}{R-RLC\\omega^2+jL\\omega}\\underline E$ ; puis $\\underline I_R=\\underline U/R$ et $\\underline I=\\underline I_L+\\underline I_R$.",
+     "src": "TD 4 d'électronique (régime sinusoïdal forcé), ex. 3",
+     "duree": 4,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · $\\underline U=\\underline Z\\,\\underline I$ · $U=|\\underline Z|I$ · $\\arg\\underline I=\\arg\\underline U-\\arg\\underline Z$",
+     "type": "value"
+    },
+    {
+     "id": "s57",
+     "enonce": "À quelle condition peut-on appliquer le pont diviseur de tension à deux impédances ?",
+     "sol": "Les deux impédances doivent être parcourues par le même courant : en série, sans courant prélevé entre elles (sortie à vide). Sinon on réduit d'abord le circuit (associations, Thévenin).",
+     "duree": 3,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Thévenin et Norton en complexe",
+   "notions": [
+    "thevenin_c",
+    "diviseur_c"
+   ],
+   "exos": [
+    {
+     "id": "s61",
+     "enonce": "$v_e$ en série avec $2R$, puis $C$ et $R$ en parallèle en sortie. Thévenin vu par $R$ : $\\underline E_{th}/\\underline V_E$ ?",
+     "ans": "1/(1+2*I*R*C*w)",
+     "sol": "On retire $R$ : diviseur $2R$, $C$ : $\\underline E_{th}=\\dfrac{1}{1+2jRC\\omega}\\underline V_E$.",
+     "src": "Examen B2 d'électronique, janvier 2025, Q7",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s62",
+     "enonce": "Même montage : $\\underline Z_{th}$ ?",
+     "ans": "2*R/(1+2*I*R*C*w)",
+     "sol": "Source éteinte (fil) : $2R\\parallel C=\\dfrac{2R}{1+2jRC\\omega}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, Q8",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s63",
+     "enonce": "Source $\\underline E=10$ V en série avec $\\underline Z=5j$ Ω. Courant de Norton efficace (en A) ?",
+     "ans": "2",
+     "sol": "$\\underline I_N=\\underline E/\\underline Z=-2j$ A, $|\\underline I_N|=2$ A.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Source $\\underline E=12$ V en série avec $\\underline Z=-4j$ Ω. Courant de Norton efficace (en A) ?",
+       "ans": "3",
+       "sol": "$|\\underline I_N|=12/4=3$ A."
+      }
+     ],
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "s64",
+     "enonce": "$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ et $2R$ en série en sortie. Thévenin vu par $2R$ : $\\underline Z_{th}$ ?",
+     "ans": "3*R+I*L*w",
+     "sol": "$6R\\parallel6R=3R$ en série avec $L$ : $\\underline Z_{th}=3R+jL\\omega$ (et $\\underline E_{th}=\\tfrac12\\underline V_E$).",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s65",
+     "enonce": "$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. $\\underline E_{th}/\\underline V_E$ vu par $L$ ?",
+     "ans": "Rational(2,3)",
+     "sol": "Norton : $\\dfrac{\\underline V_E}{2R}$ avec $2R\\parallel4R=\\tfrac{4R}3$, d'où $\\underline E_{th}=\\tfrac{4R}{3}\\cdot\\dfrac{\\underline V_E}{2R}=\\tfrac23\\underline V_E$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s66",
+     "enonce": "Même montage : $\\underline Z_{th}$ vu par $L$ ?",
+     "ans": "4*R/3+1/(I*C*w)",
+     "sol": "$\\underline Z_{th}=\\dfrac{4R}3+\\dfrac1{jC\\omega}$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "s67",
+     "enonce": "Comment obtient-on $\\underline E_{th}$ et $\\underline Z_{th}$ d'un réseau linéaire en régime sinusoïdal ?",
+     "sol": "$\\underline E_{th}$ : tension à vide entre les deux bornes (charge retirée). $\\underline Z_{th}$ : impédance vue des bornes, sources éteintes (source de tension $\\to$ fil, source de courant $\\to$ circuit ouvert). On peut aussi enchaîner les transformations Thévenin $\\leftrightarrow$ Norton.",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Très basses et très hautes fréquences",
+   "notions": [
+    "limites",
+    "diviseur_c"
+   ],
+   "exos": [
+    {
+     "id": "s71",
+     "enonce": "$v_e$, $6R$ en série, $6R$ en parallèle, puis $L$ en série et $2R$ en sortie. Limite de $A(\\omega)$ en TBF ?",
+     "ans": "Rational(1,5)",
+     "sol": "$L\\to$ fil : $6R\\parallel2R=1{,}5R$, $A=\\dfrac{1{,}5R}{6R+1{,}5R}=\\tfrac15$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 3,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s72",
+     "enonce": "Même filtre : limite de $A(\\omega)$ en THF ?",
+     "ans": "0",
+     "sol": "$L\\to$ circuit ouvert : aucun courant dans $2R$, $v_s\\to0$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 2,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "value"
+    },
+    {
+     "id": "s73",
+     "enonce": "Même filtre : nature ? Et si l'on remplace la bobine par un condensateur ?",
+     "sol": "$A$ décroît de $\\tfrac15$ à $0$ : passe-bas. Avec un condensateur, les comportements TBF et THF sont inversés : passe-haut.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 3,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "open"
+    },
+    {
+     "id": "s74",
+     "enonce": "$v_e$, $C$ en série, puis $4R$ et $L$ en parallèle en sortie. Limite de $A(\\omega)$ en THF ?",
+     "ans": "1",
+     "sol": "$C\\to$ fil, $L\\to$ circuit ouvert : $v_s=v_e$, $A\\to1$ (en TBF $C$ ouvert : $A\\to0$). Passe-haut.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 2,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "value"
+    },
+    {
+     "id": "s75",
+     "enonce": "Même filtre : nature si l'on remplace le condensateur par une bobine ? Justifier.",
+     "sol": "TBF : la bobine de sortie est un fil, $v_s=0$. THF : la bobine série est ouverte, aucun courant dans $4R$, $v_s=0$. Amplification nulle aux deux bouts : passe-bande.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 4,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "open"
+    },
+    {
+     "id": "s76",
+     "enonce": "$v_e$, $2R$ en série, $4R$ en parallèle, puis $C$ en série et $L$ en sortie. Limite de $A(\\omega)$ en THF ?",
+     "ans": "Rational(2,3)",
+     "sol": "$C\\to$ fil, $L\\to$ ouvert : $v_s$ est la tension sur $4R$, $A=\\dfrac{4R}{2R+4R}=\\tfrac23$ ; en TBF $C$ ouvert donne $A\\to0$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 3,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s77",
+     "enonce": "Filtre RC, sortie sur $C$. Limite de $A(\\omega)$ en TBF ?",
+     "ans": "1",
+     "sol": "$C\\to$ circuit ouvert, pas de courant dans $R$ : $v_s=v_e$. Passe-bas.",
+     "duree": 1,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Fonction de transfert et gain",
+   "notions": [
+    "transfert",
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "s81",
+     "enonce": "Amplification $A=10$. Gain (en dB) ?",
+     "ans": "20",
+     "sol": "$G=20\\log_{10}10=20$ dB.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Amplification $100$. Gain (en dB) ?",
+       "ans": "40",
+       "sol": "$20\\log_{10}100=40$ dB."
+      }
+     ],
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s82",
+     "enonce": "Gain $-20$ dB. Amplification ?",
+     "ans": "Rational(1,10)",
+     "sol": "$A=10^{G/20}=0{,}1$.",
+     "duree": 2,
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s83",
+     "enonce": "Amplification $\\tfrac1{\\sqrt2}$. Gain exact (en dB) ?",
+     "ans": "-10*log(2)/log(10)",
+     "sol": "$G=20\\log_{10}2^{-1/2}=-10\\log_{10}2\\approx-3$ dB.",
+     "duree": 2,
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s84",
+     "enonce": "$V_E=10$ V efficaces, $A=0{,}2$. $V_S$ efficace (en V) ?",
+     "ans": "2",
+     "sol": "$V_S=A\\,V_E=2$ V.",
+     "src": "Examen B2 d'électronique, janvier 2025, Q5",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "$V_E=5$ V efficaces, $A=3$. $V_S$ efficace (en V) ?",
+       "ans": "15",
+       "sol": "$V_S=15$ V."
+      }
+     ],
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s85",
+     "enonce": "$\\underline T=\\dfrac1{1+j\\omega/\\omega_c}$ à $\\omega=\\omega_c$. Déphasage de $v_s$ par rapport à $v_e$ (en degrés) ?",
+     "ans": "-45",
+     "sol": "$\\arg\\dfrac1{1+j}=-45°$.",
+     "duree": 2,
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s86",
+     "enonce": "$\\underline T=\\dfrac{R}{5R+jL\\omega}$ à $\\omega=5R/L$. Amplification ?",
+     "ans": "sqrt(2)/10",
+     "sol": "$\\underline T=\\dfrac{1}{5+5j}$, $A=\\dfrac1{5\\sqrt2}=\\dfrac{\\sqrt2}{10}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 3,
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "value"
+    },
+    {
+     "id": "s87",
+     "enonce": "Vrai ou faux : $\\arg\\underline T(\\omega)$ est le déphasage de la tension de sortie par rapport à la tension d'entrée. Que représente $V_S/V_E$ ?",
+     "sol": "Vrai : $\\arg\\underline T=\\arg\\underline V_S-\\arg\\underline V_E$. Le quotient des valeurs efficaces $V_S/V_E=|\\underline T|$ est l'amplification $A(\\omega)$ (le gain est $20\\log_{10}A$).",
+     "src": "Examen B2 d'électronique, janvier 2025, Q5-Q6",
+     "duree": 3,
+     "formules": "$\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Filtres du premier ordre",
+   "notions": [
+    "ordre1",
+    "transfert"
+   ],
+   "exos": [
+    {
+     "id": "s91",
+     "enonce": "Filtre RC passe-bas $\\dfrac1{1+jRC\\omega}$, $R=1$ kΩ, $C=1\\,\\mu$F. $\\omega_c$ (en rad/s) ?",
+     "ans": "1000",
+     "sol": "$\\omega_c=\\dfrac1{RC}=\\dfrac1{10^{-3}}=1000$ rad/s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Filtre RC passe-bas, $R=10$ kΩ, $C=10$ nF. $\\omega_c$ (en rad/s) ?",
+       "ans": "10000",
+       "sol": "$RC=10^{-4}$ s, $\\omega_c=10^4$ rad/s."
+      }
+     ],
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "s92",
+     "enonce": "$\\omega_c=1000$ rad/s. Fréquence de coupure en Hz (valeur exacte) ?",
+     "ans": "500/pi",
+     "sol": "$f_c=\\dfrac{\\omega_c}{2\\pi}=\\dfrac{500}\\pi\\approx159$ Hz.",
+     "duree": 2,
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "s93",
+     "enonce": "Examen 2025, ex. 2 : diviseur de $\\underline E_{th}=\\tfrac12\\underline V_E$, $\\underline Z_{th}=3R+jL\\omega$ et $2R$. $\\underline T=\\underline V_S/\\underline V_E$ ?",
+     "ans": "R/(5*R+I*L*w)",
+     "sol": "$\\underline V_S=\\dfrac{2R}{3R+jL\\omega+2R}\\cdot\\dfrac{\\underline V_E}2$, donc $\\underline T=\\dfrac{R}{5R+jL\\omega}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 4,
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "s94",
+     "enonce": "Même filtre : $A_{max}$ ?",
+     "ans": "Rational(1,5)",
+     "sol": "$\\underline T=\\dfrac15\\cdot\\dfrac{1}{1+j\\frac{L}{5R}\\omega}$ : $A_{max}=A_{TBF}=\\tfrac15$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 2,
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "s95",
+     "enonce": "Même filtre, $R=100$ Ω, $L=0{,}5$ H. $\\omega_c$ (en rad/s) ?",
+     "ans": "1000",
+     "sol": "$\\omega_c=\\dfrac{5R}{L}=1000$ rad/s.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Même filtre, $R=20$ Ω, $L=0{,}1$ H. $\\omega_c$ (en rad/s) ?",
+       "ans": "1000",
+       "sol": "$5R/L=1000$ rad/s."
+      }
+     ],
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "s96",
+     "enonce": "Passe-haut du premier ordre, $A_{max}=1$. Amplification à $\\omega=\\omega_c$ ?",
+     "ans": "1/sqrt(2)",
+     "sol": "$\\left|\\dfrac{j}{1+j}\\right|=\\dfrac1{\\sqrt2}$.",
+     "duree": 2,
+     "formules": "passe-haut : $A_{max}\\dfrac{j\\omega/\\omega_c}{1+j\\omega/\\omega_c}$",
+     "type": "value"
+    },
+    {
+     "id": "s97",
+     "enonce": "Comment met-on une fonction de transfert du premier ordre sous forme normalisée ? Que vaut le gain à $\\omega_c$ ?",
+     "sol": "On factorise le terme réel du dénominateur pour obtenir $1+j\\frac\\omega{\\omega_c}$, puis on identifie $A_{max}$ et $\\omega_c$. À $\\omega_c$ : $A=A_{max}/\\sqrt2$, soit $G=G_{max}-3$ dB.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 4,
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Filtres du second ordre",
+   "notions": [
+    "ordre2",
+    "ordre1"
+   ],
+   "exos": [
+    {
+     "id": "sa1",
+     "enonce": "Examen 2025, ex. 3 : $C$ en série, $4R\\parallel L$ en sortie. $\\underline T$ ?",
+     "ans": "-4*R*L*C*w**2/(4*R+I*L*w-4*R*L*C*w**2)",
+     "sol": "$4R\\parallel L=\\dfrac{j4RL\\omega}{4R+jL\\omega}$, diviseur : $\\underline T=\\dfrac{-4RLC\\omega^2}{4R+jL\\omega-4RLC\\omega^2}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 5,
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "sa2",
+     "enonce": "$L=10$ mH, $C=1\\,\\mu$F. Pulsation propre $\\omega_0=1/\\sqrt{LC}$ (en rad/s) ?",
+     "ans": "10000",
+     "sol": "$LC=10^{-8}$, $\\omega_0=10^4$ rad/s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$L=1$ mH, $C=10\\,\\mu$F. $\\omega_0$ (en rad/s) ?",
+       "ans": "10000",
+       "sol": "$LC=10^{-8}$, $\\omega_0=10^4$ rad/s."
+      }
+     ],
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "value"
+    },
+    {
+     "id": "sa3",
+     "enonce": "Même filtre que sa1 : $\\sigma$ en fonction de $R$, $L$, $C$ ?",
+     "ans": "L/(8*R*sqrt(L*C))",
+     "sol": "Forme normalisée : $\\dfrac{-LC\\omega^2}{1+j\\frac{L}{4R}\\omega-LC\\omega^2}$ ; $2\\sigma\\dfrac{\\omega}{\\omega_0}=\\dfrac{L}{4R}\\omega$ donc $\\sigma=\\dfrac{L}{8R}\\omega_0=\\dfrac{L}{8R\\sqrt{LC}}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 4,
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "value"
+    },
+    {
+     "id": "sa4",
+     "enonce": "$L=10$ mH, $C=1\\,\\mu$F, $R=25$ Ω dans ce filtre. $\\sigma$ ?",
+     "ans": "Rational(1,2)",
+     "sol": "$\\sigma=\\dfrac{L\\omega_0}{8R}=\\dfrac{0{,}01\\times10^4}{200}=0{,}5$.",
+     "duree": 3,
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "value"
+    },
+    {
+     "id": "sa5",
+     "enonce": "Passe-bande du second ordre, $A_0=1$. Amplification à $\\omega=\\omega_0$ ?",
+     "ans": "1",
+     "sol": "À $\\omega_0$ : $\\underline T=A_0\\dfrac{2j\\sigma}{2j\\sigma}=A_0=1$, quel que soit $\\sigma$.",
+     "duree": 2,
+     "formules": "passe-bande : $A_0\\dfrac{2j\\sigma\\omega/\\omega_0}{1+2j\\sigma\\omega/\\omega_0-(\\omega/\\omega_0)^2}$",
+     "type": "value"
+    },
+    {
+     "id": "sa6",
+     "enonce": "Examen 2026, ex. 3 : $\\underline E_{th}=\\tfrac23\\underline V_E$, $\\underline Z_{th}=\\tfrac{4R}3+\\tfrac1{jC\\omega}$, sortie sur $L$. $\\underline V_S/\\underline V_E$ ?",
+     "ans": "-2*L*C*w**2/(4*I*R*C*w+3-3*L*C*w**2)",
+     "sol": "Diviseur : $\\dfrac{jL\\omega}{\\frac{4R}3+\\frac1{jC\\omega}+jL\\omega}\\cdot\\dfrac23$ ; on multiplie par $3jC\\omega$ : $\\dfrac{-2LC\\omega^2}{4jRC\\omega+3-3LC\\omega^2}$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 5,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · $\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "sa7",
+     "enonce": "Nature du filtre de l'examen 2026 (ex. 3) à partir de $\\dfrac{-2LC\\omega^2}{3+4jRC\\omega-3LC\\omega^2}$ ?",
+     "sol": "Divisé par $3$ : $\\dfrac23\\cdot\\dfrac{-LC\\omega^2}{1+j\\frac{4RC}{3}\\omega-LC\\omega^2}$, numérateur en $-(\\omega/\\omega_0)^2$ : passe-haut du second ordre, $A_0=A_{THF}=\\tfrac23$, $\\omega_0=\\dfrac1{\\sqrt{LC}}$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 5,
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Niveau examen : sujet B2 janvier 2025",
+   "notions": [
+    "impedances",
+    "thevenin_c",
+    "limites",
+    "ordre1",
+    "ordre2"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "xa1",
+     "enonce": "Exercice 1 (QCM) : unité de $U$ dans $u(t)=U\\sqrt2\\sin(\\omega t+\\varphi)$ ; argument de $\\underline U$ ; argument de $\\underline Z$ ; unité de $C\\omega$ ; nom de $V_S/V_E$ ; $\\arg\\underline T$ = déphasage de la sortie sur l'entrée ?",
+     "sol": "$U$ en volts ; $\\arg\\underline U=\\varphi$ ; $\\arg\\underline Z$ : déphasage de $u$ par rapport à $i$ ; $C\\omega$ en siemens ; $V_S/V_E$ : l'amplification $A(\\omega)$ ; vrai.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 1 (4 points)",
+     "duree": 6,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$ · $\\underline T=\\underline V_S/\\underline V_E$ · $A=|\\underline T|$ · $G=20\\log_{10}A$ · $\\arg\\underline T$ : déphasage sortie/entrée",
+     "type": "open"
+    },
+    {
+     "id": "xa2",
+     "enonce": "Exercice 1, Q7-Q8 : $v_e$, $2R$ en série, $C\\parallel R$ en sortie. $\\underline Z_{th}$ vu par $R$ ?",
+     "ans": "2*R/(1+2*I*R*C*w)",
+     "sol": "$\\underline E_{th}=\\dfrac{\\underline V_E}{1+2jRC\\omega}$, $\\underline Z_{th}=\\dfrac{2R}{1+2jRC\\omega}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 1",
+     "duree": 4,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "xa3",
+     "enonce": "Exercice 2 (qualitatif) : $v_e$, $6R$ en série, $6R$ en parallèle, $L$ en série, $2R$ en sortie. Limites TBF et THF de $A$, nature, et nature avec un condensateur à la place de $L$.",
+     "sol": "TBF : $L$ fil, $A\\to\\tfrac15$. THF : $L$ ouvert, $A\\to0$. Passe-bas. Avec un condensateur : TBF et THF inversés, passe-haut.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2 (9 points)",
+     "duree": 8,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "open"
+    },
+    {
+     "id": "xa4",
+     "enonce": "Exercice 2 (quantitatif) : $\\underline T(\\omega)$ ?",
+     "ans": "R/(5*R+I*L*w)",
+     "sol": "$\\underline E_{th}=\\tfrac12\\underline V_E$, $\\underline Z_{th}=3R+jL\\omega$, diviseur sur $2R$ : $\\underline T=\\dfrac{R}{5R+jL\\omega}=\\dfrac15\\cdot\\dfrac{1}{1+j\\frac{L}{5R}\\omega}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 8,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · $\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "xa5",
+     "enonce": "Exercice 2 : $R=200$ Ω, $L=1$ H. $\\omega_c$ (en rad/s) ?",
+     "ans": "1000",
+     "sol": "$\\omega_c=\\dfrac{5R}{L}=1000$ rad/s.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 2",
+     "duree": 3,
+     "formules": "$\\underline T=A_{max}\\dfrac1{1+j\\omega/\\omega_c}$ · $A(\\omega_c)=A_{max}/\\sqrt2$ · $f_c=\\omega_c/(2\\pi)$",
+     "type": "value"
+    },
+    {
+     "id": "xa6",
+     "enonce": "Exercice 3 (qualitatif) : $v_e$, $C$ en série, $4R\\parallel L$ en sortie. Limites, nature, et nature avec une bobine à la place de $C$.",
+     "sol": "TBF : $C$ ouvert, $A\\to0$. THF : $C$ fil et $L$ ouvert, $A\\to1$. Passe-haut. Avec une bobine à la place de $C$ : $A\\to0$ aux deux bouts, passe-bande.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3 (7 points)",
+     "duree": 8,
+     "formules": "TBF : $C\\to$ ouvert, $L\\to$ fil · THF : $C\\to$ fil, $L\\to$ ouvert",
+     "type": "open"
+    },
+    {
+     "id": "xa7",
+     "enonce": "Exercice 3 (quantitatif) : $\\underline T(\\omega)$ ?",
+     "ans": "-4*R*L*C*w**2/(4*R+I*L*w-4*R*L*C*w**2)",
+     "sol": "$\\underline T=\\dfrac{-4RLC\\omega^2}{4R+jL\\omega-4RLC\\omega^2}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 8,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "xa8",
+     "enonce": "Exercice 3 : $\\omega_0$ en fonction de $L$, $C$ ?",
+     "ans": "(L*C)**Rational(-1,2)",
+     "sol": "$\\left(\\dfrac\\omega{\\omega_0}\\right)^2=LC\\omega^2$ donc $\\omega_0=\\dfrac1{\\sqrt{LC}}$, puis $\\sigma=\\dfrac{L}{8R\\sqrt{LC}}$.",
+     "src": "Examen B2 d'électronique, janvier 2025, ex. 3",
+     "duree": 5,
+     "formules": "$1+2j\\sigma\\dfrac\\omega{\\omega_0}-\\left(\\dfrac\\omega{\\omega_0}\\right)^2$ · $\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Niveau examen : sujet janvier 2026",
+   "notions": [
+    "associations",
+    "thevenin_c",
+    "amplitude",
+    "ordre2"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "xb1",
+     "enonce": "Exercice 1 : vrai ou faux, « le courant qui entre dans une résistance est plus intense que celui qui en sort » ; que représente $\\arg\\underline Z$ ; unité de $L\\omega$ ; $\\underline Z$ de $R\\parallel C$ ; $\\underline Z''$ de $L\\parallel C$.",
+     "sol": "Faux (même courant). $\\arg\\underline Z$ : déphasage de la tension sur le courant. $L\\omega$ en ohms. $\\underline Z=\\dfrac{R}{1+jRC\\omega}$. $\\underline Z''=\\dfrac{jL\\omega}{1-LC\\omega^2}$, déphasage $\\pm\\tfrac\\pi2$ selon le signe de $1-LC\\omega^2$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 1 (4,5 points)",
+     "duree": 6,
+     "formules": "$\\underline Z_R=R$ · $\\underline Z_L=jL\\omega$ · $\\underline Z_C=\\dfrac1{jC\\omega}$ · $|\\underline Z|=U/I$ · $\\arg\\underline Z=\\arg\\underline U-\\arg\\underline I$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "open"
+    },
+    {
+     "id": "xb2",
+     "enonce": "Exercice 1, Q2 : $E$, $R$, $R$ en série, puis $R$ entre $A$ et $B$. $E=9$ V : $E_{th}$ (en V) ?",
+     "ans": "3",
+     "sol": "Diviseur : $E_{th}=\\dfrac{R}{3R}E=\\dfrac E3=3$ V et $R_{th}=2R\\parallel R=\\dfrac{2R}3$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 1",
+     "duree": 3,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · $\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$",
+     "type": "value"
+    },
+    {
+     "id": "xb3",
+     "enonce": "Exercice 2 (régime continu, figure 1 du sujet) : nombre de nœuds, de branches, de mailles ; méthode pour exprimer $U$ aux bornes de $4R$.",
+     "sol": "$3$ nœuds, $6$ branches, $10$ mailles. On transforme $I_0$ et $R$ en source $RI_0$ en série avec $R$, on associe avec $E$ et $R$ ($RI_0-E$, $2R$), on repasse en Norton $\\dfrac{RI_0-E}{2R}$, on associe les sources de courant et $2R\\parallel6R\\parallel4R=\\dfrac{12R}{11}$, d'où $U=-\\dfrac{6}{11}(RI_0+E)$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 2 (7,5 points)",
+     "duree": 15,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "open"
+    },
+    {
+     "id": "xb4",
+     "enonce": "Exercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=1$ kΩ, $I_0=2$ mA, $E=9$ V. $U$ (en V) ?",
+     "ans": "-6",
+     "sol": "$RI_0=2$ V, $U=-\\tfrac6{11}\\times11=-6$ V.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Exercice 2 : $U=-\\tfrac{6}{11}(RI_0+E)$ avec $R=2$ kΩ, $I_0=1$ mA, $E=20$ V. $U$ (en V) ?",
+       "ans": "-12",
+       "sol": "$RI_0+E=22$ V, $U=-12$ V."
+      }
+     ],
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "xb5",
+     "enonce": "Exercice 3, Q1-Q4 : $V_E$ est-il une grandeur sans unité ? Que représente $\\omega$ ? Module et argument de $\\underline V_E$ pour $v_e(t)=V_E\\sqrt2\\sin(\\omega t)$ ?",
+     "sol": "Faux : $V_E$ est une valeur efficace en volts. $\\omega$ est la pulsation. $|\\underline V_E|=V_E$ et $\\arg\\underline V_E=0$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3 (8 points)",
+     "duree": 4,
+     "formules": "$\\underline S=S\\,e^{j\\varphi}$ · $|\\underline S|=S$ (efficace) · $\\arg\\underline S=\\varphi$ · $\\cos(\\omega t)=\\sin(\\omega t+\\tfrac\\pi2)$ · $U_m=U\\sqrt2$",
+     "type": "open"
+    },
+    {
+     "id": "xb6",
+     "enonce": "Exercice 3, Q5 : $\\underline Z_{th}$ vu par $L$ ($v_e$, $2R$ en série, $4R$ en parallèle, $C$ en série) ?",
+     "ans": "4*R/3+1/(I*C*w)",
+     "sol": "$\\underline E_{th}=\\tfrac23\\underline V_E$, $\\underline Z_{th}=\\dfrac{4R}3+\\dfrac1{jC\\omega}$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 6,
+     "formules": "$\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$ · série : $\\underline Z_1+\\underline Z_2$ · parallèle : $\\dfrac{\\underline Z_1\\underline Z_2}{\\underline Z_1+\\underline Z_2}$",
+     "type": "value"
+    },
+    {
+     "id": "xb7",
+     "enonce": "Exercice 3, Q5 : $\\underline V_S/\\underline V_E$ ?",
+     "ans": "-2*L*C*w**2/(4*I*R*C*w+3-3*L*C*w**2)",
+     "sol": "$\\underline V_S=\\dfrac{jL\\omega}{\\underline Z_{th}+jL\\omega}\\underline E_{th}=\\dfrac{-2LC\\omega^2}{4jRC\\omega+3-3LC\\omega^2}\\underline V_E$.",
+     "src": "Examen 2 d'électronique, janvier 2026, ex. 3",
+     "duree": 8,
+     "formules": "$\\underline U_2=\\dfrac{\\underline Z_2}{\\underline Z_1+\\underline Z_2}\\underline E$ · $\\underline E_{th}$ : tension à vide · $\\underline Z_{th}$ : sources éteintes · $\\underline I_N=\\underline E_{th}/\\underline Z_{th}$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

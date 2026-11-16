@@ -12,7 +12,7 @@ import sympy as sp
 
 HERE = Path(__file__).parent
 PATHS = ["obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
-         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits"]
+         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus"]
 x, t = sp.symbols("x t", real=True)
 i, k = sp.symbols("i k", integer=True)
 n = sp.symbols("n", integer=True, positive=True)

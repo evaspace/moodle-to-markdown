@@ -388,10 +388,10 @@
         "05_Travaux Dirigés"
        ],
        "parcours": [
-        "elec-s1-circuits"
+        "elec-s1-circuits",
+        "elec-s1-sinus"
        ],
        "a_faire": [
-        "B2 janvier : régime sinusoïdal (filtres, puissance), exam janvier 2025 et 2026",
         "S2 : diodes, filtres, régimes transitoires"
        ],
        "annales": []
