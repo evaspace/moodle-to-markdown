@@ -111,17 +111,30 @@
     }
     h.classList.remove('bump'); void h.offsetWidth; h.classList.add('bump');
   }
-  function slam(n) {
+  // Game-style swap: the old count is knocked out of the screen, the new one crashes in.
+  // Every success with a combo; milestones add a title, a bigger number and a shake. A miss drops the old one.
+  let slamTimer = null;
+  function slam(n, old, kind) {
     const s = $('combo-slam');
     s.replaceChildren();
-    const big = document.createElement('strong'); big.textContent = '×' + n;
-    const sub = document.createElement('span'); sub.textContent = title(n);
-    s.append(big, sub);
-    s.className = 'lv-slam go' + (n >= 20 ? ' hot' : '');
-    const w = $('exo'); w.classList.remove('lv-shake'); void w.offsetWidth; w.classList.add('lv-shake');
-    setTimeout(() => { s.className = 'lv-slam'; }, 1400);
+    const stage = document.createElement('div'); stage.className = 'lv-slam-stage';
+    if (old >= 1 && old !== n) {
+      const o = document.createElement('strong'); o.className = 'old'; o.textContent = '×' + old;
+      stage.append(o);
+    }
+    const b = document.createElement('strong'); b.className = 'new'; b.textContent = '×' + n;
+    stage.append(b);
+    s.append(stage);
+    if (kind === 'milestone') {
+      const sub = document.createElement('span'); sub.textContent = title(n);
+      s.append(sub);
+    }
+    s.className = `lv-slam go ${kind}` + (n >= 10 ? ' hot' : '');
+    if (kind === 'milestone') { const w = $('exo'); w.classList.remove('lv-shake'); void w.offsetWidth; w.classList.add('lv-shake'); }
+    clearTimeout(slamTimer);
+    slamTimer = setTimeout(() => { s.className = 'lv-slam'; }, kind === 'milestone' ? 1600 : 1100);
   }
-  function celebrate(d, sq) {
+  function celebrate(d, sq, before) {
     const n = d.combo || 0;
     if (sq) { sq.classList.remove('pop'); void sq.offsetWidth; sq.classList.add('pop'); }
     const big = d.event === 'up' || d.event === 'finished';
@@ -134,7 +147,7 @@
     } else {
       pixelConfetti(canvas, 1);
     }
-    if (milestone) slam(n);
+    if (n >= 2) slam(n, before, milestone ? 'milestone' : 'step');
     showCatBubble(big ? 'Niveau validé !' : milestone ? `Combo ×${n} !` : 'Bien joué !', big || milestone ? 2600 : 1600);
     cat.onCorrectAnswer(Math.min(1 + Math.floor(n / 5), 5));
     if (navigator.vibrate) navigator.vibrate(milestone ? [30, 40, 30, 40, 80] : [40]);
@@ -235,9 +248,10 @@
       const before = +(exo.dataset.combo || 0);
       exo.dataset.combo = d.combo || 0;
       if (ok) {
-        celebrate(d, sq);
+        celebrate(d, sq, before);
       } else {
         hud(d.combo || 0, before);
+        if (before >= 2) slam(d.combo || 0, before, 'broken');
         const r = $('chill-cat').getBoundingClientRect();
         showCatBubble('Raté... KABOOM', 1200);
         cat.onWrongAnswer(() => {
