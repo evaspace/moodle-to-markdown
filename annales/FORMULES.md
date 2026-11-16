@@ -416,6 +416,50 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\dfrac{V_A}{V_B} = \dfrac{V_D}{V_C}$
 - $r = \dfrac{|W_{cycle}|}{Q_{absorbée}} = 1 - \dfrac{T_f}{T_c}$
 
+**QCM de thermodynamique (intensif, isobare, travail, force de pression, unités)** (2)
+
+- intensive : $P$, $T$
+- extensive : $V$, $m$
+- isobare : $P = \text{cste}$, $W = -P_0(V_f - V_i)$
+- $d\vec F = P\,d\vec S$
+- énergie en joules (J)
+
+**calorimétrie (bilan d'enthalpie dans une enceinte isolée, capacité thermique massique)** (2)
+
+- $\Delta H = mc(T_f - T_i)$
+- enceinte isolée, isobare : $\sum\Delta H = 0$
+- $c_{cuivre} = -\dfrac{m_{eau}c_{eau}(T_f - T_{eau})}{m_{cuivre}(T_f - T_{cuivre})}$
+
+**cycle de Lenoir dans le diagramme de Watt (isochore, isotherme, isobare, travaux)** (2)
+
+- isotherme : $P = \dfrac{nRT}{V}$ (hyperbole)
+- isochore : $W = 0$
+- isotherme : $W = -nRT\ln\dfrac{V_f}{V_i}$
+- isobare : $W = -P(V_f - V_i)$
+- $PV = nRT$
+
+**machine ditherme réversible (premier et deuxième principes, rendement de Carnot)** (2)
+
+- sur un cycle : $\Delta U = Q_c + Q_f + W = 0$
+- $\Delta S = \dfrac{Q_c}{T_c} + \dfrac{Q_f}{T_f} + S_{créée} = 0$, $S_{créée} = 0$ (réversible)
+- $\rho = \left|\dfrac{\text{énergie utile}}{\text{énergie coûteuse}}\right| = -\dfrac{W}{Q_c} = 1 + \dfrac{Q_f}{Q_c} = 1 - \dfrac{T_f}{T_c}$
+
+**calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion)** (1)
+
+- $\Delta H = mc\Delta T$ sans changement d'état
+- fusion à 0 °C : $\Delta H = m\,\Delta h_F$
+- enceinte isolée, isobare : $\sum\Delta H = 0$
+- chemin fictif : échauffement de la glace, fusion, puis échauffement ou refroidissement de l'eau liquide
+
+**machine frigorifique ditherme (signes des échanges, premier et deuxième principes, efficacité de Carnot)** (1)
+
+- sur un cycle : $\Delta U = Q_c + Q_f + W = 0$
+- $\Delta S = \dfrac{Q_c}{T_c} + \dfrac{Q_f}{T_f} + S_{créée} = 0$
+- réfrigérateur : $Q_f > 0$, $Q_c < 0$, $W > 0$
+- $e = \dfrac{Q_f}{W} = -\dfrac{1}{1 + Q_c/Q_f}$
+- réversible : $e = \dfrac{T_f}{T_c - T_f}$
+- $T(\text{K}) = T(°\text{C}) + 273$
+
 ## OBM
 
 **traduire avec quantificateurs** (13)

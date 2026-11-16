@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-214 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1302 exercices.
+217 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1312 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1786,6 +1786,28 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3. Énergie mécanique (4,5 points) | conservation de l'énergie mécanique sur une piste (vitesse en un point, condition d'arrêt) | Mécanique | physique-s2-energie/6 |
 | Exercice 4. Énergie cinétique et travail (4,5 points) | théorème de l'énergie cinétique avec frottement (palet qui s'arrête) | Mécanique | physique-s2-energie/7 |
 
+### Examen de physique S2 : thermodynamique — mai 2024 (corrigé, FR)
+
+`md/S2/Finals/Phys/2028/final-2028-s2-phys-correction-fr.md` — date réelle : mai 2024
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de thermodynamique (intensif, isobare, travail, force de pression, unités) | Thermodynamique | physique-s2-thermo/3 |
+| Exercice 2. Capacité thermique du cuivre (6 points) | calorimétrie (bilan d'enthalpie dans une enceinte isolée, capacité thermique massique) | Thermodynamique | physique-s2-thermo/4 |
+| Exercice 3. Machine thermique et cycle de Lenoir (5 points) | cycle de Lenoir dans le diagramme de Watt (isochore, isotherme, isobare, travaux) | Thermodynamique | physique-s2-thermo/12 |
+| Exercice 4. Rendement d'un moteur (4 points) | machine ditherme réversible (premier et deuxième principes, rendement de Carnot) | Thermodynamique | physique-s2-thermo/11 |
+
+### Examen de physique S2 : thermodynamique — mai 2024 (sujet, FR)
+
+`md/S2/Finals/Phys/2028/final-2028-s2-phys-subject-fr.md` — date réelle : mai 2024
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de thermodynamique (intensif, isobare, travail, force de pression, unités) | Thermodynamique | physique-s2-thermo/3 |
+| Exercice 2. Capacité thermique du cuivre (6 points) | calorimétrie (bilan d'enthalpie dans une enceinte isolée, capacité thermique massique) | Thermodynamique | physique-s2-thermo/4 |
+| Exercice 3. Machine thermique et cycle de Lenoir (5 points) | cycle de Lenoir dans le diagramme de Watt (isochore, isotherme, isobare, travaux) | Thermodynamique | physique-s2-thermo/12 |
+| Exercice 4. Rendement d'un moteur (4 points) | machine ditherme réversible (premier et deuxième principes, rendement de Carnot) | Thermodynamique | physique-s2-thermo/11 |
+
 ## S2 — QCM
 
 ### QCM 1 (S2 PA) — lundi 29 janvier 2024
@@ -2298,6 +2320,15 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de cinématique (unité de force, position, vitesse, norme, intégration) | Mécanique | physique-s1-meca/2 |
 | Exercice 2. Tir au tennis (9 points) | tir horizontal (PFD, équations horaires, trajectoire parabolique, passage d'un obstacle, portée) | Mécanique | physique-s1-meca/5 |
 | Exercice 3. Pendule en coordonnées polaires (7 points) | pendule simple en coordonnées polaires (vitesse, accélération, PFD, petites oscillations, période) | Mécanique | physique-s1-meca/6 |
+
+### Contrôle de physique S2 : thermodynamique — promo 2030 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2030/midterms-2030-s2-phys-correction-fr.md` — date réelle : S2 2025-2026
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Chaleur latente de fusion de la glace (10 points) | calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 2. Efficacité d'une machine frigorifique (10 points) | machine frigorifique ditherme (signes des échanges, premier et deuxième principes, efficacité de Carnot) | Thermodynamique | physique-s2-thermo/11 |
 
 ## S2 — Contrôles de TD et feuilles de TD
 
