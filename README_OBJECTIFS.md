@@ -252,3 +252,8 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 
 ## Décision du 2026-11-16 : « Copier pour une IA » seulement après la correction
 - « Le bouton copier pour une IA doit seulement être visible pour la correction, logique, sinon c'est du cheat. » Fait : sur la page d'exercice, le bouton est caché jusqu'à « J'ai ma réponse » (ou la fin du chrono), placé sous la correction, et il copie toujours énoncé + correction avec la demande d'explication.
+
+## Décisions du 2026-11-16 (soir, suite)
+- Stats « Par matière » : la barre montre réussis en vert et ratés en rouge, pour ne pas la confondre avec la progression.
+- Bouton « Copier pour une IA » : en bleu, et seulement quand on a raté (pour se faire expliquer la correction).
+- Révisions espacées dans le grind : jamais une autre matière. Un autre chapitre de la même matière, oui.
