@@ -346,6 +346,24 @@
        ],
        "a_faire": [],
        "annales": []
+      },
+      {
+       "id": "Systèmes à microprocesseur",
+       "titre": "Systèmes à microprocesseur : mémoires et décodage d'adresse",
+       "bloc": "B4",
+       "periode_examen": "examen de B4",
+       "chapitres": [
+        "06_Les systèmes à microprocesseur (B4)",
+        "07_Cours",
+        "08_TD"
+       ],
+       "parcours": [
+        "archi-s2-microprocesseur"
+       ],
+       "a_faire": [
+        "TD5 : lecture d'une ROM (schémas : bascule RS, compteurs 74HCT193, M2716, transmission série)"
+       ],
+       "annales": []
       }
      ]
     }
