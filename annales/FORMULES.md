@@ -2372,3 +2372,34 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $|zw| = |z||w|$
 - $\frac{e^{i\alpha}}{e^{i\beta}} = e^{i(\alpha - \beta)}$
 - $\Delta < 0 \Rightarrow z = \frac{-b \pm i\sqrt{-\Delta}}{2a}$
+
+## Études des filtres
+
+**QCM régime sinusoïdal et nature des filtres du 2nd ordre** (2)
+
+- amplitude complexe (référence sinus) : $S\sin(\omega t + \theta) \to Se^{j\theta}$
+- $\cos x = \sin(x + \frac\pi2)$
+- $Z = \frac{U}{I}$
+- $u$, $i$ en phase : résistance
+- $i$ en avance de $\frac\pi2$ : condensateur, $Z = \frac1{C\omega}$
+- $i$ en retard : bobine, $Z = L\omega$
+- $LC\omega^2$ sans unité
+- $\underline T = A_0\frac{Num}{1 + 2jz\frac\omega{\omega_0} - (\frac\omega{\omega_0})^2}$ : $Num = 1$ passe-bas, $-(\frac\omega{\omega_0})^2$ passe-haut, $2jz\frac\omega{\omega_0}$ passe-bande
+
+**filtre du 1er ordre (étude qualitative, transfert, Bode, régime sinusoïdal)** (2)
+
+- TBF : bobine = fil, condensateur = interrupteur ouvert
+- THF : l'inverse
+- diviseur de tension $\underline{V_s} = \frac{Z_2}{Z_1 + Z_2}\underline{V_e}$
+- $Z_1 \parallel Z_2 = \frac{Z_1Z_2}{Z_1 + Z_2}$
+- passe-haut $\underline T = A_0\frac{j\frac\omega{\omega_c}}{1 + j\frac\omega{\omega_c}}$, passe-bas $\underline T = \frac{A_0}{1 + j\frac\omega{\omega_c}}$
+- $G_{dB} = 20\log|\underline T|$, pente $\pm 20$ dB/décade
+- $v_s = V_E|\underline T|\sin(\omega t + \arg\underline T)$
+
+**filtre du 2nd ordre RLC (étude qualitative, forme normalisée, Bode)** (2)
+
+- TBF / THF : bobine et condensateur en fil ou circuit ouvert
+- $\underline T = \frac{A_0}{1 + 2jz\frac\omega{\omega_0} - (\frac\omega{\omega_0})^2}$
+- identifier $A_0$, $\omega_0^2$, $\frac{2z}{\omega_0}$
+- THF : $G_{dB} \approx 20\log A_0 - 40\log\frac\omega{\omega_0}$
+- phase $0 \to -\pi$ (passe-bas), $\pi \to 0$ (passe-haut)

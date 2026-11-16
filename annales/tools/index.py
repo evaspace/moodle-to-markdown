@@ -18,7 +18,7 @@ TYPE = re.compile(r"Type : (.*?) · ECUE : (.*?)(?: · Niveau : (\S+))?$")
 KIND = {"Finals": "Partiels (finals)", "Midterms": "Contrôles (midterms)", "TDs": "Contrôles de TD et feuilles de TD", "MCQs": "QCM"}
 files = sorted(glob.glob(ROOT + "/md/**/*.md", recursive=True))
 errors, by_ecue, n_ex = [], defaultdict(lambda: defaultdict(int)), 0
-out = ["# Index des annales (maths et physique)", "",
+out = ["# Index des annales", "",
        f"{len(files)} fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main.",
        "Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.",
        "Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).", ""]

@@ -1,6 +1,6 @@
-# Index des annales (maths et physique)
+# Index des annales
 
-237 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1382 exercices.
+239 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1388 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1340,6 +1340,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 4 : nombres premiers et pgcd (2 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
 
 ## S2 — Partiels (finals)
+
+### Partiel d'électronique S2 — juin 2016 (corrigé rédigé, FR)
+
+`md/S2/Finals/Elec/2020/final-2020-s2-elec-correction-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. QCM (4 points, pas de point négatif) | QCM régime sinusoïdal et nature des filtres du 2nd ordre | Études des filtres | elec-s2-filtres/3 |
+| Exercice 2. Filtres du premier ordre (8 points) | filtre du 1er ordre (étude qualitative, transfert, Bode, régime sinusoïdal) | Études des filtres | elec-s2-filtres/6 |
+| Exercice 3. Filtre du second ordre (8 points) | filtre du 2nd ordre RLC (étude qualitative, forme normalisée, Bode) | Études des filtres | elec-s2-filtres/8 |
+
+### Partiel d'électronique S2 — juin 2016 (sujet, FR)
+
+`md/S2/Finals/Elec/2020/final-2020-s2-elec-subject-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. QCM (4 points, pas de point négatif) | QCM régime sinusoïdal et nature des filtres du 2nd ordre | Études des filtres | elec-s2-filtres/3 |
+| Exercice 2. Filtres du premier ordre (8 points) | filtre du 1er ordre (étude qualitative, transfert, Bode, régime sinusoïdal) | Études des filtres | elec-s2-filtres/6 |
+| Exercice 3. Filtre du second ordre (8 points) | filtre du 2nd ordre RLC (étude qualitative, forme normalisée, Bode) | Études des filtres | elec-s2-filtres/8 |
 
 ### Partiel 2 de mathématiques S2 — juin 2016 (corrigé rédigé, FR)
 
