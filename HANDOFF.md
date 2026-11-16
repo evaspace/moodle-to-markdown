@@ -279,3 +279,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Caml path `algo-s1-caml` (Moodle `[algo] Caml et récursivité`: course sheet, recursion and list advice, Hanoï; no exam or TD downloaded). OCaml is not installed: check model solutions in a throwaway container (e.g. `docker run --rm alpine sh -c 'apk add ocaml && ...'`) or with `ocaml/opam`; ask before pulling a big image.
 2. Then prog, anglais, méthodo. Still open: footer hover (which browser?), delete `qa_feed1` (needs user OK).
+
+# Handoff — 2026-11-16 (algo Caml)
+## Done
+- `algo-s1-caml` (`parcours/src/algo_caml.py`): 14 levels, 90 exos (13-14 = B1 exams Oct 2023 / Oct 2024, Past-Exams `S1/Midterms/Algo/2028|2029/CAML`, downloaded to `annales/raw`), 11 notions, 22 quiz, variants, FORMULES. `parcours/check_caml.py` replays all 102 Caml checks in OCaml 4.14 (throwaway `alpine:3.20` container): 102/102 OK. In `PATHS`, `syllabus.json` (ECUE Caml filled, `a_faire` empty). Build OK (25 paths), 33 offline tests OK, 14 levels at 390 px (0 KaTeX error, no overflow, no stray tag), QA account deleted, deployed. Branch `feat/algo`.
+## Next steps
+1. Prog (Moodle `2030-S1 Programmation`, `2030-S2-Programmation`; Past-Exams `S1/Finals/Algo/*/PYTHON`?), then anglais, méthodo.
+2. Moodle `multiply` example has a bug (`mult_rec (x, y-1)`): turned into exercise k96.
+3. Still open: footer hover (which browser?), delete `qa_feed1` (needs user OK), S1 January / S2 exam dates.

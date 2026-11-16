@@ -538,11 +538,15 @@
        "chapitres": [
         "[algo] Caml et récursivité/01_🐫 Caml - Récursivité"
        ],
-       "parcours": [],
-       "a_faire": [
+       "parcours": [
         "algo-s1-caml"
        ],
-       "annales": []
+       "a_faire": [],
+       "annales": [
+        "S1/Midterms/Algo/2028/CAML/midterm-2028-s1-algo-subject-fr.pdf",
+        "S1/Midterms/Algo/2028/CAML/midterm-2028-s1-algo-correction-fr.pdf",
+        "S1/Midterms/Algo/2029/CAML/midterm-2029-s1-algo-subject-fr.pdf"
+       ]
       }
      ]
     }

@@ -1,0 +1,1383 @@
+{
+ "subject": {
+  "id": "algo-s1-caml",
+  "ordre": 610,
+  "matiere": "algo",
+  "semestre": "S1",
+  "ecue": "Caml et récursivité",
+  "titre": "Caml et récursivité : fonctions, filtrage, récursivité, listes",
+  "chapitres_moodle": [
+   "[algo] Caml et récursivité/01_🐫 Caml - Récursivité"
+  ],
+  "td": "Séminaire (jours 1 à 8, 6 QCM), conseils pour la récursivité et les listes, Hanoï",
+  "examens": [
+   "Examen écrit B1 de Caml (1 h 30)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "bases",
+   "titre": "Expressions, types de base, définitions",
+   "formule": "`int` : `+ - * / mod` · `float` : `+. -. *. /.` · `string` : `^` · `bool` : `true false && || not` · `char` : `'a'` · comparaisons `= <> < > <= >=` · `let x = e ;;` (global) · `let x = e1 in e2` (local) · réponse : `- : type = valeur` ou `val x : type = valeur`",
+   "exemple": "`7 / 2 ;;` répond `- : int = 3` ; `1 + 2.5 ;;` est une erreur de type",
+   "cours": "Caml évalue chaque phrase terminée par `;;` et répond par son type puis sa valeur. Pas de conversion implicite : les opérateurs flottants ont un point (`+.`), `1 + 2.5` est refusé. `let` lie un nom à une valeur pour toute la suite ; `let … in` ne le lie que dans l'expression qui suit. Une liaison ne change jamais : redéfinir `x` crée une nouvelle liaison."
+  },
+  {
+   "id": "fonctions",
+   "titre": "Fonctions à un ou plusieurs paramètres",
+   "formule": "`let f x = e` $\\equiv$ `let f = function x -> e` · type `t1 -> t2` · `let f x y = e` : `t1 -> t2 -> t3` · application prioritaire : `f 2 + 1` $=$ `(f 2) + 1` · application partielle : `f 2` est une fonction · `'a` : type quelconque (polymorphe)",
+   "exemple": "`let somme x y = x + y ;;` répond `val somme : int -> int -> int = <fun>` ; `somme 1` est de type `int -> int`",
+   "cours": "Une fonction est une valeur comme une autre, affichée `<fun>`. Une fonction à deux paramètres est une fonction qui renvoie une fonction : `int -> int -> int` se lit `int -> (int -> int)`. L'application se fait par simple juxtaposition et passe avant tous les opérateurs : il faut des parenthèses pour `f (n - 1)` ou `f (-2)`. Les valeurs libres d'une fonction sont celles connues à sa définition (liaison statique)."
+  },
+  {
+   "id": "alternative",
+   "titre": "Alternative et booléens",
+   "formule": "`if c then e1 else e2` : `c` booléen, `e1` et `e2` de même type · `&&`, `||` paresseux : `a && b` n'évalue pas `b` si `a` est faux · `not`",
+   "exemple": "`let abs x = if x < 0 then -x else x ;;`",
+   "cours": "L'alternative est une expression : elle a une valeur, donc ses deux branches ont le même type. `&&` et `||` évaluent de gauche à droite et s'arrêtent dès que le résultat est connu : `true || 1 / 0 = 0` vaut `true`. On s'en sert pour arrêter un calcul dès que la réponse est trouvée."
+  },
+  {
+   "id": "exceptions",
+   "titre": "Exceptions : failwith, invalid_arg",
+   "formule": "`failwith \\\"msg\\\"` : déclenche `Failure \\\"msg\\\"` · `invalid_arg \\\"msg\\\"` : déclenche `Invalid_argument \\\"msg\\\"` · type de `failwith` : `string -> 'a` · réponse : `Exception: Invalid_argument \\\"msg\\\".`",
+   "exemple": "`if n < 0 then invalid_arg \\\"fact: n < 0\\\" else …`",
+   "cours": "`invalid_arg` signale un paramètre hors domaine (n négatif, k nul…) ; `failwith` signale un échec du calcul (liste trop courte, élément absent). Comme elles ne rendent jamais de valeur, elles ont n'importe quel type et se placent dans une branche de `if` ou de `match` sans gêner le typage. À l'examen, ce sont les seules fonctions prédéfinies permises."
+  },
+  {
+   "id": "filtrage",
+   "titre": "Filtrage, n-uplets, fonctions anonymes",
+   "formule": "`match e with m1 -> e1 | m2 -> e2` · `function m1 -> e1 | …` (filtre le paramètre) · `_` : tout · `m when c` : garde · motifs testés dans l'ordre · n-uplet `(a, b)` : type `t1 * t2` · `fun x -> e` : fonction anonyme",
+   "exemple": "`let nom = function 1 -> \\\"un\\\" | _ -> \\\"autre\\\" ;;`",
+   "cours": "Le filtrage compare une valeur à des motifs, dans l'ordre, et prend la première branche qui correspond ; un motif peut nommer des morceaux (`(x, y)`, `e :: l`) et être complété par une garde `when`. Il doit être exhaustif (sinon avertissement, puis exception `Match_failure`). Un n-uplet regroupe des valeurs de types différents ; `fun x -> …` crée une fonction sans la nommer."
+  },
+  {
+   "id": "recursivite",
+   "titre": "Récursivité simple",
+   "formule": "`let rec f n = …` · cas d'arrêt d'abord · cas récursif : problème « plus petit » (`n - 1`, `n / 10`…) · les appels doivent tendre vers un cas d'arrêt · sans `rec` : `Error: Unbound value f`",
+   "exemple": "`let rec fact n = if n = 0 then 1 else n * fact (n - 1) ;;`",
+   "cours": "Méthode du cours : préciser ce que calcule la fonction, ses paramètres et son résultat (spécification) ; trouver les cas ; écrire l'« équation de récurrence » : cas de base (arrêt) et expression du problème en fonction du même problème plus petit ; vérifier que chaque appel se rapproche d'un cas d'arrêt."
+  },
+  {
+   "id": "multiple",
+   "titre": "Récursivité à plusieurs appels",
+   "formule": "plusieurs appels récursifs par cas · Fibonacci : $F_n=F_{n-1}+F_{n-2}$ · Pascal : $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $n-1$ disques vers l'intermédiaire, $1$ disque, $n-1$ disques vers la destination ; $2^n-1$ déplacements",
+   "exemple": "`let rec fibo n = if n < 2 then n else fibo (n - 1) + fibo (n - 2) ;;`",
+   "cours": "Quand un cas fait deux appels, le nombre d'appels peut exploser : `fibo` recalcule sans cesse les mêmes valeurs (nombre d'appels exponentiel). Hanoï, lui, a besoin de ses deux appels : on déplace $n-1$ disques sur le piquet intermédiaire, le grand disque sur la destination, puis les $n-1$ disques par-dessus ; le piquet intermédiaire vaut $6-$source$-$destination."
+  },
+  {
+   "id": "optimisation",
+   "titre": "Optimisation : fonctions chapeaux, accumulateurs",
+   "formule": "fonction chapeau : teste les paramètres une seule fois puis appelle la fonction récursive interne · accumulateur : paramètre en plus, renvoyé au cas d'arrêt · `let p = … in` : ne pas répéter un calcul · arrêter dès que la réponse est connue",
+   "exemple": "`let fact n = if n < 0 then invalid_arg \\\"…\\\" else let rec f = function 0 -> 1 | n -> n * f (n - 1) in f n ;;`",
+   "cours": "Règles du cours : éviter les calculs inutiles, ne pas répéter un calcul, s'arrêter dès qu'une réponse est donnée. La fonction chapeau vérifie la validité des paramètres avant la récursion (sinon le test est refait à chaque appel), élimine les cas particuliers et donne leur valeur initiale aux paramètres ajoutés (accumulateur, compteur)."
+  },
+  {
+   "id": "listes",
+   "titre": "Listes : parcours d'une liste",
+   "formule": "`[]` · `e :: l` · `[1; 2; 3]` $=$ `1 :: 2 :: 3 :: []` · type `'a list` (éléments de même type) · `@` : concaténation · motifs `[]` (arrêt) et `e :: l` · réponse pour `e :: l` en fonction de celle pour `l`",
+   "exemple": "`let rec length = function [] -> 0 | _ :: l -> 1 + length l ;;`",
+   "cours": "Une liste est vide (`[]`) ou formée d'une tête et d'une liste (`e :: l`). Le traitement est récursif : la liste vide est le cas d'arrêt ; pour `e :: l`, on cherche ce qu'il faut faire à la réponse sur `l` pour obtenir celle sur `e :: l`. Si le parcours peut s'arrêter avant la fin (élément trouvé, propriété fausse), il y a un autre cas d'arrêt. Attention : `[1, 2, 3]` est une liste d'un seul triplet."
+  },
+  {
+   "id": "listes2",
+   "titre": "Listes : deux listes, cas `e1 :: e2 :: l`, couples",
+   "formule": "deux listes : `([], [])`, `(l, [])`, `([], l)`, `(e1 :: l1, e2 :: l2)` · tête insuffisante : `[]`, `[e]`, `e1 :: e2 :: l` · éléments structurés : `(a, b) :: l` · accumulateur seulement si la récursion pure échoue",
+   "exemple": "`let rec croissante = function e1 :: (e2 :: _ as l) -> e1 <= e2 && croissante l | _ -> true ;;`",
+   "cours": "Le nombre de listes à parcourir donne les motifs. Avec deux listes, on se demande si on avance dans les deux à la fois ou dans une seule (alors au moins deux cas selon la liste dont on retire la tête, comme pour une fusion). Quand la tête ne suffit pas (liste croissante), on distingue la liste vide, un seul élément et au moins deux éléments."
+  },
+  {
+   "id": "ordre_sup",
+   "titre": "Fonctions d'ordre supérieur",
+   "formule": "fonction en paramètre : `('a -> 'b) -> 'a list -> 'b list` · `map f l` · `for_all p l`, `exists p l` · `filter p l` · `fold f acc l` · ordre en paramètre : `order : 'a -> 'a -> bool`",
+   "exemple": "`let rec map f = function [] -> [] | e :: l -> f e :: map f l ;;`",
+   "cours": "Une fonction peut prendre une fonction en paramètre (ou en renvoyer une). On écrit une seule fois un parcours général (appliquer, tester, filtrer, cumuler) et on lui donne le traitement à faire. Pour trier dans n'importe quel ordre, on passe la fonction de comparaison : `insert_x x order l` sert pour l'ordre croissant comme pour le décroissant."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "bases",
+   "type": "qcm",
+   "q": "`7 / 2 ;;` répond :",
+   "choix": [
+    "`- : int = 3`",
+    "`- : float = 3.5`",
+    "`- : int = 4`",
+    "une erreur de type"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bases",
+   "type": "vf",
+   "q": "`1 + 2.5` est accepté par Caml et vaut `3.5`.",
+   "bonne": false
+  },
+  {
+   "notion": "fonctions",
+   "type": "qcm",
+   "q": "Type de `let f x y = x + y` :",
+   "choix": [
+    "`int -> int -> int`",
+    "`int * int -> int`",
+    "`(int -> int) -> int`",
+    "`'a -> 'a -> 'a`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "fonctions",
+   "type": "vf",
+   "q": "`f 2 + 1` est évalué comme `f (2 + 1)`.",
+   "bonne": false
+  },
+  {
+   "notion": "alternative",
+   "type": "qcm",
+   "q": "Dans `if c then e1 else e2` :",
+   "choix": [
+    "`e1` et `e2` ont le même type",
+    "`e2` est facultatif quand `e1` est un entier",
+    "`c` peut être un entier",
+    "`e1` doit être un booléen"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "alternative",
+   "type": "vf",
+   "q": "`true || 1 / 0 = 0` déclenche `Division_by_zero`.",
+   "bonne": false
+  },
+  {
+   "notion": "exceptions",
+   "type": "qcm",
+   "q": "Type de `failwith` :",
+   "choix": [
+    "`string -> 'a`",
+    "`string -> unit`",
+    "`'a -> string`",
+    "`unit -> 'a`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "exceptions",
+   "type": "vf",
+   "q": "`invalid_arg \\\"f\\\"` déclenche l'exception `Invalid_argument \\\"f\\\"`.",
+   "bonne": true
+  },
+  {
+   "notion": "filtrage",
+   "type": "qcm",
+   "q": "`[1, 2, 3]` a le type :",
+   "choix": [
+    "`(int * int * int) list`",
+    "`int list`",
+    "`int * int * int`",
+    "`int list list`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "filtrage",
+   "type": "vf",
+   "q": "Les motifs d'un `match` sont essayés dans l'ordre d'écriture.",
+   "bonne": true
+  },
+  {
+   "notion": "recursivite",
+   "type": "qcm",
+   "q": "`let f n = … f (n - 1) …` sans `rec` donne :",
+   "choix": [
+    "`Error: Unbound value f`",
+    "une boucle infinie",
+    "`Exception: Stack_overflow`",
+    "une fonction correcte"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "recursivite",
+   "type": "vf",
+   "q": "Chaque appel récursif doit se rapprocher d'un cas d'arrêt.",
+   "bonne": true
+  },
+  {
+   "notion": "multiple",
+   "type": "qcm",
+   "q": "Nombre minimal de déplacements pour Hanoï à $n$ disques :",
+   "choix": [
+    "$2^n-1$",
+    "$2n-1$",
+    "$n^2$",
+    "$2^{n-1}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "multiple",
+   "type": "vf",
+   "q": "La version de `fibo` à deux appels récursifs fait un nombre d'appels linéaire en $n$.",
+   "bonne": false
+  },
+  {
+   "notion": "optimisation",
+   "type": "qcm",
+   "q": "Une fonction chapeau sert à :",
+   "choix": [
+    "tester les paramètres une seule fois avant la récursion",
+    "rendre une fonction polymorphe",
+    "éviter le mot-clé `rec`",
+    "afficher le résultat"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "optimisation",
+   "type": "vf",
+   "q": "`let p = puissance x (n / 2) in p * p` évite de refaire le même calcul.",
+   "bonne": true
+  },
+  {
+   "notion": "listes",
+   "type": "qcm",
+   "q": "`1 :: [2; 3]` vaut :",
+   "choix": [
+    "`[1; 2; 3]`",
+    "`[[1]; 2; 3]`",
+    "`[2; 3; 1]`",
+    "une erreur de type"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "listes",
+   "type": "vf",
+   "q": "`[1; 'a']` est une liste valide.",
+   "bonne": false
+  },
+  {
+   "notion": "listes2",
+   "type": "qcm",
+   "q": "Pour tester qu'une liste est croissante, les motifs sont :",
+   "choix": [
+    "`[]`, `[e]`, `e1 :: e2 :: l`",
+    "`[]`, `e :: l`",
+    "`e :: l` seulement",
+    "`([], [])`, `(e1 :: l1, e2 :: l2)`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "listes2",
+   "type": "vf",
+   "q": "Le cours conseille d'essayer d'abord la récursion pure avant un accumulateur.",
+   "bonne": true
+  },
+  {
+   "notion": "ordre_sup",
+   "type": "qcm",
+   "q": "Type de `map` :",
+   "choix": [
+    "`('a -> 'b) -> 'a list -> 'b list`",
+    "`'a list -> 'b list`",
+    "`('a -> 'a) -> 'a list -> 'a`",
+    "`'a -> 'b -> 'a list`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ordre_sup",
+   "type": "vf",
+   "q": "Avec `order` en paramètre, la même fonction `insertion_sort` trie par ordre croissant ou décroissant.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Expressions et types de base",
+   "notions": [
+    "bases"
+   ],
+   "exos": [
+    {
+     "id": "k11",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n3 + 4 * 2 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int = 11\n```\n\n`*` passe avant `+` : $3+8=11$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n2 * 3 + 4 * 5 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : int = 26\n```\n\n$6+20$."
+      },
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n(3 + 4) * 2 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : int = 14\n```\n\nParenthèses d'abord."
+      }
+     ],
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k12",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n7 / 2 ;;\n7 mod 2 ;;\n-7 / 2 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int = 3\n- : int = 1\n- : int = -3\n```\n\n`/` sur les entiers est la division entière (tronquée vers $0$) ; `mod` donne le reste.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n17 / 5 ;;\n17 mod 5 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : int = 3\n- : int = 2\n```\n\n$17=5\\times3+2$."
+      }
+     ],
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k13",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n1.5 +. 2. ;;\n2. *. 3.5 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : float = 3.5\n- : float = 7.\n```\n\nOpérateurs flottants avec un point ; `7.` est l'écriture Caml de $7{,}0$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n5. /. 2. ;;\n0.5 *. 4. ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : float = 2.5\n- : float = 2.\n```\n\nOpérateurs flottants."
+      }
+     ],
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k14",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n1 + 2.5 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nError: This expression has type float but an expression was expected of type int\n```\n\nPas de conversion implicite : `+` attend deux `int`. Il faut `1. +. 2.5` (ou `float_of_int 1 +. 2.5`).",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k15",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n\"Info\" ^ \"-\" ^ \"sup\" ;;\n'a' < 'b' ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : string = \"Info-sup\"\n- : bool = true\n```\n\n`^` concatène deux chaînes ; les caractères se comparent dans l'ordre du code ASCII.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k16",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet x = 3 * 4 ;;\nlet y = x + 1 in y * 2 ;;\nx ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval x : int = 12\n- : int = 26\n- : int = 12\n```\n\n`let … in` : `y` n'existe que dans `y * 2`, et Caml répond `-` (pas de nom global). `x` reste lié à $12$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet x = 7 ;;\nlet x = 2 in x * x ;;\nx ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval x : int = 7\n- : int = 4\n- : int = 7\n```\n\nLe `x` local masque le global dans `x * x` seulement."
+      }
+     ],
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    },
+    {
+     "id": "k17",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet x = 5 ;;\nlet x = x * 2 ;;\nx = 10 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval x : int = 5\nval x : int = 10\n- : bool = true\n```\n\nLa seconde définition crée une nouvelle liaison de `x` (calculée avec l'ancienne). Dans une expression, `=` est la comparaison.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`+ - * / mod` (int) · `+. -. *. /.` (float) · `^` · `let x = e` · `let x = e1 in e2` · `- : type = valeur`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Fonctions à un paramètre",
+   "notions": [
+    "fonctions",
+    "bases"
+   ],
+   "exos": [
+    {
+     "id": "k21",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet double x = 2 * x ;;\ndouble 5 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval double : int -> int = <fun>\n- : int = 10\n```\n\n`2 * x` impose `x : int` et un résultat `int`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet triple x = 3 * x ;;\ntriple 4 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval triple : int -> int = <fun>\n- : int = 12\n```\n\n`3 * x` impose `int`."
+      }
+     ],
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k22",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f = function x -> x +. 1. ;;\nf 2. ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : float -> float = <fun>\n- : float = 3.\n```\n\n`let f = function x -> e` est la même définition que `let f x = e`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k23",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet carre x = x * x ;;\ncarre 2 + 1 ;;\ncarre (2 + 1) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval carre : int -> int = <fun>\n- : int = 5\n- : int = 9\n```\n\nL'application passe avant `+` : `carre 2 + 1` $=4+1$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet succ x = x + 1 ;;\nsucc 2 * 3 ;;\nsucc (2 * 3) ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval succ : int -> int = <fun>\n- : int = 9\n- : int = 7\n```\n\n`succ 2 * 3` $=(2+1)\\times3$."
+      }
+     ],
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k24",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet id x = x ;;\nid 'z' ;;\nid \"z\" ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval id : 'a -> 'a = <fun>\n- : char = 'z'\n- : string = \"z\"\n```\n\nRien ne contraint `x` : type polymorphe `'a`, la même fonction sert pour tout type.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k25",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet est_pair n = n mod 2 = 0 ;;\nest_pair 7 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval est_pair : int -> bool = <fun>\n- : bool = false\n```\n\nLe corps est une comparaison : résultat `bool`. `mod` passe avant `=`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k26",
+     "enonce": "Écrire la fonction `cube x` qui renvoie $x^3$.\n\n```\n# cube 3;;\n- : int = 27\n# cube (-2);;\n- : int = -8\n```",
+     "sol": "```\nlet cube x = x * x * x ;;\n```\n\n```\nval cube : int -> int = <fun>\n```\n\n`cube -2` serait lu `cube - 2` (soustraction) : il faut `cube (-2)`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    },
+    {
+     "id": "k27",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet a = 10 ;;\nlet ajoute x = x + a ;;\nlet a = 100 ;;\najoute 1 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval a : int = 10\nval ajoute : int -> int = <fun>\nval a : int = 100\n- : int = 11\n```\n\nLiaison statique : `ajoute` utilise le `a` connu à sa définition ($10$). Redéfinir `a` ensuite ne la change pas.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`let f x = e` $\\equiv$ `let f = function x -> e` · `t1 -> t2` · application prioritaire · `'a` polymorphe · liaison statique",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Plusieurs paramètres, application partielle",
+   "notions": [
+    "fonctions"
+   ],
+   "exos": [
+    {
+     "id": "k31",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet somme x y = x + y ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval somme : int -> int -> int = <fun>\n```\n\nDeux paramètres : `int -> int -> int`, à lire `int -> (int -> int)`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k32",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet somme x y = x + y ;;\nlet incr = somme 1 ;;\nincr 41 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval somme : int -> int -> int = <fun>\nval incr : int -> int = <fun>\n- : int = 42\n```\n\nApplication partielle : `somme 1` attend encore `y`, c'est une fonction `int -> int`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet mult x y = x * y ;;\nlet double = mult 2 ;;\ndouble 21 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval mult : int -> int -> int = <fun>\nval double : int -> int = <fun>\n- : int = 42\n```\n\nApplication partielle."
+      }
+     ],
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k33",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet moyenne a b = (a +. b) /. 2. ;;\nmoyenne 3. 4. ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval moyenne : float -> float -> float = <fun>\n- : float = 3.5\n```\n\n`+.` et `/.` imposent des flottants partout.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k34",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f x y = x ^ y ;;\nf \"ab\" ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : string -> string -> string = <fun>\n- : string -> string = <fun>\n```\n\nUn seul argument donné : la réponse est une fonction, pas une erreur.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k35",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet somme x y = x + y ;;\nsomme 1 2 * 3 ;;\nsomme 1 (2 * 3) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval somme : int -> int -> int = <fun>\n- : int = 9\n- : int = 7\n```\n\n`somme 1 2 * 3` se lit `(somme 1 2) * 3`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet somme x y = x + y ;;\nsomme 2 3 * 4 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval somme : int -> int -> int = <fun>\n- : int = 20\n```\n\n`(somme 2 3) * 4`."
+      }
+     ],
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k36",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet g = function x -> function y -> x - y ;;\ng 10 3 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval g : int -> int -> int = <fun>\n- : int = 7\n```\n\nMême type que `let g x y = x - y` : une fonction qui renvoie une fonction.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    },
+    {
+     "id": "k37",
+     "enonce": "Écrire la fonction `volume l w h` qui renvoie le volume d'un pavé de dimensions entières.\n\n```\n# volume 2 3 4;;\n- : int = 24\n# volume 1 1 10;;\n- : int = 10\n```",
+     "sol": "```\nlet volume l w h = l * w * h ;;\n```\n\n```\nval volume : int -> int -> int -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let f x y = e` : `t1 -> t2 -> t3` · application partielle `f x` : `t2 -> t3`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Alternative et booléens",
+   "notions": [
+    "alternative"
+   ],
+   "exos": [
+    {
+     "id": "k41",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet abs x = if x < 0 then -x else x ;;\nabs (-5) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval abs : int -> int = <fun>\n- : int = 5\n```\n\nLes deux branches sont des `int`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k42",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nif 3 > 2 then \"oui\" else 0 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nError: This expression has type int but an expression was expected of type string\n```\n\nLes deux branches d'un `if` doivent avoir le même type : la première impose `string`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k43",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\ntrue || 1 / 0 = 0 ;;\nfalse && 1 / 0 = 0 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : bool = true\n- : bool = false\n```\n\n`||` et `&&` sont paresseux : la division par zéro n'est jamais évaluée.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nfalse && 1 / 0 = 0 ;;\ntrue && 2 > 1 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : bool = false\n- : bool = true\n```\n\n`&&` s'arrête si le premier terme est faux."
+      }
+     ],
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k44",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f x = x > 0 && x mod 2 = 0 ;;\nf 4 ;;\nf (-2) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : int -> bool = <fun>\n- : bool = true\n- : bool = false\n```\n\n$-2$ est pair mais pas strictement positif.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k45",
+     "enonce": "Écrire la fonction `max3 a b c` qui renvoie le plus grand de ses trois paramètres (sans fonction prédéfinie).\n\n```\n# max3 1 5 3;;\n- : int = 5\n# max3 'a' 'z' 'c';;\n- : char = 'z'\n```",
+     "sol": "```\nlet max3 a b c =\n  let m = if a > b then a else b in\n  if m > c then m else c ;;\n```\n\n```\nval max3 : 'a -> 'a -> 'a -> 'a = <fun>\n```\n\n`>` compare toute valeur de même type : la fonction est polymorphe.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k46",
+     "enonce": "Écrire la fonction `signe x` qui renvoie $-1$, $0$ ou $1$ selon le signe de l'entier $x$.\n\n```\n# signe (-7);;\n- : int = -1\n# signe 0;;\n- : int = 0\n# signe 3;;\n- : int = 1\n```",
+     "sol": "```\nlet signe x =\n  if x < 0 then -1\n  else if x = 0 then 0\n  else 1 ;;\n```\n\n```\nval signe : int -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    },
+    {
+     "id": "k47",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet bissextile a = (a mod 4 = 0 && a mod 100 <> 0) || a mod 400 = 0 ;;\nbissextile 1900 ;;\nbissextile 2024 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval bissextile : int -> bool = <fun>\n- : bool = false\n- : bool = true\n```\n\n$1900$ est divisible par $100$ mais pas par $400$ ; $2024$ est divisible par $4$ et pas par $100$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`if c then e1 else e2` (même type) · `&&`, `||` paresseux · `not`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Exceptions",
+   "notions": [
+    "exceptions",
+    "alternative"
+   ],
+   "exos": [
+    {
+     "id": "k51",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nfailwith \"oups\" ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nException: Failure \"oups\".\n```\n\n`failwith` déclenche l'exception `Failure`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    },
+    {
+     "id": "k52",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet inverse x = if x = 0. then failwith \"inverse: zero\" else 1. /. x ;;\ninverse 4. ;;\ninverse 0. ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval inverse : float -> float = <fun>\n- : float = 0.25\nException: Failure \"inverse: zero\".\n```\n\n`failwith` a le type `string -> 'a` : la branche s'accorde avec `float`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet racine x = if x < 0. then failwith \"racine: x < 0\" else sqrt x ;;\nracine 9. ;;\nracine (-1.) ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval racine : float -> float = <fun>\n- : float = 3.\nException: Failure \"racine: x < 0\".\n```\n\n`sqrt` est la racine carrée des flottants."
+      }
+     ],
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    },
+    {
+     "id": "k53",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\ninvalid_arg \"f: n < 0\" ;;\n10 / 0 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nException: Invalid_argument \"f: n < 0\".\nException: Division_by_zero.\n```\n\n`invalid_arg` déclenche `Invalid_argument` ; la division entière par zéro déclenche `Division_by_zero`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    },
+    {
+     "id": "k54",
+     "enonce": "Écrire la fonction `div a b` (quotient entier) qui déclenche `Invalid_argument \\\"div: b = 0\\\"` si $b=0$.\n\n```\n# div 7 2;;\n- : int = 3\n# div 1 0;;\nException: Invalid_argument \"div: b = 0\".\n```",
+     "sol": "```\nlet div a b =\n  if b = 0 then invalid_arg \"div: b = 0\"\n  else a / b ;;\n```\n\n```\nval div : int -> int -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    },
+    {
+     "id": "k55",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f x = if x then failwith \"non\" else 1 ;;\nf false ;;\nf true ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : bool -> int = <fun>\n- : int = 1\nException: Failure \"non\".\n```\n\nLa branche `failwith` prend le type de l'autre branche : `int`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    },
+    {
+     "id": "k56",
+     "enonce": "Quand utiliser `invalid_arg` plutôt que `failwith` ?",
+     "sol": "`invalid_arg` : un paramètre est hors du domaine prévu par la spécification (entier négatif, $k$ nul…), l'appel n'aurait pas dû être fait. `failwith` : les paramètres sont valides mais le calcul échoue (liste trop courte, élément absent). Le message commence par le nom de la fonction, comme dans les annales : `\\\"nth: list too short\\\"`.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 2,
+     "formules": "`failwith \\\"msg\\\"` : `Failure` · `invalid_arg \\\"msg\\\"` : `Invalid_argument` · `failwith : string -> 'a`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Filtrage, n-uplets, fonctions anonymes",
+   "notions": [
+    "filtrage"
+   ],
+   "exos": [
+    {
+     "id": "k61",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet nom = function\n    1 -> \"un\"\n  | 2 -> \"deux\"\n  | _ -> \"beaucoup\" ;;\nnom 2 ;;\nnom 7 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval nom : int -> string = <fun>\n- : string = \"deux\"\n- : string = \"beaucoup\"\n```\n\nLes motifs sont essayés dans l'ordre ; `_` filtre tout le reste.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet nom = function\n    1 -> \"un\"\n  | 2 -> \"deux\"\n  | _ -> \"beaucoup\" ;;\nnom 1 ;;\nnom 0 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval nom : int -> string = <fun>\n- : string = \"un\"\n- : string = \"beaucoup\"\n```\n\n`0` n'est filtré que par `_`."
+      }
+     ],
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k62",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f x = match x with\n    0 -> \"nul\"\n  | n when n < 0 -> \"negatif\"\n  | _ -> \"positif\" ;;\nf (-3) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : int -> string = <fun>\n- : string = \"negatif\"\n```\n\nLa garde `when` ajoute une condition au motif `n`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k63",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n(1, 'a', \"b\") ;;\n[1, 2] ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int * char * string = (1, 'a', \"b\")\n- : (int * int) list = [(1, 2)]\n```\n\nUn triplet a le type produit `int * char * string`. Dans une liste, la virgule fabrique un couple : `[1, 2]` est une liste d'un seul couple.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k64",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet echange (a, b) = (b, a) ;;\nechange (1, true) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval echange : 'a * 'b -> 'b * 'a = <fun>\n- : bool * int = (true, 1)\n```\n\nLe motif `(a, b)` nomme les deux composantes ; elles peuvent avoir deux types différents.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet premier (a, b) = a ;;\npremier ('x', 3.) ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval premier : 'a * 'b -> 'a = <fun>\n- : char = 'x'\n```\n\n`b` n'est pas utilisé : type quelconque `'b`."
+      }
+     ],
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k65",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n(fun x -> x * 3) 5 ;;\n(function (x, y) -> x + y) (2, 3) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int = 15\n- : int = 5\n```\n\nFonctions anonymes appliquées directement.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k66",
+     "enonce": "Écrire la fonction `xor a b` (ou exclusif) avec un filtrage sur le couple `(a, b)`.\n\n```\n# xor true false;;\n- : bool = true\n# xor true true;;\n- : bool = false\n```",
+     "sol": "```\nlet xor a b = match (a, b) with\n    (true, false) | (false, true) -> true\n  | _ -> false ;;\n```\n\n```\nval xor : bool -> bool -> bool = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    },
+    {
+     "id": "k67",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f = function\n    (x, 0) -> x\n  | (x, y) -> x / y ;;\nf (8, 0) ;;\nf (8, 2) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : int * int -> int = <fun>\n- : int = 8\n- : int = 4\n```\n\nUn seul paramètre : un couple d'entiers. Le premier motif traite $y=0$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`match e with m -> e | _ -> e` · `function` · `when` · `(a, b)` : `t1 * t2` · `fun x -> e`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Récursivité simple",
+   "notions": [
+    "recursivite"
+   ],
+   "exos": [
+    {
+     "id": "k71",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet rec fact n = if n = 0 then 1 else n * fact (n - 1) ;;\nfact 5 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval fact : int -> int = <fun>\n- : int = 120\n```\n\n$5\\times4\\times3\\times2\\times1\\times1$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet rec fact n = if n = 0 then 1 else n * fact (n - 1) ;;\nfact 4 ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval fact : int -> int = <fun>\n- : int = 24\n```\n\n$4\\times3\\times2\\times1$."
+      }
+     ],
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k72",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet f n = if n = 0 then 1 else n * f (n - 1) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nError: Unbound value f\nHint: If this is a recursive definition,\nyou should add the 'rec' keyword on line 1\n```\n\nSans `rec`, `f` n'est pas encore connu dans son propre corps.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k73",
+     "enonce": "Écrire la fonction récursive `puissance x n` qui renvoie $x^n$ ($n\\ge0$).\n\n```\n# puissance 2 10;;\n- : int = 1024\n# puissance 3 0;;\n- : int = 1\n```",
+     "sol": "```\nlet rec puissance x n =\n  if n = 0 then 1\n  else x * puissance x (n - 1) ;;\n```\n\n```\nval puissance : int -> int -> int = <fun>\n```\n\nCas d'arrêt $x^0=1$ ; $x^n=x\\times x^{n-1}$.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 4,
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k74",
+     "enonce": "Écrire la fonction `somme_chiffres n` qui renvoie la somme des chiffres de l'entier $n\\ge0$.\n\n```\n# somme_chiffres 1234;;\n- : int = 10\n# somme_chiffres 7;;\n- : int = 7\n```",
+     "sol": "```\nlet rec somme_chiffres n =\n  if n < 10 then n\n  else n mod 10 + somme_chiffres (n / 10) ;;\n```\n\n```\nval somme_chiffres : int -> int = <fun>\n```\n\n`n mod 10` est le dernier chiffre, `n / 10` le nombre sans lui.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 4,
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k75",
+     "enonce": "Écrire la fonction `nb_chiffres n` qui renvoie le nombre de chiffres de l'entier $n\\ge0$.\n\n```\n# nb_chiffres 0;;\n- : int = 1\n# nb_chiffres 2024;;\n- : int = 4\n```",
+     "sol": "```\nlet rec nb_chiffres n =\n  if n < 10 then 1\n  else 1 + nb_chiffres (n / 10) ;;\n```\n\n```\nval nb_chiffres : int -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k76",
+     "enonce": "Écrire la fonction `pgcd a b` (algorithme d'Euclide, $a, b\\ge0$).\n\n```\n# pgcd 48 18;;\n- : int = 6\n# pgcd 7 0;;\n- : int = 7\n```",
+     "sol": "```\nlet rec pgcd a b =\n  if b = 0 then a\n  else pgcd b (a mod b) ;;\n```\n\n```\nval pgcd : int -> int -> int = <fun>\n```\n\n$\\mathrm{pgcd}(a, b)=\\mathrm{pgcd}(b, a \\bmod b)$ et $\\mathrm{pgcd}(a, 0)=a$.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "open"
+    },
+    {
+     "id": "k77",
+     "enonce": "Avec `let rec fact n = if n = 0 then 1 else n * fact (n - 1)`, combien d'appels de `fact` (le premier compris) fait l'évaluation de `fact 5` ?",
+     "ans": "6",
+     "sol": "`fact 5`, `fact 4`, `fact 3`, `fact 2`, `fact 1`, `fact 0` : $6$ appels ($n+1$).",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Avec la même fonction `fact`, combien d'appels fait `fact 8` ?",
+       "ans": "9",
+       "sol": "De `fact 8` à `fact 0` : $9$ appels."
+      }
+     ],
+     "formules": "`let rec` · cas d'arrêt · appel sur un problème plus petit · `n mod 10`, `n / 10`",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Récursivité à plusieurs appels, Hanoï",
+   "notions": [
+    "multiple",
+    "recursivite"
+   ],
+   "exos": [
+    {
+     "id": "k81",
+     "enonce": "Écrire la fonction `fibo n` ($F_0=0$, $F_1=1$, $F_n=F_{n-1}+F_{n-2}$) directement d'après la définition.\n\n```\n# fibo 10;;\n- : int = 55\n# fibo 1;;\n- : int = 1\n```",
+     "sol": "```\nlet rec fibo n =\n  if n < 2 then n\n  else fibo (n - 1) + fibo (n - 2) ;;\n```\n\n```\nval fibo : int -> int = <fun>\n```\n\nDeux appels par cas récursif : simple à écrire, mais exponentiel (niveau suivant).",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "$F_n=F_{n-1}+F_{n-2}$ · $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $2^n-1$, intermédiaire $=6-s-d$",
+     "type": "open"
+    },
+    {
+     "id": "k82",
+     "enonce": "Combien d'appels de `fibo` (le premier compris) fait `fibo 5` avec la version à deux appels ?",
+     "ans": "15",
+     "sol": "$A(0)=A(1)=1$, $A(n)=1+A(n-1)+A(n-2)$ : $A(2)=3$, $A(3)=5$, $A(4)=9$, $A(5)=15$.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien d'appels de `fibo` (le premier compris) fait `fibo 4` avec la version à deux appels ?",
+       "ans": "9",
+       "sol": "$A(4)=1+A(3)+A(2)=1+5+3=9$."
+      }
+     ],
+     "formules": "$F_n=F_{n-1}+F_{n-2}$ · $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $2^n-1$, intermédiaire $=6-s-d$",
+     "type": "value"
+    },
+    {
+     "id": "k83",
+     "enonce": "Hanoï : nombre minimal de déplacements pour une tour de $10$ disques ?",
+     "ans": "1023",
+     "sol": "$D(1)=1$, $D(n)=2D(n-1)+1$, donc $D(n)=2^n-1=1023$.",
+     "src": "Moodle Caml, « Hanoï »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Hanoï : nombre minimal de déplacements pour $7$ disques ?",
+       "ans": "127",
+       "sol": "$2^7-1=127$."
+      }
+     ],
+     "formules": "$F_n=F_{n-1}+F_{n-2}$ · $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $2^n-1$, intermédiaire $=6-s-d$",
+     "type": "value"
+    },
+    {
+     "id": "k84",
+     "enonce": "Compléter la fonction `play n source destination` de `hanoi` (page « Hanoï » du Moodle) : elle affiche les déplacements, piquets $1$, $2$, $3$.\n\n```\n# hanoi 2;;\n1 -> 2\n1 -> 3\n2 -> 3\n- : unit = ()\n# hanoi 0;;\nException: Invalid_argument \"Hanoi: number of disks invalid\".\n```",
+     "sol": "```\nlet move source destination =\n  print_int source ;\n  print_string \" -> \" ;\n  print_int destination ;\n  print_newline () ;;\nlet hanoi n =\n  let rec play n source destination =\n    if n > 0 then\n      begin\n        let inter = 6 - source - destination in\n        play (n - 1) source inter ;\n        move source destination ;\n        play (n - 1) inter destination\n      end\n  in\n  if n <= 0 then invalid_arg \"Hanoi: number of disks invalid\"\n  else play n 1 3 ;;\n```\n\n```\nval move : int -> int -> unit = <fun>\nval hanoi : int -> unit = <fun>\n```\n\nLes piquets valent $1+2+3=6$ : l'intermédiaire est $6-$source$-$destination. $n-1$ disques vers l'intermédiaire, le grand vers la destination, puis les $n-1$ par-dessus.",
+     "src": "Moodle Caml, « Hanoï »",
+     "duree": 8,
+     "formules": "$F_n=F_{n-1}+F_{n-2}$ · $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $2^n-1$, intermédiaire $=6-s-d$",
+     "type": "open"
+    },
+    {
+     "id": "k85",
+     "enonce": "Écrire la fonction `binom n p` ($0\\le p\\le n$) avec la relation de Pascal.\n\n```\n# binom 5 2;;\n- : int = 10\n# binom 6 0;;\n- : int = 1\n```",
+     "sol": "```\nlet rec binom n p =\n  if p = 0 || p = n then 1\n  else binom (n - 1) (p - 1) + binom (n - 1) p ;;\n```\n\n```\nval binom : int -> int -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "$F_n=F_{n-1}+F_{n-2}$ · $\\binom np=\\binom{n-1}{p-1}+\\binom{n-1}{p}$ · Hanoï : $2^n-1$, intermédiaire $=6-s-d$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Optimisation : fonctions chapeaux et accumulateurs",
+   "notions": [
+    "optimisation",
+    "exceptions",
+    "recursivite"
+   ],
+   "exos": [
+    {
+     "id": "k91",
+     "enonce": "Écrire `fact n` avec une fonction chapeau : le test $n<0$ n'est fait qu'une fois.\n\n```\n# fact 5;;\n- : int = 120\n# fact (-1);;\nException: Invalid_argument \"fact: n is not a natural\".\n```",
+     "sol": "```\nlet fact n =\n  if n < 0 then invalid_arg \"fact: n is not a natural\"\n  else\n    let rec fact_rec = function\n        0 -> 1\n      | n -> n * fact_rec (n - 1)\n    in\n    fact_rec n ;;\n```\n\n```\nval fact : int -> int = <fun>\n```\n\nVersion du cours. Sans chapeau, le test $n<0$ serait refait à chaque appel : $2n$ tests au lieu de $n$.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 5,
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "open"
+    },
+    {
+     "id": "k92",
+     "enonce": "Version sans chapeau : `let rec fact n = if n < 0 then invalid_arg \\\"…\\\" else if n = 0 then 1 else n * fact (n - 1)`. Combien de tests `n < 0` fait `fact 10` ?",
+     "ans": "11",
+     "sol": "Un test par appel, de `fact 10` à `fact 0` : $11$. Avec la fonction chapeau : $1$.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Même version sans chapeau : combien de tests `n < 0` fait `fact 4` ?",
+       "ans": "5",
+       "sol": "Un par appel, de `fact 4` à `fact 0` : $5$."
+      }
+     ],
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "value"
+    },
+    {
+     "id": "k93",
+     "enonce": "Écrire `fibo n` en temps linéaire : fonction chapeau et deux accumulateurs (les deux derniers termes).\n\n```\n# fibo 10;;\n- : int = 55\n# fibo 50;;\n- : int = 12586269025\n```",
+     "sol": "```\nlet fibo n =\n  let rec fib a b k =\n    if k = 0 then a\n    else fib b (a + b) (k - 1)\n  in\n  if n < 0 then invalid_arg \"fibo: n < 0\"\n  else fib 0 1 n ;;\n```\n\n```\nval fibo : int -> int = <fun>\n```\n\n`fib a b k` avance de $k$ termes en partant de $(F_i, F_{i+1})=(a, b)$ : $n+1$ appels au lieu d'un nombre exponentiel.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 6,
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "open"
+    },
+    {
+     "id": "k94",
+     "enonce": "Écrire `puissance x n` en ne faisant qu'un appel récursif sur $n/2$ : $x^{2k}=(x^k)^2$, $x^{2k+1}=x(x^k)^2$.\n\n```\n# puissance 2 10;;\n- : int = 1024\n# puissance 3 5;;\n- : int = 243\n```",
+     "sol": "```\nlet rec puissance x n =\n  if n = 0 then 1\n  else\n    let p = puissance x (n / 2) in\n    if n mod 2 = 0 then p * p\n    else x * p * p ;;\n```\n\n```\nval puissance : int -> int -> int = <fun>\n```\n\n`let p = … in` : le calcul de $x^{n/2}$ n'est fait qu'une fois (écrire `puissance x (n / 2) * puissance x (n / 2)` referait tout deux fois).",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 6,
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "open"
+    },
+    {
+     "id": "k95",
+     "enonce": "Écrire `est_premier n` qui s'arrête dès qu'un diviseur est trouvé.\n\n```\n# est_premier 97;;\n- : bool = true\n# est_premier 91;;\n- : bool = false\n# est_premier 1;;\n- : bool = false\n```",
+     "sol": "```\nlet est_premier n =\n  let rec aux d = d * d > n || (n mod d <> 0 && aux (d + 1)) in\n  n >= 2 && aux 2 ;;\n```\n\n```\nval est_premier : int -> bool = <fun>\n```\n\n`&&` s'arrête au premier diviseur ; on ne teste que $d\\le\\sqrt n$.",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 6,
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "open"
+    },
+    {
+     "id": "k96",
+     "enonce": "La fonction `multiply` de la page « Conseils pour la récursivité » contient `mult_rec (x, y-1)`. Corriger la fonction.\n\n```\n# multiply 3 (-4);;\n- : int = -12\n# multiply 0 5;;\n- : int = 0\n# multiply 6 7;;\n- : int = 42\n```",
+     "sol": "```\nlet multiply x y =\n  let rec mult_rec = function\n      0 -> 0\n    | y -> x + mult_rec (y - 1)\n  in\n  match x with\n      0 -> 0\n    | 1 -> y\n    | x -> if y < 0 then - mult_rec (-y) else mult_rec y ;;\n```\n\n```\nval multiply : int -> int -> int = <fun>\n```\n\n`mult_rec` n'a qu'un paramètre, `y` (`x` est connu de la fonction chapeau) : l'appel est `mult_rec (y - 1)`. La version du Moodle est refusée par Caml (erreur de type).",
+     "src": "Moodle Caml, « Conseils pour la récursivité »",
+     "duree": 5,
+     "formules": "fonction chapeau · accumulateur · `let p = … in` · `&&`/`||` pour s'arrêter tôt",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Listes : parcourir une liste",
+   "notions": [
+    "listes"
+   ],
+   "exos": [
+    {
+     "id": "ka1",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n[1; 2; 3] ;;\n1 :: [2; 3] ;;\n[] ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int list = [1; 2; 3]\n- : int list = [1; 2; 3]\n- : 'a list = []\n```\n\n`::` ajoute un élément en tête. La liste vide a le type polymorphe `'a list`.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n'a' :: ['b'] ;;\n[[]] ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\n- : char list = ['a'; 'b']\n- : 'a list list = [[]]\n```\n\n`[[]]` : une liste contenant une liste vide."
+      }
+     ],
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka2",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\n[1; 2] @ [3] ;;\n[[1]; []] ;;\n[1; 'a'] ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\n- : int list = [1; 2; 3]\n- : int list list = [[1]; []]\nError: This expression has type char but an expression was expected of type int\n```\n\n`@` concatène. Les éléments d'une liste ont tous le même type.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 2,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka3",
+     "enonce": "Écrire la fonction `length lst` (nombre d'éléments).\n\n```\n# length [1; 2; 3];;\n- : int = 3\n# length [];;\n- : int = 0\n```",
+     "sol": "```\nlet rec length = function\n    [] -> 0\n  | _ :: l -> 1 + length l ;;\n```\n\n```\nval length : 'a list -> int = <fun>\n```\n\nRéponse pour `e :: l` : celle pour `l` plus un.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 3,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka4",
+     "enonce": "Écrire la fonction `sum lst` (somme d'une liste d'entiers).\n\n```\n# sum [1; 2; 3; 4];;\n- : int = 10\n# sum [];;\n- : int = 0\n```",
+     "sol": "```\nlet rec sum = function\n    [] -> 0\n  | e :: l -> e + sum l ;;\n```\n\n```\nval sum : int list -> int = <fun>\n```",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 3,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka5",
+     "enonce": "Écrire `count x lst` : nombre d'occurrences de `x` dans `lst`.\n\n```\n# count 2 [2; 1; 2; 3];;\n- : int = 2\n# count 'z' ['a'];;\n- : int = 0\n```",
+     "sol": "```\nlet rec count x = function\n    [] -> 0\n  | e :: l -> if e = x then 1 + count x l else count x l ;;\n```\n\n```\nval count : 'a -> 'a list -> int = <fun>\n```",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 4,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka6",
+     "enonce": "Écrire `mem x lst` (`x` est-il dans `lst` ?) qui s'arrête dès que `x` est trouvé.\n\n```\n# mem 3 [1; 2; 3; 4];;\n- : bool = true\n# mem 5 [1; 2];;\n- : bool = false\n```",
+     "sol": "```\nlet rec mem x = function\n    [] -> false\n  | e :: l -> e = x || mem x l ;;\n```\n\n```\nval mem : 'a -> 'a list -> bool = <fun>\n```\n\n`||` est paresseux : pas d'appel après avoir trouvé `x`.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 4,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka7",
+     "enonce": "Écrire `nth lst k` : $k$-ième élément ($k\\ge1$). `Invalid_argument \\\"nth: k <= 0\\\"` si $k\\le0$, `Failure \\\"nth: list too short\\\"` si la liste est trop courte.\n\n```\n# nth ['a'; 'b'; 'c'] 2;;\n- : char = 'b'\n# nth [1] 3;;\nException: Failure \"nth: list too short\".\n# nth [1] 0;;\nException: Invalid_argument \"nth: k <= 0\".\n```",
+     "sol": "```\nlet nth lst k =\n  let rec aux k = function\n      [] -> failwith \"nth: list too short\"\n    | e :: l -> if k = 1 then e else aux (k - 1) l\n  in\n  if k <= 0 then invalid_arg \"nth: k <= 0\"\n  else aux k lst ;;\n```\n\n```\nval nth : 'a list -> int -> 'a = <fun>\n```\n\nFonction chapeau pour le test de $k$ ; la récursion compte à rebours.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 6,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka8",
+     "enonce": "Écrire `append l1 l2` (comme `l1 @ l2`, sans `@`).\n\n```\n# append [1; 2] [3; 4];;\n- : int list = [1; 2; 3; 4]\n# append [] ['a'];;\n- : char list = ['a']\n```",
+     "sol": "```\nlet rec append l1 l2 = match l1 with\n    [] -> l2\n  | e :: l -> e :: append l l2 ;;\n```\n\n```\nval append : 'a list -> 'a list -> 'a list = <fun>\n```\n\nOn ne parcourt que `l1` : `l2` est recopiée telle quelle à la fin.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 4,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    },
+    {
+     "id": "ka9",
+     "enonce": "Écrire `rev lst` (liste renversée) en temps linéaire, avec un accumulateur.\n\n```\n# rev [1; 2; 3];;\n- : int list = [3; 2; 1]\n# rev [];;\n- : 'a list = []\n```",
+     "sol": "```\nlet rev lst =\n  let rec aux acc = function\n      [] -> acc\n    | e :: l -> aux (e :: acc) l\n  in\n  aux [] lst ;;\n```\n\n```\nval rev : 'a list -> 'a list = <fun>\n```\n\nIci l'accumulateur est utile : on construit le résultat en avançant dans la liste (version récursive pure avec `@` : quadratique).",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 5,
+     "formules": "`[]` · `e :: l` · `@` · réponse pour `e :: l` à partir de celle pour `l` · accumulateur pour renverser",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Listes : deux listes, `e1 :: e2 :: l`, couples",
+   "notions": [
+    "listes2",
+    "listes"
+   ],
+   "exos": [
+    {
+     "id": "kb1",
+     "enonce": "Écrire `croissante lst` : la liste est-elle triée par ordre croissant ?\n\n```\n# croissante [1; 2; 2; 5];;\n- : bool = true\n# croissante [3; 1];;\n- : bool = false\n# croissante [];;\n- : bool = true\n```",
+     "sol": "```\nlet rec croissante = function\n    [] | [_] -> true\n  | e1 :: e2 :: l -> e1 <= e2 && croissante (e2 :: l) ;;\n```\n\n```\nval croissante : 'a list -> bool = <fun>\n```\n\nLa tête seule ne suffit pas : trois cas (vide, un élément, au moins deux).",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 5,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb2",
+     "enonce": "Écrire `merge l1 l2` : fusion de deux listes croissantes en une liste croissante.\n\n```\n# merge [1; 4; 6] [2; 3; 7];;\n- : int list = [1; 2; 3; 4; 6; 7]\n# merge [] [5];;\n- : int list = [5]\n```",
+     "sol": "```\nlet rec merge l1 l2 = match (l1, l2) with\n    ([], l) | (l, []) -> l\n  | (e1 :: r1, e2 :: r2) ->\n      if e1 <= e2 then e1 :: merge r1 l2\n      else e2 :: merge l1 r2 ;;\n```\n\n```\nval merge : 'a list -> 'a list -> 'a list = <fun>\n```\n\nDeux listes, un seul élément retiré à chaque appel : le cas non vide se divise selon la liste dont on prend la tête.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 6,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb3",
+     "enonce": "Écrire `insert x lst` : insère `x` à sa place dans une liste croissante.\n\n```\n# insert 4 [1; 3; 5];;\n- : int list = [1; 3; 4; 5]\n# insert 9 [];;\n- : int list = [9]\n```",
+     "sol": "```\nlet rec insert x = function\n    [] -> [x]\n  | e :: l -> if x <= e then x :: e :: l else e :: insert x l ;;\n```\n\n```\nval insert : 'a -> 'a list -> 'a list = <fun>\n```\n\nArrêt dès que la place est trouvée : le reste de la liste est gardé tel quel.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 5,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb4",
+     "enonce": "Écrire `combine l1 l2` : liste des couples ; `Invalid_argument \\\"combine: different lengths\\\"` si les longueurs diffèrent.\n\n```\n# combine [1; 2] ['a'; 'b'];;\n- : (int * char) list = [(1, 'a'); (2, 'b')]\n# combine [1] [];;\nException: Invalid_argument \"combine: different lengths\".\n```",
+     "sol": "```\nlet rec combine l1 l2 = match (l1, l2) with\n    ([], []) -> []\n  | (e1 :: r1, e2 :: r2) -> (e1, e2) :: combine r1 r2\n  | _ -> invalid_arg \"combine: different lengths\" ;;\n```\n\n```\nval combine : 'a list -> 'b list -> ('a * 'b) list = <fun>\n```\n\nLes deux listes avancent ensemble ; les deux cas `(l, [])` et `([], l)` non vides sont regroupés dans `_`.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 5,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb5",
+     "enonce": "Écrire `sum_pairs lst` : pour une liste de couples d'entiers, la liste des sommes.\n\n```\n# sum_pairs [(1, 2); (10, 5)];;\n- : int list = [3; 15]\n```",
+     "sol": "```\nlet rec sum_pairs = function\n    [] -> []\n  | (a, b) :: l -> (a + b) :: sum_pairs l ;;\n```\n\n```\nval sum_pairs : (int * int) list -> int list = <fun>\n```\n\nÉlément structuré : on filtre `(a, b) :: l` pour lire les deux valeurs.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 4,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb6",
+     "enonce": "Écrire `last lst` : dernier élément ; `Invalid_argument \\\"last: empty list\\\"` si la liste est vide.\n\n```\n# last [1; 2; 3];;\n- : int = 3\n# last [];;\nException: Invalid_argument \"last: empty list\".\n```",
+     "sol": "```\nlet rec last = function\n    [] -> invalid_arg \"last: empty list\"\n  | [e] -> e\n  | _ :: l -> last l ;;\n```\n\n```\nval last : 'a list -> 'a = <fun>\n```\n\nLe motif `[e]` (un seul élément) est l'arrêt normal ; il doit précéder `_ :: l`.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 4,
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    },
+    {
+     "id": "kb7",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet rec f = function\n    [] -> []\n  | [x] -> [x]\n  | x :: y :: l -> y :: x :: f l ;;\nf [1; 2; 3; 4; 5] ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval f : 'a list -> 'a list = <fun>\n- : int list = [2; 1; 4; 3; 5]\n```\n\nLes éléments sont échangés deux à deux ; le dernier, seul, reste en place.",
+     "src": "Moodle Caml, « Conseils pour les listes »",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet rec f = function\n    [] -> []\n  | [x] -> [x]\n  | x :: y :: l -> y :: x :: f l ;;\nf ['a'; 'b'; 'c'; 'd'] ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval f : 'a list -> 'a list = <fun>\n- : char list = ['b'; 'a'; 'd'; 'c']\n```\n\nÉchange deux à deux."
+      }
+     ],
+     "formules": "`[] | [_] | e1 :: e2 :: l` · deux listes : `([], l) | (l, []) | (e1 :: r1, e2 :: r2)` · `(a, b) :: l`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Fonctions d'ordre supérieur",
+   "notions": [
+    "ordre_sup",
+    "listes"
+   ],
+   "exos": [
+    {
+     "id": "kc1",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet applique f x = f (f x) ;;\napplique (fun x -> x * 2) 5 ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval applique : ('a -> 'a) -> 'a -> 'a = <fun>\n- : int = 20\n```\n\n`f` est appliquée à son propre résultat : son type est `'a -> 'a`.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet applique f x = f (f x) ;;\napplique (fun x -> x ^ \"!\") \"ok\" ;;\n```",
+       "sol": "**Réponse de Caml :**\n\n```\nval applique : ('a -> 'a) -> 'a -> 'a = <fun>\n- : string = \"ok!!\"\n```\n\nDeux applications."
+      }
+     ],
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc2",
+     "enonce": "Donner la réponse de Caml à chaque phrase :\n\n```\nlet compose f g x = f (g x) ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval compose : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b = <fun>\n```\n\n`g x` est de type `'a` (le paramètre de `f`), `x` d'un type `'c` quelconque.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 3,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc3",
+     "enonce": "Écrire `map f lst` : applique `f` à chaque élément.\n\n```\n# map (fun x -> x * x) [1; 2; 3];;\n- : int list = [1; 4; 9]\n# map (fun x -> x > 0) [-1; 2];;\n- : bool list = [false; true]\n```",
+     "sol": "```\nlet rec map f = function\n    [] -> []\n  | e :: l -> f e :: map f l ;;\n```\n\n```\nval map : ('a -> 'b) -> 'a list -> 'b list = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc4",
+     "enonce": "Écrire `for_all p lst` : tous les éléments vérifient-ils le prédicat `p` ? (arrêt au premier qui échoue)\n\n```\n# for_all (fun x -> x mod 2 = 0) [2; 4; 6];;\n- : bool = true\n# for_all (fun x -> x > 0) [1; -1; 2];;\n- : bool = false\n```",
+     "sol": "```\nlet rec for_all p = function\n    [] -> true\n  | e :: l -> p e && for_all p l ;;\n```\n\n```\nval for_all : ('a -> bool) -> 'a list -> bool = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc5",
+     "enonce": "Écrire `filter p lst` : les éléments qui vérifient `p`, dans l'ordre.\n\n```\n# filter (fun x -> x > 2) [1; 5; 2; 3];;\n- : int list = [5; 3]\n```",
+     "sol": "```\nlet rec filter p = function\n    [] -> []\n  | e :: l -> if p e then e :: filter p l else filter p l ;;\n```\n\n```\nval filter : ('a -> bool) -> 'a list -> 'a list = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc6",
+     "enonce": "Écrire `fold f acc lst` : $f(\\dots f(f(acc, e_1), e_2)\\dots, e_n)$. Puis en déduire la somme d'une liste.\n\n```\n# fold (fun a e -> a + e) 0 [1; 2; 3];;\n- : int = 6\n# fold (fun a e -> e :: a) [] [1; 2; 3];;\n- : int list = [3; 2; 1]\n```",
+     "sol": "```\nlet rec fold f acc = function\n    [] -> acc\n  | e :: l -> fold f (f acc e) l ;;\n```\n\n```\nval fold : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a = <fun>\n```\n\nL'accumulateur porte le résultat partiel ; avec `e :: a`, `fold` renverse la liste.",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 5,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    },
+    {
+     "id": "kc7",
+     "enonce": "Écrire `count_if p lst` : nombre d'éléments qui vérifient `p`.\n\n```\n# count_if (fun c -> c = 'a') ['a'; 'b'; 'a'];;\n- : int = 2\n```",
+     "sol": "```\nlet rec count_if p = function\n    [] -> 0\n  | e :: l -> (if p e then 1 else 0) + count_if p l ;;\n```\n\n```\nval count_if : ('a -> bool) -> 'a list -> int = <fun>\n```",
+     "src": "Moodle Caml, fiche de cours et séminaire",
+     "duree": 4,
+     "formules": "`map`, `for_all`, `filter`, `fold` · fonction en paramètre · `order : 'a -> 'a -> bool`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Niveau examen : B1 Caml octobre 2023",
+   "notions": [
+    "listes",
+    "listes2",
+    "optimisation",
+    "exceptions",
+    "ordre_sup"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "kx1",
+     "enonce": "Exercice 1 (6,5 points). Écrire la fonction `insert_mult n x lst` qui insère l'élément `x` dans la liste `lst` après chaque groupe de `n` éléments. Elle déclenche `Invalid_argument` si `n` est négatif ou nul. Seules fonctions prédéfinies permises : `failwith` et `invalid_arg`.\n\n```\n# insert_mult 0 1 [1; 2; 3; 4; 5];;\nException: Invalid_argument \"insert_mult: n must be > 0\".\n# insert_mult 4 42 [10; 20; 30; 40];;\n- : int list = [10; 20; 30; 40; 42]\n# insert_mult 2 0 [1; 2; 3; 4; 5];;\n- : int list = [1; 2; 0; 3; 4; 0; 5]\n# insert_mult 3 'x' ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'];;\n- : char list = ['a'; 'b'; 'c'; 'x'; 'd'; 'e'; 'f'; 'x'; 'g']\n# insert_mult 1 42 [];;\n- : int list = []\n# insert_mult 1 42 [10];;\n- : int list = [10; 42]\n```",
+     "sol": "```\nlet insert_mult n x lst =\n  if n <= 0 then invalid_arg \"insert_mult: n must be > 0\"\n  else\n    let rec aux count = function\n        l when count = 0 -> x :: aux n l\n      | [] -> []\n      | e :: l -> e :: aux (count - 1) l\n    in\n    aux n lst ;;\n```\n\n```\nval insert_mult : int -> 'a -> 'a list -> 'a list = <fun>\n```\n\nFonction chapeau pour le test de `n` ; compteur `count` qui descend à $0$ : on insère `x` et on repart de `n`. Le cas `count = 0` passe avant `[]` : `x` est ajouté après un groupe complet même en fin de liste.",
+     "src": "Examen B1 Caml, octobre 2023 (Past-Exams 2028/CAML)",
+     "duree": 15,
+     "formules": "fonction chapeau · compteur · `remove_x` puis `remove_duplicates` · groupes construits en récursion pure",
+     "type": "open"
+    },
+    {
+     "id": "kx2",
+     "enonce": "Exercice 2.1 (2 points). Écrire la fonction `remove_x x lst` qui supprime toutes les occurrences de `x` dans `lst`.\n\n```\n# remove_x 1 [];;\n- : int list = []\n# remove_x \"apple\" [\"banana\"; \"apple\"; \"cherry\"; \"date\"; \"apple\"];;\n- : string list = [\"banana\"; \"cherry\"; \"date\"]\n# remove_x 5 [5; 5; 2; 3; 5; 1];;\n- : int list = [2; 3; 1]\n# remove_x true [true; false; true; false; true];;\n- : bool list = [false; false]\n```",
+     "sol": "```\nlet rec remove_x x = function\n    [] -> []\n  | e :: l when e = x -> remove_x x l\n  | e :: l -> e :: remove_x x l ;;\n```\n\n```\nval remove_x : 'a -> 'a list -> 'a list = <fun>\n```\n\nParcours complet : un seul cas d'arrêt.",
+     "src": "Examen B1 Caml, octobre 2023 (Past-Exams 2028/CAML)",
+     "duree": 6,
+     "formules": "fonction chapeau · compteur · `remove_x` puis `remove_duplicates` · groupes construits en récursion pure",
+     "type": "open"
+    },
+    {
+     "id": "kx3",
+     "enonce": "Exercice 2.2 (3 points). Écrire `remove_duplicates lst` qui supprime tous les doublons de `lst` (on garde la première occurrence). La fonction doit utiliser `remove_x`.\n\n```\n# remove_duplicates [3; 1; 2; 2; 3; 1; 4; 5; 5];;\n- : int list = [3; 1; 2; 4; 5]\n# remove_duplicates [42; 13; 42; 7; 7; 13; 42; 42];;\n- : int list = [42; 13; 7]\n# remove_duplicates [\"dog\"; \"cat\"; \"dog\"; \"rat\"; \"rat\"; \"bat\"];;\n- : string list = [\"dog\"; \"cat\"; \"rat\"; \"bat\"]\n# remove_duplicates [true; true; false; true; false; true; false];;\n- : bool list = [true; false]\n```",
+     "sol": "```\nlet rec remove_x x = function\n    [] -> []\n  | e :: l when e = x -> remove_x x l\n  | e :: l -> e :: remove_x x l ;;\nlet rec remove_duplicates = function\n    [] -> []\n  | e :: l -> e :: remove_duplicates (remove_x e l) ;;\n```\n\n```\nval remove_x : 'a -> 'a list -> 'a list = <fun>\nval remove_duplicates : 'a list -> 'a list = <fun>\n```\n\nOn garde la tête et on retire ses autres occurrences avant de continuer.",
+     "src": "Examen B1 Caml, octobre 2023 (Past-Exams 2028/CAML)",
+     "duree": 8,
+     "formules": "fonction chapeau · compteur · `remove_x` puis `remove_duplicates` · groupes construits en récursion pure",
+     "type": "open"
+    },
+    {
+     "id": "kx4",
+     "enonce": "Exercice 3 (8 points). Écrire `split sep lst` qui coupe `lst` en sous-listes dès que le prédicat `sep` est vérifié sur un élément. Ces éléments ne font partie d'aucune sous-liste ; les sous-listes restent dans l'ordre initial.\n\n```\n# split (function x -> x = ',') [];;\n- : char list list = []\n# split (function x -> x = 3) [1; 2; 3; 4; 5];;\n- : int list list = [[1; 2]; [4; 5]]\n# split (function x -> x = 20) [10; 20; 30; 40; 50];;\n- : int list list = [[10]; [30; 40; 50]]\n# split (function x -> x = 0) [0; 1; 0; 2; 0; 3; 0; 4];;\n- : int list list = [[]; [1]; [2]; [3]; [4]]\n```",
+     "sol": "```\nlet split sep lst =\n  let rec aux = function\n      [] -> [[]]\n    | e :: l ->\n        if sep e then [] :: aux l\n        else match aux l with\n            g :: r -> (e :: g) :: r\n          | [] -> [[e]]\n  in\n  if lst = [] then [] else aux lst ;;\n```\n\n```\nval split : ('a -> bool) -> 'a list -> 'a list list = <fun>\n```\n\nRécursion pure : `aux` renvoie toujours au moins un groupe. Un séparateur ouvre un nouveau groupe vide ; un autre élément se place en tête du premier groupe. La fonction chapeau traite la liste vide. (Le cas `[] -> [[e]]` n'arrive jamais : il rend seulement le filtrage exhaustif.)",
+     "src": "Examen B1 Caml, octobre 2023 (Past-Exams 2028/CAML)",
+     "duree": 20,
+     "formules": "fonction chapeau · compteur · `remove_x` puis `remove_duplicates` · groupes construits en récursion pure",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Niveau examen : B1 Caml 30 octobre 2024",
+   "notions": [
+    "listes",
+    "listes2",
+    "ordre_sup",
+    "exceptions",
+    "filtrage"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "ky1",
+     "enonce": "Exercice 1 (7 points). Écrire `check_list k lst` : `lst` (liste de listes) ne contient-elle que des listes de longueur $\\le k$ ? `Invalid_argument` si $k<0$. Seules fonctions prédéfinies permises : `failwith` et `invalid_arg`.\n\n```\n# check_list 2 [[1; 2]; [4]; [5; 6]];;\n- : bool = true\n# check_list 3 [[1; 2; 3]; [4; 5; 6; 7]; [8; 9; 10]];;\n- : bool = false\n# check_list 1 [[]; [2]; [3]];;\n- : bool = true\n# check_list (-1) [[1]; [2]; []];;\nException: Invalid_argument \"check_list: k < 0\".\n```",
+     "sol": "```\nlet check_list k lst =\n  let rec len_ok n = function\n      [] -> true\n    | _ :: l -> n > 0 && len_ok (n - 1) l\n  in\n  let rec check = function\n      [] -> true\n    | l :: r -> len_ok k l && check r\n  in\n  if k < 0 then invalid_arg \"check_list: k < 0\"\n  else check lst ;;\n```\n\n```\nval check_list : int -> 'a list list -> bool = <fun>\n```\n\n`len_ok n l` vérifie longueur$(l)\\le n$ sans calculer la longueur : on s'arrête dès que $n$ éléments sont dépassés. `&&` arrête aussi `check` à la première liste trop longue.",
+     "src": "Examen B1 Caml, 30 octobre 2024 (Past-Exams 2029/CAML)",
+     "duree": 15,
+     "formules": "longueur $\\le k$ sans `List.length` · `insert_x` avec `order` · tri insertion · `mystery` : liste puis son miroir",
+     "type": "open"
+    },
+    {
+     "id": "ky2",
+     "enonce": "Exercice 2.1 (tri insertion). Écrire `insert_x x order lst` qui insère `x` dans la liste `lst`, triée selon l'ordre induit par la fonction booléenne à deux paramètres `order`.\n\n```\n# insert_x 3 (function x -> function y -> x < y) [];;\n- : int list = [3]\n# insert_x 7 (function x -> function y -> x < y) [1; 3; 5; 9];;\n- : int list = [1; 3; 5; 7; 9]\n# insert_x 5 (function x -> function y -> x > y) [10; 8; 6; 4; 2];;\n- : int list = [10; 8; 6; 5; 4; 2]\n# insert_x 'c' (function x -> function y -> x < y) ['d'; 'e'];;\n- : char list = ['c'; 'd'; 'e']\n# insert_x 'c' (function x -> function y -> x > y) ['e'];;\n- : char list = ['e'; 'c']\n```",
+     "sol": "```\nlet rec insert_x x order = function\n    [] -> [x]\n  | e :: l -> if order x e then x :: e :: l else e :: insert_x x order l ;;\n```\n\n```\nval insert_x : 'a -> ('a -> 'a -> bool) -> 'a list -> 'a list = <fun>\n```\n\nArrêt dès que `order x e` est vrai : `x` se place devant `e`, le reste est déjà trié.",
+     "src": "Examen B1 Caml, 30 octobre 2024 (Past-Exams 2029/CAML)",
+     "duree": 10,
+     "formules": "longueur $\\le k$ sans `List.length` · `insert_x` avec `order` · tri insertion · `mystery` : liste puis son miroir",
+     "type": "open"
+    },
+    {
+     "id": "ky3",
+     "enonce": "Exercice 2.2. Écrire `insertion_sort order lst` qui trie `lst` selon `order`, en utilisant `insert_x`.\n\n```\n# insertion_sort (function x -> function y -> x > y) [];;\n- : 'a list = []\n# insertion_sort (function x -> function y -> x < y) [5; 3; 8; 1; 4];;\n- : int list = [1; 3; 4; 5; 8]\n# insertion_sort (function x -> function y -> x > y) [10; 20; 15; 5; 30];;\n- : int list = [30; 20; 15; 10; 5]\n# insertion_sort (function x -> function y -> x < y) ['d'; 'a'; 'c'; 'b'; 'e'];;\n- : char list = ['a'; 'b'; 'c'; 'd'; 'e']\n# insertion_sort (function x -> function y -> x < y) [1.1; 3.3; 2.2; 5.5; 4.4];;\n- : float list = [1.1; 2.2; 3.3; 4.4; 5.5]\n```",
+     "sol": "```\nlet rec insert_x x order = function\n    [] -> [x]\n  | e :: l -> if order x e then x :: e :: l else e :: insert_x x order l ;;\nlet rec insertion_sort order = function\n    [] -> []\n  | e :: l -> insert_x e order (insertion_sort order l) ;;\n```\n\n```\nval insert_x : 'a -> ('a -> 'a -> bool) -> 'a list -> 'a list = <fun>\nval insertion_sort : ('a -> 'a -> bool) -> 'a list -> 'a list = <fun>\n```\n\nRécursion pure : on trie la fin, puis on y insère la tête.",
+     "src": "Examen B1 Caml, 30 octobre 2024 (Past-Exams 2029/CAML)",
+     "duree": 8,
+     "formules": "longueur $\\le k$ sans `List.length` · `insert_x` avec `order` · tri insertion · `mystery` : liste puis son miroir",
+     "type": "open"
+    },
+    {
+     "id": "ky4",
+     "enonce": "Exercice 3 (4 points). Donner le type de `mystery`, puis la réponse de Caml aux deux évaluations :\n\n```\nlet mystery lst =\n  let rec tmp lst acc switch = match (lst, switch) with\n      ([], true) -> tmp [] acc false\n    | ([], false) -> (match acc with\n                        [] -> []\n                      | h :: acc -> h :: tmp lst acc true)\n    | (h :: t, true) -> h :: tmp t (h :: acc) true\n  in\n  tmp lst [] true ;;\nmystery [1; 2; 8; 2; 1] ;;\nmystery [\"a\"; \"b\"; \"c\"; \"d\"; \"e\"; \"f\"] ;;\n```",
+     "sol": "**Réponse de Caml :**\n\n```\nval mystery : 'a list -> 'a list = <fun>\n- : int list = [1; 2; 8; 2; 1; 1; 2; 8; 2; 1]\n- : string list = [\"a\"; \"b\"; \"c\"; \"d\"; \"e\"; \"f\"; \"f\"; \"e\"; \"d\"; \"c\"; \"b\"; \"a\"]\n```\n\nAvec `switch = true`, chaque élément est recopié et empilé dans `acc` (à l'envers). À la fin de la liste, `switch` passe à `false` et les éléments de `acc` sont recopiés : la liste suivie de son miroir. (Le filtrage n'est pas exhaustif : Caml affiche un avertissement, le cas `(h :: t, false)` n'arrive jamais.)",
+     "src": "Examen B1 Caml, 30 octobre 2024 (Past-Exams 2029/CAML)",
+     "duree": 10,
+     "formules": "longueur $\\le k$ sans `List.length` · `insert_x` avec `order` · tri insertion · `mystery` : liste puis son miroir",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
