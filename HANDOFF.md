@@ -229,3 +229,10 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Régimes transitoires (Moodle `Electronique S2 - Études des régimes transitoires ...`: kit, TD + corrigé, contrôle février 2023 + corrigé).
 2. Diodes (cours jonction PN, TD diodes + Zéner corrigés, exam B7 March 2025 EN).
 3. Then algo, prog, anglais, méthodo.
+
+# Handoff — 2026-11-16 (électronique S2 transitoires)
+## Done
+- `elec-s2-transitoires` (`parcours/src/elec_transitoires.py`): 12 levels, 83 exos (12 exam: contrôle février 2023), 8 notions, 16 quiz, variants, FORMULES. Syllabus ECUE « Études des régimes transitoires » filled. Build OK, 26/26 tests, 332 formulas 0 KaTeX error, 12 levels at 390 px OK, QA account deleted, deployed. Branch `feat/elec-sinus`.
+## Next steps
+1. Diodes (Moodle `Electronique S2 - Diodes [...]`: cours jonction PN + précisions et méthodes, TD diodes + Zéner corrigés, exam B7 March 2025 EN, partiel 2018-2019).
+2. Then algo, prog, anglais, méthodo.

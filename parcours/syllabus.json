@@ -420,12 +420,15 @@
        "id": "Études des régimes transitoires",
        "titre": "Études des régimes transitoires",
        "bloc": "",
-       "periode_examen": "",
-       "chapitres": [],
-       "parcours": [],
-       "a_faire": [
-        "Parcours régimes transitoires (RC, RL), contrôle février 2023"
+       "periode_examen": "février (contrôle 2023 ; aucun sujet promo 2030 publié)",
+       "chapitres": [
+        "Electronique S2 - Études des régimes transitoires [2526_I_INF_FISE_S02_CN_ERT]/01_Documents de cours",
+        "Electronique S2 - Études des régimes transitoires [2526_I_INF_FISE_S02_CN_ERT]/02_Travaux Dirigés"
        ],
+       "parcours": [
+        "elec-s2-transitoires"
+       ],
+       "a_faire": [],
        "annales": []
       },
       {

@@ -1,0 +1,1244 @@
+{
+ "subject": {
+  "id": "elec-s2-transitoires",
+  "ordre": 530,
+  "matiere": "electronique",
+  "semestre": "S2",
+  "ecue": "Études des régimes transitoires",
+  "titre": "Régimes transitoires (circuits RC et RL)",
+  "chapitres_moodle": [
+   "Electronique S2 - Études des régimes transitoires [2526_I_INF_FISE_S02_CN_ERT]/01_Documents de cours",
+   "Electronique S2 - Études des régimes transitoires [2526_I_INF_FISE_S02_CN_ERT]/02_Travaux Dirigés"
+  ],
+  "td": "TD « Les régimes transitoires » (4 exercices, étincelle de rupture)",
+  "examens": [
+   "Contrôle d'électronique S2 (février 2023)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "composants",
+   "titre": "Condensateur et bobine : relations et continuité",
+   "formule": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité de la tension aux bornes d'un condensateur : $u_C(0^+)=u_C(0^-)$ · continuité du courant dans une bobine : $i_L(0^+)=i_L(0^-)$ · $C$ en farads (F), $L$ en henrys (H)",
+   "exemple": "condensateur initialement déchargé : $u_C(0^+)=0$ juste après la fermeture",
+   "cours": "La tension aux bornes d'un condensateur ne peut pas varier brutalement (le courant serait infini) ; de même le courant dans une bobine. Ces continuités donnent l'état du circuit juste après un changement ($t=0^+$, fermeture ou ouverture d'un interrupteur)."
+  },
+  {
+   "id": "permanent",
+   "titre": "Régime permanent continu",
+   "formule": "$t\\to\\infty$ : grandeurs constantes, $\\dfrac{du}{dt}=0$, $\\dfrac{di}{dt}=0$ · condensateur $=$ interrupteur ouvert ($i=0$) · bobine $=$ fil ($u=0$)",
+   "exemple": "$E$, $R$, $C$ en série : $u_C(\\infty)=E$, $i(\\infty)=0$",
+   "cours": "Une fois le régime permanent atteint, le circuit ne contient plus que des résistances et des sources : on calcule les valeurs finales avec les lois du continu (diviseurs, mailles). La tension aux bornes d'un interrupteur ouvert n'est en général pas nulle."
+  },
+  {
+   "id": "initial",
+   "titre": "Conditions initiales à $t=0^+$",
+   "formule": "à $t=0^+$ : condensateur déchargé $\\to$ fil ($u_C=0$), chargé sous $U_0$ $\\to$ source $U_0$ · bobine sans courant $\\to$ interrupteur ouvert ($i_L=0$) · puis lois de Kirchhoff",
+   "exemple": "$E$, $R$, puis $R\\parallel L$ : à $0^+$, $i_L=0$, $i=i_R=\\dfrac E{2R}$, $u_L=\\dfrac E2$",
+   "cours": "On commence par les grandeurs continues (tension du condensateur, courant de la bobine), puis on remplace le composant par son équivalent à cet instant seulement, et on calcule les autres grandeurs, qui elles peuvent sauter."
+  },
+  {
+   "id": "equadiff",
+   "titre": "Équation différentielle du premier ordre",
+   "formule": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · RC : $\\dfrac{du_C}{dt}+\\dfrac{1}{RC}u_C=\\dfrac{E}{RC}$ · RL : $\\dfrac{di}{dt}+\\dfrac RL i=\\dfrac EL$ · $\\tau$ : coefficient de $s$ quand celui de $\\dfrac{ds}{dt}$ vaut $1$",
+   "exemple": "$\\dfrac{di_2}{dt}+\\dfrac{2}{3RC}i_2=0$ : $\\tau=\\dfrac{3RC}2$",
+   "cours": "La loi des mailles et la relation courant/tension du composant donnent une équation différentielle linéaire du premier ordre à coefficients constants. On la met sous forme normalisée (coefficient $1$ devant la dérivée) pour lire $\\tau$."
+  },
+  {
+   "id": "resolution",
+   "titre": "Résolution : $s(t)=\\alpha e^{-t/\\tau}+\\beta$",
+   "formule": "$s(t)=\\alpha\\,e^{-t/\\tau}+\\beta$ · $\\beta=s(\\infty)$ : solution particulière (régime permanent) · $\\alpha=s(0^+)-s(\\infty)$ · donc $s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+   "exemple": "$u_C(0^+)=U_0$, $u_C(\\infty)=E$ : $u_C(t)=E+(U_0-E)e^{-t/RC}$",
+   "cours": "Sans second membre, la solution est $\\alpha e^{-t/\\tau}$ (séparation des variables puis exponentielle). Avec un second membre constant, on ajoute une solution particulière constante, la valeur finale. La constante $\\alpha$ vient de la condition initiale."
+  },
+  {
+   "id": "tau",
+   "titre": "Constante de temps",
+   "formule": "RC : $\\tau=RC$ · RL : $\\tau=\\dfrac LR$ · tangente à l'origine : coupe l'asymptote en $t=\\tau$ · $s(\\tau)$ : $63\\,\\%$ du chemin · régime permanent atteint à $5\\tau$ (écart $< 1\\,\\%$)",
+   "exemple": "$R=1$ kΩ, $C=1\\,\\mu$F : $\\tau=1$ ms, permanent après $5$ ms",
+   "cours": "La constante de temps mesure la durée du régime transitoire. Après $\\tau$, le signal a parcouru $1-e^{-1}\\approx63\\,\\%$ de l'écart entre sa valeur initiale et sa valeur finale ; après $5\\tau$, l'écart restant est inférieur à $1\\,\\%$."
+  },
+  {
+   "id": "thevenin_t",
+   "titre": "Se ramener à un circuit RC ou RL",
+   "formule": "Thévenin/Norton sur la partie résistive : $E_{th}$ (tension à vide), $R_{th}$ (sources éteintes) · puis $\\tau=R_{th}C$ ou $\\tau=\\dfrac{L}{R_{th}}$ · $s(\\infty)$ calculée avec $E_{th}$",
+   "exemple": "$E$, $R$, puis $R/2$ en parallèle avec $C$ : $E_{th}=\\dfrac E3$, $R_{th}=\\dfrac R3$, $\\tau=\\dfrac{RC}3$",
+   "cours": "Vu du condensateur ou de la bobine, le reste du circuit (sources et résistances) équivaut à un générateur de Thévenin. On retrouve le circuit RC ou RL série du cours, avec $R_{th}$ et $E_{th}$."
+  },
+  {
+   "id": "millman_t",
+   "titre": "Rappel : théorème de Millman",
+   "formule": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$ (vient de la loi des nœuds)",
+   "exemple": "$(2E,R)$, $(-E,2R)$, $R$ et source $I$ entrant en $A$ : $U=\\dfrac{3E+2RI}{5}$",
+   "cours": "Le théorème de Millman, vu en S1, revient au contrôle de S2 : il donne le potentiel d'un nœud relié à la masse par des branches en parallèle."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "composants",
+   "type": "qcm",
+   "q": "Il y a continuité :",
+   "choix": [
+    "de la tension aux bornes d'un condensateur",
+    "du courant dans un condensateur",
+    "de la tension aux bornes d'une bobine",
+    "du courant dans une résistance"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "composants",
+   "type": "vf",
+   "q": "L'inductance d'une bobine s'exprime en henrys.",
+   "bonne": true
+  },
+  {
+   "notion": "permanent",
+   "type": "qcm",
+   "q": "En régime permanent continu, un condensateur équivaut à :",
+   "choix": [
+    "un interrupteur ouvert",
+    "un fil",
+    "une résistance",
+    "une source de tension"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "permanent",
+   "type": "vf",
+   "q": "En régime permanent continu, la tension aux bornes d'une bobine est nulle.",
+   "bonne": true
+  },
+  {
+   "notion": "initial",
+   "type": "qcm",
+   "q": "$E$, $R$, $C$ déchargé : $u_C$ juste après la fermeture vaut :",
+   "choix": [
+    "$0$",
+    "$E$",
+    "$E/R$",
+    "$RE$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "initial",
+   "type": "vf",
+   "q": "À $t=0^+$, le courant dans une résistance est forcément continu.",
+   "bonne": false
+  },
+  {
+   "notion": "equadiff",
+   "type": "qcm",
+   "q": "Dans $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$, la constante de temps est :",
+   "choix": [
+    "$L/R$",
+    "$R/L$",
+    "$RL$",
+    "$E/L$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "equadiff",
+   "type": "vf",
+   "q": "Un circuit RC série donne une équation différentielle du premier ordre.",
+   "bonne": true
+  },
+  {
+   "notion": "resolution",
+   "type": "qcm",
+   "q": "Dans $s(t)=\\alpha e^{-t/\\tau}+\\beta$, $\\beta$ est :",
+   "choix": [
+    "la valeur en régime permanent",
+    "la valeur initiale",
+    "la constante de temps",
+    "la pente à l'origine"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "resolution",
+   "type": "vf",
+   "q": "$\\alpha$ se détermine avec la condition initiale.",
+   "bonne": true
+  },
+  {
+   "notion": "tau",
+   "type": "qcm",
+   "q": "On considère le régime permanent atteint au bout de :",
+   "choix": [
+    "$5\\tau$",
+    "$\\tau$",
+    "$\\tau/2$",
+    "$2\\tau$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tau",
+   "type": "vf",
+   "q": "La tangente à l'origine coupe l'asymptote finale en $t=\\tau$.",
+   "bonne": true
+  },
+  {
+   "notion": "thevenin_t",
+   "type": "qcm",
+   "q": "Vu du condensateur, $R_{th}$ s'obtient :",
+   "choix": [
+    "sources éteintes",
+    "en court-circuitant le condensateur",
+    "en ajoutant toutes les résistances",
+    "avec Millman"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "thevenin_t",
+   "type": "vf",
+   "q": "Pour un circuit RL ramené à Thévenin, $\\tau=L/R_{th}$.",
+   "bonne": true
+  },
+  {
+   "notion": "millman_t",
+   "type": "qcm",
+   "q": "Le théorème de Millman vient de :",
+   "choix": [
+    "la loi des nœuds",
+    "la loi des mailles",
+    "la loi d'Ohm seule",
+    "Thévenin"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "millman_t",
+   "type": "vf",
+   "q": "Une branche sans source contribue seulement au dénominateur de Millman.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Condensateur et bobine",
+   "notions": [
+    "composants"
+   ],
+   "exos": [
+    {
+     "id": "t11",
+     "enonce": "Condensateur $C=2\\,\\mu$F, $\\dfrac{du}{dt}=500$ V/s. Courant (en mA) ?",
+     "ans": "1",
+     "sol": "$i=C\\dfrac{du}{dt}=2\\times10^{-6}\\times500=10^{-3}$ A.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Condensateur $C=10\\,\\mu$F, $\\dfrac{du}{dt}=200$ V/s. Courant (en mA) ?",
+       "ans": "2",
+       "sol": "$i=10^{-5}\\times200=2$ mA."
+      }
+     ],
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    },
+    {
+     "id": "t12",
+     "enonce": "Bobine $L=50$ mH, $\\dfrac{di}{dt}=100$ A/s. Tension (en V) ?",
+     "ans": "5",
+     "sol": "$u=L\\dfrac{di}{dt}=5$ V.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Bobine $L=20$ mH, $\\dfrac{di}{dt}=500$ A/s. Tension (en V) ?",
+       "ans": "10",
+       "sol": "$u=10$ V."
+      }
+     ],
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    },
+    {
+     "id": "t13",
+     "enonce": "Condensateur chargé sous $6$ V juste avant la fermeture d'un interrupteur. $u_C(0^+)$ (en V) ?",
+     "ans": "6",
+     "sol": "Continuité de la tension aux bornes d'un condensateur : $u_C(0^+)=u_C(0^-)=6$ V.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 1,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    },
+    {
+     "id": "t14",
+     "enonce": "Bobine traversée par $2$ A juste avant l'ouverture d'un interrupteur. $i_L(0^+)$ (en A) ?",
+     "ans": "2",
+     "sol": "Continuité du courant dans une bobine : $2$ A.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 1,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    },
+    {
+     "id": "t15",
+     "enonce": "Unités de la capacité $C$ et de l'inductance $L$ ?",
+     "sol": "$C$ en farads (F), $L$ en henrys (H).",
+     "src": "Contrôle d'électronique S2, février 2023, Q2-Q3",
+     "duree": 1,
+     "formules": "$C$ en F · $L$ en H",
+     "type": "open"
+    },
+    {
+     "id": "t16",
+     "enonce": "Pourquoi la tension aux bornes d'un condensateur ne peut-elle pas varier brutalement ?",
+     "sol": "$i=C\\dfrac{du}{dt}$ : un saut de tension demanderait une dérivée infinie, donc un courant infini, impossible dans un circuit réel. Même raisonnement pour le courant dans une bobine avec $u=L\\dfrac{di}{dt}$.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 3,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "open"
+    },
+    {
+     "id": "t17",
+     "enonce": "Bobine sans courant avant la fermeture. $i_L(0^+)$ (en A) ?",
+     "ans": "0",
+     "sol": "Continuité : $i_L(0^+)=i_L(0^-)=0$ ; à cet instant la bobine se comporte comme un interrupteur ouvert.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 1,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Régime permanent continu",
+   "notions": [
+    "permanent",
+    "composants"
+   ],
+   "exos": [
+    {
+     "id": "t21",
+     "enonce": "En régime permanent continu, par quoi remplace-t-on un condensateur ? une bobine ?",
+     "sol": "Condensateur : interrupteur ouvert ($i=C\\,du/dt=0$). Bobine : fil ($u=L\\,di/dt=0$).",
+     "src": "Contrôle d'électronique S2, février 2023, Q4",
+     "duree": 2,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "open"
+    },
+    {
+     "id": "t22",
+     "enonce": "$E=10$ V, $R$ et $C$ en série, interrupteur fermé depuis longtemps. $u_C(\\infty)$ (en V) ?",
+     "ans": "10",
+     "sol": "$i=0$, pas de tension sur $R$ : $u_C=E=10$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 1,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t23",
+     "enonce": "$E=12$ V, $R=4$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
+     "ans": "3",
+     "sol": "Bobine $=$ fil : $i=E/R=3$ A, $u_L=0$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "$E=15$ V, $R=5$ Ω et $L$ en série, régime permanent. Courant (en A) ?",
+       "ans": "3",
+       "sol": "$i=3$ A."
+      }
+     ],
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t24",
+     "enonce": "$E$, $R$ en série, puis $R$ en parallèle avec ($R$ en série avec $C$). $E=12$ V. $u_C(\\infty)$ (en V) ?",
+     "ans": "6",
+     "sol": "Aucun courant dans la branche de $C$ : diviseur $\\dfrac{R}{R+R}E=6$ V, et $u_C=u$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
+     "duree": 3,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil · diviseur : $U_2=\\dfrac{R_2}{R_1+R_2}E$",
+     "type": "value"
+    },
+    {
+     "id": "t25",
+     "enonce": "$E=10$ V, $R$ en série, puis $R$ et $L$ en parallèle. $u_L(\\infty)$ (en V) ?",
+     "ans": "0",
+     "sol": "Bobine $=$ fil : $u_L=0$ (et tout le courant $E/R$ passe dans $L$).",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t26",
+     "enonce": "Même circuit, $R=5$ Ω : $i_L(\\infty)$ (en A) ?",
+     "ans": "2",
+     "sol": "La bobine court-circuite la résistance de droite : $i=i_L=E/R=2$ A.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t27",
+     "enonce": "$E$, $R$, $C$ en série. Courant final (en A) ?",
+     "ans": "0",
+     "sol": "Condensateur $=$ interrupteur ouvert : $i(\\infty)=0$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 1,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Conditions initiales",
+   "notions": [
+    "initial",
+    "permanent"
+   ],
+   "exos": [
+    {
+     "id": "t31",
+     "enonce": "Contrôle 2023, ex. 2 : $E$, $K$, $R$ en série, puis $R$ et $L$ en parallèle, courants nuls avant. $u_L(0^+)$ en fonction de $E$ ($E=10$ V) ?",
+     "ans": "5",
+     "sol": "$i_L(0^+)=0$ : la bobine est ouverte, diviseur $R$, $R$ : $u_L=\\dfrac E2=5$ V.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 3,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff · diviseur : $U_2=\\dfrac{R_2}{R_1+R_2}E$",
+     "type": "value"
+    },
+    {
+     "id": "t32",
+     "enonce": "Même circuit, $R=1$ kΩ : $i(0^+)$ (en mA) ?",
+     "ans": "5",
+     "sol": "$i=i_R=\\dfrac E{2R}=5$ mA.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t33",
+     "enonce": "TD ex. 3 : $E$, $K$, $R$ en série, puis $(R$ en série avec $C)$ et $R$ en parallèle ; $C$ déchargé. $E=9$ V : $u(0^+)$ (en V) ?",
+     "ans": "3",
+     "sol": "$u_C(0^+)=0$ : $C$ est un fil, les deux $R$ sont en parallèle ($R/2$), diviseur : $u=\\dfrac{R/2}{R/2+R}E=\\dfrac E3=3$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
+     "duree": 3,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff · diviseur : $U_2=\\dfrac{R_2}{R_1+R_2}E$",
+     "type": "value"
+    },
+    {
+     "id": "t34",
+     "enonce": "Même circuit, $R=1$ kΩ : $i_1(0^+)$ (en mA) ?",
+     "ans": "6",
+     "sol": "$i_2=i_3=\\dfrac{u}{R}=\\dfrac E{3R}$, $i_1=\\dfrac{2E}{3R}=6$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
+     "duree": 3,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t35",
+     "enonce": "$E=10$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=2$ kΩ (en mA) ?",
+     "ans": "5",
+     "sol": "$u_C(0^+)=0$ : toute la tension est sur $R$, $i=\\dfrac ER=5$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E=12$ V, $R$, $C$ en série, $C$ déchargé. $i(0^+)$ avec $R=4$ kΩ (en mA) ?",
+       "ans": "3",
+       "sol": "$i=E/R=3$ mA."
+      }
+     ],
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t36",
+     "enonce": "$E=10$ V, $R=2$ kΩ, $C$ chargé sous $U_0=4$ V. $i(0^+)$ (en mA) ?",
+     "ans": "3",
+     "sol": "$i(0^+)=\\dfrac{E-U_0}{R}=3$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1.2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E=12$ V, $R=3$ kΩ, $C$ chargé sous $U_0=3$ V. $i(0^+)$ (en mA) ?",
+       "ans": "3",
+       "sol": "$\\dfrac{E-U_0}R=3$ mA."
+      }
+     ],
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t37",
+     "enonce": "Contrôle 2023, ex. 2 : remplir le tableau $i$, $i_R$, $i_L$, $u_L$ à $t=0^+$ et $t\\to\\infty$.",
+     "sol": "$t=0^+$ : $i=\\dfrac E{2R}$, $i_R=\\dfrac E{2R}$, $i_L=0$, $u_L=\\dfrac E2$. $t\\to\\infty$ : $i=\\dfrac ER$, $i_R=0$, $i_L=\\dfrac ER$, $u_L=0$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 6,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff · $t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Équation différentielle",
+   "notions": [
+    "equadiff",
+    "composants"
+   ],
+   "exos": [
+    {
+     "id": "t41",
+     "enonce": "$E$, $R$, $C$ en série : $\\dfrac{du_C}{dt}+\\dfrac1{RC}u_C=\\dfrac E{RC}$. Constante de temps avec $R=10$ kΩ, $C=100$ nF (en ms) ?",
+     "ans": "1",
+     "sol": "$\\tau=RC=10^4\\times10^{-7}=10^{-3}$ s.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Constante de temps RC avec $R=2$ kΩ, $C=500$ nF (en ms) ?",
+       "ans": "1",
+       "sol": "$\\tau=10^{-3}$ s."
+      }
+     ],
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t42",
+     "enonce": "$E$, $R$, $L$ en série : $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$. $\\tau$ avec $L=20$ mH, $R=10$ Ω (en ms) ?",
+     "ans": "2",
+     "sol": "$\\tau=\\dfrac LR=2$ ms.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\tau=L/R$ avec $L=50$ mH, $R=25$ Ω (en ms) ?",
+       "ans": "2",
+       "sol": "$2$ ms."
+      }
+     ],
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t43",
+     "enonce": "$\\dfrac{di_2}{dt}+\\dfrac{2}{3RC}i_2=0$. $\\tau$ avec $R=2$ kΩ, $C=1\\,\\mu$F (en ms) ?",
+     "ans": "3",
+     "sol": "$\\tau=\\dfrac{3RC}2=3$ ms.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
+     "duree": 2,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t44",
+     "enonce": "$3\\dfrac{ds}{dt}+6s=12$. Constante de temps (en s) ?",
+     "ans": "Rational(1,2)",
+     "sol": "On divise par $3$ : $\\dfrac{ds}{dt}+2s=4$, $\\dfrac1\\tau=2$, $\\tau=0{,}5$ s.",
+     "duree": 2,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t45",
+     "enonce": "Même équation : valeur finale $s(\\infty)$ ?",
+     "ans": "2",
+     "sol": "En régime permanent $\\dfrac{ds}{dt}=0$ : $6s=12$, $s=2$.",
+     "duree": 2,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t46",
+     "enonce": "Établir l'équation différentielle de $u_C$ pour $E$, $R$, $C$ en série.",
+     "sol": "Mailles : $E=Ri+u_C$. Condensateur : $i=C\\dfrac{du_C}{dt}$. D'où $RC\\dfrac{du_C}{dt}+u_C=E$, soit $\\dfrac{du_C}{dt}+\\dfrac1{RC}u_C=\\dfrac E{RC}$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 4,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$ · $i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "open"
+    },
+    {
+     "id": "t47",
+     "enonce": "Établir l'équation différentielle de $i$ pour $E$, $R$, $L$ en série.",
+     "sol": "Mailles : $E=Ri+u_L$ avec $u_L=L\\dfrac{di}{dt}$. D'où $\\dfrac{di}{dt}+\\dfrac RLi=\\dfrac EL$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 4,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$ · $i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Résolution",
+   "notions": [
+    "resolution",
+    "equadiff"
+   ],
+   "exos": [
+    {
+     "id": "t51",
+     "enonce": "$s(0^+)=0$, $s(\\infty)=10$, $\\tau=1$ ms. $s(t)$ avec $t$ en ms ?",
+     "ans": "10*(1-exp(-t))",
+     "sol": "$s(t)=s(\\infty)+(s(0^+)-s(\\infty))e^{-t/\\tau}=10(1-e^{-t})$.",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t52",
+     "enonce": "$s(0^+)=5$, $s(\\infty)=0$, $\\tau=2$ ms. $s(t)$ avec $t$ en ms ?",
+     "ans": "5*exp(-t/2)",
+     "sol": "Décroissance libre : $s(t)=5e^{-t/2}$.",
+     "duree": 2,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t53",
+     "enonce": "$s(0^+)=2$, $s(\\infty)=8$, $\\tau=1$ s. $\\alpha$ dans $s=\\alpha e^{-t/\\tau}+\\beta$ ?",
+     "ans": "-6",
+     "sol": "$\\beta=s(\\infty)=8$, $\\alpha=s(0^+)-\\beta=-6$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$s(0^+)=10$, $s(\\infty)=4$. $\\alpha$ ?",
+       "ans": "6",
+       "sol": "$\\alpha=10-4=6$."
+      }
+     ],
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t54",
+     "enonce": "Vérifier : $u(t)=V(1-e^{-t/\\tau})$ dans $\\dfrac{du}{dt}+\\dfrac u\\tau$. Valeur (en fonction de $V$, $\\tau$) ?",
+     "ans": "V/tau",
+     "sol": "$\\dfrac{V}{\\tau}e^{-t/\\tau}+\\dfrac V\\tau-\\dfrac V\\tau e^{-t/\\tau}=\\dfrac V\\tau$ : c'est bien $\\dfrac{E}{RC}$ avec $\\tau=RC$, $V=E$.",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t55",
+     "enonce": "Résoudre $\\dfrac{du}{dt}+\\dfrac1\\tau u=0$ par séparation des variables.",
+     "sol": "$\\dfrac{du}{u}=-\\dfrac{dt}\\tau$, on primitive : $\\ln u=-\\dfrac t\\tau+c$, puis $u=e^{c}e^{-t/\\tau}=\\alpha e^{-t/\\tau}$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 4,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "open"
+    },
+    {
+     "id": "t56",
+     "enonce": "Pourquoi la solution particulière est-elle une constante, et que représente-t-elle ?",
+     "sol": "Les coefficients et le second membre sont constants : une constante $\\beta$ convient ($\\dfrac{d\\beta}{dt}=0$ donne $\\beta=A\\tau$). C'est la valeur du signal en régime permanent.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "open"
+    },
+    {
+     "id": "t57",
+     "enonce": "$E=10$ V, $U_0=4$ V, $RC=1$ ms. $u_C(t)$ avec $t$ en ms ?",
+     "ans": "10-6*exp(-t)",
+     "sol": "$u_C(t)=E+(U_0-E)e^{-t/RC}=10-6e^{-t}$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1.2",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Charge d'un condensateur",
+   "notions": [
+    "resolution",
+    "tau"
+   ],
+   "exos": [
+    {
+     "id": "t61",
+     "enonce": "Charge RC, $E=10$ V, $C$ déchargé. $u_C(\\tau)$ (en V, exact) ?",
+     "ans": "10-10*exp(-1)",
+     "sol": "$u_C(\\tau)=E(1-e^{-1})\\approx6{,}3$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 2,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t62",
+     "enonce": "Même charge : courant $i(t)$ en mA, $R=1$ kΩ, $RC=1$ ms, $t$ en ms ?",
+     "ans": "10*exp(-t)",
+     "sol": "$i=C\\dfrac{du_C}{dt}=\\dfrac ER e^{-t/RC}=10e^{-t}$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "value"
+    },
+    {
+     "id": "t63",
+     "enonce": "Charge RC : $u_C(5\\tau)/E$ (exact) ?",
+     "ans": "1-exp(-5)",
+     "sol": "$1-e^{-5}\\approx0{,}993$ : écart inférieur à $1\\,\\%$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 2,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t64",
+     "enonce": "$E=10$ V, $R=2$ kΩ, $U_0=4$ V. Courant initial (en mA) ?",
+     "ans": "3",
+     "sol": "$i(t)=\\dfrac{E-U_0}{R}e^{-t/RC}$ : $3$ mA à $t=0^+$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1.2",
+     "duree": 2,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff · $s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t65",
+     "enonce": "Allure de $u_C(t)$ et de $i(t)$ pour la charge d'un condensateur initialement déchargé.",
+     "sol": "$u_C$ part de $0$ (continuité), croît et tend vers $E$ ; la tangente à l'origine coupe $E$ en $t=\\tau$. $i$ saute à $\\dfrac ER$ à $0^+$ puis décroît exponentiellement vers $0$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 4,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "open"
+    },
+    {
+     "id": "t66",
+     "enonce": "Même charge, combien de temps (en ms) avant de considérer le régime permanent atteint si $RC=2$ ms ?",
+     "ans": "10",
+     "sol": "$5\\tau=10$ ms.",
+     "src": "Kit de survie « Les régimes transitoires »",
+     "duree": 1,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t67",
+     "enonce": "Pente à l'origine de $u_C(t)=E(1-e^{-t/\\tau})$ (en fonction de $V=E$ et $\\tau$) ?",
+     "ans": "V/tau",
+     "sol": "$\\dfrac{du_C}{dt}(0)=\\dfrac E\\tau$ : la tangente atteint $E$ en $t=\\tau$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 1",
+     "duree": 3,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Établissement du courant dans une bobine",
+   "notions": [
+    "resolution",
+    "equadiff"
+   ],
+   "exos": [
+    {
+     "id": "t71",
+     "enonce": "$E=12$ V, $R=6$ Ω, $L$ en série, fermeture à $t=0$. $i(\\infty)$ (en A) ?",
+     "ans": "2",
+     "sol": "$i(\\infty)=\\dfrac ER=2$ A.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 1,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t72",
+     "enonce": "Même circuit, $L=30$ mH. $\\tau$ (en ms) ?",
+     "ans": "5",
+     "sol": "$\\tau=\\dfrac LR=5$ ms.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$L=60$ mH, $R=12$ Ω. $\\tau$ (en ms) ?",
+       "ans": "5",
+       "sol": "$5$ ms."
+      }
+     ],
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "t73",
+     "enonce": "Même circuit : $i(t)$ en A, $t$ en ms ?",
+     "ans": "2*(1-exp(-t/5))",
+     "sol": "$i(t)=\\dfrac ER\\left(1-e^{-Rt/L}\\right)=2(1-e^{-t/5})$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t74",
+     "enonce": "Même circuit : $u_L(t)$ en V, $t$ en ms ?",
+     "ans": "12*exp(-t/5)",
+     "sol": "$u_L=L\\dfrac{di}{dt}=Ee^{-t/\\tau}=12e^{-t/5}$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 3,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$ · $s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t75",
+     "enonce": "Même circuit : $u_L(0^+)$ (en V) ?",
+     "ans": "12",
+     "sol": "$i(0^+)=0$ : pas de tension sur $R$, toute la tension $E$ est sur la bobine.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 1,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t76",
+     "enonce": "Allure de $i(t)$ et de $u_L(t)$ à la fermeture d'un circuit $E$, $R$, $L$.",
+     "sol": "$i$ part de $0$ (continuité) et tend vers $E/R$. $u_L$ saute à $E$ puis décroît vers $0$ ; leurs tangentes à l'origine coupent les asymptotes en $t=\\tau=L/R$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 2",
+     "duree": 4,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "open"
+    },
+    {
+     "id": "t77",
+     "enonce": "Courant à $t=\\tau$ en pourcentage de $E/R$ (exact) ?",
+     "ans": "100-100*exp(-1)",
+     "sol": "$1-e^{-1}\\approx63\\,\\%$.",
+     "duree": 2,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Constante de temps",
+   "notions": [
+    "tau",
+    "resolution"
+   ],
+   "exos": [
+    {
+     "id": "t81",
+     "enonce": "$R=4{,}7$ kΩ, $C=10\\,\\mu$F. $\\tau$ (en ms) ?",
+     "ans": "47",
+     "sol": "$\\tau=RC=4{,}7\\times10^3\\times10^{-5}=47\\times10^{-3}$ s.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$R=2{,}2$ kΩ, $C=100\\,\\mu$F. $\\tau$ (en ms) ?",
+       "ans": "220",
+       "sol": "$2{,}2\\times10^3\\times10^{-4}=0{,}22$ s."
+      }
+     ],
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t82",
+     "enonce": "$L=100$ mH, $R=50$ Ω. $\\tau$ (en ms) ?",
+     "ans": "2",
+     "sol": "$\\tau=L/R=2$ ms.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$L=200$ mH, $R=40$ Ω. $\\tau$ (en ms) ?",
+       "ans": "5",
+       "sol": "$5$ ms."
+      }
+     ],
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t83",
+     "enonce": "Décharge : $s(t)=s_0e^{-t/\\tau}$. Fraction restante à $t=3\\tau$ (exact) ?",
+     "ans": "exp(-3)",
+     "sol": "$e^{-3}\\approx5\\,\\%$.",
+     "duree": 2,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t84",
+     "enonce": "Instant (en multiples de $\\tau$) où une décharge atteint la moitié de sa valeur initiale (exact) ?",
+     "ans": "log(2)",
+     "sol": "$e^{-t/\\tau}=\\tfrac12$ donc $t=\\tau\\ln2\\approx0{,}69\\tau$.",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t85",
+     "enonce": "Écart restant (en %) après $10\\tau$ : arrondi du cours ?",
+     "ans": "Rational(1,200)",
+     "sol": "$e^{-10}\\approx4{,}5\\times10^{-5}$, soit moins de $0{,}005\\,\\%$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 2,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t86",
+     "enonce": "Deux façons de lire $\\tau$ sur une courbe expérimentale.",
+     "sol": "1. La tangente à l'origine coupe l'asymptote finale en $t=\\tau$. 2. À $t=\\tau$, le signal a parcouru $63\\,\\%$ de l'écart initial–final (il reste $37\\,\\%$ pour une décharge).",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 3,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "open"
+    },
+    {
+     "id": "t87",
+     "enonce": "Comment identifier $\\tau$ dans une équation différentielle ou dans une solution ?",
+     "sol": "Équation : coefficient de $s$ quand celui de $\\dfrac{ds}{dt}$ vaut $1$ ($\\dfrac1\\tau$). Solution : dénominateur de $t$ dans l'exponentielle $e^{-t/\\tau}$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires »",
+     "duree": 2,
+     "formules": "$\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Thévenin pour se ramener à RC ou RL",
+   "notions": [
+    "thevenin_t",
+    "tau"
+   ],
+   "exos": [
+    {
+     "id": "t91",
+     "enonce": "TD ex. 4 : $E$, $R$ en série, puis $R/2$ et $C$ en parallèle. $E_{th}$ vu par $C$ avec $E=9$ V (en V) ?",
+     "ans": "3",
+     "sol": "Diviseur $R$, $R/2$ : $E_{th}=\\dfrac E3=3$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 3,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$ · diviseur : $U_2=\\dfrac{R_2}{R_1+R_2}E$",
+     "type": "value"
+    },
+    {
+     "id": "t92",
+     "enonce": "Même circuit : $R_{th}$ avec $R=3$ kΩ (en kΩ) ?",
+     "ans": "1",
+     "sol": "$R\\parallel\\dfrac R2=\\dfrac R3=1$ kΩ.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Même circuit : $R_{th}$ avec $R=6$ kΩ (en kΩ) ?",
+       "ans": "2",
+       "sol": "$R/3=2$ kΩ."
+      }
+     ],
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "t93",
+     "enonce": "Même circuit, $R=3$ kΩ, $C=1\\,\\mu$F : $\\tau'$ (en ms) ?",
+     "ans": "1",
+     "sol": "$\\tau'=R_{th}C=\\dfrac{RC}3=1$ ms.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 2,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "t94",
+     "enonce": "Même circuit, $C$ chargé sous $E=9$ V avant la fermeture de $K$. $u(t')$ en V, $t'$ en ms ($\\tau'=1$ ms) ?",
+     "ans": "3*(2*exp(-t)+1)",
+     "sol": "$u(t')=\\dfrac E3+\\dfrac{2E}3e^{-t'/\\tau'}=3(2e^{-t'}+1)$ : décharge partielle de $9$ V vers $3$ V.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 4",
+     "duree": 4,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$ · $s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t95",
+     "enonce": "Contrôle 2023 : $E$, $R$ en série, puis $R\\parallel L$. $R_{th}$ vu par $L$ avec $R=2$ kΩ (en kΩ) ?",
+     "ans": "1",
+     "sol": "$E_{th}=\\dfrac E2$, $R_{th}=R\\parallel R=\\dfrac R2=1$ kΩ.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "t96",
+     "enonce": "Même circuit, $L=0{,}1$ H, $R=100$ Ω : $\\tau$ (en ms) ?",
+     "ans": "2",
+     "sol": "$\\tau=\\dfrac{L}{R_{th}}=\\dfrac{2L}R=2$ ms.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "t97",
+     "enonce": "TD ex. 3 : montrer que $E$, $R$, puis $R$ en parallèle avec $(R+C)$ se ramène à un RC série ; donner $\\tau$.",
+     "sol": "Norton : $\\dfrac ER$ en parallèle avec $R$ et $R$, soit $\\dfrac R2$ ; retour Thévenin : $\\dfrac E2$ en série avec $\\dfrac R2$, plus $R$ : $R_{th}=\\dfrac{3R}2$. Mailles : $\\dfrac E2=\\dfrac{3R}2i_2+u_C$, d'où $\\dfrac{di_2}{dt}+\\dfrac{2}{3RC}i_2=0$ et $\\tau=\\dfrac{3RC}2$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3",
+     "duree": 6,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$ · $\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Décharge et ouverture",
+   "notions": [
+    "resolution",
+    "initial"
+   ],
+   "exos": [
+    {
+     "id": "t101",
+     "enonce": "TD ex. 3.2 : on ouvre $K$, $C$ chargé sous $\\dfrac E2$ se décharge dans $R$ et $R$ en série. $\\tau$ avec $R=1$ kΩ, $C=1\\,\\mu$F (en ms) ?",
+     "ans": "2",
+     "sol": "$\\tau=2RC=2$ ms.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3.2",
+     "duree": 2,
+     "formules": "$\\tau=RC$ ou $L/R$ · $63\\,\\%$ à $\\tau$ · permanent à $5\\tau$",
+     "type": "value"
+    },
+    {
+     "id": "t102",
+     "enonce": "Même décharge, $E=8$ V, $R=1$ kΩ : $i_3(0^+)$ (en mA) ?",
+     "ans": "2",
+     "sol": "$i_3=\\dfrac{u_C}{2R}=\\dfrac{E}{4R}=2$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3.2",
+     "duree": 3,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff",
+     "type": "value"
+    },
+    {
+     "id": "t103",
+     "enonce": "Même décharge : $i_2(t')$ en mA, $t'$ en ms ?",
+     "ans": "-2*exp(-t/2)",
+     "sol": "$i_2=-i_3$ : $i_2(t')=-\\dfrac E{4R}e^{-t'/2RC}=-2e^{-t'/2}$ mA.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3.2",
+     "duree": 3,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$",
+     "type": "value"
+    },
+    {
+     "id": "t104",
+     "enonce": "Même décharge : $u_C(\\infty)$ (en V) ?",
+     "ans": "0",
+     "sol": "Aucun générateur : l'énergie du condensateur est dissipée par effet Joule, tout tend vers $0$.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », ex. 3.2",
+     "duree": 1,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t105",
+     "enonce": "Étincelle de rupture : $E=40$ V, $R=40$ Ω, $L$ en série. Courant juste avant l'ouverture (en A) ?",
+     "ans": "1",
+     "sol": "Régime permanent : bobine $=$ fil, $i=E/R=1$ A.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », pour aller plus loin",
+     "duree": 2,
+     "formules": "$t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "value"
+    },
+    {
+     "id": "t106",
+     "enonce": "Même circuit, coupure modélisée par $C=10$ pF, $L=4$ mH : $\\omega_0=1/\\sqrt{LC}$ (en rad/s) ?",
+     "ans": "5000000",
+     "sol": "$LC=4\\times10^{-14}$, $\\omega_0=5\\times10^6$ rad/s.",
+     "src": "TD d'électronique S2 « Les régimes transitoires », pour aller plus loin",
+     "duree": 3,
+     "formules": "$\\omega_0=\\dfrac1{\\sqrt{LC}}$",
+     "type": "value"
+    },
+    {
+     "id": "t107",
+     "enonce": "Pourquoi l'ouverture d'un circuit inductif produit-elle une étincelle ?",
+     "sol": "Le courant dans la bobine ne peut pas s'annuler brutalement : il charge la petite capacité de la coupure. La tension monte à $u_{max}\\approx E\\left(1+\\dfrac1{RC\\omega_0}\\right)\\approx20\\,000$ V en moins de $3\\times10^{-7}$ s, au-delà du potentiel d'éclatement ($\\approx1000$ V).",
+     "src": "TD d'électronique S2 « Les régimes transitoires », pour aller plus loin",
+     "duree": 5,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Rappel : théorème de Millman",
+   "notions": [
+    "millman_t"
+   ],
+   "exos": [
+    {
+     "id": "t111",
+     "enonce": "Branches entre $A$ et la masse : $(2E,R)$, $(-E,2R)$, $R$ seule, et source $I$ entrant en $A$. $U$ en fonction de $E$, $R$, $I$ (symboles `V` pour $E$, `I0` pour $I$) ?",
+     "ans": "(3*V+2*R*I0)/5",
+     "sol": "$U=\\dfrac{\\frac{2E}R-\\frac E{2R}+I}{\\frac1R+\\frac1{2R}+\\frac1R}=\\dfrac{3E+2RI}{5}$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3.1",
+     "duree": 5,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    },
+    {
+     "id": "t112",
+     "enonce": "Même montage, $E=5$ V, $R=1$ kΩ, $I=5$ mA : $U$ (en V) ?",
+     "ans": "5",
+     "sol": "$\\dfrac{15+10}5=5$ V.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3.1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Même montage, $E=10$ V, $R=1$ kΩ, $I=10$ mA : $U$ (en V) ?",
+       "ans": "10",
+       "sol": "$\\dfrac{30+20}5=10$ V."
+      }
+     ],
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    },
+    {
+     "id": "t113",
+     "enonce": "Contrôle 2023, ex. 3.2 : $U=\\dfrac{-3E-6RI}{2}$ avec $E=2$ V, $R=1$ kΩ, $I=1$ mA. $U$ (en V) ?",
+     "ans": "-6",
+     "sol": "$\\dfrac{-6-6}2=-6$ V.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3.2",
+     "duree": 2,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    },
+    {
+     "id": "t114",
+     "enonce": "Contrôle 2023, ex. 3.2 : comment utiliser Millman quand une branche contient la source $2E$ entre $B$ et $C$ ?",
+     "sol": "Millman en $A$ : $U=\\dfrac{\\frac{V_C}{2R}-4I-\\frac{2E}{4R}+I}{\\frac1{2R}+\\frac1{4R}+\\frac1{4R}}=\\dfrac{V_C-6RI-E}{2}$. La source de gauche impose $2E=V_B-V_C$, soit $V_C=-2E$, d'où $U=\\dfrac{-3E-6RI}{2}$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3.2",
+     "duree": 8,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "open"
+    },
+    {
+     "id": "t115",
+     "enonce": "De quelle loi vient le théorème de Millman ?",
+     "sol": "De la loi des nœuds appliquée au nœud $A$.",
+     "src": "Contrôle d'électronique S2, février 2023, Q1",
+     "duree": 1,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "open"
+    },
+    {
+     "id": "t116",
+     "enonce": "Branches $(10$ V$, 1$ kΩ$)$ et $(0, 1$ kΩ$)$ entre $A$ et la masse. $V_A$ (en V) ?",
+     "ans": "5",
+     "sol": "$\\dfrac{10}{2}=5$ V.",
+     "duree": 2,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Niveau examen : contrôle février 2023",
+   "notions": [
+    "composants",
+    "permanent",
+    "initial",
+    "thevenin_t",
+    "millman_t"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "xd1",
+     "enonce": "Exercice 1 (QCM) : origine de Millman ; unités de $C$ et $L$ ; bobine en régime permanent ; $E$, $K$, $R$, $C$ déchargé : $u_C$ juste après la fermeture et en régime permanent.",
+     "sol": "Loi des nœuds ; farad ; henry ; un fil ; $u_C(0^+)=0$ ; $u_C(\\infty)=E$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 1 (4 points)",
+     "duree": 5,
+     "formules": "$i=C\\dfrac{du}{dt}$ · $u=L\\dfrac{di}{dt}$ · continuité : $u_C$ et $i_L$ · $t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "open"
+    },
+    {
+     "id": "xd2",
+     "enonce": "Exercice 2.1 : tableau $i$, $i_R$, $i_L$, $u_L$ à $0^+$ et $t\\to\\infty$ ($E$, $K$, $R$, puis $R\\parallel L$).",
+     "sol": "$0^+$ : $\\dfrac E{2R}$, $\\dfrac E{2R}$, $0$, $\\dfrac E2$. $\\infty$ : $\\dfrac ER$, $0$, $\\dfrac ER$, $0$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2 (10 points)",
+     "duree": 6,
+     "formules": "$0^+$ : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ · puis Kirchhoff · $t\\to\\infty$ : $C\\to$ ouvert, $L\\to$ fil",
+     "type": "open"
+    },
+    {
+     "id": "xd3",
+     "enonce": "Exercice 2.2.a : $E_{th}$ vu par $L$, avec $E=12$ V (en V) ?",
+     "ans": "6",
+     "sol": "Norton $\\dfrac ER$ avec $R\\parallel R=\\dfrac R2$ : $E_{th}=\\dfrac E2=6$ V, $R_{th}=\\dfrac R2$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 4,
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "xd4",
+     "enonce": "Exercice 2.2.b : $u_L(t)$ en fonction de $E$, $R$, $L$, $t$ (symbole `V` pour $E$) ?",
+     "ans": "V/2*exp(-R*t/(2*L))",
+     "sol": "Mailles : $E_{th}=R_{th}i_L+u_L$, on dérive : $\\dfrac{du_L}{dt}+\\dfrac{R}{2L}u_L=0$. $u_L(0^+)=\\dfrac E2$ : $u_L(t)=\\dfrac E2e^{-\\frac{R}{2L}t}$, $\\tau=\\dfrac{2L}R$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 8,
+     "formules": "$s(t)=s(\\infty)+\\big(s(0^+)-s(\\infty)\\big)e^{-t/\\tau}$ · $\\dfrac{ds}{dt}+\\dfrac1\\tau s=A$ · $\\tau_{RC}=RC$ · $\\tau_{RL}=L/R$",
+     "type": "value"
+    },
+    {
+     "id": "xd5",
+     "enonce": "Exercice 2 : $\\tau$ avec $L=50$ mH, $R=100$ Ω (en ms) ?",
+     "ans": "1",
+     "sol": "$\\tau=\\dfrac{2L}R=1$ ms.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Exercice 2 : $\\tau$ avec $L=0{,}2$ H, $R=200$ Ω (en ms) ?",
+       "ans": "2",
+       "sol": "$\\dfrac{2L}R=2$ ms."
+      }
+     ],
+     "formules": "$E_{th}$ à vide · $R_{th}$ sources éteintes · $\\tau=R_{th}C$ ou $L/R_{th}$",
+     "type": "value"
+    },
+    {
+     "id": "xd6",
+     "enonce": "Exercice 3.1 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`) ?",
+     "ans": "(3*V+2*R*I0)/5",
+     "sol": "Millman en $A$ : $U=\\dfrac{3E+2RI}{5}$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3 (6 points)",
+     "duree": 6,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    },
+    {
+     "id": "xd7",
+     "enonce": "Exercice 3.2 : $U$ en fonction de $E$, $R$, $I$ (symboles `V`, `I0`), sachant $V_C=-2E$ ?",
+     "ans": "(-3*V-6*R*I0)/2",
+     "sol": "$U=\\dfrac{V_C-6RI-E}{2}$ avec $V_C=-2E$ : $U=\\dfrac{-3E-6RI}{2}$.",
+     "src": "Contrôle d'électronique S2, février 2023, ex. 3",
+     "duree": 6,
+     "formules": "$V_A=\\dfrac{\\sum E_i/R_i+\\sum\\eta_i}{\\sum1/R_i}$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}
