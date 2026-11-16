@@ -321,3 +321,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. The June 2016 bundle (`raw/S2/Finals/Phys/2020`) also holds the June 2016 maths, électronique and archi S2 exams (pages 8-56, FR + EN): transcribe them where those annales are missing.
 2. Prog, anglais, méthodo still blocked on material from the user.
+
+# Handoff — 2026-11-16 (bundle juin 2016 : maths, élec, archi)
+## Done
+- French maths (pages 15-22), électronique (31-37) and archi (45-50) of `raw/S2/Finals/Phys/2020` transcribed with « corrigé rédigé » in `annales/md/S2/Finals/{Maths PC,Elec,Archi}/2020/` (subject derived by dropping `> ` lines). 9 new types in `annales/tools/formules.py`; `index.py` OK (241 files, 1396 exercises); title of INDEX.md now generic.
+- First elec/archi annales: `FICHE_SECTION` maps `elec-s2-filtres`, `archi-s1-numeration`, `archi-s2-sequentielle`, `archi-s2-microprocesseur` to their formula-sheet section. Bundle PDF added to `syllabus.json` annales (ALM, APEF, filtres, séquentielle, microprocesseur). Build OK, 31 offline tests OK, deployed. 3 commits on `feat/annales-phys-s2`.
+## Next steps
+1. English versions of the bundle (pages 8-14, 23-30, 38-44, 51-56) not transcribed (same content).
+2. Debatable answers: élec QCM 7 answered FAUX (A0 is the max only if z ≥ 1/√2); archi ex. 4 chronogram input edges read from the scan at half-period precision.
+3. Prog, anglais, méthodo still blocked on material from the user.
