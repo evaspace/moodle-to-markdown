@@ -296,3 +296,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Ask the user for the prog PDFs/TDs/exams (Moodle) and recalibrate order/vocabulary of `prog_c_debut`.
 2. Python part of prog (S1), C avancé (S2): same remark, no source.
 3. Then anglais, méthodo (check Moodle for real content first).
+
+# Handoff — 2026-11-16 (section blog)
+## Done
+- Native blog: `blogsection.py`, `templates/blog.html`, `article.html`, `articles/*.md` (3 articles: niveaux, vérification des corrigés, copier pour une IA), nav « Blog », sitemap, CSS in `niveaux.css`, `tests/test_blog.py`. Caddy: `/blog/*` static handle removed for epitadoomscrolling (backup `Caddyfile.bak-edsblog-20261116`, validated + reloaded); old `*.html` URLs 301 to `/blog/`. Checked at 390 and 1100 px (KaTeX OK, no overflow). 32 tests OK.
+- Incident: first test run imported `app` before the test DB env was set and created 12 fixture accounts in the real `cards.db` (alice, bob, dave…). Removed (only those 12, ids 44-55) with their rows; real accounts `morgan.pierrefeu` and `qa_feed1` untouched; backup `/tmp/cards.db.bak-before-clean`.
+## Next steps
+1. Decide what to do with the blogbot daily batch for this site (its output is unlinked): disable the site there or feed it the new format.
+2. More articles (one per exam type once real calibrated data exists); add blog to llms files if wanted.

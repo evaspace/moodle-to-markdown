@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ a.title }} · Epita Doomscrolling</title>
+  <meta name="description" content="{{ a.description }}">
+  <link rel="canonical" href="https://epitadoomscrolling.pierref.eu/blog/{{ a.slug }}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ a.title }}">
+  <meta property="og:description" content="{{ a.description }}">
+  <meta property="og:image" content="https://epitadoomscrolling.pierref.eu/static/cat-512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/cat-32.png">
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/niveaux.css?v=20">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="application/ld+json">{{ {"@context": "https://schema.org", "@type": "BlogPosting", "headline": a.title, "datePublished": a.date, "description": a.description, "inLanguage": "fr", "author": {"@type": "Person", "name": "Morgan Pierrefeu"}, "mainEntityOfPage": "https://epitadoomscrolling.pierref.eu/blog/" ~ a.slug}|tojson }}</script>
+</head>
+<body class="lv-page">
+{% set active = 'blog' %}{% include 'nav.html' %}
+<article class="lv-wrap blog-article">
+  <p class="blog-back"><a href="/blog">Blog</a></p>
+  <h1>{{ a.title }}</h1>
+  <p class="blog-meta"><time datetime="{{ a.date }}">{{ a.date_fr }}</time> · {{ a.minutes }} min de lecture · Morgan Pierrefeu</p>
+  <div class="blog-body">{{ html|safe }}</div>
+  <p class="blog-cta"><a class="lv-btn primary" href="/niveaux">Essayer les niveaux</a></p>
+</article>
+<script>
+addEventListener('DOMContentLoaded', () => renderMathInElement(document.querySelector('.blog-body'),
+  {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]}));
+</script>
+{% include 'footer.html' %}
+</body>
+</html>

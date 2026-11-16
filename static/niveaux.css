@@ -272,3 +272,18 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .lv-page h3.cal-prob { font-size: 15px; margin: 14px 0 8px; }
 .lv-page .cal-mh3 { font-size: 18px; margin: 20px 0 10px; }
 .cal-item.is-past { opacity: .7; }
+
+/* Blog */
+.blog-lead { margin-bottom: 8px; }
+.blog-list { list-style: none; padding: 0; margin: 24px 0 0; }
+.blog-list li { margin-bottom: 32px; }
+.lv-page .blog-list h2 { font-size: 20px; margin: 0 0 6px; }
+.blog-list h2 a { color: inherit; text-decoration: none; }
+.blog-list h2 a:hover, .blog-list h2 a:focus-visible { text-decoration: underline; }
+.blog-list p { margin: 0 0 6px; }
+.blog-list time, .blog-meta { font-size: 14px; }
+.blog-back { margin: 0 0 12px; font-size: 14px; }
+.blog-meta { margin: 0 0 24px; }
+.blog-body p, .blog-body li { line-height: 1.65; }
+.blog-body pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; background: #F4F5F7; }
+.blog-cta { margin-top: 40px; }

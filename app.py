@@ -20,6 +20,7 @@ from flask import Flask, Response, abort, jsonify, render_template, request, sen
 from init_db import DB_PATH, init_db
 from levels import bp as levels_bp, init_levels_db, is_admin, secret_key
 from scroll import bp as scroll_bp, init_scroll_db
+from blogsection import bp as blog_bp
 from themes import clean_name, syllabus_rank, theme_for, theme_order
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s')
@@ -38,6 +39,7 @@ init_levels_db()
 app.register_blueprint(levels_bp)
 init_scroll_db()
 app.register_blueprint(scroll_bp)
+app.register_blueprint(blog_bp)
 DOCS_ROOT = Path(__file__).resolve().parent / 'EPITA_Moodle_Notes_MD'
 DOC_TAGS = ['p', 'br', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li',
             'blockquote', 'strong', 'em', 'del', 'code', 'pre', 'table', 'thead', 'tbody',
