@@ -1,0 +1,986 @@
+{
+ "subject": {
+  "id": "prog-s1-c-debut",
+  "ordre": 700,
+  "matiere": "prog",
+  "semestre": "S1",
+  "ecue": "Programmation C (début)",
+  "titre": "Début du C : printf, types, conditions, boucles, fonctions, tableaux, pointeurs",
+  "chapitres_moodle": [
+   "2030-S1 Programmation/00_Section 0"
+  ],
+  "td": "Non calibré : cours officiel inaccessible (GitLab EPITA), programme standard d'un début de C",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "compil",
+   "titre": "Programme minimal, compilation, printf",
+   "formule": "`#include <stdio.h>` · `int main(void) { … return 0; }` · `gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `printf(\\\"%d\\\", n)` · `%d` int · `%f` double · `%c` char · `%s` chaîne · `%zu` taille · `%%` · `\\\\n` retour à la ligne · `%5d`, `%-5d`, `%05d`, `%.2f`",
+   "exemple": "`printf(\\\"%d + %d = %d\\\\n\\\", 2, 3, 2 + 3);` affiche `2 + 3 = 5`",
+   "cours": "Un programme C est un ensemble de fonctions dont `main` est le point d'entrée : sa valeur de retour est le code de sortie (`0` = succès). `gcc` compile le fichier source en exécutable ; les options `-Wall -Wextra` demandent les avertissements, qu'il faut lire et corriger. `printf` affiche selon un format : chaque `%` consomme un argument du type indiqué. Un format qui ne correspond pas au type de l'argument est un bug (comportement indéfini)."
+  },
+  {
+   "id": "types",
+   "titre": "Types, variables, conversions",
+   "formule": "`char` (1 octet) · `int` (4) · `long` · `float` · `double` (8) · `unsigned` · déclaration `int x = 3;` · `sizeof(type)` en octets · cast `(double) a` · `int` $\\to$ `double` automatique · `double` $\\to$ `int` tronque",
+   "exemple": "`char c = 'a'; c = c + 2;` donne `'c'` (code $99$)",
+   "cours": "Une variable a un type, fixé à sa déclaration, qui détermine sa taille et ses opérations. Un `char` est un petit entier (code ASCII) : `'a' + 1` vaut `98`. Un entier non signé qui dépasse sa capacité revient à $0$ (modulo $2^{8k}$). Dans une expression mixte, l'entier est converti en flottant ; la conversion inverse tronque vers $0$. Une variable locale non initialisée contient n'importe quoi."
+  },
+  {
+   "id": "operateurs",
+   "titre": "Opérateurs et priorités",
+   "formule": "`/` entier : quotient tronqué vers $0$ · `%` reste (signe de l'opérande de gauche) · `+= -= *= /= %=` · `i++` (valeur puis +1) · `++i` (+1 puis valeur) · priorité : `* / %` avant `+ -` · cast avant `/` : `(double) a / b`",
+   "exemple": "`7 / 2` $=3$ ; `-7 / 2` $=-3$ ; `7 % 2` $=1$ ; `7 / 2.0` $=3{,}5$",
+   "cours": "La division de deux entiers est entière : `5 / 2` vaut `2`, même si le résultat est rangé dans un `double`. Pour une division réelle, un des deux opérandes doit être flottant, avant la division. `i++` rend l'ancienne valeur, `++i` la nouvelle. Ne jamais modifier deux fois la même variable dans une expression : le résultat n'est pas défini."
+  },
+  {
+   "id": "conditions",
+   "titre": "Conditions : if, switch, booléens",
+   "formule": "`if (c) … else …` · `==` comparaison, `=` affectation · vrai $\\ne 0$, faux $=0$ · `!` `&&` `||` (paresseux) · `c ? a : b` · `switch (n) { case 1: … break; default: … }` · sans `break`, on continue dans le `case` suivant · `else` se rattache au `if` le plus proche",
+   "exemple": "`if (n = 0)` affecte $0$ à `n` puis est faux : bug classique, à la place de `if (n == 0)`",
+   "cours": "Il n'y a pas de type booléen en C classique : une comparaison vaut `1` (vrai) ou `0` (faux) et toute valeur non nulle est vraie. `&&` et `||` s'arrêtent dès que le résultat est connu : la suite n'est pas évaluée. Dans un `switch`, chaque `case` doit finir par `break`, sinon l'exécution « tombe » dans le suivant (parfois voulu, souvent un bug)."
+  },
+  {
+   "id": "boucles",
+   "titre": "Boucles : while, for, do-while",
+   "formule": "`while (c) { … }` · `for (init; cond; pas) { … }` $\\equiv$ `init; while (cond) { …; pas; }` · `do { … } while (c);` (au moins un tour) · `break` sort de la boucle · `continue` passe au tour suivant · `for (int i = 0; i < n; i++)` : $n$ tours",
+   "exemple": "`for (int i = 1; i < 100; i *= 2)` fait $7$ tours ($i=1,2,4,\\dots,64$)",
+   "cours": "`while` teste avant chaque tour, `do … while` après (donc un tour au moins). Le `for` regroupe initialisation, condition et pas. `break` quitte la boucle la plus interne, `continue` saute à l'itération suivante (en passant par le pas du `for`). Pour une boucle de $n$ tours, le motif `i` de $0$ à $n-1$ avec `i < n` évite les décalages de un."
+  },
+  {
+   "id": "fonctions",
+   "titre": "Fonctions : paramètres, retour, portée",
+   "formule": "`type nom(type p1, type p2) { … return v; }` · `void` : pas de valeur · prototype `int f(int);` avant l'appel · paramètres passés par valeur (copie) · variable locale : bloc `{ }` · `static` : garde sa valeur entre les appels · récursivité : cas d'arrêt",
+   "exemple": "`int f(int x) { x = x * 2; return x; }` ne modifie pas la variable de l'appelant",
+   "cours": "Une fonction reçoit une copie de ses arguments : modifier un paramètre ne change pas la variable de l'appelant. Une fonction doit être déclarée (définie ou prototypée) avant son premier appel. Une variable locale n'existe que dans son bloc et masque une variable de même nom d'un bloc extérieur. Une variable `static` locale est initialisée une seule fois et garde sa valeur d'un appel à l'autre."
+  },
+  {
+   "id": "tableaux",
+   "titre": "Tableaux et chaînes de caractères",
+   "formule": "`int t[5];` · indices de $0$ à $4$ · `int t[5] = {1, 2};` : le reste vaut $0$ · taille : `sizeof t / sizeof t[0]` · un tableau passé en paramètre n'est pas copié (adresse) : `void f(int t[], int n)` · chaîne = `char s[]` finissant par `'\\\\0'` · `strlen` (sans le `\\\\0`) · `sizeof` (avec)",
+   "exemple": "`char s[] = \\\"abc\\\";` : `sizeof s` $=4$, `strlen(s)` $=3$",
+   "cours": "Un tableau a une taille fixe et ses éléments sont contigus. C ne vérifie jamais les indices : `t[5]` sur un tableau de $5$ éléments est une erreur silencieuse (comportement indéfini). Un tableau passé à une fonction n'est pas copié et la fonction ne connaît pas sa taille : on la passe à part. Une chaîne est un tableau de `char` terminé par `'\\\\0'` ; `strlen`, `strcpy`, `strcat`, `strcmp` sont dans `<string.h>`."
+  },
+  {
+   "id": "pointeurs",
+   "titre": "Pointeurs",
+   "formule": "`int *p = &a;` · `&a` adresse de `a` · `*p` valeur pointée · `*p = 9;` modifie `a` · `p + 1` : élément suivant · `t[i]` $\\equiv$ `*(t + i)` · tableau $\\approx$ adresse de son premier élément · passage par adresse : `void f(int *n) { (*n)++; }` · appel `f(&x)`",
+   "exemple": "`void echange(int *a, int *b) { int t = *a; *a = *b; *b = t; }`",
+   "cours": "Un pointeur est une variable qui contient une adresse. `&` donne l'adresse d'une variable, `*` accède à ce qui est à une adresse. Passer l'adresse d'une variable à une fonction permet à celle-ci de la modifier (sinon elle ne reçoit qu'une copie). L'arithmétique de pointeurs avance d'un élément entier, pas d'un octet : `p + 1` pointe sur l'`int` suivant."
+  },
+  {
+   "id": "memoire",
+   "titre": "Mémoire dynamique, chaînes en détail",
+   "formule": "`#include <stdlib.h>` · `int *t = malloc(n * sizeof(int));` · tester `t != NULL` · `free(t);` · toujours un `free` par `malloc` · ne pas utiliser après `free` · `<string.h>` : `strlen`, `strcpy`, `strcat`, `strcmp` (`0` si égales) · le tampon doit contenir le `\\\\0`",
+   "exemple": "`malloc(10 * sizeof(double))` réserve $80$ octets",
+   "cours": "`malloc` réserve un bloc dont la taille est donnée en octets ; on écrit `n * sizeof(type)` pour ne pas dépendre de la machine. Le bloc reste réservé jusqu'à `free` : oublier le `free` est une fuite mémoire, l'appeler deux fois ou utiliser le bloc après est une erreur grave. `strcpy` et `strcat` ne vérifient pas la taille de destination : un tampon trop petit déborde sur la mémoire voisine."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "compil",
+   "type": "qcm",
+   "q": "`printf(\\\"%d\\\", 2.5);` :",
+   "choix": [
+    "est un bug : le format ne correspond pas au type",
+    "affiche `2`",
+    "affiche `2.5`",
+    "affiche `3`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "compil",
+   "type": "vf",
+   "q": "La valeur renvoyée par `main` est le code de sortie du programme.",
+   "bonne": true
+  },
+  {
+   "notion": "types",
+   "type": "qcm",
+   "q": "`'a' + 1` vaut :",
+   "choix": [
+    "`98`",
+    "`'a1'`",
+    "`'b'` de type chaîne",
+    "une erreur de compilation"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "types",
+   "type": "vf",
+   "q": "Une variable locale non initialisée vaut toujours $0$.",
+   "bonne": false
+  },
+  {
+   "notion": "operateurs",
+   "type": "qcm",
+   "q": "`double d = 5 / 2;` range dans `d` :",
+   "choix": [
+    "`2.0`",
+    "`2.5`",
+    "`3.0`",
+    "une erreur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "operateurs",
+   "type": "vf",
+   "q": "`i++` renvoie la valeur de `i` avant l'incrémentation.",
+   "bonne": true
+  },
+  {
+   "notion": "conditions",
+   "type": "qcm",
+   "q": "`if (x = 3)` :",
+   "choix": [
+    "affecte $3$ à `x` et est toujours vrai",
+    "compare `x` et $3$",
+    "est une erreur de syntaxe",
+    "est faux si `x` valait $3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "conditions",
+   "type": "vf",
+   "q": "Sans `break`, un `case` de `switch` continue dans le `case` suivant.",
+   "bonne": true
+  },
+  {
+   "notion": "boucles",
+   "type": "qcm",
+   "q": "Une boucle `do … while` :",
+   "choix": [
+    "fait au moins un tour",
+    "teste avant le premier tour",
+    "ne peut pas contenir de `break`",
+    "ne s'arrête jamais"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "boucles",
+   "type": "vf",
+   "q": "`continue` quitte complètement la boucle.",
+   "bonne": false
+  },
+  {
+   "notion": "fonctions",
+   "type": "qcm",
+   "q": "Si `f(int x)` fait `x = 0;`, la variable passée par l'appelant :",
+   "choix": [
+    "est inchangée",
+    "vaut $0$",
+    "est indéfinie",
+    "est libérée"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "fonctions",
+   "type": "vf",
+   "q": "Une variable `static` locale garde sa valeur entre deux appels.",
+   "bonne": true
+  },
+  {
+   "notion": "tableaux",
+   "type": "qcm",
+   "q": "`char s[] = \\\"abc\\\";` : `sizeof s` vaut :",
+   "choix": [
+    "`4`",
+    "`3`",
+    "`2`",
+    "`8`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tableaux",
+   "type": "vf",
+   "q": "C vérifie que l'indice d'un tableau est dans les bornes.",
+   "bonne": false
+  },
+  {
+   "notion": "pointeurs",
+   "type": "qcm",
+   "q": "`int a; int *p = &a;` : `*p = 4;` :",
+   "choix": [
+    "met `a` à $4$",
+    "met `p` à $4$",
+    "met l'adresse de `a` à $4$",
+    "est une erreur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "pointeurs",
+   "type": "vf",
+   "q": "`t[i]` est équivalent à `*(t + i)`.",
+   "bonne": true
+  },
+  {
+   "notion": "memoire",
+   "type": "qcm",
+   "q": "Chaque `malloc` doit être suivi, en fin d'utilisation, de :",
+   "choix": [
+    "`free`",
+    "`delete`",
+    "`return`",
+    "`NULL`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "memoire",
+   "type": "vf",
+   "q": "`strcpy` vérifie que le tampon de destination est assez grand.",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Premier programme et printf",
+   "notions": [
+    "compil"
+   ],
+   "exos": [
+    {
+     "id": "c11",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"Salut\\n\");\n    printf(\"EPITA\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nSalut\nEPITA\n```\n\n`\\n` termine la première ligne ; le second `printf` n'ajoute pas de retour à la ligne.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 1,
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c12",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%d + %d = %d\\n\", 2, 3, 2 + 3);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2 + 3 = 5\n```\n\nChaque `%d` prend l'argument suivant : `2`, `3`, puis la valeur de `2 + 3`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%d * %d = %d\\n\", 4, 6, 4 * 6);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n4 * 6 = 24\n```\n\nLe troisième argument est la valeur de `4 * 6`."
+      }
+     ],
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c13",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%c%c%c\\n\", 'E', 'P', 'A');\n    printf(\"%s\\n\", \"ok\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nEPA\nok\n```\n\n`%c` affiche un caractère, `%s` une chaîne.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c14",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%5d|%-5d|%05d\\n\", 42, 42, 42);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n   42|42   |00042\n```\n\n`%5d` : largeur $5$, aligné à droite ; `%-5d` : aligné à gauche ; `%05d` : complété par des zéros.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%4d|%-4d|%03d\\n\", 7, 7, 7);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n   7|7   |007\n```\n\nLargeur $4$ à droite, à gauche, puis complétée par des zéros sur $3$ chiffres."
+      }
+     ],
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c15",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%.2f %d%%\\n\", 3.14159, 50);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n3.14 50%\n```\n\n`%.2f` : deux chiffres après la virgule, arrondi ; `%%` affiche un `%`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%.1f %d%%\\n\", 2.75, 20);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n2.8 20%\n```\n\n$2{,}75$ arrondi à un chiffre donne `2.8`."
+      }
+     ],
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c16",
+     "enonce": "Écrire la commande qui compile `prog.c` en un exécutable `prog` avec les avertissements `-Wall -Wextra`, en C99 strict, puis celle qui l'exécute.",
+     "sol": "```\ngcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c\n./prog\n```\n`-o prog` nomme l'exécutable (sinon `a.out`). `-Wall -Wextra` activent les avertissements, `-std=c99 -pedantic` imposent la norme.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 4,
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "open"
+    },
+    {
+     "id": "c17",
+     "enonce": "Combien de caractères le programme affiche-t-il avec `printf(\\\"EPITA\\\\n\\\");` ? (le retour à la ligne compte pour un)",
+     "ans": "6",
+     "sol": "$5$ lettres et un `\\n`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`gcc -Wall -Wextra -std=c99 -pedantic -o prog prog.c` · `%d %f %c %s %zu %%` · `%5d %-5d %05d %.2f`",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Types et opérateurs",
+   "notions": [
+    "types",
+    "operateurs"
+   ],
+   "exos": [
+    {
+     "id": "c21",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 7, b = 2;\n    printf(\"%d %d %d\\n\", a / b, a % b, -a / b);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n3 1 -3\n```\n\nDivision entière tronquée vers $0$ : $7/2=3$ et $-7/2=-3$ ; $7\\bmod 2=1$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 17, b = 5;\n    printf(\"%d %d %d\\n\", a / b, a % b, -a % b);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n3 2 -2\n```\n\n$17=5\\times3+2$ ; `-17 % 5` a le signe de $-17$ : $-2$."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c22",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    double d = 7 / 2;\n    printf(\"%.1f\\n\", d);\n    d = 7 / 2.0;\n    printf(\"%.1f\\n\", d);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n3.0\n3.5\n```\n\n`7 / 2` est une division entière faite avant l'affectation : `3`, rangé comme `3.0`. Avec `2.0`, la division est réelle.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    double d = 9 / 2;\n    printf(\"%.1f %.1f\\n\", d, 9 / 2.0);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n4.0 4.5\n```\n\nDivision entière d'abord : `9 / 2` vaut $4$."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c23",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int i = 5;\n    printf(\"%d\\n\", i++);\n    printf(\"%d\\n\", i);\n    printf(\"%d\\n\", ++i);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n5\n6\n7\n```\n\n`i++` rend $5$ puis incrémente ; `++i` incrémente puis rend la nouvelle valeur.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int i = 1;\n    printf(\"%d\\n\", ++i);\n    printf(\"%d\\n\", i++);\n    printf(\"%d\\n\", i);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n2\n2\n3\n```\n\n`++i` rend $2$ ; `i++` rend $2$ puis `i` vaut $3$."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c24",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int x = 10;\n    x += 5;\n    x *= 2;\n    x -= 3;\n    x /= 4;\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n6\n```\n\n$10\\to15\\to30\\to27\\to 27/4=6$ (division entière).",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int x = 3;\n    x *= 4;\n    x += 1;\n    x %= 5;\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n3\n```\n\n$3\\to12\\to13\\to13\\bmod5=3$."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c25",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    char c = 'a';\n    c = c + 2;\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nc 99\n```\n\nUn `char` est un entier : `'a'` vaut $97$, donc $99$ est le code de `'c'`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    char c = 'A';\n    c += 3;\n    printf(\"%c %d\\n\", c, c);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\nD 68\n```\n\n`'A'` vaut $65$ ; $65+3=68$, code de `'D'`."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c26",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 5, b = 2;\n    printf(\"%d %.2f %.2f\\n\", a / b, (double) a / b, (double) (a / b));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2 2.50 2.00\n```\n\nLe cast `(double) a` s'applique avant la division ; dans `(double) (a / b)`, la division entière a déjà donné $2$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c27",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    unsigned char c = 250;\n    c += 10;\n    printf(\"%d\\n\", c);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n4\n```\n\nUn `unsigned char` va de $0$ à $255$ : $260 \\bmod 256 = 4$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    unsigned char c = 200;\n    c += 100;\n    printf(\"%d\\n\", c);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n44\n```\n\n$300\\bmod256=44$."
+      }
+     ],
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "open"
+    },
+    {
+     "id": "c28",
+     "enonce": "Valeur de l'expression C `1 + 2 * 3 % 4` ?",
+     "ans": "3",
+     "sol": "`*` et `%` ont la même priorité et s'évaluent de gauche à droite : $(2\\times3)\\bmod4=2$, puis $1+2=3$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`/` entier tronqué vers $0$ · `%` · `(double) a / b` · `i++` / `++i` · `+=` · `char` entier · `unsigned` modulo $2^{8k}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Conditions",
+   "notions": [
+    "conditions"
+   ],
+   "exos": [
+    {
+     "id": "c31",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int n = 5;\n    if (n = 0)\n        printf(\"zero\\n\");\n    else\n        printf(\"non zero %d\\n\", n);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nnon zero 0\n```\n\n`n = 0` est une affectation : elle met `n` à $0$ et vaut $0$ (faux). C'est `==` qu'il fallait écrire ; `-Wall` le signale.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    },
+    {
+     "id": "c32",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%d %d %d\\n\", 3 > 2, 2 == 3, !5);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 0 0\n```\n\nUne comparaison vaut `1` ou `0` ; `!5` est la négation d'une valeur non nulle.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%d %d %d\\n\", 1 < 2, 4 != 4, !0);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n1 0 1\n```\n\n`!0` vaut $1$."
+      }
+     ],
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    },
+    {
+     "id": "c33",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 1, b = 0;\n    if (a || b++)\n        printf(\"x\");\n    printf(\" %d %d\\n\", a, b);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nx 1 0\n```\n\n`a` est vrai : `||` n'évalue pas `b++`, donc `b` reste à $0$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 0, b = 0;\n    if (a && b++)\n        printf(\"x\");\n    printf(\" %d %d\\n\", a, b);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n 0 0\n```\n\n`a` est faux : `&&` n'évalue pas `b++`."
+      }
+     ],
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    },
+    {
+     "id": "c34",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int n = 2;\n    switch (n) {\n    case 1:\n        printf(\"un\\n\");\n    case 2:\n        printf(\"deux\\n\");\n    case 3:\n        printf(\"trois\\n\");\n        break;\n    default:\n        printf(\"autre\\n\");\n    }\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\ndeux\ntrois\n```\n\nPas de `break` après `case 2` : l'exécution continue dans `case 3`, puis `break`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    },
+    {
+     "id": "c35",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int x = 5;\n    if (x > 0)\n        if (x > 10)\n            printf(\"A\");\n        else\n            printf(\"B\");\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nB\n```\n\nLe `else` se rattache au `if` le plus proche (`x > 10`). Ici `x > 0` est vrai et `x > 10` faux : on affiche `B`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    },
+    {
+     "id": "c36",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int max3(int a, int b, int c)` qui renvoie le plus grand des trois entiers.\n\nCe `main` doit afficher :\n\n```\n3 9 -2\n```\n\n```c\nint main(void)\n{\n    printf(\"%d %d %d\\n\", max3(1, 2, 3), max3(9, 4, 7), max3(-5, -2, -8));\n    return 0;\n}\n```",
+     "sol": "```c\nint max3(int a, int b, int c)\n{\n    int m = a;\n    if (b > m)\n        m = b;\n    if (c > m)\n        m = c;\n    return m;\n}\n```\n\nOn garde le plus grand vu jusqu'ici dans `m`.",
+     "formules": "`==` et `=` · vrai $\\ne0$ · `&&` `||` paresseux · `switch` sans `break` · `else` au `if` le plus proche",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Boucles",
+   "notions": [
+    "boucles"
+   ],
+   "exos": [
+    {
+     "id": "c41",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    for (int i = 0; i < 5; i++)\n        printf(\"%d \", i);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n0 1 2 3 4\n```\n\n`i` va de $0$ à $4$ : cinq tours.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c42",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int s = 0;\n    for (int i = 1; i <= 4; i++)\n        s += i * i;\n    printf(\"%d\\n\", s);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n30\n```\n\n$1+4+9+16=30$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int s = 0;\n    for (int i = 1; i <= 5; i++)\n        s += i;\n    printf(\"%d\\n\", s);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n15\n```\n\n$1+2+3+4+5$."
+      }
+     ],
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c43",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int i = 10;\n    while (i > 0)\n        i -= 3;\n    printf(\"%d\\n\", i);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n-2\n```\n\n$10,7,4,1,-2$ : on sort quand `i` n'est plus strictement positif.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int i = 20;\n    while (i > 0)\n        i -= 6;\n    printf(\"%d\\n\", i);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n-4\n```\n\n$20,14,8,2,-4$."
+      }
+     ],
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c44",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int n = 0;\n    do {\n        n++;\n    } while (n < 0);\n    printf(\"%d\\n\", n);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1\n```\n\n`do … while` fait toujours un tour avant de tester la condition.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c45",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    for (int i = 0; i < 10; i++) {\n        if (i % 2)\n            continue;\n        if (i > 6)\n            break;\n        printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n0 2 4 6\n```\n\n`continue` saute les impairs ; `break` s'exécute à `i = 8`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c46",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j <= i; j++)\n            printf(\"*\");\n        printf(\"\\n\");\n    }\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n*\n**\n***\n```\n\nLa ligne $i$ contient $i+1$ étoiles.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c47",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int puissance(int x, int n)` qui renvoie $x^n$ ($n\\ge0$) avec une boucle.\n\nCe `main` doit afficher :\n\n```\n1024 1 81\n```\n\n```c\nint main(void)\n{\n    printf(\"%d %d %d\\n\", puissance(2, 10), puissance(5, 0), puissance(3, 4));\n    return 0;\n}\n```",
+     "sol": "```c\nint puissance(int x, int n)\n{\n    int r = 1;\n    for (int i = 0; i < n; i++)\n        r *= x;\n    return r;\n}\n```\n\n$n=0$ : la boucle ne fait aucun tour et on renvoie $1$.",
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "open"
+    },
+    {
+     "id": "c48",
+     "enonce": "Combien de tours fait `for (int i = 1; i < 100; i *= 2)` ?",
+     "ans": "7",
+     "sol": "$i=1,2,4,8,16,32,64$ ; $128$ n'est plus $<100$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien de tours fait `for (int i = 1; i < 1000; i *= 3)` ?",
+       "ans": "7",
+       "sol": "$i=1,3,9,27,81,243,729$ ; $2187$ est trop grand."
+      }
+     ],
+     "formules": "`for (init; cond; pas)` · `while` · `do … while` · `break` · `continue` · $n$ tours : `i < n`",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Fonctions",
+   "notions": [
+    "fonctions"
+   ],
+   "exos": [
+    {
+     "id": "c51",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint f(int x)\n{\n    x = x * 2;\n    return x;\n}\n\nint main(void)\n{\n    int a = 3;\n    int b = f(a);\n    printf(\"%d %d\\n\", a, b);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n3 6\n```\n\n`f` travaille sur une copie de `a` : `a` reste $3$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint f(int x)\n{\n    x = x + 10;\n    return x * 2;\n}\n\nint main(void)\n{\n    int a = 1;\n    printf(\"%d %d\\n\", f(a), a);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n22 1\n```\n\n`f(1)` calcule $(1+10)\\times2$ sur une copie ; `a` reste $1$."
+      }
+     ],
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c52",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid affiche(int n)\n{\n    printf(\"[%d]\", n);\n}\n\nint main(void)\n{\n    affiche(1);\n    affiche(2);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n[1][2]\n```\n\nUne fonction `void` ne renvoie rien, elle agit (ici elle affiche).",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 1,
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c53",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint fact(int n)\n{\n    return n <= 1 ? 1 : n * fact(n - 1);\n}\n\nint main(void)\n{\n    printf(\"%d\\n\", fact(5));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n120\n```\n\n$5\\times4\\times3\\times2\\times1$ ; `fact(1)` est le cas d'arrêt.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint fact(int n)\n{\n    return n <= 1 ? 1 : n * fact(n - 1);\n}\n\nint main(void)\n{\n    printf(\"%d\\n\", fact(4));\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n24\n```\n\n$4\\times3\\times2\\times1$."
+      }
+     ],
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c54",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint cpt(void)\n{\n    static int c = 0;\n    c++;\n    return c;\n}\n\nint main(void)\n{\n    printf(\"%d \", cpt());\n    printf(\"%d \", cpt());\n    printf(\"%d\\n\", cpt());\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 2 3\n```\n\n`static` : `c` est initialisée une fois et garde sa valeur d'un appel à l'autre.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c55",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int x = 1;\n    {\n        int x = 2;\n        printf(\"%d \", x);\n    }\n    printf(\"%d\\n\", x);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2 1\n```\n\nLe `x` du bloc interne masque l'autre jusqu'à la fin du bloc.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c56",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int est_premier(int n)` qui renvoie `1` si `n` est premier, `0` sinon.\n\nCe `main` doit afficher :\n\n```\n1 0 1 0\n```\n\n```c\nint main(void)\n{\n    printf(\"%d %d %d %d\\n\", est_premier(2), est_premier(15), est_premier(17), est_premier(1));\n    return 0;\n}\n```",
+     "sol": "```c\nint est_premier(int n)\n{\n    if (n < 2)\n        return 0;\n    for (int d = 2; d * d <= n; d++)\n        if (n % d == 0)\n            return 0;\n    return 1;\n}\n```\n\nIl suffit de tester les diviseurs $d$ avec $d^2\\le n$.",
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    },
+    {
+     "id": "c57",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int pgcd(int a, int b)` (algorithme d'Euclide, récursif ou non).\n\nCe `main` doit afficher :\n\n```\n6 1 5\n```\n\n```c\nint main(void)\n{\n    printf(\"%d %d %d\\n\", pgcd(12, 18), pgcd(7, 13), pgcd(0, 5));\n    return 0;\n}\n```",
+     "sol": "```c\nint pgcd(int a, int b)\n{\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n```\n\n$\\gcd(a,b)=\\gcd(b,a\\bmod b)$, jusqu'à $b=0$.",
+     "formules": "passage par valeur · `static` · portée de bloc · prototype · récursivité : cas d'arrêt",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Tableaux et chaînes",
+   "notions": [
+    "tableaux"
+   ],
+   "exos": [
+    {
+     "id": "c61",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[5] = {1, 2, 3};\n    printf(\"%d %d %d\\n\", t[0], t[2], t[4]);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 3 0\n```\n\nLes éléments non listés valent $0$ ; les indices vont de $0$ à $4$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[4] = {7};\n    printf(\"%d %d\\n\", t[0], t[3]);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n7 0\n```\n\nSeul `t[0]` est initialisé, le reste vaut $0$."
+      }
+     ],
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c62",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[] = {4, 8, 15, 16, 23, 42};\n    printf(\"%zu\\n\", sizeof t / sizeof t[0]);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n6\n```\n\nTaille totale divisée par la taille d'un élément : $24/4$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c63",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[4] = {1, 2, 3, 4};\n    for (int i = 0; i < 4 / 2; i++) {\n        int tmp = t[i];\n        t[i] = t[3 - i];\n        t[3 - i] = tmp;\n    }\n    for (int i = 0; i < 4; i++)\n        printf(\"%d \", t[i]);\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n4 3 2 1\n```\n\nOn échange $t[0]\\leftrightarrow t[3]$ puis $t[1]\\leftrightarrow t[2]$ : le tableau est retourné.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c64",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid incr(int t[], int n)\n{\n    for (int i = 0; i < n; i++)\n        t[i]++;\n}\n\nint main(void)\n{\n    int a[3] = {1, 2, 3};\n    incr(a, 3);\n    printf(\"%d %d %d\\n\", a[0], a[1], a[2]);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2 3 4\n```\n\nUn tableau n'est pas copié : la fonction modifie le tableau de l'appelant.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid double_tab(int t[], int n)\n{\n    for (int i = 0; i < n; i++)\n        t[i] *= 2;\n}\n\nint main(void)\n{\n    int a[3] = {1, 2, 3};\n    double_tab(a, 3);\n    printf(\"%d %d %d\\n\", a[0], a[1], a[2]);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n2 4 6\n```\n\nLe tableau de l'appelant est modifié."
+      }
+     ],
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c65",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void)\n{\n    char s[] = \"abc\";\n    printf(\"%zu %zu\\n\", sizeof s, strlen(s));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n4 3\n```\n\n`sizeof` compte le `'\\0'` final ; `strlen` non.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c66",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    char s[] = \"EPITA\";\n    s[1] = '\\0';\n    printf(\"%s\\n\", s);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nE\n```\n\n`printf(\\\"%s\\\")` s'arrête au premier `'\\0'`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c67",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int max_tab(int t[], int n)` qui renvoie le plus grand élément d'un tableau de $n\\ge1$ entiers.\n\nCe `main` doit afficher :\n\n```\n9 -1\n```\n\n```c\nint main(void)\n{\n    int a[] = {3, 9, 2};\n    int b[] = {-4, -1, -7, -3};\n    printf(\"%d %d\\n\", max_tab(a, 3), max_tab(b, 4));\n    return 0;\n}\n```",
+     "sol": "```c\nint max_tab(int t[], int n)\n{\n    int m = t[0];\n    for (int i = 1; i < n; i++)\n        if (t[i] > m)\n            m = t[i];\n    return m;\n}\n```\n\nOn part de `t[0]` (et non de $0$, sinon un tableau négatif donnerait $0$).",
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c68",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int compte(char s[], char c)` : nombre d'occurrences de `c` dans la chaîne `s`.\n\nCe `main` doit afficher :\n\n```\n3 2 0\n```\n\n```c\nint main(void)\n{\n    char s[] = \"banana\";\n    printf(\"%d %d %d\\n\", compte(s, 'a'), compte(s, 'n'), compte(s, 'z'));\n    return 0;\n}\n```",
+     "sol": "```c\nint compte(char s[], char c)\n{\n    int n = 0;\n    for (int i = 0; s[i] != '\\0'; i++)\n        if (s[i] == c)\n            n++;\n    return n;\n}\n```\n\nUne chaîne se parcourt jusqu'au `'\\0'`, sans connaître sa longueur.",
+     "formules": "indices $0\\dots n-1$ · `sizeof t / sizeof t[0]` · tableau non copié · chaîne finie par `'\\\\0'` · `strlen` / `sizeof`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Pointeurs",
+   "notions": [
+    "pointeurs"
+   ],
+   "exos": [
+    {
+     "id": "c71",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 5;\n    int *p = &a;\n    *p = 9;\n    printf(\"%d\\n\", a);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n9\n```\n\n`p` contient l'adresse de `a` : écrire dans `*p` modifie `a`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 3, b = 4;\n    int *p = &a;\n    *p = *p + b;\n    printf(\"%d %d\\n\", a, b);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n7 4\n```\n\n`*p` est `a`."
+      }
+     ],
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c72",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid echange(int *a, int *b)\n{\n    int t = *a;\n    *a = *b;\n    *b = t;\n}\n\nint main(void)\n{\n    int x = 1, y = 2;\n    echange(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2 1\n```\n\nOn passe les adresses pour que `echange` modifie `x` et `y`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid echange(int *a, int *b)\n{\n    int t = *a;\n    *a = *b;\n    *b = t;\n}\n\nint main(void)\n{\n    int x = 5, y = 8;\n    echange(&x, &y);\n    echange(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n5 8\n```\n\nDeux échanges : retour à l'état initial."
+      }
+     ],
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c73",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[3] = {10, 20, 30};\n    int *p = t;\n    p++;\n    printf(\"%d %d\\n\", *p, *(p + 1));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n20 30\n```\n\n`p` pointe d'abord sur `t[0]` ; `p++` avance d'un `int`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[4] = {1, 2, 3, 4};\n    int *p = t + 2;\n    p--;\n    printf(\"%d %d\\n\", *p, p[2]);\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n2 4\n```\n\n`p` pointe sur `t[1]` ; `p[2]` est `t[3]`."
+      }
+     ],
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c74",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int a = 1, b = 2;\n    int *p = &a;\n    int *q = p;\n    *q += 10;\n    q = &b;\n    *q += 20;\n    printf(\"%d %d\\n\", a, b);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n11 22\n```\n\n`q` pointe d'abord sur `a` (comme `p`), puis sur `b`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c75",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nvoid maj(int *n)\n{\n    (*n)++;\n}\n\nint main(void)\n{\n    int a = 0;\n    maj(&a);\n    maj(&a);\n    printf(\"%d\\n\", a);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n2\n```\n\nLes parenthèses sont nécessaires : `*n++` incrémenterait le pointeur.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c76",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    int t[] = {5, 6, 7, 8};\n    int *p = t + 1;\n    printf(\"%d %d %ld\\n\", p[0], p[2], (long) (&t[3] - &t[0]));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n6 8 3\n```\n\n`p[i]` est `*(p + i)` ; la différence de deux adresses se compte en éléments.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    },
+    {
+     "id": "c77",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `void min_max(int t[], int n, int *min, int *max)` qui range dans `*min` et `*max` le plus petit et le plus grand élément de $t$ ($n\\ge1$).\n\nCe `main` doit afficher :\n\n```\n-2 9\n```\n\n```c\nint main(void)\n{\n    int t[] = {4, -2, 9, 0};\n    int lo, hi;\n    min_max(t, 4, &lo, &hi);\n    printf(\"%d %d\\n\", lo, hi);\n    return 0;\n}\n```",
+     "sol": "```c\nvoid min_max(int t[], int n, int *min, int *max)\n{\n    *min = t[0];\n    *max = t[0];\n    for (int i = 1; i < n; i++) {\n        if (t[i] < *min)\n            *min = t[i];\n        if (t[i] > *max)\n            *max = t[i];\n    }\n}\n```\n\nUne fonction ne renvoie qu'une valeur : pour en rendre deux, on lui passe deux adresses.",
+     "formules": "`&a` · `*p` · `p + 1` · `t[i]` $\\equiv$ `*(t + i)` · passage par adresse `f(&x)` · `(*n)++`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Mémoire dynamique et chaînes",
+   "notions": [
+    "memoire",
+    "tableaux"
+   ],
+   "exos": [
+    {
+     "id": "c81",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void)\n{\n    int *t = malloc(3 * sizeof(int));\n    if (t == NULL)\n        return 1;\n    for (int i = 0; i < 3; i++)\n        t[i] = i + 1;\n    printf(\"%d\\n\", t[0] + t[1] + t[2]);\n    free(t);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n6\n```\n\n$1+2+3$. Le bloc réservé par `malloc` est libéré par `free`.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c82",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%zu %zu %zu\\n\", sizeof(char), sizeof(int), sizeof(double));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 4 8\n```\n\nTailles usuelles sur une machine 64 bits (`int` : $4$ octets).",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\nint main(void)\n{\n    printf(\"%zu\\n\", 10 * sizeof(int));\n    return 0;\n}\n```",
+       "sol": "**Affichage :**\n\n```\n40\n```\n\n$10\\times4$."
+      }
+     ],
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c83",
+     "enonce": "Qu'affiche ce programme ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <string.h>\n\nint main(void)\n{\n    char s[8];\n    strcpy(s, \"ab\");\n    strcat(s, \"cd\");\n    printf(\"%s %zu\\n\", s, strlen(s));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nabcd 4\n```\n\n`strcpy` copie `\\\"ab\\\"` (avec son `'\\0'`), `strcat` ajoute `\\\"cd\\\"` ; le tampon de $8$ octets suffit pour $4+1$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c84",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `int longueur(const char *s)` sans `strlen`.\n\nCe `main` doit afficher :\n\n```\n5 0\n```\n\n```c\nint main(void)\n{\n    printf(\"%d %d\\n\", longueur(\"EPITA\"), longueur(\"\"));\n    return 0;\n}\n```",
+     "sol": "```c\nint longueur(const char *s)\n{\n    int n = 0;\n    while (s[n] != '\\0')\n        n++;\n    return n;\n}\n```\n\nOn compte jusqu'au `'\\0'` (non compté).",
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c85",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 6,
+     "enonce": "Écrire `void inverse(char *s)` qui retourne la chaîne `s` sur place (sans `strlen`, sans second tableau).\n\nCe `main` doit afficher :\n\n```\nATIPE\n```\n\n```c\nint main(void)\n{\n    char s[] = \"EPITA\";\n    inverse(s);\n    printf(\"%s\\n\", s);\n    return 0;\n}\n```",
+     "sol": "```c\nvoid inverse(char *s)\n{\n    int n = 0;\n    while (s[n] != '\\0')\n        n++;\n    for (int i = 0; i < n / 2; i++) {\n        char c = s[i];\n        s[i] = s[n - 1 - i];\n        s[n - 1 - i] = c;\n    }\n}\n```\n\nOn échange $s[i]$ et $s[n-1-i]$ pour $i<n/2$.",
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c86",
+     "enonce": "Ce code est faux de deux façons. Lesquelles ?\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint main(void)\n{\n    char s[5] = \"EPITA\";\n    int *t = malloc(10 * sizeof(int));\n    t[0] = 1;\n    printf(\"%s %d\\n\", s, t[0]);\n    return 0;\n}\n```",
+     "sol": "1. `\\\"EPITA\\\"` occupe $6$ octets avec le `'\\0'` : `char s[5]` est trop petit (la chaîne n'est pas terminée, `%s` lit au-delà : comportement indéfini). Il faut `char s[6]` ou `char s[] = \\\"EPITA\\\"`.\n2. Le bloc de `malloc` n'est jamais libéré (fuite mémoire) : il manque `free(t);` ; on devrait aussi tester `t != NULL` avant d'écrire dedans.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 4,
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "open"
+    },
+    {
+     "id": "c87",
+     "enonce": "Combien d'octets réserve `malloc(10 * sizeof(double))` (`double` : $8$ octets) ?",
+     "ans": "80",
+     "sol": "$10\\times8$.",
+     "src": "Programme standard de début de C (non calibré sur le cours EPITA)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien d'octets réserve `malloc(25 * sizeof(int))` (`int` : $4$ octets) ?",
+       "ans": "100",
+       "sol": "$25\\times4$."
+      }
+     ],
+     "formules": "`malloc(n * sizeof(type))` · `free` · `strlen` `strcpy` `strcat` · `'\\\\0'` dans le tampon · `sizeof`",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

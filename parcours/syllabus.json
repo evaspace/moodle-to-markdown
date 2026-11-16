@@ -551,6 +551,36 @@
      ]
     }
    ]
+  },
+  {
+   "id": "prog",
+   "titre": "Programmation",
+   "semestres": [
+    {
+     "id": "S1",
+     "moodle": ".",
+     "_note": "NON CALIBRÉ : le cours officiel (prepa.pages.epita.fr, connexion GitLab EPITA) n'est pas sur le serveur ; contenu = programme standard d'un début de C. À recaler avec les vrais PDF/TP.",
+     "ecues": [
+      {
+       "id": "Programmation C (début)",
+       "titre": "Programmation : début du C",
+       "bloc": "B1",
+       "periode_examen": "à préciser",
+       "chapitres": [
+        "2030-S1 Programmation/00_Section 0"
+       ],
+       "parcours": [
+        "prog-s1-c-debut"
+       ],
+       "a_faire": [
+        "Python (S1)",
+        "C avancé (S2)"
+       ],
+       "annales": []
+      }
+     ]
+    }
+   ]
   }
  ]
 }

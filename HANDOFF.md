@@ -287,3 +287,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Prog (Moodle `2030-S1 Programmation`, `2030-S2-Programmation`; Past-Exams `S1/Finals/Algo/*/PYTHON`?), then anglais, méthodo.
 2. Moodle `multiply` example has a bug (`mult_rec (x, y-1)`): turned into exercise k96.
 3. Still open: footer hover (which browser?), delete `qa_feed1` (needs user OK), S1 January / S2 exam dates.
+
+# Handoff — 2026-11-16 (logo chat, prog C début)
+## Done
+- Cat logo: `static/cat.jpg` made transparent + cropped (`static/cat-logo.png`, `cat-512/192/180/64/32/16.png`, `favicon.ico`); templates `index/404/scroll` updated, route `/favicon.ico` in `app.py`. iOS apple-touch icon is transparent (iOS fills black).
+- `prog-s1-c-debut` (`parcours/src/prog_c_debut.py`): 8 levels, 58 exos, 9 notions, 18 quiz, variants, FORMULES. NOT CALIBRATED: the real course is on prepa.pages.epita.fr (GitLab login), no PDF/TD/exam of prog on the server (user could not locate the PDFs). `parcours/check_c.py` compiles and runs all 73 programs (gcc in a throwaway `alpine:3.20`): 73/73 OK. Matière `prog` added to `syllabus.json` (`a_faire`: Python S1, C avancé S2). Build OK (26 paths), 29 tests OK, `<stdio.h>` escaped in the HTML, deployed.
+## Next steps
+1. Ask the user for the prog PDFs/TDs/exams (Moodle) and recalibrate order/vocabulary of `prog_c_debut`.
+2. Python part of prog (S1), C avancé (S2): same remark, no source.
+3. Then anglais, méthodo (check Moodle for real content first).
