@@ -182,3 +182,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Archi S1 remaining: logique combinatoire (TD6-7: additionneurs, décodeurs, multiplexeurs), then Archi S2 (logique séquentielle: bascules, compteurs; microprocesseur) from `Archi S2 2030 - ...`.
 2. Then électronique, algo, prog, anglais, méthodo (user order). Transcribe S2 physics annales.
 3. Pitfall: markdown in `sol` supports tables; `$a<b$` still opens a tag (write `a < b`).
+
+# Handoff — 2026-11-16 (nuit, fin)
+## Done
+- `archi-s1-circuits` (8 lvl, 46 exos) built, tested (26/26), 8 levels checked at 390 px, QA account deleted, deployed (`docker restart`). Archi S1 now has 3 paths (numération, Boole, circuits). All committed on `feat/physique-thermo`, nothing pushed, main untouched.
+## Next steps
+1. Archi S2 (B3 logique séquentielle: bascules, compteurs; B4 microprocesseur): sources `Archi S2 2030 - ...` Moodle (chapters 1-3 PDFs, exams `s2_exam3`, `b3_exam3`, `b4_exam`).
+2. Electronique (Moodle `S1 - Electronique - Promo 2030`, `Electronique S2 - ...`), algo, prog, anglais, méthodo.
+3. Transcribe S2 physics annales; nothing asked of the user yet except merge/push decisions for the branches.

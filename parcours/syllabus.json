@@ -308,6 +308,22 @@
        ],
        "a_faire": [],
        "annales": []
+      },
+      {
+       "id": "Circuits combinatoires",
+       "titre": "Circuits combinatoires : additionneurs, comparateurs, décodeurs",
+       "bloc": "B2",
+       "periode_examen": "décembre-janvier (examen B2)",
+       "chapitres": [
+        "06_Algèbre de Boole [2526_I_INF_FISE_S01_PR_BOOL]",
+        "08_Travaux Dirigés",
+        "09_Entraînement"
+       ],
+       "parcours": [
+        "archi-s1-circuits"
+       ],
+       "a_faire": [],
+       "annales": []
       }
      ]
     }
