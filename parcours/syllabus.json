@@ -619,6 +619,25 @@
         "S2/Midterms/Algo/2030/midterm-2030-s2-algo-subject-fr.pdf",
         "S2/TDs/2030/Algo/B3/td2-2030-s2-b3-algo-subject-fr.pdf"
        ]
+      },
+      {
+       "id": "Arbres de recherche",
+       "titre": "Arbres de recherche : tas, arbres binaires de recherche, AVL",
+       "bloc": "B4",
+       "periode_examen": "mai (examen écrit B4, Python, 2 h)",
+       "chapitres": [],
+       "parcours": [
+        "algo-s2-recherche"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S2/Finals/Algo/2030/final-2030-s2-algo-subject-fr.pdf",
+        "S2/TDs/2030/Algo/B4/td1-2030-s2-b4-algo-subject-fr.pdf",
+        "S2/TDs/2030/Algo/B4/td2-2030-s2-b4-algo-subject-fr.pdf",
+        "S2/TDs/2030/Algo/B4/td3-2030-s2-b4-algo-correction-fr.pdf",
+        "S2/Finals/Algo/2022/final-2022-s2-algo-correction-fr.pdf",
+        "S2/Finals/Algo/2023/final-2023-s2-algo-correction.py"
+       ]
       }
      ]
     }

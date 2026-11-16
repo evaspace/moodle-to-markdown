@@ -350,18 +350,19 @@ ALLOWED = {"len", "range", "min", "max", "BinTree", "BinTreeSize", "Queue", "str
 METHODS = {"append", "enqueue", "dequeue", "isempty"}
 
 
-def _api(code):
+def _api(code, extra=(), methods=()):
+    """Exam annex check; `extra`/`methods`: names and methods another path's annex adds."""
     tree = ast.parse(code)
     defined = {n.name for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)}
     for n in ast.walk(tree):
         bad = None
         if isinstance(n, ast.Call):
             f = n.func
-            if isinstance(f, ast.Name) and f.id not in ALLOWED | defined:
+            if isinstance(f, ast.Name) and f.id not in ALLOWED | set(extra) | defined:
                 bad = f"function {f.id}"
             elif isinstance(f, ast.Name) and f.id in ("min", "max") and len(n.args) != 2:
                 bad = f"{f.id} with {len(n.args)} values"
-            elif isinstance(f, ast.Attribute) and f.attr not in METHODS:
+            elif isinstance(f, ast.Attribute) and f.attr not in METHODS | set(methods):
                 bad = f"method {f.attr}"
         elif isinstance(n, ast.Slice):
             bad = "slice"

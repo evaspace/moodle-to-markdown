@@ -1,0 +1,925 @@
+{
+ "subject": {
+  "id": "algo-s2-recherche",
+  "ordre": 640,
+  "matiere": "algo",
+  "semestre": "S2",
+  "ecue": "Arbres de recherche",
+  "titre": "Arbres de recherche : tas, arbres binaires de recherche, AVL",
+  "chapitres_moodle": [],
+  "td": "TD Algo-S2-AR de mars-avril 2026 (tas, ABR, AVL), examen B4 de mai 2026, partiels P2 de 2018 et 2019",
+  "examens": [
+   "Examen écrit B4 d'algorithmique, arbres de recherche (Python, 2 h, mai)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "tas",
+   "titre": "Tas : arbre parfait dans un vecteur",
+   "formule": "racine `H[1]` (case $0$ inutilisée) · fils de $i$ : $2i$ et $2i+1$ · père : $i\\,//\\,2$ · feuille : $2i>n$ · point simple : $2i=n$ · valeur d'un nœud $\\le$ celles de ses sous-arbres",
+   "exemple": "$n=13$ : le père de $11$ est $5$, les feuilles sont $7\\dots13$",
+   "cours": "Un tas représente un arbre binaire parfait partiellement ordonné : le minimum est en racine. La numérotation hiérarchique évite tout pointeur."
+  },
+  {
+   "id": "tas_ops",
+   "titre": "Ajout, suppression, modification dans un tas",
+   "formule": "ajout : en case $n+1$ puis remonter tant que le père est plus grand · suppression du minimum : le dernier remplace la racine puis descend vers le plus petit fils · coût $O(\\log n)$ · tri par tas $O(n\\log n)$",
+   "exemple": "`heap_push(H, 1, 'C')` sur `[None, (8, 'A'), (9, 'D')]` donne `[None, (1, 'C'), (9, 'D'), (8, 'A')]`",
+   "cours": "L'arbre reste parfait (on ajoute et retire toujours la dernière case) ; l'ordre se répare en remontant ou en descendant un seul chemin."
+  },
+  {
+   "id": "abr",
+   "titre": "Arbre binaire de recherche",
+   "formule": "clés du sous-arbre gauche $\\le$ clé $<$ clés du droit · infixe = ordre croissant · minimum : tout à gauche · maximum : tout à droite · recherche : un seul chemin, $O(h)$",
+   "exemple": "plus proche ancêtre commun : premier nœud où $x$ et $y$ se séparent",
+   "cours": "Toute recherche descend un seul chemin : on compare et on choisit un côté. On ne parcourt jamais tout l'arbre si l'ordre suffit."
+  },
+  {
+   "id": "abr_ajout",
+   "titre": "Ajout en feuille, ajout en racine",
+   "formule": "feuille : descendre jusqu'à `None` et y créer le nœud · racine : couper l'arbre en $(G, D)$ (clés $\\le x$, clés $>x$) puis `BinTree(x, G, D)`",
+   "exemple": "$13, 20, 5, 1, 15, 10, 18, 25, 4, 21, 27, 7, 12$ en feuille : racine $13$",
+   "cours": "L'ajout en feuille ne modifie qu'un lien. L'ajout en racine coupe l'arbre le long du chemin de recherche de $x$."
+  },
+  {
+   "id": "abr_supp",
+   "titre": "Suppression dans un ABR",
+   "formule": "feuille : on l'enlève · point simple : remplacé par son fils · point double : clé remplacée par le maximum du sous-arbre gauche, qu'on supprime ensuite",
+   "exemple": "supprimer $15$ dans B1 : $12$ monte en racine",
+   "cours": "Le maximum du sous-arbre gauche n'a pas de fils droit : le supprimer revient à un des deux cas simples."
+  },
+  {
+   "id": "abr_taille",
+   "titre": "ABR avec taille en chaque nœud",
+   "formule": "`size` $=1+$ taille gauche $+$ taille droite · $k$-ième : $g=$ taille gauche ; $k=g+1$ : racine ; $k\\le g$ : à gauche ; sinon $(k-g-1)$-ième à droite · médiane : rang $(n+1)\\,//\\,2$",
+   "exemple": "si le $k$-ième est en racine : $k-1$ éléments à gauche, $n-k$ à droite",
+   "cours": "Stocker la taille permet de trouver le $k$-ième en $O(h)$. Un ajout incrémente la taille de chaque nœud du chemin, seulement si l'élément a vraiment été ajouté."
+  },
+  {
+   "id": "avl",
+   "titre": "AVL : arbres h-équilibrés",
+   "formule": "déséquilibre $=h(G)-h(D)$ · AVL : ABR où chaque déséquilibre vaut $-1$, $0$ ou $1$ · $h(\\text{vide})=-1$ · hauteur $O(\\log n)$ · nombre minimal de nœuds : $N_h=N_{h-1}+N_{h-2}+1$",
+   "exemple": "arbres de Fibonacci : tous les nœuds internes ont un déséquilibre de $1$, $h_n=n-1$",
+   "cours": "La hauteur d'un AVL reste logarithmique : recherche, ajout et suppression coûtent $O(\\log n)$."
+  },
+  {
+   "id": "rotations",
+   "titre": "Rotations",
+   "formule": "déséquilibre $+2$ : fils gauche à $-1$ : `lrr` (rgd), sinon `rr` (rd) · $-2$ : fils droit à $+1$ : `rlr` (rdg), sinon `lr` (rg) · `lr` : `A.bal += 1 - min(B.bal, 0)` puis `B.bal += 1 + max(A.bal, 0)`",
+   "exemple": "chaîne $1, 2, 3$ insérée : rotation gauche sur $1$",
+   "cours": "Une rotation garde l'ordre infixe et change la racine du sous-arbre. Les rotations doubles enchaînent deux simples."
+  },
+  {
+   "id": "avl_modif",
+   "titre": "Ajout et suppression dans un AVL",
+   "formule": "ajout : la hauteur a augmenté si le nouveau déséquilibre vaut $\\pm1$ ; après une rotation, plus de changement · suppression : la hauteur a diminué si le nouveau déséquilibre vaut $0$ (aussi après rotation) · rééquilibrage à la remontée",
+   "exemple": "suppression avec fils à $0$ : rotation simple, hauteur inchangée",
+   "cours": "La fonction récursive renvoie l'arbre et un booléen « la hauteur a changé » ; le père met à jour son déséquilibre ($\\pm1$) seulement si ce booléen est vrai."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "tas",
+   "type": "qcm",
+   "q": "Dans un tas (case $0$ inutilisée), le père du nœud $i$ est :",
+   "choix": [
+    "$i\\,//\\,2$",
+    "$2i$",
+    "$i-1$",
+    "$(i+1)\\,//\\,2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tas",
+   "type": "vf",
+   "q": "Dans un tas de valeurs distinctes, le maximum est une feuille.",
+   "bonne": true
+  },
+  {
+   "notion": "tas_ops",
+   "type": "qcm",
+   "q": "Coût de la suppression du minimum dans un tas de $n$ éléments :",
+   "choix": [
+    "$O(\\log n)$",
+    "$O(1)$",
+    "$O(n)$",
+    "$O(n\\log n)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tas_ops",
+   "type": "vf",
+   "q": "Pour supprimer le minimum, on met le dernier élément en racine puis on le fait descendre du côté du plus grand fils.",
+   "bonne": false
+  },
+  {
+   "notion": "abr",
+   "type": "qcm",
+   "q": "Le parcours qui donne les clés d'un ABR en ordre croissant :",
+   "choix": [
+    "infixe",
+    "préfixe",
+    "suffixe",
+    "en largeur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "abr",
+   "type": "vf",
+   "q": "Le minimum d'un ABR non vide est toujours une feuille.",
+   "bonne": false
+  },
+  {
+   "notion": "abr_ajout",
+   "type": "qcm",
+   "q": "Ajout en racine de $x$ : on coupe l'arbre en :",
+   "choix": [
+    "clés $\\le x$ et clés $>x$",
+    "sous-arbre gauche et droit de la racine",
+    "deux moitiés de même taille",
+    "feuilles et nœuds internes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "abr_ajout",
+   "type": "vf",
+   "q": "Après des ajouts en feuille, la première valeur ajoutée est la racine.",
+   "bonne": true
+  },
+  {
+   "notion": "abr_supp",
+   "type": "qcm",
+   "q": "Suppression d'un point double : la clé est remplacée par :",
+   "choix": [
+    "le maximum du sous-arbre gauche",
+    "le minimum du sous-arbre gauche",
+    "le maximum du sous-arbre droit",
+    "la clé du père"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "abr_supp",
+   "type": "vf",
+   "q": "Le maximum du sous-arbre gauche n'a pas de fils droit.",
+   "bonne": true
+  },
+  {
+   "notion": "abr_taille",
+   "type": "qcm",
+   "q": "Taille gauche $g$, on cherche le $k$-ième avec $k>g+1$ : on cherche à droite le :",
+   "choix": [
+    "$(k-g-1)$-ième",
+    "$k$-ième",
+    "$(k-g)$-ième",
+    "$(k-1)$-ième"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "abr_taille",
+   "type": "vf",
+   "q": "Dans `addBSTSize`, on incrémente la taille de chaque nœud du chemin même si la clé était déjà présente.",
+   "bonne": false
+  },
+  {
+   "notion": "avl",
+   "type": "qcm",
+   "q": "Déséquilibre d'un nœud :",
+   "choix": [
+    "$h(G)-h(D)$",
+    "$h(D)-h(G)$",
+    "taille$(G)-$taille$(D)$",
+    "$|h(G)-h(D)|$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "avl",
+   "type": "vf",
+   "q": "Un arbre de Fibonacci est un AVL.",
+   "bonne": true
+  },
+  {
+   "notion": "rotations",
+   "type": "qcm",
+   "q": "Racine à $+2$, fils gauche à $-1$ :",
+   "choix": [
+    "rotation gauche-droite",
+    "rotation droite",
+    "rotation gauche",
+    "rotation droite-gauche"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rotations",
+   "type": "vf",
+   "q": "Une rotation change l'ordre infixe des clés.",
+   "bonne": false
+  },
+  {
+   "notion": "avl_modif",
+   "type": "qcm",
+   "q": "Après un ajout et une rotation, la hauteur du sous-arbre :",
+   "choix": [
+    "redevient celle d'avant l'ajout",
+    "augmente de 1",
+    "diminue de 1",
+    "dépend du fils"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "avl_modif",
+   "type": "vf",
+   "q": "Une suppression dans un AVL peut demander plusieurs rotations.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Tas : arbre parfait dans un vecteur",
+   "notions": [
+    "tas"
+   ],
+   "exos": [
+    {
+     "id": "r11",
+     "enonce": "Soit `H` le vecteur d'un arbre binaire parfait de taille $n$ (numérotation hiérarchique, case $0$ inutilisée). Où est la racine ? Comment trouver les fils, le père d'un nœud $i$ ? Comment savoir si $i$ est une feuille, un point simple ?",
+     "sol": "Racine : `H[1]`. Fils de $i$ : $2i$ et $2i+1$ (s'ils sont $\\le n$). Père : $i\\,//\\,2$ pour $i>1$. Feuille : $2i>n$. Point simple : $2i=n$ (un seul fils, le gauche : au plus un tel nœud, quand $n$ est pair).",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "racine `H[1]` · fils $2i$, $2i+1$ · père $i\\,//\\,2$ · feuille $2i>n$ · point simple $2i=n$",
+     "type": "open"
+    },
+    {
+     "id": "r12",
+     "enonce": "Tas de taille $n=13$ : indice du père du nœud $11$ ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\n$11\\,//\\,2=5$.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 1,
+     "formules": "racine `H[1]` · fils $2i$, $2i+1$ · père $i\\,//\\,2$ · feuille $2i>n$ · point simple $2i=n$",
+     "type": "value"
+    },
+    {
+     "id": "r13",
+     "enonce": "Combien de feuilles dans un tas de taille $13$ ?",
+     "ans": "7",
+     "sol": "**Réponse :** $7$\n\nLes nœuds $i$ avec $2i>13$ : $i=7\\dots13$, soit $n-n\\,//\\,2=7$.",
+     "src": "Calé sur les TD Algo-S2-AR 2026 et l'examen B4 du 11 mai 2026 (Past-Exams S2/TDs/2030/Algo/B4, S2/Finals/Algo/2030)",
+     "duree": 2,
+     "formules": "racine `H[1]` · fils $2i$, $2i+1$ · père $i\\,//\\,2$ · feuille $2i>n$ · point simple $2i=n$",
+     "type": "value"
+    },
+    {
+     "id": "r14",
+     "enonce": "Donner la représentation par tas (vecteur de couples `(valeur, élément)`) de l'arbre ci-dessous. Éléments : A = 2, B = 10, C = 12, D = 14, E = 16, F = 18, G = 20, H = 22, I = 24, J = 26, K = 28, L = 30, M = 32.\n\n![ = ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨10, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨18, _, _⟩⟩⟩](/static/arbres/abg-151df840a859.svg)",
+     "sol": "```\n[None, (2, 'A'), (12, 'C'), (10, 'B'), (24, 'I'), (16, 'E'), (14, 'D'), (18, 'F'), (30, 'L'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H')]\n```\n\nOn lit l'arbre niveau par niveau, de gauche à droite.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "racine `H[1]` · fils $2i$, $2i+1$ · père $i\\,//\\,2$ · feuille $2i>n$ · point simple $2i=n$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Tas : ajout et suppression du minimum",
+   "notions": [
+    "tas_ops",
+    "tas"
+   ],
+   "exos": [
+    {
+     "id": "r21",
+     "enonce": "Ajouter au tas ci-dessous N de valeur $5$, puis O de valeur $15$, enfin P de valeur $1$. Donner l'arbre et le vecteur.\n\n![ = ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨10, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨18, _, _⟩⟩⟩](/static/arbres/abg-151df840a859.svg)",
+     "sol": "![ = ⟨1, ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨5, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨10, ⟨18, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-9f664955fb8d.svg)\n\n```\n[None, (1, 'P'), (2, 'A'), (5, 'N'), (12, 'C'), (16, 'E'), (14, 'D'), (10, 'B'), (24, 'I'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H'), (18, 'F'), (15, 'O'), (30, 'L')]\n```\n\nChaque nouvel élément entre en dernière case puis remonte tant que son père est plus grand ; P (valeur $1$) remonte jusqu'à la racine.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 6,
+     "formules": "ajout : `append` puis remonter · suppression : dernier en racine puis descendre vers le plus petit fils",
+     "type": "open"
+    },
+    {
+     "id": "r22",
+     "enonce": "Écrire la fonction `heap_push(H, val, elt)` qui ajoute la paire `(val, elt)` au tas `H` (modifié en place).\n\nExemples d'applications :\n\n```\n>>> H = [None]\n>>> heap_push(H, 8, 'A')\n>>> H\n[None, (8, 'A')]\n>>> heap_push(H, 9, 'D')\n>>> H\n[None, (8, 'A'), (9, 'D')]\n>>> heap_push(H, 1, 'C')\n>>> H\n[None, (1, 'C'), (9, 'D'), (8, 'A')]\n>>> heap_push(H, 2, 'B')\n>>> H\n[None, (1, 'C'), (2, 'B'), (8, 'A'), (9, 'D')]\n```",
+     "sol": "```python\ndef heap_push(H, val, elt):\n    H.append((val, elt))\n    i = len(H) - 1\n    while i > 1 and H[i // 2][0] > val:\n        H[i] = H[i // 2]\n        i = i // 2\n    H[i] = (val, elt)\n```\n\nOn fait descendre les pères plutôt que d'échanger : une seule affectation de la nouvelle paire à la fin.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 8,
+     "formules": "ajout : `append` puis remonter · suppression : dernier en racine puis descendre vers le plus petit fils",
+     "type": "open"
+    },
+    {
+     "id": "r23",
+     "enonce": "Supprimer le plus petit élément du tas obtenu (ci-dessous). Donner l'arbre et le vecteur.\n\n![ = ⟨1, ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨5, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨10, ⟨18, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-9f664955fb8d.svg)",
+     "sol": "![ = ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨5, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨10, ⟨18, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-f931e3b02af8.svg)\n\n```\n[None, (2, 'A'), (12, 'C'), (5, 'N'), (24, 'I'), (16, 'E'), (14, 'D'), (10, 'B'), (30, 'L'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H'), (18, 'F'), (15, 'O')]\n```\n\nLa dernière case remplace la racine puis descend du côté du plus petit fils tant qu'il est plus petit qu'elle.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 6,
+     "formules": "ajout : `append` puis remonter · suppression : dernier en racine puis descendre vers le plus petit fils",
+     "type": "open"
+    },
+    {
+     "id": "r24",
+     "enonce": "Écrire `heap_pop(H)` qui supprime et renvoie la paire de plus petite valeur du tas `H` (modifié en place). Elle lève une `Exception` si le tas est vide.\n\nExemples d'applications :\n\n```\n>>> H = [None, (1, 'C'), (2, 'B'), (8, 'A'), (9, 'D')]\n>>> heap_pop(H)\n(1, 'C')\n>>> H\n[None, (2, 'B'), (9, 'D'), (8, 'A')]\n>>> heap_pop(H)\n(2, 'B')\n>>> H\n[None, (8, 'A'), (9, 'D')]\n>>> heap_pop([None])\nException: empty heap\n```",
+     "sol": "```python\ndef heap_pop(H):\n    n = len(H) - 1\n    if n == 0:\n        raise Exception(\"empty heap\")\n    top = H[1]\n    last = H.pop()\n    n = n - 1\n    if n > 0:\n        i = 1\n        ok = False\n        while 2 * i <= n and not ok:\n            j = 2 * i\n            if j + 1 <= n and H[j + 1][0] < H[j][0]:\n                j = j + 1\n            if H[j][0] < last[0]:\n                H[i] = H[j]\n                i = j\n            else:\n                ok = True\n        H[i] = last\n    return top\n```\n\n`H.pop()` retire la dernière case : l'arbre reste parfait. Attention au tas qui devient vide (rien à faire descendre).",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "ajout : `append` puis remonter · suppression : dernier en racine puis descendre vers le plus petit fils",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Tas : modification, tri, heapify",
+   "notions": [
+    "tas_ops"
+   ],
+   "exos": [
+    {
+     "id": "r31",
+     "enonce": "Dans le tas ci-dessous, la valeur de M (case $11$) passe à $4$. Donner le nouveau tas.\n\n![ = ⟨2, ⟨12, ⟨24, ⟨30, _, _⟩, ⟨26, _, _⟩⟩, ⟨16, ⟨20, _, _⟩, ⟨32, _, _⟩⟩⟩, ⟨5, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨10, ⟨18, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-f931e3b02af8.svg)",
+     "sol": "![ = ⟨2, ⟨4, ⟨24, ⟨30, _, _⟩, ⟨26, _, _⟩⟩, ⟨12, ⟨20, _, _⟩, ⟨16, _, _⟩⟩⟩, ⟨5, ⟨14, ⟨28, _, _⟩, ⟨22, _, _⟩⟩, ⟨10, ⟨18, _, _⟩, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-460c1a6fee59.svg)\n\n```\n[None, (2, 'A'), (4, 'M'), (5, 'N'), (24, 'I'), (12, 'C'), (14, 'D'), (10, 'B'), (30, 'L'), (26, 'J'), (20, 'G'), (16, 'E'), (28, 'K'), (22, 'H'), (18, 'F'), (15, 'O')]\n```\n\nLa valeur a diminué : M remonte tant que son père est plus grand.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "diminution : remonter · augmentation : descendre · heapify : descendre de $n\\,//\\,2$ à $1$ · tri $O(n\\log n)$",
+     "type": "open"
+    },
+    {
+     "id": "r32",
+     "enonce": "Écrire `heap_update(H, pos, newval)` qui remplace la valeur de l'élément en position `pos` par `newval` (tas modifié en place). Elle lève une exception si `pos` n'est pas valide.\n\nExemples d'applications :\n\n```\n>>> H = [None, (1, 'C'), (2, 'B'), (8, 'A'), (9, 'D')]\n>>> heap_update(H, 3, 0)\n>>> H\n[None, (0, 'A'), (2, 'B'), (1, 'C'), (9, 'D')]\n>>> heap_update(H, 1, 10)\n>>> H\n[None, (1, 'C'), (2, 'B'), (10, 'A'), (9, 'D')]\n>>> heap_update(H, 5, 3)\nException: invalid position\n```",
+     "sol": "```python\ndef heap_update(H, pos, newval):\n    n = len(H) - 1\n    if pos < 1 or pos > n:\n        raise Exception(\"invalid position\")\n    e = (newval, H[pos][1])\n    i = pos\n    while i > 1 and H[i // 2][0] > newval:      # value decreased: up\n        H[i] = H[i // 2]\n        i = i // 2\n    ok = False\n    while 2 * i <= n and not ok:                # value increased: down\n        j = 2 * i\n        if j + 1 <= n and H[j + 1][0] < H[j][0]:\n            j = j + 1\n        if H[j][0] < newval:\n            H[i] = H[j]\n            i = j\n        else:\n            ok = True\n    H[i] = e\n```\n\nUne valeur qui diminue remonte, une valeur qui augmente descend : un seul des deux `while` déplace l'élément.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "diminution : remonter · augmentation : descendre · heapify : descendre de $n\\,//\\,2$ à $1$ · tri $O(n\\log n)$",
+     "type": "open"
+    },
+    {
+     "id": "r33",
+     "enonce": "Quelle est la complexité de la recherche de la position d'un élément quelconque dans un tas ? Que faut-il ajouter pour modifier un élément quelconque en restant en $O(\\log n)$ ?",
+     "sol": "Le tas n'est pas ordonné de gauche à droite : trouver un élément demande un parcours de tout le vecteur, $O(n)$. On ajoute une table des positions (élément $\\to$ indice dans le vecteur), mise à jour à chaque déplacement ; `heap_update` coûte alors $O(\\log n)$.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 3,
+     "formules": "diminution : remonter · augmentation : descendre · heapify : descendre de $n\\,//\\,2$ à $1$ · tri $O(n\\log n)$",
+     "type": "open"
+    },
+    {
+     "id": "r34",
+     "enonce": "Écrire `heap_sort(L)` qui trie (pas en place) la liste de paires `(val, elt)` en ordre croissant à l'aide d'un tas.\n\nExemples d'applications :\n\n```\n>>> L = [(1, 'C'), (8, 'A'), (9, 'D'), (2, 'B')]\n>>> heap_sort(L)\n[(1, 'C'), (2, 'B'), (8, 'A'), (9, 'D')]\n>>> L\n[(1, 'C'), (8, 'A'), (9, 'D'), (2, 'B')]\n```",
+     "sol": "```python\ndef heap_push(H, val, elt):\n    H.append((val, elt))\n    i = len(H) - 1\n    while i > 1 and H[i // 2][0] > val:\n        H[i] = H[i // 2]\n        i = i // 2\n    H[i] = (val, elt)\n\ndef heap_pop(H):\n    n = len(H) - 1\n    if n == 0:\n        raise Exception(\"empty heap\")\n    top = H[1]\n    last = H.pop()\n    n = n - 1\n    if n > 0:\n        i = 1\n        ok = False\n        while 2 * i <= n and not ok:\n            j = 2 * i\n            if j + 1 <= n and H[j + 1][0] < H[j][0]:\n                j = j + 1\n            if H[j][0] < last[0]:\n                H[i] = H[j]\n                i = j\n            else:\n                ok = True\n        H[i] = last\n    return top\n\ndef heap_sort(L):\n    H = [None]\n    for i in range(len(L)):\n        heap_push(H, L[i][0], L[i][1])\n    R = []\n    for i in range(len(L)):\n        R.append(heap_pop(H))\n    return R\n```\n\n$n$ ajouts puis $n$ suppressions du minimum : $O(n\\log n)$.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 6,
+     "formules": "diminution : remonter · augmentation : descendre · heapify : descendre de $n\\,//\\,2$ à $1$ · tri $O(n\\log n)$",
+     "type": "open"
+    },
+    {
+     "id": "r35",
+     "enonce": "Soit `T` un arbre binaire parfait (numérotation hiérarchique). Écrire `heapify(T)` qui le transforme en tas en place.\n\nExemples d'applications :\n\n```\n>>> T1 = [None, (3, 'A'), (2, 'B'), (1, 'C')]\n>>> heapify(T1)\n>>> T1\n[None, (1, 'C'), (2, 'B'), (3, 'A')]\n>>> T2 = [None, (20, 'G'), (18, 'F'), (28, 'K'), (16, 'E'), (24, 'I'), (2, 'A'), (14, 'D'), (32, 'M'), (30, 'L'), (22, 'H'), (10, 'B'), (26, 'J'), (12, 'C')]\n>>> heapify(T2)\n>>> T2\n[None, (2, 'A'), (10, 'B'), (12, 'C'), (16, 'E'), (18, 'F'), (20, 'G'), (14, 'D'), (32, 'M'), (30, 'L'), (22, 'H'), (24, 'I'), (26, 'J'), (28, 'K')]\n```",
+     "sol": "```python\ndef sift_down(T, i, n):\n    \"\"\"moves T[i] down until its sons are greater (T[1..n] perfect tree)\"\"\"\n    e = T[i]\n    ok = False\n    while 2 * i <= n and not ok:\n        j = 2 * i\n        if j + 1 <= n and T[j + 1][0] < T[j][0]:\n            j = j + 1\n        if T[j][0] < e[0]:\n            T[i] = T[j]\n            i = j\n        else:\n            ok = True\n    T[i] = e\n\ndef heapify(T):\n    n = len(T) - 1\n    for i in range(n // 2, 0, -1):\n        sift_down(T, i, n)\n```\n\nOn fait descendre chaque nœud interne, du dernier ($n\\,//\\,2$) jusqu'à la racine : coût $O(n)$. C'est le résultat du TD ; d'autres tas sont possibles.",
+     "src": "TD 1 Algo-S2-AR, tas, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "diminution : remonter · augmentation : descendre · heapify : descendre de $n\\,//\\,2$ à $1$ · tri $O(n\\log n)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "ABR : minimum, maximum, recherche",
+   "notions": [
+    "abr"
+   ],
+   "exos": [
+    {
+     "id": "r41",
+     "enonce": "Où se trouvent les valeurs minimum et maximum d'un arbre binaire de recherche non vide ?",
+     "sol": "Le minimum est le nœud le plus à gauche (on suit les fils gauches jusqu'à un nœud sans fils gauche), le maximum le plus à droite. Ce ne sont pas forcément des feuilles.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 2,
+     "formules": "min tout à gauche, max tout à droite · recherche : `while B != None and x != B.key`",
+     "type": "open"
+    },
+    {
+     "id": "r42",
+     "enonce": "Écrire `minBST(B)` (récursif) et `maxBST(B)` (itératif), avec `B` un ABR non vide.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> minBST(B1)\n1\n>>> maxBST(B1)\n66\n```",
+     "sol": "```python\ndef minBST(B):\n    if B.left == None:\n        return B.key\n    else:\n        return minBST(B.left)\n\ndef maxBST(B):\n    while B.right != None:\n        B = B.right\n    return B.key\n```",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "min tout à gauche, max tout à droite · recherche : `while B != None and x != B.key`",
+     "type": "open"
+    },
+    {
+     "id": "r43",
+     "enonce": "Écrire la fonction récursive `searchBST(B, x)` qui renvoie l'arbre de racine $x$ si $x$ est dans l'ABR `B`, `None` sinon.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> searchBST(B1, 12).key\n12\n>>> searchBST(B1, 13)\nNone\n```",
+     "sol": "```python\ndef searchBST(B, x):\n    if B == None or x == B.key:\n        return B\n    elif x < B.key:\n        return searchBST(B.left, x)\n    else:\n        return searchBST(B.right, x)\n```",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "min tout à gauche, max tout à droite · recherche : `while B != None and x != B.key`",
+     "type": "open"
+    },
+    {
+     "id": "r44",
+     "enonce": "Même question en itératif : `searchBST_iter(B, x)`.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> searchBST_iter(B1, 35).key\n35\n>>> searchBST_iter(B1, 30)\nNone\n```",
+     "sol": "```python\ndef searchBST_iter(B, x):\n    while B != None and x != B.key:\n        if x < B.key:\n            B = B.left\n        else:\n            B = B.right\n    return B\n```",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "min tout à gauche, max tout à droite · recherche : `while B != None and x != B.key`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "ABR : ajout en feuille",
+   "notions": [
+    "abr_ajout",
+    "abr"
+   ],
+   "exos": [
+    {
+     "id": "r51",
+     "enonce": "Ajout aux feuilles : construire, à partir d'un arbre vide, l'ABR obtenu après ajouts successifs de $13, 20, 5, 1, 15, 10, 18, 25, 4, 21, 27, 7, 12$.",
+     "sol": "![ = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-8c313466e8ce.svg)\n\nChaque valeur descend depuis la racine $13$ et devient une feuille. C'est l'arbre B2 de l'exercice « second minimum ».",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "`if x <= B.key: B.left = addBST(x, B.left)` · itératif : garder le père",
+     "type": "open"
+    },
+    {
+     "id": "r52",
+     "enonce": "Écrire la fonction récursive `addBST(x, B)` qui ajoute $x$ en feuille dans l'ABR `B` et renvoie l'arbre.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> B1 = addBST(11, B1)\n>>> B1.left.right.left.right.key\n11\n```\n\nRésultats attendus :\n\n![addBST(40, B1) = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, ⟨11, _, _⟩⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, ⟨40, _, _⟩⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-bb4456642306.svg)",
+     "sol": "```python\ndef addBST(x, B):\n    if B == None:\n        return BinTree(x, None, None)\n    if x <= B.key:\n        B.left = addBST(x, B.left)\n    else:\n        B.right = addBST(x, B.right)\n    return B\n```\n\nL'arbre vide devient une feuille ; sinon on raccroche le sous-arbre modifié. Coût $O(h)$.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "`if x <= B.key: B.left = addBST(x, B.left)` · itératif : garder le père",
+     "type": "open"
+    },
+    {
+     "id": "r53",
+     "enonce": "Bonus : écrire l'ajout en feuille en itératif, `addBST_iter(x, B)`.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> addBST_iter(5, None).key\n5\n```\n\nRésultats attendus :\n\n![addBST_iter(30, B1) = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, ⟨30, _, _⟩, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-32d76b777066.svg)",
+     "sol": "```python\ndef addBST_iter(x, B):\n    new = BinTree(x, None, None)\n    (P, C) = (None, B)\n    while C != None:\n        P = C\n        if x <= C.key:\n            C = C.left\n        else:\n            C = C.right\n    if P == None:\n        return new\n    if x <= P.key:\n        P.left = new\n    else:\n        P.right = new\n    return B\n```\n\nOn garde le père `P` du nœud courant : c'est sous lui qu'on accroche la nouvelle feuille.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 7,
+     "formules": "`if x <= B.key: B.left = addBST(x, B.left)` · itératif : garder le père",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "ABR : suppression",
+   "notions": [
+    "abr_supp"
+   ],
+   "exos": [
+    {
+     "id": "r61",
+     "enonce": "Dans l'ABR ci-dessous, supprimer $15$ puis $28$ (un point double prend le maximum de son sous-arbre gauche).\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)",
+     "sol": "![sans 15 = ⟨12, ⟨8, ⟨1, _, _⟩, ⟨10, _, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩ ; puis sans 28 = ⟨12, ⟨8, ⟨1, _, _⟩, ⟨10, _, _⟩⟩, ⟨23, ⟨20, _, _⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-307f2805359a.svg)\n\n$15$ est remplacé par $12$ (maximum à gauche), puis $28$ par $23$.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "feuille/point simple : renvoyer l'autre fils · point double : `B.key = maxBST(B.left)` puis supprimer à gauche",
+     "type": "open"
+    },
+    {
+     "id": "r62",
+     "enonce": "Écrire la fonction récursive `delBST(x, B)` qui supprime $x$ de l'ABR `B` et renvoie l'arbre.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> delBST(7, None)\nNone\n```\n\nRésultats attendus :\n\n![delBST(15, B1) = ⟨12, ⟨8, ⟨1, _, _⟩, ⟨10, _, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩ ; puis delBST(10, B1) = ⟨12, ⟨8, ⟨1, _, _⟩, _⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-044b8509eb77.svg)",
+     "sol": "```python\ndef maxBST(B):\n    while B.right != None:\n        B = B.right\n    return B.key\n\ndef delBST(x, B):\n    if B == None:\n        return None\n    if x == B.key:\n        if B.left == None:\n            return B.right\n        if B.right == None:\n            return B.left\n        B.key = maxBST(B.left)\n        B.left = delBST(B.key, B.left)\n    elif x < B.key:\n        B.left = delBST(x, B.left)\n    else:\n        B.right = delBST(x, B.right)\n    return B\n```\n\nTrois cas : feuille ou point simple (on renvoie l'autre fils), point double (on remplace par le maximum du sous-arbre gauche puis on le supprime à gauche).",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "feuille/point simple : renvoyer l'autre fils · point double : `B.key = maxBST(B.left)` puis supprimer à gauche",
+     "type": "open"
+    },
+    {
+     "id": "r63",
+     "enonce": "Écrire `delMin(B)` qui supprime le minimum de l'ABR non vide `B` et renvoie l'arbre.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> delMin(BinTree(3, None, None))\nNone\n```\n\nRésultats attendus :\n\n![delMin(B1) = ⟨15, ⟨8, _, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-014a8b86f16c.svg)",
+     "sol": "```python\ndef delMin(B):\n    if B.left == None:\n        return B.right\n    B.left = delMin(B.left)\n    return B\n```\n\nLe minimum n'a pas de fils gauche : on le remplace par son fils droit (cas du point simple ou de la feuille).",
+     "src": "Calé sur les TD Algo-S2-AR 2026 et l'examen B4 du 11 mai 2026 (Past-Exams S2/TDs/2030/Algo/B4, S2/Finals/Algo/2030)",
+     "duree": 5,
+     "formules": "feuille/point simple : renvoyer l'autre fils · point double : `B.key = maxBST(B.left)` puis supprimer à gauche",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "ABR : ajout en racine",
+   "notions": [
+    "abr_ajout"
+   ],
+   "exos": [
+    {
+     "id": "r71",
+     "enonce": "Ajout en racine : construire, à partir d'un arbre vide, l'ABR obtenu après ajouts successifs de $13, 20, 5, 1, 15, 10, 18, 25, 4, 21, 27, 7, 12$.",
+     "sol": "![ = ⟨12, ⟨7, ⟨4, ⟨1, _, _⟩, ⟨5, _, _⟩⟩, ⟨10, _, _⟩⟩, ⟨27, ⟨21, ⟨18, ⟨15, ⟨13, _, _⟩, _⟩, ⟨20, _, _⟩⟩, ⟨25, _, _⟩⟩, _⟩⟩](/static/arbres/abg-27def5068ed4.svg)\n\nLa dernière valeur ajoutée, $12$, est en racine ; chaque ajout coupe l'arbre précédent en (clés $\\le x$, clés $>x$).",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 8,
+     "formules": "`cut` : clés $\\le x$ / $>x$ le long du chemin · `BinTree(x, L, R)`",
+     "type": "open"
+    },
+    {
+     "id": "r72",
+     "enonce": "Écrire `addRoot(x, B)` qui ajoute $x$ en racine dans l'ABR `B`.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> addRoot(3, None).key\n3\n```\n\nRésultats attendus :\n\n![addRoot(13, B1) = ⟨13, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨15, _, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩⟩](/static/arbres/abg-ec22a480c1ff.svg)",
+     "sol": "```python\ndef cut(x, B):\n    \"\"\"splits the BST B into (L, R): keys <= x in L, keys > x in R\"\"\"\n    if B == None:\n        return (None, None)\n    if x < B.key:\n        (L, R) = cut(x, B.left)\n        B.left = R\n        return (L, B)\n    else:\n        (L, R) = cut(x, B.right)\n        B.right = L\n        return (B, R)\n\ndef addRoot(x, B):\n    (L, R) = cut(x, B)\n    return BinTree(x, L, R)\n```\n\n`cut` suit le chemin de recherche de $x$ : chaque nœud rencontré part à gauche (clé $\\le x$) ou à droite, et récupère la partie coupée de son sous-arbre.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "`cut` : clés $\\le x$ / $>x$ le long du chemin · `BinTree(x, L, R)`",
+     "type": "open"
+    },
+    {
+     "id": "r73",
+     "enonce": "Ajouter $25$ en racine dans l'ABR ci-dessous. Dessiner le résultat.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)",
+     "sol": "![ = ⟨25, ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨20, _, ⟨23, _, _⟩⟩⟩, ⟨28, _, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-8e7446260e75.svg)\n\nLe chemin de recherche de $25$ ($15$, $28$, $20$, $23$) est coupé : $15$, $20$, $23$ (clés $\\le 25$) partent à gauche, $28$ à droite.",
+     "src": "Calé sur les TD Algo-S2-AR 2026 et l'examen B4 du 11 mai 2026 (Past-Exams S2/TDs/2030/Algo/B4, S2/Finals/Algo/2030)",
+     "duree": 5,
+     "formules": "`cut` : clés $\\le x$ / $>x$ le long du chemin · `BinTree(x, L, R)`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "ABR : second minimum, comptages, ancêtre commun",
+   "notions": [
+    "abr"
+   ],
+   "exos": [
+    {
+     "id": "r81",
+     "enonce": "Écrire `second_min(B)` qui renvoie la deuxième plus petite valeur de l'ABR `B` (clés distinctes), ou `None` si elle n'existe pas.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩ ; B2 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩ ; B3 = ⟨12, ⟨2, _, ⟨4, ⟨3, _, _⟩, ⟨5, _, _⟩⟩⟩, ⟨21, ⟨18, _, _⟩, _⟩⟩](/static/arbres/abg-0bef0b890f34.svg)\n\nExemples d'applications :\n\n```\n>>> second_min(B1)\n8\n>>> second_min(B2)\n4\n>>> second_min(B3)\n3\n>>> second_min(None)\nNone\n```",
+     "sol": "```python\ndef second_min(B):\n    if B == None:\n        return None\n    P = None\n    while B.left != None:\n        P = B\n        B = B.left\n    if B.right != None:\n        B = B.right\n        while B.left != None:\n            B = B.left\n        return B.key\n    elif P != None:\n        return P.key\n    else:\n        return None\n```\n\nAprès le minimum : le minimum de son sous-arbre droit s'il existe, sinon son père.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 8,
+     "formules": "second min : min du droit du minimum, sinon son père · $x\\le$ racine : racine $+$ droit $\\ge x$ · lca : séparer $x$ et $y$",
+     "type": "open"
+    },
+    {
+     "id": "r82",
+     "enonce": "Écrire `both_x(B, x)` qui renvoie `(inf, sup)` : nombres d'éléments de l'ABR `B` inférieurs à $x$, et supérieurs ou égaux à $x$.\n\n![B2 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩ ; B3 = ⟨12, ⟨2, _, ⟨4, ⟨3, _, _⟩, ⟨5, _, _⟩⟩⟩, ⟨21, ⟨18, _, _⟩, _⟩⟩](/static/arbres/abg-62c26505893e.svg)\n\nExemples d'applications :\n\n```\n>>> both_x(B2, 20)\n(9, 4)\n>>> both_x(B2, 27)\n(12, 1)\n>>> both_x(B2, 21)\n(10, 3)\n>>> both_x(B3, 12)\n(4, 3)\n>>> both_x(B3, 23)\n(7, 0)\n>>> both_x(B3, 7)\n(4, 3)\n```",
+     "sol": "```python\ndef size(B):\n    if B == None:\n        return 0\n    return 1 + size(B.left) + size(B.right)\n\ndef both_x(B, x):\n    if B == None:\n        return (0, 0)\n    if x <= B.key:\n        (inf, sup) = both_x(B.left, x)\n        return (inf, sup + 1 + size(B.right))\n    else:\n        (inf, sup) = both_x(B.right, x)\n        return (inf + 1 + size(B.left), sup)\n```\n\nSi $x\\le$ racine, la racine et tout le sous-arbre droit sont $\\ge x$ : on les compte d'un coup et on descend à gauche (et symétriquement).",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "second min : min du droit du minimum, sinon son père · $x\\le$ racine : racine $+$ droit $\\ge x$ · lca : séparer $x$ et $y$",
+     "type": "open"
+    },
+    {
+     "id": "r83",
+     "enonce": "Écrire `lca(B, x, y)` : clé du plus proche ancêtre commun des nœuds $x$ et $y$ ($x\\ne y$, présents dans l'ABR `B`, un nœud est son propre ancêtre).\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> lca(B1, 10, 15)\n15\n>>> lca(B1, 20, 66)\n28\n>>> lca(B1, 8, 10)\n8\n>>> lca(B1, 10, 42)\n15\n```",
+     "sol": "```python\ndef lca(B, x, y):\n    while (x < B.key and y < B.key) or (x > B.key and y > B.key):\n        if x < B.key:\n            B = B.left\n        else:\n            B = B.right\n    return B.key\n```\n\nTant que $x$ et $y$ sont du même côté, on descend ; le premier nœud qui les sépare (ou qui vaut l'un d'eux) est l'ancêtre.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 6,
+     "formules": "second min : min du droit du minimum, sinon son père · $x\\le$ racine : racine $+$ droit $\\ge x$ · lca : séparer $x$ et $y$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "ABR avec taille : k-ième élément",
+   "notions": [
+    "abr_taille"
+   ],
+   "exos": [
+    {
+     "id": "r91",
+     "enonce": "Soit `B` un ABR de $n$ éléments. Si le $k$-ième élément ($1\\le k\\le n$, ordre croissant) est en racine, combien d'éléments contiennent ses sous-arbres ?",
+     "sol": "$k-1$ à gauche (les plus petits), $n-k$ à droite.",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 2,
+     "formules": "$g$ = taille gauche · $k=g+1$ racine · $k\\le g$ gauche · sinon $(k-g-1)$ à droite · médiane $(n+1)\\,//\\,2$",
+     "type": "open"
+    },
+    {
+     "id": "r92",
+     "enonce": "On ajoute aux arbres binaires l'opération `taille` : `taille(arbrevide) = 0`, `taille(<o, G, D>) = 1 + taille(G) + taille(D)`. Donner une définition abstraite de `kieme : ArbreBinaire × Entier → Élément` (utilisant `taille`).",
+     "sol": "Pour $1\\le k\\le$ `taille(<o, G, D>)` :\n\n- `kieme(<o, G, D>, k) = contenu(o)` si $k=$ `taille(G)` $+1$\n- `kieme(<o, G, D>, k) = kieme(G, k)` si $k\\le$ `taille(G)`\n- `kieme(<o, G, D>, k) = kieme(D, k - taille(G) - 1)` si $k>$ `taille(G)` $+1$",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "$g$ = taille gauche · $k=g+1$ racine · $k\\le g$ gauche · sinon $(k-g-1)$ à droite · médiane $(n+1)\\,//\\,2$",
+     "type": "open"
+    },
+    {
+     "id": "r93",
+     "enonce": "Avec `BinTreeSize` (attribut `size` en chaque nœud), écrire `nthBST(B, k)` qui renvoie l'arbre dont la racine est le $k$-ième élément ($1\\le k\\le$ `B.size`).\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> nthBST(B1, 3).key\n10\n>>> nthBST(B1, 1).key\n1\n>>> nthBST(B1, 11).key\n66\n```",
+     "sol": "```python\ndef nthBST(B, k):\n    if B.left == None:\n        leftSize = 0\n    else:\n        leftSize = B.left.size\n    if k == leftSize + 1:\n        return B\n    elif k <= leftSize:\n        return nthBST(B.left, k)\n    else:\n        return nthBST(B.right, k - leftSize - 1)\n```\n\nUn seul chemin descendu : $O(h)$, sans parcours infixe.",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 8,
+     "formules": "$g$ = taille gauche · $k=g+1$ racine · $k\\le g$ gauche · sinon $(k-g-1)$ à droite · médiane $(n+1)\\,//\\,2$",
+     "type": "open"
+    },
+    {
+     "id": "r94",
+     "enonce": "Écrire `median(B)` : valeur médiane (rang $(n+1)\\,//\\,2$) de l'ABR avec taille `B`, `None` s'il est vide.\n\n![B1 = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-86ce56dd9abf.svg)\n\nExemples d'applications :\n\n```\n>>> median(B1)\n20\n>>> median(None)\nNone\n```",
+     "sol": "```python\ndef nthBST(B, k):\n    if B.left == None:\n        leftSize = 0\n    else:\n        leftSize = B.left.size\n    if k == leftSize + 1:\n        return B\n    elif k <= leftSize:\n        return nthBST(B.left, k)\n    else:\n        return nthBST(B.right, k - leftSize - 1)\n\ndef median(B):\n    if B == None:\n        return None\n    return nthBST(B, (B.size + 1) // 2).key\n```",
+     "src": "TD 2 Algo-S2-AR, arbres binaires de recherche, mars 2026 (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "$g$ = taille gauche · $k=g+1$ racine · $k\\le g$ gauche · sinon $(k-g-1)$ à droite · médiane $(n+1)\\,//\\,2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "AVL : déséquilibres et rotations",
+   "notions": [
+    "avl",
+    "rotations"
+   ],
+   "exos": [
+    {
+     "id": "r101",
+     "enonce": "Indiquer le déséquilibre de chaque nœud de l'arbre ci-dessous. Est-ce un AVL ?\n\n![ = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩](/static/arbres/abg-d07be2b25cd5.svg)",
+     "sol": "Déséquilibres ($h(G)-h(D)$) : 17 : 0 · 9 : 0 · 3 : 0 · 1 : 0 · 8 : 0 · 13 : +1 · 11 : 0 · 29 : -1 · 23 : 0 · 40 : -1 · 42 : 0.\n\nC'est un ABR et tous les déséquilibres sont dans $\\{-1, 0, 1\\}$ : c'est un AVL.",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 4,
+     "formules": "déséq. $h(G)-h(D)$ · $+2$ : gauche à $-1$ : `lrr`, sinon `rr` · $-2$ : droit à $+1$ : `rlr`, sinon `lr`",
+     "type": "open"
+    },
+    {
+     "id": "r102",
+     "enonce": "Écrire `is_hbalanced(B)` qui vérifie si l'arbre binaire `B` (`BinTree`) est h-équilibré.\n\n![A = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩ ; C = ⟨1, _, ⟨2, _, ⟨3, _, _⟩⟩⟩](/static/arbres/abg-45e474c6f247.svg)\n\nExemples d'applications :\n\n```\n>>> is_hbalanced(A)\nTrue\n>>> is_hbalanced(C)\nFalse\n>>> is_hbalanced(None)\nTrue\n```",
+     "sol": "```python\ndef __hb(B):\n    \"\"\"returns (height of B, True if B is h-balanced)\"\"\"\n    if B == None:\n        return (-1, True)\n    (hl, okl) = __hb(B.left)\n    (hr, okr) = __hb(B.right)\n    ok = okl and okr and -1 <= hl - hr and hl - hr <= 1\n    return (1 + max(hl, hr), ok)\n\ndef is_hbalanced(B):\n    (h, ok) = __hb(B)\n    return ok\n```\n\nLa fonction auxiliaire renvoie la hauteur avec le booléen : un seul parcours, $O(n)$ (recalculer la hauteur en chaque nœud coûterait $O(n^2)$).",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 8,
+     "formules": "déséq. $h(G)-h(D)$ · $+2$ : gauche à $-1$ : `lrr`, sinon `rr` · $-2$ : droit à $+1$ : `rlr`, sinon `lr`",
+     "type": "open"
+    },
+    {
+     "id": "r103",
+     "enonce": "Pour un déséquilibre de $+2$ ou $-2$ en racine, quelle rotation appliquer selon le déséquilibre du fils concerné ? Quelle variation de hauteur ?",
+     "sol": "| racine | fils | rotation | $\\Delta H$ |\n|---|---|---|---|\n| $-2$ | droit $-1$ | gauche `lr` (rg) | $-1$ |\n| $-2$ | droit $0$ | gauche `lr` (rg) | $0$ |\n| $-2$ | droit $+1$ | droite-gauche `rlr` (rdg) | $-1$ |\n| $+2$ | gauche $+1$ | droite `rr` (rd) | $-1$ |\n| $+2$ | gauche $0$ | droite `rr` (rd) | $0$ |\n| $+2$ | gauche $-1$ | gauche-droite `lrr` (rgd) | $-1$ |\n\nLe cas du fils à $0$ n'arrive qu'après une suppression.",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "déséq. $h(G)-h(D)$ · $+2$ : gauche à $-1$ : `lrr`, sinon `rr` · $-2$ : droit à $+1$ : `rlr`, sinon `lr`",
+     "type": "open"
+    },
+    {
+     "id": "r104",
+     "enonce": "Écrire les quatre rotations `lr`, `rr`, `lrr`, `rlr` sur la classe `AVL` (attribut `bal` = déséquilibre), avec mise à jour des déséquilibres.\n\n![A = ⟨1, _, ⟨2, _, ⟨3, _, _⟩⟩⟩ ; C = ⟨3, ⟨1, _, ⟨2, _, _⟩⟩, _⟩ ; D = ⟨5, ⟨3, ⟨2, _, _⟩, ⟨4, _, _⟩⟩, _⟩](/static/arbres/abg-3ffe88d81fc9.svg)\n\nRésultats attendus :\n\n![lr(A) = ⟨2, ⟨1, _, _⟩, ⟨3, _, _⟩⟩ ; lrr(C) = ⟨2, ⟨1, _, _⟩, ⟨3, _, _⟩⟩ ; rr(D) = ⟨3, ⟨2, _, _⟩, ⟨5, ⟨4, _, _⟩, _⟩⟩](/static/arbres/abg-30f22063aa8b.svg)",
+     "sol": "```python\ndef lr(A):\n    \"\"\"left rotation, balance factors updated\"\"\"\n    B = A.right\n    A.right = B.left\n    B.left = A\n    A.bal = A.bal + 1 - min(B.bal, 0)\n    B.bal = B.bal + 1 + max(A.bal, 0)\n    return B\n\ndef rr(A):\n    \"\"\"right rotation, balance factors updated\"\"\"\n    B = A.left\n    A.left = B.right\n    B.right = A\n    A.bal = A.bal - 1 - max(B.bal, 0)\n    B.bal = B.bal - 1 + min(A.bal, 0)\n    return B\n\ndef lrr(A):\n    \"\"\"left-right rotation\"\"\"\n    A.left = lr(A.left)\n    return rr(A)\n\ndef rlr(A):\n    \"\"\"right-left rotation\"\"\"\n    A.right = rr(A.right)\n    return lr(A)\n```\n\nFormules générales : après `lr`, l'ancienne racine gagne $1$ (plus $-\\min$ du déséquilibre du fils), puis la nouvelle racine gagne $1$ (plus $\\max$ du nouveau déséquilibre de l'ancienne). Avec ces formules, les rotations doubles se composent des simples ; avec des mises à jour « cas par cas » (TD), elles doivent être écrites à part.",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 12,
+     "formules": "déséq. $h(G)-h(D)$ · $+2$ : gauche à $-1$ : `lrr`, sinon `rr` · $-2$ : droit à $+1$ : `rlr`, sinon `lr`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "AVL : ajout",
+   "notions": [
+    "avl_modif",
+    "rotations"
+   ],
+   "exos": [
+    {
+     "id": "r111",
+     "enonce": "Insérer successivement $4$, $48$, $7$, $5$ et $6$ dans l'AVL ci-dessous. Indiquer les rotations.\n\n![ = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩](/static/arbres/abg-d07be2b25cd5.svg)",
+     "sol": "![+4 = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, ⟨4, _, _⟩, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩ ; +48 = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, ⟨4, _, _⟩, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨42, ⟨40, _, _⟩, ⟨48, _, _⟩⟩⟩⟩ ; +7 = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨7, ⟨4, _, _⟩, ⟨8, _, _⟩⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨42, ⟨40, _, _⟩, ⟨48, _, _⟩⟩⟩⟩ ; +5 = ⟨17, ⟨9, ⟨4, ⟨3, ⟨1, _, _⟩, _⟩, ⟨7, ⟨5, _, _⟩, ⟨8, _, _⟩⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨42, ⟨40, _, _⟩, ⟨48, _, _⟩⟩⟩⟩ ; +6 = ⟨17, ⟨7, ⟨4, ⟨3, ⟨1, _, _⟩, _⟩, ⟨5, _, ⟨6, _, _⟩⟩⟩, ⟨9, ⟨8, _, _⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨42, ⟨40, _, _⟩, ⟨48, _, _⟩⟩⟩⟩](/static/arbres/abg-2450e7bc09d3.svg)\n\nRotations, dans l'ordre : rg(40), rgd(8), rdg(3), rgd(9).\n\nLe corrigé officiel donne les trois premières (insertions de $4$, $48$, $7$, $5$).",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "ajout : hauteur changée si déséq. $\\pm1$ · après rotation : inchangée · $N_h=N_{h-1}+N_{h-2}+1$",
+     "type": "open"
+    },
+    {
+     "id": "r112",
+     "enonce": "Écrire `insertAVL(x, A)` qui insère $x$ dans l'AVL `A` (sauf si la clé est déjà présente) et renvoie l'arbre. Annexe : rotations avec mise à jour des déséquilibres `lr` (gauche), `rr` (droite), `lrr` (gauche-droite), `rlr` (droite-gauche).\n\n![A = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩](/static/arbres/abg-4deb659930dd.svg)\n\nExemples d'applications :\n\n```\n>>> A = insertAVL(4, A)\n>>> A = insertAVL(48, A)\n>>> A = insertAVL(7, A)\n>>> A = insertAVL(5, A)\n>>> A.left.key\n9\n```\n\nRésultats attendus :\n\n![A = ⟨17, ⟨9, ⟨4, ⟨3, ⟨1, _, _⟩, _⟩, ⟨7, ⟨5, _, _⟩, ⟨8, _, _⟩⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨42, ⟨40, _, _⟩, ⟨48, _, _⟩⟩⟩⟩](/static/arbres/abg-ea3296091d91.svg)",
+     "sol": "```python\ndef __insertAVL(x, A):\n    \"\"\"returns (A with x inserted, True if the height of A has changed)\"\"\"\n    if A == None:\n        return (AVL(x, None, None, 0), True)\n    elif x == A.key:\n        return (A, False)\n    elif x < A.key:\n        (A.left, dh) = __insertAVL(x, A.left)\n        if not dh:\n            return (A, False)\n        A.bal = A.bal + 1\n        if A.bal == 2:\n            if A.left.bal == 1:\n                A = rr(A)\n            else:\n                A = lrr(A)\n        return (A, A.bal == 1)\n    else:\n        (A.right, dh) = __insertAVL(x, A.right)\n        if not dh:\n            return (A, False)\n        A.bal = A.bal - 1\n        if A.bal == -2:\n            if A.right.bal == -1:\n                A = lr(A)\n            else:\n                A = rlr(A)\n        return (A, A.bal == -1)\n\ndef insertAVL(x, A):\n    (A, dh) = __insertAVL(x, A)\n    return A\n```\n\nLa fonction auxiliaire renvoie aussi « la hauteur a augmenté ». Après une rotation, le déséquilibre est $0$ : la hauteur revient à sa valeur avant insertion (raccourci `A.bal == 1`).",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 12,
+     "formules": "ajout : hauteur changée si déséq. $\\pm1$ · après rotation : inchangée · $N_h=N_{h-1}+N_{h-2}+1$",
+     "type": "open"
+    },
+    {
+     "id": "r113",
+     "enonce": "Nombre minimal de nœuds d'un AVL de hauteur $4$ ?",
+     "ans": "12",
+     "sol": "**Réponse :** $12$\n\n$N_0=1$, $N_1=2$, $N_h=N_{h-1}+N_{h-2}+1$ : $4$, $7$, puis $12$. C'est la taille de l'arbre de Fibonacci $A_5$.",
+     "src": "Calé sur les TD Algo-S2-AR 2026 et l'examen B4 du 11 mai 2026 (Past-Exams S2/TDs/2030/Algo/B4, S2/Finals/Algo/2030)",
+     "duree": 2,
+     "formules": "ajout : hauteur changée si déséq. $\\pm1$ · après rotation : inchangée · $N_h=N_{h-1}+N_{h-2}+1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "AVL : suppression",
+   "notions": [
+    "avl_modif",
+    "rotations"
+   ],
+   "exos": [
+    {
+     "id": "r121",
+     "enonce": "Supprimer successivement $23$, $17$, $11$ et $1$ dans l'AVL ci-dessous (point double : maximum du sous-arbre gauche). Indiquer les rotations.\n\n![ = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩](/static/arbres/abg-d07be2b25cd5.svg)",
+     "sol": "![-23 = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩ ; -17 = ⟨13, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨11, _, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩ ; -11 = ⟨13, ⟨3, ⟨1, _, _⟩, ⟨9, ⟨8, _, _⟩, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩ ; -1 = ⟨13, ⟨8, ⟨3, _, _⟩, ⟨9, _, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩](/static/arbres/abg-53b382872c2f.svg)\n\nRotations : rg(29), rd(9), rdg(3). $17$ est remplacé par $13$, qui est remplacé à son tour par $11$ dans son ancien nœud.",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 10,
+     "formules": "suppression : hauteur changée si déséq. $0$ · fils à $0$ : rotation simple, hauteur inchangée",
+     "type": "open"
+    },
+    {
+     "id": "r122",
+     "enonce": "Après une suppression dans le sous-arbre gauche qui a diminué sa hauteur, que devient la hauteur de l'arbre selon son ancien déséquilibre ($+1$, $0$, $-1$) ?",
+     "sol": "Ancien $+1$, nouveau $0$ : la hauteur diminue. Ancien $0$, nouveau $-1$ : inchangée. Ancien $-1$, nouveau $-2$ : rotation ; fils droit à $-1$ : `lr`, hauteur diminuée ; à $0$ : `lr`, inchangée ; à $+1$ : `rlr`, diminuée. Bilan : la hauteur a changé si le déséquilibre final vaut $0$.",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 5,
+     "formules": "suppression : hauteur changée si déséq. $0$ · fils à $0$ : rotation simple, hauteur inchangée",
+     "type": "open"
+    },
+    {
+     "id": "r123",
+     "enonce": "Écrire `deleteAVL(x, A)` qui supprime $x$ de l'AVL `A` et renvoie l'arbre. Annexe : rotations avec mise à jour des déséquilibres `lr` (gauche), `rr` (droite), `lrr` (gauche-droite), `rlr` (droite-gauche).\n\n![A = ⟨17, ⟨9, ⟨3, ⟨1, _, _⟩, ⟨8, _, _⟩⟩, ⟨13, ⟨11, _, _⟩, _⟩⟩, ⟨29, ⟨23, _, _⟩, ⟨40, _, ⟨42, _, _⟩⟩⟩⟩](/static/arbres/abg-4deb659930dd.svg)\n\nExemples d'applications :\n\n```\n>>> A = deleteAVL(23, A)\n>>> A = deleteAVL(17, A)\n>>> A = deleteAVL(11, A)\n>>> A.key\n13\n```\n\nRésultats attendus :\n\n![A = ⟨13, ⟨3, ⟨1, _, _⟩, ⟨9, ⟨8, _, _⟩, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩ ; deleteAVL(1, A) = ⟨13, ⟨8, ⟨3, _, _⟩, ⟨9, _, _⟩⟩, ⟨40, ⟨29, _, _⟩, ⟨42, _, _⟩⟩⟩](/static/arbres/abg-ca8b447834b4.svg)",
+     "sol": "```python\ndef maxBST(B):\n    while B.right != None:\n        B = B.right\n    return B.key\n\ndef __deleteAVL(x, A):\n    \"\"\"returns (A without x, True if the height of A has changed)\"\"\"\n    if A == None:\n        return (None, False)\n    if x == A.key:\n        if A.left != None and A.right != None:\n            A.key = maxBST(A.left)\n            x = A.key       # deleted below, in the left subtree\n        elif A.left == None:\n            return (A.right, True)\n        else:\n            return (A.left, True)\n    if x <= A.key:\n        (A.left, dh) = __deleteAVL(x, A.left)\n        if not dh:\n            return (A, False)\n        A.bal = A.bal - 1\n        if A.bal == -2:\n            if A.right.bal == 1:\n                A = rlr(A)\n            else:\n                A = lr(A)\n        return (A, A.bal == 0)\n    else:\n        (A.right, dh) = __deleteAVL(x, A.right)\n        if not dh:\n            return (A, False)\n        A.bal = A.bal + 1\n        if A.bal == 2:\n            if A.left.bal == -1:\n                A = lrr(A)\n            else:\n                A = rr(A)\n        return (A, A.bal == 0)\n\ndef deleteAVL(x, A):\n    (A, dh) = __deleteAVL(x, A)\n    return A\n```\n\nPoint double : on remonte le maximum du sous-arbre gauche puis on le supprime à gauche (`x <= A.key`). Le corrigé officiel teste `A.right.bal == -1` après une suppression à droite : c'est le fils **gauche** qu'il faut tester (sinon, supprimer $4$ dans $3(1(\\cdot, 2), 4)$ plante : `A.right` vaut `None`).",
+     "src": "TD Algo-S2-AR « AVL », avril 2026, et son corrigé officiel (Past-Exams S2/TDs/2030/Algo/B4)",
+     "duree": 15,
+     "formules": "suppression : hauteur changée si déséq. $0$ · fils à $0$ : rotation simple, hauteur inchangée",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Partiel du 30 mai 2018",
+   "notions": [
+    "avl_modif",
+    "avl",
+    "abr"
+   ],
+   "exos": [
+    {
+     "id": "r131",
+     "enonce": "**Exercice 1 (AVL, 3 points).** À partir d'un arbre vide, construire l'AVL en insérant $25, 60, 35, 10, 20, 5, 70, 65, 45$. Dessiner l'arbre final et indiquer les rotations, dans l'ordre (par exemple `rg(42)`).",
+     "sol": "![ = ⟨20, ⟨10, ⟨5, _, _⟩, _⟩, ⟨60, ⟨35, ⟨25, _, _⟩, ⟨45, _, _⟩⟩, ⟨65, _, ⟨70, _, _⟩⟩⟩⟩](/static/arbres/abg-3fc988c79988.svg)\n\nRotations : rdg(25), rgd(25), rd(35), rdg(60), rdg(35).",
+     "src": "Partiel P2 du 30 mai 2018, corrigé officiel (Past-Exams S2/Finals/Algo/2022)",
+     "duree": 8,
+     "formules": "rotations notées rg, rd, rgd, rdg · $h_n=n-1$ · milieu en racine · successeur",
+     "type": "open"
+    },
+    {
+     "id": "r132",
+     "enonce": "**Exercice 2 (Arbres de Léonard, 3 points).** $A_0$ est vide, $A_1=\\langle o, \\emptyset, \\emptyset\\rangle$, $A_n=\\langle o, A_{n-1}, A_{n-2}\\rangle$. Dessiner $A_5$. Exprimer la hauteur $h_n$ ($n\\ge2$) et montrer que $A_n$ est h-équilibré.",
+     "sol": "![A5 (nœuds = déséquilibres) = ⟨1, ⟨1, ⟨1, ⟨1, ⟨0, _, _⟩, _⟩, ⟨0, _, _⟩⟩, ⟨1, ⟨0, _, _⟩, _⟩⟩, ⟨1, ⟨1, ⟨0, _, _⟩, _⟩, ⟨0, _, _⟩⟩⟩](/static/arbres/abg-fa510ccc224d.svg)\n\n$h_n=n-1$. Par récurrence, les sous-arbres $A_{n-1}$ et $A_{n-2}$ ont pour hauteurs $n-2$ et $n-3$ : la racine a un déséquilibre de $1$, et les sous-arbres sont h-équilibrés.",
+     "src": "Partiel P2 du 30 mai 2018, corrigé officiel (Past-Exams S2/Finals/Algo/2022)",
+     "duree": 6,
+     "formules": "rotations notées rg, rd, rgd, rdg · $h_n=n-1$ · milieu en racine · successeur",
+     "type": "open"
+    },
+    {
+     "id": "r133",
+     "enonce": "**Exercice 3 (List → AVL, 5 points).** Écrire `list2avl(L)` qui renvoie un AVL (classe `AVL`, déséquilibres renseignés) créé à partir de la liste `L` strictement croissante.\n\nRésultats attendus :\n\n![list2avl((1, 4, 5, 7, 10, 12, 13, 15, 18, 20, 21, 25)) = ⟨12, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨7, _, ⟨10, _, _⟩⟩⟩, ⟨18, ⟨13, _, ⟨15, _, _⟩⟩, ⟨21, ⟨20, _, _⟩, ⟨25, _, _⟩⟩⟩⟩](/static/arbres/abg-72cfa41c55b1.svg)",
+     "sol": "```python\ndef __list2avl(L, left, right):\n    \"\"\"AVL of L[left..right], and its height\"\"\"\n    if left > right:\n        return (None, -1)\n    mid = (left + right) // 2\n    B = AVL(L[mid], None, None, 0)\n    (B.left, hl) = __list2avl(L, left, mid - 1)\n    (B.right, hr) = __list2avl(L, mid + 1, right)\n    B.bal = hl - hr\n    return (B, 1 + max(hl, hr))\n\ndef list2avl(L):\n    (A, h) = __list2avl(L, 0, len(L) - 1)\n    return A\n```\n\nCorrigé officiel : le milieu en racine, récursivement ; la fonction auxiliaire renvoie la hauteur pour calculer le déséquilibre. Coût $O(n)$.",
+     "src": "Partiel P2 du 30 mai 2018, corrigé officiel (Past-Exams S2/Finals/Algo/2022)",
+     "duree": 12,
+     "formules": "rotations notées rg, rd, rgd, rdg · $h_n=n-1$ · milieu en racine · successeur",
+     "type": "open"
+    },
+    {
+     "id": "r134",
+     "enonce": "**Exercice 4 (AVL, suppression du minimum, 6 points).** Écrire la fonction récursive `del_min_avl(A)` qui supprime le minimum de l'AVL non vide `A` et renvoie le couple (arbre, la hauteur a changé). Annexe : rotations avec mise à jour des déséquilibres `lr` (gauche), `rr` (droite), `lrr` (gauche-droite), `rlr` (droite-gauche).\n\n![A = ⟨20, ⟨10, ⟨5, _, _⟩, _⟩, ⟨60, ⟨35, ⟨25, _, _⟩, ⟨45, _, _⟩⟩, ⟨65, _, ⟨70, _, _⟩⟩⟩⟩](/static/arbres/abg-a3771bcdb86a.svg)\n\nExemples d'applications :\n\n```\n>>> (A, dh) = del_min_avl(A)\n>>> dh\nFalse\n>>> (A, dh) = del_min_avl(A)\n>>> dh\nFalse\n>>> (A, dh) = del_min_avl(A)\n>>> dh\nTrue\n```\n\nRésultats attendus :\n\n![A = ⟨60, ⟨35, ⟨25, _, _⟩, ⟨45, _, _⟩⟩, ⟨65, _, ⟨70, _, _⟩⟩⟩](/static/arbres/abg-60eab430c4f4.svg)",
+     "sol": "```python\ndef del_min_avl(A):\n    \"\"\"A not empty: returns (A without its minimum, True if the height of A has changed)\"\"\"\n    if A.left == None:\n        return (A.right, True)\n    (A.left, dh) = del_min_avl(A.left)\n    if not dh:\n        return (A, False)\n    A.bal = A.bal - 1\n    if A.bal == -2:\n        if A.right.bal == 1:\n            A = rlr(A)\n        else:\n            A = lr(A)\n    return (A, A.bal == 0)\n```\n\nAprès la suppression du minimum, seul le déséquilibre $-2$ est possible : fils droit à $-1$ : rg, hauteur diminuée ; à $0$ : rg, inchangée ; à $+1$ : rdg, diminuée.",
+     "src": "Partiel P2 du 30 mai 2018, corrigé officiel (Past-Exams S2/Finals/Algo/2022)",
+     "duree": 12,
+     "formules": "rotations notées rg, rd, rgd, rdg · $h_n=n-1$ · milieu en racine · successeur",
+     "type": "open"
+    },
+    {
+     "id": "r135",
+     "enonce": "**Exercice 5 (ABR et mystère, 4 points).** Pour chaque appel, donner le résultat : `call(25, B1)`, `call(21, B1)`, `call(20, B1)`, `call(9, B1)`, `call(53, B1)`. Que fait `call(x, B)` ?\n\n```python\ndef bstMystery(x, B):\n    # first part\n    P = None\n    while B != None and x != B.key:\n        if x < B.key:\n            P = B\n            B = B.left\n        else:\n            B = B.right\n    if B == None:\n        return None\n    # second part\n    if B.right == None:\n        return P\n    else:\n        B = B.right\n        while B.left != None:\n            B = B.left\n        return B\n\ndef call(x, B):\n    p = bstMystery(x, B)\n    if p == None:\n        return None\n    else:\n        return p.key\n```\n\n![B1 = ⟨21, ⟨7, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, _⟩, ⟨17, ⟨9, _, ⟨15, _, _⟩⟩, ⟨20, _, _⟩⟩⟩, ⟨33, ⟨26, _, ⟨31, _, _⟩⟩, ⟨47, ⟨42, _, _⟩, ⟨53, _, _⟩⟩⟩⟩](/static/arbres/abg-f9b45b75ef0a.svg)",
+     "sol": "`call(25, B1)` : None · `call(21, B1)` : 26 · `call(20, B1)` : 21 · `call(9, B1)` : 15 · `call(53, B1)` : None\n\nÀ la fin de la première partie, `B` est le nœud de $x$ (ou `None`) et `P` le dernier nœud depuis lequel on est descendu à gauche. `call(x, B)` renvoie la valeur immédiatement supérieure à $x$ (le successeur), `None` si $x$ est absent ou maximal.",
+     "src": "Partiel P2 du 30 mai 2018, corrigé officiel (Past-Exams S2/Finals/Algo/2022)",
+     "duree": 8,
+     "formules": "rotations notées rg, rd, rgd, rdg · $h_n=n-1$ · milieu en racine · successeur",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Partiel du 22 mai 2019",
+   "notions": [
+    "abr_taille",
+    "avl_modif"
+   ],
+   "exos": [
+    {
+     "id": "r141",
+     "enonce": "**Exercice 1 (La taille en plus, 4 points).** Écrire `copyWithSize(B)` qui renvoie une copie de l'arbre `BinTree` `B` en `BinTreeSize` (taille renseignée en chaque nœud).\n\n![B1 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-96f25dd2d401.svg)\n\nExemples d'applications :\n\n```\n>>> copyWithSize(B1).size\n13\n>>> copyWithSize(B1).left.size\n6\n>>> copyWithSize(None)\nNone\n```\n\nRésultats attendus :\n\n![copyWithSize(B1) = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-cf1f5ec4a189.svg)",
+     "sol": "```python\ndef __copySize(B):\n    \"\"\"returns (copy of B with sizes, size of B)\"\"\"\n    if B == None:\n        return (None, 0)\n    (left, s1) = __copySize(B.left)\n    (right, s2) = __copySize(B.right)\n    size = 1 + s1 + s2\n    return (BinTreeSize(B.key, left, right, size), size)\n\ndef copyWithSize(B):\n    (C, size) = __copySize(B)\n    return C\n```\n\nCorrigé officiel : l'auxiliaire renvoie la copie et sa taille, pour ne jamais recalculer une taille.",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 8,
+     "formules": "auxiliaire (copie, taille) · taille $+1$ si ajouté · `nthBST` · `rebalancing` renvoie (arbre, hauteur changée)",
+     "type": "open"
+    },
+    {
+     "id": "r142",
+     "enonce": "**Exercice 2 (Ajout avec mise à jour de la taille, 4 points).** Écrire une fonction récursive qui ajoute un élément en feuille dans un ABR `BinTreeSize`, sauf s'il est déjà présent, en mettant à jour les tailles.\n\n![B1 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-96f25dd2d401.svg)\n\nExemples d'applications :\n\n```\n>>> (B1, ok) = addBSTSize(11, B1)\n>>> ok\nTrue\n>>> B1.size\n14\n>>> (B1, ok) = addBSTSize(13, B1)\n>>> ok\nFalse\n>>> B1.size\n14\n```\n\nRésultats attendus :\n\n![B1 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, ⟨11, _, _⟩, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-6b2373a7dab0.svg)",
+     "sol": "```python\ndef addBSTSize(x, A):\n    \"\"\"adds x in leaf if absent: returns (tree, True if x was added)\"\"\"\n    if A == None:\n        return (BinTreeSize(x, None, None, 1), True)\n    if x < A.key:\n        (A.left, insert) = addBSTSize(x, A.left)\n    elif x > A.key:\n        (A.right, insert) = addBSTSize(x, A.right)\n    else:\n        insert = False\n    if insert:\n        A.size = A.size + 1\n    return (A, insert)\n```\n\nLa taille d'un nœud n'augmente que si l'élément a été ajouté : le booléen remonte.",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 8,
+     "formules": "auxiliaire (copie, taille) · taille $+1$ si ajouté · `nthBST` · `rebalancing` renvoie (arbre, hauteur changée)",
+     "type": "open"
+    },
+    {
+     "id": "r143",
+     "enonce": "**Exercice 3 (Médian, 7 points).** Avec `BinTreeSize`, écrire `nthBST(B, k)` (arbre dont la racine est le $k$-ième élément) puis `median(B)` (valeur de rang $(n+1)\\,//\\,2$, `None` si `B` est vide).\n\n![B1 = ⟨13, ⟨5, ⟨1, _, ⟨4, _, _⟩⟩, ⟨10, ⟨7, _, _⟩, ⟨12, _, _⟩⟩⟩, ⟨20, ⟨15, _, ⟨18, _, _⟩⟩, ⟨25, ⟨21, _, _⟩, ⟨27, _, _⟩⟩⟩⟩](/static/arbres/abg-96f25dd2d401.svg)\n\nExemples d'applications :\n\n```\n>>> nthBST(B1, 3).key\n5\n>>> nthBST(B1, 9).key\n18\n>>> median(B1)\n13\n```",
+     "sol": "```python\ndef nthBST(B, k):\n    if B.left == None:\n        leftSize = 0\n    else:\n        leftSize = B.left.size\n    if k == leftSize + 1:\n        return B\n    elif k <= leftSize:\n        return nthBST(B.left, k)\n    else:\n        return nthBST(B.right, k - leftSize - 1)\n\ndef median(B):\n    if B == None:\n        return None\n    return nthBST(B, (B.size + 1) // 2).key\n```\n\nCorrigé officiel. Un peu d'aide de l'énoncé : si le $k$-ième est en racine, $k-1$ éléments à gauche et $n-k$ à droite.",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 12,
+     "formules": "auxiliaire (copie, taille) · taille $+1$ si ajouté · `nthBST` · `rebalancing` renvoie (arbre, hauteur changée)",
+     "type": "open"
+    },
+    {
+     "id": "r144",
+     "enonce": "**Exercice 4 (Construction, 3 points).** À partir d'un arbre vide, construire l'AVL en insérant $5, 15, 20, 2, 4, 1, 32, 25, 22$. Dessiner l'arbre après l'insertion de $1$, puis l'arbre final.",
+     "sol": "![après 1 = ⟨4, ⟨2, ⟨1, _, _⟩, _⟩, ⟨15, ⟨5, _, _⟩, ⟨20, _, _⟩⟩⟩ ; final = ⟨4, ⟨2, ⟨1, _, _⟩, _⟩, ⟨20, ⟨15, ⟨5, _, _⟩, _⟩, ⟨25, ⟨22, _, _⟩, ⟨32, _, _⟩⟩⟩⟩](/static/arbres/abg-cf3022294f34.svg)\n\nRotations : rg(5), rgd(5), rd(15), rdg(20), rdg(15).",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 8,
+     "formules": "auxiliaire (copie, taille) · taille $+1$ si ajouté · `nthBST` · `rebalancing` renvoie (arbre, hauteur changée)",
+     "type": "open"
+    },
+    {
+     "id": "r145",
+     "enonce": "**Exercice 5 (Rééquilibrage, 3 points).** Écrire `rebalancing(A)` qui rééquilibre si nécessaire l'AVL `A` après la mise à jour du déséquilibre de sa racine ($-2\\le$ `A.bal` $\\le2$), et renvoie le couple (arbre, la rotation a changé la hauteur). Annexe : rotations avec mise à jour des déséquilibres `lr` (gauche), `rr` (droite), `lrr` (gauche-droite), `rlr` (droite-gauche).\n\n![C = ⟨3, ⟨2, ⟨1, _, _⟩, _⟩, _⟩ ; D = ⟨5, ⟨3, ⟨2, _, _⟩, ⟨4, _, _⟩⟩, _⟩ ; E = ⟨3, ⟨1, _, ⟨2, _, _⟩⟩, _⟩](/static/arbres/abg-cdc7815e8c0c.svg)\n\nExemples d'applications :\n\n```\n>>> (T, dh) = rebalancing(C)\n>>> dh\nTrue\n>>> (T, dh) = rebalancing(D)\n>>> dh\nFalse\n>>> rebalancing(E)[1]\nTrue\n```",
+     "sol": "```python\ndef rebalancing(A):\n    \"\"\"A not empty, A.bal in [-2, 2]: rotation if needed;\n    returns (tree, True if the rotation changed the height)\"\"\"\n    if abs(A.bal) < 2:\n        return (A, False)\n    if A.bal == 2:\n        if A.left.bal == 1:\n            return (rr(A), True)\n        elif A.left.bal == 0:\n            return (rr(A), False)\n        else:\n            return (lrr(A), True)\n    else:\n        if A.right.bal == -1:\n            return (lr(A), True)\n        elif A.right.bal == 0:\n            return (lr(A), False)\n        else:\n            return (rlr(A), True)\n```\n\nCorrigé officiel. Seul le cas du fils à $0$ (après une suppression) laisse la hauteur inchangée.",
+     "src": "Partiel P2 du 22 mai 2019, corrigé officiel (Past-Exams S2/Finals/Algo/2023)",
+     "duree": 8,
+     "formules": "auxiliaire (copie, taille) · taille $+1$ si ajouté · `nthBST` · `rebalancing` renvoie (arbre, hauteur changée)",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examen B4 du 11 mai 2026",
+   "notions": [
+    "abr",
+    "abr_ajout",
+    "avl_modif"
+   ],
+   "exos": [
+    {
+     "id": "r151",
+     "enonce": "**Exercice 1 (6 points).** Écrire `insert_before_depth(B, x, d)` : insère $x$ en feuille dans l'ABR `B` (chemin d'insertion standard) **seulement si la profondeur d'insertion est $\\le d$** (racine à la profondeur $0$). Renvoie le couple `(root, res)`, `res` vrai si $x$ a été inséré.\n\n![B = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-6d3986013122.svg)\n\nExemples d'applications :\n\n```\n>>> (B, res) = insert_before_depth(B, 9, 3)\n>>> res\nFalse\n>>> (B, res) = insert_before_depth(B, 13, 3)\n>>> res\nTrue\n>>> (T, res) = insert_before_depth(None, 5, 0)\n>>> res\nTrue\n```\n\nRésultats attendus :\n\n![B = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, ⟨13, _, _⟩⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-4e4ae42286d4.svg)",
+     "sol": "```python\ndef insert_before_depth(B, x, d):\n    if B == None:\n        if d < 0:\n            return (None, False)\n        return (BinTree(x, None, None), True)\n    if d == 0:          # the new leaf would be deeper than d\n        return (B, False)\n    if x <= B.key:\n        (B.left, res) = insert_before_depth(B.left, x, d - 1)\n    else:\n        (B.right, res) = insert_before_depth(B.right, x, d - 1)\n    return (B, res)\n```\n\nOn s'arrête dès que la profondeur restante est nulle sur un nœud non vide : inutile de descendre plus bas (optimisation notée).",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    },
+    {
+     "id": "r152",
+     "enonce": "**Exercice 2 (6 points).** Écrire `check_list(L, B, x)` : vrai si la liste `L` est exactement la suite des nœuds rencontrés lors de la recherche de $x$ dans l'ABR `B`.\n\n![B = ⟨15, ⟨8, ⟨1, _, _⟩, ⟨12, ⟨10, _, _⟩, _⟩⟩, ⟨28, ⟨20, _, ⟨23, _, _⟩⟩, ⟨42, ⟨35, _, _⟩, ⟨66, _, _⟩⟩⟩⟩](/static/arbres/abg-6d3986013122.svg)\n\nExemples d'applications :\n\n```\n>>> check_list([], None, 42)\nTrue\n>>> check_list([15, 28, 20, 23], B, 23)\nTrue\n>>> check_list([15, 28, 23], B, 23)\nFalse\n>>> check_list([15, 28, 20, 23], B, 22)\nTrue\n>>> check_list([15, 8, 12, 10], B, 10)\nTrue\n>>> check_list([15, 8, 10], B, 10)\nFalse\n>>> check_list([15], B, 15)\nTrue\n```",
+     "sol": "```python\ndef check_list(L, B, x):\n    (i, n) = (0, len(L))\n    ok = True\n    while B != None and ok:\n        ok = i < n and L[i] == B.key\n        i = i + 1\n        if x == B.key:\n            B = None\n        elif x < B.key:\n            B = B.left\n        else:\n            B = B.right\n    return ok and i == n\n```\n\nOn descend le chemin de recherche en avançant dans `L` ; à la fin, toute la liste doit avoir été lue. Si $x$ est absent, le chemin s'arrête sur `None` (exemple avec $22$).",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 12,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    },
+    {
+     "id": "r153",
+     "enonce": "**Exercice 3.1 (Dessins).** Construire l'AVL des ajouts successifs de $10, 5, 15, 2, 1, 7, 6, 0, 9, 8$ à partir de l'arbre vide. Dessiner l'arbre après le 6e ajout, puis l'arbre final ; indiquer les rotations dans l'ordre (`rg(42)`, `rdg(42)`…).",
+     "sol": "![après 6 ajouts = ⟨5, ⟨2, ⟨1, _, _⟩, _⟩, ⟨10, ⟨7, _, _⟩, ⟨15, _, _⟩⟩⟩ ; final = ⟨5, ⟨1, ⟨0, _, _⟩, ⟨2, _, _⟩⟩, ⟨9, ⟨7, ⟨6, _, _⟩, ⟨8, _, _⟩⟩, ⟨10, _, ⟨15, _, _⟩⟩⟩⟩](/static/arbres/abg-8037fed52013.svg)\n\nRotations : rd(5), rgd(10), rd(2), rgd(10).",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 10,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    },
+    {
+     "id": "r154",
+     "enonce": "**Exercice 3.2.** Dans l'AVL ci-dessous, supprimer $40$ (point double : maximum du sous-arbre gauche). Indiquer les rotations.\n\n![ = ⟨30, ⟨20, ⟨10, ⟨5, _, _⟩, ⟨15, _, _⟩⟩, ⟨25, ⟨22, _, _⟩, ⟨27, _, ⟨28, _, _⟩⟩⟩⟩, ⟨40, ⟨35, _, _⟩, ⟨50, ⟨45, _, _⟩, _⟩⟩⟩](/static/arbres/abg-48cad1f408cb.svg)",
+     "sol": "![ = ⟨25, ⟨20, ⟨10, ⟨5, _, _⟩, ⟨15, _, _⟩⟩, ⟨22, _, _⟩⟩, ⟨30, ⟨27, _, ⟨28, _, _⟩⟩, ⟨45, ⟨35, _, _⟩, ⟨50, _, _⟩⟩⟩⟩](/static/arbres/abg-57ea07f421f9.svg)\n\nRotations : rdg(35), rgd(30). $35$ remplace $40$ ; le nœud passe à $-2$, puis la racine à $+2$.",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    },
+    {
+     "id": "r155",
+     "enonce": "**Exercice 4 (2 points).** Lesquels de ces arbres sont des arbres 2-3-4 ? (Un nœud entre crochets, ses fils en dessous, décalés.)\n\nB1 :\n\n```\n[20]\n    [10]\n        [5]\n        [15]\n    [30 40]\n        [18 25]\n        [35]\n        [45]\n```\n\nB2 :\n\n```\n[50 70]\n    [20 30]\n        [10]\n        [25]\n        [35]\n    [60]\n        [55]\n        [65]\n    [80 90]\n        [75]\n        [85]\n        [95]\n```\n\nB3 :\n\n```\n[40]\n    [20]\n        [10]\n        [30]\n    [60 80]\n        [50]\n        [70]\n        [90]\n```\n\nB4 :\n\n```\n[25 50]\n    [10]\n        [5]\n        [15]\n    [35]\n        [30]\n        [40]\n    [70]\n        [80]\n```",
+     "sol": "Arbres 2-3-4 : B2, B3.\n\nB1 : $18$ est dans le sous-arbre droit de $20$ (ordre faux). B4 : le nœud $[70]$ a une clé mais un seul fils (il en faut $2$).",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 4,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    },
+    {
+     "id": "r156",
+     "enonce": "**Exercice 5 (Mystery, 2 points).** Dessiner l'arbre `B` après `mystery(B)`.\n\n```python\ndef myst(B, a):\n    if B == None:\n        return 0\n    else:\n        b = myst(B.right, a)\n        if b == 0:\n            B.key = B.key + a\n        B.key = B.key + b\n        b = myst(B.left, B.key)\n        if b == 0:\n            return B.key\n        else:\n            return b\n\ndef mystery(B):\n    myst(B, 0)\n```\n\n![B = ⟨4, ⟨1, ⟨0, _, _⟩, ⟨2, _, ⟨3, _, _⟩⟩⟩, ⟨3, ⟨3, _, _⟩, ⟨1, _, ⟨2, _, _⟩⟩⟩⟩](/static/arbres/abg-c0f54eb2c291.svg)",
+     "sol": "![après mystery = ⟨13, ⟨19, ⟨19, _, _⟩, ⟨18, _, ⟨16, _, _⟩⟩⟩, ⟨6, ⟨9, _, _⟩, ⟨3, _, ⟨2, _, _⟩⟩⟩⟩](/static/arbres/abg-3a3a62694493.svg)\n\nParcours infixe inversé (droite, racine, gauche) : chaque clé devient la somme d'elle-même et de toutes les clés qui la suivent dans l'ordre infixe.",
+     "src": "Examen B4 du 11 mai 2026 (Past-Exams S2/Finals/Algo/2030, scan), pas de corrigé officiel",
+     "duree": 8,
+     "formules": "profondeur restante · chemin de recherche · max à gauche · 2-3-4 : $k$ clés, $k+1$ fils, feuilles au même niveau",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

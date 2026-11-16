@@ -374,3 +374,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. S2 algo arbres de recherche (B4): TDs `S2/TDs/2030/Algo/B4` (tas, ABR, AVL + AVL correction), final `S2/Finals/Algo/2030` (scan), older finals with corrections (2019-2025). Tree figures: reuse `algo_abg.fig`.
 2. Prog: recalibrate `prog_c_debut` on `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`.
 3. Anglais, méthodo: need material from the user.
+
+# Handoff — 2026-11-16 (algo S2 arbres de recherche, aperçu de partage)
+## Done
+- Share preview: `templates/share.html` (icons + og/twitter tags) included in every page head; opaque `static/og-cat.png` 1200x630 (the transparent cat-512.png rendered black). Commit e8b20b0.
+- `algo-s2-recherche` (`parcours/src/algo_recherche.py`): 15 levels, 59 exos, 9 notions, 18 quiz; heaps (td1), BST (td2), AVL (td + correction), levels 13-15 = P2 30 May 2018, P2 22 May 2019, B4 11 May 2026 (scan read as images). Reference engines compute every figure answer; official rotation lists asserted. Official AVL deletion bug (line 37, `A.right.bal` instead of `A.left.bal`) asserted and taught fixed. Syllabus: algo S2 ECUE `Arbres de recherche` (B4). Build OK (30 paths), offline tests OK, 59 statements/solutions rendered at 390 px (0 KaTeX error, 0 broken image, no overflow; 13+ node trees scale to ~0.75). Branch `feat/algo-s2-recherche` (from `feat/algo-s2-matrices`).
+## Next steps
+1. Prog: recalibrate `prog_c_debut` on `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`.
+2. Older S2 finals not used yet: 2-3-4 trees (2015, 2017, Jan 2018), AA trees (2017), 2020-2021 S2# exams: possible extra levels.
+3. Anglais, méthodo: need material from the user.
