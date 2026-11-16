@@ -271,3 +271,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Open
 - Footer « PIERREFEU » hover: ask the user which browser/page. Delete `qa_feed1` (needs user OK). S1 January / S2 exam dates when Auriga publishes them. Next subject: algo.
 - `python -m unittest discover` runs `test_md_to_cards`, which calls the Mistral API (free tier, 429s): run the named offline tests instead.
+
+# Handoff — 2026-11-16 (algo TAA, scroll shuffle)
+## Done
+- Scroll QCM choices shuffled on every display (`scroll.py`, order kept in session, server maps the screen position back); test added. User decision recorded in README_OBJECTIFS (goals: learn as fast as possible, get addicted). Commit `79abe9f` on `feat/calendrier-copie-ia`.
+- `algo-s1-taa` (`parcours/src/algo_taa.py`): 12 levels, 81 exos, 10 notions, 20 quiz, variants, FORMULES; evaluation answers checked by an in-file model of the abstract types. Matière `algo` in `syllabus.json`. Code blocks wrap on the exercise page (`niveaux.css?v=19`). Build OK (24 paths), offline tests OK, 12 levels at 390 px (0 KaTeX error, no overflow), QA accounts deleted, deployed. Branch `feat/algo`.
+## Next steps
+1. Caml path `algo-s1-caml` (Moodle `[algo] Caml et récursivité`: course sheet, recursion and list advice, Hanoï; no exam or TD downloaded). OCaml is not installed: check model solutions in a throwaway container (e.g. `docker run --rm alpine sh -c 'apk add ocaml && ...'`) or with `ocaml/opam`; ask before pulling a big image.
+2. Then prog, anglais, méthodo. Still open: footer hover (which browser?), delete `qa_feed1` (needs user OK).

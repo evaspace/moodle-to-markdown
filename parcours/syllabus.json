@@ -504,6 +504,49 @@
      ]
     }
    ]
+  },
+  {
+   "id": "algo",
+   "titre": "Algorithmique",
+   "semestres": [
+    {
+     "id": "S1",
+     "moodle": ".",
+     "_note": "Two Moodle courses (Caml et récursivité, TAA): chapters are given from the Moodle root.",
+     "ecues": [
+      {
+       "id": "Types algébriques abstraits",
+       "titre": "Types algébriques abstraits : listes, piles, files, ensembles",
+       "bloc": "B1",
+       "periode_examen": "fin octobre (examen B1, 1 h)",
+       "chapitres": [
+        "[algo] TAA - Types algébriques abstraits/04_👨‍🏫 I - Types abstraits [FR]",
+        "[algo] TAA - Types algébriques abstraits/05_👨‍🏫 II - Les listes [FR]",
+        "[algo] TAA - Types algébriques abstraits/06_👨‍🏫 II - Les piles - files et ensembles [FR]"
+       ],
+       "parcours": [
+        "algo-s1-taa"
+       ],
+       "a_faire": [],
+       "annales": []
+      },
+      {
+       "id": "Caml et récursivité",
+       "titre": "Caml et récursivité",
+       "bloc": "B1",
+       "periode_examen": "fin octobre (examen écrit B1, 1 h 30)",
+       "chapitres": [
+        "[algo] Caml et récursivité/01_🐫 Caml - Récursivité"
+       ],
+       "parcours": [],
+       "a_faire": [
+        "algo-s1-caml"
+       ],
+       "annales": []
+      }
+     ]
+    }
+   ]
   }
  ]
 }

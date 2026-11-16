@@ -1,0 +1,1306 @@
+{
+ "subject": {
+  "id": "algo-s1-taa",
+  "ordre": 600,
+  "matiere": "algo",
+  "semestre": "S1",
+  "ecue": "Types algébriques abstraits",
+  "titre": "Types algébriques abstraits : listes, piles, files, ensembles",
+  "chapitres_moodle": [
+   "[algo] TAA - Types algébriques abstraits/04_👨‍🏫 I - Types abstraits [FR]",
+   "[algo] TAA - Types algébriques abstraits/05_👨‍🏫 II - Les listes [FR]",
+   "[algo] TAA - Types algébriques abstraits/06_👨‍🏫 II - Les piles - files et ensembles [FR]"
+  ],
+  "td": "MiMos et questions du cours, exercice d'application (booléen)",
+  "examens": [
+   "Examen écrit B1 de TAA (1 h)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "signature",
+   "titre": "Signature d'un type abstrait",
+   "formule": "type abstrait $=$ signature $+$ axiomes · signature $=$ types $+$ opérations · profil : nom : type$_1$ x type$_2$ $\\to$ type du résultat · opération sans argument $=$ constante · le _ marque la place d'un argument",
+   "exemple": "insérer : liste x entier x élément $\\to$ liste ; s'utilise insérer(l, i, e)",
+   "cours": "Les types nomment les ensembles de valeurs que l'on définit (pile, liste…). Chaque opération a un nom et un profil : le type de ses arguments, puis celui de son résultat. Dans un nom, le caractère _ indique où se placent les arguments : _! s'écrit x!, _^_ s'écrit x^y. Une opération sans argument (vrai : $\\to$ booléen) est une constante."
+  },
+  {
+   "id": "hierarchie",
+   "titre": "Hiérarchie : types définis, prédéfinis, opérations internes, observateurs",
+   "formule": "défini : déclaré dans types (en conception) · prédéfini : déclaré dans utilise (déjà conçu) · opération interne : résultat de type défini · observateur : au moins un argument de type défini, résultat de type prédéfini",
+   "exemple": "vecteur : modifième est interne ; ième, borneinf, bornesup sont des observateurs",
+   "cours": "Un type réutilise des types déjà définis (entier, booléen, élément) listés après utilise ; sa signature est l'union de leurs signatures et des nouvelles opérations. Les opérations internes construisent ou modifient une valeur du type défini ; les observateurs la regardent et renvoient une valeur d'un type prédéfini."
+  },
+  {
+   "id": "axiomes",
+   "titre": "Axiomes, préconditions, consistance, complétude",
+   "formule": "axiomes : observateurs appliqués aux opérations internes · opération partielle : précondition « est-défini-ssi » · consistance : aucun axiome contradictoire · complétude : une valeur pour tout observateur appliqué à toute opération interne",
+   "exemple": "sommet(empiler(p, e)) $=$ e ; sommet(p) est-défini-ssi estvide(p) $=$ Faux",
+   "cours": "Pour savoir ce que fait une opération interne, on lui applique chaque observateur : chaque combinaison donne un axiome. Une opération qui n'est pas définie partout est partielle ; on précise son domaine par une précondition avant d'écrire ses axiomes, parfois à l'aide d'une opération auxiliaire (estinitialisé pour le vecteur, existe pour rechercher)."
+  },
+  {
+   "id": "lrec",
+   "titre": "Liste récursive",
+   "formule": "listevide · cons : élément x liste $\\to$ liste · fin · tête : liste $\\to$ place · contenu : place $\\to$ élément · premier · succ : place $\\to$ place · premier(l) $=$ contenu(tête(l)) · fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · fin, tête, premier : l $\\neq$ listevide",
+   "exemple": "premier(fin(cons(3, cons(5, listevide)))) $=5$",
+   "cours": "La liste récursive se manipule par sa tête : cons ajoute un élément devant, fin retire le premier, premier lit le premier. tête renvoie la première place, succ passe à la place suivante, contenu lit l'élément d'une place. fin, tête et premier sont partielles (liste non vide)."
+  },
+  {
+   "id": "liter",
+   "titre": "Liste itérative",
+   "formule": "accès(l, k) : $k$-ième place · ième(l, k) · longueur · insérer(l, k, e) · supprimer(l, k) · insérer : $1\\le k\\le$ longueur(l)$+1$ · supprimer, accès : $1\\le k\\le$ longueur(l) · longueur(insérer(l, k, e)) $=$ longueur(l)$+1$ · ième(insérer(l, k, e), k) $=$ e · contenu(accès(l, k)) $=$ ième(l, k)",
+   "exemple": "insérer(insérer(listevide, 1, 5), 1, 8) $=\\langle 8, 5\\rangle$",
+   "cours": "La liste itérative décrit la même donnée, mais l'opération de base est l'accès à la $k$-ième place. Insérer en $k$ décale d'un rang les éléments de rang $\\ge k$ ; supprimer en $k$ ramène d'un rang les éléments de rang $> k$. Les rangs commencent à $1$."
+  },
+  {
+   "id": "conversion",
+   "titre": "Extensions : concaténer, existe, rechercher ; passage récursif $\\leftrightarrow$ itératif",
+   "formule": "tête(l) $=$ accès(l, 1) · premier(l) $=$ ième(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(listevide, l) $=$ l · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2)) · rechercher(e, l) est-défini-ssi existe(e, l) $=$ vrai",
+   "exemple": "concaténer(cons(1, listevide), cons(2, listevide)) $=$ cons(1, cons(2, listevide))",
+   "cours": "Une extension ajoute des opérations à un type supposé connu : on donne leur profil, leurs préconditions et leurs axiomes, sans réécrire le type. Les deux listes décrivent la même donnée : chaque opération de l'une s'écrit avec celles de l'autre (parfois avec une boucle et une liste auxiliaire)."
+  },
+  {
+   "id": "pile",
+   "titre": "Piles (LIFO)",
+   "formule": "pilevide · empiler : pile x élément $\\to$ pile · dépiler · sommet · estvide · dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai · estvide(empiler(p, e)) $=$ Faux · dépiler, sommet : estvide(p) $=$ Faux",
+   "exemple": "sommet(dépiler(empiler(empiler(pilevide, 3), 5))) $=3$",
+   "cours": "Dernier entré, premier sorti : les entrées et les sorties se font du même côté, le sommet. dépiler et sommet sont partielles."
+  },
+  {
+   "id": "file",
+   "titre": "Files (FIFO)",
+   "formule": "filevide · enfiler · défiler · premier · estvide · estvide(f) $=$ Vrai $\\Rightarrow$ premier(enfiler(f, e)) $=$ e · estvide(f) $=$ Faux $\\Rightarrow$ premier(enfiler(f, e)) $=$ premier(f) · estvide(f) $=$ Vrai $\\Rightarrow$ défiler(enfiler(f, e)) $=$ filevide · estvide(f) $=$ Faux $\\Rightarrow$ défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+   "exemple": "premier(défiler(enfiler(enfiler(filevide, 3), 5))) $=5$",
+   "cours": "Premier entré, premier sorti : on enfile en queue, on défile en tête. Les axiomes de premier et de défiler distinguent la file vide de la file non vide : on ne voit le nouvel élément en tête que si la file était vide."
+  },
+  {
+   "id": "repr",
+   "titre": "Représentations statique et dynamique",
+   "formule": "statique : tableau de Nbmax éléments $+$ longueur (ou sommet, ou tête et queue) · dynamique : enregistrements chaînés par pointeurs, NUL $=$ fin · file statique circulaire : indice suivant $=(i \\bmod \\text{Nbmax})+1$",
+   "exemple": "Nbmax $=8$, queue $=8$ : après un enfilage, queue $=1$",
+   "cours": "Le tableau impose un surdimensionnement et des décalages pour insérer ou supprimer au milieu, mais donne l'accès direct au $k$-ième élément. Les pointeurs ne stockent que les éléments présents et insèrent sans décaler, mais l'accès au $k$-ième élément impose un parcours. Variantes : sentinelle en tête (pas de cas particulier devant le premier), liste circulaire (le pointeur repère le dernier), liste doublement chaînée (pointeurs de tête et de queue, retour en arrière)."
+  },
+  {
+   "id": "ensemble",
+   "titre": "Ensembles et multi-ensembles",
+   "formule": "ensemblevide · ajouter(x, e) · supprimer(x, e) · x $\\in$ e · card · choisir · x $\\in$ ensemblevide $=$ faux · x $\\in$ e $=$ vrai $\\Rightarrow$ card(ajouter(x, e)) $=$ card(e) · x $\\in$ e $=$ faux $\\Rightarrow$ card(ajouter(x, e)) $=$ card(e)$+1$ · multi-ensemble : card(ajouter(x, me)) $=$ card(me)$+1$, nboccurrences",
+   "exemple": "card(ajouter(3, ajouter(3, ensemblevide))) $=1$ ; dans un multi-ensemble, $2$",
+   "cours": "Un ensemble ne contient pas de doublon et n'a pas d'ordre : ajouter un élément déjà présent ne change rien. choisir renvoie un élément quelconque d'un ensemble non vide. Un multi-ensemble garde les répétitions : nboccurrences compte les exemplaires, supprimer en retire un seul."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "signature",
+   "type": "qcm",
+   "q": "Une opération sans argument, comme vrai : $\\to$ booléen, est :",
+   "choix": [
+    "une constante",
+    "un observateur",
+    "une précondition",
+    "un axiome"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "signature",
+   "type": "vf",
+   "q": "Dans le nom _^_, les _ marquent la place des arguments.",
+   "bonne": true
+  },
+  {
+   "notion": "hierarchie",
+   "type": "qcm",
+   "q": "Un observateur :",
+   "choix": [
+    "a un argument de type défini et un résultat de type prédéfini",
+    "renvoie toujours le type défini",
+    "n'a pas d'argument",
+    "est toujours partiel"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "hierarchie",
+   "type": "vf",
+   "q": "Dans le type pile, sommet est une opération interne.",
+   "bonne": false
+  },
+  {
+   "notion": "axiomes",
+   "type": "qcm",
+   "q": "La complétude d'un ensemble d'axiomes signifie :",
+   "choix": [
+    "on peut déduire tout observateur appliqué à toute opération interne",
+    "aucun axiome n'en contredit un autre",
+    "toutes les opérations sont totales",
+    "il y a un axiome par opération"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "axiomes",
+   "type": "vf",
+   "q": "Une opération partielle reçoit une précondition « est-défini-ssi ».",
+   "bonne": true
+  },
+  {
+   "notion": "lrec",
+   "type": "qcm",
+   "q": "premier(fin(cons(1, cons(2, listevide)))) vaut :",
+   "choix": [
+    "$2$",
+    "$1$",
+    "listevide",
+    "indéfini"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lrec",
+   "type": "vf",
+   "q": "fin(listevide) $=$ listevide.",
+   "bonne": false
+  },
+  {
+   "notion": "liter",
+   "type": "qcm",
+   "q": "insérer(l, k, e) est défini pour :",
+   "choix": [
+    "$1\\le k\\le$ longueur(l)$+1$",
+    "$1\\le k\\le$ longueur(l)",
+    "$0\\le k\\le$ longueur(l)",
+    "tout $k$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "liter",
+   "type": "vf",
+   "q": "longueur(supprimer(l, k)) $=$ longueur(l)$-1$.",
+   "bonne": true
+  },
+  {
+   "notion": "conversion",
+   "type": "qcm",
+   "q": "cons(e, l) s'écrit en liste itérative :",
+   "choix": [
+    "insérer(l, 1, e)",
+    "insérer(l, longueur(l)$+1$, e)",
+    "accès(l, 1)",
+    "supprimer(l, 1)"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "conversion",
+   "type": "vf",
+   "q": "concaténer(listevide, l) $=$ l.",
+   "bonne": true
+  },
+  {
+   "notion": "pile",
+   "type": "qcm",
+   "q": "sommet(dépiler(empiler(empiler(pilevide, 1), 2))) vaut :",
+   "choix": [
+    "$1$",
+    "$2$",
+    "pilevide",
+    "indéfini"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "pile",
+   "type": "vf",
+   "q": "Une pile est une structure FIFO.",
+   "bonne": false
+  },
+  {
+   "notion": "file",
+   "type": "qcm",
+   "q": "premier(enfiler(enfiler(filevide, 1), 2)) vaut :",
+   "choix": [
+    "$1$",
+    "$2$",
+    "filevide",
+    "indéfini"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "file",
+   "type": "vf",
+   "q": "estvide(f) $=$ Faux $\\Rightarrow$ défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e).",
+   "bonne": true
+  },
+  {
+   "notion": "repr",
+   "type": "qcm",
+   "q": "La représentation dynamique d'une liste permet :",
+   "choix": [
+    "d'insérer sans décaler",
+    "l'accès direct au $k$-ième élément",
+    "d'éviter tout pointeur",
+    "de connaître la longueur sans parcours"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "repr",
+   "type": "vf",
+   "q": "Dans une file statique circulaire, l'indice suivant se calcule avec un modulo Nbmax.",
+   "bonne": true
+  },
+  {
+   "notion": "ensemble",
+   "type": "qcm",
+   "q": "card(ajouter(2, ajouter(2, ensemblevide))) vaut :",
+   "choix": [
+    "$1$",
+    "$2$",
+    "$0$",
+    "indéfini"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ensemble",
+   "type": "vf",
+   "q": "Dans un multi-ensemble, card(ajouter(x, me)) $=$ card(me)$+1$ même si x est déjà présent.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Signature : profils et constantes",
+   "notions": [
+    "signature"
+   ],
+   "exos": [
+    {
+     "id": "t11",
+     "enonce": "Donner le profil de l'opération insérer d'une liste itérative (insérer un élément à la $k$-ième place).",
+     "sol": "insérer : liste x entier x élément $\\to$ liste. Les arguments sont la liste, le rang et l'élément ; le résultat est la nouvelle liste.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 2,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "open"
+    },
+    {
+     "id": "t12",
+     "enonce": "Combien d'arguments a l'opération Δ : entier x entier x entier $\\to$ entier ?",
+     "ans": "3",
+     "sol": "Trois entiers avant la flèche : $3$ arguments.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 1,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "value"
+    },
+    {
+     "id": "t13",
+     "enonce": "Dans la signature du type booléen (vrai, faux, non, et, ou), combien d'opérations sont des constantes ?",
+     "ans": "2",
+     "sol": "vrai : $\\to$ booléen et faux : $\\to$ booléen n'ont pas d'argument : ce sont des constantes. $2$.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 1,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "value"
+    },
+    {
+     "id": "t14",
+     "enonce": "L'opération puissance est déclarée _^_ : entier x entier $\\to$ entier. Comment l'appliquer à x et y ? Que vaut l'écriture x^y! avec _! la factorielle ?",
+     "sol": "Les arguments remplacent les _ dans l'ordre : x^y. L'écriture x^y! est ambiguë ; le cours la lit x^(y!) et impose des parenthèses, (x^y)!, pour la factorielle de la puissance.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "open"
+    },
+    {
+     "id": "t15",
+     "enonce": "Écrire la signature complète du type booléen.",
+     "sol": "```\ntypes\n   booléen\nopérations\n   vrai : → booléen\n   faux : → booléen\n    non : booléen → booléen\n     et : booléen x booléen → booléen\n     ou : booléen x booléen → booléen\n```",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "open"
+    },
+    {
+     "id": "t16",
+     "enonce": "Signature de la pile (pilevide, empiler, dépiler, sommet, estvide) : combien d'opérations ont un résultat de type pile ?",
+     "ans": "3",
+     "sol": "pilevide, empiler et dépiler renvoient une pile ; sommet renvoie un élément, estvide un booléen. $3$.",
+     "src": "Cours TAA (MiMos)",
+     "duree": 2,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "value"
+    },
+    {
+     "id": "t17",
+     "enonce": "Quels caractères sont interdits dans le nom d'une opération, et pourquoi ?",
+     "sol": "L'espace (séparateur), les parenthèses (elles forcent les priorités) et _ (il marque la place des arguments). Tous les autres glyphes sont permis : Δ, !, ^…",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 2,
+     "formules": "nom : type$_1$ x type$_2$ $\\to$ résultat · sans argument : constante · _ : place d'un argument",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Hiérarchie : défini, prédéfini, interne, observateur",
+   "notions": [
+    "hierarchie",
+    "signature"
+   ],
+   "exos": [
+    {
+     "id": "t21",
+     "enonce": "Type pile : quels sont les types définis et prédéfinis ?",
+     "sol": "Défini : pile (déclaré dans types). Prédéfinis : booléen et élément (déclarés dans utilise).",
+     "src": "Cours TAA (MiMos)",
+     "duree": 2,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "open"
+    },
+    {
+     "id": "t22",
+     "enonce": "Type vecteur (vect, modifième, ième, estinitialisé, bornesup, borneinf) : combien d'observateurs ?",
+     "ans": "4",
+     "sol": "ième (élément), estinitialisé (booléen), bornesup et borneinf (entier) prennent un vecteur et renvoient un type prédéfini : $4$. vect et modifième renvoient un vecteur : opérations internes.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 2,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "value"
+    },
+    {
+     "id": "t23",
+     "enonce": "Liste récursive (listevide, cons, fin, tête, contenu, premier, succ) : combien d'observateurs ?",
+     "ans": "2",
+     "sol": "Types définis : liste et place. contenu (place $\\to$ élément) et premier (liste $\\to$ élément) sont des observateurs. tête et succ sont internes (résultat place), listevide, cons, fin aussi (résultat liste). $2$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 3,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "value"
+    },
+    {
+     "id": "t24",
+     "enonce": "Classer les opérations de la file : internes ou observateurs ?",
+     "sol": "Internes (résultat file) : filevide, enfiler, défiler. Observateurs : premier (élément) et estvide (booléen).",
+     "src": "Cours TAA (MiMos)",
+     "duree": 2,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "open"
+    },
+    {
+     "id": "t25",
+     "enonce": "Liste itérative (listevide, accès, contenu, ième, longueur, supprimer, insérer, succ) : combien d'opérations internes ?",
+     "ans": "5",
+     "sol": "Internes : listevide, supprimer, insérer (résultat liste), accès et succ (résultat place). Observateurs : contenu, ième, longueur. $5$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 3,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "value"
+    },
+    {
+     "id": "t26",
+     "enonce": "À quoi sert la rubrique utilise ? Donner la signature du vecteur qu'elle permet d'écrire.",
+     "sol": "Elle réutilise des types déjà conçus au lieu de les redéfinir : la signature du type défini est l'union de leurs signatures et de ses nouvelles opérations. Pour vecteur : utilise entier, élément ; on peut alors écrire ième(v, i+2), car l'addition des entiers est disponible.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "open"
+    },
+    {
+     "id": "t27",
+     "enonce": "Type ensemble (ensemblevide, ajouter, supprimer, _∈_, card, choisir) : classer les opérations.",
+     "sol": "Internes (résultat ensemble) : ensemblevide, ajouter, supprimer. Observateurs : _∈_ (booléen), card (entier), choisir (élément).",
+     "src": "Cours d'algo EPITA (wiki), « Ensembles »",
+     "duree": 2,
+     "formules": "défini : types · prédéfini : utilise · interne : résultat de type défini · observateur : résultat prédéfini",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Axiomes, préconditions, consistance, complétude",
+   "notions": [
+    "axiomes",
+    "hierarchie"
+   ],
+   "exos": [
+    {
+     "id": "t31",
+     "enonce": "Rédiger les axiomes du type booléen : vrai, faux : $\\to$ booléen ; non : booléen $\\to$ booléen ; _ et _, _ ou _ : booléen x booléen $\\to$ booléen.",
+     "sol": "```\naxiomes\n   non(vrai) = faux\n   non(faux) = vrai\n   vrai et b = b\n   faux et b = faux\n   vrai ou b = vrai\n   faux ou b = b\navec\n   booléen b\n```\nOn applique chaque opération aux deux constructeurs vrai et faux : pour et et ou, il suffit de distinguer le premier argument.",
+     "src": "Moodle TAA, exercice d'application",
+     "duree": 6,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t32",
+     "enonce": "Définir la consistance et la complétude d'un ensemble d'axiomes.",
+     "sol": "Consistance : aucun axiome n'en contredit un autre (une même opération sur les mêmes arguments ne rend jamais deux valeurs différentes). Complétude : assez d'axiomes pour déduire une valeur de tout observateur appliqué à toute opération interne.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t33",
+     "enonce": "Qu'est-ce qu'une opération partielle ? Lesquelles le sont dans la pile ? Écrire leurs préconditions.",
+     "sol": "Une opération qui n'est pas définie partout ; son domaine est donné par une précondition.\n\n```\ndépiler(p) est-défini-ssi estvide(p) = Faux\n sommet(p) est-défini-ssi estvide(p) = Faux\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t34",
+     "enonce": "Comment trouve-t-on les axiomes d'un type ?",
+     "sol": "On applique chaque observateur à chaque opération interne : la valeur obtenue décrit ce que fait l'opération interne. Exemple pour la pile : sommet et estvide appliqués à pilevide et à empiler, puis dépiler appliqué à empiler.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t35",
+     "enonce": "Pourquoi le type vecteur a-t-il besoin de l'opération estinitialisé ?",
+     "sol": "ième n'est pas définie sur une case jamais remplie par modifième. Pour écrire la précondition de ième, il faut pouvoir dire qu'une case est remplie : estinitialisé est une opération auxiliaire créée pour cela. ième(v, i) est-défini-ssi borneinf(v) $\\le$ i $\\le$ bornesup(v) & estinitialisé(v, i) $=$ vrai.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t36",
+     "enonce": "Expliquer les deux axiomes : borneinf(v) $\\le$ i $\\le$ bornesup(v) $\\Rightarrow$ ième(modifième(v, i, e), i) $=$ e, et, pour $i\\neq j$ dans les bornes, ième(modifième(v, i, e), j) $=$ ième(v, j).",
+     "sol": "Le premier : après modifième, la case $i$ contient e. Le second : les autres cases ($j\\neq i$) gardent leur contenu. Ensemble, ils disent que modifième ne change que la case $i$.",
+     "src": "Cours d'algo EPITA (wiki), « Types abstraits »",
+     "duree": 3,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "open"
+    },
+    {
+     "id": "t37",
+     "enonce": "Pour la pile, combien d'axiomes faut-il pour estvide (observateur appliqué aux opérations qui construisent une pile : pilevide et empiler) ?",
+     "ans": "2",
+     "sol": "estvide(pilevide) $=$ Vrai et estvide(empiler(p, e)) $=$ Faux : $2$.",
+     "src": "Cours TAA (MiMos)",
+     "duree": 2,
+     "formules": "axiomes : observateurs $\\circ$ opérations internes · partielle : est-défini-ssi · consistance · complétude",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Liste récursive : évaluer",
+   "notions": [
+    "lrec"
+   ],
+   "exos": [
+    {
+     "id": "t41",
+     "enonce": "Évaluer :\n\npremier(cons(3, cons(5, listevide)))",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\npremier(cons(e, l)) $=$ e.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\npremier(cons(8, cons(1, listevide)))",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\npremier(cons(e, l)) $=$ e."
+      }
+     ],
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "value"
+    },
+    {
+     "id": "t42",
+     "enonce": "Évaluer :\n\npremier(fin(cons(3, cons(5, cons(7, listevide)))))",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nfin retire $3$ ; le premier de cons(5, cons(7, listevide)) est $5$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\npremier(fin(cons(4, cons(9, cons(2, listevide)))))",
+       "ans": "9",
+       "sol": "**Réponse :** $9$\n\nfin retire $4$ ; premier $=9$."
+      }
+     ],
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "value"
+    },
+    {
+     "id": "t43",
+     "enonce": "Évaluer :\n\ncontenu(succ(succ(tête(cons(2, cons(4, cons(6, listevide)))))))",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\ntête donne la place de $2$, chaque succ avance d'une place : $4$ puis $6$. contenu lit $6$.",
+     "duree": 3,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\ncontenu(succ(tête(cons(5, cons(1, cons(8, listevide))))))",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\ntête : place de $5$ ; succ : place de $1$."
+      }
+     ],
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "value"
+    },
+    {
+     "id": "t44",
+     "enonce": "Évaluer :\n\nfin(fin(cons(3, cons(5, cons(7, listevide)))))",
+     "sol": "**Réponse :** cons(7, listevide)\n\nfin(cons(e, l)) $=$ l, deux fois.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nfin(cons(2, cons(4, listevide)))",
+       "sol": "**Réponse :** cons(4, listevide)\n\nfin(cons(e, l)) $=$ l."
+      }
+     ],
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "open"
+    },
+    {
+     "id": "t45",
+     "enonce": "Évaluer :\n\nfin(cons(4, listevide))",
+     "sol": "**Réponse :** listevide\n\nfin(cons(e, l)) $=$ l avec l $=$ listevide.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "open"
+    },
+    {
+     "id": "t46",
+     "enonce": "Évaluer :\n\npremier(fin(cons(9, listevide)))",
+     "sol": "**Réponse :** indéfini\n\nfin(cons(9, listevide)) $=$ listevide et premier(l) est-défini-ssi l $\\neq$ listevide.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "open"
+    },
+    {
+     "id": "t47",
+     "enonce": "Expliquer l'axiome succ(tête(l)) $=$ tête(fin(l)).",
+     "sol": "La place qui suit la première place de l est la première place de la liste privée de son premier élément : avancer d'une place revient à regarder la tête de la fin.",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "fin(cons(e, l)) $=$ l · premier(cons(e, l)) $=$ e · succ(tête(l)) $=$ tête(fin(l)) · premier(l) $=$ contenu(tête(l))",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Liste itérative : évaluer",
+   "notions": [
+    "liter"
+   ],
+   "exos": [
+    {
+     "id": "t51",
+     "enonce": "Évaluer :\n\nlongueur(insérer(insérer(listevide, 1, 5), 1, 8))",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nChaque insérer ajoute $1$ à la longueur.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nlongueur(supprimer(insérer(insérer(listevide, 1, 5), 2, 8), 1))",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n$+1$, $+1$, $-1$."
+      }
+     ],
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "value"
+    },
+    {
+     "id": "t52",
+     "enonce": "Évaluer :\n\nième(insérer(insérer(listevide, 1, 5), 1, 8), 1)",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\n$\\langle 5\\rangle$ puis on insère $8$ au rang $1$ : $\\langle 8, 5\\rangle$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nième(insérer(insérer(listevide, 1, 2), 2, 7), 2)",
+       "ans": "7",
+       "sol": "**Réponse :** $7$\n\n$\\langle 2, 7\\rangle$."
+      }
+     ],
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "value"
+    },
+    {
+     "id": "t53",
+     "enonce": "Évaluer :\n\ninsérer(insérer(insérer(listevide, 1, 3), 2, 7), 2, 9)",
+     "sol": "**Réponse :** ⟨3, 9, 7⟩\n\n$\\langle 3\\rangle$, $\\langle 3, 7\\rangle$, puis $9$ au rang $2$ décale $7$ au rang $3$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\ninsérer(insérer(insérer(listevide, 1, 1), 1, 2), 3, 3)",
+       "sol": "**Réponse :** ⟨2, 1, 3⟩\n\n$\\langle 1\\rangle$, $\\langle 2, 1\\rangle$, puis $3$ au rang $3$."
+      }
+     ],
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "open"
+    },
+    {
+     "id": "t54",
+     "enonce": "Évaluer :\n\nsupprimer(insérer(insérer(insérer(listevide, 1, 3), 2, 7), 3, 9), 2)",
+     "sol": "**Réponse :** ⟨3, 9⟩\n\n$\\langle 3, 7, 9\\rangle$ ; supprimer le rang $2$ ramène $9$ au rang $2$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nsupprimer(insérer(insérer(insérer(listevide, 1, 4), 2, 5), 3, 6), 1)",
+       "sol": "**Réponse :** ⟨5, 6⟩\n\n$\\langle 4, 5, 6\\rangle$ sans le rang $1$."
+      }
+     ],
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "open"
+    },
+    {
+     "id": "t55",
+     "enonce": "Évaluer :\n\ncontenu(succ(accès(insérer(insérer(listevide, 1, 4), 2, 6), 1)))",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\n$\\langle 4, 6\\rangle$ ; succ(accès(l, 1)) $=$ accès(l, 2) et contenu(accès(l, 2)) $=$ ième(l, 2) $=6$.",
+     "duree": 3,
+     "src": "Cours TAA (MiMos)",
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "value"
+    },
+    {
+     "id": "t56",
+     "enonce": "Évaluer :\n\ninsérer(listevide, 2, 5)",
+     "sol": "**Réponse :** indéfini\n\ninsérer(l, k, e) est-défini-ssi $1\\le k\\le$ longueur(l)$+1=1$ : $k=2$ est hors domaine.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "open"
+    },
+    {
+     "id": "t57",
+     "enonce": "$l=\\langle a, b, c, d\\rangle$. Que vaut ième(supprimer(l, 2), 3) ? Citer l'axiome utilisé.",
+     "sol": "$k=2\\le i=3\\le$ longueur(l)$-1=3$, donc ième(supprimer(l, 2), 3) $=$ ième(l, 4) $=$ d (axiome $k\\le i\\le$ longueur(l)$-1\\Rightarrow$ ième(supprimer(l, k), i) $=$ ième(l, i$+1$)).",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "insérer décale les rangs $\\ge k$ · supprimer ramène les rangs $> k$ · insérer : $1\\le k\\le$ longueur$+1$ · contenu(accès(l, k)) $=$ ième(l, k)",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Extensions et passage récursif ↔ itératif",
+   "notions": [
+    "conversion",
+    "lrec",
+    "liter"
+   ],
+   "exos": [
+    {
+     "id": "t61",
+     "enonce": "Écrire tête, premier, fin et cons de la liste récursive avec les opérations de la liste itérative.",
+     "sol": "tête(l) $=$ accès(l, 1) ; premier(l) $=$ ième(l, 1) ; fin(l) $=$ supprimer(l, 1) ; cons(e, l) $=$ insérer(l, 1, e).",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 3,
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t62",
+     "enonce": "Écrire supprimer(l, i) (liste itérative) avec les seules opérations de la liste récursive (listevide, cons, fin, premier).",
+     "sol": "```\nl2 ← listevide\n(i-1) fois { l2 ← cons(premier(l), l2)\n             l ← fin(l) }\nl ← fin(l)\n(i-1) fois { l ← cons(premier(l2), l)\n             l2 ← fin(l2) }\n```\nOn met de côté les $i-1$ premiers éléments, on retire le $i$-ème, puis on remet les éléments mis de côté (comme insérer, avec fin à la place de cons(e, l)).",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 6,
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t63",
+     "enonce": "Évaluer :\n\nconcaténer(cons(1, cons(2, listevide)), cons(3, listevide))",
+     "sol": "**Réponse :** cons(1, cons(2, cons(3, listevide)))\n\nconcaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2)) deux fois, puis concaténer(listevide, l2) $=$ l2.",
+     "duree": 2,
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nconcaténer(cons(5, listevide), cons(6, cons(7, listevide)))",
+       "sol": "**Réponse :** cons(5, cons(6, cons(7, listevide)))\n\ncons(5, concaténer(listevide, l2)) $=$ cons(5, l2)."
+      }
+     ],
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t64",
+     "enonce": "Évaluer :\n\nexiste(4, cons(1, cons(4, listevide)))",
+     "sol": "**Réponse :** Vrai\n\n$1\\neq4$ : on regarde la suite ; $4=4$ : vrai.",
+     "duree": 1,
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t65",
+     "enonce": "Évaluer :\n\nexiste(5, concaténer(cons(1, listevide), cons(2, listevide)))",
+     "sol": "**Réponse :** Faux\n\nLa liste est cons(1, cons(2, listevide)) ; $5$ n'y est pas : on atteint existe(5, listevide) $=$ faux.",
+     "duree": 2,
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t66",
+     "enonce": "Écrire le profil et les axiomes de concaténer pour la liste récursive.",
+     "sol": "```\nconcaténer : liste x liste → liste\nconcaténer(listevide, l) = l\nconcaténer(cons(e, l), l2)\n      = cons(e, concaténer(l, l2))\n```",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 4,
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    },
+    {
+     "id": "t67",
+     "enonce": "Pourquoi l'opération rechercher : élément x liste $\\to$ place a-t-elle une précondition, et comment l'écrire ?",
+     "sol": "La place d'un élément absent n'existe pas : rechercher est partielle. On ajoute l'opération auxiliaire existe : élément x liste $\\to$ booléen, puis rechercher(e, l) est-défini-ssi existe(e, l) $=$ vrai, et l'axiome existe(e, l) $=$ vrai $\\Rightarrow$ contenu(rechercher(e, l)) $=$ e.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 4,
+     "formules": "tête(l) $=$ accès(l, 1) · fin(l) $=$ supprimer(l, 1) · cons(e, l) $=$ insérer(l, 1, e) · concaténer(cons(e, l), l2) $=$ cons(e, concaténer(l, l2))",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Piles : évaluer",
+   "notions": [
+    "pile"
+   ],
+   "exos": [
+    {
+     "id": "t71",
+     "enonce": "Évaluer :\n\nsommet(empiler(empiler(pilevide, 3), 5))",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nsommet(empiler(p, e)) $=$ e.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nsommet(empiler(empiler(pilevide, 8), 2))",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nsommet(empiler(p, e)) $=$ e."
+      }
+     ],
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "value"
+    },
+    {
+     "id": "t72",
+     "enonce": "Évaluer :\n\nsommet(dépiler(empiler(empiler(pilevide, 3), 5)))",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\ndépiler(empiler(p, e)) $=$ p, puis sommet $=3$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nsommet(dépiler(empiler(empiler(empiler(pilevide, 1), 2), 3)))",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nOn retire $3$ ; sommet $2$."
+      }
+     ],
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "value"
+    },
+    {
+     "id": "t73",
+     "enonce": "Évaluer :\n\ndépiler(empiler(dépiler(empiler(pilevide, 1)), 2))",
+     "sol": "**Réponse :** pilevide\n\ndépiler(empiler(pilevide, 1)) $=$ pilevide ; on empile $2$ puis on le dépile.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "open"
+    },
+    {
+     "id": "t74",
+     "enonce": "Évaluer :\n\nestvide(dépiler(empiler(pilevide, 7)))",
+     "sol": "**Réponse :** Vrai\n\ndépiler(empiler(pilevide, 7)) $=$ pilevide.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "open"
+    },
+    {
+     "id": "t75",
+     "enonce": "Évaluer :\n\nsommet(dépiler(empiler(pilevide, 4)))",
+     "sol": "**Réponse :** indéfini\n\nOn demande le sommet de pilevide : précondition fausse.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "open"
+    },
+    {
+     "id": "t76",
+     "enonce": "Évaluer :\n\nempiler(dépiler(empiler(empiler(pilevide, 1), 2)), 3)",
+     "sol": "**Réponse :** empiler(empiler(pilevide, 1), 3)\n\ndépiler retire $2$ ; on empile $3$ sur $1$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\nempiler(dépiler(empiler(empiler(pilevide, 4), 6)), 8)",
+       "sol": "**Réponse :** empiler(empiler(pilevide, 4), 8)\n\ndépiler retire $6$ ; on empile $8$."
+      }
+     ],
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "open"
+    },
+    {
+     "id": "t77",
+     "enonce": "Pourquoi dit-on qu'une pile est LIFO ? Donner les axiomes qui le traduisent.",
+     "sol": "Last In First Out : le dernier élément empilé est le premier lu et retiré, au sommet. dépiler(empiler(p, e)) $=$ p et sommet(empiler(p, e)) $=$ e : on retrouve d'abord le dernier élément ajouté.",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "dépiler(empiler(p, e)) $=$ p · sommet(empiler(p, e)) $=$ e · estvide(pilevide) $=$ Vrai",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Files : évaluer",
+   "notions": [
+    "file"
+   ],
+   "exos": [
+    {
+     "id": "t81",
+     "enonce": "Évaluer :\n\npremier(enfiler(enfiler(filevide, 3), 5))",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nenfiler(filevide, 3) n'est pas vide : premier(enfiler(f, 5)) $=$ premier(f) $=3$.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\npremier(enfiler(enfiler(filevide, 9), 1))",
+       "ans": "9",
+       "sol": "**Réponse :** $9$\n\nPremier enfilé, premier lu."
+      }
+     ],
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "value"
+    },
+    {
+     "id": "t82",
+     "enonce": "Évaluer :\n\npremier(défiler(enfiler(enfiler(filevide, 3), 5)))",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nOn défile $3$, il reste $5$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\npremier(défiler(enfiler(enfiler(enfiler(filevide, 1), 2), 3)))",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nOn défile $1$."
+      }
+     ],
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "value"
+    },
+    {
+     "id": "t83",
+     "enonce": "Évaluer :\n\ndéfiler(enfiler(enfiler(filevide, 1), 2))",
+     "sol": "**Réponse :** enfiler(filevide, 2)\n\nf $=$ enfiler(filevide, 1) non vide : défiler(enfiler(f, 2)) $=$ enfiler(défiler(f), 2) $=$ enfiler(filevide, 2).",
+     "duree": 3,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\ndéfiler(enfiler(enfiler(filevide, 6), 4))",
+       "sol": "**Réponse :** enfiler(filevide, 4)\n\nOn retire $6$, il reste $4$."
+      }
+     ],
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "open"
+    },
+    {
+     "id": "t84",
+     "enonce": "Évaluer :\n\nestvide(défiler(enfiler(filevide, 9)))",
+     "sol": "**Réponse :** Vrai\n\ndéfiler(enfiler(filevide, 9)) $=$ filevide.",
+     "duree": 1,
+     "src": "Cours TAA (MiMos)",
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "open"
+    },
+    {
+     "id": "t85",
+     "enonce": "Évaluer :\n\npremier(défiler(enfiler(défiler(enfiler(enfiler(filevide, 1), 2)), 3)))",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nFile $1, 2$ ; on défile $1$ : $2$ ; on enfile $3$ : $2, 3$ ; on défile $2$ : il reste $3$.",
+     "duree": 3,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\npremier(enfiler(défiler(enfiler(enfiler(filevide, 5), 6)), 7))",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$5, 6$ ; on défile : $6$ ; on enfile $7$ : $6, 7$."
+      }
+     ],
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "value"
+    },
+    {
+     "id": "t86",
+     "enonce": "Démontrer avec les axiomes que défiler(enfiler(enfiler(filevide, a), b)) $=$ enfiler(filevide, b).",
+     "sol": "f $=$ enfiler(filevide, a) n'est pas vide (estvide(enfiler(f, e)) $=$ Faux), donc défiler(enfiler(f, b)) $=$ enfiler(défiler(f), b). filevide est vide, donc défiler(enfiler(filevide, a)) $=$ filevide. D'où enfiler(filevide, b).",
+     "src": "Cours TAA (MiMos)",
+     "duree": 5,
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "open"
+    },
+    {
+     "id": "t87",
+     "enonce": "Pourquoi les axiomes de premier et défiler distinguent-ils la file vide, alors que ceux de la pile non ?",
+     "sol": "Dans une file, on ajoute en queue et on lit en tête : le nouvel élément n'est en tête que si la file était vide. Dans une pile, on ajoute et on lit au même endroit, le sommet : le nouvel élément est toujours visible.",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "f vide : premier(enfiler(f, e)) $=$ e · f non vide : premier(enfiler(f, e)) $=$ premier(f) · défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e)",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Écrire les axiomes d'une extension",
+   "notions": [
+    "axiomes",
+    "lrec",
+    "pile",
+    "conversion"
+   ],
+   "exos": [
+    {
+     "id": "t91",
+     "enonce": "Extension longueur : liste $\\to$ entier pour la liste récursive. Écrire ses axiomes.",
+     "sol": "```\nlongueur(listevide) = 0\nlongueur(cons(e, l)) = longueur(l) + 1\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    },
+    {
+     "id": "t92",
+     "enonce": "Extension hauteur : pile $\\to$ entier (nombre d'éléments). Écrire ses axiomes.",
+     "sol": "```\nhauteur(pilevide) = 0\nhauteur(empiler(p, e)) = hauteur(p) + 1\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 3,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    },
+    {
+     "id": "t93",
+     "enonce": "Extension dernier : liste $\\to$ élément (dernier élément d'une liste récursive). Précondition et axiomes.",
+     "sol": "```\ndernier(l) est-défini-ssi l ≠ listevide\ndernier(cons(e, listevide)) = e\nl ≠ listevide ⇒ dernier(cons(e, l)) = dernier(l)\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 4,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    },
+    {
+     "id": "t94",
+     "enonce": "Extension nbocc : élément x liste $\\to$ entier (nombre d'occurrences dans une liste récursive). Écrire ses axiomes.",
+     "sol": "```\nnbocc(x, listevide) = 0\nx = e ⇒ nbocc(x, cons(e, l)) = nbocc(x, l) + 1\nx ≠ e ⇒ nbocc(x, cons(e, l)) = nbocc(x, l)\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 4,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    },
+    {
+     "id": "t95",
+     "enonce": "Extension ajouterqueue : liste x élément $\\to$ liste (ajoute à la fin d'une liste récursive). Écrire ses axiomes.",
+     "sol": "```\najouterqueue(listevide, e) = cons(e, listevide)\najouterqueue(cons(x, l), e)\n      = cons(x, ajouterqueue(l, e))\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 4,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    },
+    {
+     "id": "t96",
+     "enonce": "Évaluer :\n\nlongueur(concaténer(cons(1, listevide), cons(2, cons(3, listevide))))",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nLa concaténation contient $1, 2, 3$ : longueur(cons(e, l)) $=$ longueur(l)$+1$ trois fois.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "value"
+    },
+    {
+     "id": "t97",
+     "enonce": "Extension fond : pile $\\to$ élément (l'élément le plus ancien de la pile). Précondition et axiomes.",
+     "sol": "```\nfond(p) est-défini-ssi estvide(p) = Faux\nestvide(p) = Vrai ⇒ fond(empiler(p, e)) = e\nestvide(p) = Faux ⇒ fond(empiler(p, e)) = fond(p)\n```",
+     "src": "Cours TAA (MiMos)",
+     "duree": 4,
+     "formules": "un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Représentations statique et dynamique",
+   "notions": [
+    "repr",
+    "pile",
+    "file"
+   ],
+   "exos": [
+    {
+     "id": "t101",
+     "enonce": "File statique circulaire, Nbmax $=8$, indices de $1$ à $8$. La queue vaut $8$ ; on enfile un élément. Nouvelle queue ?",
+     "ans": "1",
+     "sol": "Après $8$ on revient à $1$ : $(8 \\bmod 8)+1=1$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "File statique circulaire, Nbmax $=6$, indices de $1$ à $6$. La queue vaut $6$ ; on enfile un élément. Nouvelle queue ?",
+       "ans": "1",
+       "sol": "Après $6$ on revient à $1$."
+      }
+     ],
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "value"
+    },
+    {
+     "id": "t102",
+     "enonce": "Même file (Nbmax $=8$). La queue vaut $6$ ; on enfile $4$ éléments. Nouvelle queue ?",
+     "ans": "2",
+     "sol": "$7, 8, 1, 2$ : la queue vaut $2$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "File statique circulaire, Nbmax $=8$. La tête vaut $7$ ; on défile $3$ éléments. Nouvelle tête ?",
+       "ans": "2",
+       "sol": "$8, 1, 2$ : la tête vaut $2$."
+      }
+     ],
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "value"
+    },
+    {
+     "id": "t103",
+     "enonce": "Pile statique, sommet $=0$ pour la pile vide. On empile $5$ éléments, on dépile $2$ fois, on empile $3$ éléments. Sommet ?",
+     "ans": "6",
+     "sol": "Le sommet compte les éléments : $5-2+3=6$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Pile statique, sommet $=0$ pour la pile vide. On empile $4$ éléments, on dépile $3$ fois, on empile $2$ éléments. Sommet ?",
+       "ans": "3",
+       "sol": "$4-3+2=3$."
+      }
+     ],
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "value"
+    },
+    {
+     "id": "t104",
+     "enonce": "Liste statique de longueur $12$ (Nbmax $=20$). Supprimer l'élément de rang $3$ oblige à décaler combien d'éléments ?",
+     "ans": "9",
+     "sol": "Les éléments de rang $4$ à $12$ reculent d'une case : $12-3=9$.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Liste statique de longueur $10$. Insérer un élément au rang $4$ oblige à décaler combien d'éléments ?",
+       "ans": "7",
+       "sol": "Les rangs $4$ à $10$ avancent d'une case : $7$."
+      }
+     ],
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "value"
+    },
+    {
+     "id": "t105",
+     "enonce": "Comparer les représentations statique et dynamique d'une liste.",
+     "sol": "Statique (tableau $+$ longueur) : accès direct au $k$-ième élément, mais tableau surdimensionné et décalages pour insérer ou supprimer au milieu. Dynamique (enregistrements chaînés, NUL en fin) : exactement le nombre d'éléments, insertion et suppression sans décalage, concaténation facile, bien adaptée au récursif ; mais pas d'accès direct au $k$-ième élément et un pointeur par élément.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 5,
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "open"
+    },
+    {
+     "id": "t106",
+     "enonce": "Qu'apportent la sentinelle en tête, la liste circulaire et la liste doublement chaînée ?",
+     "sol": "Sentinelle : un enregistrement fixe en tête, plus de cas particulier pour insérer devant le premier élément. Circulaire : le dernier pointe sur le premier, le pointeur de liste repère le dernier (le premier est à un lien). Doublement chaînée : un lien vers le précédent en plus, on peut revenir en arrière ; il faut des pointeurs de tête et de queue.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 5,
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "open"
+    },
+    {
+     "id": "t107",
+     "enonce": "Pourquoi la représentation statique convient-elle bien à une pile ?",
+     "sol": "On n'ajoute et ne retire qu'au sommet : l'indice sommet avance ou recule, sans aucun décalage dans le tableau. Seule la taille maximale (Nbmax) limite la pile.",
+     "src": "Cours d'algo EPITA (wiki), « Structures séquentielles »",
+     "duree": 3,
+     "formules": "suivant $=(i \\bmod \\text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Ensembles et multi-ensembles",
+   "notions": [
+    "ensemble"
+   ],
+   "exos": [
+    {
+     "id": "t111",
+     "enonce": "Évaluer :\n\ncard(ajouter(3, ajouter(5, ajouter(3, ensemblevide))))",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n$3$ est déjà présent au dernier ajout : card ne change pas. Ensemble $\\{3, 5\\}$.",
+     "duree": 2,
+     "src": "Cours d'algo EPITA (wiki), « Ensembles »",
+     "variants": [
+      {
+       "enonce": "Évaluer :\n\ncard(ajouter(1, ajouter(2, ajouter(2, ensemblevide))))",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$\\{1, 2\\}$."
+      }
+     ],
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "value"
+    },
+    {
+     "id": "t112",
+     "enonce": "Évaluer (appartient(x, e) est noté x ∈ e dans le cours) :\n\nappartient(5, supprimer(5, ajouter(5, ajouter(5, ensemblevide))))",
+     "sol": "**Réponse :** Faux\n\nx $=$ y $\\Rightarrow$ (x $\\in$ supprimer(y, e)) $=$ faux, même après deux ajouts.",
+     "duree": 2,
+     "src": "Cours d'algo EPITA (wiki), « Ensembles »",
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "open"
+    },
+    {
+     "id": "t113",
+     "enonce": "Évaluer :\n\ncard(supprimer(4, ajouter(2, ensemblevide)))",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n$4\\notin\\{2\\}$ : card(supprimer(x, e)) $=$ card(e) $=1$.",
+     "duree": 2,
+     "src": "Cours d'algo EPITA (wiki), « Ensembles »",
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "value"
+    },
+    {
+     "id": "t114",
+     "enonce": "Évaluer (multi-ensemble) :\n\ncard(ajouter(3, ajouter(3, multiensemblevide)))",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nDans un multi-ensemble, card(ajouter(x, me)) $=$ card(me)$+1$ toujours.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "variants": [
+      {
+       "enonce": "Évaluer (multi-ensemble) :\n\ncard(supprimer(4, ajouter(3, ajouter(3, multiensemblevide))))",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$4$ absent : card inchangé."
+      }
+     ],
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "value"
+    },
+    {
+     "id": "t115",
+     "enonce": "Évaluer (multi-ensemble) :\n\nnboccurrences(3, supprimer(3, ajouter(3, ajouter(3, ajouter(1, multiensemblevide)))))",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nDeux exemplaires de $3$ ; supprimer en retire un seul : $1$.",
+     "duree": 2,
+     "src": "Cours TAA (MiMos)",
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "value"
+    },
+    {
+     "id": "t116",
+     "enonce": "Pourquoi choisir : ensemble $\\to$ élément a-t-elle une précondition, et quel axiome la décrit ?",
+     "sol": "On ne peut pas choisir un élément dans l'ensemble vide : choisir(e) est-défini-ssi e $\\neq$ ensemblevide. Axiome : choisir(e) $\\in$ e $=$ vrai (l'élément choisi appartient à l'ensemble, sans dire lequel).",
+     "src": "Cours d'algo EPITA (wiki), « Ensembles »",
+     "duree": 3,
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "open"
+    },
+    {
+     "id": "t117",
+     "enonce": "Écrire les axiomes de card pour le type ensemble.",
+     "sol": "```\ncard(ensemblevide) = 0\nx ∈ e = vrai ⇒ card(ajouter(x, e)) = card(e)\nx ∈ e = faux ⇒ card(ajouter(x, e)) = card(e) + 1\nx ∈ e = vrai ⇒ card(supprimer(x, e)) = card(e) - 1\nx ∈ e = faux ⇒ card(supprimer(x, e)) = card(e)\n```\n(La fiche Moodle écrit « x ∈ = faux » dans le dernier axiome : il manque e.)",
+     "src": "Cours TAA (MiMos)",
+     "duree": 5,
+     "formules": "x $\\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Niveau examen : examen blanc B1 (rédigé d'après le cours, pas une annale)",
+   "notions": [
+    "signature",
+    "hierarchie",
+    "axiomes",
+    "lrec",
+    "liter",
+    "conversion",
+    "pile",
+    "file",
+    "repr",
+    "ensemble"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "tx1",
+     "enonce": "Exercice 1 : type chaîne. chainevide : $\\to$ chaîne ; ajout : chaîne x caractère $\\to$ chaîne (ajoute à la fin) ; longueur : chaîne $\\to$ entier ; ième : chaîne x entier $\\to$ caractère. (a) Types définis et prédéfinis, internes et observateurs. (b) Précondition de ième. (c) Axiomes.",
+     "sol": "(a) Défini : chaîne ; prédéfinis : caractère, entier. Internes : chainevide, ajout. Observateurs : longueur, ième.\n\n(b) ième(c, i) est-défini-ssi $1\\le i\\le$ longueur(c).\n\n(c)\n```\nlongueur(chainevide) = 0\nlongueur(ajout(c, x)) = longueur(c) + 1\ni = longueur(c) + 1 ⇒ ième(ajout(c, x), i) = x\n1 ≤ i ≤ longueur(c) ⇒ ième(ajout(c, x), i) = ième(c, i)\n```",
+     "src": "Examen blanc rédigé (format de l'examen B1 : 1 h)",
+     "duree": 15,
+     "formules": "signature · axiomes · évaluation · représentations",
+     "type": "open"
+    },
+    {
+     "id": "tx2",
+     "enonce": "Exercice 2 : évaluer (a) sommet(dépiler(empiler(empiler(empiler(pilevide, 2), 4), 6))) ; (b) premier(défiler(enfiler(enfiler(enfiler(filevide, 2), 4), 6))) ; (c) ième(supprimer(insérer(insérer(listevide, 1, 1), 1, 2), 1), 1) ; (d) card(ajouter(1, ajouter(2, ajouter(1, ensemblevide)))).",
+     "sol": "(a) $4$ : on retire $6$, le sommet est $4$.\n\n(b) $4$ : on retire $2$, le premier est $4$.\n\n(c) $1$ : $\\langle 2, 1\\rangle$, on supprime le rang $1$, il reste $\\langle 1\\rangle$.\n\n(d) $2$ : $\\{1, 2\\}$.",
+     "src": "Examen blanc rédigé",
+     "duree": 8,
+     "formules": "signature · axiomes · évaluation · représentations",
+     "type": "open"
+    },
+    {
+     "id": "tx3",
+     "enonce": "Exercice 3 : extension miroir : liste $\\to$ liste (renverse une liste récursive), avec concaténer. Écrire ses axiomes puis calculer miroir(cons(1, cons(2, cons(3, listevide)))).",
+     "sol": "```\nmiroir(listevide) = listevide\nmiroir(cons(e, l))\n      = concaténer(miroir(l), cons(e, listevide))\n```\nmiroir(cons(1, cons(2, cons(3, listevide)))) $=$ cons(3, cons(2, cons(1, listevide))).",
+     "src": "Examen blanc rédigé",
+     "duree": 10,
+     "formules": "signature · axiomes · évaluation · représentations",
+     "type": "open"
+    },
+    {
+     "id": "tx4",
+     "enonce": "Exercice 4 : (a) Comment simuler une file avec deux piles ? (b) File statique circulaire, Nbmax $=8$ : tête $=7$, queue $=2$. Combien d'éléments contient-elle, si tête est l'indice du premier et queue celui du dernier ?",
+     "sol": "(a) Pile E pour enfiler (on empile), pile S pour défiler : si S est vide, on dépile tout E en empilant dans S, ce qui inverse l'ordre ; premier $=$ sommet(S), défiler $=$ dépiler(S).\n\n(b) Indices $7, 8, 1, 2$ : $4$ éléments, $((\\text{queue}-\\text{tête}) \\bmod 8)+1$.",
+     "src": "Examen blanc rédigé",
+     "duree": 10,
+     "formules": "signature · axiomes · évaluation · représentations",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

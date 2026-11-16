@@ -107,7 +107,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
    - [x] Liste de formules par exercice (champ `formules` dans `parcours/src/*.py`) pour le bouton « Formules de la solution » ; aujourd'hui : formules du niveau. (dict `FORMULES`, 358 puis 582 exercices)
    - [x] Corrigés rédigés pour tous les sujets sans corrigé officiel (2026-11-15).
    - [x] Lectures incertaines vérifiées sur les PDF (2026-11-15) : td4-2030 ex. 1.1 = $-\frac12u$, td5-2030 = $\int_0^1$, td3-2028 cours 2 q5 c illisible mais sans effet (cubique toujours réductible).
-4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières : physique (S1 méca, S2 énergie, thermo, EM), archi (S1 ×3, S2 ×2), électronique S1 (B1 circuits, B2 régime sinusoïdal) et S2 (filtres, régimes transitoires) faits, électronique S2 diodes fait ; restent algo, prog, anglais, méthodo.
+4. [x] Parcours APIS suites (15 niveaux, 75 exos, calé sur SR janv. 2025 + ASI janv. 2024). [x] EDO. [x] S2 : APEF (polynômes, fonctions), EV, ALM (2026-11-15). [ ] Les autres matières : physique (S1 méca, S2 énergie, thermo, EM), archi (S1 ×3, S2 ×2), électronique S1 (B1 circuits, B2 régime sinusoïdal) et S2 (filtres, régimes transitoires) faits, électronique S2 diodes fait, algo TAA fait (2026-11-16) ; restent algo Caml, prog, anglais, méthodo.
 5. [x] Scroll adaptatif. [x] Accueil maths dans l'ordre du syllabus (2031, S1, S2).
 6. [x] Mail de réinitialisation depuis `morgan@pierref.eu` (via `/opt/pierref/mailer` ; accord donné le 2026-11-14).
 
@@ -123,3 +123,4 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Calendrier : tous les mois cliquables
 - [x] Outil de récupération des dates Moodle (1 fois par mois)
 - [x] Scroll des cartes : chat qui explose / confettis comme sur papier, vrai/faux en swipe gauche/droite
+- [x] Scroll : ordre des réponses des QCM mélangé à chaque affichage (2026-11-16)
