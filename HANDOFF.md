@@ -339,3 +339,13 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Re-check the Planning EPITA calendar for January S1 and S2 exams.
 2. Prog, anglais, méthodo: material needed from the user.
+
+# Handoff — 2026-11-16 (algo Python S1)
+## Done
+- 189 algo/prog PDFs of Epidocs Past-Exams downloaded to `annales/raw` (gitignored): S1/S2 finals, midterms, TDs, `Algo` and `Prog`. S1 finals algo are the Python part of the B2 exam (`2028|2029` split into `PYTHON`/`TAA`).
+- `algo-s1-python` (`parcours/src/algo_python.py`): 15 levels, 70 exos, 11 notions, 22 quiz, variants, FORMULES; levels 13-15 = P1 18 Jan 2021, P1 4 Jan 2022, B2 7 Jan 2025. Answers checked at import (sessions replayed, stdout compared, exam-annex rule via AST). ECUE `Algorithmique Python` (B2) in `syllabus.json`. Build OK (27 paths), offline tests OK, 15 levels checked at 390 px on a local instance with a throwaway DB (0 KaTeX error, no overflow, no JS error; no prod QA account). Deployed. Branch `feat/algo-python`.
+## Next steps
+1. TAA exam level is a mock: real TAA exams now in `annales/raw/S1/Finals/Algo/2028|2029/TAA` and `S1/Midterms/Algo/2029/TAA`: replace or add exam levels.
+2. Prog: `S1/Finals/Prog/2023` (subject + correction zip), `S1/Midterms/Prog/2022` (Caml correction .ml), S2 `Midterms/Prog/2021|2022`: check what language and recalibrate `prog_c_debut`.
+3. S2 algo (many finals/midterms + `S2/TDs/2030/Algo`): new S2 path(s).
+4. Anglais, méthodo: still need material from the user.

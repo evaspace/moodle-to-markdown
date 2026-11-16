@@ -555,6 +555,25 @@
         "S1/Midterms/Algo/2028/CAML/midterm-2028-s1-algo-correction-fr.pdf",
         "S1/Midterms/Algo/2029/CAML/midterm-2029-s1-algo-subject-fr.pdf"
        ]
+      },
+      {
+       "id": "Algorithmique Python",
+       "titre": "Algorithmique en Python : listes, recherche, dichotomie, tris",
+       "bloc": "B2",
+       "periode_examen": "début janvier (examen écrit B2, 1 h 30)",
+       "chapitres": [],
+       "parcours": [
+        "algo-s1-python"
+       ],
+       "a_faire": [],
+       "annales": [
+        "S1/Finals/Algo/2023/final-2023-s1-algo-subject-fr.pdf",
+        "S1/Finals/Algo/2023/final-2023-s1-algo-correction-fr.pdf",
+        "S1/Finals/Algo/2025/final-2025-s1-algo-subject-fr.pdf",
+        "S1/Finals/Algo/2026/final-2026-s1-algo-subject-fr.pdf",
+        "S1/Finals/Algo/2026/final-2026-s1-algo-correction-fr.pdf",
+        "S1/Finals/Algo/2029/PYTHON/final-2029-s1-algo-subject-fr.pdf"
+       ]
       }
      ]
     }
