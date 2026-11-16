@@ -132,36 +132,6 @@
     $('btn-ok').disabled = false; $('btn-ko').disabled = false;
   };
 
-  // Level validated: pixel-art confetti thrown everywhere, on the gore canvas (idle on a success).
-  function confetti(canvas, bursts) {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const ctx = canvas.getContext('2d'), w = canvas.width = innerWidth, h = canvas.height = innerHeight;
-    const colors = ['#FF5555', '#2ECC71', '#FFD23F', '#3A86FF', '#FFFFFF', '#111111'];
-    const bits = [];
-    for (let b = 0; b < bursts; b++) {
-      const ox = Math.random() * w, oy = h * (0.2 + Math.random() * 0.6);
-      for (let i = 0; i < 90; i++) {
-        const angle = Math.random() * Math.PI * 2, speed = 4 + Math.random() * 16;
-        bits.push({ x: ox, y: oy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 6, delay: b * 12,
-          size: (1 + Math.floor(Math.random() * 3)) * 4, wide: Math.random() < 0.5, color: colors[i % colors.length] });
-      }
-    }
-    (function frame() {
-      ctx.clearRect(0, 0, w, h);
-      let alive = false;
-      for (const c of bits) {
-        if (c.delay-- > 0) { alive = true; continue; }
-        c.vy += 0.25; c.vx *= 0.985; c.x += c.vx; c.y += c.vy;
-        if (c.y > h + 12) continue;
-        alive = true;
-        // snapped to a 4 px grid: hard pixels, no rotation or blur
-        ctx.fillStyle = c.color;
-        ctx.fillRect(Math.round(c.x / 4) * 4, Math.round(c.y / 4) * 4, c.wide ? c.size * 2 : c.size, c.size);
-      }
-      if (alive) requestAnimationFrame(frame); else ctx.clearRect(0, 0, w, h);
-    })();
-  }
-
   const MESSAGES = {
     progress: (d) => `Bien joué. ${d.green}/${d.total} formules du niveau en vert.`,
     up: (d) => `Toutes les formules en vert : niveau validé ! Tu passes au niveau ${d.level}.`,
@@ -210,7 +180,7 @@
     if (ok) {
       cat.onCorrectAnswer(1);
       showCatBubble(d.event === 'up' || d.event === 'finished' ? 'Niveau validé !' : 'Bien joué !');
-      if (d.event === 'up' || d.event === 'finished') confetti($('gore-canvas'), d.event === 'finished' ? 14 : 7);
+      if (d.event === 'up' || d.event === 'finished') pixelConfetti($('gore-canvas'), d.event === 'finished' ? 14 : 7);
       if (navigator.vibrate) navigator.vibrate([40]);
     } else {
       const r = $('chill-cat').getBoundingClientRect();

@@ -85,6 +85,7 @@
   function quizCard(q) {
     const [card, body] = shell(q.type === 'qcm' ? 'QCM' : 'VRAI / FAUX', q.notion_titre);
     body.append(el('div', 'card-front', q.q));
+    if (q.type === 'vf') return tfCard(q, card, body);
     const choices = el('div', 'qcm-choices');
     const buttons = q.choix.map((html, i) => {
       const b = el('button', 'choice-btn', html);
@@ -94,6 +95,65 @@
     });
     choices.append(...buttons);
     body.append(choices);
+    return card;
+  }
+
+  // True/false: same markup and gesture as the main feed (static/app.js): swipe right = vrai, left = faux.
+  // Server choices for vf: 0 = Vrai, 1 = Faux.
+  function tfCard(q, card, body) {
+    const actions = el('div', 'tf-actions');
+    const vrai = el('button', 'tf-btn btn-vrai', '✓ VRAI');
+    const faux = el('button', 'tf-btn btn-faux', '✕ FAUX');
+    vrai.type = faux.type = 'button';
+    actions.append(faux, vrai);
+    const indL = el('div', 'tf-indicator tf-left', 'FAUX');
+    const indR = el('div', 'tf-indicator tf-right', 'VRAI');
+    body.append(actions, indL, indR, el('div', 'tf-swipe-hint', '← SWIPE GAUCHE FAUX · SWIPE DROITE VRAI →'));
+    const buttons = [vrai, faux];
+    let locked = false, startX = 0, startY = 0, gesture = null;
+    const resetInd = () => { indL.style.opacity = indR.style.opacity = 0; };
+    const pick = (choice) => {
+      if (locked) return;
+      locked = true;
+      const right = choice === 0;
+      card.style.transition = 'transform 0.22s ease-in, opacity 0.22s';
+      card.style.transform = `translateX(${right ? 120 : -120}%) rotate(${right ? 20 : -20}deg)`;
+      card.style.opacity = '0';
+      setTimeout(() => { card.style.transition = 'none'; card.style.transform = ''; card.style.opacity = ''; resetInd(); }, 240);
+      answer(q, choice, buttons, card, body);
+    };
+    vrai.onclick = () => pick(0);
+    faux.onclick = () => pick(1);
+    // Pointer events: finger on a phone, mouse drag on a computer.
+    card.addEventListener('pointerdown', (e) => {
+      if (locked || e.target.closest('button')) return;
+      startX = e.clientX; startY = e.clientY; gesture = null;
+    });
+    card.addEventListener('pointermove', (e) => {
+      if (locked || gesture === 'v' || (e.pointerType === 'mouse' && !e.buttons)) return;
+      const dX = e.clientX - startX, dY = e.clientY - startY;
+      if (!gesture) {
+        if (Math.abs(dX) < 8 && Math.abs(dY) < 8) return;
+        gesture = Math.abs(dX) > Math.abs(dY) ? 'h' : 'v';
+        if (gesture === 'v') return;
+        card.style.transition = 'none';
+        card.setPointerCapture(e.pointerId);
+      }
+      card.style.transform = `translateX(${dX}px) rotate(${dX * 0.03}deg)`;
+      indR.style.opacity = dX > 0 ? Math.min(dX / 120, 1) : 0;
+      indL.style.opacity = dX < 0 ? Math.min(-dX / 120, 1) : 0;
+    });
+    const end = (e) => {
+      if (locked || gesture !== 'h') { gesture = null; return; }
+      gesture = null;
+      const dX = e.clientX - startX, threshold = Math.min(90, innerWidth * 0.22);
+      if (dX > threshold) pick(0);
+      else if (dX < -threshold) pick(1);
+      else { card.style.transition = 'transform 0.25s ease-out'; card.style.transform = ''; resetInd(); }
+    };
+    card.addEventListener('pointerup', end);
+    card.addEventListener('pointercancel', end);
+    card.style.touchAction = 'pan-y';  // vertical scroll stays native, horizontal drags are ours
     return card;
   }
 
@@ -113,6 +173,7 @@
     if (d.ok) {
       cat.onCorrectAnswer(1);
       showCatBubble('Bien joué !');
+      pixelConfetti($('gore-canvas'), 2);
     } else {
       const rect = $('chill-cat').getBoundingClientRect();
       cat.onWrongAnswer(() => gore.explode(rect.left + rect.width / 2, rect.top + rect.height / 2));
