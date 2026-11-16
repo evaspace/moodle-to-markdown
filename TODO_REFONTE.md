@@ -122,7 +122,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
   - [x] Toutes les autres matières sur papier (physique, archi, électronique : même page)
   - [ ] Ajouter les dates S1 janvier et S2 au calendrier quand Auriga les publie
   - [x] Cartes du scroll `/scroll/<parcours>` et du fil d'accueil (bouton « IA », 2026-11-16)
-- [ ] Footer : « PIERREFEU » noir au survol (pas seulement au clic)
+- [x] Footer : « PIERREFEU » noir au survol (pas seulement au clic). Cause : footer des blogs générés par blogbot (`blogbot/morgan_footer.py`) sans règle `:hover` ; corrigé dans la source et les 238 pages déjà générées, vérifié dans Chromium, Firefox et WebKit (2026-11-16).
 - [x] Blogbot branché sur epitadoomscrolling (contexte complet : addictif + exact)
 - [x] Calendrier : tous les mois cliquables
 - [x] Outil de récupération des dates Moodle (1 fois par mois)
