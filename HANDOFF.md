@@ -330,3 +330,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. English versions of the bundle (pages 8-14, 23-30, 38-44, 51-56) not transcribed (same content).
 2. Debatable answers: élec QCM 7 answered FAUX (A0 is the max only if z ≥ 1/√2); archi ex. 4 chronogram input edges read from the scan at half-period precision.
 3. Prog, anglais, méthodo still blocked on material from the user.
+
+# Handoff — 2026-11-16 (footer hover, navigateurs)
+## Done
+- Playwright Chromium + Firefox + WebKit installed in the durable venv `~/.local/share/playwright-venv`.
+- Footer « PIERREFEU » hover: this site and morgan were already fine; the blogbot footer (`blogbot/morgan_footer.py`) had no `:hover`. Fixed in the source (blogbot branch `fix/footer-hover`, commit d4c78b2; stay on that branch: the file is untracked on master) and in the 238 already generated pages (`/opt/pierref/blog`, `blogbot/public`, `opticars/static/drafts`). Checked in the 3 engines. Fusée `foot-word` is an intentional variant, untouched.
+- Planning EPITA (Google) checked: no exam after 2026-12-14 published yet. `MOODLE_CALENDAR_URL` / `AURIGA_ICS_URL` are not in `.env`, so `tools/exam_dates.py` finds nothing.
+## Next steps
+1. Re-check the Planning EPITA calendar for January S1 and S2 exams.
+2. Prog, anglais, méthodo: material needed from the user.
