@@ -326,6 +326,11 @@ def not_found(_e):
     return render_template('404.html', path=request.path[:200]), 404
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico')
+
+
 @app.route('/robots.txt')
 def robots():
     return send_from_directory(app.static_folder, 'robots.txt', mimetype='text/plain')
