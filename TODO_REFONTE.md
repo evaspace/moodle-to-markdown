@@ -72,6 +72,7 @@ ECUE S1 promo 2031 : DP (dénombrement, probas), APIS (primitives, intégrales, 
 - [x] Les 4 tests de `tests/test_md_to_cards.py` en erreur réparés (signature de `FakeV2Backend.verify`) et le test de vérif mis à jour : la vérification LLM est désormais bloquante (2026-11-15)
 
 ## Journal
+- 2026-11-16 (nuit, suite) : première matière Archi S1 : numération (14 niveaux, 75 exos) et algèbre de Boole (12 niveaux, 69 exos), réponses vérifiées par `build.py` (nouveaux helpers). 26 tests OK, 26 niveaux vus à 390 px (0 erreur KaTeX).
 - 2026-11-16 (nuit) : parcours physique S2 « Travail et énergie » (11 niveaux, 64 exos), vérifié à 390 px (0 erreur KaTeX, pas de débordement), 26 tests OK.
 - 2026-11-15 (suite 10) : niveaux d'examen S2 2028/2029 ajoutés (EV, APEF ×2, ALM). Premier parcours de physique : mécanique du point S1 (15 niveaux, 73 exos). Ordre des matières décidé : physique, archi, électronique, algo, prog, anglais, méthodo.
 - 2026-11-15 (suite 5) : navbar commune `templates/nav.html` (Niveaux, Stats, Formules, Cours, Fil + niveaux sur papier validés / points / jours d'affilée via `/api/me`), pastille de l'accueil dynamique et cliquable vers `/stats`, footer PIERREFEU sur toutes les pages sauf le fil plein écran (`/scroll`, fil d'accueil). `/stats` : progression par parcours, réussite par semaine, niveaux à retravailler. `/admin/stats` (+ `?format=json`) : audience, activation, rétention, funnel par parcours, exercices les plus ratés (`admin_stats.py`). Branche `feat/navbar-stats-admin`.

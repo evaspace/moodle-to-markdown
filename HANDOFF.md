@@ -174,3 +174,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Transcribe S2 physics annales (mostly scans) to `annales/md`, add Thermodynamique / Électromagnétisme sections.
 2. TD5 ex.2 and TD1 ex.1 readings to verify; Archi path (next subject in the user's order).
+
+# Handoff — 2026-11-16 (nuit, suite)
+## Done
+- Archi S1: `archi-s1-numeration` (14 lvl, 75 exos) and `archi-s1-boole` (12 lvl, 69 exos), in `PATHS`, `syllabus.json` (matiere `archi`, ECUE Numération B1 / Algèbre de Boole B2). New `build.py` helpers documented in README. Build OK, 26/26 tests, all levels opened at 390 px, QA accounts deleted. Committed on `feat/physique-thermo`.
+## Next steps
+1. Archi S1 remaining: logique combinatoire (TD6-7: additionneurs, décodeurs, multiplexeurs), then Archi S2 (logique séquentielle: bascules, compteurs; microprocesseur) from `Archi S2 2030 - ...`.
+2. Then électronique, algo, prog, anglais, méthodo (user order). Transcribe S2 physics annales.
+3. Pitfall: markdown in `sol` supports tables; `$a<b$` still opens a tag (write `a < b`).

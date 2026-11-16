@@ -1,0 +1,1088 @@
+{
+ "subject": {
+  "id": "archi-s1-boole",
+  "ordre": 410,
+  "matiere": "archi",
+  "semestre": "S1",
+  "ecue": "Algèbre de Boole",
+  "titre": "Algèbre de Boole et logique combinatoire",
+  "chapitres_moodle": [
+   "06_Algèbre de Boole [2526_I_INF_FISE_S01_PR_BOOL]",
+   "08_Travaux Dirigés",
+   "09_Entraînement"
+  ],
+  "td": "TD 4 à 7 d'architecture (Moodle Archi S1)",
+  "examens": [
+   "Examen B2 d'architecture des ordinateurs"
+  ]
+ },
+ "notions": [
+  {
+   "id": "portes",
+   "titre": "Portes logiques et tables de vérité",
+   "formule": "NON $\\overline A$ · ET $A.B$ · OU $A+B$ · NON-ET $\\overline{A.B}$ · NON-OU $\\overline{A+B}$ · OU exclusif $A\\oplus B=A\\overline B+\\overline AB$ · $n$ entrées : $2^n$ lignes",
+   "exemple": "$A\\oplus B=1$ si et seulement si $A\\neq B$ : $1\\oplus1=0$",
+   "cours": "Une table de vérité donne la sortie pour chacune des $2^n$ combinaisons d'entrées. Énumérer les lignes dans l'ordre binaire (000, 001, 010, …) pour ne rien oublier."
+  },
+  {
+   "id": "lois",
+   "titre": "Lois de l'algèbre de Boole",
+   "formule": "$A+0=A$, $A.1=A$ · $A+1=1$, $A.0=0$ · $A+A=A$, $A.A=A$ · $A+\\overline A=1$, $A.\\overline A=0$ · absorption : $A+AB=A$, $A(A+B)=A$ · $A+\\overline AB=A+B$ · $A.B+A.\\overline B=A$",
+   "exemple": "$A+AB=A(1+B)=A$",
+   "cours": "Mettre en facteur (distributivité des deux lois : $A(B+C)=AB+AC$ et $A+BC=(A+B)(A+C)$) puis appliquer $A+\\overline A=1$. L'absorption élimine tout terme contenant déjà un autre terme."
+  },
+  {
+   "id": "morgan",
+   "titre": "Théorèmes de De Morgan",
+   "formule": "$\\overline{A.B}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A.\\overline B$ · $\\overline{\\overline A}=A$",
+   "exemple": "$\\overline{A+B}.C=\\overline A\\,\\overline B\\,C$",
+   "cours": "Pour nier une expression : nier chaque variable et échanger ET et OU. Il faut ensuite que le résultat ne contienne plus de barre au-dessus de plusieurs variables (consigne habituelle : « pas de parenthèses »)."
+  },
+  {
+   "id": "canonique",
+   "titre": "Formes canoniques",
+   "formule": "1re forme : somme (OU) de produits (ET) contenant toutes les variables, un produit par ligne à $1$ · 2e forme : produit (ET) de sommes (OU) contenant toutes les variables, une somme par ligne à $0$ (variables complémentées quand elles valent $1$ sur la ligne)",
+   "exemple": "$A+B$ (2 variables) : $\\overline AB+A\\overline B+AB$ (lignes 01, 10, 11)",
+   "cours": "1re forme : pour chaque ligne à $1$, ET de toutes les variables (variable directe si elle vaut $1$, complémentée sinon). 2e forme : pour chaque ligne à $0$, OU de toutes les variables (directe si elle vaut $0$, complémentée sinon), puis ET de ces sommes."
+  },
+  {
+   "id": "karnaugh3",
+   "titre": "Tableau de Karnaugh à 3 variables",
+   "formule": "colonnes $BA$ en code de Gray : $00,01,11,10$ · lignes $C=0,1$ · regrouper des $1$ en rectangles de $1,2,4,8$ cases (bords opposés adjacents) · chaque groupe = produit des variables constantes",
+   "exemple": "$S=\\overline A\\,\\overline B\\,\\overline C+BC\\ldots$ : un groupe de $4$ cases ne garde qu'une variable",
+   "cours": "Les cases adjacentes ne diffèrent que d'un bit (y compris la première et la dernière colonne). Les groupes les plus grands donnent les termes les plus courts. Les indifférents (Φ) peuvent être inclus ou non dans un groupe, mais ne justifient jamais un groupe à eux seuls."
+  },
+  {
+   "id": "karnaugh4",
+   "titre": "Tableau de Karnaugh à 4 variables",
+   "formule": "lignes $DC$ et colonnes $BA$ en code de Gray ($00,01,11,10$) · 16 cases, adjacence circulaire (haut/bas et gauche/droite, 4 coins ensemble) · un groupe de $2^k$ cases supprime $k$ variables",
+   "exemple": "quatre coins du tableau : $\\overline B\\,\\overline A$ ($DC$ varie, $BA=00$ et $10$ ...)",
+   "cours": "Toujours remplir le tableau avant de grouper : aucune note n'est donnée à une expression si le tableau est faux. Prendre les plus grands groupes possibles, couvrir tous les $1$, utiliser les Φ seulement s'ils agrandissent un groupe."
+  },
+  {
+   "id": "xor",
+   "titre": "Le OU exclusif",
+   "formule": "$A\\oplus B=A\\overline B+\\overline AB=(A+B)\\overline{AB}$ · $A\\oplus0=A$ · $A\\oplus1=\\overline A$ · $A\\oplus A=0$ · commutatif et associatif · motif en damier dans Karnaugh",
+   "exemple": "$\\overline AB+A\\overline B=A\\oplus B$",
+   "cours": "Dans un tableau de Karnaugh, des $1$ disposés en damier se simplifient avec le OU exclusif. Pour 3 variables, $A\\oplus B\\oplus C=1$ si un nombre impair d'entrées valent $1$."
+  },
+  {
+   "id": "probleme",
+   "titre": "Du problème à la table de vérité",
+   "formule": "1. nommer entrées et sorties · 2. table de vérité ($2^n$ lignes), combinaisons impossibles : Φ · 3. une sortie = un tableau de Karnaugh · 4. expression simplifiée",
+   "exemple": "3 capteurs d'une cuve : seules $000,001,011,111$ sont possibles ; les autres combinaisons donnent le voyant de défaut",
+   "cours": "Lire l'énoncé ligne par ligne et traduire chaque condition en valeurs de capteurs. Une combinaison physiquement impossible vaut Φ (indifférent) si le cahier des charges ne dit rien, mais peut aussi déclencher une sortie « défaut » si l'énoncé le demande."
+  },
+  {
+   "id": "nand",
+   "titre": "Portes NON-ET universelles",
+   "formule": "$\\overline A=\\overline{A.A}$ · $A.B=\\overline{\\overline{A.B}.\\overline{A.B}}$ (2 portes) · $A+B=\\overline{\\overline A.\\overline B}$ (3 portes) · $A\\oplus B$ avec 4 portes NON-ET",
+   "exemple": "NON : une porte dont les deux entrées sont reliées",
+   "cours": "Toute fonction booléenne se réalise avec seulement des portes NON-ET. Méthode : écrire l'expression, appliquer De Morgan pour faire apparaître des $\\overline{X.Y}$, puis remplacer chaque NON par un NON-ET à entrées reliées."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "portes",
+   "type": "qcm",
+   "q": "La sortie d'un NON-ET vaut $0$ quand :",
+   "choix": [
+    "les deux entrées valent $1$",
+    "une entrée vaut $1$",
+    "les deux entrées valent $0$",
+    "jamais"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "portes",
+   "type": "vf",
+   "q": "Une fonction de $n$ variables a une table de vérité de $2^n$ lignes.",
+   "bonne": true
+  },
+  {
+   "notion": "lois",
+   "type": "qcm",
+   "q": "$A+\\overline A.B$ vaut :",
+   "choix": [
+    "$A+B$",
+    "$A$",
+    "$B$",
+    "$A.B$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lois",
+   "type": "vf",
+   "q": "$A+A.B=A$ (absorption).",
+   "bonne": true
+  },
+  {
+   "notion": "morgan",
+   "type": "qcm",
+   "q": "$\\overline{A+B}$ vaut :",
+   "choix": [
+    "$\\overline A.\\overline B$",
+    "$\\overline A+\\overline B$",
+    "$A.B$",
+    "$\\overline{A.B}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "morgan",
+   "type": "vf",
+   "q": "$\\overline{A.B}=\\overline A.\\overline B$.",
+   "bonne": false
+  },
+  {
+   "notion": "canonique",
+   "type": "qcm",
+   "q": "La première forme canonique est :",
+   "choix": [
+    "une somme de produits contenant toutes les variables",
+    "un produit de sommes contenant toutes les variables",
+    "toujours la forme la plus courte",
+    "une expression sans complémentation"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "canonique",
+   "type": "vf",
+   "q": "La seconde forme canonique s'écrit à partir des lignes de la table de vérité où la fonction vaut $0$.",
+   "bonne": true
+  },
+  {
+   "notion": "karnaugh3",
+   "type": "qcm",
+   "q": "L'ordre des colonnes $BA$ d'un tableau de Karnaugh est :",
+   "choix": [
+    "$00,\\ 01,\\ 11,\\ 10$",
+    "$00,\\ 01,\\ 10,\\ 11$",
+    "$00,\\ 10,\\ 01,\\ 11$",
+    "$11,\\ 10,\\ 01,\\ 00$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "karnaugh3",
+   "type": "vf",
+   "q": "La première et la dernière colonne d'un tableau de Karnaugh sont adjacentes.",
+   "bonne": true
+  },
+  {
+   "notion": "karnaugh4",
+   "type": "qcm",
+   "q": "Un groupe de $8$ cases dans un tableau à $4$ variables correspond à un terme de :",
+   "choix": [
+    "$1$ variable",
+    "$2$ variables",
+    "$3$ variables",
+    "$4$ variables"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "karnaugh4",
+   "type": "vf",
+   "q": "Les indifférents (Φ) doivent tous être inclus dans un groupe.",
+   "bonne": false
+  },
+  {
+   "notion": "xor",
+   "type": "qcm",
+   "q": "$A\\oplus A$ vaut :",
+   "choix": [
+    "$0$",
+    "$1$",
+    "$A$",
+    "$\\overline A$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "xor",
+   "type": "vf",
+   "q": "$A\\oplus1=\\overline A$.",
+   "bonne": true
+  },
+  {
+   "notion": "probleme",
+   "type": "qcm",
+   "q": "Une combinaison d'entrées physiquement impossible, sans consigne particulière, se note :",
+   "choix": [
+    "Φ (indifférent)",
+    "$0$",
+    "$1$",
+    "une erreur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "probleme",
+   "type": "vf",
+   "q": "On remplit le tableau de Karnaugh avant de choisir les groupes.",
+   "bonne": true
+  },
+  {
+   "notion": "nand",
+   "type": "qcm",
+   "q": "Pour réaliser un OU avec des NON-ET, il faut au minimum :",
+   "choix": [
+    "$3$ portes",
+    "$2$ portes",
+    "$1$ porte",
+    "$4$ portes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "nand",
+   "type": "vf",
+   "q": "Toute fonction booléenne peut se réaliser avec uniquement des portes NON-ET.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Portes et tables de vérité",
+   "notions": [
+    "portes"
+   ],
+   "exos": [
+    {
+     "id": "b11",
+     "enonce": "Sortie d'une porte NON-ET pour $A=1$, $B=1$ ?",
+     "ans": "0",
+     "sol": "$\\overline{1.1}=\\overline1=0$.",
+     "duree": 1,
+     "formules": "NON-ET : $\\overline{AB}$",
+     "type": "value"
+    },
+    {
+     "id": "b12",
+     "enonce": "Sortie d'une porte NON-OU pour $A=0$, $B=0$ ?",
+     "ans": "1",
+     "sol": "$\\overline{0+0}=\\overline0=1$.",
+     "duree": 1,
+     "formules": "NON-OU : $\\overline{A+B}$",
+     "type": "value"
+    },
+    {
+     "id": "b13",
+     "enonce": "Sortie d'un OU exclusif pour $A=1$, $B=1$ ?",
+     "ans": "0",
+     "sol": "$A\\oplus B=1$ seulement si $A\\neq B$ : ici $0$.",
+     "duree": 1,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$",
+     "type": "value"
+    },
+    {
+     "id": "b14",
+     "enonce": "Combien de lignes dans la table de vérité d'une fonction de $4$ variables ?",
+     "ans": "16",
+     "sol": "$2^4=16$.",
+     "duree": 1,
+     "formules": "$2^n$ lignes",
+     "type": "value"
+    },
+    {
+     "id": "b15",
+     "enonce": "Combien de fonctions booléennes différentes de $2$ variables existe-t-il ?",
+     "ans": "16",
+     "sol": "$4$ lignes, chacune à $0$ ou $1$ : $2^4=16$.",
+     "duree": 2,
+     "formules": "$2^{2^n}$ fonctions de $n$ variables",
+     "type": "value"
+    },
+    {
+     "id": "b16",
+     "enonce": "Donner la table de vérité du OU exclusif, du NON-ET et du NON-OU pour deux entrées $A$, $B$.",
+     "sol": "| $A$ | $B$ | $A\\oplus B$ | NON-ET | NON-OU |\n|---|---|---|---|---|\n| 0 | 0 | 0 | 1 | 1 |\n| 0 | 1 | 1 | 1 | 0 |\n| 1 | 0 | 1 | 1 | 0 |\n| 1 | 1 | 0 | 0 | 0 |",
+     "duree": 4,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$ · NON-ET · NON-OU",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Lois de base et absorption",
+   "notions": [
+    "lois"
+   ],
+   "exos": [
+    {
+     "id": "b21",
+     "enonce": "Simplifier $A+A.B$. Contrôle : la forme simplifiée est $A$ ?",
+     "ans": "1",
+     "sol": "$A+AB=A(1+B)=A$ (absorption).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $B+B.C$. Contrôle : la forme simplifiée est $B$ ?",
+       "ans": "1",
+       "sol": "Absorption : $B(1+C)=B$."
+      }
+     ],
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    },
+    {
+     "id": "b22",
+     "enonce": "Simplifier $A.(A+B)$. Contrôle : la forme simplifiée est $A$ ?",
+     "ans": "1",
+     "sol": "$A(A+B)=A+AB=A$.",
+     "duree": 2,
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$ · $A(A+B)=A+AB$",
+     "type": "value"
+    },
+    {
+     "id": "b23",
+     "enonce": "Simplifier $A+\\overline A.B$. Contrôle : la forme simplifiée est $A+B$ ?",
+     "ans": "1",
+     "sol": "$A+\\overline AB=(A+\\overline A)(A+B)=A+B$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $B+\\overline B.C$. Contrôle : la forme simplifiée est $B+C$ ?",
+       "ans": "1",
+       "sol": "$B+\\overline BC=B+C$."
+      }
+     ],
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    },
+    {
+     "id": "b24",
+     "enonce": "Simplifier $A.B+A.\\overline B$. Contrôle : la forme simplifiée est $A$ ?",
+     "ans": "1",
+     "sol": "$A(B+\\overline B)=A$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $B.C+B.\\overline C$. Contrôle : $B$ ?",
+       "ans": "1",
+       "sol": "$B(C+\\overline C)=B$."
+      }
+     ],
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    },
+    {
+     "id": "b25",
+     "enonce": "Simplifier $(A+B).(A+\\overline B)$. Contrôle : la forme simplifiée est $A$ ?",
+     "ans": "1",
+     "sol": "$(A+B)(A+\\overline B)=A+B\\overline B=A$.",
+     "duree": 2,
+     "formules": "$A+B\\overline B=A$ · distributivité $A+BC=(A+B)(A+C)$",
+     "type": "value"
+    },
+    {
+     "id": "b26",
+     "enonce": "Simplifier $\\overline A.B+\\overline A.\\overline B+A.B$. Contrôle : la forme simplifiée est $\\overline A+B$ ?",
+     "ans": "1",
+     "sol": "$\\overline A(B+\\overline B)+AB=\\overline A+AB=\\overline A+B$.",
+     "duree": 3,
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "De Morgan",
+   "notions": [
+    "morgan",
+    "lois"
+   ],
+   "exos": [
+    {
+     "id": "b31",
+     "enonce": "Développer $\\overline{A+B}.C$ (sans barre sur plusieurs variables). Contrôle : $\\overline A.\\overline B.C$ ?",
+     "ans": "1",
+     "sol": "$\\overline{A+B}=\\overline A.\\overline B$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $\\overline{B+C}.A$. Contrôle : $\\overline B.\\overline C.A$ ?",
+       "ans": "1",
+       "sol": "De Morgan."
+      }
+     ],
+     "formules": "$\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$",
+     "type": "value"
+    },
+    {
+     "id": "b32",
+     "enonce": "Développer $\\overline{A.B}+C$. Contrôle : $\\overline A+\\overline B+C$ ?",
+     "ans": "1",
+     "sol": "$\\overline{AB}=\\overline A+\\overline B$.",
+     "duree": 2,
+     "formules": "$\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$",
+     "type": "value"
+    },
+    {
+     "id": "b33",
+     "enonce": "Simplifier $\\overline{A.B}.(A+\\overline B)$. Contrôle : $\\overline B$ ?",
+     "ans": "1",
+     "sol": "$(\\overline A+\\overline B)(A+\\overline B)=\\overline B+\\overline A\\,A=\\overline B$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 1 (adapté)",
+     "duree": 3,
+     "formules": "$\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$ · $A.\\overline A=0$",
+     "type": "value"
+    },
+    {
+     "id": "b34",
+     "enonce": "Simplifier $\\overline{\\overline A+B}+A.B$. Contrôle : $A$ ?",
+     "ans": "1",
+     "sol": "$\\overline{\\overline A+B}=A\\overline B$, donc $A\\overline B+AB=A$.",
+     "duree": 3,
+     "formules": "$\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$ · $\\overline{\\overline A}=A$",
+     "type": "value"
+    },
+    {
+     "id": "b35",
+     "enonce": "Simplifier $\\overline{ABC}+AB$. Contrôle : l'expression vaut toujours $1$ ?",
+     "ans": "1",
+     "sol": "Si $AB=1$ le second terme vaut $1$ ; sinon $ABC=0$ et $\\overline{ABC}=1$ : la somme vaut toujours $1$.",
+     "duree": 3,
+     "formules": "$\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$ · $X+\\overline X=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Simplifier des expressions",
+   "notions": [
+    "lois",
+    "morgan"
+   ],
+   "exos": [
+    {
+     "id": "b41",
+     "enonce": "Simplifier $A.B+\\overline A.B+A.\\overline B$. Contrôle : $A+B$ ?",
+     "ans": "1",
+     "sol": "$AB+\\overline AB=B$, puis $B+A\\overline B=A+B$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Simplifier $B.C+\\overline B.C+B.\\overline C$. Contrôle : $B+C$ ?",
+       "ans": "1",
+       "sol": "$BC+\\overline BC=C$ puis $C+B\\overline C=B+C$."
+      }
+     ],
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    },
+    {
+     "id": "b42",
+     "enonce": "Simplifier $(A+B).(A+C)+A.B.C$. Contrôle : $A+B.C$ ?",
+     "ans": "1",
+     "sol": "$(A+B)(A+C)=A+BC$ et $ABC$ est absorbé par $A$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 1",
+     "duree": 3,
+     "formules": "$A+BC=(A+B)(A+C)$ · absorption",
+     "type": "value"
+    },
+    {
+     "id": "b43",
+     "enonce": "Simplifier $A+B.C+A.(B+C).(A.D+C)$. Contrôle : $A+B.C$ ?",
+     "ans": "1",
+     "sol": "Le terme $A.(\\ldots)$ est absorbé par $A$ : il reste $A+BC$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 1",
+     "duree": 3,
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    },
+    {
+     "id": "b44",
+     "enonce": "Simplifier $A.B.C.D+A.B.C.\\overline D+A.B.\\overline C.D+A.B.\\overline C.\\overline D$. Contrôle : $A.B$ ?",
+     "ans": "1",
+     "sol": "$AB\\left(CD+C\\overline D+\\overline CD+\\overline C\\overline D\\right)=AB$.",
+     "duree": 3,
+     "formules": "mise en facteur · $X+\\overline X=1$",
+     "type": "value"
+    },
+    {
+     "id": "b45",
+     "enonce": "Simplifier $(A+B+C).(A+C).(A+B)$. Contrôle : $A+B.C$ ?",
+     "ans": "1",
+     "sol": "$(A+C)(A+B)=A+BC$ ; $(A+B+C)(A+BC)=A+BC$ (absorption).",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 1",
+     "duree": 4,
+     "formules": "$A+BC=(A+B)(A+C)$ · absorption",
+     "type": "value"
+    },
+    {
+     "id": "b46",
+     "enonce": "Théorème du consensus : vérifier que $AB+\\overline AC+BC=AB+\\overline AC$. Contrôle ?",
+     "ans": "1",
+     "sol": "$BC=BC(A+\\overline A)=ABC+\\overline ABC$, terme absorbé par $AB$ et par $\\overline AC$ : le terme $BC$ est redondant.",
+     "duree": 4,
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Formes canoniques",
+   "notions": [
+    "canonique",
+    "portes"
+   ],
+   "exos": [
+    {
+     "id": "b51",
+     "enonce": "1re forme canonique de $A+B$ (2 variables). Contrôle : $\\overline AB+A\\overline B+AB$ ?",
+     "ans": "1",
+     "sol": "Lignes à $1$ : $01$, $10$, $11$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "1re forme canonique de $A.B$ pour $3$ variables $A,B,C$ ? Contrôle : $ABC+AB\\overline C$ ?",
+       "ans": "1",
+       "sol": "Lignes à $1$ : $111$, $110$."
+      }
+     ],
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme",
+     "type": "value"
+    },
+    {
+     "id": "b52",
+     "enonce": "1re forme canonique de $A.(B+C)$ (3 variables $A,B,C$). Contrôle : $ABC+AB\\overline C+A\\overline BC$ ?",
+     "ans": "1",
+     "sol": "Lignes à $1$ : $111$, $110$, $101$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 2",
+     "duree": 3,
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme",
+     "type": "value"
+    },
+    {
+     "id": "b53",
+     "enonce": "2e forme canonique de $(A+B).(B+C)$ (3 variables). Contrôle : $(A+B+C)(A+B+\\overline C)(\\overline A+B+C)$ ?",
+     "ans": "1",
+     "sol": "$(A+B)(B+C)=B+AC$ : à $0$ pour $ABC=000,001,100$ ; une somme par ligne à $0$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 2",
+     "duree": 4,
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme · $(A+B)(B+C)=B+AC$",
+     "type": "value"
+    },
+    {
+     "id": "b54",
+     "enonce": "2e forme canonique de $A+B.C$ (3 variables). Contrôle : $(A+B+C)(A+B+\\overline C)(A+\\overline B+C)$ ?",
+     "ans": "1",
+     "sol": "À $0$ si $A=0$ et $BC\\neq11$ : lignes $000,001,010$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 2",
+     "duree": 4,
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme",
+     "type": "value"
+    },
+    {
+     "id": "b55",
+     "enonce": "Combien de lignes à $1$ pour $A+B$ si l'on travaille avec $3$ variables $A,B,C$ ?",
+     "ans": "6",
+     "sol": "$A=1$ : $4$ lignes ; $B=1$ : $4$ lignes ; communes $A=B=1$ : $2$. Total $4+4-2=6$.",
+     "duree": 3,
+     "formules": "$|A+B|=4+4-2$",
+     "type": "value"
+    },
+    {
+     "id": "b56",
+     "enonce": "Donner la première forme canonique de $A+B.(C+D)$ (4 variables).",
+     "sol": "$A+BC+BD$ : $A=1$ (8 lignes) ou $B=1$ avec $C=1$ ou $D=1$.\n\nLignes à $1$ ($ABCD$) : $1000$ à $1111$ ($A=1$), plus $0111,0110,0101$ (à $A=0$, $B=1$, $CD\\neq00$). Soit $11$ produits de $4$ variables.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 2",
+     "duree": 6,
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Karnaugh à 3 variables",
+   "notions": [
+    "karnaugh3",
+    "lois"
+   ],
+   "exos": [
+    {
+     "id": "b61",
+     "enonce": "$S_1=1$ pour $N=0,3,6,7$ ($N$ sur 3 bits $CBA$). Expression simplifiée proposée : $S_1=BC+AB+\\overline A.\\overline B.\\overline C$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupes : $6,7$ ($BC$) ; $3,7$ ($AB$) ; $0$ seul.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 4,
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "value"
+    },
+    {
+     "id": "b62",
+     "enonce": "$S_2=1$ pour $N=0,2,4,6$, indéfinie pour $N=1,5$ ($CBA$). Expression simplifiée proposée : $S_2=\\overline A$. Contrôle ?",
+     "ans": "1",
+     "sol": "Les quatre $1$ sont les cases où $A=0$ : un groupe de $4$ cases ($\\overline A$) ; les Φ ne servent pas.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$S=1$ pour $N=1,3,5,7$ et indéfinie pour $N=2$ ($CBA$). Expression proposée : $A$. Contrôle ?",
+       "ans": "1",
+       "sol": "Les quatre $1$ forment la colonne $A=1$."
+      }
+     ],
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b63",
+     "enonce": "$f=1$ pour $N=1,3,5,7$ ($CBA$). Expression simplifiée : $A$. Contrôle ?",
+     "ans": "1",
+     "sol": "Les cases à $A=1$ forment une colonne : $f=A$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$f=1$ pour $N=2,3,6,7$ ($CBA$). Expression simplifiée : $B$. Contrôle ?",
+       "ans": "1",
+       "sol": "Cases à $B=1$."
+      }
+     ],
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "value"
+    },
+    {
+     "id": "b64",
+     "enonce": "$f=1$ pour $N=0,1,2,3$ ($CBA$). Expression simplifiée : $\\overline C$. Contrôle ?",
+     "ans": "1",
+     "sol": "La ligne $C=0$ entière : $f=\\overline C$.",
+     "duree": 2,
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "value"
+    },
+    {
+     "id": "b65",
+     "enonce": "$f=1$ pour $N=0,2,4,6$ et $f$ indéfinie pour $N=3$ ($CBA$). Peut-on faire mieux que $\\overline A$ ? Contrôle de $\\overline A$ ?",
+     "ans": "1",
+     "sol": "Non : $\\overline A$ est déjà un groupe maximal de $4$ cases. Le Φ en $3$ ($A=1$) n'ajoute rien.",
+     "duree": 3,
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "value"
+    },
+    {
+     "id": "b66",
+     "enonce": "Remplir le tableau de Karnaugh de $S_1$ ($1$ pour $N=0,3,6,7$ ; lignes $C$, colonnes $BA$ dans l'ordre $00,01,11,10$) et justifier le choix des groupes.",
+     "sol": "| $C\\backslash BA$ | 00 | 01 | 11 | 10 |\n|---|---|---|---|---|\n| 0 | 1 | 0 | 1 | 0 |\n| 1 | 0 | 0 | 1 | 1 |\n\nGroupes : $\\{N=6,7\\}$ (colonnes $11,10$, ligne $1$) donne $BC$ ; $\\{N=3,7\\}$ (colonne $11$) donne $AB$ ; $N=0$ isolé donne $\\overline A\\,\\overline B\\,\\overline C$. $S_1=BC+AB+\\overline A\\,\\overline B\\,\\overline C$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 6,
+     "formules": "Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Karnaugh à 4 variables",
+   "notions": [
+    "karnaugh4",
+    "karnaugh3"
+   ],
+   "exos": [
+    {
+     "id": "b71",
+     "enonce": "$S_3=1$ pour $N=0,1,4,5,6,7,9,11$ ($DCBA$). Expression simplifiée proposée : $S_3=C\\overline D+\\overline B\\overline D+A\\overline C D$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupes : $\\{4,5,6,7\\}$ donne $C\\overline D$ ; $\\{0,1,4,5\\}$ donne $\\overline B\\,\\overline D$ ; $\\{9,11\\}$ donne $A\\overline CD$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b72",
+     "enonce": "$S_4=1$ pour $N=0,1,2,3,4,6,8,9,10,11$ ($DCBA$). Expression simplifiée proposée : $S_4=\\overline C+\\overline A\\,\\overline D$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupe de $8$ cases ($C=0$) : $\\overline C$ ; les cases $4,6$ complétées par $0,2$ ($\\overline A\\,\\overline D$).",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b73",
+     "enonce": "$S_5=1$ pour $N=0,2,4,5,6,8,12,13,14$, indéfinie pour $N=10,11,15$ ($DCBA$). Expression simplifiée proposée : $S_5=\\overline A+C\\overline B$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupe de $8$ cases ($A=0$, avec Φ en $10$) : $\\overline A$ ; groupe $\\{4,5,12,13\\}$ : $C\\overline B$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b74",
+     "enonce": "$S_6=1$ pour $N=2,3,6,7,10,11,14,15$, indéfinie pour $N=1,4,5,9,12,13$ ($DCBA$). Expression simplifiée proposée : $S_6=B$. Contrôle ?",
+     "ans": "1",
+     "sol": "Les huit $1$ sont les cases où $B=1$ : un groupe de $8$ cases, $S_6=B$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 5,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b75",
+     "enonce": "Que vaut la fonction qui est à $1$ aux quatre coins du tableau ($N=0,2,8,10$, $DCBA$) ? Expression proposée : $\\overline C.\\overline A$. Contrôle ?",
+     "ans": "1",
+     "sol": "Les quatre coins sont adjacents : $C=0$ et $A=0$, $D$ et $B$ varient.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Cases $N=0,1,8,9$ ($DCBA$) : expression proposée $\\overline C.\\overline B$. Contrôle ?",
+       "ans": "1",
+       "sol": "$C=0$ et $B=0$."
+      }
+     ],
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs · 4 coins adjacents",
+     "type": "value"
+    },
+    {
+     "id": "b76",
+     "enonce": "Remplir le tableau de Karnaugh de $S_4$ et dessiner les groupes. Rappeler l'ordre des lignes et colonnes.",
+     "sol": "Lignes $DC$ : $00,01,11,10$ ; colonnes $BA$ : $00,01,11,10$. $S_4=1$ pour $N=0,1,2,3,4,6,8,9,10,11$.\n\n| $DC\\backslash BA$ | 00 | 01 | 11 | 10 |\n|---|---|---|---|---|\n| 00 | 1 | 1 | 1 | 1 |\n| 01 | 1 | 0 | 0 | 1 |\n| 11 | 0 | 0 | 0 | 0 |\n| 10 | 1 | 1 | 1 | 1 |\n\nGroupe de $8$ (lignes $00$ et $10$, bords opposés adjacents) : $\\overline C$. Groupe de $4$ (colonnes $00$ et $10$, lignes $00$ et $01$) : $\\overline A\\,\\overline D$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Karnaugh avec indifférents et OU exclusif",
+   "notions": [
+    "karnaugh4",
+    "xor"
+   ],
+   "exos": [
+    {
+     "id": "b81",
+     "enonce": "$S_1=1$ ssi $N=2,3,6,7,10,11,12,13$ ($DCBA$). Expression simplifiée proposée : $S_1=B\\overline C+B\\overline D+\\overline BCD$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupes : $\\{2,3,10,11\\}$ donne $B\\overline C$ ; $\\{2,3,6,7\\}$ donne $B\\overline D$ ; $\\{12,13\\}$ donne $\\overline BCD$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b82",
+     "enonce": "$S_2=1$ ssi $N=0,4,6,8,12,14$, indéfinie pour $N=3,5,7,10,13,15$ ($DCBA$). Expression proposée : $S_2=C+\\overline A\\,\\overline B$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupe de $8$ cases ($C=1$, qui absorbe les Φ $5,7,13,15$) : $C$ ; groupe $\\{0,4,8,12\\}$ ($A=0$, $B=0$) : $\\overline A\\,\\overline B$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b83",
+     "enonce": "$S_3=1$ ssi $N=0,1,4,5,8,9,12,13$, indéfinie pour $N=3,7,11,15$ ($DCBA$). Expression proposée : $S_3=\\overline B$. Contrôle ?",
+     "ans": "1",
+     "sol": "Groupe de $8$ cases où $B=0$ (les Φ $3,7,11,15$ ont $B=1$ et ne servent pas) : $S_3=\\overline B$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3",
+     "duree": 5,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b84",
+     "enonce": "$S_4=1$ ssi $N=8,10,14,15$, indéfinie pour $N=0,\\dots,7$ ($DCBA$). Expression simplifiée proposée : $S_4=BC+\\overline A\\,\\overline C$. Contrôle ?",
+     "ans": "1",
+     "sol": "$\\{14,15\\}$ élargi aux Φ $6,7$ ($B=1,C=1$) : $BC$ ; $\\{8,10\\}$ élargi aux Φ $0,2$ puis $\\{0,2,8,10\\}$ ($A=0$, $C=0$) : $\\overline A\\,\\overline C$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b85",
+     "enonce": "Écrire $\\overline A.B+A.\\overline B$ avec le OU exclusif. Contrôle : $A\\oplus B$ ?",
+     "ans": "1",
+     "sol": "C'est la définition : $A\\oplus B$.",
+     "duree": 2,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$",
+     "type": "value"
+    },
+    {
+     "id": "b86",
+     "enonce": "Simplifier $S_1$ (niveau 8, $B\\overline C+B\\overline D+CD\\overline B$) à l'aide du OU exclusif.",
+     "sol": "$S_1=B\\overline C+B\\overline D+\\overline BCD$.\n\nOn remarque $B(\\overline C+\\overline D)=B\\,\\overline{CD}$ et $\\overline BCD$ : si $CD=1$, $S_1=\\overline B$ ; si $CD=0$, $S_1=B$. Donc $S_1=B\\oplus CD$ (vrai si $B$ et $CD$ diffèrent).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3 q. 2",
+     "duree": 8,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$ · $B\\overline{CD}+\\overline BCD=B\\oplus CD$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Problèmes logiques",
+   "notions": [
+    "probleme",
+    "karnaugh3"
+   ],
+   "exos": [
+    {
+     "id": "b91",
+     "enonce": "Cuve à 3 capteurs $C_3C_2C_1$ (immergé $=1$). Seules $000,001,011,111$ sont cohérentes. Voyant $L_1$ (volume $<250$ L) : expression ? Contrôle : $\\overline{C_3}\\,\\overline{C_2}\\,\\overline{C_1}$ ?",
+     "ans": "1",
+     "sol": "Avec $A=C_1$, $B=C_2$, $C=C_3$ : $L_1=1$ seulement pour $000$ (aucun capteur immergé).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 4",
+     "duree": 3,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression",
+     "type": "value"
+    },
+    {
+     "id": "b92",
+     "enonce": "Même cuve : $L_4$ (volume $\\ge750$ L). Contrôle : $L_4=C_3.C_2.C_1$ ?",
+     "ans": "1",
+     "sol": "Seul $111$ allume $L_4$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 4",
+     "duree": 3,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression",
+     "type": "value"
+    },
+    {
+     "id": "b93",
+     "enonce": "Même cuve : le voyant de défaut $L_0$ s'allume pour $010,100,101,110$. Expression simplifiée proposée : $L_0=C_2.\\overline{C_1}+C_3.\\overline{C_2}$. Contrôle ?",
+     "ans": "1",
+     "sol": "Karnaugh ($C_3$ en ligne, $C_2C_1$ en colonne) : groupe $\\{010,110\\}$ donne $C_2\\overline{C_1}$ ; groupe $\\{100,101\\}$ donne $C_3\\overline{C_2}$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 4",
+     "duree": 5,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression · Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "value"
+    },
+    {
+     "id": "b94",
+     "enonce": "Deux réservoirs : détecteurs hauts $A$ ($R_1$), $B$ ($R_2$) et bas $C$ ($R_1$), $D$ ($R_2$). $V_1=1$ si les deux sont pleins. Les cas « haut à $1$ avec bas à $0$ » sont impossibles (Φ). Expression simplifiée proposée : $V_1=A.B$. Contrôle ?",
+     "ans": "1",
+     "sol": "Φ en $A=1,C=0$ ($8,9,12,13$) et $B=1,D=0$ ($4,6,12,14$). Un seul $1$ réel ($1111$) : on le groupe avec les Φ voisins pour obtenir $AB$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 4",
+     "duree": 6,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression · Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b95",
+     "enonce": "Mêmes réservoirs : $V_3=1$ dans tous les autres cas. Expression simplifiée proposée : $V_3=C.\\overline B+D.\\overline A$. Contrôle ?",
+     "ans": "1",
+     "sol": "$V_3=1$ pour $0001,0010,0011,0101,0111,1010,1011$. Avec les Φ : $C\\overline B$ et $D\\overline A$.",
+     "src": "Examen 2 d'architecture S1 2024/2025, ex. 4",
+     "duree": 6,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression · Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "b96",
+     "enonce": "Un ascenseur a deux capteurs d'étage $E_1$ et $E_2$ et un capteur de porte fermée $P$. Le moteur $M$ doit tourner si la porte est fermée et l'ascenseur n'est à aucun étage ($E_1=E_2=0$). $E_1$ et $E_2$ ne peuvent pas être à $1$ ensemble. Écrire la table de vérité et l'expression de $M$.",
+     "sol": "Entrées $E_1,E_2,P$ ; la combinaison $E_1E_2=11$ est impossible (Φ).\n\n$M=1$ pour $E_1E_2P=001$ seulement. Les Φ ($110,111$) ne permettent aucun groupe plus grand : $M=\\overline{E_1}\\,\\overline{E_2}\\,P$.\n\nContrôle : $M=P.\\overline{E_1+E_2}$.",
+     "duree": 8,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Tout avec des portes NON-ET",
+   "notions": [
+    "nand",
+    "morgan"
+   ],
+   "exos": [
+    {
+     "id": "b101",
+     "enonce": "Combien de portes NON-ET pour réaliser un ET ?",
+     "ans": "2",
+     "sol": "$A.B=\\overline{\\overline{A.B}}$ : une NON-ET puis une NON-ET à entrées reliées.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 5",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien de portes NON-ET pour réaliser un NON-OU ($\\overline{A+B}$) ?",
+       "ans": "4",
+       "sol": "un OU ($3$ portes) suivi d'un inverseur ($1$ porte) : $4$ portes."
+      }
+     ],
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$",
+     "type": "value"
+    },
+    {
+     "id": "b102",
+     "enonce": "Combien de portes NON-ET pour réaliser un OU ?",
+     "ans": "3",
+     "sol": "$A+B=\\overline{\\overline A.\\overline B}$ : deux inverseurs (NON-ET à entrées reliées) puis une NON-ET.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 5",
+     "duree": 3,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$",
+     "type": "value"
+    },
+    {
+     "id": "b103",
+     "enonce": "Combien de portes NON-ET pour réaliser un NON ?",
+     "ans": "1",
+     "sol": "$\\overline A=\\overline{A.A}$.",
+     "duree": 1,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$",
+     "type": "value"
+    },
+    {
+     "id": "b104",
+     "enonce": "Combien de portes NON-ET pour réaliser un OU exclusif (version minimale) ?",
+     "ans": "4",
+     "sol": "Avec $P=\\overline{AB}$, $N_1=\\overline{AP}$, $N_2=\\overline{BP}$ et $S=\\overline{N_1N_2}$ : $4$ portes (le sujet en autorise $5$).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 5",
+     "duree": 4,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$ · $A\\oplus B=\\overline{\\overline{A\\overline{AB}}\\ \\overline{B\\overline{AB}}}$",
+     "type": "value"
+    },
+    {
+     "id": "b105",
+     "enonce": "Vérifier $A\\oplus B=\\overline{\\overline{A\\,\\overline{AB}}\\ \\overline{B\\,\\overline{AB}}}$. Contrôle ?",
+     "ans": "1",
+     "sol": "$A\\overline{AB}=A\\overline B$, $B\\overline{AB}=\\overline AB$, et $\\overline{\\overline X\\,\\overline Y}=X+Y$ : on retrouve $A\\overline B+\\overline AB$.",
+     "duree": 4,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$ · $A\\oplus B=A\\overline B+\\overline AB$",
+     "type": "value"
+    },
+    {
+     "id": "b106",
+     "enonce": "Dessiner le schéma (liste des portes) d'un ET, d'un OU et d'un OU exclusif avec uniquement des portes NON-ET.",
+     "sol": "ET : $N_1=\\overline{AB}$, $S=\\overline{N_1N_1}$ (2 portes).\n\nOU : $N_1=\\overline{AA}=\\overline A$, $N_2=\\overline{BB}=\\overline B$, $S=\\overline{N_1N_2}=A+B$ (3 portes).\n\nOU exclusif : $P=\\overline{AB}$, $N_1=\\overline{AP}$, $N_2=\\overline{BP}$, $S=\\overline{N_1N_2}$ (4 portes).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 5 (3 points)",
+     "duree": 8,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Niveau examen : sujet B2",
+   "notions": [
+    "lois",
+    "canonique",
+    "karnaugh4",
+    "xor",
+    "probleme",
+    "nand"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "bx1",
+     "enonce": "Simplifier : $A+B.C+A.(B+C).(A.D+C)$ ; $A.B.C.D+A.B.C.\\overline D+A.B.\\overline C.D+A.B.\\overline C.\\overline D$ ; $(A+B.\\overline C).A.B$ .",
+     "sol": "$A+BC$ ; $AB$ ; $(A+B\\overline C)AB=AB+AB\\overline C=AB$ (absorption).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 1 (4 points)",
+     "duree": 10,
+     "formules": "$A+AB=A$ · $A+\\overline AB=A+B$ · $AB+A\\overline B=A$ · $A+\\overline A=1$ · $\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$",
+     "type": "open"
+    },
+    {
+     "id": "bx2",
+     "enonce": "1. Première forme canonique de $A+B$ (2 variables) et de $(A+C).(A+C+D).B.C$ (variables $A,B,C,D$). 2. Seconde forme canonique de $(A+B).(B+C)$ et de $A+B.C$.",
+     "sol": "1. $A+B=\\overline AB+A\\overline B+AB$ ; pour le second, $(A+C)(A+C+D)BC=BC$ : lignes à $1$ ($ABCD$) $0110,0111,1110,1111$, soit $\\overline ABC\\overline D+\\overline ABCD+ABC\\overline D+ABCD$.\n\n2. $(A+B)(B+C)$ : $(A+B+C)(A+B+\\overline C)(\\overline A+B+C)$ ; $A+BC$ : $(A+B+C)(A+B+\\overline C)(A+\\overline B+C)$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 2 (4 points)",
+     "duree": 12,
+     "formules": "1re forme : une ligne à $1$ $\\to$ un produit · 2e forme : une ligne à $0$ $\\to$ une somme",
+     "type": "open"
+    },
+    {
+     "id": "bx3",
+     "enonce": "Tableaux de Karnaugh ($DCBA$) : $S_1=1$ ssi $N=2,3,6,7,10,11,12,13$ ; $S_2=1$ ssi $N=0,4,6,8,12,14$ (Φ : $3,5,7,10,13,15$) ; $S_3=1$ ssi $N=0,1,4,5,8,9,12,13$ (Φ : $3,7,11,15$) ; $S_4=1$ ssi $N=8,10,14,15$ (Φ : $0$ à $7$). Donner les expressions les plus simplifiées.",
+     "sol": "$S_1=B\\overline C+B\\overline D+\\overline BCD$.\n\n$S_2=C+\\overline A\\,\\overline B$.\n\n$S_3=\\overline B$.\n\n$S_4=BC+\\overline A\\,\\overline C$ (groupes élargis aux Φ).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 3 (5 points)",
+     "duree": 15,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs · $A\\oplus B=A\\overline B+\\overline AB$",
+     "type": "open"
+    },
+    {
+     "id": "bx4",
+     "enonce": "Cuve de $1000$ L avec capteurs $C_1$ ($250$ L), $C_2$ ($500$ L), $C_3$ ($750$ L). Voyants $L_1$ ($V<250$), $L_2$ ($250\\le V<500$), $L_3$ ($500\\le V<750$), $L_4$ ($V\\ge750$), $L_0$ défaut. Table de vérité, expressions de $L_1$ à $L_4$, tableau de Karnaugh de $L_0$.",
+     "sol": "Lignes $C_3C_2C_1$ : $000\\to L_1$ ; $001\\to L_2$ ; $011\\to L_3$ ; $111\\to L_4$ ; $010,100,101,110\\to L_0$.\n\n$L_1=\\overline{C_3}\\,\\overline{C_2}\\,\\overline{C_1}$, $L_2=\\overline{C_3}\\,\\overline{C_2}\\,C_1$, $L_3=\\overline{C_3}C_2C_1$, $L_4=C_3C_2C_1$.\n\n$L_0=C_2\\overline{C_1}+C_3\\overline{C_2}$.",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 4 (4 points)",
+     "duree": 15,
+     "formules": "table de vérité $\\to$ Karnaugh (Φ pour les cas impossibles) $\\to$ expression · Gray $BA$ : $00,01,11,10$ · groupes de $2^k$ cases",
+     "type": "open"
+    },
+    {
+     "id": "bx5",
+     "enonce": "Schémas d'un ET (2 portes), d'un OU (3 portes) et d'un OU exclusif (5 portes) avec uniquement des portes NON-ET.",
+     "sol": "ET : $\\overline{\\overline{AB}\\ \\overline{AB}}$. OU : $\\overline{\\overline{A}\\ \\overline{B}}$ avec $\\overline A=\\overline{AA}$. OU exclusif : $\\overline{\\overline{A\\,\\overline{AB}}\\ \\overline{B\\,\\overline{AB}}}$ (4 portes, donc dans la limite de 5).",
+     "src": "Examen B2 d'architecture 2025/2026, ex. 5 (3 points)",
+     "duree": 10,
+     "formules": "$\\overline A=\\overline{AA}$ · $AB=\\overline{\\overline{AB}\\,\\overline{AB}}$ · $A+B=\\overline{\\overline A\\,\\overline B}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "canonique",
+    "karnaugh4",
+    "probleme",
+    "morgan"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "by1",
+     "enonce": "$f=1$ pour $N=1,3,5,7,9,11,13,15$ ($DCBA$). Expression simplifiée : $A$. Contrôle ?",
+     "ans": "1",
+     "sol": "Toutes les cases à $A=1$ : un groupe de $8$.",
+     "duree": 3,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs",
+     "type": "value"
+    },
+    {
+     "id": "by2",
+     "enonce": "$f=1$ pour $N=0,5,10,15$ ($DCBA$). Expression proposée avec le OU exclusif : $f=\\overline{D\\oplus B}\\ .\\ \\overline{C\\oplus A}$. Contrôle ?",
+     "ans": "1",
+     "sol": "$0000,0101,1010,1111$ : $D=B$ et $C=A$ dans chaque cas, et dans aucun autre.",
+     "duree": 6,
+     "formules": "Gray $DC$ et $BA$ · adjacence circulaire · groupe de $2^k$ cases supprime $k$ variables · Φ facultatifs · $A\\oplus B=A\\overline B+\\overline AB$",
+     "type": "value"
+    },
+    {
+     "id": "by3",
+     "enonce": "$f=1$ si $N$ ($DCBA$) a un nombre impair de bits à $1$ : $N=1,2,4,7,8,11,13,14$. Expression proposée : $f=A\\oplus B\\oplus C\\oplus D$. Contrôle ?",
+     "ans": "1",
+     "sol": "Le OU exclusif de plusieurs bits vaut $1$ si le nombre de bits à $1$ est impair. Le tableau de Karnaugh est un damier : aucun groupe possible sans OU exclusif.",
+     "duree": 6,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$ · parité",
+     "type": "value"
+    },
+    {
+     "id": "by4",
+     "enonce": "Détecteur de parité sur $3$ bits $A,B,C$ : $P=1$ si le nombre de bits à $1$ est impair. Table de vérité, tableau de Karnaugh et expression avec le OU exclusif.",
+     "sol": "$P=1$ pour $001,010,100,111$. Karnaugh en damier : aucun regroupement possible, $P=\\overline A\\,\\overline BC+\\overline AB\\overline C+A\\overline B\\,\\overline C+ABC$.\n\nAvec le OU exclusif : $P=A\\oplus B\\oplus C$.",
+     "duree": 8,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$ · Karnaugh en damier",
+     "type": "open"
+    },
+    {
+     "id": "by5",
+     "enonce": "Montrer que $A\\oplus B$ peut s'écrire $(A+B).\\overline{AB}$ et en déduire un montage à portes ET, OU et NON.",
+     "sol": "$(A+B)\\overline{AB}=(A+B)(\\overline A+\\overline B)=A\\overline B+\\overline AB+A\\overline A+B\\overline B=A\\overline B+\\overline AB=A\\oplus B$.\n\nMontage : une porte OU sur $(A,B)$, une porte ET sur $(A,B)$ suivie d'un NON, puis une porte ET combinant les deux sorties.",
+     "duree": 6,
+     "formules": "$A\\oplus B=A\\overline B+\\overline AB$ · $\\overline{AB}=\\overline A+\\overline B$ · $\\overline{A+B}=\\overline A\\,\\overline B$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
