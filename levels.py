@@ -40,7 +40,8 @@ PEEK_FACTOR = {0: 1, 1: 1 / 3, 2: 1 / 2}
 FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-integrales': 'APIS (intégrales)',
                  'maths-s1-apis-suites': 'APIS (suites)', 'maths-s1-apis-edo': 'APIS (EDO)',
                  'maths-s2-apef-polynomes': 'APEF (polynômes)', 'maths-s2-apef-fonctions': 'APEF (fonctions)',
-                 'maths-s2-ev': 'EV', 'maths-s2-alm': 'ALM', 'physique-s1-meca': 'Mécanique', 'physique-s2-energie': 'Mécanique'}
+                 'maths-s2-ev': 'EV', 'maths-s2-alm': 'ALM', 'physique-s1-meca': 'Mécanique', 'physique-s2-energie': 'Mécanique',
+                 'physique-s2-thermo': 'Thermodynamique'}
 # path id -> paths whose notions it relies on; shown as links after a failed exercise
 PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-obm'],
           'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm'],
