@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-210 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1290 exercices.
+214 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1302 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2258,6 +2258,46 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : cours sur les sev | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 4 : somme de sous-espaces vectoriels | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
 | Exercice 5 : cours 2 sur les familles | familles libres, génératrices, bases | EV | maths-s2-ev/6 |
+
+### Contrôle 2 de physique S2 — mars 2020 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2024/midterm-2024-s2-phys-correction-fr.md` — date réelle : mars 2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique) | Mécanique | — |
+| Exercice 1. Palet sur une piste (6 points) | énergie sur une piste avec propulsion (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet) | Mécanique | physique-s2-energie/6 |
+| Exercice 2. Oscillateurs (11 points) | oscillateur ressort amorti puis ressort sur plan incliné (équation différentielle, énergie, équilibre) | Mécanique | — |
+
+### Contrôle 2 de physique S2 — mars 2020 (sujet, FR)
+
+`md/S2/Midterms/Phys/2024/midterm-2024-s2-phys-subject-fr.md` — date réelle : mars 2020
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique) | Mécanique | — |
+| Exercice 1. Palet sur une piste (6 points) | énergie sur une piste avec propulsion (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet) | Mécanique | physique-s2-energie/6 |
+| Exercice 2. Oscillateurs (11 points) | oscillateur ressort amorti puis ressort sur plan incliné (équation différentielle, énergie, équilibre) | Mécanique | — |
+
+### Examen de physique S2 : mécanique — mars 2024 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2028/midterm-2028-s2-phys-correction-fr.md` — date réelle : mars 2024
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de cinématique (unité de force, position, vitesse, norme, intégration) | Mécanique | physique-s1-meca/2 |
+| Exercice 2. Tir au tennis (9 points) | tir horizontal (PFD, équations horaires, trajectoire parabolique, passage d'un obstacle, portée) | Mécanique | physique-s1-meca/5 |
+| Exercice 3. Pendule en coordonnées polaires (7 points) | pendule simple en coordonnées polaires (vitesse, accélération, PFD, petites oscillations, période) | Mécanique | physique-s1-meca/6 |
+
+### Examen de physique S2 : mécanique — mars 2024 (sujet, FR)
+
+`md/S2/Midterms/Phys/2028/midterm-2028-s2-phys-subject-fr.md` — date réelle : mars 2024
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de cinématique (unité de force, position, vitesse, norme, intégration) | Mécanique | physique-s1-meca/2 |
+| Exercice 2. Tir au tennis (9 points) | tir horizontal (PFD, équations horaires, trajectoire parabolique, passage d'un obstacle, portée) | Mécanique | physique-s1-meca/5 |
+| Exercice 3. Pendule en coordonnées polaires (7 points) | pendule simple en coordonnées polaires (vitesse, accélération, PFD, petites oscillations, période) | Mécanique | physique-s1-meca/6 |
 
 ## S2 — Contrôles de TD et feuilles de TD
 

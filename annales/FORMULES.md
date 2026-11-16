@@ -176,6 +176,56 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\Delta E_c = \sum W$
 - $f = \dfrac{mv_A^2}{2x}$
 
+**QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique)** (2)
+
+- $m\ddot x + \alpha\dot x + kx = 0$
+- pseudopériodique $\iff \alpha < 2m\omega_0$, $\omega_0 = \sqrt{k/m}$, $\omega < \omega_0$
+- $x(t) = x_0e^{-\frac{\alpha}{2m}t}\cos(\omega t)$
+- pendule : $\ddot\theta + \dfrac gL\theta = 0$, $T = 2\pi\sqrt{L/g}$
+- $R_{th} = \dfrac{e}{\lambda_{th}S}$, $\lambda_{th}$ en $\text{W·K}^{-1}\text{·m}^{-1}$
+
+**énergie sur une piste avec propulsion (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet)** (2)
+
+- $\Delta E_c = \sum W$
+- $W(\vec F) = Fl$
+- $E_m = \tfrac12mv^2 + mgz$ conservée sans frottement
+- Frenet : $m\dfrac{v^2}{R} = \sum F_N$
+- $z_C = R(1 - \cos\theta)$
+
+**oscillateur ressort amorti puis ressort sur plan incliné (équation différentielle, énergie, équilibre)** (2)
+
+- $m\ddot x = -kx - \alpha\dot x$
+- pseudopériodique si $\alpha < 2m\omega_0$
+- $E_m = \tfrac12m\dot x^2 + \tfrac12kx^2$, $\dfrac{dE_m}{dt} = \dot x(m\ddot x + kx) = -\alpha\dot x^2 = \vec f \cdot \vec v$
+- plan incliné : $k(x_e - L_0) = mg\sin\alpha$
+- $X = x - x_e$, $\ddot X + \dfrac kmX = 0$
+
+**QCM de cinématique (unité de force, position, vitesse, norme, intégration)** (2)
+
+- $1\ \text{N} = 1\ \text{kg·m·s}^{-2}$
+- $\overrightarrow{OM} = x\,\vec u_x + y\,\vec u_y$
+- $\vec v = \dfrac{d\overrightarrow{OM}}{dt}$
+- $\|\vec v\| = \sqrt{v_x^2 + v_y^2}$
+- $\overrightarrow{OM}(t) = \overrightarrow{OM}(0) + \displaystyle\int_0^t\vec v\,dt$
+- $\vec a = \dfrac{d\vec v}{dt}$
+
+**tir horizontal (PFD, équations horaires, trajectoire parabolique, passage d'un obstacle, portée)** (2)
+
+- $m\vec a = \vec P \Rightarrow a_x = 0$, $a_y = -g$
+- $\vec v = (v_0,\ -gt)$
+- $x = v_0t$, $y = -\tfrac12gt^2 + H$
+- $y(x) = -\dfrac{gx^2}{2v_0^2} + H$
+- portée : $y = 0 \Rightarrow x = \sqrt{\dfrac{2v_0^2H}{g}}$
+
+**pendule simple en coordonnées polaires (vitesse, accélération, PFD, petites oscillations, période)** (2)
+
+- $\overrightarrow{OM} = r\,\vec u_r$
+- $\vec v = \dot r\,\vec u_r + r\dot\theta\,\vec u_\theta$
+- $\vec a = (\ddot r - r\dot\theta^2)\vec u_r + (2\dot r\dot\theta + r\ddot\theta)\vec u_\theta$
+- $r = l$ : $\vec a = -l\dot\theta^2\vec u_r + l\ddot\theta\vec u_\theta$
+- $\sin\theta \approx \theta$ : $\ddot\theta + \dfrac gl\theta = 0$
+- $T_p = 2\pi\sqrt{l/g}$
+
 **Frenet (vitesse, accélération) et spirale logarithmique en polaires** (1)
 
 - $dS = R\,d\theta$
