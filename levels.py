@@ -820,14 +820,17 @@ def exam_calendar(today, syllabus=None, paths=None):
                 'periode': e.get('periode_examen', ''), 'links': links(e['parcours'])}
                for key, (m, s, e) in ecues.items() if key not in dated and e['parcours']]
     start = today.year if today.month >= 9 else today.year - 1  # school year: September to July
-    strip = []
+    months = []
     for k in range(11):
         y, m = start + (8 + k) // 12, (8 + k) % 12 + 1
         evs = [e for e in past + upcoming if e['ym'] == (y, m)]
-        strip.append({'nom': MOIS[m - 1][:4].rstrip('.'), 'now': (y, m) == (today.year, today.month),
-                      'exams': sum(e['type'] == 'Examen' for e in evs), 'tests': sum(e['type'] != 'Examen' for e in evs),
-                      'anchor': f'm{y}-{m}' if any(e in upcoming for e in evs) else None})
-    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated, 'strip': strip}
+        months.append({
+            'nom': MOIS[m - 1][:4], 'label': f'{MOIS[m - 1]} {y}', 'anchor': f'm{y}-{m}',
+            'now': (y, m) == (today.year, today.month), 'past': (y, m) < (today.year, today.month),
+            'events': evs, 'exams': sum(e['type'] == 'Examen' for e in evs), 'tests': sum(e['type'] != 'Examen' for e in evs),
+            # undated ECUEs whose usual exam period names this month ("décembre-janvier", "partiel en mai")
+            'probable': [e for e in undated if re.search(rf'\b{MOIS[m - 1]}\b', e['periode'].lower())]})
+    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated, 'months': months}
 
 
 @bp.route('/calendrier')

@@ -7,7 +7,7 @@
   <meta name="description" content="Dates des examens et tests de la prépa EPITA, avec l'entraînement correspondant pour chacun.">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=17">
+  <link rel="stylesheet" href="/static/niveaux.css?v=18">
 </head>
 <body class="lv-page">
 {% set active = 'calendrier' %}{% include 'nav.html' %}
@@ -32,8 +32,8 @@
   {% endif %}
 
   <nav class="cal-strip" aria-label="Année scolaire">
-    {% for m in strip %}
-    <a class="cal-month{{ ' now' if m.now }}"{% if m.anchor %} href="#{{ m.anchor }}"{% endif %}>
+    {% for m in months %}
+    <a class="cal-month{{ ' now' if m.now }}{{ ' done' if m.past }}" href="#{{ m.anchor }}">
       <span class="cal-dots">{% for _ in range(m.exams) %}<i class="ex"></i>{% endfor %}{% for _ in range(m.tests) %}<i></i>{% endfor %}</span>
       <span>{{ m.nom }}</span>
     </a>
@@ -41,21 +41,38 @@
   </nav>
   <p class="cal-legend"><i class="ex"></i> examen <i></i> test à distance</p>
 
-  {% for month, evs in upcoming|groupby('ym') %}
-  <h2 class="cal-mh" id="m{{ month[0] }}-{{ month[1] }}">{{ evs[0].mois|capitalize }}</h2>
-  <ul class="cal-list">
-    {% for e in evs %}
-    <li class="cal-item{{ ' is-exam' if e.type == 'Examen' }}">
+  {% macro event(e) %}
+    <li class="cal-item{{ ' is-exam' if e.type == 'Examen' }}{{ ' is-past' if e.jours < 0 and not e.en_cours }}">
       <div class="cal-day"><small>{{ e.wd }}</small><strong>{{ e.jour }}{% if e.jour_fin %}<span>–{{ e.jour_fin }}</span>{% endif %}</strong></div>
       <div>
         <h3>{{ e.titre }}</h3>
-        <p class="cal-meta">{{ e.type }} · {% if e.en_cours %}en ce moment{% elif e.jours == 1 %}demain{% else %}dans {{ e.jours }} jours{% endif %}</p>
+        <p class="cal-meta">{{ e.type }}{% if e.en_cours %} · en ce moment{% elif e.jours == 1 %} · demain{% elif e.jours > 1 %} · dans {{ e.jours }} jours{% endif %}</p>
         {{ paths(e.links) }}
       </div>
     </li>
-    {% endfor %}
-  </ul>
-  {% else %}<p>Aucune date publiée pour l'instant.</p>{% endfor %}
+  {% endmacro %}
+  {% macro month_body(m) %}
+    {% if m.events %}<ul class="cal-list">{% for e in m.events %}{{ event(e) }}{% endfor %}</ul>
+    {% else %}<p class="cal-empty">{{ "Rien ce mois-là." if m.past else "Rien de publié pour l'instant." }}</p>{% endif %}
+    {% if m.probable and not m.past %}
+    <h3 class="cal-prob">Examens habituellement en {{ m.label.split(' ')[0] }}</h3>
+    <ul class="cal-list">
+      {% for e in m.probable %}
+      <li class="cal-item">
+        <div class="cal-day cal-day-soft"><strong>?</strong></div>
+        <div><h3>{{ e.titre }}</h3><p class="cal-meta">{{ e.matiere }} {{ e.semestre }} · {{ e.periode }}</p>{{ paths(e.links) }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  {% endmacro %}
+
+  {% for m in months if not m.past %}
+  <section id="{{ m.anchor }}" class="cal-sec">
+    <h2 class="cal-mh">{{ m.label|capitalize }}</h2>
+    {{ month_body(m) }}
+  </section>
+  {% endfor %}
 
   {% if undated %}
   <h2 class="cal-mh">Pas encore de date</h2>
@@ -78,21 +95,25 @@
   {% endfor %}
   {% endif %}
 
-  {% if past %}
-  <details class="cal-fold cal-past">
-    <summary>Déjà passés <span>{{ past|length }}</span></summary>
-    <ul class="cal-list">
-      {% for e in past %}
-      <li class="cal-item">
-        <div class="cal-day cal-day-soft"><small>{{ e.mois[:4] }}</small><strong>{{ e.jour }}</strong></div>
-        <div><h3>{{ e.titre }}</h3><p class="cal-meta">{{ e.type }}</p>{{ paths(e.links) }}</div>
-      </li>
-      {% endfor %}
-    </ul>
+  {% set done = months|selectattr('past')|list %}
+  {% if done %}
+  <details class="cal-fold cal-past" id="passes">
+    <summary>Mois passés <span>{{ past|length }}</span></summary>
+    {% for m in done %}
+    <section id="{{ m.anchor }}" class="cal-sec">
+      <h3 class="cal-mh3">{{ m.label|capitalize }}</h3>
+      {{ month_body(m) }}
+    </section>
+    {% endfor %}
   </details>
   {% endif %}
   <p class="lv-muted">Sources : planning Auriga et Moodle.{% if not pct %} <a href="/compte">Connecte-toi</a> pour voir ta progression sur chaque parcours.{% endif %}</p>
 </div>
+<script>
+// A month link inside the folded past section opens it first.
+const openTarget = () => { const t = location.hash && document.querySelector(location.hash); const d = t && t.closest('details'); if (d && !d.open) { d.open = true; t.scrollIntoView(); } };
+addEventListener('hashchange', openTarget); openTarget();
+</script>
 {% include 'footer.html' %}
 </body>
 </html>

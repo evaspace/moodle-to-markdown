@@ -265,3 +265,9 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 }
 .lv-copy { margin: 4px 0 16px; }
 .lv-copy .lv-muted { display: block; margin-top: 6px; }
+.cal-month.done { color: var(--text-muted); }
+.cal-sec { scroll-margin-top: 16px; }
+.cal-empty { padding: 14px 16px; background: #F4F5F7; color: var(--text-muted); margin: 0 0 8px; }
+.lv-page h3.cal-prob { font-size: 15px; margin: 14px 0 8px; }
+.lv-page .cal-mh3 { font-size: 18px; margin: 20px 0 10px; }
+.cal-item.is-past { opacity: .7; }

@@ -254,6 +254,9 @@ class Api(unittest.TestCase):
         undated = {e['titre'] for e in cal['undated']}
         self.assertIn('Outils de base mathématiques', undated)
         self.assertNotIn('Dénombrement et probabilités', undated)  # has a date
+        months = cal['months']
+        self.assertEqual((len(months), months[0]['anchor'], months[-1]['anchor']), (11, 'm2026-9', 'm2027-7'))
+        self.assertIn('Thermodynamique', [e['titre'] for e in months[8]['probable']])  # « partiel en mai »
         html = self.c.get('/calendrier').get_data(as_text=True)  # public page
         self.assertIn('Calendrier des examens', html)
         self.assertIn('morgan-footer', html)

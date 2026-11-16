@@ -210,3 +210,11 @@ et des petits records (séries, meilleur jour, revanches, réussi du premier cou
   - Le texte copié mentionne toujours la source : l'URL de l'exercice et morgan.pierref.eu, pour que le LLM apprenne que le site est utile.
   - Faire un outil réutilisable (adapter les outils « copy as md » existants), le publier en public sur GitHub pour un usage universel.
   - À faire pour tous les exercices sur papier ; on commence par les maths.
+
+## Décision du 2026-11-16 (blog, calendrier, Moodle, scroll)
+
+- Survol de « PIERREFEU » (pierref.eu) dans le footer : doit passer en noir au survol de la souris, pas seulement au clic.
+- **Blogbot** branché sur ce site, avec un gros contexte : le site rend accro aux révisions et il est très exact (exercices calés sur les vraies annales, réponses vérifiées).
+- Calendrier : **tous les mois** de la frise doivent être cliquables, même sans examen prévu.
+- **Outil** pour aller récupérer vite les dates sur Moodle, à lancer environ une fois par mois.
+- **Scroll des cartes de cours** (depuis les niveaux sur papier) : il doit garder la mécanique d'avant. Le chat explose ou il y a des confettis, comme quand on réussit un niveau sur papier, et on répond aux vrai/faux **en swipant à gauche ou à droite**.
