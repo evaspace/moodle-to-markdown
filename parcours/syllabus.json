@@ -368,6 +368,37 @@
      ]
     }
    ]
+  },
+  {
+   "id": "electronique",
+   "titre": "Électronique",
+   "semestres": [
+    {
+     "id": "S1",
+     "moodle": "S1 - Electronique - Promo 2030",
+     "ecues": [
+      {
+       "id": "Outils d'analyse de circuits",
+       "titre": "Outils d'analyse de circuits : lois et théorèmes",
+       "bloc": "B1",
+       "periode_examen": "octobre (B1), janvier (B2 : régime sinusoïdal)",
+       "chapitres": [
+        "01_Outils d'analyse de circuits - Définitions, Lois et Théorèmes [2526_I_INF_FISE_S01_CN_OAC]",
+        "02_Documents de cours",
+        "05_Travaux Dirigés"
+       ],
+       "parcours": [
+        "elec-s1-circuits"
+       ],
+       "a_faire": [
+        "B2 janvier : régime sinusoïdal (filtres, puissance), exam janvier 2025 et 2026",
+        "S2 : diodes, filtres, régimes transitoires"
+       ],
+       "annales": []
+      }
+     ]
+    }
+   ]
   }
  ]
 }
