@@ -383,3 +383,15 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Prog: recalibrate `prog_c_debut` on `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`.
 2. Older S2 finals not used yet: 2-3-4 trees (2015, 2017, Jan 2018), AA trees (2017), 2020-2021 S2# exams: possible extra levels.
 3. Anglais, méthodo: need material from the user.
+
+# Handoff — 2026-11-16 (schémas électroniques)
+## Done
+- `parcours/src/schema.py`: circuits drawn as SVG with schemdraw + ziamath in the French exam conventions, saved to `static/schemas/`. `schema_echelle` (ladder circuits) + hand-drawn exam figures. All 5 elec paths end with `FIGS` + `ajoute(LEVELS, FIGS)`: 213 statements (with variants) show a figure, 51 SVG. README « Circuit diagrams ».
+- Checked: build OK (30 paths), 35 offline tests OK, 230 images survive Markdown + bleach, real exercise page at 390 px on a throwaway local instance (no overflow, no JS error). Deployed. Branch `feat/elec-schemas`, commit a0b1c28.
+## Next steps
+1. Not drawn: diode bridge (Mar 2025 ex. 4, `xe6`/`xe7`/`d81`-`d87`), AND gate (`d61`-`d66`), series Zener pairs (`d101`-`d107`), TD circuits with unknown labels (`t33`, `t34`, `t97`, `t101`-`t104`), dipole associations (`s31`-`s36`).
+2. Wide figures (B2 2026 fig. 1, contrôle 2023 ex. 3.2) render at ~0.55 scale on a phone: readable but small.
+3. Prog, anglais, méthodo: still need material from the user.
+## Key facts (new)
+- `/tmp` (tmpfs 3.4 G) is full of old session scratchpads: export `TMPDIR=~/.cache/tmp`. Build venv: `~/.local/share/playwright-venv` (sympy, schemdraw, ziamath, playwright, pillow).
+- schemdraw `reverse()` is ignored after `endpoints()`: swap the endpoints instead (`_dip` does).
