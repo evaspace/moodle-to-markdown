@@ -193,6 +193,24 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $r^2 + \dfrac\alpha m r + \dfrac gR = 0$, $\Delta = \left(\dfrac\alpha m\right)^2 - \dfrac{4g}R$
 - $\Delta > 0$ apériodique, $\Delta = 0$ critique, $\Delta < 0$ pseudopériodique
 
+**QCM d'oscillateurs et de thermique (énergie du pendule, régime critique, système isolé, résistances thermiques, mélange)** (2)
+
+- $E_m = \tfrac12mL^2\dot\theta^2 + mgL(1 - \cos\theta)$, $\dfrac{dE_m}{dt} = 0 \Rightarrow \ddot\theta + \dfrac gL\sin\theta = 0$
+- critique : $\alpha = 2m\omega_0$
+- isolé : ni matière ni énergie échangée
+- $R_{th} = \dfrac{e}{\lambda_{th}S}$, en série $R = \sum R_i$
+- mélange d'eau : $\theta_e = \dfrac{V_1\theta_1 + V_2\theta_2}{V_1 + V_2}$
+- intensive : température, pression
+
+**oscillateur ressort horizontal amorti (forces, équation différentielle, régimes, allure de x(t))** (2)
+
+- $\sum\vec F_{ext} = m\vec a$
+- rappel $-kx\,\vec u_x$, frottement $-\alpha\vec v$
+- $\ddot x + \dfrac\alpha m\dot x + \dfrac kmx = 0$
+- $\omega_0^2 = \dfrac km$
+- $r^2 + \dfrac\alpha mr + \omega_0^2 = 0$, $\Delta = \left(\dfrac\alpha m\right)^2 - 4\omega_0^2$
+- $\alpha < 2m\omega_0$ pseudopériodique, $\alpha = 2m\omega_0$ critique, $\alpha > 2m\omega_0$ apériodique
+
 **QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique)** (2)
 
 - $m\ddot x + \alpha\dot x + kx = 0$
@@ -538,6 +556,21 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - fusion : $Q = mL_f$
 - chemin fictif glace $\theta_2 \to 0$ °C $\to$ fusion $\to$ eau $0 \to \theta_e$
 - $m = \rho V$
+
+**conduction thermique (flux, unités, résistances thermiques en série)** (2)
+
+- $\Phi = -\lambda_{th}S\dfrac{\Delta\theta}{e} = -\dfrac{\Delta\theta}{R_{th}}$
+- $R_{th} = \dfrac{e}{\lambda_{th}S}$
+- $[\Phi] = \text{J·s}^{-1} = \text{W}$, $[R_{th}] = \text{K·W}^{-1}$, $[\lambda_{th}] = \text{W·K}^{-1}\text{·m}^{-1}$
+- même flux dans chaque couche : $R_{th} = \sum R_{th,i}$
+
+**calorimétrie (capacité massique d'une huile, glace en vapeur, capacité du calorimètre)** (2)
+
+- enceinte adiabatique : $\sum Q_i = 0$
+- $Q = mc(\theta_f - \theta_i)$
+- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
+- changement d'état : $Q = mL$
+- glace $-20$ °C $\to 0$ °C ($c_g$) $\to$ fusion ($L_f$) $\to 100$ °C ($c_e$) $\to$ vaporisation ($L_v$)
 
 **calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion)** (1)
 

@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-225 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1336 exercices.
+227 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1344 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2320,6 +2320,28 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1. Solide dans une glissière (7 points) | glissière inclinée puis circulaire (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet, énergie minimale) | Mécanique | physique-s2-energie/6 |
 | Exercice 2. Étude d'une oscillation amortie (6 points) | oscillation amortie sur un demi-cercle (Newton en Frenet, réaction, petites oscillations, régimes) | Mécanique | — |
 | Exercice 3. Calorimétrie (7 points, questions indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
+
+### Contrôle 2 de physique S2 — mars 2018 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2022/midterm-2022-s2-phys-correction-fr.md` — date réelle : mars 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, pas de points négatifs) | QCM d'oscillateurs et de thermique (énergie du pendule, régime critique, système isolé, résistances thermiques, mélange) | Mécanique | — |
+| Exercice 1. Oscillateur amorti (5 points) | oscillateur ressort horizontal amorti (forces, équation différentielle, régimes, allure de x(t)) | Mécanique | — |
+| Exercice 2. Conduction thermique (5 points) | conduction thermique (flux, unités, résistances thermiques en série) | Thermodynamique | — |
+| Exercice 3. Calorimétrie (6 points, questions indépendantes) | calorimétrie (capacité massique d'une huile, glace en vapeur, capacité du calorimètre) | Thermodynamique | physique-s2-thermo/5 |
+
+### Contrôle 2 de physique S2 — mars 2018 (sujet, FR)
+
+`md/S2/Midterms/Phys/2022/midterm-2022-s2-phys-subject-fr.md` — date réelle : mars 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, pas de points négatifs) | QCM d'oscillateurs et de thermique (énergie du pendule, régime critique, système isolé, résistances thermiques, mélange) | Mécanique | — |
+| Exercice 1. Oscillateur amorti (5 points) | oscillateur ressort horizontal amorti (forces, équation différentielle, régimes, allure de x(t)) | Mécanique | — |
+| Exercice 2. Conduction thermique (5 points) | conduction thermique (flux, unités, résistances thermiques en série) | Thermodynamique | — |
+| Exercice 3. Calorimétrie (6 points, questions indépendantes) | calorimétrie (capacité massique d'une huile, glace en vapeur, capacité du calorimètre) | Thermodynamique | physique-s2-thermo/5 |
 
 ### Contrôle 2 de physique S2 — mars 2020 (corrigé, FR)
 
