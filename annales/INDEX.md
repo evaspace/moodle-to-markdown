@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-217 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1312 exercices.
+221 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1324 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1808,6 +1808,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3. Machine thermique et cycle de Lenoir (5 points) | cycle de Lenoir dans le diagramme de Watt (isochore, isotherme, isobare, travaux) | Thermodynamique | physique-s2-thermo/12 |
 | Exercice 4. Rendement d'un moteur (4 points) | machine ditherme réversible (premier et deuxième principes, rendement de Carnot) | Thermodynamique | physique-s2-thermo/11 |
 
+### Examen de physique S2 : thermodynamique — mai 2025 (corrigé rédigé, FR)
+
+`md/S2/Finals/Phys/2029/final-2029-s2-phys-correction-fr.md` — date réelle : mai 2025
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de thermodynamique (gaz qui refroidit, cycle, isochore, pompe à chaleur, conduction) | Thermodynamique | physique-s2-thermo/6 |
+| Exercice 2. Vaporisation de l'eau (6,5 points) | calorimétrie avec vaporisation partielle (bilan d'enthalpie, masse vaporisée) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 3. Cycle thermodynamique (8,5 points) | cycle isotherme, isobare, isochore du gaz parfait (volumes, travaux, bilan) | Thermodynamique | physique-s2-thermo/7 |
+
+### Examen de physique S2 : thermodynamique — mai 2025 (corrigé rédigé, FR)
+
+`md/S2/Finals/Phys/2029/final-2029-s2-phys-subject-fr.md` — date réelle : mai 2025
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de thermodynamique (gaz qui refroidit, cycle, isochore, pompe à chaleur, conduction) | Thermodynamique | physique-s2-thermo/6 |
+| Exercice 2. Vaporisation de l'eau (6,5 points) | calorimétrie avec vaporisation partielle (bilan d'enthalpie, masse vaporisée) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 3. Cycle thermodynamique (8,5 points) | cycle isotherme, isobare, isochore du gaz parfait (volumes, travaux, bilan) | Thermodynamique | physique-s2-thermo/7 |
+
 ## S2 — QCM
 
 ### QCM 1 (S2 PA) — lundi 29 janvier 2024
@@ -2320,6 +2340,26 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de cinématique (unité de force, position, vitesse, norme, intégration) | Mécanique | physique-s1-meca/2 |
 | Exercice 2. Tir au tennis (9 points) | tir horizontal (PFD, équations horaires, trajectoire parabolique, passage d'un obstacle, portée) | Mécanique | physique-s1-meca/5 |
 | Exercice 3. Pendule en coordonnées polaires (7 points) | pendule simple en coordonnées polaires (vitesse, accélération, PFD, petites oscillations, période) | Mécanique | physique-s1-meca/6 |
+
+### Examen de physique S2 : mécanique — mars 2025 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Phys/2029/midterm-2029-s2-phys-correction-fr.md` — date réelle : mars 2025
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de mécanique (unité et signe du travail, cinématique, position en polaires) | Mécanique | physique-s2-energie/1 |
+| Exercice 2. Lancer de javelot (8 points) | tir oblique depuis une hauteur (PFD, équations horaires, trajectoire, durée de vol, portée) | Mécanique | physique-s1-meca/5 |
+| Exercice 3. Étude énergétique (7 points) | plan incliné sans frottement puis piste horizontale avec frottement (travail, énergie mécanique, théorème de l'énergie cinétique) | Mécanique | physique-s2-energie/7 |
+
+### Examen de physique S2 : mécanique — mars 2025 (corrigé rédigé, FR)
+
+`md/S2/Midterms/Phys/2029/midterm-2029-s2-phys-subject-fr.md` — date réelle : mars 2025
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. Questions de cours (5 points, pas de points négatifs) | QCM de mécanique (unité et signe du travail, cinématique, position en polaires) | Mécanique | physique-s2-energie/1 |
+| Exercice 2. Lancer de javelot (8 points) | tir oblique depuis une hauteur (PFD, équations horaires, trajectoire, durée de vol, portée) | Mécanique | physique-s1-meca/5 |
+| Exercice 3. Étude énergétique (7 points) | plan incliné sans frottement puis piste horizontale avec frottement (travail, énergie mécanique, théorème de l'énergie cinétique) | Mécanique | physique-s2-energie/7 |
 
 ### Contrôle de physique S2 : thermodynamique — promo 2030 (corrigé, FR)
 

@@ -226,6 +226,30 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\sin\theta \approx \theta$ : $\ddot\theta + \dfrac gl\theta = 0$
 - $T_p = 2\pi\sqrt{l/g}$
 
+**QCM de mécanique (unité et signe du travail, cinématique, position en polaires)** (2)
+
+- $W$ en joules, comme l'énergie
+- $W > 0$ : travail moteur, $W < 0$ : résistant
+- $\vec F \perp \overrightarrow{AB} \Rightarrow W = 0$
+- cinématique : description du mouvement sans ses causes
+- polaires : $\overrightarrow{OM} = r\,\vec u_r = \begin{pmatrix} r \\ 0 \end{pmatrix}$ dans $(\vec u_r, \vec u_\theta)$
+
+**tir oblique depuis une hauteur (PFD, équations horaires, trajectoire, durée de vol, portée)** (2)
+
+- $\vec a = \begin{pmatrix} 0 \\ -g \end{pmatrix}$
+- $\vec v = \begin{pmatrix} v_0\cos\alpha \\ v_0\sin\alpha - gt \end{pmatrix}$
+- $\overrightarrow{OM} = \begin{pmatrix} v_0\cos\alpha\,t \\ -\tfrac12gt^2 + v_0\sin\alpha\,t + h \end{pmatrix}$
+- $y(x) = -\dfrac{gx^2}{2v_0^2\cos^2\alpha} + x\tan\alpha + h$
+- impact : $y = 0$, $t = \dfrac{v_0\sin\alpha + \sqrt{v_0^2\sin^2\alpha + 2gh}}{g}$
+
+**plan incliné sans frottement puis piste horizontale avec frottement (travail, énergie mécanique, théorème de l'énergie cinétique)** (2)
+
+- $W(\vec P) = mg\,AB\sin\alpha$ en descente
+- $W(\vec R_N) = 0$
+- sans frottement $E_m$ conservée : $v_B = \sqrt{2g\,AB\sin\alpha}$
+- $W(\vec f) = -f\,BC$
+- $\Delta E_c = \sum W$ : $BC = \dfrac{mv_B^2}{2f}$
+
 **Frenet (vitesse, accélération) et spirale logarithmique en polaires** (1)
 
 - $dS = R\,d\theta$
@@ -443,6 +467,29 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - sur un cycle : $\Delta U = Q_c + Q_f + W = 0$
 - $\Delta S = \dfrac{Q_c}{T_c} + \dfrac{Q_f}{T_f} + S_{créée} = 0$, $S_{créée} = 0$ (réversible)
 - $\rho = \left|\dfrac{\text{énergie utile}}{\text{énergie coûteuse}}\right| = -\dfrac{W}{Q_c} = 1 + \dfrac{Q_f}{Q_c} = 1 - \dfrac{T_f}{T_c}$
+
+**QCM de thermodynamique (gaz qui refroidit, cycle, isochore, pompe à chaleur, conduction)** (2)
+
+- $PV = nRT$
+- sur un cycle : état initial = état final, $\Delta U = 0$
+- isochore : $W = 0$, $Q = \Delta U$
+- pompe à chaleur : énergie utile = chaleur cédée à la source chaude
+- conduction : transfert sans déplacement de matière
+
+**calorimétrie avec vaporisation partielle (bilan d'enthalpie, masse vaporisée)** (2)
+
+- $\Delta H = mc_p\Delta T$ sans changement d'état
+- $\Delta H = m\,\Delta h_{vap}$ pour la vaporisation
+- enceinte calorifugée, isobare : $\sum\Delta H = 0$
+- $m_{vap} = \dfrac{-m_{fer}c_{fer}(T_f - T_{fer}) - m_{eau}c_{eau}(T_f - T_{eau})}{\Delta h_{vap}}$
+
+**cycle isotherme, isobare, isochore du gaz parfait (volumes, travaux, bilan)** (2)
+
+- $PV = nRT$
+- isotherme : $P_AV_A = P_BV_B$, $W = -nRT\ln\dfrac{V_f}{V_i}$
+- isobare : $W = -P(V_f - V_i)$
+- isochore : $W = 0$
+- sur un cycle : $\sum W + \sum Q = \Delta U = 0$
 
 **calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion)** (1)
 
