@@ -26,7 +26,7 @@ class CatMascotEngine {
             CLAP: '/static/clapping-cat-removebg-preview.png',
             ANGRY: '/static/angry-cat-removebg-preview.png',
             EXPLODE_1: '/static/first-explosing-cat-removebg-preview.png',
-            EXPLODE_2: '/static/seconde-explosing-cat-removebg-preview.png'
+            EXPLODE_2: '/static/seconde-explosing-cat-removebg-preview.png?v=2'
         };
 
         // Rétrocompatibilité avec les anciens alias
