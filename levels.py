@@ -41,7 +41,9 @@ FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-inte
                  'maths-s1-apis-suites': 'APIS (suites)', 'maths-s1-apis-edo': 'APIS (EDO)',
                  'maths-s2-apef-polynomes': 'APEF (polynômes)', 'maths-s2-apef-fonctions': 'APEF (fonctions)',
                  'maths-s2-ev': 'EV', 'maths-s2-alm': 'ALM', 'physique-s1-meca': 'Mécanique', 'physique-s2-energie': 'Mécanique',
-                 'physique-s2-thermo': 'Thermodynamique'}
+                 'physique-s2-thermo': 'Thermodynamique', 'elec-s2-filtres': 'Études des filtres',
+                 'archi-s1-numeration': 'Numération', 'archi-s2-sequentielle': 'Logique séquentielle',
+                 'archi-s2-microprocesseur': 'Systèmes à microprocesseur'}
 # path id -> paths whose notions it relies on; shown as links after a failed exercise
 PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-obm'],
           'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm'],

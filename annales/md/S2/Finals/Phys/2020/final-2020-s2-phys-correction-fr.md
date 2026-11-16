@@ -1,6 +1,6 @@
 # Partiel 2 de physique S2 — juin 2016 (corrigé rédigé, FR)
 
-- Source : `raw/S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf`, pages 1 à 7 (le PDF de 56 pages regroupe toute la session de juin 2016 : physique en français puis en anglais, mathématiques, électronique, architecture ; seule la physique en français est transcrite ici). Pas de corrigé officiel.
+- Source : `raw/S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf`, pages 1 à 7 (le PDF de 56 pages regroupe toute la session de juin 2016 : physique en français puis en anglais, mathématiques, électronique, architecture ; la physique en français est transcrite ici ; maths, électronique et architecture en français dans `md/S2/Finals/{Maths PC,Elec,Archi}/2020/`). Pas de corrigé officiel.
 - Date réelle : juin 2016 (EPITA InfoSup S2, dossier promo 2020). Sujet : `final-2020-s2-phys-subject-fr.md`.
 - Calculatrices et documents non autorisés, réponses sur le sujet. Noté sur 20. Thermodynamique : calorimétrie, enthalpie, Meyer, transformations du gaz parfait, cycle de Joule, entropie. Formulaire fourni : $\Delta U = nc_v\Delta T$ ; $Q_P = nc_p\Delta T$ ($\delta Q_P = nc_pdT$). Les lignes `> ` sont les solutions, rédigées.
 

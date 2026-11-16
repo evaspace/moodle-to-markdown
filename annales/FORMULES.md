@@ -2373,6 +2373,48 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\frac{e^{i\alpha}}{e^{i\beta}} = e^{i(\alpha - \beta)}$
 - $\Delta < 0 \Rightarrow z = \frac{-b \pm i\sqrt{-\Delta}}{2a}$
 
+## Logique séquentielle
+
+**compteur synchrone à bascules JK (table d'excitation, Karnaugh)** (2)
+
+- excitation JK : $0 \to 0$ : $J = 0$, $K = \Phi$
+- $0 \to 1$ : $1, \Phi$
+- $1 \to 0$ : $\Phi, 1$
+- $1 \to 1$ : $\Phi, 0$
+- états inutilisés en $\Phi$
+- regrouper les $1$ et les $\Phi$ par puissances de 2
+
+**décompteur asynchrone modulo N et chronogrammes (JK, D, RS)** (2)
+
+- JK avec $J = K = 1$ : bascule $T$
+- front montant : décompteur si $H_i = Q_{i-1}$ (front descendant : $\overline{Q_{i-1}}$)
+- modulo $N$ : détecter l'état transitoire $1111$ (NON-ET) et forcer $N - 1$ par $\overline{Pre}$ / $\overline{Clr}$
+- JK : $00$ mémoire, $10$ mise à 1, $01$ mise à 0, $11$ basculement
+- D : $Q = D$ au front
+- RS asynchrone : $S$ met à 1, $R$ met à 0
+
+## Numération
+
+**flottants IEEE 754 simple et double précision (dénormalisé)** (2)
+
+- simple : 1 bit $S$, 8 bits $E$ (biais 127), 23 bits $M$
+- double : 1, 11 (biais 1023), 52
+- normalisé : $(-1)^S \times 1{,}M \times 2^{E - \text{biais}}$
+- $E = 0$ : dénormalisé $(-1)^S \times 0{,}M \times 2^{1 - \text{biais}}$ (double : $2^{-1022}$)
+- $0{,}75 = 1{,}1_2 \times 2^{-1}$
+
+## Systèmes à microprocesseur
+
+**décodage d'adresse par zone (bits de sélection, CS, adresses, redondance)** (2)
+
+- fils d'adresse $= \log_2(\text{capacité})$
+- linéaire possible si $P - C \geqslant n$ composants
+- zone : $n$ bits de sélection de poids fort pour $2^n \geqslant$ composants
+- $CS = AS \cdot$ (combinaison des bits de sélection)
+- adresse basse : sélection, puis $0$
+- haute : bits du composant à $1$
+- images $= 2^{P - \text{sélection} - \text{fils}}$
+
 ## Études des filtres
 
 **QCM régime sinusoïdal et nature des filtres du 2nd ordre** (2)

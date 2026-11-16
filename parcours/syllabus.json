@@ -177,7 +177,8 @@
         "S2/Midterms/Maths PC/2029/PC/APEF/midterm-2029-s2-maths-subject-fr.pdf",
         "S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-subject-fr.pdf",
         "S2/Midterms/Maths PC/2028/PC/APEF/midterm-2028-s2-maths-correction-fr.pdf",
-        "S2/Midterms/Maths PC/2030/PC/APEF/midterms-2030-s2-apef-correction-fr.pdf"
+        "S2/Midterms/Maths PC/2030/PC/APEF/midterms-2030-s2-apef-correction-fr.pdf",
+        "S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf"
        ]
       },
       {
@@ -217,7 +218,8 @@
        "annales": [
         "S2/Finals/Maths PC/2029/PC/ALM/final-2029-s2-maths-subject-fr.pdf",
         "S2/Finals/Maths PC/2028/PC/ALM/final-2028-s2-maths-subject-fr.pdf",
-        "S2/Finals/Maths PC/2030/PC/ALM/final-2030-s2-alm-subject-fr.pdf"
+        "S2/Finals/Maths PC/2030/PC/ALM/final-2030-s2-alm-subject-fr.pdf",
+        "S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf"
        ]
       }
      ]
@@ -400,7 +402,9 @@
         "archi-s2-sequentielle"
        ],
        "a_faire": [],
-       "annales": []
+       "annales": [
+        "S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf"
+       ]
       },
       {
        "id": "Systèmes à microprocesseur",
@@ -418,7 +422,9 @@
        "a_faire": [
         "TD5 : lecture d'une ROM (schémas : bascule RS, compteurs 74HCT193, M2716, transmission série)"
        ],
-       "annales": []
+       "annales": [
+        "S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf"
+       ]
       }
      ]
     }
@@ -469,7 +475,9 @@
         "elec-s2-filtres"
        ],
        "a_faire": [],
-       "annales": []
+       "annales": [
+        "S2/Finals/Phys/2020/final-2020-s2-phys-subject-fr.pdf"
+       ]
       },
       {
        "id": "Études des régimes transitoires",

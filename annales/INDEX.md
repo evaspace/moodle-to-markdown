@@ -1,6 +1,6 @@
 # Index des annales
 
-239 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1388 exercices.
+241 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1396 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1340,6 +1340,28 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 4 : nombres premiers et pgcd (2 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
 
 ## S2 — Partiels (finals)
+
+### Partiel S2 d'architecture des ordinateurs — juin 2016 (corrigé rédigé, FR)
+
+`md/S2/Finals/Archi/2020/final-2020-s2-archi-correction-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (2 points) | flottants IEEE 754 simple et double précision (dénormalisé) | Numération | archi-s1-numeration/12 |
+| Exercice 2 (5,5 points) | décodage d'adresse par zone (bits de sélection, CS, adresses, redondance) | Systèmes à microprocesseur | archi-s2-microprocesseur/9 |
+| Exercice 3 (6 points) | compteur synchrone à bascules JK (table d'excitation, Karnaugh) | Logique séquentielle | archi-s2-sequentielle/7 |
+| Exercice 4 (6,5 points) | décompteur asynchrone modulo N et chronogrammes (JK, D, RS) | Logique séquentielle | archi-s2-sequentielle/4 |
+
+### Partiel S2 d'architecture des ordinateurs — juin 2016 (sujet, FR)
+
+`md/S2/Finals/Archi/2020/final-2020-s2-archi-subject-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (2 points) | flottants IEEE 754 simple et double précision (dénormalisé) | Numération | archi-s1-numeration/12 |
+| Exercice 2 (5,5 points) | décodage d'adresse par zone (bits de sélection, CS, adresses, redondance) | Systèmes à microprocesseur | archi-s2-microprocesseur/9 |
+| Exercice 3 (6 points) | compteur synchrone à bascules JK (table d'excitation, Karnaugh) | Logique séquentielle | archi-s2-sequentielle/7 |
+| Exercice 4 (6,5 points) | décompteur asynchrone modulo N et chronogrammes (JK, D, RS) | Logique séquentielle | archi-s2-sequentielle/4 |
 
 ### Partiel d'électronique S2 — juin 2016 (corrigé rédigé, FR)
 
