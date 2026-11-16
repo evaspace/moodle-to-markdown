@@ -395,3 +395,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Key facts (new)
 - `/tmp` (tmpfs 3.4 G) is full of old session scratchpads: export `TMPDIR=~/.cache/tmp`. Build venv: `~/.local/share/playwright-venv` (sympy, schemdraw, ziamath, playwright, pillow).
 - schemdraw `reverse()` is ignored after `endpoints()`: swap the endpoints instead (`_dip` does).
+
+# Handoff — 2026-11-16 (outils publics, anglais/méthodo)
+## Done
+- Published (public, MIT, branch release/v0.1.0, tag v0.1.0): evaspace/fil-rouge, arbrisseau, cobaye, exposant. Each has README with real illustrations, tests, examples; `pip install git+https://github.com/evaspace/<name>` checked. Listed in morgan `static/llms*.txt` (4 languages, live; not committed: morgan has unrelated pending changes).
+- Epidocs: 30 files downloaded to `annales/raw` (gitignored): S1/S2 CIE, TIM (anglais), ADP 2030 (anglais S2), TE (techniques d'expression), DDRS 2030, TOEIC (ST-05 + MCQ JSON).
+## Next steps
+1. Anglais path(s) from CIE/TIM/ADP exams (several scans: read as images), then TE (méthodo).
+2. Course material (Moodle anglais/méthodo, prog on prepa.pages.epita.fr) needs the user's session: Claude in Chrome not connected; MoodleSession/MOODLE_TOKEN empty in config.py.
+3. `/tmp` cleanup was denied by the permission classifier: the user must run it.
