@@ -8,13 +8,15 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=19">
+  <link rel="stylesheet" href="/static/niveaux.css?v=20">
 </head>
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
 <div class="lv-wrap">
   <h1>Mes niveaux</h1>
-  <p>Exercices sur papier, un par formule. Un niveau est validé quand toutes ses formules sont en vert ; un raté passe en rouge, revient plus tard, et fait redescendre d'un niveau (les verts restent acquis).</p>
+  <p>Exercices sur papier, un par formule. Un niveau est validé quand toutes ses formules sont en vert. Un raté passe en rouge et revient à J+1, J+3 puis J+7 ; deux ratés d'affilée font redescendre d'un niveau (les verts restent acquis).</p>
+  {% if n_review %}<p class="lv-review"><a class="lv-btn primary" href="/niveaux/revoir">{{ n_review }} à revoir aujourd'hui</a></p>
+  {% elif reviewed %}<p class="lv-review">Rien d'autre à revoir aujourd'hui.</p>{% endif %}
 
 
   <form class="lv-pick" method="get" action="/niveaux">
@@ -41,6 +43,7 @@
       <span class="lv-squares" role="img" aria-label="{{ s.squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ s.squares|length }}">{% for q in s.squares %}<i class="{{ q.state }}" data-exo="{{ q.id }}"></i>{% endfor %}</span></p>
     <div class="lv-row"><a class="lv-btn primary" href="/niveaux/{{ s.id }}">Continuer au niveau {{ s.level }}</a>
       <a class="lv-btn" href="/scroll/{{ s.id }}">Scroll : le cours en cartes</a></div>
+    <details class="lv-all"><summary>Tous les niveaux ({{ s.best }} validés sur {{ s.n }})</summary>
     <ol class="lv-levels">
       {% for l in s.levels %}
       <li class="{{ 'done' if l.n <= s.best }} {{ 'current' if l.n == s.level }} {{ 'exam' if l.examen }}">
@@ -49,6 +52,7 @@
       </li>
       {% endfor %}
     </ol>
+    </details>
   </section>
   {% endfor %}
 </div>

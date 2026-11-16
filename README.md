@@ -373,6 +373,10 @@ COURSES_FILTER = []  # Laisser vide pour tout télécharger
 
 ## Levels mode (`/niveaux`)
 
+- Demotion (2026-11-16): `apply_result(..., prev_ko)` drops one level only when the previous non-practice answer on that level was also a miss; a first miss returns event `warn`.
+- Spaced review: `due_reviews(attempts, today)` (pure, tested) puts a missed exercise back at D+1, then D+3, then D+7 after each success on a later day; a miss restarts the cycle. `review_queue` reads `exo_log` (dates in Europe/Paris). `/niveaux/revoir` redirects to the oldest due exercise (`?n=K&exo=ID&revoir=1`; `level_page` honours `exo`), or to `/niveaux?revu=1` when nothing is due. No new table.
+- Exercise page: « Exercice suivant » fetches the next page and swaps `#exo` (`static/niveaux.js` `next()`, full load as fallback); rules of points are in a `?` toggle; no footer. Success effects: square pop, confetti growing with the combo, « Combo xN », green edge flash from 3 in a row.
+
 Paper exercises graded from the simplest skill up to exam level + 20 %. Goals and rules: [README_OBJECTIFS.md](README_OBJECTIFS.md); work plan: [TODO_REFONTE.md](TODO_REFONTE.md).
 
 - Accounts: `/compte` (username + password, optional e-mail). Session key from `SECRET_KEY` env or the generated `.secret_key` file (git-ignored).

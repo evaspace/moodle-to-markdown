@@ -223,3 +223,16 @@ et des petits records (séries, meilleur jour, revanches, réussi du premier cou
 - « Dans les scroll de cours, il faut changer l'ordre des réponses, sinon on fait de la mémoire musculaire et pas de la mémoire cérébrale. »
 - Les deux buts principaux de l'application : 1. apprendre le plus vite possible ; 2. en devenir addict.
 - Fait : les choix des QCM du scroll `/scroll/<parcours>` sont mélangés à chaque affichage (`scroll.py`, ordre gardé en session, vérifié par le serveur). Le fil d'accueil les mélangeait déjà. Vrai/Faux gardent leur côté (swipe droite = vrai).
+
+## Décision du 2026-11-16 : conseil sur l'application (`todo.md`)
+Réponses de l'utilisateur au conseil (débat complet dans `todo.md`) :
+- Rétrogradation au premier raté : « faut être moins méchant, peut-être, mais le but c'est d'apprendre ». Fait : on ne redescend qu'après 2 ratés d'affilée sur le même niveau ; le premier raté affiche un avertissement.
+- Boucle trop lente : fait, « Exercice suivant » sans rechargement de page ; le paragraphe des règles des points est dans un « ? » ; plus de footer sur la page d'exercice.
+- Franglais dans les langues : à régler avec un outil de traduction fait sur mesure (pas encore fait).
+- Répétition espacée : fait, un exercice raté revient à J+1, puis J+3, puis J+7 (« N à revoir aujourd'hui » en haut de « Mes niveaux », `/niveaux/revoir`). Les cartes du scroll ne sont pas encore dans la file.
+- Session de 10 exercices avec bilan : « le but c'est de grind, d'aller le plus haut possible » dans la bonne catégorie (maintenant les maths, surtout les primitives ; ensuite probas et logique/OBM). Pas fait.
+- « Mes niveaux » trop long : les niveaux sont simplement dépliables, mais l'avancement de chaque parcours reste visible. Fait : liste des niveaux repliée, barre, carrés et niveau en cours visibles, parcours travaillé en dernier en premier.
+- Style à garder (monospace, noir et rouge, chat pixel). Mais la page d'accueil fait trop « téléphone » sur PC : il faut une vraie version PC et une vraie version téléphone (pas encore fait).
+- Auto-notation Réussi/Raté : « je suis pas d'accord » avec la saisie de réponse, mais la garder en tête.
+- La réussite doit être plus satisfaisante que l'échec : effet sur chaque carré qui passe au vert, combo quand on enchaîne, effets « waouh ». Fait : carré qui grossit, confettis croissants avec le combo, bulle « Combo xN », flash vert du bord de l'écran dès 3 réussites d'affilée.
+- Chat qui chevauche le texte sur téléphone : chat réduit à 64 px sous 520 px, et les règles ne sont plus en bas de la page.

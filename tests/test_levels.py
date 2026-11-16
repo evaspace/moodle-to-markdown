@@ -15,7 +15,8 @@ os.environ.update(DB_PATH=os.path.join(TMP, 'test.db'), COOKIE_INSECURE='1', SEC
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import levels  # noqa: E402
-from levels import apply_result, percent, pick_exo, score  # noqa: E402
+from levels import apply_result, due_reviews, percent, pick_exo, score  # noqa: E402
+from datetime import date  # noqa: E402
 
 SUBJECT = 'maths-s1-apis-integrales'
 
@@ -25,9 +26,24 @@ class Rules(unittest.TestCase):
         self.assertEqual(apply_result(1, 0, True, False, 14), (1, 0, 'progress'))
         self.assertEqual(apply_result(1, 0, True, True, 14), (2, 1, 'up'))
 
-    def test_failure_drops_one_level(self):
+    def test_failure_drops_one_level_only_after_two_misses(self):
+        self.assertEqual(apply_result(5, 4, False, False, 14, prev_ko=False), (5, 4, 'warn'))
         self.assertEqual(apply_result(5, 4, False, False, 14), (4, 4, 'down'))
         self.assertEqual(apply_result(1, 0, False, False, 14), (1, 0, 'retry'))
+
+    def test_spaced_review_d1_d3_d7(self):
+        d = date(2026, 11, 1)
+        day = lambda k: date.fromordinal(d.toordinal() + k)  # noqa: E731
+        miss = [('a', 0, d), ('a', 1, d)]  # a success the same day as the miss does not count
+        self.assertEqual(due_reviews(miss, d), {})
+        self.assertEqual(due_reviews(miss, day(1)), {'a': day(1)})
+        once = miss + [('a', 1, day(1))]
+        self.assertEqual(due_reviews(once, day(3)), {})
+        self.assertEqual(due_reviews(once, day(4)), {'a': day(4)})
+        thrice = once + [('a', 1, day(4)), ('a', 1, day(11))]
+        self.assertEqual(due_reviews(thrice, day(60)), {})  # learnt: leaves the queue
+        self.assertEqual(due_reviews(thrice + [('a', 0, day(12))], day(13)), {'a': day(13)})  # a miss restarts
+        self.assertEqual(due_reviews([('b', 1, d)], day(9)), {})  # never missed: never reviewed
 
     def test_last_level(self):
         self.assertEqual(apply_result(14, 13, True, True, 14), (14, 14, 'finished'))
@@ -135,7 +151,8 @@ class Api(unittest.TestCase):
         self.assertGreater(me['levels_total'], 0)
         for path in ('/niveaux', '/stats', '/formules', '/compte', f'/niveaux/{SUBJECT}', '/inconnu'):
             html = self.c.get(path).get_data(as_text=True)
-            self.assertIn('morgan-footer', html, path)
+            # the exercise page has no footer: nothing below the answer buttons (council 2026-11-16)
+            self.assertEqual('morgan-footer' in html, path != f'/niveaux/{SUBJECT}', path)
             self.assertIn('app-nav', html, path)
         self.answer(1, True)
         self.assertEqual(self.c.get('/api/me').get_json()['streak'], 1)
@@ -162,8 +179,13 @@ class Api(unittest.TestCase):
                 self.assertEqual((d['event'], d['green']), ('progress', i + 1))
         self.assertEqual((d['event'], d['level']), ('up', 2))
         self.assertGreater(d['percent'], 0)
-        d = self.answer(2, False)
+        d = self.answer(2, False)  # first miss: warning only
+        self.assertEqual((d['event'], d['level']), ('warn', 2))
+        d = self.answer(2, False)  # second miss in a row: one level down
         self.assertEqual((d['event'], d['level'], d['best']), ('down', 1, 1))
+        # the missed exercise is due tomorrow, not today
+        self.assertNotIn('à revoir', self.c.get('/niveaux').get_data(as_text=True))
+        self.assertIn('revu=1', self.c.get('/niveaux/revoir').headers['Location'])
         # practice on another level does not move progress
         exo = self.data['levels'][4]['exos'][0]['id']
         d = self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': 5, 'exo_id': exo, 'ok': True}).get_json()

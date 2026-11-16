@@ -17,6 +17,7 @@ import smtplib
 import sqlite3
 import threading
 import time
+from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 from contextlib import contextmanager
 from functools import wraps
@@ -153,9 +154,13 @@ def get_parcours(subject):
 
 
 # ---------------------------------------------------------- game rules ----
-def apply_result(level, best, ok, all_green, n_levels):
-    """Return the new (level, best, event) after one answered exercise of the current level."""
+def apply_result(level, best, ok, all_green, n_levels, prev_ko=True):
+    """Return the new (level, best, event) after one answered exercise of the current level.
+    A miss only drops a level when the previous answer on this level was also a miss (`prev_ko`):
+    one bad evening must not send the user down a cascade of levels."""
     if not ok:
+        if not prev_ko:
+            return level, best, 'warn'
         return max(1, level - 1), best, 'down' if level > 1 else 'retry'
     if not all_green:
         return level, best, 'progress'
@@ -174,6 +179,43 @@ def pick_exo(exos, status, last_id=None, attempts=0):
         return (todo or red)[0]
     others = [e for e in exos if e['id'] != last_id] or exos
     return others[attempts % len(others)]
+
+
+REVIEW_DAYS = (1, 3, 7)  # a failed exercise comes back at D+1, then D+3, then D+7 after each success
+
+
+def due_reviews(attempts, today):
+    """Spaced review. attempts: (key, ok, day) oldest first, day = local date.
+    A miss (re)starts the cycle; each success on a later day than the previous step moves it one
+    interval further; after len(REVIEW_DAYS) successes the key leaves the queue.
+    Returns {key: due_day} for the keys due on or before `today`."""
+    state = {}  # key -> (anchor day, successes since the last miss)
+    for key, ok, day in attempts:
+        if not ok:
+            state[key] = (day, 0)
+        elif key in state and day > state[key][0]:
+            state[key] = (day, state[key][1] + 1)
+    due = {}
+    for key, (anchor, k) in state.items():
+        if k < len(REVIEW_DAYS):
+            when = anchor + timedelta(days=REVIEW_DAYS[k])
+            if when <= today:
+                due[key] = when
+    return due
+
+
+def review_queue(conn, uid, today):
+    """Exercises due for review today, oldest due first: [(subject, level, exo_id)]."""
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo(TZ)
+    rows = conn.execute('SELECT subject, level, exo_id, ok, at FROM exo_log WHERE account_id=? ORDER BY id', (uid,))
+    attempts = [((r[0], r[1], r[2]), r[3],
+                 datetime.fromisoformat(r[4]).replace(tzinfo=timezone.utc).astimezone(tz).date()) for r in rows]
+    paths = load_parcours()
+    due = due_reviews(attempts, today)
+    known = {k: d for k, d in due.items() if k[0] in paths and 1 <= k[1] <= len(paths[k[0]]['levels'])
+             and k[2] in {e['id'] for e in paths[k[0]]['levels'][k[1] - 1]['exos']}}
+    return sorted(known, key=lambda k: known[k])
 
 
 def variant(exo, tries):
@@ -523,8 +565,13 @@ def levels_home():
                              'levels': [{'n': l['n'], 'titre': l['titre'], 'examen': l.get('examen', False)}
                                         for l in data['levels']]})
         total_xp = xp(conn, uid)
+        n_review = len(review_queue(conn, uid, _today()))
+        last = {r[0]: r[1] for r in conn.execute('SELECT subject, MAX(id) FROM exo_log WHERE account_id=? GROUP BY subject',
+                                                 (uid,))}
+    subjects.sort(key=lambda x: -last.get(x['id'], 0))  # the path worked on last comes first (stable otherwise)
     return render_template('niveaux.html', subjects=subjects, username=session['username'], xp=total_xp,
-                           f=f, sel=selector(paths, f), qs=urlencode(f))
+                           f=f, sel=selector(paths, f), qs=urlencode(f), n_review=n_review,
+                           reviewed=bool(request.args.get('revu')))
 
 
 @bp.route('/niveaux/melange')
@@ -536,6 +583,23 @@ def levels_mix():
     if not chosen:
         return redirect('/niveaux')
     return redirect(f'/niveaux/{random.choice(chosen)}?' + urlencode(dict(f, mix=1)))
+
+
+def _today():
+    from zoneinfo import ZoneInfo
+    return datetime.now(ZoneInfo(TZ)).date()
+
+
+@bp.route('/niveaux/revoir')
+@login_required
+def levels_review():
+    """Next exercise due for spaced review (D+1, D+3, D+7 after a miss), whatever the path."""
+    with db() as conn:
+        queue = review_queue(conn, session['uid'], _today())
+    if not queue:
+        return redirect('/niveaux?revu=1')
+    subject, n, exo_id = queue[0]
+    return redirect(f'/niveaux/{subject}?' + urlencode({'n': n, 'exo': exo_id, 'revoir': 1}))
 
 
 @bp.route('/niveaux/<subject>')
@@ -555,7 +619,8 @@ def level_page(subject):
         last = conn.execute('SELECT exo_id, (SELECT COUNT(*) FROM exo_log WHERE account_id=? AND subject=? AND level=?) '
                             'FROM exo_log WHERE account_id=? AND subject=? AND level=? ORDER BY id DESC LIMIT 1',
                             (uid, subject, n, uid, subject, n)).fetchone()
-        exo = pick_exo(lvl['exos'], status, last[0] if last else None, last[1] if last else 0)
+        asked = next((e for e in lvl['exos'] if e['id'] == request.args.get('exo')), None)  # review queue
+        exo = asked or pick_exo(lvl['exos'], status, last[0] if last else None, last[1] if last else 0)
         tries = conn.execute('SELECT COUNT(*) FROM exo_log WHERE account_id=? AND subject=? AND level=? AND exo_id=?',
                              (uid, subject, n, exo['id'])).fetchone()[0]
         exo = variant(exo, tries)
@@ -570,7 +635,9 @@ def level_page(subject):
     return render_template(
         'niveau.html', subject=data['subject'], lvl=lvl, n_levels=n_levels, current=level,
         best=best, practice=(n != level), percent=total_percent(st, data), xp=total_xp,
-        mix=('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else None,
+        mix=('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
+            '/niveaux/revoir' if request.args.get('revoir') else None,
+        review=bool(request.args.get('revoir')),
         squares=squares(lvl, status),
         exo={'id': exo['id'], 'src': exo.get('src'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
@@ -626,6 +693,8 @@ def level_result(subject):
     with db() as conn:
         level, _, best = progress(conn, uid, subject)
         practice = n != level
+        prev = conn.execute('SELECT ok FROM exo_log WHERE account_id=? AND subject=? AND level=? AND practice=0 '
+                            'ORDER BY id DESC LIMIT 1', (uid, subject, n)).fetchone()
         pts = score(ok, secs, ref, peek, n) if secs else 0  # no matching page view: no points
         conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
@@ -640,7 +709,8 @@ def level_result(subject):
             extra['prereq'] = [{'id': p, 'titre': get_parcours(p)['subject']['titre']} for p in PREREQ.get(subject, [])]
         if practice:  # practice on another level: logged (squares change), level unchanged
             return jsonify(event='practice', level=level, best=best, **extra)
-        level, best, event = apply_result(level, best, ok, green == len(status), n_levels)
+        level, best, event = apply_result(level, best, ok, green == len(status), n_levels,
+                                          prev_ko=bool(prev) and not prev['ok'])
         streak = green  # column kept for compatibility: greens on the level just answered
         conn.execute('''INSERT INTO level_progress (account_id, subject, level, streak, best) VALUES (?, ?, ?, ?, ?)
                         ON CONFLICT(account_id, subject) DO UPDATE SET level=excluded.level,

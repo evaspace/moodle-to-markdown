@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=19">
+  <link rel="stylesheet" href="/static/niveaux.css?v=20">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -16,13 +16,14 @@
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
 <div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}">
-  <h1>Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
+  <h1 tabindex="-1">Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
   <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"
        aria-label="Progression totale {{ subject.titre }}"><span id="total-bar" style="width: {{ percent }}%"></span></div>
   <p class="lv-muted"><span id="total-pct">{{ percent }}</span> % de toutes les formules de « {{ subject.titre }} » réussies</p>
   <p>Formules du niveau <span class="lv-squares" role="img" aria-label="{{ squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ squares|length }}">{% for q in squares %}<i class="{{ q.state }}{{ ' cur' if q.id == exo.id }}" data-exo="{{ q.id }}"></i>{% endfor %}</span>
     <span class="lv-muted">toutes en vert = niveau validé</span></p>
-  {% if practice %}
+  {% if review %}<p class="lv-practice">Révision espacée : cet exercice raté revient pour vérifier qu'il est acquis.</p>
+  {% elif practice %}
     <p class="lv-practice">Entraînement libre : ce niveau ne change pas ta progression. Ton niveau actuel est le {{ current }}.
       <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
   {% endif %}
@@ -46,6 +47,7 @@
   </div>
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
+  <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>
@@ -75,7 +77,6 @@
     <div id="solution-body">{{ exo.sol|safe }}</div>
   </section>
 
-  <p class="lv-muted" id="verdict-hint">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p>
   <div class="lv-row">
     <button class="lv-btn ok" type="button" id="btn-ok" disabled>Réussi</button>
     <button class="lv-btn primary" type="button" id="btn-ko" disabled>Raté</button>
@@ -89,9 +90,8 @@
   <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
 </div>
 <script src="/static/cat.js?v=20261116"></script>
-<script src="/static/niveaux.js?v=12"></script>
+<script src="/static/niveaux.js?v=13"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
-{% include 'footer.html' %}
 </body>
 </html>
