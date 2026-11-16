@@ -304,3 +304,13 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Decide what to do with the blogbot daily batch for this site (its output is unlinked): disable the site there or feed it the new format.
 2. More articles (one per exam type once real calibrated data exists); add blog to llms files if wanted.
+
+# Handoff — 2026-11-16 (annales physique S2)
+## Done
+- 10 S2 physics exams transcribed in `annales/md/S2/{Finals,Midterms}/Phys/` (correction file with `> ` solutions + subject file derived from it): finals 2023, 2025, 2026, 2028, 2029 and midterms 2024, 2027, 2028, 2029, 2030 (2030: correction only, statements rebuilt). Types added to `annales/tools/formules.py`, `ORDER` in `annales/tools/index.py` has Thermodynamique/Électromagnétisme. `index.py` OK (223 files, 1330 exercises).
+- `FICHE_SECTION['physique-s2-thermo'] = 'Thermodynamique'` in `levels.py`. Offline tests OK, deployed (`docker restart`). README + TODO_REFONTE updated. Branch `feat/annales-phys-s2` (from `feat/prog-c`), nothing pushed.
+- `S2/Midterms/Phys/2026` = S1 November 2021 test (already transcribed in S1): skipped.
+## Next steps
+1. Remaining S2 physics scans (older): Finals 2020 (56 pages, check what it contains first), 2021, 2022 (+correction); Midterms 2021 (+corr), 2022 (+corr), 2025 (correction only). Helper idea: write the correction md, then derive the subject by dropping `> ` lines (script was in the session scratchpad, not kept: easy to redo).
+2. Corrections written by me (not official): midterm 2027, 2029, final 2029. QCM 7 of final 2025: official correction circles c), flagged as an error.
+3. Prog still blocked on sources (Moodle prog/Python dirs = links only); anglais and méthodo Moodle dirs are empty (titles only): ask the user for material.
