@@ -460,7 +460,7 @@ def nav_state():
 
 @bp.app_context_processor
 def inject_nav():
-    return {'nav': nav_state()}
+    return {'nav': nav_state(), 'public_url': PUBLIC_URL}
 
 
 @bp.route('/api/me')
@@ -771,6 +771,57 @@ def formula_sheet():
 @login_required
 def formulas_page():
     return render_template('formules.html', sections=formula_sheet())
+
+
+MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre',
+        'novembre', 'décembre']
+
+
+def _date_fr(d):
+    return f"{'1er' if d.day == 1 else d.day} {MOIS[d.month - 1]} {d.year}"
+
+
+def exam_calendar(today, syllabus=None, paths=None):
+    """Exam dates of syllabus.json 'calendrier' split into upcoming / past, each with links to its
+    paths and their first exam level; ECUEs with no date are listed with their periode_examen."""
+    from datetime import date
+    syllabus = syllabus or json.loads((PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))
+    paths = load_parcours() if paths is None else paths
+    ecues = {f"{m['id']}/{s['id']}/{e['id']}": (m, s, e)
+             for m in syllabus['matieres'] for s in m['semestres'] for e in s['ecues']}
+
+    def links(ids):
+        out = []
+        for pid in ids:
+            data = paths.get(pid)
+            if not data:
+                continue
+            exam = next((l['n'] for l in data['levels'] if l.get('examen')), None)
+            out.append({'titre': data['subject']['titre'], 'url': f'/niveaux/{pid}',
+                        'exam_url': f'/niveaux/{pid}?n={exam}' if exam else None})
+        return out
+
+    upcoming, past, dated = [], [], set()
+    for ev in syllabus.get('calendrier', []):
+        debut = date.fromisoformat(ev['debut'])
+        fin = date.fromisoformat(ev.get('fin', ev['debut']))
+        ids = ev.get('parcours') or (ecues[ev['ecue']][2]['parcours'] if ev.get('ecue') else [])
+        if ev.get('ecue'):
+            dated.add(ev['ecue'])
+        item = {**ev, 'quand': _date_fr(debut) if fin == debut else f'du {_date_fr(debut)} au {_date_fr(fin)}',
+                'jours': (debut - today).days, 'en_cours': debut <= today <= fin, 'links': links(ids)}
+        (past if fin < today else upcoming).append(item)
+    undated = [{'matiere': m['titre'], 'semestre': s['id'], 'titre': e['titre'], 'bloc': e.get('bloc', ''),
+                'periode': e.get('periode_examen', ''), 'links': links(e['parcours'])}
+               for key, (m, s, e) in ecues.items() if key not in dated and e['parcours']]
+    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated}
+
+
+@bp.route('/calendrier')
+def calendar_page():
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    return render_template('calendrier.html', **exam_calendar(datetime.now(ZoneInfo(TZ)).date()))
 
 
 @bp.route('/stats')

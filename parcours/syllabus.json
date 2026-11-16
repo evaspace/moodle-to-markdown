@@ -3,6 +3,61 @@
  "promo": 2031,
  "annales_root": "annales/raw",
  "moodle_root": "EPITA_Moodle_Notes_MD",
+ "calendrier_doc": "Dates d'examens de la promo (page /calendrier). debut/fin = AAAA-MM-JJ. ecue = 'matiere/semestre/id' de ce registre (ses parcours servent de liens) ou parcours = liste explicite. Sources : Auriga (événements de type Examen) et Moodle S1-MATHS-2031 (tests à distance). Les ECUE sans date ici sont listées avec leur periode_examen.",
+ "calendrier": [
+  {
+   "debut": "2026-09-04",
+   "titre": "Anglais Communication Formel",
+   "type": "Examen",
+   "source": "Auriga"
+  },
+  {
+   "debut": "2026-10-05",
+   "titre": "Test à distance : dénombrement",
+   "type": "Test à distance",
+   "ecue": "maths/S1/DP",
+   "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-10-19",
+   "titre": "Test à distance : probabilités",
+   "type": "Test à distance",
+   "ecue": "maths/S1/DP",
+   "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-10-26",
+   "fin": "2026-10-30",
+   "titre": "Dénombrement et probabilités",
+   "type": "Examen",
+   "ecue": "maths/S1/DP",
+   "source": "Auriga"
+  },
+  {
+   "debut": "2026-11-16",
+   "titre": "Test à distance : primitives, IPP, changement de variable",
+   "type": "Test à distance",
+   "parcours": [
+    "maths-s1-apis-integrales"
+   ],
+   "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-12-07",
+   "titre": "Test à distance : APIS en entier",
+   "type": "Test à distance",
+   "ecue": "maths/S1/APIS",
+   "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-12-14",
+   "fin": "2026-12-18",
+   "titre": "Analyse : primitives, intégrales et suites",
+   "type": "Examen",
+   "ecue": "maths/S1/APIS",
+   "source": "Auriga"
+  }
+ ],
  "matieres": [
   {
    "id": "maths",

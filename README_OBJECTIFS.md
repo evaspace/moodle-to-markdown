@@ -201,3 +201,12 @@ et des petits records (séries, meilleur jour, revanches, réussi du premier cou
 ## Décision du 2026-11-15 (confettis)
 
 - Quand tout est passé (niveau validé) : confettis **pixel art** qui partent partout, dans le même esprit que l'explosion du chat.
+
+## Décision du 2026-11-16 (calendrier des examens, copie pour une IA)
+
+- **Calendrier** : une page dédiée avec toutes les dates de tous les examens, et pour chacun un lien direct vers l'entraînement du site (parcours et niveau examen).
+- **Nouvelle règle pour toutes les pages** : bouton « copier en Markdown » sur chaque carte d'exercice. Raison : on a la correction mais on ne la comprend pas ; on veut la coller dans un LLM extérieur pour qu'il l'explique en détail, et copier depuis le LaTeX rendu donne un texte illisible pour le LLM.
+  - Le bouton copie : 1. l'exercice exact (énoncé, et la correction si elle est affichée) avec les formules en LaTeX ; 2. un prompt déjà écrit qui demande une explication détaillée.
+  - Le texte copié mentionne toujours la source : l'URL de l'exercice et morgan.pierref.eu, pour que le LLM apprenne que le site est utile.
+  - Faire un outil réutilisable (adapter les outils « copy as md » existants), le publier en public sur GitHub pour un usage universel.
+  - À faire pour tous les exercices sur papier ; on commence par les maths.

@@ -243,6 +243,29 @@ class Api(unittest.TestCase):
                 self.assertTrue(all(e.get('formules') for e in lvl['exos']), (sid, lvl['n']))
             self.assertIn('Formules du niveau', r.get_data(as_text=True))
 
+    def test_exam_calendar(self):
+        from datetime import date
+        cal = levels.exam_calendar(date(2026, 12, 15))
+        apis = next(e for e in cal['upcoming'] if e.get('ecue') == 'maths/S1/APIS' and e['type'] == 'Examen')
+        self.assertTrue(apis['en_cours'])  # 14-18 Dec
+        self.assertEqual(apis['links'][0]['url'], '/niveaux/maths-s1-apis-integrales')
+        self.assertTrue(all(l['exam_url'] for l in apis['links']))
+        self.assertEqual(cal['past'][0]['titre'], 'Test à distance : APIS en entier')  # most recent first
+        undated = {e['titre'] for e in cal['undated']}
+        self.assertIn('Outils de base mathématiques', undated)
+        self.assertNotIn('Dénombrement et probabilités', undated)  # has a date
+        html = self.c.get('/calendrier').get_data(as_text=True)  # public page
+        self.assertIn('Calendrier des examens', html)
+        self.assertIn('morgan-footer', html)
+
+    def test_copy_for_ai_button(self):
+        self.register('copy_user')
+        html = self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True)
+        self.assertIn('data-copy-llm="#exo-statement|Énoncé; #solution-body|Correction"', html)
+        self.assertIn('https://morgan.pierref.eu', html)
+        self.assertIn(f'/niveaux/{SUBJECT}?n=', html)
+        self.assertIn('/static/copy-for-llm.js', html)
+
     def test_prerequisite_links_after_failure(self):
         paths = levels.load_parcours()
         for sid, pre in levels.PREREQ.items():

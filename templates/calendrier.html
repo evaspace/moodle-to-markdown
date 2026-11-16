@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendrier des examens · Epita Doomscrolling</title>
+  <meta name="description" content="Dates des examens et tests de la prépa EPITA, avec l'entraînement correspondant pour chacun.">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/niveaux.css?v=15">
+</head>
+<body class="lv-page">
+{% set active = 'calendrier' %}{% include 'nav.html' %}
+{% macro train(links) %}{% if links %}<p class="cal-links">{% for l in links %}<a href="{{ l.url }}">{{ l.titre }}</a>{% if l.exam_url %} (<a href="{{ l.exam_url }}">niveau examen</a>){% endif %}{{ ' · ' if not loop.last }}{% endfor %}</p>{% endif %}{% endmacro %}
+<div class="lv-wrap">
+  <h1>Calendrier des examens</h1>
+  <p>Chaque date mène à l'entraînement du site : le parcours entier, ou directement son niveau examen (annales complètes).</p>
+
+  <h2>À venir</h2>
+  {% if upcoming %}
+  <ul class="cal-list">
+    {% for e in upcoming %}
+    <li>
+      <h3>{{ e.titre }}</h3>
+      <p class="lv-muted"><strong class="cal-when">{{ e.quand }}</strong> · {{ e.type }} ·
+        {% if e.en_cours %}en ce moment{% elif e.jours == 1 %}demain{% else %}dans {{ e.jours }} jours{% endif %}</p>
+      {{ train(e.links) }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="lv-muted">Aucune date publiée pour l'instant.</p>{% endif %}
+
+  {% if undated %}
+  <h2>Date pas encore publiée</h2>
+  <p class="lv-muted">Période habituelle, d'après les années précédentes.</p>
+  <ul class="cal-list">
+    {% for e in undated %}
+    <li>
+      <h3>{{ e.titre }}</h3>
+      <p class="lv-muted">{{ e.matiere }} {{ e.semestre }}{% if e.bloc %} · {{ e.bloc }}{% endif %} · {{ e.periode }}</p>
+      {{ train(e.links) }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if past %}
+  <h2>Passés</h2>
+  <ul class="cal-list">
+    {% for e in past %}
+    <li>
+      <h3>{{ e.titre }}</h3>
+      <p class="lv-muted">{{ e.quand }} · {{ e.type }}</p>
+      {{ train(e.links) }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p class="lv-muted">Sources : planning Auriga et Moodle, recopiés à la main.</p>
+</div>
+{% include 'footer.html' %}
+</body>
+</html>
