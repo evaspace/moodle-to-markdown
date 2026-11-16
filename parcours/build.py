@@ -12,15 +12,64 @@ import sympy as sp
 
 HERE = Path(__file__).parent
 PATHS = ["obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
-         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie"]
+         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration"]
 x, t = sp.symbols("x t", real=True)
 i, k = sp.symbols("i k", integer=True)
 n = sp.symbols("n", integer=True, positive=True)
+
+
+def _sym(s, base):
+    """Value of a number written in `base` with an optional fractional part ('1011.01')."""
+    whole, _, frac = s.replace(" ", "").partition(".")
+    v = sp.Integer(int(whole or "0", base))
+    return v + sum((sp.Rational(int(c, base), base ** (j + 1)) for j, c in enumerate(frac)), sp.Integer(0))
+
+
+def _tc(s, n=None):
+    """Two's complement value of a bit string."""
+    s = s.replace(" ", "")
+    return sp.Integer(int(s, 2) - (1 << len(s) if s[0] == "1" else 0))
+
+
+def _f32(v):
+    import struct
+    return sp.Integer(struct.unpack(">I", struct.pack(">f", float(v)))[0])
+
+
+def _f64(v):
+    import struct
+    return sp.Integer(struct.unpack(">Q", struct.pack(">d", float(v)))[0])
+
+
+def _fdec(hexstr, fmt):
+    import struct
+    return sp.Rational(struct.unpack(fmt, bytes.fromhex(hexstr.replace(" ", "")))[0])
+
+
+def _eqv(a, b):
+    from sympy.logic.boolalg import Xor, simplify_logic
+    return sp.Integer(0 if sp.satisfiable(Xor(a, b)) else 1)
+
+
+def _cover(expr, names, ones, dcs=()):
+    """1 if expr is true on every minterm of `ones`, false outside ones+dcs (names: most significant first)."""
+    syms = [sp.Symbol(c) for c in names]
+    for m in range(1 << len(syms)):
+        val = {s: bool((m >> (len(syms) - 1 - j)) & 1) for j, s in enumerate(syms)}
+        got = bool(expr.subs(val))
+        if m in ones and not got or m not in ones and m not in dcs and got:
+            return sp.Integer(0)
+    return sp.Integer(1)
+
+
 NS = {"x": x, "t": t, "E": sp.E, "pi": sp.pi, "log": sp.log, "sqrt": sp.sqrt,
       "exp": sp.exp, "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "atan": sp.atan,
       "Rational": sp.Rational, "i": i, "k": k, "binomial": sp.binomial,
       "factorial": sp.factorial, "summation": sp.summation,
       "n": n, "oo": sp.oo, "limit": sp.limit,
+      "bits": lambda s: _sym(s, 2), "hexa": lambda s: _sym(s, 16), "octal": lambda s: _sym(s, 8), "tc": _tc,
+      "f32": _f32, "f32d": lambda h: _fdec(h, ">f"), "f64d": lambda h: _fdec(h, ">d"), "f64": _f64, "eqv": _eqv, "cover": _cover, "A": sp.Symbol("A"), "B": sp.Symbol("B"),
+      "C": sp.Symbol("C"), "D": sp.Symbol("D"), "Xor": sp.Xor, "Not": sp.Not,
       "C1": sp.Symbol("C1"), "C2": sp.Symbol("C2"), "Y0": sp.Symbol("Y0"), "Y1": sp.Symbol("Y1"), "Y2": sp.Symbol("Y2")}
 DUREE = {"derivative": 2, "primitive": 2, "integral": 5, "value": 4, "open": 5, "ode": 6}
 SAMPLES = [sp.Rational(3, 10), sp.Rational(7, 10), sp.Rational(6, 5)]  # inside every domain used

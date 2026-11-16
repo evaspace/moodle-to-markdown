@@ -1,0 +1,1267 @@
+{
+ "subject": {
+  "id": "archi-s1-numeration",
+  "ordre": 400,
+  "matiere": "archi",
+  "semestre": "S1",
+  "ecue": "Numération",
+  "titre": "Numération et arithmétique des ordinateurs",
+  "chapitres_moodle": [
+   "01_Numération [2526_I_INF_FISE_S01_PR_NUM]",
+   "02_Documents de cours",
+   "03_Travaux Dirigés"
+  ],
+  "td": "TD d'architecture (Moodle Archi S1)",
+  "examens": [
+   "Examen B1 d'architecture des ordinateurs"
+  ]
+ },
+ "notions": [
+  {
+   "id": "bases",
+   "titre": "Bases 2, 8, 16 vers le décimal",
+   "formule": "$N=\\sum_i a_i\\,b^i$ · binaire : poids $1,2,4,8,16,32,64,128,256$ · hexadécimal : $A=10,\\dots,F=15$, poids $1,16,256$ · octal : poids $1,8,64$",
+   "exemple": "$1101_2=8+4+1=13$ · $1A5_{16}=256+160+5=421$",
+   "cours": "Chaque chiffre est multiplié par la puissance de la base qui correspond à sa position (la plus à droite est $b^0$). Savoir par cœur les puissances de 2 jusqu'à $2^{10}=1024$."
+  },
+  {
+   "id": "division",
+   "titre": "Décimal vers une autre base",
+   "formule": "partie entière : divisions successives par $b$, restes lus de bas en haut · $528_{10}=210_{16}$ · hexa $\\leftrightarrow$ décimal : $16^2=256$",
+   "exemple": "$213=128+64+16+4+1=1101\\,0101_2$",
+   "cours": "On divise jusqu'à obtenir un quotient nul. Le premier reste est le chiffre de poids faible. Pour le binaire, on peut aussi soustraire les plus grandes puissances de 2."
+  },
+  {
+   "id": "groupes",
+   "titre": "Binaire, octal et hexadécimal",
+   "formule": "hexa = groupes de $4$ bits · octal = groupes de $3$ bits · groupes à partir de la virgule, vers la gauche pour la partie entière, vers la droite pour la fraction · $0\\,0000\\ldots F\\,1111$",
+   "exemple": "$1011\\,1011_2=BB_{16}$ · $3D7_{16}=001\\,111\\,010\\,111_2=1727_8$",
+   "cours": "Pas de calcul : on remplace chaque chiffre hexa par 4 bits (ou chaque chiffre octal par 3). Compléter par des zéros les groupes incomplets : à gauche pour la partie entière, à droite pour la fraction."
+  },
+  {
+   "id": "fractions",
+   "titre": "Nombres à virgule",
+   "formule": "poids après la virgule : $2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$ · fraction décimale $\\to$ base $b$ : multiplications successives par $b$, parties entières lues de haut en bas",
+   "exemple": "$0{,}35\\to0{,}7;\\ 1{,}4;\\ 0{,}8;\\ 1{,}6;\\ 1{,}2$ donne $0{,}01011\\ldots_2$",
+   "cours": "On convertit séparément la partie entière et la partie fractionnaire. La conversion peut ne jamais se terminer : on s'arrête à la précision demandée (nombre de chiffres)."
+  },
+  {
+   "id": "addition",
+   "titre": "Addition en base 2 et 16",
+   "formule": "binaire : $0+0=0$, $0+1=1$, $1+1=10$ (retenue $1$), $1+1+1=11$ · hexa : somme $\\ge16\\Rightarrow$ retrancher $16$ et retenue $1$",
+   "exemple": "$1011_2+0110_2=10001_2$ · $2F_{16}+1D_{16}=4C_{16}$",
+   "cours": "Même méthode qu'en décimal, colonne par colonne de la droite vers la gauche, avec la retenue. En hexadécimal, convertir chaque chiffre en décimal, additionner, puis réécrire."
+  },
+  {
+   "id": "soustraction",
+   "titre": "Soustraction en base 2 et 16",
+   "formule": "binaire : $0-1\\to$ emprunt : $10-1=1$ · hexa : emprunt de $16$ · vérification : résultat $+$ soustrahende $=$ nombre de départ",
+   "exemple": "$1101001_2-110110_2=110011_2$ ($105-54=51$)",
+   "cours": "Quand le chiffre du haut est plus petit que celui du bas, on emprunte une unité à gauche, qui vaut 2 (ou 16) dans la colonne courante. Toujours vérifier avec l'addition."
+  },
+  {
+   "id": "produit",
+   "titre": "Multiplication et division en base 2",
+   "formule": "multiplication : somme des multiplicandes décalés pour chaque $1$ du multiplicateur · $\\times2^k$ = décalage à gauche de $k$ rangs · division : poser comme en décimal, quotient $1$ si le diviseur « rentre »",
+   "exemple": "$10110_2\\times101_2=1101110_2$ ($22\\times5=110$)",
+   "cours": "Chaque chiffre du multiplicateur vaut 0 (ligne nulle) ou 1 (multiplicande décalé). Multiplier ou diviser par une puissance de 2 revient à décaler la virgule."
+  },
+  {
+   "id": "capacite",
+   "titre": "Capacité d'un mot de n bits",
+   "formule": "$2^n$ valeurs · non signé : $[0,\\ 2^n-1]$ · signé (complément à deux) : $[-2^{n-1},\\ 2^{n-1}-1]$ · $8$ bits : $256$ valeurs · $n$ bits : $\\lceil\\log_2 N\\rceil$ pour coder $N$ valeurs",
+   "exemple": "$8$ bits : $[0,255]$ ou $[-128,127]$ · $16$ bits non signé : $65\\,535$",
+   "cours": "Le même mot binaire peut représenter deux nombres selon qu'on l'interprète en non signé ou en signé. Le nombre de bits est fixé : une opération qui sort de la plage donne un dépassement."
+  },
+  {
+   "id": "cplt2",
+   "titre": "Complément à deux",
+   "formule": "$-x$ : inverser tous les bits de $x$ puis ajouter $1$ · bit de poids fort $=1\\Rightarrow$ négatif · $N_{\\text{signé}}=N_{\\text{non signé}}-2^n$ si le bit de poids fort vaut $1$ · extension : recopier le bit de signe",
+   "exemple": "$-45$ sur 8 bits : $00101101\\to11010010\\to11010011$",
+   "cours": "Le complément à deux permet d'utiliser le même additionneur pour les nombres signés et non signés. $10000000$ est $-128$ sur 8 bits et n'a pas d'opposé représentable."
+  },
+  {
+   "id": "depassement",
+   "titre": "Dépassements non signé et signé",
+   "formule": "addition non signée : dépassement $\\iff$ retenue sortante · soustraction non signée : dépassement $\\iff$ emprunt ($A < B$) · signé : dépassement $\\iff$ deux opérandes de même signe donnent un résultat de signe opposé",
+   "exemple": "$0111\\,1111+1=1000\\,0000$ : non signé $128$ correct, signé dépassement ($127+1$)",
+   "cours": "Le résultat binaire est le même dans les deux interprétations (on garde les 8 bits de poids faible), mais le dépassement se juge séparément selon l'interprétation. Écrire « ERREUR » si le résultat n'est pas représentable."
+  },
+  {
+   "id": "ieee",
+   "titre": "Flottants IEEE 754 simple précision",
+   "formule": "$32$ bits : $S$ ($1$) $|$ $E$ ($8$) $|$ $M$ ($23$) · $x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · normaliser : $x=\\pm1{,}f\\times2^e$ puis $E=e+127$",
+   "exemple": "$320=1{,}01_2\\times2^8$ : $S=0$, $E=135=1000\\,0111$, $M=0100\\ldots0$, soit $43A00000_{16}$",
+   "cours": "On écrit la valeur absolue en binaire, on décale la virgule pour avoir un seul $1$ devant, l'exposant est le nombre de rangs décalés. Le $1$ de tête n'est pas stocké (bit caché). Le signe est dans $S$, pas dans la mantisse."
+  },
+  {
+   "id": "ieeedec",
+   "titre": "Décodage et cas particuliers IEEE 754",
+   "formule": "double précision : $1|11|52$, biais $1023$ · $E=0,M=0$ : $\\pm0$ · $E$ max, $M=0$ : $\\pm\\infty$ · $E$ max, $M\\ne0$ : NaN · $E=0,M\\ne0$ : dénormalisé $(-1)^S\\times0{,}M\\times2^{-126}$",
+   "exemple": "$41A00000_{16}$ : $S=0$, $E=131$, $M=0{,}25$ : $1{,}25\\times2^4=20$",
+   "cours": "Pour décoder : séparer les trois champs en binaire, retrancher le biais à $E$, rajouter le $1$ caché à la mantisse. Vérifier d'abord les cas particuliers avant d'appliquer la formule."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "bases",
+   "type": "qcm",
+   "q": "$1101_2$ vaut en décimal :",
+   "choix": [
+    "13",
+    "11",
+    "15",
+    "9"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bases",
+   "type": "vf",
+   "q": "En hexadécimal, le chiffre $F$ vaut $15$.",
+   "bonne": true
+  },
+  {
+   "notion": "division",
+   "type": "qcm",
+   "q": "Pour convertir un entier décimal en binaire par divisions successives, on lit les restes :",
+   "choix": [
+    "de bas en haut (dernier reste en premier)",
+    "de haut en bas",
+    "dans un ordre quelconque",
+    "seulement les restes égaux à $1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "groupes",
+   "type": "qcm",
+   "q": "Un chiffre hexadécimal correspond à combien de bits ?",
+   "choix": [
+    "4",
+    "3",
+    "8",
+    "2"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "groupes",
+   "type": "vf",
+   "q": "Pour passer de l'hexadécimal à l'octal, on peut passer par le binaire.",
+   "bonne": true
+  },
+  {
+   "notion": "fractions",
+   "type": "qcm",
+   "q": "Dans $0{,}101_2$, le dernier chiffre pèse :",
+   "choix": [
+    "$0{,}125$",
+    "$0{,}25$",
+    "$0{,}5$",
+    "$0{,}0625$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "fractions",
+   "type": "vf",
+   "q": "Tout nombre décimal à virgule finie a une écriture binaire finie.",
+   "bonne": false
+  },
+  {
+   "notion": "addition",
+   "type": "qcm",
+   "q": "$1_2+1_2$ vaut :",
+   "choix": [
+    "$10_2$",
+    "$11_2$",
+    "$2_2$",
+    "$0_2$ sans retenue"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "soustraction",
+   "type": "qcm",
+   "q": "En binaire, lors d'un emprunt, l'unité empruntée vaut dans la colonne courante :",
+   "choix": [
+    "$2$",
+    "$10$",
+    "$1$",
+    "$16$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "produit",
+   "type": "vf",
+   "q": "Multiplier un entier binaire par $2^k$ revient à décaler ses bits de $k$ rangs vers la gauche.",
+   "bonne": true
+  },
+  {
+   "notion": "capacite",
+   "type": "qcm",
+   "q": "Plage des entiers signés (complément à deux) sur $8$ bits :",
+   "choix": [
+    "$[-128,\\ 127]$",
+    "$[-127,\\ 127]$",
+    "$[-128,\\ 128]$",
+    "$[0,\\ 255]$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "capacite",
+   "type": "vf",
+   "q": "Le même mot binaire peut représenter deux entiers différents selon qu'on l'interprète en signé ou en non signé.",
+   "bonne": true
+  },
+  {
+   "notion": "cplt2",
+   "type": "qcm",
+   "q": "Pour obtenir l'opposé d'un entier en complément à deux :",
+   "choix": [
+    "inverser les bits puis ajouter $1$",
+    "inverser les bits seulement",
+    "ajouter $1$ puis inverser les bits",
+    "changer le bit de poids fort"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cplt2",
+   "type": "vf",
+   "q": "$1000\\,0000_2$ a un opposé représentable sur $8$ bits.",
+   "bonne": false
+  },
+  {
+   "notion": "depassement",
+   "type": "qcm",
+   "q": "Une addition non signée déborde si et seulement si :",
+   "choix": [
+    "il y a une retenue sortante",
+    "le résultat est négatif",
+    "les opérandes sont de signes opposés",
+    "le résultat est nul"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "depassement",
+   "type": "vf",
+   "q": "Additionner deux nombres signés de signes opposés peut déborder.",
+   "bonne": false
+  },
+  {
+   "notion": "ieee",
+   "type": "qcm",
+   "q": "Le biais de l'exposant en simple précision vaut :",
+   "choix": [
+    "$127$",
+    "$128$",
+    "$1023$",
+    "$255$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ieee",
+   "type": "vf",
+   "q": "Le $1$ de tête de la mantisse normalisée est stocké dans les $23$ bits de $M$.",
+   "bonne": false
+  },
+  {
+   "notion": "ieeedec",
+   "type": "qcm",
+   "q": "$E$ avec tous les bits à $1$ et $M\\ne0$ désigne :",
+   "choix": [
+    "NaN",
+    "$+\\infty$",
+    "$0$",
+    "un nombre dénormalisé"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ieeedec",
+   "type": "qcm",
+   "q": "Le biais en double précision vaut :",
+   "choix": [
+    "$1023$",
+    "$127$",
+    "$2047$",
+    "$1024$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Binaire, octal, hexa vers décimal",
+   "notions": [
+    "bases"
+   ],
+   "exos": [
+    {
+     "id": "n11",
+     "enonce": "Convertir $1011\\,0110_2$ en décimal.",
+     "ans": "bits('10110110')",
+     "sol": "$128+32+16+4+2=182$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $1100\\,1010_2$ en décimal.",
+       "ans": "bits('11001010')",
+       "sol": "$128+64+8+2=202$."
+      }
+     ],
+     "formules": "$N=\\sum_ia_ib^i$ · puissances de 2",
+     "type": "value"
+    },
+    {
+     "id": "n12",
+     "enonce": "Convertir $1A5_{16}$ en décimal.",
+     "ans": "hexa('1A5')",
+     "sol": "$1\\times256+10\\times16+5=421$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $2F3_{16}$ en décimal.",
+       "ans": "hexa('2F3')",
+       "sol": "$512+240+3=755$."
+      }
+     ],
+     "formules": "$N=\\sum_ia_ib^i$ · $A=10,\\dots,F=15$",
+     "type": "value"
+    },
+    {
+     "id": "n13",
+     "enonce": "Convertir $725_8$ en décimal.",
+     "ans": "octal('725')",
+     "sol": "$7\\times64+2\\times8+5=469$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $614_8$ en décimal.",
+       "ans": "octal('614')",
+       "sol": "$384+8+4=396$."
+      }
+     ],
+     "formules": "$N=\\sum_ia_ib^i$ · poids $64,8,1$",
+     "type": "value"
+    },
+    {
+     "id": "n14",
+     "enonce": "Convertir $1\\,0110\\,1101_2$ en décimal.",
+     "ans": "bits('101101101')",
+     "sol": "$256+64+32+8+4+1=365$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 2,
+     "formules": "$N=\\sum_ia_ib^i$",
+     "type": "value"
+    },
+    {
+     "id": "n15",
+     "enonce": "Quelle est la valeur décimale de $1111\\,1111_2$ ?",
+     "ans": "bits('11111111')",
+     "sol": "$2^8-1=255$.",
+     "duree": 1,
+     "formules": "$2^n-1=11\\ldots1_2$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Décimal vers binaire et hexa",
+   "notions": [
+    "division",
+    "bases"
+   ],
+   "exos": [
+    {
+     "id": "n21",
+     "enonce": "Convertir $213$ en binaire (sur 8 bits).",
+     "ans": "bits('11010101')",
+     "sol": "$213=128+64+16+4+1=1101\\,0101_2$.",
+     "duree": 3,
+     "formules": "divisions successives par $b$, restes de bas en haut · ou soustraire les puissances de 2",
+     "type": "value"
+    },
+    {
+     "id": "n22",
+     "enonce": "Convertir $528$ en hexadécimal.",
+     "ans": "hexa('210')",
+     "sol": "$528=2\\times256+1\\times16+0$, soit $210_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 3,
+     "formules": "divisions successives par $b$, restes de bas en haut",
+     "type": "value"
+    },
+    {
+     "id": "n23",
+     "enonce": "Convertir $1000$ en hexadécimal.",
+     "ans": "hexa('3E8')",
+     "sol": "$1000=3\\times256+14\\times16+8$, soit $3E8_{16}$.",
+     "duree": 3,
+     "formules": "divisions successives par $b$, restes de bas en haut",
+     "type": "value"
+    },
+    {
+     "id": "n24",
+     "enonce": "Convertir $255$ en binaire.",
+     "ans": "bits('11111111')",
+     "sol": "$255=2^8-1=1111\\,1111_2$.",
+     "duree": 1,
+     "formules": "$2^8-1=1111\\,1111_2$",
+     "type": "value"
+    },
+    {
+     "id": "n25",
+     "enonce": "Convertir $715$ en binaire par divisions successives, puis en hexadécimal.",
+     "sol": "$715=2\\times357+1$ ; $357=2\\times178+1$ ; $178=2\\times89+0$ ; $89=2\\times44+1$ ; $44=2\\times22+0$ ; $22=2\\times11+0$ ; $11=2\\times5+1$ ; $5=2\\times2+1$ ; $2=2\\times1+0$ ; $1=2\\times0+1$.\n\nRestes lus de bas en haut : $715=10\\,1100\\,1011_2=2CB_{16}$.",
+     "src": "Cours chapitre 1, § 2.3",
+     "duree": 6,
+     "formules": "divisions successives par $b$, restes de bas en haut · hexa : 4 bits · octal : 3 bits",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Binaire, octal et hexadécimal",
+   "notions": [
+    "groupes"
+   ],
+   "exos": [
+    {
+     "id": "n31",
+     "enonce": "Convertir $1011\\,1011_2$ en hexadécimal.",
+     "ans": "hexa('BB')",
+     "sol": "$1011=B$, $1011=B$ : $BB_{16}=187$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $1100\\,1010_2$ en hexadécimal.",
+       "ans": "hexa('CA')",
+       "sol": "$1100=C$, $1010=A$ : $CA_{16}$."
+      }
+     ],
+     "formules": "hexa : 4 bits · octal : 3 bits",
+     "type": "value"
+    },
+    {
+     "id": "n32",
+     "enonce": "Convertir $3D7_{16}$ en binaire.",
+     "ans": "bits('1111010111')",
+     "sol": "$3=0011$, $D=1101$, $7=0111$ : $0011\\,1101\\,0111_2=11\\,1101\\,0111_2$ ($983$).",
+     "duree": 2,
+     "formules": "hexa : 4 bits · octal : 3 bits",
+     "type": "value"
+    },
+    {
+     "id": "n33",
+     "enonce": "Convertir $1010011_2$ en octal.",
+     "ans": "octal('123')",
+     "sol": "Groupes de 3 : $001\\ 010\\ 011=123_8$ ($83$).",
+     "duree": 2,
+     "formules": "octal : groupes de 3 bits",
+     "type": "value"
+    },
+    {
+     "id": "n34",
+     "enonce": "Convertir $235_8$ en binaire.",
+     "ans": "bits('10011101')",
+     "sol": "$2=010$, $3=011$, $5=101$ : $010\\,011\\,101=1001\\,1101_2$ ($157$).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $164_8$ en binaire.",
+       "ans": "bits('1110100')",
+       "sol": "$1=001$, $6=110$, $4=100$ : $001\\,110\\,100=111\\,0100_2$ ($116$)."
+      }
+     ],
+     "formules": "octal : groupes de 3 bits",
+     "type": "value"
+    },
+    {
+     "id": "n35",
+     "enonce": "Convertir $3D7_{16}$ en octal (passer par le binaire).",
+     "ans": "octal('1727')",
+     "sol": "$0011\\,1101\\,0111=001\\ 111\\ 010\\ 111$ : $1727_8$.",
+     "duree": 3,
+     "formules": "hexa : 4 bits · octal : 3 bits",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Nombres à virgule",
+   "notions": [
+    "fractions",
+    "groupes"
+   ],
+   "exos": [
+    {
+     "id": "n41",
+     "enonce": "Convertir $1101{,}1000\\,1_2$ en décimal.",
+     "ans": "bits('1101.10001')",
+     "sol": "$13+\\frac12+\\frac1{32}=13{,}53125$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Convertir $101{,}011_2$ en décimal.",
+       "ans": "bits('101.011')",
+       "sol": "$4+1+\\frac14+\\frac18=5{,}375$."
+      }
+     ],
+     "formules": "$2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$",
+     "type": "value"
+    },
+    {
+     "id": "n42",
+     "enonce": "Convertir $28{,}28_{16}$ en décimal.",
+     "ans": "hexa('28.28')",
+     "sol": "$2\\times16+8=40$ et $\\frac{2}{16}+\\frac{8}{256}=0{,}15625$ : $40{,}15625$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 3,
+     "formules": "$16^{-1}=0{,}0625$, $16^{-2}=0{,}00390625$ · $N=\\sum_ia_ib^i$",
+     "type": "value"
+    },
+    {
+     "id": "n43",
+     "enonce": "Convertir $40{,}35$ en binaire avec $5$ chiffres après la virgule (troncature). Valeur décimale exacte du résultat ?",
+     "ans": "bits('101000.01011')",
+     "sol": "$40=101000_2$. $0{,}35\\times2=0{,}7\\ (0)$ ; $0{,}7\\times2=1{,}4\\ (1)$ ; $0{,}4\\times2=0{,}8\\ (0)$ ; $0{,}8\\times2=1{,}6\\ (1)$ ; $0{,}6\\times2=1{,}2\\ (1)$ : $101000{,}01011_2=40{,}34375$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 4,
+     "formules": "fraction $\\to$ binaire : $\\times2$, partie entière",
+     "type": "value"
+    },
+    {
+     "id": "n44",
+     "enonce": "Convertir $22{,}84$ en hexadécimal avec $2$ chiffres après la virgule (troncature). Valeur décimale exacte ?",
+     "ans": "hexa('16.D7')",
+     "sol": "$22=16_{16}$. $0{,}84\\times16=13{,}44\\ (D)$ ; $0{,}44\\times16=7{,}04\\ (7)$ : $16{,}D7_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 4,
+     "formules": "fraction $\\to$ hexa : $\\times16$, partie entière",
+     "type": "value"
+    },
+    {
+     "id": "n45",
+     "enonce": "Convertir $1011\\,1011{,}1011\\,01_2$ en hexadécimal.",
+     "ans": "hexa('BB.B4')",
+     "sol": "Partie entière : $BB$. Fraction : $1011\\ 01\\to1011\\ 0100=B4$. Résultat $BB{,}B4_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1",
+     "duree": 3,
+     "formules": "hexa : 4 bits · octal : 3 bits · compléter la fraction par des zéros à droite",
+     "type": "value"
+    },
+    {
+     "id": "n46",
+     "enonce": "Pourquoi $0{,}1_{10}$ n'a-t-il pas d'écriture finie en binaire ?",
+     "sol": "$0{,}1\\times2=0{,}2$, $0{,}2\\times2=0{,}4$, $0{,}4\\times2=0{,}8$, $0{,}8\\times2=1{,}6$, $0{,}6\\times2=1{,}2$, $0{,}2\\ldots$ : on retrouve $0{,}2$, la suite des chiffres se répète indéfiniment ($0{,}0001\\,1001\\,1001\\ldots_2$). Une fraction a une écriture finie en base 2 seulement si son dénominateur (irréductible) est une puissance de 2.",
+     "duree": 5,
+     "formules": "fraction $\\to$ binaire : $\\times2$, partie entière",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Addition en base 2 et 16",
+   "notions": [
+    "addition",
+    "bases"
+   ],
+   "exos": [
+    {
+     "id": "n51",
+     "enonce": "Calculer $1011_2+0110_2$.",
+     "ans": "bits('10001')",
+     "sol": "$11+6=17=1\\,0001_2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $1101_2+0111_2$.",
+       "ans": "bits('10100')",
+       "sol": "$13+7=20=1\\,0100_2$."
+      }
+     ],
+     "formules": "$1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue",
+     "type": "value"
+    },
+    {
+     "id": "n52",
+     "enonce": "Calculer $101101_2+110111_2$.",
+     "ans": "bits('1100100')",
+     "sol": "$45+55=100=110\\,0100_2$.",
+     "duree": 3,
+     "formules": "$1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue",
+     "type": "value"
+    },
+    {
+     "id": "n53",
+     "enonce": "Calculer $763_{16}+FAA_{16}$.",
+     "ans": "hexa('170D')",
+     "sol": "$3+A=D$ ; $6+A=16=10_{16}$ : écrire $0$, retenue $1$ ; $7+F+1=23=17_{16}$ : écrire $7$, retenue $1$ ; reste $1$. Résultat $170D_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Calculer $3AF_{16}+1C5_{16}$.",
+       "ans": "hexa('574')",
+       "sol": "$F+5=20=14_{16}$ : $4$, retenue $1$ ; $A+C+1=23=17_{16}$ : $7$, retenue $1$ ; $3+1+1=5$ : $574_{16}$."
+      }
+     ],
+     "formules": "$1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue · $A=10$, $F=15$",
+     "type": "value"
+    },
+    {
+     "id": "n54",
+     "enonce": "Calculer $2F_{16}+1D_{16}$.",
+     "ans": "hexa('4C')",
+     "sol": "$F+D=15+13=28=1C_{16}$ : $C$, retenue $1$ ; $2+1+1=4$ : $4C_{16}$.",
+     "duree": 2,
+     "formules": "$1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue",
+     "type": "value"
+    },
+    {
+     "id": "n55",
+     "enonce": "Calculer $1111_2+1_2$.",
+     "ans": "bits('10000')",
+     "sol": "La retenue se propage jusqu'au bout : $1\\,0000_2$.",
+     "duree": 1,
+     "formules": "$1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Soustraction en base 2 et 16",
+   "notions": [
+    "soustraction",
+    "addition"
+   ],
+   "exos": [
+    {
+     "id": "n61",
+     "enonce": "Calculer $1101001_2-110110_2$.",
+     "ans": "bits('110011')",
+     "sol": "$105-54=51=110011_2$ (vérifier : $110011+110110=1101001$).",
+     "src": "Cours chapitre 1, § 3.2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Calculer $1010100_2-100111_2$.",
+       "ans": "bits('101101')",
+       "sol": "$84-39=45=101101_2$."
+      }
+     ],
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition",
+     "type": "value"
+    },
+    {
+     "id": "n62",
+     "enonce": "Calculer $1\\,0111\\,0110_2-1101\\,1011_2$.",
+     "ans": "bits('10011011')",
+     "sol": "$374-219=155=1001\\,1011_2$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 2",
+     "duree": 4,
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition",
+     "type": "value"
+    },
+    {
+     "id": "n63",
+     "enonce": "Calculer $A3_{16}-5F_{16}$.",
+     "ans": "hexa('44')",
+     "sol": "$3-F$ : emprunt, $19-15=4$ ; $A-1-5=4$ : $44_{16}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $B2_{16}-6D_{16}$.",
+       "ans": "hexa('45')",
+       "sol": "$178-109=69=45_{16}$."
+      }
+     ],
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition · emprunt de $16$",
+     "type": "value"
+    },
+    {
+     "id": "n64",
+     "enonce": "Calculer $1000_{16}-1_{16}$.",
+     "ans": "hexa('FFF')",
+     "sol": "Les emprunts se propagent : $FFF_{16}$.",
+     "duree": 2,
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition",
+     "type": "value"
+    },
+    {
+     "id": "n65",
+     "enonce": "Calculer $1\\,0000_2-1_2$.",
+     "ans": "bits('1111')",
+     "sol": "$16-1=15=1111_2$.",
+     "duree": 1,
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Multiplication et division",
+   "notions": [
+    "produit",
+    "addition"
+   ],
+   "exos": [
+    {
+     "id": "n71",
+     "enonce": "Calculer $10110_2\\times101_2$.",
+     "ans": "bits('1101110')",
+     "sol": "$10110+1011000=1101110_2$ ($22\\times5=110$).",
+     "src": "Cours chapitre 1, § 3.3",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Calculer $1001_2\\times110_2$.",
+       "ans": "bits('110110')",
+       "sol": "$9\\times6=54=11\\,0110_2$."
+      }
+     ],
+     "formules": "somme des multiplicandes décalés · $\\times2^k$ = décalage de $k$ rangs",
+     "type": "value"
+    },
+    {
+     "id": "n72",
+     "enonce": "Calculer $1011_2\\times11_2$.",
+     "ans": "bits('100001')",
+     "sol": "$1011+10110=100001_2$ ($33$).",
+     "duree": 3,
+     "formules": "somme des multiplicandes décalés · $\\times2^k$ = décalage de $k$ rangs",
+     "type": "value"
+    },
+    {
+     "id": "n73",
+     "enonce": "Calculer $1101_2\\times1010_2$.",
+     "ans": "bits('10000010')",
+     "sol": "$1101\\times1010$ : $0+11010+0+1101000=10000010_2$ ($130$).",
+     "duree": 4,
+     "formules": "somme des multiplicandes décalés · $\\times2^k$ = décalage de $k$ rangs",
+     "type": "value"
+    },
+    {
+     "id": "n74",
+     "enonce": "Quotient de la division euclidienne de $1100100_2$ par $110_2$ (en décimal) ?",
+     "ans": "bits('10000')",
+     "sol": "$100=16\\times6+4$ : quotient $10000_2$ ($16$), reste $100_2$ ($4$).",
+     "duree": 4,
+     "formules": "division euclidienne : dividende $=$ quotient $\\times$ diviseur $+$ reste",
+     "type": "value"
+    },
+    {
+     "id": "n75",
+     "enonce": "Calculer $1F_{16}\\times3_{16}$.",
+     "ans": "hexa('5D')",
+     "sol": "$F\\times3=45=2D_{16}$ : $D$, retenue $2$ ; $1\\times3+2=5$ : $5D_{16}$.",
+     "duree": 3,
+     "formules": "somme des multiplicandes décalés · $\\times2^k$ = décalage de $k$ rangs · hexa : $F\\times3=45=2D_{16}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Capacité d'un mot de n bits",
+   "notions": [
+    "capacite"
+   ],
+   "exos": [
+    {
+     "id": "n81",
+     "enonce": "Combien de valeurs différentes sur $8$ bits ?",
+     "ans": "256",
+     "sol": "$2^8=256$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Combien de valeurs différentes sur $12$ bits ?",
+       "ans": "4096",
+       "sol": "$2^{12}=4096$."
+      }
+     ],
+     "formules": "$2^n$ valeurs · non signé $[0,2^n-1]$ · signé $[-2^{n-1},2^{n-1}-1]$",
+     "type": "value"
+    },
+    {
+     "id": "n82",
+     "enonce": "Plus grand entier non signé sur $10$ bits ?",
+     "ans": "1023",
+     "sol": "$2^{10}-1=1023$.",
+     "duree": 1,
+     "formules": "$2^n$ valeurs · non signé $[0,2^n-1]$ · signé $[-2^{n-1},2^{n-1}-1]$",
+     "type": "value"
+    },
+    {
+     "id": "n83",
+     "enonce": "Nombre minimal de bits pour coder $1000$ valeurs différentes ?",
+     "ans": "10",
+     "sol": "$2^9=512<1000\\le2^{10}=1024$ : $10$ bits.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Nombre minimal de bits pour coder $300$ valeurs différentes ?",
+       "ans": "9",
+       "sol": "$2^8=256<300\\le512=2^9$ : $9$ bits."
+      }
+     ],
+     "formules": "$\\lceil\\log_2N\\rceil$ bits",
+     "type": "value"
+    },
+    {
+     "id": "n84",
+     "enonce": "Combien de chiffres hexadécimaux pour $32$ bits ?",
+     "ans": "8",
+     "sol": "$4$ bits par chiffre : $8$ chiffres.",
+     "duree": 1,
+     "formules": "1 chiffre hexa = 4 bits",
+     "type": "value"
+    },
+    {
+     "id": "n85",
+     "enonce": "Plus grand entier non signé sur $16$ bits ?",
+     "ans": "65535",
+     "sol": "$2^{16}-1=65\\,535$.",
+     "duree": 1,
+     "formules": "$2^n$ valeurs · non signé $[0,2^n-1]$ · signé $[-2^{n-1},2^{n-1}-1]$",
+     "type": "value"
+    },
+    {
+     "id": "n86",
+     "enonce": "Plage signée sur $8$ bits : plus petite valeur ?",
+     "ans": "-128",
+     "sol": "$-2^{n-1}=-128$.",
+     "duree": 1,
+     "formules": "$2^n$ valeurs · non signé $[0,2^n-1]$ · signé $[-2^{n-1},2^{n-1}-1]$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Complément à deux",
+   "notions": [
+    "cplt2",
+    "capacite"
+   ],
+   "exos": [
+    {
+     "id": "n91",
+     "enonce": "Valeur signée (complément à deux) de $1001\\,1100_2$ sur $8$ bits ?",
+     "ans": "tc('10011100')",
+     "sol": "Non signé $156$, bit de poids fort à $1$ : $156-256=-100$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 3",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Valeur signée de $1100\\,0101_2$ sur $8$ bits ?",
+       "ans": "tc('11000101')",
+       "sol": "$197-256=-59$."
+      }
+     ],
+     "formules": "$-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "value"
+    },
+    {
+     "id": "n92",
+     "enonce": "Représenter $-45$ en complément à deux sur $8$ bits. Valeur non signée du mot obtenu ?",
+     "ans": "bits('11010011')",
+     "sol": "$45=0010\\,1101$, inversion $1101\\,0010$, plus $1$ : $1101\\,0011_2=211$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Représenter $-20$ en complément à deux sur $8$ bits. Valeur non signée du mot ?",
+       "ans": "bits('11101100')",
+       "sol": "$20=0001\\,0100$, inversion $1110\\,1011$, plus $1$ : $1110\\,1100_2=236$."
+      }
+     ],
+     "formules": "$-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "value"
+    },
+    {
+     "id": "n93",
+     "enonce": "Valeur signée de $1000\\,0000_2$ sur $8$ bits ?",
+     "ans": "tc('10000000')",
+     "sol": "$128-256=-128$ : plus petite valeur de la plage.",
+     "duree": 1,
+     "formules": "$-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "value"
+    },
+    {
+     "id": "n94",
+     "enonce": "Valeur signée de $1111\\,1111_2$ sur $8$ bits ?",
+     "ans": "tc('11111111')",
+     "sol": "$255-256=-1$.",
+     "duree": 1,
+     "formules": "$-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "value"
+    },
+    {
+     "id": "n95",
+     "enonce": "Étendre $1010_2$ (signé, $4$ bits) sur $8$ bits. Valeur signée ?",
+     "ans": "tc('11111010')",
+     "sol": "On recopie le bit de signe : $1111\\,1010_2=-6$.",
+     "duree": 2,
+     "formules": "extension de signe : recopier le bit de poids fort",
+     "type": "value"
+    },
+    {
+     "id": "n96",
+     "enonce": "Montrer que, pour $x$ sur $n$ bits, inverser tous les bits puis ajouter $1$ donne $-x$ modulo $2^n$.",
+     "sol": "Inverser tous les bits revient à calculer $(2^n-1)-x$, car $x+\\bar x=11\\ldots1=2^n-1$.\n\nAjouter $1$ donne $2^n-x\\equiv-x\\pmod{2^n}$.",
+     "duree": 5,
+     "formules": "$x+\\bar x=2^n-1$ · $-x\\equiv2^n-x$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Dépassements sur 8 bits",
+   "notions": [
+    "depassement",
+    "cplt2",
+    "addition",
+    "soustraction"
+   ],
+   "exos": [
+    {
+     "id": "n101",
+     "enonce": "$0111\\,0110+0001\\,1001$ sur $8$ bits : résultat non signé (décimal) ?",
+     "ans": "143",
+     "sol": "$118+25=143\\le255$, pas de retenue sortante : $1000\\,1111_2=143$. (En signé : $118+25=143>127$, dépassement.)",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$0110\\,0100+0010\\,1000$ sur $8$ bits : résultat non signé (décimal) ?",
+       "ans": "140",
+       "sol": "$100+40=140\\le255$ : $1000\\,1100_2$."
+      }
+     ],
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie",
+     "type": "value"
+    },
+    {
+     "id": "n102",
+     "enonce": "$1101\\,0011-0001\\,0110$ sur $8$ bits : résultat signé (décimal) ?",
+     "ans": "-67",
+     "sol": "$-45-22=-67\\in[-128,127]$ : $1011\\,1101_2$ ($189$ non signé).",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 3",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$1100\\,0000-0001\\,0000$ sur $8$ bits : résultat signé (décimal) ?",
+       "ans": "-80",
+       "sol": "$-64-16=-80$ : $1011\\,0000_2$."
+      }
+     ],
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie · $-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "value"
+    },
+    {
+     "id": "n103",
+     "enonce": "$0011\\,0010+0100\\,0110$ sur $8$ bits : résultat signé (décimal) ?",
+     "ans": "tc('01111000')",
+     "sol": "$50+70=120\\le127$ : $0111\\,1000_2=120$, aucun dépassement.",
+     "duree": 3,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie",
+     "type": "value"
+    },
+    {
+     "id": "n104",
+     "enonce": "$0101\\,0100-1001\\,1100$ sur $8$ bits : donner le résultat binaire, puis la valeur non signée et la valeur signée (« ERREUR » en cas de dépassement).",
+     "sol": "$84-156=-72$ : en binaire sur 8 bits, $0101\\,0100-1001\\,1100=1011\\,1000_2$.\n\nNon signé : $84<156$, il y a un emprunt : ERREUR.\n\nSigné : $84-(-100)=184>127$ : ERREUR.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 3",
+     "duree": 6,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie · emprunt : $10_2-1=1$ · vérifier par l'addition",
+     "type": "open"
+    },
+    {
+     "id": "n105",
+     "enonce": "$0111\\,1111+0000\\,0001$ puis $1111\\,1111+0000\\,0001$ sur $8$ bits : résultat binaire, valeur non signée et valeur signée.",
+     "sol": "$0111\\,1111+1=1000\\,0000$ : non signé $128$ (correct) ; signé : deux positifs donnent un négatif, ERREUR ($127+1$).\n\n$1111\\,1111+1=1\\,0000\\,0000$, sur 8 bits $0000\\,0000$ avec retenue sortante : non signé ERREUR ($255+1$) ; signé $0$ ($-1+1$), correct.",
+     "duree": 6,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie",
+     "type": "open"
+    },
+    {
+     "id": "n106",
+     "enonce": "Donner le critère de dépassement d'une addition sur $n$ bits en non signé, puis en signé.",
+     "sol": "Non signé : dépassement si et seulement si il y a une retenue sortante du bit de poids fort ($A+B\\ge2^n$).\n\nSigné : dépassement si et seulement si $A$ et $B$ ont le même bit de signe et que le résultat a un bit de signe différent (deux positifs donnent un négatif, ou deux négatifs donnent un positif). Une addition de signes opposés ne peut pas déborder.",
+     "duree": 5,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Flottants IEEE 754 simple précision",
+   "notions": [
+    "ieee",
+    "fractions"
+   ],
+   "exos": [
+    {
+     "id": "n111",
+     "enonce": "Écrire $320$ en IEEE 754 simple précision. Donner le mot en hexadécimal (valeur décimale pour contrôle).",
+     "ans": "hexa('43A00000')",
+     "sol": "$320=256+64=1{,}25\\times2^8$ : $S=0$, $E=8+127=135=1000\\,0111$, $M=01\\,0000\\ldots$ : $0\\ 10000111\\ 0100\\ldots0=43A00000_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 4",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Écrire $5$ en IEEE 754 simple précision (hexadécimal).",
+       "ans": "hexa('40A00000')",
+       "sol": "$5=1{,}01_2\\times2^2$ : $E=129$, $M=01\\,0\\ldots$ : $40A00000_{16}$."
+      }
+     ],
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · $E=e+127$",
+     "type": "value"
+    },
+    {
+     "id": "n112",
+     "enonce": "Écrire $0{,}09375$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('3DC00000')",
+     "sol": "$0{,}09375=\\frac3{32}=1{,}1_2\\times2^{-4}$ : $S=0$, $E=-4+127=123=0111\\,1011$, $M=1000\\ldots0$ : $3DC00000_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 4",
+     "duree": 5,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$",
+     "type": "value"
+    },
+    {
+     "id": "n113",
+     "enonce": "Écrire $-6{,}5$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('C0D00000')",
+     "sol": "$6{,}5=110{,}1_2=1{,}101_2\\times2^2$ : $S=1$, $E=129=1000\\,0001$, $M=101\\,0\\ldots0$ : $C0D00000_{16}$.",
+     "duree": 5,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · $S=1$ si négatif",
+     "type": "value"
+    },
+    {
+     "id": "n114",
+     "enonce": "Écrire $12{,}375$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('41460000')",
+     "sol": "$12{,}375=1100{,}011_2=1{,}100011_2\\times2^3$ : $E=130=1000\\,0010$, $M=1000\\,11\\ldots$ : $41460000_{16}$.",
+     "duree": 5,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · $2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$",
+     "type": "value"
+    },
+    {
+     "id": "n115",
+     "enonce": "Écrire $-0{,}15625$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('BE200000')",
+     "sol": "$0{,}15625=\\frac5{32}=1{,}01_2\\times2^{-3}$ : $S=1$, $E=124=0111\\,1100$, $M=01\\,0\\ldots$ : $BE200000_{16}$.",
+     "duree": 5,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · $2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$",
+     "type": "value"
+    },
+    {
+     "id": "n116",
+     "enonce": "Pourquoi $0{,}1$ n'est-il pas représenté exactement en simple précision ? Donner l'ordre de grandeur de l'erreur.",
+     "sol": "$0{,}1$ n'a pas d'écriture binaire finie (voir niveau 4) : la mantisse de $23$ bits est tronquée ou arrondie. On obtient $3DCCCCCD_{16}\\approx0{,}100000001490116$. L'erreur relative est au plus $2^{-24}\\approx6\\times10^{-8}$.",
+     "duree": 5,
+     "formules": "$2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$ · fraction $\\to$ binaire : $\\times2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Décodage et cas particuliers",
+   "notions": [
+    "ieeedec",
+    "ieee"
+   ],
+   "exos": [
+    {
+     "id": "n121",
+     "enonce": "Quelle valeur décimale représente le mot simple précision $41A00000_{16}$ ?",
+     "ans": "f32d('41A00000')",
+     "sol": "$0100\\,0001\\,1010\\ldots$ : $S=0$, $E=1000\\,0011=131$, $M=0100\\ldots=0{,}25$ : $1{,}25\\times2^{4}=20$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Valeur du mot simple précision $40400000_{16}$ ?",
+       "ans": "f32d('40400000')",
+       "sol": "$E=128$, $M=1000\\ldots$ : $1{,}5\\times2=3$."
+      }
+     ],
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$",
+     "type": "value"
+    },
+    {
+     "id": "n122",
+     "enonce": "Valeur de $C1200000_{16}$ (simple précision) ?",
+     "ans": "f32d('C1200000')",
+     "sol": "$S=1$, $E=1000\\,0010=130$, $M=0100\\ldots$ : $-1{,}25\\times2^3=-10$.",
+     "duree": 4,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$",
+     "type": "value"
+    },
+    {
+     "id": "n123",
+     "enonce": "Valeur de $3F000000_{16}$ (simple précision) ?",
+     "ans": "f32d('3F000000')",
+     "sol": "$S=0$, $E=0111\\,1110=126$, $M=0$ : $1\\times2^{-1}=0{,}5$.",
+     "duree": 3,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$",
+     "type": "value"
+    },
+    {
+     "id": "n124",
+     "enonce": "Représentation associée au mot double précision $2844\\,0000\\,0000\\,0000_{16}$, sous la forme $k\\times2^n$ ?",
+     "ans": "f64d('2844000000000000')",
+     "sol": "$S=0$, $E=284_{16}=644$, $644-1023=-379$, $M=0100\\ldots=0{,}25$ : $1{,}25\\times2^{-379}=5\\times2^{-381}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 4",
+     "duree": 6,
+     "formules": "double : $1|11|52$, biais $1023$ · $E$ max et $M\\ne0$ : NaN · $E=0,M=0$ : $\\pm0$",
+     "type": "value"
+    },
+    {
+     "id": "n125",
+     "enonce": "Représentation associée au mot double précision $7FF0\\,0001\\,0000\\,0000_{16}$ ?",
+     "sol": "$E=7FF_{16}=2047$ (tous les bits à $1$) et $M\\ne0$ : ce n'est pas un nombre, c'est NaN (Not a Number).",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 4",
+     "duree": 3,
+     "formules": "double : $1|11|52$, biais $1023$ · $E$ max et $M\\ne0$ : NaN · $E=0,M=0$ : $\\pm0$",
+     "type": "open"
+    },
+    {
+     "id": "n126",
+     "enonce": "Que représentent les mots simple précision $0000\\,0000_{16}$, $8000\\,0000_{16}$, $7F80\\,0000_{16}$ et $FF80\\,0000_{16}$ ?",
+     "sol": "$0000\\,0000_{16}$ : $E=0,M=0$ : $+0$. $8000\\,0000_{16}$ : $-0$. $7F80\\,0000_{16}$ : $E=255,M=0$ : $+\\infty$. $FF80\\,0000_{16}$ : $-\\infty$.",
+     "duree": 4,
+     "formules": "double : $1|11|52$, biais $1023$ · $E$ max et $M\\ne0$ : NaN · $E=0,M=0$ : $\\pm0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Niveau examen : sujet B1",
+   "notions": [
+    "bases",
+    "fractions",
+    "addition",
+    "soustraction",
+    "depassement",
+    "ieee",
+    "ieeedec"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "nx1",
+     "enonce": "Convertir : $1\\,0110\\,1101_2$ en décimal ; $1A5_{16}$ en décimal ; $528$ en hexa ; $1101{,}1000\\,1_2$ en décimal ; $28{,}28_{16}$ en décimal ; $40{,}35$ en binaire ($5$ chiffres après la virgule) ; $22{,}84$ en hexa ($2$ chiffres) ; $1011\\,1011{,}1011\\,01_2$ en hexa.",
+     "sol": "$365$ ; $421$ ; $210_{16}$ ; $13{,}53125$ ; $40{,}15625$ ; $101000{,}01011_2$ ; $16{,}D7_{16}$ ; $BB{,}B4_{16}$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 1 (4 points)",
+     "duree": 12,
+     "formules": "$N=\\sum_ia_ib^i$ · divisions successives par $b$, restes de bas en haut · hexa : 4 bits · octal : 3 bits",
+     "type": "open"
+    },
+    {
+     "id": "nx2",
+     "enonce": "Effectuer : $1\\,0111\\,0110_2-1101\\,1011_2$ ; $763_{16}+FAA_{16}$ ; $1010\\,1010\\,100_2\\times10\\,1010_2$.",
+     "sol": "$1001\\,1011_2$ ($374-219=155$) ; $170D_{16}$ ; $1364\\times42=57\\,288=1101\\,1111\\,1100\\,1000_2$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 2 (adapté, 6 points)",
+     "duree": 12,
+     "formules": "emprunt : $10_2-1=1$ · vérifier par l'addition · $1+1=10_2$ (retenue) · hexa : $\\ge16\\Rightarrow$ retenue · somme des multiplicandes décalés · $\\times2^k$ = décalage de $k$ rangs",
+     "type": "open"
+    },
+    {
+     "id": "nx3",
+     "enonce": "Sur $8$ bits, effectuer $0101\\,0100-1001\\,1100$, $0111\\,0110+0001\\,1001$, $1101\\,0011-0001\\,0110$ et donner le résultat binaire, la valeur non signée et la valeur signée (« ERREUR » si dépassement).",
+     "sol": "$1011\\,1000$ : non signé ERREUR, signé ERREUR.\n\n$1000\\,1111$ : non signé $143$, signé ERREUR.\n\n$1011\\,1101$ : non signé $189$, signé $-67$.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 3 (6 points)",
+     "duree": 12,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie · $-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "open"
+    },
+    {
+     "id": "nx4",
+     "enonce": "1. Convertir $320$ et $0{,}09375$ en IEEE 754 simple précision (champs $S$, $E$, $M$). 2. Interpréter en double précision $2844\\,0000\\,0000\\,0000_{16}$ et $7FF0\\,0001\\,0000\\,0000_{16}$ (forme $k\\times2^n$ si nombre).",
+     "sol": "1. $320$ : $S=0$, $E=1000\\,0111$, $M=010\\ldots0$. $0{,}09375$ : $S=0$, $E=0111\\,1011$, $M=10\\ldots0$.\n\n2. $5\\times2^{-381}$ et NaN.",
+     "src": "Examen B1 d'architecture 2025/2026, ex. 4 (4 points)",
+     "duree": 12,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · double : $1|11|52$, biais $1023$ · $E$ max et $M\\ne0$ : NaN · $E=0,M=0$ : $\\pm0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Examen + 20 %",
+   "notions": [
+    "ieee",
+    "depassement",
+    "cplt2",
+    "capacite"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "ny1",
+     "enonce": "Écrire $18{,}25$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('41920000')",
+     "sol": "$18{,}25=10010{,}01_2=1{,}001001_2\\times2^4$ : $E=131=1000\\,0011$, $M=0010\\,01\\ldots$ : $41920000_{16}$.",
+     "duree": 6,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$ · $2^{-1}=0{,}5$, $2^{-2}=0{,}25$, $2^{-3}=0{,}125$, $2^{-4}=0{,}0625$, $2^{-5}=0{,}03125$",
+     "type": "value"
+    },
+    {
+     "id": "ny2",
+     "enonce": "Écrire $-2$ en IEEE 754 simple précision (hexadécimal).",
+     "ans": "hexa('C0000000')",
+     "sol": "$-2=-1{,}0\\times2^1$ : $S=1$, $E=128=1000\\,0000$, $M=0$ : $C0000000_{16}$.",
+     "duree": 4,
+     "formules": "$x=(-1)^S\\times1{,}M\\times2^{E-127}$ · biais $127$ · $1|8|23$",
+     "type": "value"
+    },
+    {
+     "id": "ny3",
+     "enonce": "Plus petit entier positif non représentable exactement en simple précision (indice : $24$ bits significatifs) ?",
+     "ans": "16777217",
+     "sol": "Un entier $n\\le2^{24}$ tient sur $24$ bits significatifs. $2^{24}+1=1\\,0000\\ldots01_2$ en demande $25$ : non représentable.",
+     "duree": 5,
+     "formules": "24 bits significatifs (1 caché + 23)",
+     "type": "value"
+    },
+    {
+     "id": "ny4",
+     "enonce": "Donner la représentation IEEE 754 double précision de $1{,}5$ (hexadécimal) et de $-0$.",
+     "sol": "$1{,}5=1{,}1_2\\times2^0$ : $S=0$, $E=1023=011\\,1111\\,1111$, $M=1000\\ldots$ : $3FF8\\,0000\\,0000\\,0000_{16}$.\n\n$-0$ : $S=1$, $E=0$, $M=0$ : $8000\\,0000\\,0000\\,0000_{16}$.",
+     "duree": 6,
+     "formules": "double : $1|11|52$, biais $1023$ · $E$ max et $M\\ne0$ : NaN · $E=0,M=0$ : $\\pm0$",
+     "type": "open"
+    },
+    {
+     "id": "ny5",
+     "enonce": "Sur $8$ bits, calculer $1000\\,0000-0000\\,0001$ puis $0101\\,1010+0110\\,0110$. Donner le résultat binaire, la valeur non signée et signée (« ERREUR » en cas de dépassement).",
+     "sol": "$1000\\,0000-0000\\,0001=0111\\,1111$ : non signé $127$ (pas d'emprunt) ; signé : $-128-1=-129$ ERREUR.\n\n$0101\\,1010+0110\\,0110=1100\\,0000$ : non signé $192$ ; signé : $90+102=192>127$, ERREUR.",
+     "duree": 8,
+     "formules": "non signé : retenue sortante (ou emprunt) · signé : même signe en entrée, signe opposé en sortie · $-x$ = inverser les bits puis $+1$ · $N_{signé}=N_{non\\ signé}-2^n$ si bit de poids fort $=1$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
