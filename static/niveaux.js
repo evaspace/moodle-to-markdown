@@ -186,11 +186,7 @@
       $('solution').hidden = false;
       $('btn-correction').disabled = true;
       renderMath($('solution'));
-      const copy = $('btn-copy-ia');  // from now on the AI explains the correction
-      if (copy) {
-        copy.dataset.copyPrompt = copy.dataset.promptAfter;
-        $('copy-ia-note').textContent = 'Énoncé et correction, avec une demande d’explication détaillée';
-      }
+      $('copy-ia').hidden = false;  // only after the correction: asking an AI before answering is cheating
     };
     $('timer-left').textContent = fmt(left);
     clearInterval(tick);

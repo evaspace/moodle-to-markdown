@@ -249,3 +249,6 @@ Réponses de l'utilisateur au conseil (débat complet dans `todo.md`) :
 Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord sur les 6 points. Fait selon leurs règles :
 - Combo calculé par le serveur ; un raté le divise par 2 au lieu de le remettre à zéro (sinon on se ment en s'auto-notant) ; pas lié à la vitesse ; petit effet à chaque réussite, grosse animation plein écran seulement aux paliers 5, 10, 20, 30, 50, 75, 100… (sinon on s'habitue).
 - Révision espacée dans le grind : une révision due est glissée tous les 5 exercices du grind, jamais bloquante ; un raté en révision la remet à J+1 sans faire redescendre ; une révision réussie compte dans le combo.
+
+## Décision du 2026-11-16 : « Copier pour une IA » seulement après la correction
+- « Le bouton copier pour une IA doit seulement être visible pour la correction, logique, sinon c'est du cheat. » Fait : sur la page d'exercice, le bouton est caché jusqu'à « J'ai ma réponse » (ou la fin du chrono), placé sous la correction, et il copie toujours énoncé + correction avec la demande d'explication.
