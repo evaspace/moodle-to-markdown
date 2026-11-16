@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-235 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1372 exercices.
+237 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1382 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1340,6 +1340,30 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Cours 4 : nombres premiers et pgcd (2 points) | PGCD par facteurs premiers, Fermat | HP (arithmétique) | — |
 
 ## S2 — Partiels (finals)
+
+### Partiel 2 de mathématiques S2 — juin 2016 (corrigé rédigé, FR)
+
+`md/S2/Finals/Maths PC/2020/final-2020-s2-maths-correction-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (3 points) | inverse d'une matrice | ALM | maths-s2-alm/8 |
+| Exercice 2 (4,5 points) | décomposition en éléments simples | APEF (polynômes) | maths-s2-apef-polynomes/8 |
+| Exercice 3 (4 points) | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 4 (4 points) | puissance d'une matrice par polynôme annulateur | ALM | maths-s2-alm/12 |
+| Exercice 5 (5,5 points) | endomorphisme de dérivation : base, matrice, puissance | ALM | maths-s2-alm/5 |
+
+### Partiel 2 de mathématiques S2 — juin 2016 (sujet, FR)
+
+`md/S2/Finals/Maths PC/2020/final-2020-s2-maths-subject-fr.md` — date réelle : juin 2016
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1 (3 points) | inverse d'une matrice | ALM | maths-s2-alm/8 |
+| Exercice 2 (4,5 points) | décomposition en éléments simples | APEF (polynômes) | maths-s2-apef-polynomes/8 |
+| Exercice 3 (4 points) | matrice d'une application linéaire | ALM | maths-s2-alm/5 |
+| Exercice 4 (4 points) | puissance d'une matrice par polynôme annulateur | ALM | maths-s2-alm/12 |
+| Exercice 5 (5,5 points) | endomorphisme de dérivation : base, matrice, puissance | ALM | maths-s2-alm/5 |
 
 ### Partiel 2 (S2) — juin 2017 (corrigé rédigé, FR)
 

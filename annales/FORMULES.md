@@ -1843,20 +1843,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $\alpha$ racine d'ordre $m$ $\iff P(\alpha) = \dots = P^{(m-1)}(\alpha) = 0$, $P^{(m)}(\alpha) \neq 0$
 - $(X^n)' = nX^{n-1}$
 
-**divisibilité et reste de division euclidienne de polynômes** (7)
-
-- $A = BQ + R$, $\deg R < \deg B$
-- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
-- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
-- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
-
-**décomposition en éléments simples** (6)
+**décomposition en éléments simples** (8)
 
 - si $\deg N \geqslant \deg D$ : division euclidienne, partie entière
 - pôle simple $a$ : $\frac{c}{X - a}$ avec $c = \left[(X - a)F\right](a)$
 - pôle double : $\frac{c_1}{X-a} + \frac{c_2}{(X-a)^2}$
 - facteur irréductible $X^2 + 1$ : $\frac{bX + c}{X^2 + 1}$
 - identifier en évaluant (ex. $X = 0$) ou par limite de $xF(x)$ en $+\infty$
+
+**divisibilité et reste de division euclidienne de polynômes** (7)
+
+- $A = BQ + R$, $\deg R < \deg B$
+- $(X-a)(X-b) \mid P \iff P(a) = P(b) = 0$ ($a \neq b$)
+- reste par $(X-a)(X-b)$ : $R = \alpha X + \beta$ avec $R(a) = P(a)$, $R(b) = P(b)$
+- reste par $(X-a)^2$ : $R(a) = P(a)$, $R'(a) = P'(a)$
 
 **divisibilité de polynômes par les racines** (5)
 
@@ -1977,12 +1977,20 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $f = id$ sur $\mathrm{Im} f$, $0$ sur $\mathrm{Ker} f$
 - matrice dans une base adaptée $\mathrm{diag}(0, \dots, 0, 1, \dots, 1)$
 
-**matrice d'une application linéaire** (17)
+**matrice d'une application linéaire** (19)
 
 - colonne $j$ = coordonnées de $f(e_j)$ dans la base d'arrivée
 - base canonique de $\mathbb{R}_2[X]$ : $(1, X, X^2)$
 - de $\mathcal{M}_2(\mathbb{R})$ : $E_{11}, E_{12}, E_{21}, E_{22}$
 - taille (dim arrivée) $\times$ (dim départ)
+
+**inverse d'une matrice** (15)
+
+- $A$ inversible $\iff \det A \neq 0$
+- pivot de Gauss sur $(A \mid I_n) \to (I_n \mid A^{-1})$
+- ou $A^{-1} = \frac1{\det A}{}^t\mathrm{Com}(A)$
+- vérifier $AA^{-1} = I_n$
+- $2 \times 2$ : $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1} = \frac1{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$
 
 **changement de base, formule $Y = AX$** (14)
 
@@ -1991,14 +1999,6 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $f(e_j) = \sum_i a_{i,j}\varepsilon_i$
 - coordonnées de l'image $Y = AX$
 - inverse $2 \times 2$ : $\frac1{ad - bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$
-
-**inverse d'une matrice** (13)
-
-- $A$ inversible $\iff \det A \neq 0$
-- pivot de Gauss sur $(A \mid I_n) \to (I_n \mid A^{-1})$
-- ou $A^{-1} = \frac1{\det A}{}^t\mathrm{Com}(A)$
-- vérifier $AA^{-1} = I_n$
-- $2 \times 2$ : $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1} = \frac1{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$
 
 **application linéaire (caractérisation)** (12)
 
@@ -2088,6 +2088,23 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $E = F \oplus G$ : $u = v + w$ unique
 - projection sur $F$ : $u \mapsto v$
 - symétrie par rapport à $F$ parallèlement à $G$ : $u \mapsto v - w$, $s \circ s = id$
+
+**puissance d'une matrice par polynôme annulateur** (2)
+
+- $J^2 - J - 2I = 0 \Rightarrow J(J - I) = 2I$, donc $J^{-1} = \frac12(J - I)$
+- $JK = I \Rightarrow J^{-1} = K$
+- division euclidienne $X^n = (X^2 - X - 2)Q + aX + b$
+- évaluer en $2$ et $-1$ (racines) : $2^n = 2a + b$, $(-1)^n = -a + b$
+- substituer $J$ : $J^n = aJ + bI$
+
+**endomorphisme de dérivation : base, matrice, puissance** (2)
+
+- famille libre : $\sum \lambda_if_i = 0 \Rightarrow \lambda_i = 0$ (diviser par $e^{2x}$, polynôme nul)
+- $d$ linéaire et $d(F) \subset F$
+- colonne $j$ = coordonnées de $d(f_j)$
+- $(e^{2x})^{(n)} = 2^ne^{2x}$
+- Leibniz $(uv)^{(n)} = \sum_k C_n^ku^{(k)}v^{(n-k)}$
+- $\mathrm{Mat}(d^n) = A^n$
 
 **calcul matriciel, transposée** (2)
 
