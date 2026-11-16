@@ -7,56 +7,91 @@
   <meta name="description" content="Dates des examens et tests de la prépa EPITA, avec l'entraînement correspondant pour chacun.">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=15">
+  <link rel="stylesheet" href="/static/niveaux.css?v=17">
 </head>
 <body class="lv-page">
 {% set active = 'calendrier' %}{% include 'nav.html' %}
-{% macro train(links) %}{% if links %}<p class="cal-links">{% for l in links %}<a href="{{ l.url }}">{{ l.titre }}</a>{% if l.exam_url %} (<a href="{{ l.exam_url }}">niveau examen</a>){% endif %}{{ ' · ' if not loop.last }}{% endfor %}</p>{% endif %}{% endmacro %}
-<div class="lv-wrap">
+{% macro paths(links) %}{% if links %}<ul class="cal-paths">{% for l in links %}<li><a href="{{ l.url }}">{{ l.titre }}</a>{% if l.id in pct %}<span class="cal-meter" role="img" aria-label="{{ pct[l.id] }} % réussi"><i style="width: {{ pct[l.id] }}%"></i></span><b>{{ pct[l.id] }} %</b>{% endif %}</li>{% endfor %}</ul>{% endif %}{% endmacro %}
+<div class="lv-wrap cal">
   <h1>Calendrier des examens</h1>
-  <p>Chaque date mène à l'entraînement du site : le parcours entier, ou directement son niveau examen (annales complètes).</p>
 
-  <h2>À venir</h2>
-  {% if upcoming %}
+  {% set next = upcoming[0] if upcoming else None %}
+  {% if next %}
+  <section class="cal-next" aria-labelledby="cal-next-title">
+    <div class="cal-count">
+      {% if next.en_cours %}<strong class="today">Aujourd'hui</strong>
+      {% else %}<strong>{{ next.jours }}</strong><span>{{ 'jour' if next.jours == 1 else 'jours' }}</span>{% endif %}
+    </div>
+    <div class="cal-next-body">
+      <h2 id="cal-next-title">{{ next.titre }}</h2>
+      <p>{{ next.quand }} · {{ next.type }}</p>
+      {% set ex = next.links|selectattr('exam_url')|first %}
+      {% if ex %}<a class="lv-btn primary" href="{{ ex.exam_url }}">Faire l'examen blanc</a>{% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  <nav class="cal-strip" aria-label="Année scolaire">
+    {% for m in strip %}
+    <a class="cal-month{{ ' now' if m.now }}"{% if m.anchor %} href="#{{ m.anchor }}"{% endif %}>
+      <span class="cal-dots">{% for _ in range(m.exams) %}<i class="ex"></i>{% endfor %}{% for _ in range(m.tests) %}<i></i>{% endfor %}</span>
+      <span>{{ m.nom }}</span>
+    </a>
+    {% endfor %}
+  </nav>
+  <p class="cal-legend"><i class="ex"></i> examen <i></i> test à distance</p>
+
+  {% for month, evs in upcoming|groupby('ym') %}
+  <h2 class="cal-mh" id="m{{ month[0] }}-{{ month[1] }}">{{ evs[0].mois|capitalize }}</h2>
   <ul class="cal-list">
-    {% for e in upcoming %}
-    <li>
-      <h3>{{ e.titre }}</h3>
-      <p class="lv-muted"><strong class="cal-when">{{ e.quand }}</strong> · {{ e.type }} ·
-        {% if e.en_cours %}en ce moment{% elif e.jours == 1 %}demain{% else %}dans {{ e.jours }} jours{% endif %}</p>
-      {{ train(e.links) }}
+    {% for e in evs %}
+    <li class="cal-item{{ ' is-exam' if e.type == 'Examen' }}">
+      <div class="cal-day"><small>{{ e.wd }}</small><strong>{{ e.jour }}{% if e.jour_fin %}<span>–{{ e.jour_fin }}</span>{% endif %}</strong></div>
+      <div>
+        <h3>{{ e.titre }}</h3>
+        <p class="cal-meta">{{ e.type }} · {% if e.en_cours %}en ce moment{% elif e.jours == 1 %}demain{% else %}dans {{ e.jours }} jours{% endif %}</p>
+        {{ paths(e.links) }}
+      </div>
     </li>
     {% endfor %}
   </ul>
-  {% else %}<p class="lv-muted">Aucune date publiée pour l'instant.</p>{% endif %}
+  {% else %}<p>Aucune date publiée pour l'instant.</p>{% endfor %}
 
   {% if undated %}
-  <h2>Date pas encore publiée</h2>
-  <p class="lv-muted">Période habituelle, d'après les années précédentes.</p>
-  <ul class="cal-list">
-    {% for e in undated %}
-    <li>
-      <h3>{{ e.titre }}</h3>
-      <p class="lv-muted">{{ e.matiere }} {{ e.semestre }}{% if e.bloc %} · {{ e.bloc }}{% endif %} · {{ e.periode }}</p>
-      {{ train(e.links) }}
-    </li>
-    {% endfor %}
-  </ul>
+  <h2 class="cal-mh">Pas encore de date</h2>
+  {% for mat, ecs in undated|groupby('matiere') %}
+  <details class="cal-fold">
+    <summary>{{ mat }} <span>{{ ecs|length }}</span></summary>
+    <ul class="cal-list">
+      {% for e in ecs %}
+      <li class="cal-item">
+        <div class="cal-day cal-day-soft"><strong>{{ e.semestre }}</strong></div>
+        <div>
+          <h3>{{ e.titre }}</h3>
+          <p class="cal-meta">{{ e.periode }}</p>
+          {{ paths(e.links) }}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
   {% endif %}
 
   {% if past %}
-  <h2>Passés</h2>
-  <ul class="cal-list">
-    {% for e in past %}
-    <li>
-      <h3>{{ e.titre }}</h3>
-      <p class="lv-muted">{{ e.quand }} · {{ e.type }}</p>
-      {{ train(e.links) }}
-    </li>
-    {% endfor %}
-  </ul>
+  <details class="cal-fold cal-past">
+    <summary>Déjà passés <span>{{ past|length }}</span></summary>
+    <ul class="cal-list">
+      {% for e in past %}
+      <li class="cal-item">
+        <div class="cal-day cal-day-soft"><small>{{ e.mois[:4] }}</small><strong>{{ e.jour }}</strong></div>
+        <div><h3>{{ e.titre }}</h3><p class="cal-meta">{{ e.type }}</p>{{ paths(e.links) }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
   {% endif %}
-  <p class="lv-muted">Sources : planning Auriga et Moodle, recopiés à la main.</p>
+  <p class="lv-muted">Sources : planning Auriga et Moodle.{% if not pct %} <a href="/compte">Connecte-toi</a> pour voir ta progression sur chaque parcours.{% endif %}</p>
 </div>
 {% include 'footer.html' %}
 </body>

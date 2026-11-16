@@ -777,6 +777,9 @@ MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août
         'novembre', 'décembre']
 
 
+JOURS = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.']
+
+
 def _date_fr(d):
     return f"{'1er' if d.day == 1 else d.day} {MOIS[d.month - 1]} {d.year}"
 
@@ -797,7 +800,7 @@ def exam_calendar(today, syllabus=None, paths=None):
             if not data:
                 continue
             exam = next((l['n'] for l in data['levels'] if l.get('examen')), None)
-            out.append({'titre': data['subject']['titre'], 'url': f'/niveaux/{pid}',
+            out.append({'id': pid, 'titre': data['subject']['titre'], 'url': f'/niveaux/{pid}',
                         'exam_url': f'/niveaux/{pid}?n={exam}' if exam else None})
         return out
 
@@ -809,19 +812,34 @@ def exam_calendar(today, syllabus=None, paths=None):
         if ev.get('ecue'):
             dated.add(ev['ecue'])
         item = {**ev, 'quand': _date_fr(debut) if fin == debut else f'du {_date_fr(debut)} au {_date_fr(fin)}',
-                'jours': (debut - today).days, 'en_cours': debut <= today <= fin, 'links': links(ids)}
+                'jours': (debut - today).days, 'en_cours': debut <= today <= fin, 'links': links(ids),
+                'jour': debut.day, 'jour_fin': fin.day if fin != debut else None, 'wd': JOURS[debut.weekday()],
+                'mois': f'{MOIS[debut.month - 1]} {debut.year}', 'ym': (debut.year, debut.month)}
         (past if fin < today else upcoming).append(item)
     undated = [{'matiere': m['titre'], 'semestre': s['id'], 'titre': e['titre'], 'bloc': e.get('bloc', ''),
                 'periode': e.get('periode_examen', ''), 'links': links(e['parcours'])}
                for key, (m, s, e) in ecues.items() if key not in dated and e['parcours']]
-    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated}
+    start = today.year if today.month >= 9 else today.year - 1  # school year: September to July
+    strip = []
+    for k in range(11):
+        y, m = start + (8 + k) // 12, (8 + k) % 12 + 1
+        evs = [e for e in past + upcoming if e['ym'] == (y, m)]
+        strip.append({'nom': MOIS[m - 1][:4].rstrip('.'), 'now': (y, m) == (today.year, today.month),
+                      'exams': sum(e['type'] == 'Examen' for e in evs), 'tests': sum(e['type'] != 'Examen' for e in evs),
+                      'anchor': f'm{y}-{m}' if any(e in upcoming for e in evs) else None})
+    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated, 'strip': strip}
 
 
 @bp.route('/calendrier')
 def calendar_page():
     from datetime import datetime
     from zoneinfo import ZoneInfo
-    return render_template('calendrier.html', **exam_calendar(datetime.now(ZoneInfo(TZ)).date()))
+    cal = exam_calendar(datetime.now(ZoneInfo(TZ)).date())
+    pct = {}
+    if session.get('uid'):  # readiness bar per path for logged-in users
+        with db() as conn:
+            pct = {sid: total_percent(statuses(conn, session['uid'], sid), data) for sid, data in load_parcours().items()}
+    return render_template('calendrier.html', pct=pct, **cal)
 
 
 @bp.route('/stats')

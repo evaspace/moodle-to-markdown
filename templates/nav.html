@@ -1,20 +1,31 @@
 <header class="app-nav">
   <a class="app-nav-brand" href="/"><span class="nav-long">Epita Doomscrolling</span><span class="nav-short">EDS</span></a>
-  <nav class="app-nav-links" aria-label="Navigation">
-    <a href="/niveaux"{% if active == 'niveaux' %} aria-current="page"{% endif %}>Niveaux</a>
-    <a href="/stats"{% if active == 'stats' %} aria-current="page"{% endif %}>Stats</a>
-    <a href="/calendrier"{% if active == 'calendrier' %} aria-current="page"{% endif %}>Examens</a>
-    <a class="nav-sec" href="/formules"{% if active == 'formules' %} aria-current="page"{% endif %}>Formules</a>
-    <a class="nav-sec" href="/cours/">Cours</a>
-    <a class="nav-sec" href="/">Fil</a>
-    {% if nav.admin %}<a href="/admin/stats"{% if active == 'admin' %} aria-current="page"{% endif %}>Admin</a>{% endif %}
-  </nav>
-  {% if nav.logged %}
-  <a class="app-nav-me" href="/stats" title="Niveaux sur papier validés, points, jours d'affilée">
-    <strong>{{ nav.levels_done }}/{{ nav.levels_total }}</strong> niveaux · <span id="xp">{{ nav.xp }}</span> pts{% if nav.streak %} · {{ nav.streak }} j{% endif %}
-  </a>
-  <a class="app-nav-acc" href="/compte">{{ nav.username }}</a>
-  {% else %}
-  <a class="app-nav-acc" href="/compte">Connexion</a>
-  {% endif %}
+  <button class="app-nav-burger" type="button" aria-expanded="false" aria-controls="app-nav-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="app-nav-menu" id="app-nav-menu">
+    <nav class="app-nav-links" aria-label="Navigation">
+      <a href="/niveaux"{% if active == 'niveaux' %} aria-current="page"{% endif %}>Niveaux</a>
+      <a href="/calendrier"{% if active == 'calendrier' %} aria-current="page"{% endif %}>Examens</a>
+      <a href="/stats"{% if active == 'stats' %} aria-current="page"{% endif %}>Stats</a>
+      <a href="/formules"{% if active == 'formules' %} aria-current="page"{% endif %}>Formules</a>
+      <a href="/cours/">Cours</a>
+      <a href="/">Fil</a>
+      {% if nav.admin %}<a href="/admin/stats"{% if active == 'admin' %} aria-current="page"{% endif %}>Admin</a>{% endif %}
+    </nav>
+    {% if nav.logged %}
+    <a class="app-nav-me" href="/stats" title="Niveaux sur papier validés, points, jours d'affilée">
+      <strong>{{ nav.levels_done }}/{{ nav.levels_total }}</strong> niveaux · <span id="xp">{{ nav.xp }}</span> pts{% if nav.streak %} · {{ nav.streak }} j{% endif %}
+    </a>
+    <a class="app-nav-acc" href="/compte">{{ nav.username }}</a>
+    {% else %}
+    <a class="app-nav-acc" href="/compte">Connexion</a>
+    {% endif %}
+  </div>
 </header>
+<script>
+(() => {
+  const b = document.querySelector('.app-nav-burger'), m = document.getElementById('app-nav-menu');
+  const set = (open) => { b.setAttribute('aria-expanded', open); m.classList.toggle('open', open); };
+  b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+})();
+</script>

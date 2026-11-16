@@ -7,7 +7,7 @@
   <title>Niveau {{ lvl.n }} · {{ subject.titre }}</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=15">
+  <link rel="stylesheet" href="/static/niveaux.css?v=17">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -33,6 +33,15 @@
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
     <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
+  </div>
+  <div class="lv-copy">
+    <button class="lv-btn" type="button" id="btn-copy-ia"
+      data-copy-llm="#exo-statement|Énoncé; #solution-body|Correction"
+      data-copy-title="{{ subject.titre }}, niveau {{ lvl.n }} : {{ lvl.titre }}"
+      data-copy-prompt="Je révise un examen de prépa EPITA ({{ subject.titre }}). Voici un exercice. Aide-moi à le résoudre sans me donner la réponse tout de suite : rappelle les formules utiles, donne-moi la première étape, puis attends ma proposition. Les formules sont écrites en LaTeX."
+      data-prompt-after="Je révise un examen de prépa EPITA ({{ subject.titre }}). Voici un exercice et sa correction. Je n'ai pas compris la correction : explique-la étape par étape, détaille chaque calcul, nomme chaque formule ou théorème utilisé et dis pourquoi on l'utilise à cet endroit. Les formules sont écrites en LaTeX. Termine par la méthode à retenir pour ce type d'exercice et un exercice semblable pour m'entraîner, sans sa solution."
+      data-copy-footer="Source : {{ public_url }}/niveaux/{{ subject.id }}?n={{ lvl.n }} (exercice d'Epita Doomscrolling, site gratuit d'entraînement aux examens de la prépa EPITA, créé par Morgan Pierrefeu : https://morgan.pierref.eu)">Copier pour une IA</button>
+    <span class="lv-muted" id="copy-ia-note">Énoncé et formules en texte lisible, à coller dans ChatGPT, Claude ou Gemini</span>
   </div>
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
@@ -63,12 +72,6 @@
   <section class="lv-solution" id="solution" hidden>
     <h2>Correction</h2>
     <div id="solution-body">{{ exo.sol|safe }}</div>
-    <p class="lv-row"><button class="lv-btn" type="button" id="btn-copy-ia"
-      data-copy-llm="#exo-statement|Énoncé; #solution-body|Correction"
-      data-copy-title="{{ subject.titre }}, niveau {{ lvl.n }} : {{ lvl.titre }}"
-      data-copy-prompt="Je révise un examen de prépa EPITA ({{ subject.titre }}). Voici un exercice et sa correction. Je n'ai pas compris la correction : explique-la étape par étape, détaille chaque calcul, nomme chaque formule ou théorème utilisé et dis pourquoi on l'utilise à cet endroit. Les formules sont écrites en LaTeX. Termine par la méthode à retenir pour ce type d'exercice et un exercice semblable pour m'entraîner, sans sa solution."
-      data-copy-footer="Source : {{ public_url }}/niveaux/{{ subject.id }}?n={{ lvl.n }} (exercice d'Epita Doomscrolling, site gratuit d'entraînement aux examens de la prépa EPITA, créé par Morgan Pierrefeu : https://morgan.pierref.eu)">Copier pour une IA</button>
-      <span class="lv-muted">Énoncé, correction et question prêts à coller dans ChatGPT, Claude ou Gemini</span></p>
   </section>
 
   <p class="lv-muted" id="verdict-hint">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p>
@@ -85,7 +88,7 @@
   <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
 </div>
 <script src="/static/cat.js?v=20261114b"></script>
-<script src="/static/niveaux.js?v=9"></script>
+<script src="/static/niveaux.js?v=11"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 {% include 'footer.html' %}

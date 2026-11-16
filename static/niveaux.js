@@ -110,6 +110,11 @@
     $('solution').hidden = false;
     $('btn-correction').disabled = true;
     renderMath($('solution'));
+    const copy = $('btn-copy-ia');  // from now on the AI explains the correction
+    if (copy) {
+      copy.dataset.copyPrompt = copy.dataset.promptAfter;
+      $('copy-ia-note').textContent = 'Énoncé et correction, avec une demande d’explication détaillée';
+    }
   };
   $('timer-left').textContent = fmt(left);
   const tick = setInterval(() => {
