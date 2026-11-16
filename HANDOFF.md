@@ -236,3 +236,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 ## Next steps
 1. Diodes (Moodle `Electronique S2 - Diodes [...]`: cours jonction PN + précisions et méthodes, TD diodes + Zéner corrigés, exam B7 March 2025 EN, partiel 2018-2019).
 2. Then algo, prog, anglais, méthodo.
+
+# Handoff — 2026-11-16 (électronique S2 diodes)
+## Done
+- `elec-s2-diodes` (`parcours/src/elec_diodes.py`): 12 levels, 84 exos (12 exam: diodes March 2025, own correction), 8 notions, 16 quiz, variants, FORMULES. Syllabus ECUE « Diodes » filled. Build OK, 26/26 tests, 313 formulas 0 KaTeX error, 12 levels at 390 px OK, QA account deleted, deployed. Branch `feat/elec-sinus`.
+- Électronique is now complete: S1 (circuits, sinus) and S2 (filtres, transitoires, diodes).
+## Next steps
+1. Algo (user order: physique > archi > électronique > algo > prog > anglais > méthodo). Find its Moodle courses in `EPITA_Moodle_Notes_MD/`.
+2. Zener TD ex. 4 values were inferred (statement page missing from the scan): check against the PDF if a clean copy appears.
+3. Transcribe S2 physics annales; branches still unmerged/unpushed (user decision).

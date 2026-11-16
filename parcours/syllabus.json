@@ -435,12 +435,15 @@
        "id": "Diodes",
        "titre": "Jonction PN et diodes",
        "bloc": "",
-       "periode_examen": "",
-       "chapitres": [],
-       "parcours": [],
-       "a_faire": [
-        "Parcours diodes et diode Zéner, examen B7 mars 2025 (anglais)"
+       "periode_examen": "mars (examen diodes 2025, en anglais, sans corrigé officiel)",
+       "chapitres": [
+        "Electronique S2 - Diodes [2526_I_INF_FISE_S02_CN_DIO]/01_Documents de cours",
+        "Electronique S2 - Diodes [2526_I_INF_FISE_S02_CN_DIO]/02_Travaux Dirigés"
        ],
+       "parcours": [
+        "elec-s2-diodes"
+       ],
+       "a_faire": [],
        "annales": []
       }
      ]
