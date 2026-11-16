@@ -255,3 +255,12 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Same button on scroll cards (`/scroll/<path>`) and home feed cards.
 2. Add S1 January and S2 exam dates when Auriga publishes them.
 3. Algo path (subject order), S2 physics annales.
+
+# Handoff — 2026-11-16 (blogbot, mois, outil dates, scroll)
+## Done
+- Blogbot: `epitadoomscrolling` removed from `NOT_PRODUCTS` (daily batch), preset rewritten in `server_scanner.py`, context file `blogbot/contexts/epitadoomscrolling.md` appended to the system prompt by `prompt_engine.site_context`, 10 student-facing topics in `daily_batch.TOPICS_MATRIX`, `sites.json` refreshed. Not committed: blogbot repo is on `master` with unrelated pending work and untracked core files.
+- Calendar: 11 clickable months (`months` in `exam_calendar`), empty months show the undated ECUEs usually examined that month.
+- `tools/exam_dates.py` (+ tests): reads `MOODLE_CALENDAR_URL` and `AURIGA_ICS_URL` from `.env` (not set yet: ask the user).
+- Scroll: confetti on right answers (`pixelConfetti` moved to `static/cat.js`), swipe T/F. Checked in Chromium with QA account (deleted). 32 tests OK. Branch `feat/calendrier-copie-ia`.
+## Open
+- Footer « PIERREFEU » hover: works in Chromium headless on every page tested (black on hover). Ask the user which browser/page.
