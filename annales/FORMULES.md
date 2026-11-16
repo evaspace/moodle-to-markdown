@@ -475,6 +475,41 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - $r = \dfrac{Q_{AB} + Q_{CD}}{Q_{AB}} = 1 - \dfrac{T_C - T_D}{T_B - T_A}$
 - $a = \dfrac{V_2}{V_1}$, $r = 1 - a^{1-\gamma}$
 
+**QCM de thermodynamique (premier principe, adiabatique, isotherme, isobare, fonction d'état, Laplace)** (2)
+
+- $dU = \delta W + \delta Q = -P\,dV + \delta Q$
+- adiabatique : $PV^\gamma = \text{cte}$, $W = nc_v(T_2 - T_1)$
+- isotherme : $\Delta U = 0$, $Q = -W$, $W = -nRT\ln\dfrac{V_2}{V_1}$
+- isobare : $\dfrac VT = \text{cte}$
+- $W$ et $Q$ ne sont pas des fonctions d'état
+- Laplace en $(T, P)$ : $T^\gamma P^{1-\gamma} = \text{cte}$
+
+**calorimétrie (vapeur sur glace avec condensation et fusion, capacité du calorimètre)** (2)
+
+- $\sum Q_i = 0$
+- $Q = mc(\theta_f - \theta_i)$
+- fusion : $Q = mL_f$
+- condensation : $Q = mL_c = -mL_v$
+- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
+
+**démonstration de la loi de Laplace (dH = V dP, dU, dH, intégration)** (2)
+
+- $H = U + PV$
+- $dU = \delta Q - P\,dV$
+- adiabatique : $\delta Q = 0$, $dH = V\,dP$
+- $dU = nc_vdT$, $dH = nc_pdT$
+- $\gamma = \dfrac{c_p}{c_v}$
+- $\gamma\dfrac{dV}V = -\dfrac{dP}P \Rightarrow PV^\gamma = \text{cte}$
+
+**cycle Diesel (deux adiabatiques, une isobare, une isochore, rendement)** (2)
+
+- Laplace $TV^{\gamma-1} = \text{cte}$
+- isobare : $\dfrac TV = \text{cte}$, $W = -P\Delta V$, $Q = nc_p\Delta T$
+- isochore : $W = 0$, $Q = nc_v\Delta T$
+- adiabatique : $Q = 0$, $W = nc_v\Delta T$
+- $\alpha = \dfrac{V_A}{V_B}$, $\beta = \dfrac{V_C}{V_B}$
+- $r = 1 + \dfrac{Q_{DA}}{Q_{BC}} = 1 + \dfrac{\alpha^{1-\gamma}(1 - \beta^\gamma)}{\gamma(\beta - 1)}$
+
 **QCM de thermodynamique (enthalpie, transformations du gaz parfait, Laplace)** (2)
 
 - $H = U + PV$

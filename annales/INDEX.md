@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-231 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1358 exercices.
+233 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1366 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1741,6 +1741,28 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 1. Calorimétrie (5 points, parties indépendantes) | calorimétrie (capacité du calorimètre, fusion d'un glaçon, mélange d'eau) | Thermodynamique | physique-s2-thermo/5 |
 | Exercice 2. Gaz parfait et premier principe (7 points, questions indépendantes) | gaz parfait (dU, dH, relation de Mayer, chaleur isobare, travail isobare et adiabatique) | Thermodynamique | physique-s2-thermo/7 |
 | Exercice 3. Cycle de Beau de Rochas (8 points) | cycle de Beau de Rochas (deux adiabatiques, deux isochores, rendement) | Thermodynamique | physique-s2-thermo/12 |
+
+### Partiel 2 de physique S2 — juin 2018 (corrigé, FR)
+
+`md/S2/Finals/Phys/2022/final-2022-s2-phys-correction-fr.md` — date réelle : juin 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, pas de points négatifs) | QCM de thermodynamique (premier principe, adiabatique, isotherme, isobare, fonction d'état, Laplace) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 1. Calorimétrie (4 points, questions indépendantes) | calorimétrie (vapeur sur glace avec condensation et fusion, capacité du calorimètre) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 2. Partie cours : loi de Laplace (4 points) | démonstration de la loi de Laplace (dH = V dP, dU, dH, intégration) | Thermodynamique | physique-s2-thermo/8 |
+| Exercice 3. Cycle de Diesel idéal (8 points) | cycle Diesel (deux adiabatiques, une isobare, une isochore, rendement) | Thermodynamique | physique-s2-thermo/12 |
+
+### Partiel 2 de physique S2 — juin 2018 (sujet, FR)
+
+`md/S2/Finals/Phys/2022/final-2022-s2-phys-subject-fr.md` — date réelle : juin 2018
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, pas de points négatifs) | QCM de thermodynamique (premier principe, adiabatique, isotherme, isobare, fonction d'état, Laplace) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 1. Calorimétrie (4 points, questions indépendantes) | calorimétrie (vapeur sur glace avec condensation et fusion, capacité du calorimètre) | Thermodynamique | physique-s2-thermo/5 |
+| Exercice 2. Partie cours : loi de Laplace (4 points) | démonstration de la loi de Laplace (dH = V dP, dU, dH, intégration) | Thermodynamique | physique-s2-thermo/8 |
+| Exercice 3. Cycle de Diesel idéal (8 points) | cycle Diesel (deux adiabatiques, une isobare, une isochore, rendement) | Thermodynamique | physique-s2-thermo/12 |
 
 ### Partiel n° 2 S2 — mai 2019 (corrigé, FR)
 
