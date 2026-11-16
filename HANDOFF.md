@@ -245,3 +245,13 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Algo (user order: physique > archi > électronique > algo > prog > anglais > méthodo). Find its Moodle courses in `EPITA_Moodle_Notes_MD/`.
 2. Zener TD ex. 4 values were inferred (statement page missing from the scan): check against the PDF if a clean copy appears.
 3. Transcribe S2 physics annales; branches still unmerged/unpushed (user decision).
+
+# Handoff — 2026-11-16 (calendrier + copie IA)
+## Done
+- `/calendrier` (public, nav « Examens »): data in `syllabus.json` key `calendrier` (Auriga exams via the user's synced Google calendar « Planning EPITA », Moodle remote tests), `levels.exam_calendar`, `templates/calendrier.html`. Checked at 390 px.
+- « Copier pour une IA » button in the correction of every paper exercise (`templates/niveau.html`), script `static/copy-for-llm.js` = vendored public lib https://github.com/evaspace/copy-for-llm (local `/opt/pierref/copy-for-llm`, branch `release/v1.0.0`, tag v1.0.0, browser test `test/test_browser.py`). Live copy checked: LaTeX exact, source URL + morgan.pierref.eu.
+- 30/30 tests, deployed, committed on branch `feat/calendrier-copie-ia`. QA account deleted. Line added to the 4 morgan llms files (not committed: morgan repo has unrelated pending work).
+## Next steps
+1. Same button on scroll cards (`/scroll/<path>`) and home feed cards.
+2. Add S1 January and S2 exam dates when Auriga publishes them.
+3. Algo path (subject order), S2 physics annales.
