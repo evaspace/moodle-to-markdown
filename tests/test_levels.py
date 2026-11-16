@@ -15,7 +15,7 @@ os.environ.update(DB_PATH=os.path.join(TMP, 'test.db'), COOKIE_INSECURE='1', SEC
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import levels  # noqa: E402
-from levels import COMBO_GAP, apply_result, combo, due_reviews, percent, pick_exo, score  # noqa: E402
+from levels import COMBO_GAP, apply_result, combo, due_reviews, easier_level, percent, pick_exo, score  # noqa: E402
 from datetime import date  # noqa: E402
 
 SUBJECT = 'maths-s1-apis-integrales'
@@ -72,6 +72,12 @@ class Rules(unittest.TestCase):
         self.assertEqual(pick_exo(exos, {'a': 0, 'b': 1, 'c': 0}, 'a')['id'], 'c')   # red, not the one just failed
         self.assertEqual(pick_exo(exos, {'a': 0, 'b': 1, 'c': 1}, 'a')['id'], 'b')   # only red = just failed: move on
         self.assertNotEqual(pick_exo(exos, {'a': 1, 'b': 1, 'c': 1}, 'a', 5)['id'], 'a')
+
+    def test_easier_level_same_notion_else_previous(self):
+        levels_ = [{'notions': ['a']}, {'notions': ['b']}, {'notions': ['c']}, {'notions': ['a', 'd']}]
+        self.assertEqual(easier_level(levels_, 4), 1)   # highest lower level sharing a notion
+        self.assertEqual(easier_level(levels_, 3), 2)   # no shared notion: the level just below
+        self.assertEqual(easier_level(levels_, 1), 1)   # nothing easier: same level (another exercise)
 
     def test_time_bonus(self):
         import sqlite3
@@ -176,6 +182,19 @@ class Api(unittest.TestCase):
         self.register('morgan.pierrefeu')
         self.assertIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
         self.assertEqual(self.c.get('/admin/stats').status_code, 200)
+
+    def test_skip_too_hard_serves_easier_without_penalty(self):
+        self.register('skipper')
+        page = self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True)
+        first = page.split('data-exo="')[1].split('"')[0]
+        self.assertIn('Trop dur, passer', page)
+        page = self.c.get(f'/niveaux/{SUBJECT}?facile={first}').get_data(as_text=True)
+        self.assertNotIn(f'data-exo="{first}"', page.split('lv-squares')[0])  # level 1: another exercise
+        self.assertIn('Plus facile, même notion', page)
+        self.assertNotIn('Trop dur, passer', page)
+        with levels.db() as conn:
+            uid = conn.execute("SELECT id FROM account WHERE username='skipper'").fetchone()[0]
+            self.assertEqual(conn.execute('SELECT COUNT(*) FROM exo_log WHERE account_id=?', (uid,)).fetchone()[0], 0)
 
     def test_progress_up_down_and_isolation(self):
         self.register('alice')

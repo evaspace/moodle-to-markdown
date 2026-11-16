@@ -264,6 +264,7 @@
     $('btn-ok').onclick = () => answer(true);
     $('btn-ko').onclick = () => answer(false);
     $('next').querySelector('a').onclick = (e) => { e.preventDefault(); next(e.currentTarget.href); };
+    if ($('btn-skip')) $('btn-skip').onclick = (e) => { e.preventDefault(); clearInterval(tick); next(e.currentTarget.href); };
   }
 
   // Next exercise without a page reload: fetch the next page and swap #exo (a full load is the fallback).

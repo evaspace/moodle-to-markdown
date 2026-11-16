@@ -154,6 +154,7 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-subjects { list-style: none; }
 .st-subjects li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin-bottom: 14px; }
 .st-subjects .lv-meter { flex-basis: 100%; margin: 0; }
+.st-subjects .st-split { background: var(--error-color); }  /* success rate, not progress: the rest is misses */
 @media (max-width: 560px) { .st-big { grid-template-columns: 1fr 1fr; } .st-facts { grid-template-columns: 1fr; } .st-big dd { font-size: 24px; } }
 .lv-fiche ul { padding-left: 1.2em; margin: 4px 0 20px; }
 .lv-fiche li { line-height: 1.7; overflow-x: auto; overflow-y: hidden; }

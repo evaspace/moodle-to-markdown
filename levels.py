@@ -181,7 +181,15 @@ def pick_exo(exos, status, last_id=None, attempts=0):
     return others[attempts % len(others)]
 
 
-REVIEW_EVERY = 5  # in the grind, one due review is slipped in after this many answers (never blocks)
+def easier_level(levels, n):
+    """« Trop dur, passer »: the highest level below n that shares a notion with level n,
+    else the level just below (n itself at level 1)."""
+    notions = set(levels[n - 1]['notions'])
+    shared = [k for k in range(n - 1, 0, -1) if notions & set(levels[k - 1]['notions'])]
+    return shared[0] if shared else max(1, n - 1)
+
+
+REVIEW_EVERY = 5 # in the grind, one due review is slipped in after this many answers (never blocks)
 REVIEW_DAYS = (1, 3, 7)  # a failed exercise comes back at D+1, then D+3, then D+7 after each success
 
 
@@ -643,9 +651,10 @@ def level_page(subject):
             session['grind_n'] = 0
             s, k, e = queue[0]
             return redirect(f'/niveaux/{s}?' + urlencode({'n': k, 'exo': e, 'revoir': 1, 'apres': subject}))
+    skipped = request.args.get('facile')  # « Trop dur, passer »: nothing logged, so no penalty
     with db() as conn:
         level, _, best = progress(conn, uid, subject)
-        n = request.args.get('n', type=int) or level
+        n = easier_level(data['levels'], level) if skipped else request.args.get('n', type=int) or level
         n = min(max(1, n), n_levels)
         lvl = data['levels'][n - 1]
         st = statuses(conn, uid, subject)
@@ -654,7 +663,8 @@ def level_page(subject):
                             'FROM exo_log WHERE account_id=? AND subject=? AND level=? ORDER BY id DESC LIMIT 1',
                             (uid, subject, n, uid, subject, n)).fetchone()
         asked = next((e for e in lvl['exos'] if e['id'] == request.args.get('exo')), None)  # review queue
-        exo = asked or pick_exo(lvl['exos'], status, last[0] if last else None, last[1] if last else 0)
+        others = [e for e in lvl['exos'] if e['id'] != skipped] or lvl['exos']  # level 1: another exercise
+        exo = asked or pick_exo(others, status, last[0] if last else None, last[1] if last else 0)
         tries = conn.execute('SELECT COUNT(*) FROM exo_log WHERE account_id=? AND subject=? AND level=? AND exo_id=?',
                              (uid, subject, n, exo['id'])).fetchone()[0]
         exo = variant(exo, tries)
@@ -670,7 +680,9 @@ def level_page(subject):
     return render_template(
         'niveau.html', subject=data['subject'], lvl=lvl, n_levels=n_levels, current=level,
         best=best, practice=(n != level), percent=total_percent(st, data), xp=total_xp,
-        mix=('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
+        easier=bool(skipped),
+        mix=f'/niveaux/{subject}' if skipped else
+            ('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
             (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
             if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),

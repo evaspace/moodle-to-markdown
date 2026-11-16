@@ -23,6 +23,7 @@
   <p>Formules du niveau <span class="lv-squares" role="img" aria-label="{{ squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ squares|length }}">{% for q in squares %}<i class="{{ q.state }}{{ ' cur' if q.id == exo.id }}" data-exo="{{ q.id }}"></i>{% endfor %}</span>
     <span class="lv-muted">toutes en vert = niveau validé</span></p>
   {% if review %}<p class="lv-practice">Révision espacée : cet exercice raté revient pour vérifier qu'il est acquis.</p>
+  {% elif easier %}<p class="lv-practice">Plus facile, même notion. Ta progression ne bouge pas ; ensuite, retour au niveau {{ current }}.</p>
   {% elif practice %}
     <p class="lv-practice">Entraînement libre : ce niveau ne change pas ta progression. Ton niveau actuel est le {{ current }}.
       <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
@@ -35,6 +36,7 @@
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
     <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
+    {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
   <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong>{% endif %}</p>
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
@@ -91,7 +93,7 @@
   <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
 </div>
 <script src="/static/cat.js?v=20261116b"></script>
-<script src="/static/niveaux.js?v=16"></script>
+<script src="/static/niveaux.js?v=17"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

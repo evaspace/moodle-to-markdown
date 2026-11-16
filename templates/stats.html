@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=19">
+  <link rel="stylesheet" href="/static/niveaux.css?v=20">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -81,8 +81,8 @@
 
   <h2>Par matière</h2>
   <ul class="st-subjects">
-    {% for x in s.subjects %}<li><span>{{ x.titre }}</span><span class="lv-muted">{{ x.n }} faits · {{ x.rate }} % réussis</span>
-      <div class="lv-meter"><span style="width:{{ x.rate }}%"></span></div></li>{% endfor %}
+    {% for x in s.subjects %}<li><span>{{ x.titre }}</span><span class="lv-muted">{{ x.n }} faits · {{ x.rate }} % réussis · {{ 100 - x.rate }} % ratés</span>
+      <div class="lv-meter st-split" role="img" aria-label="{{ x.rate }} % réussis, {{ 100 - x.rate }} % ratés"><span style="width:{{ x.rate }}%"></span></div></li>{% endfor %}
   </ul>
   {% endif %}
   {% if s.feed.n %}
