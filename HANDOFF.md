@@ -349,3 +349,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 2. Prog: `S1/Finals/Prog/2023` (subject + correction zip), `S1/Midterms/Prog/2022` (Caml correction .ml), S2 `Midterms/Prog/2021|2022`: check what language and recalibrate `prog_c_debut`.
 3. S2 algo (many finals/midterms + `S2/TDs/2030/Algo`): new S2 path(s).
 4. Anglais, méthodo: still need material from the user.
+
+# Handoff — 2026-11-16 (algo TAA, vrais examens)
+## Done
+- `algo-s1-taa`: mock exam level 12 replaced by the real B1 of 30 Oct 2024; new level 13 (output orders of stacks/queues, sequential and dichotomic search, new notion `recherche`); levels 14-15 = B2 of 9 Jan 2024 and 7 Jan 2025 (15 levels, 93 exos). Answers computed and asserted (`_out_bad`, `_calls`, `_path_bad`), checked against the teacher-marked student copy of Jan 2024 (`raw/S1/Finals/Algo/2028/TAA/final-2027-…-correction`, which is a copy, not a correction). `syllabus.json`: TAA annales listed, exam period B1 + B2 (30 min each). Build OK (27 paths), 35 offline tests OK, render checked server-side (no stray tag), deployed. No progress existed on this path, so no user data affected. Branch `feat/algo-taa-exams`.
+## Next steps
+1. S2 algo (many finals/midterms + `S2/TDs/2030/Algo`): new S2 path(s).
+2. Prog: `S1/Finals/Prog/2023`, `S1/Midterms/Prog/2022`, S2 `Midterms/Prog/2021|2022`: check language, recalibrate `prog_c_debut`.
+3. Anglais, méthodo: need material from the user. Re-check Planning EPITA for January exam dates.

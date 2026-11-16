@@ -3,8 +3,10 @@
 Sources: the Moodle course « [algo] TAA - Types algébriques abstraits » (course sheet, [doc] pages of the full abstract
 types, « Exercice d'application » on booleans) and the public EPITA algorithmics wiki the course links to
 (https://algo.infoprepa.epita.fr, pages « Types abstraits », « Structures séquentielles », « Ensembles »).
-No past exam is available (the Moodle tests are quizzes whose questions were not exported): the exam level is a mock
-exam written from the course, and says so.
+Exam levels come from Past-Exams (Epidocs): B1 of 30 Oct 2024 (S1/Midterms/Algo/2029/TAA), B2 of 9 Jan 2024
+(S1/Finals/Algo/2028/TAA, scan; the « correction » file there is a student copy marked 9/10, used as the reference) and
+B2 of 7 Jan 2025 (S1/Finals/Algo/2029/TAA, no correction). The B2 also tests stacks/queues output orders and searching,
+so level 13 trains those. Their answers are computed below (`_out_bad`, `_calls`, `_path_bad`) and asserted.
 
 Every « evaluate this term » exercise is checked by a small model of the types below (`_NS`): build.py imports this
 module, so a wrong hand-written answer stops the build (assert). Conventions of the Moodle course: cons(e, l) puts e in
@@ -25,7 +27,7 @@ SUBJECT = {
         "[algo] TAA - Types algébriques abstraits/06_👨‍🏫 II - Les piles - files et ensembles [FR]",
     ],
     "td": "MiMos et questions du cours, exercice d'application (booléen)",
-    "examens": ["Examen écrit B1 de TAA (1 h)"],
+    "examens": ["Examen B1 de TAA (fin octobre, 30 min)", "Examen B2 de TAA (janvier, 30 min)"],
 }
 
 # ---------------------------------------------------------------- model of the abstract types (build-time check)
@@ -156,6 +158,64 @@ def o(id, enonce, sol, src=None, duree=None):
     return e
 
 
+# ---------------------------------------------------------------- exam helpers (B2: output orders, searching)
+
+
+def _out_bad(push, out, stack=True):
+    """First value of `out` a stack (or a queue) fed with `push` in that order cannot produce; None if possible."""
+    if not stack:
+        return next((b for a, b in zip(push, out) if a != b), None)
+    pend, st = list(push), []
+    for c in out:
+        while (not st or st[-1] != c) and pend:
+            st.append(pend.pop(0))
+        if not st or st[-1] != c:
+            return c
+        st.pop()
+    return None
+
+
+def _calls(L, x):
+    """Calls (left, right, middle) of the course dichotomy (bounds included, stops when left == right or found)."""
+    g, d, r = 0, len(L) - 1, []
+    while g <= d:
+        m = (g + d) // 2
+        r.append((g, d, m))
+        if g == d or L[m] == x:
+            return r
+        if x < L[m]:
+            d = m - 1
+        else:
+            g = m + 1
+    return r + [(g, d, None)]
+
+
+def _path_bad(seq, x):
+    """First value of `seq` that cannot follow the earlier ones in a dichotomic search of x; None if possible."""
+    return next((b for j, b in enumerate(seq) if any(a != x and (x < a) != (b < a) for a in seq[:j])), None)
+
+
+def _pf(push, outs):
+    """Answer « pile / file / les deux / aucune » for each output order."""
+    r = []
+    for o in outs:
+        p, f = _out_bad(push, o) is None, _out_bad(push, o, False) is None
+        r.append(f"{' '.join(o)} : " + ("pile et file" if p and f else "pile" if p else "file" if f else f"aucune (pile bloquée sur {_out_bad(push, o)})"))
+    return r
+
+
+def _tab(calls):
+    return "\n\n".join(f"Appel {i} : g = {g}, d = {d}" + (f", milieu = {m}" if m is not None else " (g > d : arrêt)")
+                     for i, (g, d, m) in enumerate(calls[1:], 1)) or "Aucun appel"
+
+
+# sanity checks against the student copy marked by the teacher (B2, 9 Jan 2024)
+_LI = "ACDEFHIJLMNPQRTVXZ"
+assert _calls(_LI, "B") == [(0, 17, 8), (0, 7, 3), (0, 2, 1), (0, 0, 0)]
+assert _calls(_LI, "P") == [(0, 17, 8), (9, 17, 13), (9, 12, 10), (11, 12, 11)]
+assert _pf("DCAFBE", ["EBFACD", "DCAFBE", "ABFEDC", "ACBEFD"]) == [
+    "E B F A C D : pile", "D C A F B E : pile et file", "A B F E D C : aucune (pile bloquée sur D)", "A C B E F D : pile"]
+
 # ---------------------------------------------------------------- course
 
 NOTIONS = [
@@ -195,6 +255,10 @@ NOTIONS = [
      "formule": r"statique : tableau de Nbmax éléments $+$ longueur (ou sommet, ou tête et queue) · dynamique : enregistrements chaînés par pointeurs, NUL $=$ fin · file statique circulaire : indice suivant $=(i \bmod \text{Nbmax})+1$",
      "exemple": r"Nbmax $=8$, queue $=8$ : après un enfilage, queue $=1$",
      "cours": r"Le tableau impose un surdimensionnement et des décalages pour insérer ou supprimer au milieu, mais donne l'accès direct au $k$-ième élément. Les pointeurs ne stockent que les éléments présents et insèrent sans décaler, mais l'accès au $k$-ième élément impose un parcours. Variantes : sentinelle en tête (pas de cas particulier devant le premier), liste circulaire (le pointeur repère le dernier), liste doublement chaînée (pointeurs de tête et de queue, retour en arrière)."},
+    {"id": "recherche", "titre": "Ordres de sortie, recherche séquentielle et dichotomique",
+     "formule": r"pile : une valeur sort si elle est au sommet · file : sortie $=$ ordre d'entrée · séquentielle : une comparaison par élément visité · triée : arrêt au premier élément $\ge x$ · dichotomie : milieu $=\lfloor (g+d)/2\rfloor$, $x <$ milieu : $d=$ milieu$-1$, sinon $g=$ milieu$+1$, arrêt si trouvé ou $g=d$",
+     "exemple": r"on empile A, B, C : B A C est possible, C A B ne l'est pas (A est sous B)",
+     "cours": r"Pour tester un ordre de sortie d'une pile, on rejoue : on empile jusqu'à ce que la valeur voulue soit au sommet ; si elle est déjà dans la pile mais pas au sommet, l'ordre est impossible et c'est la valeur qui pose problème. Une file rend les valeurs dans l'ordre d'entrée. En recherche dichotomique, chaque valeur rencontrée borne toutes les suivantes : après $67$ en cherchant $66$, plus aucune valeur $\ge 67$."},
     {"id": "ensemble", "titre": "Ensembles et multi-ensembles",
      "formule": r"ensemblevide · ajouter(x, e) · supprimer(x, e) · x $\in$ e · card · choisir · x $\in$ ensemblevide $=$ faux · x $\in$ e $=$ vrai $\Rightarrow$ card(ajouter(x, e)) $=$ card(e) · x $\in$ e $=$ faux $\Rightarrow$ card(ajouter(x, e)) $=$ card(e)$+1$ · multi-ensemble : card(ajouter(x, me)) $=$ card(me)$+1$, nboccurrences",
      "exemple": r"card(ajouter(3, ajouter(3, ensemblevide))) $=1$ ; dans un multi-ensemble, $2$",
@@ -208,6 +272,19 @@ WE = "Cours d'algo EPITA (wiki), « Ensembles »"
 M = "Moodle TAA, exercice d'application"
 
 _L = "cons(3, cons(5, cons(7, listevide)))"
+B1_24 = "Examen B1 TAA, 30 octobre 2024 (Past-Exams S1/Midterms/Algo/2029/TAA)"
+B2_24 = "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)"
+B2_25 = "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)"
+_B1L = [1, 1, 2, 3, 5, 5, 8, 9, 9]
+_SQ = [2, 5, 9, 14, 20, 27, 31]
+
+
+def _mys(args):
+    return "\n\n".join(f"mystère($\\lambda$,{x},{y}) $=\\{{{', '.join(map(str, _B1L[:x - 1] + _B1L[y:]))}\\}}$" for x, y in args)
+
+
+_LB = [1, 3, 8, 15, 23, 29, 32, 35, 38, 42, 47, 51, 55]
+
 
 LEVELS = [
     {"n": 1, "titre": "Signature : profils et constantes", "notions": ["signature"], "exos": [
@@ -370,22 +447,53 @@ LEVELS = [
         o("t117", r"Écrire les axiomes de card pour le type ensemble.",
           "```\ncard(ensemblevide) = 0\nx ∈ e = vrai ⇒ card(ajouter(x, e)) = card(e)\nx ∈ e = faux ⇒ card(ajouter(x, e)) = card(e) + 1\nx ∈ e = vrai ⇒ card(supprimer(x, e)) = card(e) - 1\nx ∈ e = faux ⇒ card(supprimer(x, e)) = card(e)\n```\n(La fiche Moodle écrit « x ∈ = faux » dans le dernier axiome : il manque e.)", src=C, duree=5),
     ]},
-    {"n": 12, "titre": "Niveau examen : examen blanc B1 (rédigé d'après le cours, pas une annale)", "notions": ["signature", "hierarchie", "axiomes", "lrec", "liter", "conversion", "pile", "file", "repr", "ensemble"], "examen": True, "exos": [
-        o("tx1", r"Exercice 1 : type chaîne. chainevide : $\to$ chaîne ; ajout : chaîne x caractère $\to$ chaîne (ajoute à la fin) ; longueur : chaîne $\to$ entier ; ième : chaîne x entier $\to$ caractère. (a) Types définis et prédéfinis, internes et observateurs. (b) Précondition de ième. (c) Axiomes.",
-          "(a) Défini : chaîne ; prédéfinis : caractère, entier. Internes : chainevide, ajout. Observateurs : longueur, ième.\n\n(b) ième(c, i) est-défini-ssi $1\\le i\\le$ longueur(c).\n\n(c)\n```\nlongueur(chainevide) = 0\nlongueur(ajout(c, x)) = longueur(c) + 1\ni = longueur(c) + 1 ⇒ ième(ajout(c, x), i) = x\n1 ≤ i ≤ longueur(c) ⇒ ième(ajout(c, x), i) = ième(c, i)\n```",
-          src="Examen blanc rédigé (format de l'examen B1 : 1 h)", duree=15),
-        o("tx2", r"Exercice 2 : évaluer (a) sommet(dépiler(empiler(empiler(empiler(pilevide, 2), 4), 6))) ; (b) premier(défiler(enfiler(enfiler(enfiler(filevide, 2), 4), 6))) ; (c) ième(supprimer(insérer(insérer(listevide, 1, 1), 1, 2), 1), 1) ; (d) card(ajouter(1, ajouter(2, ajouter(1, ensemblevide)))).",
-          f"(a) ${ev('pile', 'sommet(dépiler(empiler(empiler(empiler(pilevide, 2), 4), 6)))')}$ : on retire $6$, le sommet est $4$.\n\n"
-          f"(b) ${ev('file', 'premier(défiler(enfiler(enfiler(enfiler(filevide, 2), 4), 6)))')}$ : on retire $2$, le premier est $4$.\n\n"
-          f"(c) ${ev('liter', 'ième(supprimer(insérer(insérer(listevide, 1, 1), 1, 2), 1), 1)')}$ : $\\langle 2, 1\\rangle$, on supprime le rang $1$, il reste $\\langle 1\\rangle$.\n\n"
-          f"(d) ${ev('ens', 'card(ajouter(1, ajouter(2, ajouter(1, ensemblevide))))')}$ : $\\{{1, 2\\}}$.",
-          src="Examen blanc rédigé", duree=8),
-        o("tx3", r"Exercice 3 : extension miroir : liste $\to$ liste (renverse une liste récursive), avec concaténer. Écrire ses axiomes puis calculer miroir(cons(1, cons(2, cons(3, listevide)))).",
-          "```\nmiroir(listevide) = listevide\nmiroir(cons(e, l))\n      = concaténer(miroir(l), cons(e, listevide))\n```\nmiroir(cons(1, cons(2, cons(3, listevide)))) $=$ cons(3, cons(2, cons(1, listevide))).",
-          src="Examen blanc rédigé", duree=10),
-        o("tx4", r"Exercice 4 : (a) Comment simuler une file avec deux piles ? (b) File statique circulaire, Nbmax $=8$ : tête $=7$, queue $=2$. Combien d'éléments contient-elle, si tête est l'indice du premier et queue celui du dernier ?",
-          f"(a) Pile E pour enfiler (on empile), pile S pour défiler : si S est vide, on dépile tout E en empilant dans S, ce qui inverse l'ordre ; premier $=$ sommet(S), défiler $=$ dépiler(S).\n\n(b) Indices $7, 8, 1, 2$ : ${(2 - 7) % 8 + 1}$ éléments, $((\\text{{queue}}-\\text{{tête}}) \\bmod 8)+1$.",
-          src="Examen blanc rédigé", duree=10),
+    {"n": 12, "titre": "Niveau examen : examen B1 du 30 octobre 2024", "notions": ["liter", "lrec", "axiomes", "conversion"], "examen": True, "exos": [
+        o("tx1", r"Exercice 1 (5 points). Liste itérative. mystère : liste x entier x entier $\to$ liste, défini ssi $1\le x\le y\le$ longueur($\lambda$). Axiomes : longueur(mystère($\lambda$, x, y)) $=$ longueur($\lambda$) $- y + x - 1$ ; $1\le i<x \Rightarrow$ ième(mystère($\lambda$, x, y), i) $=$ ième($\lambda$, i) ; $x\le i\le$ longueur($\lambda$)$-y+x-1 \Rightarrow$ ième(mystère($\lambda$, x, y), i) $=$ ième($\lambda$, i$+y-x+1$). Avec $\lambda=\{1,1,2,3,5,5,8,9,9\}$, donner mystère($\lambda$,3,5), mystère($\lambda$,1,4), mystère($\lambda$,6,9).",
+          "mystère supprime les éléments des rangs $x$ à $y$.\n\n" + _mys([(3, 5), (1, 4), (6, 9)]), src=B1_24, duree=7),
+        o("tx1b", r"Exercice 1, suite. Même opération mystère, même $\lambda=\{1,1,2,3,5,5,8,9,9\}$ : donner mystère($\lambda$,8,8) et mystère($\lambda$,1,9).",
+          _mys([(8, 8), (1, 9)]) + "\n\n$x=y$ supprime un seul élément ; $x=1$, $y=$ longueur($\\lambda$) vide la liste (longueur $9-9+1-1=0$).", src=B1_24, duree=5),
+        o("tx2", r"Exercice 2 (5 points). Liste récursive (listevide, cons, premier, fin, tête, contenu, succ). On ajoute supprime-sup : liste x élément $\to$ liste, qui supprime tous les éléments strictement supérieurs à x. Donner ses axiomes et ses préconditions.",
+          "Aucune précondition : supprime-sup est totale.\n```\nsupprime-sup(listevide, x) = listevide\ne > x ⇒ supprime-sup(cons(e, λ), x) = supprime-sup(λ, x)\ne ≤ x ⇒ supprime-sup(cons(e, λ), x) = cons(e, supprime-sup(λ, x))\n```\navec λ : liste ; e, x : élément. Un axiome par opération interne qui construit la liste (listevide, cons) ; cons se découpe selon la comparaison de e et x.",
+          src=B1_24, duree=12),
+    ]},
+    {"n": 13, "titre": "Ordres de sortie, recherches séquentielle et dichotomique", "notions": ["recherche", "pile", "file"], "exos": [
+        o("t131", r"On empile, dans cet ordre, A, B, C, D. Ces ordres de sortie sont-ils possibles ? Sinon, quelle est la première valeur qui pose problème ? (a) B A D C (b) D A B C (c) C D B A (d) A D B C",
+          "\n\n".join(f"({k}) {' '.join(w)} : " + ("possible" if _out_bad("ABCD", w) is None else f"impossible, {_out_bad('ABCD', w)}") for k, w in zip("abcd", ["BADC", "DABC", "CDBA", "ADBC"]))
+          + "\n\nOn rejoue : on empile jusqu'à avoir la valeur voulue au sommet. Une valeur déjà empilée mais pas au sommet bloque.", src=B2_25, duree=4),
+        o("t132", r"On ajoute, dans cet ordre, 1, 2, 3, 4 à une structure linéaire vide. Pour chaque ordre de sortie, la structure peut-elle être une pile, une file, les deux, aucune ? 1234, 4321, 2143, 3142.",
+          "\n\n".join(_pf("1234", ["1234", "4321", "2143", "3142"])) + "\n\n1234 : chaque valeur sort aussitôt entrée, la pile convient aussi.", src=B2_24, duree=4),
+        v("t133", r"$\lambda=[2, 5, 9, 14, 20, 27, 31]$. Recherche séquentielle de $20$ **sans** tenir compte de l'ordre : nombre de comparaisons entre $20$ et un élément ?",
+          str(_SQ.index(20) + 1), str(_SQ.index(20) + 1), r"On compare $2, 5, 9, 14$ puis $20$ : trouvé.", src=B2_25, duree=2),
+        v("t134", r"Même $\lambda$. Recherche séquentielle de $15$ **en tenant compte** de l'ordre : nombre de comparaisons ?",
+          str(sum(e < 15 for e in _SQ) + 1), str(sum(e < 15 for e in _SQ) + 1), r"$2, 5, 9, 14$ puis $20 > 15$ : arrêt, $5$ comparaisons (sans l'ordre : $7$).", src=B2_25, duree=2),
+        o("t135", r"Liste triée LI $=$ B D F G K M P S V Y (indices $0$ à $9$). Recherche dichotomique récursive de S entre g et d compris. Départ : g $=0$, d $=9$, milieu $=4$. Donner g, d, milieu à chaque appel.",
+          _tab(_calls("BDFGKMPSVY", "S")) + "\n\nmilieu $=\\lfloor (g+d)/2\\rfloor$ ; trouvé au dernier appel.", src=B2_24, duree=5),
+        o("t136", r"Même LI. Recherche de C (absente) : g, d, milieu à chaque appel ?",
+          _tab(_calls("BDFGKMPSVY", "C")) + "\n\nLes bornes sont égales au dernier appel : arrêt, C n'est pas dans LI (version du cours, comme dans le corrigé du B2 de janvier 2024).", src=B2_24, duree=5),
+        o("t137", r"Recherche dichotomique de $40$ dans des listes croissantes. Ces suites de valeurs rencontrées sont-elles possibles ? Sinon, première valeur qui pose problème. (a) 90 20 60 30 45 40 (b) 10 80 50 35 55 40 (c) 70 25 65 38 41 40",
+          "\n\n".join(f"({k}) {s} : " + ("possible" if _path_bad([int(t) for t in s.split()], 40) is None else f"impossible, {_path_bad([int(t) for t in s.split()], 40)}") for k, s in zip("abc", ["90 20 60 30 45 40", "10 80 50 35 55 40", "70 25 65 38 41 40"]))
+          + "\n\nChaque valeur borne les suivantes : après $50 > 40$, toutes les valeurs sont $< 50$.", src=B2_25, duree=4),
+    ]},
+    {"n": 14, "titre": "Niveau examen : examen B2 du 9 janvier 2024", "notions": ["recherche", "pile", "file"], "examen": True, "exos": [
+        o("tx3", r"Exercice 1 (Pile ou file ? 3 points). On ajoute, dans cet ordre, D, C, A, F, B, E à une structure linéaire vide. Pour chaque ordre de sortie, la structure peut-elle être une pile, une file (ce peut être les deux), ou aucune des deux ? E B F A C D ; D C A F B E ; A B F E D C ; A C B E F D.",
+          "\n\n".join(_pf("DCAFBE", ["EBFACD", "DCAFBE", "ABFEDC", "ACBEFD"])), src=B2_24, duree=5),
+        o("tx4", r"Exercice 2 (Recherche dichotomique, 7 points). LI $=$ A C D E F H I J L M N P Q R T V X Z (indices $0$ à $17$). Version récursive, bornes g et d comprises. Départ : g $=0$, d $=17$, milieu $=8$. Donner g, d et milieu à chaque appel pour la recherche de B.",
+          _tab(_calls(_LI, "B")) + "\n\nÀ l'appel 3, g $=$ d : arrêt, B est absente. La copie notée 9/10 qui ajoute un appel 4 (g $=1$, d $=0$) perd ce point.", src=B2_24, duree=5),
+        o("tx4b", r"Exercice 2, suite. Même LI, même départ : g, d et milieu à chaque appel pour la recherche de P.",
+          _tab(_calls(_LI, "P")) + "\n\nP est à l'indice $11$ : trouvée à l'appel 3.", src=B2_24, duree=5),
+    ]},
+    {"n": 15, "titre": "Niveau examen : examen B2 du 7 janvier 2025", "notions": ["recherche", "pile"], "examen": True, "exos": [
+        o("tx5", r"Exercice 1 (Pile, 3 points). On empile, dans cet ordre, A, B, C, D, E, F. Chaque séquence peut-elle être un ordre de sortie ? Sinon, première valeur qui pose problème. CBEFDA ; DEBCFA ; BDEFAC ; CEDFBA.",
+          "\n\n".join(f"{w} : " + ("oui" if _out_bad("ABCDEF", w) is None else f"non, {_out_bad('ABCDEF', w)}") for w in ["CBEFDA", "DEBCFA", "BDEFAC", "CEDFBA"]), src=B2_25, duree=5),
+        o("tx6", r"Exercice 2 (Recherches, 4 points). $\lambda=\{1, 3, 8, 15, 23, 29, 32, 35, 38, 42, 47, 51, 55\}$. Nombre de comparaisons entre la valeur cherchée et un élément, pour $36$ et pour $42$ : (a) recherche séquentielle sans tenir compte de l'ordre ; (b) en tenant compte de l'ordre ; (c) recherche dichotomique.",
+          f"(a) $36$ : ${len(_LB)}$ (absente, toute la liste) ; $42$ : ${_LB.index(42) + 1}$.\n\n"
+          f"(b) $36$ : ${sum(e < 36 for e in _LB) + 1}$ (arrêt sur $38$) ; $42$ : ${sum(e < 42 for e in _LB) + 1}$.\n\n"
+          f"(c) $36$ : valeurs rencontrées {', '.join(str(_LB[m]) for _, _, m in _calls(_LB, 36))}, ${len(_calls(_LB, 36))}$ étapes de $2$ comparaisons : ${2 * len(_calls(_LB, 36))}$. "
+          f"$42$ : {', '.join(str(_LB[m]) for _, _, m in _calls(_LB, 42))} : $2$ comparaisons sur $32$, puis l'égalité avec $42$ : $3$ ($4$ si l'on compte $2$ comparaisons par étape).\n\n"
+          "Pas de corrigé officiel : convention du cours, égalité testée d'abord.", src=B2_25, duree=8),
+        o("tx7", r"Exercice 3 (Chemin de dichotomie, 3 points). Recherche dichotomique de $66$ dans des listes croissantes. Ces suites de valeurs rencontrées sont-elles possibles ? Sinon, première valeur qui pose problème. 82-29-47-67-75-66 ; 85-45-68-55-58-66 ; 87-35-62-75-70-66 ; 37-67-54-61-68-66.",
+          "\n\n".join(f"{s} : " + ("oui" if _path_bad([int(t) for t in s.split("-")], 66) is None else f"non, {_path_bad([int(t) for t in s.split('-')], 66)}") for s in ["82-29-47-67-75-66", "85-45-68-55-58-66", "87-35-62-75-70-66", "37-67-54-61-68-66"])
+          + "\n\nAprès $67 > 66$, toutes les valeurs suivantes sont $< 67$ : $75$ et $68$ sont impossibles.", src=B2_25, duree=5),
     ]},
 ]
 
@@ -439,6 +547,8 @@ QUIZ = [
     {"notion": "file", "type": "vf", "q": r"estvide(f) $=$ Faux $\Rightarrow$ défiler(enfiler(f, e)) $=$ enfiler(défiler(f), e).", "bonne": True},
     {"notion": "repr", "type": "qcm", "q": r"La représentation dynamique d'une liste permet :", "choix": [r"d'insérer sans décaler", r"l'accès direct au $k$-ième élément", r"d'éviter tout pointeur", r"de connaître la longueur sans parcours"], "bonne": 0},
     {"notion": "repr", "type": "vf", "q": r"Dans une file statique circulaire, l'indice suivant se calcule avec un modulo Nbmax.", "bonne": True},
+    {"notion": "recherche", "type": "qcm", "q": r"On empile A, B, C dans cet ordre. Quel ordre de sortie est impossible ?", "choix": [r"C A B", r"B A C", r"A B C", r"C B A"], "bonne": 0},
+    {"notion": "recherche", "type": "vf", "q": r"En dichotomie, après avoir rencontré $67$ en cherchant $66$, on ne peut plus rencontrer $68$.", "bonne": True},
     {"notion": "ensemble", "type": "qcm", "q": r"card(ajouter(2, ajouter(2, ensemblevide))) vaut :", "choix": [r"$1$", r"$2$", r"$0$", r"indéfini"], "bonne": 0},
     {"notion": "ensemble", "type": "vf", "q": r"Dans un multi-ensemble, card(ajouter(x, me)) $=$ card(me)$+1$ même si x est déjà présent.", "bonne": True},
 ]
@@ -455,6 +565,9 @@ _F = {
     9: r"un axiome par opération interne qui construit la valeur · cas de base $+$ cas récursif",
     10: r"suivant $=(i \bmod \text{Nbmax})+1$ · statique : décalages · dynamique : chaînage",
     11: r"x $\in$ e : card inchangé par ajouter · multi-ensemble : card$+1$ · nboccurrences",
-    12: r"signature · axiomes · évaluation · représentations",
+    12: r"mystère : supprime les rangs x à y · supprime-sup : listevide, puis cons selon e > x ou e $\le$ x",
+    13: r"pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\ge x$ · milieu $=\lfloor (g+d)/2\rfloor$, arrêt si trouvé ou g $=$ d",
+    14: r"pile ou file : rejouer les entrées · dichotomie : g, d, milieu à chaque appel, arrêt si g $=$ d",
+    15: r"ordre de sortie d'une pile · comparaisons : séquentielle, triée, dichotomie ($2$ par étape) · chemin : chaque valeur borne les suivantes",
 }
 FORMULES = {e["id"]: _F[lvl["n"]] for lvl in LEVELS for e in lvl["exos"]}

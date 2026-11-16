@@ -13,7 +13,8 @@
   ],
   "td": "MiMos et questions du cours, exercice d'application (booléen)",
   "examens": [
-   "Examen écrit B1 de TAA (1 h)"
+   "Examen B1 de TAA (fin octobre, 30 min)",
+   "Examen B2 de TAA (janvier, 30 min)"
   ]
  },
  "notions": [
@@ -79,6 +80,13 @@
    "formule": "statique : tableau de Nbmax éléments $+$ longueur (ou sommet, ou tête et queue) · dynamique : enregistrements chaînés par pointeurs, NUL $=$ fin · file statique circulaire : indice suivant $=(i \\bmod \\text{Nbmax})+1$",
    "exemple": "Nbmax $=8$, queue $=8$ : après un enfilage, queue $=1$",
    "cours": "Le tableau impose un surdimensionnement et des décalages pour insérer ou supprimer au milieu, mais donne l'accès direct au $k$-ième élément. Les pointeurs ne stockent que les éléments présents et insèrent sans décaler, mais l'accès au $k$-ième élément impose un parcours. Variantes : sentinelle en tête (pas de cas particulier devant le premier), liste circulaire (le pointeur repère le dernier), liste doublement chaînée (pointeurs de tête et de queue, retour en arrière)."
+  },
+  {
+   "id": "recherche",
+   "titre": "Ordres de sortie, recherche séquentielle et dichotomique",
+   "formule": "pile : une valeur sort si elle est au sommet · file : sortie $=$ ordre d'entrée · séquentielle : une comparaison par élément visité · triée : arrêt au premier élément $\\ge x$ · dichotomie : milieu $=\\lfloor (g+d)/2\\rfloor$, $x <$ milieu : $d=$ milieu$-1$, sinon $g=$ milieu$+1$, arrêt si trouvé ou $g=d$",
+   "exemple": "on empile A, B, C : B A C est possible, C A B ne l'est pas (A est sous B)",
+   "cours": "Pour tester un ordre de sortie d'une pile, on rejoue : on empile jusqu'à ce que la valeur voulue soit au sommet ; si elle est déjà dans la pile mais pas au sommet, l'ordre est impossible et c'est la valeur qui pose problème. Une file rend les valeurs dans l'ordre d'entrée. En recherche dichotomique, chaque valeur rencontrée borne toutes les suivantes : après $67$ en cherchant $66$, plus aucune valeur $\\ge 67$."
   },
   {
    "id": "ensemble",
@@ -249,6 +257,24 @@
    "notion": "repr",
    "type": "vf",
    "q": "Dans une file statique circulaire, l'indice suivant se calcule avec un modulo Nbmax.",
+   "bonne": true
+  },
+  {
+   "notion": "recherche",
+   "type": "qcm",
+   "q": "On empile A, B, C dans cet ordre. Quel ordre de sortie est impossible ?",
+   "choix": [
+    "C A B",
+    "B A C",
+    "A B C",
+    "C B A"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "recherche",
+   "type": "vf",
+   "q": "En dichotomie, après avoir rencontré $67$ en cherchant $66$, on ne peut plus rencontrer $68$.",
    "bonne": true
   },
   {
@@ -1249,55 +1275,193 @@
   },
   {
    "n": 12,
-   "titre": "Niveau examen : examen blanc B1 (rédigé d'après le cours, pas une annale)",
+   "titre": "Niveau examen : examen B1 du 30 octobre 2024",
    "notions": [
-    "signature",
-    "hierarchie",
-    "axiomes",
-    "lrec",
     "liter",
-    "conversion",
-    "pile",
-    "file",
-    "repr",
-    "ensemble"
+    "lrec",
+    "axiomes",
+    "conversion"
    ],
    "examen": true,
    "exos": [
     {
      "id": "tx1",
-     "enonce": "Exercice 1 : type chaîne. chainevide : $\\to$ chaîne ; ajout : chaîne x caractère $\\to$ chaîne (ajoute à la fin) ; longueur : chaîne $\\to$ entier ; ième : chaîne x entier $\\to$ caractère. (a) Types définis et prédéfinis, internes et observateurs. (b) Précondition de ième. (c) Axiomes.",
-     "sol": "(a) Défini : chaîne ; prédéfinis : caractère, entier. Internes : chainevide, ajout. Observateurs : longueur, ième.\n\n(b) ième(c, i) est-défini-ssi $1\\le i\\le$ longueur(c).\n\n(c)\n```\nlongueur(chainevide) = 0\nlongueur(ajout(c, x)) = longueur(c) + 1\ni = longueur(c) + 1 ⇒ ième(ajout(c, x), i) = x\n1 ≤ i ≤ longueur(c) ⇒ ième(ajout(c, x), i) = ième(c, i)\n```",
-     "src": "Examen blanc rédigé (format de l'examen B1 : 1 h)",
-     "duree": 15,
-     "formules": "signature · axiomes · évaluation · représentations",
+     "enonce": "Exercice 1 (5 points). Liste itérative. mystère : liste x entier x entier $\\to$ liste, défini ssi $1\\le x\\le y\\le$ longueur($\\lambda$). Axiomes : longueur(mystère($\\lambda$, x, y)) $=$ longueur($\\lambda$) $- y + x - 1$ ; $1\\le i<x \\Rightarrow$ ième(mystère($\\lambda$, x, y), i) $=$ ième($\\lambda$, i) ; $x\\le i\\le$ longueur($\\lambda$)$-y+x-1 \\Rightarrow$ ième(mystère($\\lambda$, x, y), i) $=$ ième($\\lambda$, i$+y-x+1$). Avec $\\lambda=\\{1,1,2,3,5,5,8,9,9\\}$, donner mystère($\\lambda$,3,5), mystère($\\lambda$,1,4), mystère($\\lambda$,6,9).",
+     "sol": "mystère supprime les éléments des rangs $x$ à $y$.\n\nmystère($\\lambda$,3,5) $=\\{1, 1, 5, 8, 9, 9\\}$\n\nmystère($\\lambda$,1,4) $=\\{5, 5, 8, 9, 9\\}$\n\nmystère($\\lambda$,6,9) $=\\{1, 1, 2, 3, 5\\}$",
+     "src": "Examen B1 TAA, 30 octobre 2024 (Past-Exams S1/Midterms/Algo/2029/TAA)",
+     "duree": 7,
+     "formules": "mystère : supprime les rangs x à y · supprime-sup : listevide, puis cons selon e > x ou e $\\le$ x",
+     "type": "open"
+    },
+    {
+     "id": "tx1b",
+     "enonce": "Exercice 1, suite. Même opération mystère, même $\\lambda=\\{1,1,2,3,5,5,8,9,9\\}$ : donner mystère($\\lambda$,8,8) et mystère($\\lambda$,1,9).",
+     "sol": "mystère($\\lambda$,8,8) $=\\{1, 1, 2, 3, 5, 5, 8, 9\\}$\n\nmystère($\\lambda$,1,9) $=\\{\\}$\n\n$x=y$ supprime un seul élément ; $x=1$, $y=$ longueur($\\lambda$) vide la liste (longueur $9-9+1-1=0$).",
+     "src": "Examen B1 TAA, 30 octobre 2024 (Past-Exams S1/Midterms/Algo/2029/TAA)",
+     "duree": 5,
+     "formules": "mystère : supprime les rangs x à y · supprime-sup : listevide, puis cons selon e > x ou e $\\le$ x",
      "type": "open"
     },
     {
      "id": "tx2",
-     "enonce": "Exercice 2 : évaluer (a) sommet(dépiler(empiler(empiler(empiler(pilevide, 2), 4), 6))) ; (b) premier(défiler(enfiler(enfiler(enfiler(filevide, 2), 4), 6))) ; (c) ième(supprimer(insérer(insérer(listevide, 1, 1), 1, 2), 1), 1) ; (d) card(ajouter(1, ajouter(2, ajouter(1, ensemblevide)))).",
-     "sol": "(a) $4$ : on retire $6$, le sommet est $4$.\n\n(b) $4$ : on retire $2$, le premier est $4$.\n\n(c) $1$ : $\\langle 2, 1\\rangle$, on supprime le rang $1$, il reste $\\langle 1\\rangle$.\n\n(d) $2$ : $\\{1, 2\\}$.",
-     "src": "Examen blanc rédigé",
-     "duree": 8,
-     "formules": "signature · axiomes · évaluation · représentations",
+     "enonce": "Exercice 2 (5 points). Liste récursive (listevide, cons, premier, fin, tête, contenu, succ). On ajoute supprime-sup : liste x élément $\\to$ liste, qui supprime tous les éléments strictement supérieurs à x. Donner ses axiomes et ses préconditions.",
+     "sol": "Aucune précondition : supprime-sup est totale.\n```\nsupprime-sup(listevide, x) = listevide\ne > x ⇒ supprime-sup(cons(e, λ), x) = supprime-sup(λ, x)\ne ≤ x ⇒ supprime-sup(cons(e, λ), x) = cons(e, supprime-sup(λ, x))\n```\navec λ : liste ; e, x : élément. Un axiome par opération interne qui construit la liste (listevide, cons) ; cons se découpe selon la comparaison de e et x.",
+     "src": "Examen B1 TAA, 30 octobre 2024 (Past-Exams S1/Midterms/Algo/2029/TAA)",
+     "duree": 12,
+     "formules": "mystère : supprime les rangs x à y · supprime-sup : listevide, puis cons selon e > x ou e $\\le$ x",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Ordres de sortie, recherches séquentielle et dichotomique",
+   "notions": [
+    "recherche",
+    "pile",
+    "file"
+   ],
+   "exos": [
+    {
+     "id": "t131",
+     "enonce": "On empile, dans cet ordre, A, B, C, D. Ces ordres de sortie sont-ils possibles ? Sinon, quelle est la première valeur qui pose problème ? (a) B A D C (b) D A B C (c) C D B A (d) A D B C",
+     "sol": "(a) B A D C : possible\n\n(b) D A B C : impossible, A\n\n(c) C D B A : possible\n\n(d) A D B C : impossible, B\n\nOn rejoue : on empile jusqu'à avoir la valeur voulue au sommet. Une valeur déjà empilée mais pas au sommet bloque.",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 4,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
      "type": "open"
     },
     {
+     "id": "t132",
+     "enonce": "On ajoute, dans cet ordre, 1, 2, 3, 4 à une structure linéaire vide. Pour chaque ordre de sortie, la structure peut-elle être une pile, une file, les deux, aucune ? 1234, 4321, 2143, 3142.",
+     "sol": "1 2 3 4 : pile et file\n\n4 3 2 1 : pile\n\n2 1 4 3 : pile\n\n3 1 4 2 : aucune (pile bloquée sur 1)\n\n1234 : chaque valeur sort aussitôt entrée, la pile convient aussi.",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 4,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "open"
+    },
+    {
+     "id": "t133",
+     "enonce": "$\\lambda=[2, 5, 9, 14, 20, 27, 31]$. Recherche séquentielle de $20$ **sans** tenir compte de l'ordre : nombre de comparaisons entre $20$ et un élément ?",
+     "ans": "5",
+     "sol": "On compare $2, 5, 9, 14$ puis $20$ : trouvé.",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 2,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "value"
+    },
+    {
+     "id": "t134",
+     "enonce": "Même $\\lambda$. Recherche séquentielle de $15$ **en tenant compte** de l'ordre : nombre de comparaisons ?",
+     "ans": "5",
+     "sol": "$2, 5, 9, 14$ puis $20 > 15$ : arrêt, $5$ comparaisons (sans l'ordre : $7$).",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 2,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "value"
+    },
+    {
+     "id": "t135",
+     "enonce": "Liste triée LI $=$ B D F G K M P S V Y (indices $0$ à $9$). Recherche dichotomique récursive de S entre g et d compris. Départ : g $=0$, d $=9$, milieu $=4$. Donner g, d, milieu à chaque appel.",
+     "sol": "Appel 1 : g = 5, d = 9, milieu = 7\n\nmilieu $=\\lfloor (g+d)/2\\rfloor$ ; trouvé au dernier appel.",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 5,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "open"
+    },
+    {
+     "id": "t136",
+     "enonce": "Même LI. Recherche de C (absente) : g, d, milieu à chaque appel ?",
+     "sol": "Appel 1 : g = 0, d = 3, milieu = 1\n\nAppel 2 : g = 0, d = 0, milieu = 0\n\nLes bornes sont égales au dernier appel : arrêt, C n'est pas dans LI (version du cours, comme dans le corrigé du B2 de janvier 2024).",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 5,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "open"
+    },
+    {
+     "id": "t137",
+     "enonce": "Recherche dichotomique de $40$ dans des listes croissantes. Ces suites de valeurs rencontrées sont-elles possibles ? Sinon, première valeur qui pose problème. (a) 90 20 60 30 45 40 (b) 10 80 50 35 55 40 (c) 70 25 65 38 41 40",
+     "sol": "(a) 90 20 60 30 45 40 : possible\n\n(b) 10 80 50 35 55 40 : impossible, 55\n\n(c) 70 25 65 38 41 40 : possible\n\nChaque valeur borne les suivantes : après $50 > 40$, toutes les valeurs sont $< 50$.",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 4,
+     "formules": "pile : sortie seulement du sommet · file : ordre d'entrée · séquentielle triée : arrêt au premier $\\ge x$ · milieu $=\\lfloor (g+d)/2\\rfloor$, arrêt si trouvé ou g $=$ d",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Niveau examen : examen B2 du 9 janvier 2024",
+   "notions": [
+    "recherche",
+    "pile",
+    "file"
+   ],
+   "examen": true,
+   "exos": [
+    {
      "id": "tx3",
-     "enonce": "Exercice 3 : extension miroir : liste $\\to$ liste (renverse une liste récursive), avec concaténer. Écrire ses axiomes puis calculer miroir(cons(1, cons(2, cons(3, listevide)))).",
-     "sol": "```\nmiroir(listevide) = listevide\nmiroir(cons(e, l))\n      = concaténer(miroir(l), cons(e, listevide))\n```\nmiroir(cons(1, cons(2, cons(3, listevide)))) $=$ cons(3, cons(2, cons(1, listevide))).",
-     "src": "Examen blanc rédigé",
-     "duree": 10,
-     "formules": "signature · axiomes · évaluation · représentations",
+     "enonce": "Exercice 1 (Pile ou file ? 3 points). On ajoute, dans cet ordre, D, C, A, F, B, E à une structure linéaire vide. Pour chaque ordre de sortie, la structure peut-elle être une pile, une file (ce peut être les deux), ou aucune des deux ? E B F A C D ; D C A F B E ; A B F E D C ; A C B E F D.",
+     "sol": "E B F A C D : pile\n\nD C A F B E : pile et file\n\nA B F E D C : aucune (pile bloquée sur D)\n\nA C B E F D : pile",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 5,
+     "formules": "pile ou file : rejouer les entrées · dichotomie : g, d, milieu à chaque appel, arrêt si g $=$ d",
      "type": "open"
     },
     {
      "id": "tx4",
-     "enonce": "Exercice 4 : (a) Comment simuler une file avec deux piles ? (b) File statique circulaire, Nbmax $=8$ : tête $=7$, queue $=2$. Combien d'éléments contient-elle, si tête est l'indice du premier et queue celui du dernier ?",
-     "sol": "(a) Pile E pour enfiler (on empile), pile S pour défiler : si S est vide, on dépile tout E en empilant dans S, ce qui inverse l'ordre ; premier $=$ sommet(S), défiler $=$ dépiler(S).\n\n(b) Indices $7, 8, 1, 2$ : $4$ éléments, $((\\text{queue}-\\text{tête}) \\bmod 8)+1$.",
-     "src": "Examen blanc rédigé",
-     "duree": 10,
-     "formules": "signature · axiomes · évaluation · représentations",
+     "enonce": "Exercice 2 (Recherche dichotomique, 7 points). LI $=$ A C D E F H I J L M N P Q R T V X Z (indices $0$ à $17$). Version récursive, bornes g et d comprises. Départ : g $=0$, d $=17$, milieu $=8$. Donner g, d et milieu à chaque appel pour la recherche de B.",
+     "sol": "Appel 1 : g = 0, d = 7, milieu = 3\n\nAppel 2 : g = 0, d = 2, milieu = 1\n\nAppel 3 : g = 0, d = 0, milieu = 0\n\nÀ l'appel 3, g $=$ d : arrêt, B est absente. La copie notée 9/10 qui ajoute un appel 4 (g $=1$, d $=0$) perd ce point.",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 5,
+     "formules": "pile ou file : rejouer les entrées · dichotomie : g, d, milieu à chaque appel, arrêt si g $=$ d",
+     "type": "open"
+    },
+    {
+     "id": "tx4b",
+     "enonce": "Exercice 2, suite. Même LI, même départ : g, d et milieu à chaque appel pour la recherche de P.",
+     "sol": "Appel 1 : g = 9, d = 17, milieu = 13\n\nAppel 2 : g = 9, d = 12, milieu = 10\n\nAppel 3 : g = 11, d = 12, milieu = 11\n\nP est à l'indice $11$ : trouvée à l'appel 3.",
+     "src": "Examen B2 TAA, 9 janvier 2024 (Past-Exams S1/Finals/Algo/2028/TAA)",
+     "duree": 5,
+     "formules": "pile ou file : rejouer les entrées · dichotomie : g, d, milieu à chaque appel, arrêt si g $=$ d",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Niveau examen : examen B2 du 7 janvier 2025",
+   "notions": [
+    "recherche",
+    "pile"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "tx5",
+     "enonce": "Exercice 1 (Pile, 3 points). On empile, dans cet ordre, A, B, C, D, E, F. Chaque séquence peut-elle être un ordre de sortie ? Sinon, première valeur qui pose problème. CBEFDA ; DEBCFA ; BDEFAC ; CEDFBA.",
+     "sol": "CBEFDA : oui\n\nDEBCFA : non, B\n\nBDEFAC : non, A\n\nCEDFBA : oui",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 5,
+     "formules": "ordre de sortie d'une pile · comparaisons : séquentielle, triée, dichotomie ($2$ par étape) · chemin : chaque valeur borne les suivantes",
+     "type": "open"
+    },
+    {
+     "id": "tx6",
+     "enonce": "Exercice 2 (Recherches, 4 points). $\\lambda=\\{1, 3, 8, 15, 23, 29, 32, 35, 38, 42, 47, 51, 55\\}$. Nombre de comparaisons entre la valeur cherchée et un élément, pour $36$ et pour $42$ : (a) recherche séquentielle sans tenir compte de l'ordre ; (b) en tenant compte de l'ordre ; (c) recherche dichotomique.",
+     "sol": "(a) $36$ : $13$ (absente, toute la liste) ; $42$ : $10$.\n\n(b) $36$ : $9$ (arrêt sur $38$) ; $42$ : $10$.\n\n(c) $36$ : valeurs rencontrées 32, 42, 35, 38, $4$ étapes de $2$ comparaisons : $8$. $42$ : 32, 42 : $2$ comparaisons sur $32$, puis l'égalité avec $42$ : $3$ ($4$ si l'on compte $2$ comparaisons par étape).\n\nPas de corrigé officiel : convention du cours, égalité testée d'abord.",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 8,
+     "formules": "ordre de sortie d'une pile · comparaisons : séquentielle, triée, dichotomie ($2$ par étape) · chemin : chaque valeur borne les suivantes",
+     "type": "open"
+    },
+    {
+     "id": "tx7",
+     "enonce": "Exercice 3 (Chemin de dichotomie, 3 points). Recherche dichotomique de $66$ dans des listes croissantes. Ces suites de valeurs rencontrées sont-elles possibles ? Sinon, première valeur qui pose problème. 82-29-47-67-75-66 ; 85-45-68-55-58-66 ; 87-35-62-75-70-66 ; 37-67-54-61-68-66.",
+     "sol": "82-29-47-67-75-66 : non, 75\n\n85-45-68-55-58-66 : oui\n\n87-35-62-75-70-66 : oui\n\n37-67-54-61-68-66 : non, 68\n\nAprès $67 > 66$, toutes les valeurs suivantes sont $< 67$ : $75$ et $68$ sont impossibles.",
+     "src": "Examen B2 TAA, 7 janvier 2025 (Past-Exams S1/Finals/Algo/2029/TAA, sans corrigé)",
+     "duree": 5,
+     "formules": "ordre de sortie d'une pile · comparaisons : séquentielle, triée, dichotomie ($2$ par étape) · chemin : chaque valeur borne les suivantes",
      "type": "open"
     }
    ]

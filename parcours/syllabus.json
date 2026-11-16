@@ -526,7 +526,7 @@
        "id": "Types algébriques abstraits",
        "titre": "Types algébriques abstraits : listes, piles, files, ensembles",
        "bloc": "B1",
-       "periode_examen": "fin octobre (examen B1, 1 h)",
+       "periode_examen": "fin octobre (examen B1, 30 min) et janvier (examen B2, 30 min)",
        "chapitres": [
         "[algo] TAA - Types algébriques abstraits/04_👨‍🏫 I - Types abstraits [FR]",
         "[algo] TAA - Types algébriques abstraits/05_👨‍🏫 II - Les listes [FR]",
@@ -536,7 +536,11 @@
         "algo-s1-taa"
        ],
        "a_faire": [],
-       "annales": []
+       "annales": [
+        "S1/Midterms/Algo/2029/TAA/midterm-2029-s1-algo-subject-fr.pdf",
+        "S1/Finals/Algo/2028/TAA/final-2028-s1-algo-subject-fr.pdf",
+        "S1/Finals/Algo/2029/TAA/final-2029-s1-algo-subject-fr.pdf"
+       ]
       },
       {
        "id": "Caml et récursivité",
