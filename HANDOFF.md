@@ -190,3 +190,10 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Archi S2 (B3 logique séquentielle: bascules, compteurs; B4 microprocesseur): sources `Archi S2 2030 - ...` Moodle (chapters 1-3 PDFs, exams `s2_exam3`, `b3_exam3`, `b4_exam`).
 2. Electronique (Moodle `S1 - Electronique - Promo 2030`, `Electronique S2 - ...`), algo, prog, anglais, méthodo.
 3. Transcribe S2 physics annales; nothing asked of the user yet except merge/push decisions for the branches.
+
+# Handoff — 2026-11-16 (nuit, fin 2)
+## Done
+- `archi-s2-sequentielle` (10 lvl, 56 exos) built (seqD/seqJK checks), 26/26 tests, 10 levels at 390 px OK, QA account deleted, deployed. Committed on `feat/physique-thermo`.
+## Next steps
+1. Archi S2 B4 (microprocesseur: `Chapitre_3.pdf`, exam `b4_exam_fr.pdf`).
+2. Electronique, algo, prog, anglais, méthodo; S2 physics annales transcription.

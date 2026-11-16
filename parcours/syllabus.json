@@ -326,6 +326,28 @@
        "annales": []
       }
      ]
+    },
+    {
+     "id": "S2",
+     "moodle": "Archi S2 2030 - Logique Séquentielle et systèmes à microprocesseur",
+     "ecues": [
+      {
+       "id": "Logique séquentielle",
+       "titre": "Logique séquentielle : bascules et compteurs",
+       "bloc": "B3",
+       "periode_examen": "partiel de B3",
+       "chapitres": [
+        "01_Logique Séquentielle (B3)",
+        "02_Documents de cours",
+        "03_Travaux Dirigés"
+       ],
+       "parcours": [
+        "archi-s2-sequentielle"
+       ],
+       "a_faire": [],
+       "annales": []
+      }
+     ]
     }
    ]
   }

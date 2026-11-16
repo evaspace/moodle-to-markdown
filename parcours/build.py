@@ -12,7 +12,7 @@ import sympy as sp
 
 HERE = Path(__file__).parent
 PATHS = ["obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
-         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits"]
+         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle"]
 x, t = sp.symbols("x t", real=True)
 i, k = sp.symbols("i k", integer=True)
 n = sp.symbols("n", integer=True, positive=True)
@@ -46,6 +46,26 @@ def _fdec(hexstr, fmt):
     return sp.Rational(struct.unpack(fmt, bytes.fromhex(hexstr.replace(" ", "")))[0])
 
 
+def _seq(kind, n, seq, exprs):
+    """1 if the flip-flop inputs `exprs` drive the counter through `seq` (cyclic, unused states ignored).
+    kind 'D': exprs = [D_{n-1}, ..., D_0]; kind 'JK': exprs = [J_{n-1}, K_{n-1}, ..., J_0, K_0]."""
+    q = [sp.Symbol(f"Q{b}") for b in range(n)]
+    exprs = [sp.sympify(e) for e in exprs]
+    for i, m in enumerate(seq):
+        nxt = seq[(i + 1) % len(seq)]
+        env = {q[b]: bool((m >> b) & 1) for b in range(n)}
+        for b in range(n - 1, -1, -1):
+            j = n - 1 - b
+            if kind == "D":
+                got = bool(exprs[j].subs(env))
+            else:
+                jj, kk = bool(exprs[2 * j].subs(env)), bool(exprs[2 * j + 1].subs(env))
+                got = (jj and not env[q[b]]) or (not kk and env[q[b]])
+            if got != bool((nxt >> b) & 1):
+                return sp.Integer(0)
+    return sp.Integer(1)
+
+
 def _eqv(a, b):
     from sympy.logic.boolalg import Xor, simplify_logic
     return sp.Integer(0 if sp.satisfiable(Xor(a, b)) else 1)
@@ -68,7 +88,8 @@ NS = {"x": x, "t": t, "E": sp.E, "pi": sp.pi, "log": sp.log, "sqrt": sp.sqrt,
       "factorial": sp.factorial, "summation": sp.summation,
       "n": n, "oo": sp.oo, "limit": sp.limit,
       "bits": lambda s: _sym(s, 2), "hexa": lambda s: _sym(s, 16), "octal": lambda s: _sym(s, 8), "tc": _tc,
-      "f32": _f32, "f32d": lambda h: _fdec(h, ">f"), "f64d": lambda h: _fdec(h, ">d"), "f64": _f64, "eqv": _eqv, "cover": _cover, "A": sp.Symbol("A"), "B": sp.Symbol("B"),
+      "f32": _f32, "f32d": lambda h: _fdec(h, ">f"), "f64d": lambda h: _fdec(h, ">d"), "f64": _f64, "eqv": _eqv, "seqD": lambda n, sq, ex: _seq("D", n, list(sq), list(ex)), "seqJK": lambda n, sq, ex: _seq("JK", n, list(sq), list(ex)),
+      "Q0": sp.Symbol("Q0"), "Q1": sp.Symbol("Q1"), "Q2": sp.Symbol("Q2"), "Q3": sp.Symbol("Q3"), "cover": _cover, "A": sp.Symbol("A"), "B": sp.Symbol("B"),
       "C": sp.Symbol("C"), "D": sp.Symbol("D"), "Xor": sp.Xor, "Not": sp.Not,
       "C1": sp.Symbol("C1"), "C2": sp.Symbol("C2"), "Y0": sp.Symbol("Y0"), "Y1": sp.Symbol("Y1"), "Y2": sp.Symbol("Y2")}
 DUREE = {"derivative": 2, "primitive": 2, "integral": 5, "value": 4, "open": 5, "ode": 6}
