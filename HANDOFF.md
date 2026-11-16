@@ -221,3 +221,11 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Électronique S2: Moodle `Electronique S2 - Diodes`, `- Études des filtres`, `- Études des régimes transitoires` (in `EPITA_Moodle_Notes_MD/`).
 2. Then algo, prog, anglais, méthodo (user order). Transcribe S2 physics annales.
 3. AC power is in no source (kit, TD4, exams): not covered.
+
+# Handoff — 2026-11-16 (électronique S2 filtres)
+## Done
+- `elec-s2-filtres` (`parcours/src/elec_filtres.py`): 12 levels, 84 exos (12 exam: B3 March 2026), 8 notions, 16 quiz, variants, FORMULES. Syllabus: électronique semester S2 (`moodle: "."`), ECUE « Études des filtres » + placeholders for transitoires and diodes. Build OK, 26/26 tests, 319 formulas 0 KaTeX error, 12 levels at 390 px OK, QA account deleted, deployed. Branch `feat/elec-sinus`.
+## Next steps
+1. Régimes transitoires (Moodle `Electronique S2 - Études des régimes transitoires ...`: kit, TD + corrigé, contrôle février 2023 + corrigé).
+2. Diodes (cours jonction PN, TD diodes + Zéner corrigés, exam B7 March 2025 EN).
+3. Then algo, prog, anglais, méthodo.

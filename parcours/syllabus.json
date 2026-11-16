@@ -391,8 +391,52 @@
         "elec-s1-circuits",
         "elec-s1-sinus"
        ],
+       "a_faire": [],
+       "annales": []
+      }
+     ]
+    },
+    {
+     "id": "S2",
+     "moodle": ".",
+     "_note": "Three Moodle courses in S2 (filtres, régimes transitoires, diodes): chapters are given from the Moodle root.",
+     "ecues": [
+      {
+       "id": "Études des filtres",
+       "titre": "Études des filtres",
+       "bloc": "B3",
+       "periode_examen": "mars (B3)",
+       "chapitres": [
+        "Electronique S2 - Études des filtres/01_Documents de cours",
+        "Electronique S2 - Études des filtres/02_Travaux Dirigés"
+       ],
+       "parcours": [
+        "elec-s2-filtres"
+       ],
+       "a_faire": [],
+       "annales": []
+      },
+      {
+       "id": "Études des régimes transitoires",
+       "titre": "Études des régimes transitoires",
+       "bloc": "",
+       "periode_examen": "",
+       "chapitres": [],
+       "parcours": [],
        "a_faire": [
-        "S2 : diodes, filtres, régimes transitoires"
+        "Parcours régimes transitoires (RC, RL), contrôle février 2023"
+       ],
+       "annales": []
+      },
+      {
+       "id": "Diodes",
+       "titre": "Jonction PN et diodes",
+       "bloc": "",
+       "periode_examen": "",
+       "chapitres": [],
+       "parcours": [],
+       "a_faire": [
+        "Parcours diodes et diode Zéner, examen B7 mars 2025 (anglais)"
        ],
        "annales": []
       }
