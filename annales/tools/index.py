@@ -60,7 +60,7 @@ if errors:
 out[2] += f" {n_ex} exercices."
 open(ROOT + "/INDEX.md", "w", encoding="utf-8").write("\n".join(out))
 
-ORDER = ["Mécanique", "OBM", "DP", "APIS (intégrales)", "APIS (suites)", "APIS (EDO)", "APEF (fonctions)", "APEF (polynômes)", "EV", "ALM"]
+ORDER = ["Mécanique", "Thermodynamique", "Électromagnétisme", "OBM", "DP", "APIS (intégrales)", "APIS (suites)", "APIS (EDO)", "APEF (fonctions)", "APEF (polynômes)", "EV", "ALM"]
 fo = ["# Fiche synthèse des formules (maths et physique)", "",
       "Toutes les formules utilisées pour résoudre les exercices des annales, par ECUE puis par type d'exercice.",
       "Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `tools/index.py` depuis `tools/formules.py` : ne pas modifier à la main.", ""]

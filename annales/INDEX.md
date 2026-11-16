@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-204 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1268 exercices.
+210 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1290 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -1721,6 +1721,70 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | Exercice 3 : coordonnées (6 points) | familles libres, génératrices, bases ; coordonnées | EV | maths-s2-ev/7 |
 | Exercice 4 : sev engendrés (6 points) | sous-espaces engendrés, inclusion, dimension | EV | maths-s2-ev/4 |
 | Exercice 5 : sev supplémentaires ? (10 points) | sous-espaces, intersection, somme directe | EV | maths-s2-ev/9 |
+
+### Partiel n° 2 S2 — mai 2019 (corrigé, FR)
+
+`md/S2/Finals/Phys/2023/final-2023-s2-phys-correction-fr.md` — date réelle : mai 2019
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM de thermodynamique (enthalpie, transformations du gaz parfait, Laplace) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 1. Compression isotherme puis compression adiabatique (6 points) | transformation isotherme et adiabatique du gaz parfait (Q, W, pression, volume, température) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 2. Trois chemins entre deux états (5 points) | travail et chaleur selon le chemin (isochores, isobares, droite dans le diagramme de Clapeyron) | Thermodynamique | physique-s2-thermo/9 |
+| Exercice 3. Cycle réversible (5 points) | cycle adiabatique, isochore, isotherme (chaleur et travail reçus, Laplace) | Thermodynamique | physique-s2-thermo/8 |
+
+### Partiel n° 2 S2 — mai 2019 (sujet, FR)
+
+`md/S2/Finals/Phys/2023/final-2023-s2-phys-subject-fr.md` — date réelle : mai 2019
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM de thermodynamique (enthalpie, transformations du gaz parfait, Laplace) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 1. Compression isotherme puis compression adiabatique (6 points) | transformation isotherme et adiabatique du gaz parfait (Q, W, pression, volume, température) | Thermodynamique | physique-s2-thermo/7 |
+| Exercice 2. Trois chemins entre deux états (5 points) | travail et chaleur selon le chemin (isochores, isobares, droite dans le diagramme de Clapeyron) | Thermodynamique | physique-s2-thermo/9 |
+| Exercice 3. Cycle réversible (5 points) | cycle adiabatique, isochore, isotherme (chaleur et travail reçus, Laplace) | Thermodynamique | physique-s2-thermo/8 |
+
+### Partiel de physique S2 — 2020-2021 (corrigé, FR)
+
+`md/S2/Finals/Phys/2025/final-2025-s2-phys-correction-fr.md` — date réelle : année 2020-2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM de thermodynamique (unités, Mayer, cycle, premier principe, grandeurs intensives) | Thermodynamique | physique-s2-thermo/6 |
+| Exercice 1. Le cycle de Brayton (9 points) | cycle de Brayton (deux adiabatiques, deux isobares, rendement) | Thermodynamique | physique-s2-thermo/12 |
+| Exercice 2. Le cycle de Carnot (8 points) | cycle de Carnot (deux isothermes, deux adiabatiques, rendement) | Thermodynamique | physique-s2-thermo/12 |
+
+### Partiel de physique S2 — 2020-2021 (sujet, FR)
+
+`md/S2/Finals/Phys/2025/final-2025-s2-phys-subject-fr.md` — date réelle : année 2020-2021
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (4 points, sans points négatifs) | QCM de thermodynamique (unités, Mayer, cycle, premier principe, grandeurs intensives) | Thermodynamique | physique-s2-thermo/6 |
+| Exercice 1. Le cycle de Brayton (9 points) | cycle de Brayton (deux adiabatiques, deux isobares, rendement) | Thermodynamique | physique-s2-thermo/12 |
+| Exercice 2. Le cycle de Carnot (8 points) | cycle de Carnot (deux isothermes, deux adiabatiques, rendement) | Thermodynamique | physique-s2-thermo/12 |
+
+### Partiel de physique S2 — mai 2022 (corrigé, FR)
+
+`md/S2/Finals/Phys/2026/final-2026-s2-phys-correction-fr.md` — date réelle : mai 2022
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. QCM (3 points, pas de point négatif) | QCM de mécanique (travail, lois de Newton, théorème de l'énergie cinétique, énergie mécanique) | Mécanique | physique-s2-energie/4 |
+| Exercice 2. Lois de Newton (8 points) | deuxième loi de Newton, masses reliées par une poulie (tensions, accélération) | Mécanique | physique-s2-energie/9 |
+| Exercice 3. Énergie mécanique (4,5 points) | conservation de l'énergie mécanique sur une piste (vitesse en un point, condition d'arrêt) | Mécanique | physique-s2-energie/6 |
+| Exercice 4. Énergie cinétique et travail (4,5 points) | théorème de l'énergie cinétique avec frottement (palet qui s'arrête) | Mécanique | physique-s2-energie/7 |
+
+### Partiel de physique S2 — mai 2022 (sujet, FR)
+
+`md/S2/Finals/Phys/2026/final-2026-s2-phys-subject-fr.md` — date réelle : mai 2022
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| Exercice 1. QCM (3 points, pas de point négatif) | QCM de mécanique (travail, lois de Newton, théorème de l'énergie cinétique, énergie mécanique) | Mécanique | physique-s2-energie/4 |
+| Exercice 2. Lois de Newton (8 points) | deuxième loi de Newton, masses reliées par une poulie (tensions, accélération) | Mécanique | physique-s2-energie/9 |
+| Exercice 3. Énergie mécanique (4,5 points) | conservation de l'énergie mécanique sur une piste (vitesse en un point, condition d'arrêt) | Mécanique | physique-s2-energie/6 |
+| Exercice 4. Énergie cinétique et travail (4,5 points) | théorème de l'énergie cinétique avec frottement (palet qui s'arrête) | Mécanique | physique-s2-energie/7 |
 
 ## S2 — QCM
 

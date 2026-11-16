@@ -146,6 +146,36 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - cercle : $\rho = R$, $\dot\rho = \ddot\rho = 0$
 - uniforme : $\dot\theta = \omega = \text{cste}$, $\ddot\theta = 0$
 
+**QCM de mécanique (travail, lois de Newton, théorème de l'énergie cinétique, énergie mécanique)** (2)
+
+- $W = \vec F \cdot \overrightarrow{AB} = F\,AB\cos\alpha$
+- première loi de Newton (inertie)
+- $\|\vec F\| = ma$, $\|\vec F\| = \sqrt{F_x^2 + F_y^2 + F_z^2}$
+- $\Delta E_c = \sum W(\vec F_{ext})$
+- $E_m = E_c + E_p$, conservée seulement sans force non conservative
+
+**deuxième loi de Newton, masses reliées par une poulie (tensions, accélération)** (2)
+
+- $\sum\vec F_{ext} = m\vec a$ pour chaque masse
+- fil et poulie de masses négligeables : même tension de part et d'autre
+- fil inextensible : même norme d'accélération
+- $P = mg$
+
+**conservation de l'énergie mécanique sur une piste (vitesse en un point, condition d'arrêt)** (2)
+
+- $E_c = \tfrac12mv^2$
+- $E_p = mgz$
+- $E_m = E_c + E_p$
+- sans frottement : $\Delta E_m = 0$
+- $v_B = \sqrt{2g(h - d)}$
+
+**théorème de l'énergie cinétique avec frottement (palet qui s'arrête)** (2)
+
+- $W(\vec P) = 0$ et $W(\vec R_N) = 0$ sur un déplacement horizontal
+- $W(\vec f) = -f\,x$
+- $\Delta E_c = \sum W$
+- $f = \dfrac{mv_A^2}{2x}$
+
 **Frenet (vitesse, accélération) et spirale logarithmique en polaires** (1)
 
 - $dS = R\,d\theta$
@@ -277,6 +307,64 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - polaires : $\overrightarrow{OM} = R\,\vec u_\rho$, $\vec v = R\omega\,\vec u_\theta$, $\vec a = -R\omega^2\,\vec u_\rho$
 - cartésiennes : $\vec v = \dfrac{d\overrightarrow{OP}}{dt}$, $\vec a = \dfrac{d\vec v}{dt}$
 - $(\sin\omega t)' = \omega\cos\omega t$, $(\cos\omega t)' = -\omega\sin\omega t$
+
+## Thermodynamique
+
+**QCM de thermodynamique (enthalpie, transformations du gaz parfait, Laplace)** (2)
+
+- $H = U + PV$
+- $dH = \delta Q + V\,dP$ (réversible)
+- isotherme : $\Delta U = 0$, $Q = -W$
+- isobare : $W = -P(V_2 - V_1)$
+- isochore : $Q = nc_v\Delta T$, $\dfrac{P_1}{T_1} = \dfrac{P_2}{T_2}$
+- Laplace : $T^\gamma P^{1-\gamma} = \text{cste}$
+
+**transformation isotherme et adiabatique du gaz parfait (Q, W, pression, volume, température)** (2)
+
+- isotherme : $\Delta U = 0$, $Q = -W$, $P_1V_1 = P_2V_2$, $W = -nRT\ln\dfrac{V_2}{V_1} = -P_1V_1\ln\dfrac{V_2}{V_1}$
+- $PV = nRT$
+- adiabatique : $Q = 0$, $W = \Delta U = nc_v\Delta T$, $c_v = \tfrac32R$ (monoatomique)
+- Laplace : $P^{1-\gamma}T^\gamma = \text{cste}$
+
+**travail et chaleur selon le chemin (isochores, isobares, droite dans le diagramme de Clapeyron)** (2)
+
+- $PV = nRT$
+- isochore : $W = 0$, $Q = nc_v\Delta T$
+- isobare : $W = -P\Delta V$, $Q = nc_p\Delta T$
+- $W = -\displaystyle\int P\,dV$ (aire sous la courbe)
+- $\Delta U = nc_v\Delta T = W + Q$
+
+**cycle adiabatique, isochore, isotherme (chaleur et travail reçus, Laplace)** (2)
+
+- Laplace : $PV^\gamma = \text{cste}$, $TV^{\gamma-1} = \text{cste}$
+- adiabatique : $Q = 0$, $W = \Delta U = \dfrac{P_BV_B - P_AV_A}{\gamma - 1}$
+- isochore : $W = 0$
+- isotherme : $Q = -W = nRT\ln\dfrac{V_f}{V_i}$
+
+**QCM de thermodynamique (unités, Mayer, cycle, premier principe, grandeurs intensives)** (2)
+
+- résistance thermique en $\text{K·W}^{-1}$
+- Mayer : $c_p - c_v = R$, $\gamma = \dfrac{c_p}{c_v}$ $\Rightarrow c_p = \dfrac{\gamma R}{\gamma - 1}$
+- sur un cycle : $\Delta U = \Delta H = 0$, $W + Q = 0$
+- $dU = \delta Q - P\,dV$
+- isobare : $Q = \Delta H = nc_p\Delta T$
+- équilibre thermique : $T_1 = T_2$
+
+**cycle de Brayton (deux adiabatiques, deux isobares, rendement)** (2)
+
+- Laplace : $PV^\gamma = \text{cste}$ $\Rightarrow \dfrac{T}{P^\beta} = \text{cste}$ avec $\beta = \dfrac{\gamma - 1}{\gamma}$
+- adiabatique : $Q = 0$, $W = \Delta U = C_v\Delta T$
+- isobare : $Q = C_p\Delta T$, $W = \Delta U - Q = (C_v - C_p)\Delta T$
+- $W_{cycle} = -Q_{cycle}$
+- $\eta = -\dfrac{W_{cycle}}{Q_{BC}} = 1 - \dfrac{1}{r_p^\beta}$, $r_p = \dfrac{P_B}{P_A}$
+
+**cycle de Carnot (deux isothermes, deux adiabatiques, rendement)** (2)
+
+- Laplace : $TV^{\gamma-1} = \text{cste}$
+- isotherme : $\Delta U = 0$, $Q = -W = nRT\ln\dfrac{V_f}{V_i}$
+- adiabatique : $Q = 0$, $W = \Delta U = \dfrac{nR}{\gamma - 1}\Delta T$
+- $\dfrac{V_A}{V_B} = \dfrac{V_D}{V_C}$
+- $r = \dfrac{|W_{cycle}|}{Q_{absorbée}} = 1 - \dfrac{T_f}{T_c}$
 
 ## OBM
 
