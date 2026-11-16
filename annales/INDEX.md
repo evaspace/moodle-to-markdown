@@ -1,6 +1,6 @@
 # Index des annales (maths et physique)
 
-227 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1344 exercices.
+229 fichiers transcrits depuis `annales/raw/` (dépôt Epidocs/Past-Exams). Généré par `tools/index.py` : ne pas modifier à la main. 1352 exercices.
 Le dossier « promo » est l'année de diplôme ; la date réelle de l'épreuve est indiquée pour chaque fichier.
 Niveau = identifiant du parcours et numéro du niveau dans l'application (— : type sans niveau dédié, par exemple les révisions de lycée ou le hors programme).
 
@@ -2362,6 +2362,28 @@ Niveau = identifiant du parcours et numéro du niveau dans l'application (— : 
 | QCM (4 points, sans points négatifs) | QCM d'oscillateurs et de conduction (équation amortie, régimes, pendule, résistance thermique) | Mécanique | — |
 | Exercice 1. Palet sur une piste (6 points) | énergie sur une piste avec propulsion (théorème de l'énergie cinétique, énergie mécanique, réaction en Frenet) | Mécanique | physique-s2-energie/6 |
 | Exercice 2. Oscillateurs (11 points) | oscillateur ressort amorti puis ressort sur plan incliné (équation différentielle, énergie, équilibre) | Mécanique | — |
+
+### Contrôle de physique S2 — vers 2021 (corrigé, FR)
+
+`md/S2/Midterms/Phys/2025/midterm-2025-s2-phys-correction-fr.md` — date réelle : non indiquée sur les pages scannées
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (questions 6 à 8 ; 1 à 5 absentes du scan) | QCM de thermodynamique et de mécanique (force non conservative, grandeur intensive, premier principe élémentaire) | Thermodynamique | — |
+| Exercice 1. Calorimétrie (4 points) | calorimétrie (capacité du calorimètre avec un bloc de plomb) | Thermodynamique | physique-s2-thermo/4 |
+| Exercice 2. Transferts thermiques à travers une paroi (6 points) | résistances thermiques d'une paroi (double vitrage, mur isolé, série et parallèle, puissance de chauffage) | Thermodynamique | — |
+| Exercice 3. Le pendule simple (6 points + 2 points bonus) | pendule simple (énergie mécanique, petites oscillations, isochronisme, base polaire) | Mécanique | — |
+
+### Contrôle de physique S2 — vers 2021 (sujet, FR)
+
+`md/S2/Midterms/Phys/2025/midterm-2025-s2-phys-subject-fr.md` — date réelle : non indiquée sur les pages scannées
+
+| Exercice | Type | ECUE | Niveau |
+|---|---|---|---|
+| QCM (questions 6 à 8 ; 1 à 5 absentes du scan) | QCM de thermodynamique et de mécanique (force non conservative, grandeur intensive, premier principe élémentaire) | Thermodynamique | — |
+| Exercice 1. Calorimétrie (4 points) | calorimétrie (capacité du calorimètre avec un bloc de plomb) | Thermodynamique | physique-s2-thermo/4 |
+| Exercice 2. Transferts thermiques à travers une paroi (6 points) | résistances thermiques d'une paroi (double vitrage, mur isolé, série et parallèle, puissance de chauffage) | Thermodynamique | — |
+| Exercice 3. Le pendule simple (6 points + 2 points bonus) | pendule simple (énergie mécanique, petites oscillations, isochronisme, base polaire) | Mécanique | — |
 
 ### Contrôle de physique S2 : lois de Newton — février 2023 (corrigé rédigé, FR)
 

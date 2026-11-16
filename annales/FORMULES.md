@@ -235,6 +235,14 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - plan incliné : $k(x_e - L_0) = mg\sin\alpha$
 - $X = x - x_e$, $\ddot X + \dfrac kmX = 0$
 
+**pendule simple (énergie mécanique, petites oscillations, isochronisme, base polaire)** (2)
+
+- $E_c = \tfrac12ml^2\dot\theta^2$ ($v = l\dot\theta$)
+- $E_p = mgl(1 - \cos\theta)$
+- sans frottement $\dfrac{dE_m}{dt} = 0 \Rightarrow \ddot\theta + \dfrac gl\sin\theta = 0$
+- petites oscillations $\ddot\theta + \dfrac gl\theta = 0$, $\theta = \theta_0\cos(\omega t)$, $\omega = \sqrt{g/l}$
+- polaire : $\vec a = (\ddot r - r\dot\theta^2)\vec u_r + (2\dot r\dot\theta + r\ddot\theta)\vec u_\theta$
+
 **QCM de dynamique (unité du newton, tension, poulie, machine d'Atwood)** (2)
 
 - $1\ \text{N} = 1\ \text{kg·m·s}^{-2}$
@@ -571,6 +579,28 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
 - changement d'état : $Q = mL$
 - glace $-20$ °C $\to 0$ °C ($c_g$) $\to$ fusion ($L_f$) $\to 100$ °C ($c_e$) $\to$ vaporisation ($L_v$)
+
+**QCM de thermodynamique et de mécanique (force non conservative, grandeur intensive, premier principe élémentaire)** (2)
+
+- force non conservative : frottement (travail dépendant du chemin)
+- conservatives : poids, rappel du ressort, force électrique
+- intensive : température, pression
+- extensive : masse, volume
+- $dU = \delta Q + \delta W = \delta Q - P\,dV$
+
+**calorimétrie (capacité du calorimètre avec un bloc de plomb)** (2)
+
+- calorimètre isolé : $\sum Q_i = 0$
+- $Q = mc(\theta_e - \theta_i)$
+- calorimètre : $Q = C_{cal}(\theta_e - \theta_i)$, à la température initiale de l'eau qu'il contient
+
+**résistances thermiques d'une paroi (double vitrage, mur isolé, série et parallèle, puissance de chauffage)** (2)
+
+- $R_{th} = \dfrac{e}{\lambda S}$
+- couches traversées par le même flux (série) : $R = \sum R_i$
+- surfaces côte à côte (parallèle) : $\dfrac1R = \sum\dfrac1{R_i}$
+- $\Phi = \dfrac{\Delta T}{R_{th}}$
+- le flux va du chaud vers le froid
 
 **calorimétrie avec changement d'état (chemin fictif, chaleur latente de fusion)** (1)
 
