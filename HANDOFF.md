@@ -314,3 +314,10 @@ EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then 
 1. Remaining S2 physics scans (older): Finals 2020 (56 pages, check what it contains first), 2021, 2022 (+correction); Midterms 2021 (+corr), 2022 (+corr), 2025 (correction only). Helper idea: write the correction md, then derive the subject by dropping `> ` lines (script was in the session scratchpad, not kept: easy to redo).
 2. Corrections written by me (not official): midterm 2027, 2029, final 2029. QCM 7 of final 2025: official correction circles c), flagged as an error.
 3. Prog still blocked on sources (Moodle prog/Python dirs = links only); anglais and méthodo Moodle dirs are empty (titles only): ask the user for material.
+
+# Handoff — 2026-11-16 (annales physique S2, scans anciens)
+## Done
+- 6 remaining S2 physics scans transcribed (correction md + subject derived by dropping `> ` lines): finals `2020` (June 2016, pages 1-7 of a 56-page whole-session bundle), `2021` (May 2017, corrigé rédigé), `2022` (June 2018, official handwritten correction); midterms `2021` (Feb 2017), `2022` (March 2018), `2025` (correction only, page 1 = QCM 1-5 missing). New types in `annales/tools/formules.py`; `index.py` OK (235 files, 1372 exercises). One commit per exam on `feat/annales-phys-s2`. README + TODO_REFONTE updated.
+## Next steps
+1. The June 2016 bundle (`raw/S2/Finals/Phys/2020`) also holds the June 2016 maths, électronique and archi S2 exams (pages 8-56, FR + EN): transcribe them where those annales are missing.
+2. Prog, anglais, méthodo still blocked on material from the user.

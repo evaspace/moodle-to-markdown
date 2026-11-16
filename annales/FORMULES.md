@@ -458,6 +458,29 @@ Entre parenthèses : nombre d'exercices d'annales de ce type. Généré par `too
 - chemin fictif glace $\theta_2 \to 0$ °C $\to$ fusion $\to$ eau $0 \to \theta_e$
 - $m = \rho V$
 
+**calorimétrie (capacité du calorimètre, capacité massique du plomb, glace en eau liquide)** (2)
+
+- $\sum Q_i = 0$
+- $Q = mc(\theta_f - \theta_i)$
+- calorimètre : $Q = C_{cal}(\theta_f - \theta_i)$
+- fusion : $Q = mL_f$
+- glace $-20$ °C $\to 0$ °C ($c_g$) $\to$ fusion ($L_f$) $\to$ eau $0 \to 20$ °C ($c_e$)
+
+**gaz parfait (enthalpie, Meyer et capacités molaires, compression isotherme, Laplace en T, V et T, P)** (2)
+
+- $dU = \delta Q - P\,dV$
+- à $P$ constante $Q_P = \Delta(U + PV) = \Delta H$
+- $c_p - c_v = R$, $\gamma = \dfrac{c_p}{c_v}$ $\Rightarrow c_v = \dfrac{R}{\gamma - 1}$, $c_p = \dfrac{\gamma R}{\gamma - 1}$
+- isotherme : $W = -nRT\ln\dfrac{V_B}{V_A} = nRT\ln\dfrac{P_B}{P_A}$, $Q = -W$
+- Laplace : $PV^\gamma$, $TV^{\gamma-1}$, $T^\gamma P^{1-\gamma}$ constants
+
+**cycle de Joule (deux adiabatiques, deux isobares, rendement, entropie)** (2)
+
+- Laplace $T^\gamma P^{1-\gamma} = \text{cte}$
+- adiabatique : $Q = 0$, $W = nc_v\Delta T$, $\Delta S = 0$ si réversible
+- isobare : $Q = nc_p\Delta T$, $W = -nR\Delta T$, $\Delta S = nc_p\ln\dfrac{T_f}{T_i}$
+- $r = \dfrac{Q_{BC} + Q_{DA}}{Q_{BC}} = 1 - \dfrac{T_D - T_A}{T_C - T_B} = 1 - a^{\frac{1-\gamma}{\gamma}}$, $a = \dfrac{P_B}{P_A}$
+
 **gaz parfait (dU, dH, relation de Mayer, chaleur isobare, travail isobare et adiabatique)** (2)
 
 - $dU = nc_vdT$, $dH = nc_pdT$
