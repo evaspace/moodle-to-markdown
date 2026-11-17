@@ -425,6 +425,11 @@ hue from red = all failed to green = all passed, grey = no work), minutes per da
 best day, first-try rate, "revenges" (failed then passed), favourite hour, most failed exercise, timeouts,
 and a per-subject bar. Times are shown in Europe/Paris; one attempt counts at most 30 min (`MAX_SECS`).
 Linked from `/niveaux` and `/compte`.
+Path progress is grouped by subject (`s['path_groups']`, syllabus order), one closed `<details>` per subject
+whose summary gives validated levels and the weighted percent. The weekly success chart is built from
+`levels.week_history` (one bar per week since the first activity, 8 visible): the ← / → buttons (or a click on
+a bar) slide the chart one week and show that week's numbers and their change against the week before.
+`/admin/stats` keeps the full weekly table (`templates/history.html`).
 
 
 ## Navbar, stats et admin (2026-11-15)
