@@ -138,8 +138,9 @@
     faux.onclick = () => pick(1);
     const seq = [];
     const note = (e) => {
-      const t = document.elementFromPoint(e.clientX, e.clientY);
-      seq.push(`${e.type}:${e.target.className || e.target.tagName}${e.clientX !== undefined ? `@${Math.round(e.clientX)},${Math.round(e.clientY)}` : ''}${t && t !== e.target ? `>top:${t.className || t.tagName}` : ''}`);
+      const pt = e.changedTouches ? e.changedTouches[0] : e;
+      const t = pt && Number.isFinite(pt.clientX) ? document.elementFromPoint(pt.clientX, pt.clientY) : null;
+      seq.push(`${e.type}:${e.target.className || e.target.tagName}${t ? `@${Math.round(pt.clientX)},${Math.round(pt.clientY)}` : ''}${t && t !== e.target ? `>top:${t.className || t.tagName}` : ''}`);
       if (e.type === 'click' || e.type === 'pointercancel' || seq.length > 12) { trace(`tf ${innerWidth}x${innerHeight} locked=${locked} ` + seq.join(' ')); seq.length = 0; }
     };
     for (const t of ['pointerdown', 'pointerup', 'pointercancel', 'click', 'touchstart', 'touchend']) card.addEventListener(t, note, { capture: true, passive: true });
