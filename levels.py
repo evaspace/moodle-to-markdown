@@ -876,23 +876,15 @@ def compute_stats(rows, today, titles=None):
              for d, m in zip(last30, minutes)]
     best_day = max(days.items(), key=lambda kv: (kv[1][1], kv[1][0]), default=None)
     hard = fails.most_common(1)
-    # success rate per week (last 8) and weakest levels (>= 3 attempts)
-    wk = defaultdict(lambda: [0, 0])
+    # weakest levels (>= 3 attempts)
     lvl = defaultdict(lambda: [0, 0])
     for r in rows:
-        age = (today - r['at'].date()).days // 7
-        if age < 8:
-            wk[age][0] += 1
-            wk[age][1] += r['ok']
         lvl[(r['subject'], r['level'])][0] += 1
         lvl[(r['subject'], r['level'])][1] += r['ok']
-    weeks_rate = [{'label': 'cette semaine' if i == 0 else f'il y a {i} sem.', 'n': wk[i][0],
-                   'rate': round(100 * wk[i][1] / wk[i][0]) if wk[i][0] else None} for i in range(7, -1, -1)]
     weak = sorted(((k, v) for k, v in lvl.items() if v[0] >= 3 and v[1] < v[0]), key=lambda kv: (kv[1][1] / kv[1][0], -kv[1][0]))[:5]
     from admin_stats import week_heat
     return {
         'heat': week_heat([r['at'] for r in rows]),
-        'weeks_rate': weeks_rate,
         'weak': [{'id': k[0], 'subject': titles.get(k[0], k[0]), 'level': k[1], 'n': v[0], 'rate': round(100 * v[1] / v[0])} for k, v in weak],
         'avg_secs': round(sum(min(r['secs'] or 0, MAX_SECS) for r in rows) / done) if done else 0,
         'done': done, 'ok': ok, 'ko': done - ok, 'rate': round(100 * ok / done) if done else 0,
@@ -1071,6 +1063,16 @@ def stats_page():
             s['paths'].append({'id': sid, 'titre': data['subject']['titre'], 'best': best, 'n': len(data['levels']),
                                'green': green, 'total': sum(len(l['exos']) for l in data['levels']),
                                'percent': total_percent(st, data)})
+    # one foldable block per subject, in syllabus order, with its overall progress
+    mats = json.loads((PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))['matieres']
+    s['path_groups'] = []
+    for m in mats:
+        ps = [x for (sid, d), x in zip(paths, s['paths']) if d['subject'].get('matiere') == m['id']]
+        if ps:
+            total = sum(x['total'] for x in ps)
+            s['path_groups'].append({'titre': m['titre'], 'paths': ps, 'best': sum(x['best'] for x in ps),
+                                     'n': sum(x['n'] for x in ps),
+                                     'percent': round(sum(x['percent'] * x['total'] for x in ps) / total) if total else 0})
     with db() as conn:  # home feed (session_log is per account since uid)
         n, answered, right, ms = conn.execute(
             'SELECT COUNT(*), COUNT(is_correct), COALESCE(SUM(is_correct), 0), COALESCE(SUM(time_spent_ms), 0)'

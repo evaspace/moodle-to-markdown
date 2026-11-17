@@ -171,7 +171,8 @@ class Api(unittest.TestCase):
         self.assertEqual(self.c.post(f'/api/niveaux/{SUBJECT}/copie', json={'level': 1, 'exo_id': 'x'}).status_code, 200)
         self.c.get(f'/niveaux/{SUBJECT}?facile=x')  # « Trop dur, passer »
         html = self.c.get('/stats').get_data(as_text=True)
-        self.assertIn('Historique semaine par semaine', html)
+        self.assertIn('st-wk-detail', html)
+        self.assertIn('st-fold', html)
         with levels.db() as conn:
             kinds = {k for (k,) in conn.execute('SELECT kind FROM event_log e JOIN account a ON a.id=e.account_id '
                                                 "WHERE a.username='navuser'")}

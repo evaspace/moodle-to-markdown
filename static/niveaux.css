@@ -350,3 +350,16 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .adm-fmt pre { background: #F4F5F7; padding: 12px; margin-top: 8px; font-size: 13px; overflow-x: auto; }
 .adm-recent td:last-child { white-space: normal; text-align: left; min-width: 240px; }
 .adm-recent td { text-align: left; }
+.st-fold summary { font-size: 15px; }
+.st-fold .st-subjects { margin: 0 0 8px; }
+.st-wk-nav { display: flex; align-items: center; gap: 12px; margin: 12px 0 8px; }
+.st-wk-nav span { flex: 1; text-align: center; font-weight: 700; }
+.st-wk-view { overflow: hidden; background: #F4F5F7; }
+.st-wk-track > div { flex: 0 0 12.5%; box-sizing: border-box; padding: 0 1px; cursor: pointer; }
+.st-wk-track > .st-wk-pad { cursor: default; }
+.st-wk-track { gap: 0; padding: 8px 0; background: none; }
+.st-wk-track .st-sel { background: #E3E5E8; }
+.st-wk-track .st-sel span { background: var(--text-color); }
+.st-wk-detail { margin-top: 12px; }
+.st-wk .st-wk-detail { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.st-wk-detail > div { padding: 8px 10px; }

@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=27">
+  <link rel="stylesheet" href="/static/niveaux.css?v=28">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -28,19 +28,47 @@
   </dl>
 
   <h2>Ta progression sur papier</h2>
-  <ul class="st-subjects">
-    {% for x in s.paths %}<li><a href="/niveaux/{{ x.id }}">{{ x.titre }}</a><span class="lv-muted">{{ x.best }}/{{ x.n }} niveaux validés · {{ x.green }}/{{ x.total }} formules en vert</span>
-      <div class="lv-meter"><span style="width:{{ x.percent }}%"></span></div></li>{% endfor %}
-  </ul>
+  {% for g in s.path_groups %}<details class="cal-fold st-fold">
+    <summary>{{ g.titre }}<span>{{ g.best }}/{{ g.n }} niveaux · {{ g.percent }} %</span></summary>
+    <ul class="st-subjects">
+      {% for x in g.paths %}<li><a href="/niveaux/{{ x.id }}">{{ x.titre }}</a><span class="lv-muted">{{ x.best }}/{{ x.n }} niveaux validés · {{ x.green }}/{{ x.total }} formules en vert</span>
+        <div class="lv-meter"><span style="width:{{ x.percent }}%"></span></div></li>{% endfor %}
+    </ul>
+  </details>{% endfor %}
 
+  {% if s.history %}
+  {% macro dv(d, k, unit='') %}{% if d and d[k] is defined and d[k] %} <small class="{{ 'st-up' if d[k] > 0 else 'st-down' }}">{{ '+' if d[k] > 0 else '−' }}{{ d[k]|abs }}{{ unit }}</small>{% endif %}{% endmacro %}
+  {% set weeks = s.history|reverse|list %}
   <h2>Ta réussite semaine après semaine</h2>
-  <div class="st-chart" role="img" aria-label="Taux de réussite par semaine">
-    {% for w in s.weeks_rate %}<div title="{{ w.label }} : {% if w.n %}{{ w.rate }} % sur {{ w.n }} exercices{% else %}rien{% endif %}"><span style="height:{{ w.rate or 0 }}%"></span></div>{% endfor %}
+  <div class="st-wk" id="st-wk">
+    <div class="st-wk-nav">
+      <button type="button" class="lv-btn" data-step="-1" aria-label="Semaine précédente">←</button>
+      <span aria-live="polite" id="st-wk-label">Semaine du {{ weeks[-1].label }}{% if weeks[-1].current %} (en cours){% endif %}</span>
+      <button type="button" class="lv-btn" data-step="1" aria-label="Semaine suivante" disabled>→</button>
+    </div>
+    <div class="st-wk-view">
+      <div class="st-chart st-wk-track" role="img" aria-label="Taux de réussite par semaine">
+        {% for _ in range(8 - weeks|length) %}<div class="st-wk-pad"></div>{% endfor %}
+        {% for w in weeks %}<div data-i="{{ loop.index0 }}" data-label="Semaine du {{ w.label }}{% if w.current %} (en cours){% endif %}"{% if loop.last %} class="st-sel"{% endif %}
+          title="{{ w.label }} : {% if w.n %}{{ w.rate }} % sur {{ w.n }} exercices{% else %}rien{% endif %}"><span style="height:{{ w.rate or 0 }}%"></span></div>{% endfor %}
+      </div>
+    </div>
+    {% for w in weeks %}<dl class="st-facts st-wk-detail" data-i="{{ loop.index0 }}"{% if not loop.last %} hidden{% endif %}>
+      <div><dt>Exercices</dt><dd>{{ w.n }}{{ dv(w.delta, 'n') }}</dd></div>
+      <div><dt>Réussite</dt><dd>{% if w.rate is not none %}{{ w.rate }} %{{ dv(w.delta, 'rate') }}{% else %}–{% endif %}</dd></div>
+      <div><dt>Temps</dt><dd>{{ w.minutes }} min{{ dv(w.delta, 'minutes') }}</dd></div>
+      <div><dt>Points</dt><dd>{{ w.points }}{{ dv(w.delta, 'points') }}</dd></div>
+      <div><dt>Jours de travail</dt><dd>{{ w.days }}</dd></div>
+      <div><dt>Niveaux validés / perdus</dt><dd>{{ w.up }} / {{ w.down }}</dd></div>
+      <div><dt>Passés</dt><dd>{{ w.skip }}</dd></div>
+      <div><dt>Aides ouvertes</dt><dd>{{ w.help }}</dd></div>
+      <div><dt>Copies IA</dt><dd>{{ w.copies }}</dd></div>
+      <div><dt>Révisions</dt><dd>{{ w.review }}</dd></div>
+    </dl>{% endfor %}
+    <p class="lv-muted">Écarts comparés à la semaine d'avant. Passés, aides, copies IA et niveaux perdus sont comptés depuis le 17 nov. 2026.</p>
   </div>
-  <div class="st-axis lv-muted"><span>il y a 7 sem.</span><span>cette semaine</span></div>
+  {% endif %}
   <p class="lv-muted">Temps moyen par exercice : {{ s.avg_secs // 60 }} min {{ '%02d' % (s.avg_secs % 60) }} s.</p>
-
-  {% if s.history %}<h2>Historique semaine par semaine</h2>{% set history = s.history %}{% include 'history.html' %}{% endif %}
 
   {% if s.weak %}<h2>À retravailler</h2>
   <ul class="st-subjects">
@@ -98,6 +126,31 @@
   {% endif %}
 </div>
 <script>for (const el of document.querySelectorAll('.st-heat-scroll')) el.scrollLeft = el.scrollWidth;</script>
+<script>
+(() => {  // week picker: the chart slides so the chosen week is the rightmost of 8 bars
+  const box = document.getElementById('st-wk');
+  if (!box) return;
+  const view = box.querySelector('.st-wk-view');
+  const bars = [...box.querySelectorAll('.st-wk-track [data-i]')];
+  const details = [...box.querySelectorAll('.st-wk-detail')];
+  const [prev, next] = box.querySelectorAll('[data-step]');
+  const pad = box.querySelectorAll('.st-wk-pad').length;
+  let i = bars.length - 1;
+  const show = (smooth) => {
+    bars.forEach((b, k) => b.classList.toggle('st-sel', k === i));
+    details.forEach((d, k) => { d.hidden = k !== i; });
+    document.getElementById('st-wk-label').textContent = bars[i].dataset.label;
+    prev.disabled = i === 0;
+    next.disabled = i === bars.length - 1;
+    const first = Math.max(0, pad + i - 7);  // index of the leftmost visible bar
+    view.scrollTo({ left: first * bars[0].offsetWidth, behavior: smooth ? 'smooth' : 'auto' });
+  };
+  for (const btn of [prev, next]) btn.addEventListener('click', () => { i = Math.min(bars.length - 1, Math.max(0, i + +btn.dataset.step)); show(true); });
+  bars.forEach((b, k) => b.addEventListener('click', () => { i = k; show(true); }));
+  addEventListener('resize', () => show(false));
+  show(false);
+})();
+</script>
 {% include 'footer.html' %}
 </body>
 </html>
