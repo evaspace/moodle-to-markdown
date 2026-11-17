@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=25">
+  <link rel="stylesheet" href="/static/niveaux.css?v=27">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -40,29 +40,7 @@
   <div class="st-axis lv-muted"><span>il y a 7 sem.</span><span>cette semaine</span></div>
   <p class="lv-muted">Temps moyen par exercice : {{ s.avg_secs // 60 }} min {{ '%02d' % (s.avg_secs % 60) }} s.</p>
 
-  {% macro dv(d, k, unit='') %}{% if d and d[k] is defined and d[k] %}<small class="{{ 'st-up' if d[k] > 0 else 'st-down' }}">{{ '+' if d[k] > 0 else '−' }}{{ d[k]|abs }}{{ unit }}</small>{% endif %}{% endmacro %}
-  {% if s.history %}<h2>Historique semaine par semaine</h2>
-  {% set w = s.history[0] %}{% if w.delta %}<p class="lv-muted">Cette semaine par rapport à la précédente :
-    {{ '+' if w.delta.n >= 0 else '−' }}{{ w.delta.n|abs }} exercice{{ 's' if w.delta.n|abs > 1 }},
-    {% if w.delta.rate is defined %}{{ '+' if w.delta.rate >= 0 else '−' }}{{ w.delta.rate|abs }} points de réussite, {% endif %}
-    {{ '+' if w.delta.minutes >= 0 else '−' }}{{ w.delta.minutes|abs }} min.</p>{% endif %}
-  <div class="st-hist-scroll">
-  <table class="st-hist">
-    <thead><tr><th scope="col">Semaine du</th><th scope="col">Exercices</th><th scope="col">Réussite</th><th scope="col">Temps</th><th scope="col">Points</th><th scope="col">Jours</th><th scope="col">Niveaux validés</th><th scope="col">Niveaux perdus</th><th scope="col">Passés</th><th scope="col">Aides ouvertes</th><th scope="col">Copies IA</th><th scope="col">Révisions</th></tr></thead>
-    <tbody>
-    {% for w in s.history %}<tr{% if w.current %} class="st-now"{% endif %}>
-      <th scope="row">{{ w.label }}{% if w.current %} (en cours){% endif %}</th>
-      <td>{{ w.n }} {{ dv(w.delta, 'n') }}</td>
-      <td>{% if w.rate is not none %}{{ w.rate }} % {{ dv(w.delta, 'rate') }}{% else %}–{% endif %}</td>
-      <td>{{ w.minutes }} min {{ dv(w.delta, 'minutes') }}</td>
-      <td>{{ w.points }} {{ dv(w.delta, 'points') }}</td>
-      <td>{{ w.days }}</td><td>{{ w.up }}</td><td>{{ w.down }}</td><td>{{ w.skip }}</td><td>{{ w.help }}</td><td>{{ w.copies }}</td><td>{{ w.review }}</td>
-    </tr>{% endfor %}
-    </tbody>
-  </table>
-  </div>
-  <p class="lv-muted">Passés, aides, copies IA et niveaux perdus sont comptés depuis le 17 nov. 2026.</p>
-  {% endif %}
+  {% if s.history %}<h2>Historique semaine par semaine</h2>{% set history = s.history %}{% include 'history.html' %}{% endif %}
 
   {% if s.weak %}<h2>À retravailler</h2>
   <ul class="st-subjects">

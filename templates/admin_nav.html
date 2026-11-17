@@ -1,0 +1,8 @@
+{# shared nav + admin tabs: set `tab` to 'stats' or 'cartes' before including #}
+{% set active = 'admin' %}{% include 'nav.html' %}
+<nav class="adm-tabs" aria-label="Administration">
+  <a href="/admin/stats"{% if tab == 'stats' %} aria-current="page"{% endif %}>Stats</a>
+  <a href="/admin"{% if tab == 'cartes' %} aria-current="page"{% endif %}>Cartes du fil</a>
+  <a href="/admin/stats?format=json">JSON</a>
+  <a href="https://morgan.pierref.eu/admin">morgan.pierref.eu</a>
+</nav>

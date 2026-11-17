@@ -219,7 +219,35 @@ def admin():
                         (sub_id, c['type'], c['front'], c['back'], c['payload']))
                     inserted += 1
         result = {'inserted': inserted, 'duplicates': duplicates, 'errors': errors}
-    return render_template('admin.html', result=result)
+    return render_template('admin.html', result=result, c=card_catalog())
+
+
+CARD_TYPES = {'COURSE': 'Cours', 'QCM': 'QCM', 'TF': 'Vrai ou faux'}
+
+
+def card_catalog():
+    """Live counts of the home-feed cards for /admin."""
+    from datetime import datetime, timezone
+    from zoneinfo import ZoneInfo
+    from levels import TZ
+    tz = ZoneInfo(TZ)
+    with db() as conn:
+        total = conn.execute('SELECT COUNT(*) FROM card').fetchone()[0]
+        types = conn.execute('SELECT type, COUNT(*) FROM card GROUP BY type ORDER BY COUNT(*) DESC').fetchall()
+        new_7d = conn.execute("SELECT COUNT(*) FROM card WHERE created_at >= datetime('now', '-7 days')").fetchone()[0]
+        cats = conn.execute('''SELECT COALESCE(c.name, 'Sans catégorie'), COUNT(*) FROM card k
+                               LEFT JOIN subcategory s ON s.id = k.subcategory_id LEFT JOIN category c ON c.id = s.category_id
+                               GROUP BY 1 ORDER BY 2 DESC''').fetchall()
+        recent = conn.execute('''SELECT k.type, k.front, k.created_at, COALESCE(c.name, '') FROM card k
+                                 LEFT JOIN subcategory s ON s.id = k.subcategory_id LEFT JOIN category c ON c.id = s.category_id
+                                 ORDER BY k.id DESC LIMIT 10''').fetchall()
+    top = cats[0][1] if cats else 1
+    when = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(tz).strftime('%d/%m/%Y %H:%M') if t else ''
+    return {'total': total, 'new_7d': new_7d,
+            'types': [{'label': CARD_TYPES.get(t, t), 'n': n} for t, n in types],
+            'categories': [{'name': name, 'n': n, 'pct': round(100 * n / top)} for name, n in cats],
+            'recent': [{'type': CARD_TYPES.get(t, t), 'front': (f or '')[:90] + ('…' if len(f or '') > 90 else ''),
+                        'at': when(at), 'cat': cat} for t, f, at, cat in recent]}
 
 
 @app.route('/admin/stats')
@@ -235,10 +263,12 @@ def admin_stats_page():
         accounts = [{'id': r['id'], 'created': local(r['created_at']).date(), 'email': r['email']}
                     for r in conn.execute('SELECT id, created_at, email FROM account')]
         logs = [dict(r, at=local(r['at'])) for r in conn.execute(
-            'SELECT account_id, subject, level, exo_id, ok, secs, peek, timeout, at FROM exo_log')]
+            'SELECT account_id, subject, level, exo_id, ok, secs, peek, timeout, points, review, at FROM exo_log')]
+        events = [dict(r, at=local(r['at'])) for r in conn.execute('SELECT kind, at FROM event_log')]
         progress = [dict(r) for r in conn.execute('SELECT account_id, subject, level, best FROM level_progress')]
     paths = {sid: {'titre': d['subject']['titre'], 'levels': len(d['levels'])} for sid, d in load_parcours().items()}
-    stats = compute(accounts, logs, progress, paths, datetime.now(tz).date())
+    stats = compute(accounts, logs, progress, paths, datetime.now(tz).date(), events)
+    stats['updated'] = datetime.now(tz).strftime('%H:%M:%S')
     if request.args.get('format') == 'json':
         return jsonify(stats)
     return render_template('admin_stats.html', s=stats)

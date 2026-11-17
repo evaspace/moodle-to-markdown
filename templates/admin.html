@@ -1,58 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Injection - Scroll-to-Learn</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Cartes du fil · Admin</title>
   {% include "share.html" %}
-    <style>
-        * { box-sizing: border-box; }
-        html, body { height: auto; overflow: auto; }
-        body { font-family: ui-monospace, 'JetBrains Mono', monospace; color: #111; background: #fff; }
-        .admin-container { max-width: 800px; margin: 0 auto; padding: 1rem; }
-        h1 { margin-bottom: 1rem; font-size: 1.5rem; text-transform: uppercase; }
-        .console-input { width: 100%; height: 55vh; padding: 1rem; border: 2px solid #111; font: inherit; font-size: 16px; resize: vertical; }
-        .console-btn { width: 100%; margin-top: 1rem; padding: 1rem; background: #111; color: #fff; border: none; font: inherit; font-weight: bold; cursor: pointer; }
-        .notice { padding: 1rem; margin-bottom: 1rem; border: 2px solid; font-size: .9rem; }
-        .notice.ok { border-color: #00cc66; background: #eaffea; }
-        .notice.ko { border-color: #ff3333; background: #ffeaea; }
-        pre { background: #f4f4f4; padding: 1rem; margin-top: 1.5rem; font-size: .8rem; overflow-x: auto; }
-    </style>
-    <link rel="stylesheet" href="/static/footer.css?v=20261117">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261117">
+  <link rel="stylesheet" href="/static/niveaux.css?v=27">
 </head>
-<body>
-    <div class="admin-container">
-        <h1>Injection de données</h1>
-        <p><a href="/admin/stats">Voir les stats de l'application →</a></p>
+<body class="lv-page">
+{% set tab = 'cartes' %}{% include 'admin_nav.html' %}
+<div class="lv-wrap lv-wide">
+  <h1>Cartes du fil d'accueil</h1>
 
-        {% if result %}
-        <div class="notice {{ 'ok' if result.inserted else 'ko' }}">
-            {{ result.inserted }} carte(s) injectée(s){% if result.duplicates %}, {{ result.duplicates }} doublon(s) ignoré(s){% endif %}.
-            {% for e in result.errors %}<div>⚠ {{ e }}</div>{% endfor %}
-        </div>
-        {% endif %}
+  {% if result %}
+  <div class="lv-feedback {{ 'good' if result.inserted else 'bad' }}" role="status">
+    <p>{{ result.inserted }} carte{{ 's' if result.inserted > 1 }} ajoutée{{ 's' if result.inserted > 1 }}{% if result.duplicates %}, {{ result.duplicates }} doublon{{ 's' if result.duplicates > 1 }} ignoré{{ 's' if result.duplicates > 1 }}{% endif %}</p>
+    {% for e in result.errors %}<p class="lv-points">{{ e }}</p>{% endfor %}
+  </div>
+  {% endif %}
 
-        <form method="POST">
-            <textarea class="console-input" name="raw_text" placeholder="Q: Loi de Fitts&#10;R: Temps pour atteindre une cible...&#10;---"></textarea>
-            <button class="console-btn" type="submit">INJECTER</button>
-        </form>
+  <dl class="st-big">
+    <div><dt>Cartes</dt><dd>{{ c.total }}</dd></div>
+    {% for t in c.types %}<div><dt>{{ t.label }}</dt><dd>{{ t.n }}</dd></div>{% endfor %}
+    <div><dt>Ajoutées, 7 j</dt><dd>{{ c.new_7d }}</dd></div>
+  </dl>
 
+  <h2>Ajouter des cartes</h2>
+  <form method="post" class="adm-form">
+    <label for="raw_text">Blocs de cartes, séparés par <code>---</code></label>
+    <textarea id="raw_text" name="raw_text" aria-describedby="fmt" spellcheck="false" placeholder="Q: Loi de Fitts&#10;R: Temps pour atteindre une cible...&#10;---"></textarea>
+    <button class="lv-btn primary" type="submit">Ajouter au fil</button>
+  </form>
+  <details class="adm-fmt" id="fmt">
+    <summary>Format accepté</summary>
 <pre>CAT: Maths Discrètes / Logique     (optionnel, reste actif pour les blocs suivants)
 Q: Question ou titre du cours
-R: Explication (peut tenir sur plusieurs lignes)
----
-Q: [QCM] Question ?
-C1: mauvais choix
-C2: bon choix [X]
-C3: autre mauvais choix
-R: Explication
----
-Q: [TF] Affirmation ?
-A: vrai
-R: Explication
 ---
 Maths : $a &lt; b$ ou $$\sum_{i=1}^n i$$ (KaTeX)</pre>
-    </div>
-    {% include 'footer.html' %}
+  </details>
+
+  <h2>Par catégorie</h2>
+  {% if c.categories %}
+  <ul class="st-subjects">
+    {% for x in c.categories %}<li><span>{{ x.name }}</span><span class="lv-muted">{{ x.n }} carte{{ 's' if x.n > 1 }}</span>
+      <div class="lv-meter"><span style="width:{{ x.pct }}%"></span></div></li>{% endfor %}
+  </ul>
+  {% else %}<p class="lv-muted">Aucune catégorie.</p>{% endif %}
+
+  <h2>Dernières cartes ajoutées</h2>
+  {% if c.recent %}
+  <div class="st-hist-scroll">
+  <table class="st-hist adm-recent">
+    <thead><tr><th scope="col">Ajoutée le</th><th scope="col">Type</th><th scope="col">Catégorie</th><th scope="col">Recto</th></tr></thead>
+    <tbody>{% for r in c.recent %}<tr><th scope="row">{{ r.at }}</th><td>{{ r.type }}</td><td>{{ r.cat }}</td><td>{{ r.front }}</td></tr>{% endfor %}</tbody>
+  </table>
+  </div>
+  {% else %}<p class="lv-muted">Aucune carte.</p>{% endif %}
+</div>
+{% include 'footer.html' %}
 </body>
 </html>

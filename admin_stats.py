@@ -6,6 +6,7 @@ MAX_SECS = 1800     # one attempt counts at most 30 min (tab left open)
 MIN_ATTEMPTS = 5    # an exercise needs this many attempts to be ranked as hard
 
 
+EVENTS = ('niveau_up', 'niveau_down', 'passer', 'aide', 'copie_ia')
 DAYS = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim']
 
 
@@ -29,9 +30,11 @@ def _series(counter, days):
     return [{'label': f'{d.day}/{d.month}', 'n': counter.get(d, 0), 'h': round(100 * counter.get(d, 0) / top)} for d in days]
 
 
-def compute(accounts, logs, progress, paths, today):
+def compute(accounts, logs, progress, paths, today, events=()):
     """accounts: [{id, created(date), email}], logs: [{account_id, subject, level, exo_id, ok, secs, peek, timeout, at(datetime)}],
-    progress: [{account_id, subject, level, best}], paths: {subject_id: {'titre', 'levels': n}}."""
+    progress: [{account_id, subject, level, best}], paths: {subject_id: {'titre', 'levels': n}},
+    events: event_log rows [{kind, at(datetime)}] (skips, helps, AI copies, level changes)."""
+    from levels import week_history
     created = {a['id']: a['created'] for a in accounts}
     by_user = defaultdict(list)
     for r in logs:
@@ -91,7 +94,14 @@ def compute(accounts, logs, progress, paths, today):
         v[2] += min(r['secs'] or 0, MAX_SECS)
         v[3] += r.get('timeout', 0)
     hard = sorted(((k, v) for k, v in per_exo.items() if v[0] >= MIN_ATTEMPTS), key=lambda kv: (-kv[1][1] / kv[1][0], -kv[1][0]))[:10]
+    ev_all, ev_7d = Counter(), Counter()
+    for e in events:
+        k = 'aide' if e['kind'].startswith('aide_') else {'niveau_finished': 'niveau_up'}.get(e['kind'], e['kind'])
+        ev_all[k] += 1
+        ev_7d[k] += (today - e['at'].date()).days < 7
     return {
+        'events': {k: {'all': ev_all[k], 'week': ev_7d[k]} for k in EVENTS},
+        'history': week_history(logs, events, today),
         'accounts': n_acc, 'with_email': _pct(sum(1 for a in accounts if a.get('email')), n_acc),
         'activated': len(by_user), 'activation': _pct(len(by_user), n_acc), 'engaged': engaged,
         'exercises': done, 'success': _pct(ok, done), 'hours_spent': round(secs / 3600, 1),

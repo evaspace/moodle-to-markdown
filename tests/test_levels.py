@@ -188,6 +188,14 @@ class Api(unittest.TestCase):
         self.register('morgan.pierrefeu')
         self.assertIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
         self.assertEqual(self.c.get('/admin/stats').status_code, 200)
+        html = self.c.get('/admin/stats').get_data(as_text=True)
+        self.assertIn('app-nav', html)
+        self.assertIn('Comportements', html)
+        self.c.post('/admin', data={'raw_text': 'Q: Carte de test admin\nR: Verso'})
+        html = self.c.get('/admin').get_data(as_text=True)
+        self.assertIn('app-nav', html)
+        self.assertIn('Carte de test admin', html)  # live list of the last cards
+        self.assertIn('morgan-footer', html)
 
     def test_skip_too_hard_serves_easier_without_penalty(self):
         self.register('skipper')

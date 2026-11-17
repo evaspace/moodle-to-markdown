@@ -8,14 +8,14 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=25">
+  <link rel="stylesheet" href="/static/niveaux.css?v=27">
 </head>
 <body class="lv-page">
-<header class="app-nav admin-nav"><a class="app-nav-brand" href="/">Epita Doomscrolling</a>
-  <nav class="app-nav-links"><a href="/admin">Cartes</a><a href="/admin/stats" aria-current="page">Stats</a><a href="/admin/stats?format=json">JSON</a><a href="https://morgan.pierref.eu/admin">morgan.pierref.eu</a></nav></header>
+{% set tab = 'stats' %}{% include 'admin_nav.html' %}
 <div class="lv-wrap lv-wide">
   <h1>Stats de l'application</h1>
-  <p class="lv-muted">Chiffres agrégés, aucun identifiant d'utilisateur. Réponses mesurées sur les exercices sur papier.</p>
+  <p class="lv-muted">Chiffres agrégés, aucun identifiant d'utilisateur. Mis à jour toutes les minutes, dernière fois à <span id="updated">{{ s.updated }}</span>.</p>
+<div id="live">
 
   <h2>Audience</h2>
   <dl class="st-big">
@@ -48,6 +48,18 @@
     <div><dt>Temps écoulé / aides ouvertes</dt><dd>{{ s.timeout_rate }} % / {{ s.peek_rate }} %</dd></div>
   </dl>
 
+  <h2>Comportements</h2>
+  <dl class="st-big">
+    <div><dt>Niveaux validés</dt><dd>{{ s.events.niveau_up.all }}</dd></div>
+    <div><dt>Niveaux perdus</dt><dd>{{ s.events.niveau_down.all }}</dd></div>
+    <div><dt>« Trop dur, passer »</dt><dd>{{ s.events.passer.all }}</dd></div>
+    <div><dt>Aides ouvertes</dt><dd>{{ s.events.aide.all }}</dd></div>
+    <div><dt>Copies pour une IA</dt><dd>{{ s.events.copie_ia.all }}</dd></div>
+    <div><dt>Dont ces 7 jours</dt><dd>{{ s.events.niveau_up.week + s.events.niveau_down.week + s.events.passer.week + s.events.aide.week + s.events.copie_ia.week }}</dd></div>
+  </dl>
+
+  {% if s.history %}<h2>Historique semaine par semaine, tous les utilisateurs</h2>{% set history = s.history %}{% include 'history.html' %}{% endif %}
+
   <h2>Exercices par jour, 30 jours</h2>
   <div class="st-chart">{% for b in s.exo_chart %}<div title="{{ b.label }} : {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
   <div class="st-axis lv-muted"><span>{{ s.exo_chart[0].label }}</span><span>aujourd'hui</span></div>
@@ -62,20 +74,43 @@
 
   <h2>Parcours</h2>
   <p class="lv-muted">Pour chaque parcours : utilisateurs qui l'ont commencé, puis part d'entre eux qui a validé le niveau 1, 2, 3, etc.</p>
+  {% set idle = s.funnel|selectattr('started', 'equalto', 0)|list %}
   <ul class="st-subjects">
-    {% for f in s.funnel %}<li><span>{{ f.titre }}</span>
+    {% for f in s.funnel if f.started %}<li><span>{{ f.titre }}</span>
       <span class="lv-muted">{{ f.started }} commencé · {{ f.finished }} terminé · {{ f.exos }} exercices · {{ f.rate }} % réussis{% if f.stuck %} · le plus de monde au niveau {{ f.stuck[0] }}{% endif %}</span>
-      <div class="st-chart st-funnel">{% for b in f.bars %}<div title="Niveau {{ b.k }} validé par {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div></li>{% endfor %}
+      <div class="st-chart st-funnel">{% for b in f.bars %}<div title="Niveau {{ b.k }} validé par {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div></li>{% else %}<li class="lv-muted">Aucun parcours commencé.</li>{% endfor %}
   </ul>
+  {% if idle %}<details class="adm-fmt"><summary>{{ idle|length }} parcours pas encore commencés</summary>
+    <p class="lv-muted">{% for f in idle %}{{ f.titre }}{{ ' · ' if not loop.last }}{% endfor %}</p></details>{% endif %}
 
   <h2>Exercices les plus ratés</h2>
   {% if s.hard %}
-  <table class="st-table">
-    <thead><tr><th>Parcours</th><th>Niveau</th><th>Exercice</th><th>Essais</th><th>Ratés</th><th>Temps</th></tr></thead>
-    <tbody>{% for h in s.hard %}<tr><td>{{ h.subject }}</td><td>{{ h.level }}</td><td>{{ h.exo }}</td><td>{{ h.attempts }}</td><td>{{ h.fail }} %</td><td>{{ h.avg_secs }} s</td></tr>{% endfor %}</tbody>
+  <div class="st-hist-scroll">
+  <table class="st-hist">
+    <thead><tr><th scope="col">Parcours</th><th scope="col">Niveau</th><th scope="col">Exercice</th><th scope="col">Essais</th><th scope="col">Ratés</th><th scope="col">Temps moyen</th></tr></thead>
+    <tbody>{% for h in s.hard %}<tr><th scope="row">{{ h.subject }}</th><td>{{ h.level }}</td><td>{{ h.exo }}</td><td>{{ h.attempts }}</td><td>{{ h.fail }} %</td><td>{{ h.avg_secs }} s</td></tr>{% endfor %}</tbody>
   </table>
+  </div>
   {% else %}<p class="lv-muted">Pas encore assez d'essais (5 minimum par exercice).</p>{% endif %}
 </div>
+</div>
+<script>
+// Live data: every minute, refetch this page and swap the figures (no reload, nothing while the tab is hidden).
+setInterval(async () => {
+  if (document.hidden) return;
+  try {
+    const r = await fetch(location.href, { credentials: 'same-origin' });
+    if (!r.ok) return;
+    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+    const live = doc.getElementById('live');
+    if (!live) return;
+    const keep = [...document.querySelectorAll('#live .st-heat-scroll, #live .st-hist-scroll')].map((e) => e.scrollLeft);
+    document.getElementById('live').replaceWith(document.adoptNode(live));
+    document.querySelectorAll('#live .st-heat-scroll, #live .st-hist-scroll').forEach((e, i) => { e.scrollLeft = keep[i] || 0; });
+    document.getElementById('updated').textContent = doc.getElementById('updated').textContent;
+  } catch (e) { /* offline: keep the last figures */ }
+}, 60000);
+</script>
 {% include 'footer.html' %}
 </body>
 </html>

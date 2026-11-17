@@ -173,10 +173,8 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 /* admin stats */
 .lv-wide { max-width: 960px; }
 .st-hours { gap: 2px; }
-.st-funnel { height: 48px; margin-top: 8px; }
-.st-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.st-table th, .st-table td { border: 1px solid var(--border-color); padding: 6px 8px; text-align: left; }
-.st-table th { background: var(--text-color); color: #fff; }
+.st-funnel { height: 48px; margin-top: 8px; flex-basis: 100%; }
+.st-subjects li > span:first-child { font-weight: 700; }
 .st-subjects a { color: var(--text-color); font-weight: 700; text-decoration: none; }
 .st-subjects a:hover { color: var(--accent-color); }
 
@@ -212,12 +210,6 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 }
 .st-legend i { border: 1px solid #E5E7EB; }
 
-/* admin: nothing may widen the page on a phone */
-@media (max-width: 640px) {
-  .admin-nav .app-nav-links { flex-wrap: wrap; gap: 6px 14px; }
-  .st-table { font-size: 12px; table-layout: fixed; }
-  .st-table th, .st-table td { padding: 4px; overflow-wrap: anywhere; }
-}
 
 /* Exam calendar: ink field for the next exam, red only for exams and the main action */
 .cal h1 { margin-bottom: 20px; }
@@ -343,3 +335,18 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-hist small { margin-left: 4px; }
 .st-up { color: var(--success-color); }
 .st-down { color: var(--accent-color); }
+/* admin */
+.adm-tabs { display: flex; flex-wrap: wrap; gap: 0; max-width: 960px; margin: 16px auto 0; padding: 0 16px; }
+.adm-tabs a { padding: 10px 16px; font-weight: 700; color: var(--text-color); text-decoration: none; background: #F4F5F7; }
+.adm-tabs a:hover, .adm-tabs a:focus-visible { background: #E3E5E8; }
+.adm-tabs a[aria-current="page"] { background: var(--text-color); color: #fff; }
+.adm-form { display: grid; gap: 8px; margin-top: 12px; }
+.adm-form label { font-weight: 700; font-size: 14px; }
+.adm-form textarea { width: 100%; min-height: 40vh; padding: 12px; border: 2px solid var(--border-color); border-radius: 0; font: inherit; font-size: 16px; resize: vertical; }
+.adm-form textarea:focus { outline: 3px solid var(--accent-color); outline-offset: 0; }
+.adm-form .lv-btn { justify-self: start; }
+.adm-fmt { margin-top: 12px; }
+.adm-fmt summary { cursor: pointer; font-weight: 700; }
+.adm-fmt pre { background: #F4F5F7; padding: 12px; margin-top: 8px; font-size: 13px; overflow-x: auto; }
+.adm-recent td:last-child { white-space: normal; text-align: left; min-width: 240px; }
+.adm-recent td { text-align: left; }

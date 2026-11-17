@@ -32,6 +32,13 @@ class AdminStats(unittest.TestCase):
         self.assertEqual(s['funnel'][0]['started'], 2)
         self.assertEqual(s['funnel'][0]['bars'][0]['n'], 1)
 
+    def test_events_and_history(self):
+        events = [dict(kind='aide_fiche', at=datetime(2026, 11, 14, 9)), dict(kind='niveau_finished', at=datetime(2026, 11, 1, 9))]
+        s = compute([dict(id=1, created=TODAY, email=None)], [log(1, 0)], [], PATHS, TODAY, events)
+        self.assertEqual((s['events']['aide']['all'], s['events']['aide']['week']), (1, 1))
+        self.assertEqual((s['events']['niveau_up']['all'], s['events']['niveau_up']['week']), (1, 0))
+        self.assertEqual(s['history'][0]['n'], 1)
+
 
 if __name__ == '__main__':
     unittest.main()
