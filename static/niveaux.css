@@ -363,3 +363,8 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-wk-detail { margin-top: 12px; }
 .st-wk .st-wk-detail { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 .st-wk-detail > div { padding: 8px 10px; }
+.st-time-track { gap: 0; background: none; padding: 8px 0; }
+.st-time-track > div { flex: 0 0 calc(100% / 30); box-sizing: border-box; padding: 0 1px; }
+.st-pages-view { background: none; }
+.st-pages { display: flex; }
+.st-page { flex: 0 0 100%; min-width: 0; }

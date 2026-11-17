@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=28">
+  <link rel="stylesheet" href="/static/niveaux.css?v=29">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -88,15 +88,35 @@
   <p class="st-legend lv-muted">Raté <i style="background:hsl(0,62%,48%)"></i><i style="background:hsl(65,62%,48%)"></i><i style="background:hsl(130,62%,48%)"></i> Réussi</p>
 
   <h2>Temps passé, 30 derniers jours</h2>
-  <p class="lv-muted">{{ s.week_minutes }} min ces 7 derniers jours.</p>
-  <div class="st-chart" role="img" aria-label="Minutes de travail par jour sur 30 jours">
-    {% for b in s.chart %}<div title="{{ b.label }} : {{ b.min }} min"><span style="height:{{ b.h }}%"></span></div>{% endfor %}
+  <div class="st-wk" id="st-time" data-n="{{ (s.chart_all|length - 30) // 7 + 1 }}">
+    <div class="st-wk-nav">
+      <button type="button" class="lv-btn" data-step="-1" aria-label="7 jours plus tôt">←</button>
+      <span aria-live="polite" data-title>30 derniers jours</span>
+      <button type="button" class="lv-btn" data-step="1" aria-label="7 jours plus tard" disabled>→</button>
+    </div>
+    <p class="lv-muted" data-sum>{{ s.week_minutes }} min ces 7 derniers jours.</p>
+    <div class="st-wk-view">
+      <div class="st-chart st-time-track" role="img" aria-label="Minutes de travail par jour sur 30 jours">
+        {% for b in s.chart_all %}<div data-min="{{ b.min }}" data-label="{{ b.label }}" title="{{ b.label }} : {{ b.min }} min"><span></span></div>{% endfor %}
+      </div>
+    </div>
+    <div class="st-axis lv-muted"><span data-from>{{ s.chart[0].label }}</span><span data-to>aujourd'hui</span></div>
   </div>
-  <div class="st-axis lv-muted"><span>{{ s.chart[0].label }}</span><span>aujourd'hui</span></div>
 
   <h2>Quand tu travailles</h2>
   <p class="lv-muted">Chaque case est une heure d'un jour de la semaine : plus elle est verte, plus tu as fait d'exercices.</p>
-  {% set heat = s.heat %}{% include 'heat.html' %}
+  <div class="st-wk" id="st-hours" data-n="{{ s.heat_weeks|length }}">
+    <div class="st-wk-nav">
+      <button type="button" class="lv-btn" data-step="-1" aria-label="Semaine précédente">←</button>
+      <span aria-live="polite" data-title>{{ s.heat_weeks[-1].label }}</span>
+      <button type="button" class="lv-btn" data-step="1" aria-label="Semaine suivante" disabled>→</button>
+    </div>
+    <div class="st-wk-view st-pages-view">
+      <div class="st-pages">
+        {% for w in s.heat_weeks %}<div class="st-page" data-label="{{ w.label }}">{% set heat = w.heat %}{% include 'heat.html' %}</div>{% endfor %}
+      </div>
+    </div>
+  </div>
 
   <h2>Les petits records</h2>
   <dl class="st-facts">
@@ -150,6 +170,40 @@
   addEventListener('resize', () => show(false));
   show(false);
 })();
+// same left/right stepping for the 30-day time chart (7 days per step) and the weekly hour grids
+const pick = (id, render) => {
+  const box = document.getElementById(id);
+  if (!box) return;
+  const n = +box.dataset.n, view = box.querySelector('.st-wk-view');
+  const [prev, next] = box.querySelectorAll('[data-step]');
+  let i = n - 1;
+  const go = (smooth) => {
+    prev.disabled = i === 0;
+    next.disabled = i === n - 1;
+    const el = render(box, i, n);
+    view.scrollTo({ left: el.offsetLeft - el.parentNode.firstElementChild.offsetLeft, behavior: smooth ? 'smooth' : 'auto' });
+  };
+  for (const btn of [prev, next]) btn.addEventListener('click', () => { i = Math.min(n - 1, Math.max(0, i + +btn.dataset.step)); go(true); });
+  addEventListener('resize', () => go(false));
+  go(false);
+};
+pick('st-time', (box, i, n) => {
+  const bars = [...box.querySelectorAll('[data-min]')].slice(7 * i, 7 * i + 30);
+  const mins = bars.map((b) => +b.dataset.min), top = Math.max(1, ...mins);
+  bars.forEach((b, k) => { b.firstChild.style.height = Math.round(100 * mins[k] / top) + '%'; });
+  const last = i === n - 1, from = bars[0].dataset.label, to = bars[29].dataset.label;
+  const week = mins.slice(-7).reduce((a, b) => a + b, 0), all = mins.reduce((a, b) => a + b, 0);
+  box.querySelector("[data-title]").textContent = last ? '30 derniers jours' : `Du ${from} au ${to}`;
+  box.querySelector('[data-sum]').textContent = `${all} min sur ces 30 jours, dont ${week} les 7 derniers.`;
+  box.querySelector('[data-from]').textContent = from;
+  box.querySelector('[data-to]').textContent = last ? "aujourd'hui" : to;
+  return bars[0];
+});
+pick('st-hours', (box, i) => {
+  const page = box.querySelectorAll('.st-page')[i];
+  box.querySelector("[data-title]").textContent = page.dataset.label;
+  return page;
+});
 </script>
 {% include 'footer.html' %}
 </body>

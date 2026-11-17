@@ -874,6 +874,21 @@ def compute_stats(rows, today, titles=None):
     top = max(minutes) or 1
     chart = [{'label': f'{d.day} {MONTHS[d.month - 1]}', 'min': m, 'h': round(100 * m / top)}
              for d, m in zip(last30, minutes)]
+    # same chart back to the first activity, in steps of 7 days (the page slides a 30-day window)
+    back = -(-max(0, (last30[0] - min(days)).days) // 7) if days else 0
+    span = [last30[0] - timedelta(days=7 * back - i) for i in range(30 + 7 * back)]
+    chart_all = [{'label': f'{d.day} {MONTHS[d.month - 1]}', 'min': round(days.get(d, (0, 0, 0))[2] / 60)} for d in span]
+    # hour x weekday grid, one per week from the first activity to this week
+    from admin_stats import week_heat
+    monday = today - timedelta(days=today.weekday())
+    first_monday = min(days) - timedelta(days=min(days).weekday()) if days else monday
+    heat_weeks = []
+    while first_monday <= monday:
+        end = first_monday + timedelta(days=7)
+        heat_weeks.append({'label': f'Semaine du {first_monday.day} {MONTHS[first_monday.month - 1]}'
+                                    + (' (en cours)' if first_monday == monday else ''),
+                           'heat': week_heat([r['at'] for r in rows if first_monday <= r['at'].date() < end])})
+        first_monday = end
     best_day = max(days.items(), key=lambda kv: (kv[1][1], kv[1][0]), default=None)
     hard = fails.most_common(1)
     # weakest levels (>= 3 attempts)
@@ -882,9 +897,8 @@ def compute_stats(rows, today, titles=None):
         lvl[(r['subject'], r['level'])][0] += 1
         lvl[(r['subject'], r['level'])][1] += r['ok']
     weak = sorted(((k, v) for k, v in lvl.items() if v[0] >= 3 and v[1] < v[0]), key=lambda kv: (kv[1][1] / kv[1][0], -kv[1][0]))[:5]
-    from admin_stats import week_heat
     return {
-        'heat': week_heat([r['at'] for r in rows]),
+        'heat': week_heat([r['at'] for r in rows]), 'heat_weeks': heat_weeks, 'chart_all': chart_all,
         'weak': [{'id': k[0], 'subject': titles.get(k[0], k[0]), 'level': k[1], 'n': v[0], 'rate': round(100 * v[1] / v[0])} for k, v in weak],
         'avg_secs': round(sum(min(r['secs'] or 0, MAX_SECS) for r in rows) / done) if done else 0,
         'done': done, 'ok': ok, 'ko': done - ok, 'rate': round(100 * ok / done) if done else 0,

@@ -389,6 +389,13 @@ class Stats(unittest.TestCase):
         self.assertIsNone(last[6])                                   # Sunday: future
         self.assertEqual(len(s['chart']), 30)
         self.assertEqual(s['chart'][-2]['min'], 31)
+        self.assertEqual(len(s['chart_all']), 30)  # first activity inside the last 30 days: one window
+        self.assertEqual([w['label'] for w in s['heat_weeks']], ['Semaine du 9 nov. (en cours)'])
+        old = levels.compute_stats(rows + [row(1, 9, 'd', 1)], date(2026, 12, 20))  # 1 nov is 49 days back
+        self.assertEqual(len(old['chart_all']), 30 + 7 * 3)
+        self.assertEqual(old['chart_all'][-30:], [{'label': c['label'], 'min': c['min']} for c in old['chart']])
+        self.assertEqual(len(old['heat_weeks']), 8)  # weeks of 26 oct .. 14 dec
+        self.assertEqual(sum(r['total'] for r in old['heat_weeks'][2]['heat']), 4)  # week of 9 nov
 
     def test_week_history(self):
         from datetime import date, datetime
