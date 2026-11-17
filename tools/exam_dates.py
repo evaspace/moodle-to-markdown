@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Fetch exam dates from the Moodle and Auriga iCal feeds and merge them into parcours/syllabus.json.
 
-Run about once a month:
+Runs twice a day from the user crontab (7:05 and 19:05, `--apply`, log in ~/.local/state/epita_exam_dates.log).
+By hand:
     .venv/bin/python tools/exam_dates.py           # show what is new
     .venv/bin/python tools/exam_dates.py --apply   # add the new dates to the « calendrier » list
 

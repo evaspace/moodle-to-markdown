@@ -52,3 +52,6 @@ Accord des 5 : pas de session de 10 (le grind est la boucle) ; pas de classement
 Priorité commune : l'anti-blocage (bouton « Trop dur, passer » sans pénalité, qui sert un exercice plus facile de la même notion) et une jauge honnête « % de l'examen couvert » par bloc, qui dit ce qui manque (anglais, méthodo, prog).
 Désaccord : sympy. Contrarian et Expansionist : l'auto-notation rend la difficulté adaptative fictive, vérifier au moins les primitives. Outsider, First Principles, Executor : pas avant l'examen.
 Déjà dans l'appli (les conseillers ne l'ont pas vu) : niveaux adaptatifs par parcours, chrono rallongé de 50 % après un temps écoulé, formules et liens vers les prérequis affichés après un raté, % par parcours.
+
+
+pour les exams, il faut ce brancher a ma boiyr mail ou a moodle noyificstion et etre dynamique sur le rafrechisement, environ 2 par jour, cest pour les exams, qui sont anomcer par mail, le mail cest morgan.pierrefeu@epita.fr
