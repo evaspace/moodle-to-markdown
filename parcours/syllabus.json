@@ -43,6 +43,16 @@
    "source": "Moodle S1-MATHS-2031"
   },
   {
+   "debut": "2026-11-23",
+   "titre": "Contrôle de cours APIS (1 h) : primitives, aires et intégrales en entier ; suites, introduction, limites et exemples remarquables",
+   "type": "Contrôle de cours",
+   "parcours": [
+    "maths-s1-apis-integrales",
+    "maths-s1-apis-suites"
+   ],
+   "source": "Moodle S1-MATHS-2031 (annonce du 16 nov. 2026)"
+  },
+  {
    "debut": "2026-12-07",
    "titre": "Test à distance : APIS en entier",
    "type": "Test à distance",

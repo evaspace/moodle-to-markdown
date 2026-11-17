@@ -5,6 +5,10 @@
   const root = $('feed-screen');
   const feed = $('feed');
   const foot = feed.querySelector('.morgan-footer');  // footer stays last in the feed
+  // shortcut: temporary trace of the Android true/false tap bug (2026-11-17); remove once fixed
+  const trace = (msg) => { try { navigator.sendBeacon('/api/client-log', msg); } catch (e) { /* no beacon */ } };
+  addEventListener('error', (e) => trace(`error ${e.message} @${e.filename}:${e.lineno}`));
+  addEventListener('unhandledrejection', (e) => trace(`rejection ${e.reason}`));
   const api = `/api/scroll/${root.dataset.subject}`;
 
   const cat = new CatMascotEngine([$('chill-cat')]);
@@ -132,6 +136,13 @@
     };
     vrai.onclick = () => pick(0);
     faux.onclick = () => pick(1);
+    const seq = [];
+    const note = (e) => {
+      const t = document.elementFromPoint(e.clientX, e.clientY);
+      seq.push(`${e.type}:${e.target.className || e.target.tagName}${e.clientX !== undefined ? `@${Math.round(e.clientX)},${Math.round(e.clientY)}` : ''}${t && t !== e.target ? `>top:${t.className || t.tagName}` : ''}`);
+      if (e.type === 'click' || e.type === 'pointercancel' || seq.length > 12) { trace(`tf ${innerWidth}x${innerHeight} locked=${locked} ` + seq.join(' ')); seq.length = 0; }
+    };
+    for (const t of ['pointerdown', 'pointerup', 'pointercancel', 'click', 'touchstart', 'touchend']) card.addEventListener(t, note, { capture: true, passive: true });
     // Pointer events: finger on a phone, mouse drag on a computer.
     card.addEventListener('pointerdown', (e) => {
       if (locked || e.target.closest('button')) return;

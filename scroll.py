@@ -132,6 +132,16 @@ def _progress(data, pts):
     return {'unlocked': n, 'total': len(order), 'notion': titles[order[n - 1]]}
 
 
+@bp.route('/api/client-log', methods=['POST'])
+def client_log():
+    """Browser-side errors and true/false tap traces (debug of the Android tap bug, 2026-11-17): written to the app log."""
+    import logging
+    body = (request.get_data(as_text=True) or '')[:2000]
+    logging.getLogger('client').warning('client-log uid=%s ua=%s %s', session.get('uid'),
+                                        (request.headers.get('User-Agent') or '')[:160], body)
+    return '', 204
+
+
 @bp.route('/scroll/<subject>')
 @login_required
 def scroll_page(subject):
