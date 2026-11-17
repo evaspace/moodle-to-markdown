@@ -253,16 +253,18 @@
           gore.explode(r.left + r.width / 2, r.top + r.height / 2);
           if (navigator.vibrate) navigator.vibrate([150, 50, 200]);
         });
-        $('copy-ia').hidden = false;  // only after a miss: the AI explains the correction not understood
         // show the formulas of the failed level
         $('notions').hidden = false;
         $('btn-formules').setAttribute('aria-expanded', 'true');
       }
+      $('copy-ia').hidden = false;  // after every answer: a success can still hide a correction not understood
       $('next').hidden = false;
       $('next').querySelector('a').focus();
     }
     $('btn-ok').onclick = () => answer(true);
     $('btn-ko').onclick = () => answer(false);
+    if ($('btn-copy-ia')) $('btn-copy-ia').addEventListener('click', () =>
+      post(`/api/niveaux/${exo.dataset.subject}/copie`, { level: +exo.dataset.level, exo_id: exo.dataset.exo }));  // counted for /stats
     $('next').querySelector('a').onclick = (e) => { e.preventDefault(); next(e.currentTarget.href); };
     if ($('btn-skip')) $('btn-skip').onclick = (e) => { e.preventDefault(); clearInterval(tick); next(e.currentTarget.href); };
   }

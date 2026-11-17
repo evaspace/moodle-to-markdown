@@ -93,6 +93,16 @@ SCHEMA = '''
         at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     CREATE INDEX IF NOT EXISTS idx_exo_log ON exo_log(account_id, subject, level);
+    CREATE TABLE IF NOT EXISTS event_log (     -- what exo_log does not hold: skips, helps, AI copies, level changes
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        account_id INTEGER NOT NULL,
+        kind TEXT NOT NULL,
+        subject TEXT,
+        level INTEGER,
+        exo_id TEXT,
+        at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_event_log ON event_log(account_id, at);
     CREATE TABLE IF NOT EXISTS password_reset (
         token_hash TEXT PRIMARY KEY,          -- sha256 of the token sent by e-mail
         account_id INTEGER NOT NULL,
@@ -109,9 +119,14 @@ def init_levels_db(path=DB_PATH):
         cols = {r[1] for r in conn.execute('PRAGMA table_info(exo_log)')}
         for col, decl in (('secs', 'INTEGER'), ('peek', 'INTEGER NOT NULL DEFAULT 0'),
                           ('points', 'INTEGER NOT NULL DEFAULT 0'), ('practice', 'INTEGER NOT NULL DEFAULT 0'),
-                          ('timeout', 'INTEGER NOT NULL DEFAULT 0')):
+                          ('timeout', 'INTEGER NOT NULL DEFAULT 0'), ('review', 'INTEGER NOT NULL DEFAULT 0')):
             if col not in cols:
                 conn.execute(f'ALTER TABLE exo_log ADD COLUMN {col} {decl}')
+
+
+def log_event(conn, uid, kind, subject=None, level=None, exo_id=None):
+    conn.execute('INSERT INTO event_log (account_id, kind, subject, level, exo_id) VALUES (?, ?, ?, ?, ?)',
+                 (uid, kind, subject, level, exo_id))
 
 
 def secret_key():
@@ -656,6 +671,8 @@ def level_page(subject):
     skipped = request.args.get('facile')  # « Trop dur, passer »: nothing logged, so no penalty
     with db() as conn:
         level, _, best = progress(conn, uid, subject)
+        if skipped:
+            log_event(conn, uid, 'passer', subject, level, skipped[:40])
         n = easier_level(data['levels'], level) if skipped else request.args.get('n', type=int) or level
         n = min(max(1, n), n_levels)
         lvl = data['levels'][n - 1]
@@ -711,6 +728,9 @@ def level_hint(subject):
     if kind not in HINTS or not clock or clock[0] != subject or len(clock) < 7:
         return jsonify(error='aide inconnue'), 400
     new = kind not in clock[6]
+    if new:
+        with db() as conn:
+            log_event(conn, session['uid'], 'aide_' + kind, subject, clock[1], clock[2])
     session['exo_clock'] = clock[:6] + [clock[6] + [kind] if new else clock[6]]
     return jsonify(extra=round(clock[5] * HINTS[kind][2]) if new else 0, div=round(1 / HINTS[kind][1]))
 
@@ -749,9 +769,9 @@ def level_result(subject):
         prev = conn.execute('SELECT ok FROM exo_log WHERE account_id=? AND subject=? AND level=? AND practice=0 '
                             'ORDER BY id DESC LIMIT 1', (uid, subject, n)).fetchone()
         pts = score(ok, secs, ref, peek, n) if secs else 0  # no matching page view: no points
-        conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout)))
+        conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout, review)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout), int(review)))
         total_xp = xp(conn, uid)
         combo_now = current_combo(conn, uid)
         st = statuses(conn, uid, subject)
@@ -765,12 +785,26 @@ def level_result(subject):
             return jsonify(event='review' if review else 'practice', ok=ok, level=level, best=best, **extra)
         level, best, event = apply_result(level, best, ok, green == len(status), n_levels,
                                           prev_ko=bool(prev) and not prev['ok'])
+        if event in ('up', 'down', 'finished'):
+            log_event(conn, uid, 'niveau_' + event, subject, n, exo_id)
         streak = green  # column kept for compatibility: greens on the level just answered
         conn.execute('''INSERT INTO level_progress (account_id, subject, level, streak, best) VALUES (?, ?, ?, ?, ?)
                         ON CONFLICT(account_id, subject) DO UPDATE SET level=excluded.level,
                         streak=excluded.streak, best=excluded.best, updated_at=CURRENT_TIMESTAMP''',
                      (uid, subject, level, streak, best))
     return jsonify(event=event, level=level, best=best, **extra)
+
+
+@bp.route('/api/niveaux/<subject>/copie', methods=['POST'])
+@login_required
+def level_copy(subject):
+    """« Copier pour une IA » clicked: only counted, for the stats."""
+    get_parcours(subject)  # 404 on an unknown subject
+    body = request.get_json(silent=True) or {}
+    level = body.get('level') if isinstance(body.get('level'), int) else None
+    with db() as conn:
+        log_event(conn, session['uid'], 'copie_ia', subject, level, str(body.get('exo_id') or '')[:40])
+    return jsonify(ok=True)
 
 
 # --------------------------------------------------------------- stats ----
@@ -878,6 +912,44 @@ def compute_stats(rows, today, titles=None):
     }
 
 
+def week_history(rows, events, today):
+    """One entry per week (Monday first) from the first activity to this week, newest first,
+    with the change against the week before. rows: exo_log dicts, events: event_log dicts (local 'at')."""
+    from collections import defaultdict
+    from datetime import timedelta
+    monday = lambda d: d - timedelta(days=d.weekday())
+    w = defaultdict(lambda: {'n': 0, 'ok': 0, 'secs': 0, 'points': 0, 'days': set(), 'review': 0,
+                             'up': 0, 'down': 0, 'skip': 0, 'help': 0, 'copies': 0})
+    for r in rows:
+        x = w[monday(r['at'].date())]
+        x['n'] += 1
+        x['ok'] += r['ok']
+        x['secs'] += min(r['secs'] or 0, MAX_SECS)
+        x['points'] += r.get('points') or 0
+        x['review'] += r.get('review') or 0
+        x['days'].add(r['at'].date())
+    kinds = {'niveau_up': 'up', 'niveau_finished': 'up', 'niveau_down': 'down', 'passer': 'skip', 'copie_ia': 'copies'}
+    for e in events:
+        k = kinds.get(e['kind']) or ('help' if e['kind'].startswith('aide_') else None)
+        if k:
+            w[monday(e['at'].date())][k] += 1
+    if not w:
+        return []
+    out, prev, day = [], None, min(w)
+    while day <= monday(today):
+        x = w.get(day) or w.default_factory()
+        cur = {**{k: v for k, v in x.items() if k not in ('days', 'secs')}, 'days': len(x['days']),
+               'minutes': round(x['secs'] / 60), 'rate': round(100 * x['ok'] / x['n']) if x['n'] else None,
+               'label': f'{day.day} {MONTHS[day.month - 1]}' + (f' {day.year}' if day.year != today.year else ''),
+               'current': day == monday(today)}
+        cur['delta'] = prev and {k: cur[k] - prev[k] for k in ('n', 'minutes', 'points', 'days')}
+        if cur['delta'] is not None and cur['rate'] is not None and prev['rate'] is not None:
+            cur['delta']['rate'] = cur['rate'] - prev['rate']
+        out.append(cur)
+        prev, day = cur, day + timedelta(days=7)
+    return out[::-1]
+
+
 _FICHE = {'mtime': None, 'sections': []}
 
 
@@ -980,14 +1052,16 @@ def stats_page():
     tz = ZoneInfo(TZ)
     with db() as conn:
         rows = [dict(r) for r in conn.execute(
-            'SELECT subject, level, exo_id, ok, secs, timeout, at FROM exo_log WHERE account_id=? ORDER BY id',
+            'SELECT subject, level, exo_id, ok, secs, timeout, points, review, at FROM exo_log WHERE account_id=? ORDER BY id',
             (session['uid'],))]
+        events = [dict(r) for r in conn.execute('SELECT kind, at FROM event_log WHERE account_id=?', (session['uid'],))]
         total_xp = xp(conn, session['uid'])
-    for r in rows:  # sqlite CURRENT_TIMESTAMP is UTC
+    for r in rows + events:  # sqlite CURRENT_TIMESTAMP is UTC
         r['at'] = datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(tz)
     paths = _paths_meta()
     titles = {sid: d['subject']['titre'] for sid, d in paths}
     s = compute_stats(rows, datetime.now(tz).date(), titles)
+    s['history'] = week_history(rows, events, datetime.now(tz).date())
     with db() as conn:
         s['paths'] = []
         for sid, data in paths:

@@ -257,3 +257,8 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 - Stats « Par matière » : la barre montre réussis en vert et ratés en rouge, pour ne pas la confondre avec la progression.
 - Bouton « Copier pour une IA » : en bleu, et seulement quand on a raté (pour se faire expliquer la correction).
 - Révisions espacées dans le grind : jamais une autre matière. Un autre chapitre de la même matière, oui.
+
+## Décisions du 2026-11-17 (todonext.md)
+- « Remets le footer sur toutes les pages, c'est absolument nécessaire. » Fait : le footer revient sur la page d'exercice (il reste en place quand « Exercice suivant » change d'exercice sans recharger), sur le fil `/scroll/<parcours>` (tout en bas du fil, les cartes s'ajoutent au-dessus) et sur `/admin`. Remplace la décision « plus de footer sur la page d'exercice ».
+- « Affiche le bouton copy as md quand même : le but c'est d'apprendre, des fois on réussit sans tout avoir compris. » Fait : « Copier pour une IA » apparaît après chaque réponse, réussie ou ratée (toujours jamais avant la correction). Remplace « seulement quand on a raté ».
+- « Enregistre bien toutes les stats, et même plus, pour voir mon historique et comparer les semaines. » Fait : nouvelle table `event_log` (« Trop dur, passer », aides ouvertes, copies pour une IA, niveaux validés ou perdus) et colonne `exo_log.review` (révision espacée). `/stats` a une section « Historique semaine par semaine » : une ligne par semaine depuis la première activité, avec exercices, réussite, temps, points, jours actifs, niveaux validés/perdus, passés, aides, copies IA, révisions, et l'écart avec la semaine précédente. Les nouveaux compteurs démarrent le 17 nov. 2026 (avant, ils n'étaient pas enregistrés).

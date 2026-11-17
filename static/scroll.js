@@ -4,6 +4,7 @@
   const $ = (id) => document.getElementById(id);
   const root = $('feed-screen');
   const feed = $('feed');
+  const foot = feed.querySelector('.morgan-footer');  // footer stays last in the feed
   const api = `/api/scroll/${root.dataset.subject}`;
 
   const cat = new CatMascotEngine([$('chill-cat')]);
@@ -63,12 +64,12 @@
     } catch (e) {
       const [card, body] = shell('ERREUR', '');
       body.append(el('div', 'card-front', 'Erreur réseau : recharge la page.'));
-      feed.append(card);
+      feed.insertBefore(card, foot);
       return;
     } finally { loading = false; }
     setProgress(data.progress);
     const card = data.card.kind === 'c' ? courseCard(data.card) : quizCard(data.card);
-    feed.append(card);
+    feed.insertBefore(card, foot);
     renderMath(card);
     feed.scrollTo({ top: card.offsetTop, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     const first = card.querySelector('button');

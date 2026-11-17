@@ -164,12 +164,18 @@ class Api(unittest.TestCase):
         self.assertGreater(me['levels_total'], 0)
         for path in ('/niveaux', '/stats', '/formules', '/compte', f'/niveaux/{SUBJECT}', '/inconnu'):
             html = self.c.get(path).get_data(as_text=True)
-            # the exercise page has no footer: nothing below the answer buttons (council 2026-11-16)
-            self.assertEqual('morgan-footer' in html, path != f'/niveaux/{SUBJECT}', path)
+            self.assertIn('morgan-footer', html, path)  # footer on every page, exercise page included (user 2026-11-17)
             self.assertIn('app-nav', html, path)
         self.answer(1, True)
         self.assertEqual(self.c.get('/api/me').get_json()['streak'], 1)
-        self.assertEqual(self.c.get('/stats').status_code, 200)
+        self.assertEqual(self.c.post(f'/api/niveaux/{SUBJECT}/copie', json={'level': 1, 'exo_id': 'x'}).status_code, 200)
+        self.c.get(f'/niveaux/{SUBJECT}?facile=x')  # « Trop dur, passer »
+        html = self.c.get('/stats').get_data(as_text=True)
+        self.assertIn('Historique semaine par semaine', html)
+        with levels.db() as conn:
+            kinds = {k for (k,) in conn.execute('SELECT kind FROM event_log e JOIN account a ON a.id=e.account_id '
+                                                "WHERE a.username='navuser'")}
+        self.assertTrue({'copie_ia', 'passer'} <= kinds, kinds)
 
     def test_admin_only_for_owner_account(self):
         os.environ['ADMIN_PASSWORD'] = 'x'
@@ -374,3 +380,22 @@ class Stats(unittest.TestCase):
         self.assertIsNone(last[6])                                   # Sunday: future
         self.assertEqual(len(s['chart']), 30)
         self.assertEqual(s['chart'][-2]['min'], 31)
+
+    def test_week_history(self):
+        from datetime import date, datetime
+        today = date(2026, 11, 18)  # Wednesday; weeks start on Mondays 2, 9 and 16 nov
+        def row(day, ok, secs=120, points=10):
+            return {'ok': ok, 'secs': secs, 'points': points, 'review': 0, 'at': datetime(2026, 11, day, 9)}
+        rows = [row(3, 1), row(3, 0), row(17, 1), row(18, 1, 99999)]
+        events = [{'kind': 'passer', 'at': datetime(2026, 11, 17, 9)}, {'kind': 'aide_fiche', 'at': datetime(2026, 11, 17, 9)},
+                  {'kind': 'niveau_up', 'at': datetime(2026, 11, 3, 9)}, {'kind': 'copie_ia', 'at': datetime(2026, 11, 18, 9)}]
+        h = levels.week_history(rows, events, today)
+        self.assertEqual([w['label'] for w in h], ['16 nov.', '9 nov.', '2 nov.'])
+        now, empty, first = h
+        self.assertTrue(now['current'])
+        self.assertEqual((now['n'], now['rate'], now['days'], now['skip'], now['help'], now['copies']), (2, 100, 2, 1, 1, 1))
+        self.assertEqual(now['minutes'], round((120 + levels.MAX_SECS) / 60))
+        self.assertEqual((empty['n'], empty['rate'], empty['delta']['n']), (0, None, -2))
+        self.assertNotIn('rate', now['delta'])  # no rate the week before: no change shown
+        self.assertEqual((first['rate'], first['up'], first['delta']), (50, 1, None))
+        self.assertEqual(levels.week_history([], [], today), [])

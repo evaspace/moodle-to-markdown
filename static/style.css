@@ -1470,3 +1470,6 @@ a.quick-all-btn { text-decoration: none; box-sizing: border-box; }
 .me-pill { text-decoration: none; cursor: pointer; }
 .me-pill:hover { background: var(--accent-color); border-color: var(--accent-color); }
 body:has(#landing-screen.visible) .feed-only { display: none; }
+
+/* footer at the end of the /scroll feed */
+#feed > .morgan-footer { scroll-snap-align: end; }

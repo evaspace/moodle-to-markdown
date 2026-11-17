@@ -8,6 +8,7 @@
   {% include "share.html" %}
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261117">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -25,7 +26,7 @@
     <div class="header-right"></div>
   </header>
   <div id="feed-screen" class="screen" data-subject="{{ subject.id }}">
-    <div id="feed" tabindex="0" aria-live="polite"></div>
+    <div id="feed" tabindex="0" aria-live="polite">{% include 'footer.html' %}</div>
     <div id="bottom-cat-container" class="bottom-cat-wrap">
       <div id="cat-bubble" class="cat-speech-bubble hidden"></div>
       <div class="mascot-frame"><img src="/static/laying-cat-removebg-preview.png" id="chill-cat" class="mascot-cat-img state-rest" alt="Le chat"></div>
@@ -36,6 +37,6 @@
 <script src="/static/cat.js?v=20261116b"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script src="/static/card-copy.js?v=1"></script>
-<script src="/static/scroll.js?v=4"></script>
+<script src="/static/scroll.js?v=5"></script>
 </body>
 </html>
