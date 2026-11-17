@@ -430,6 +430,9 @@ whose summary gives validated levels and the weighted percent. The weekly succes
 `levels.week_history` (one bar per week since the first activity, 8 visible): the ← / → buttons (or a click on
 a bar) slide the chart one week and show that week's numbers and their change against the week before.
 `/admin/stats` keeps the full weekly table (`templates/history.html`).
+The time chart (`s['chart_all']`, every day back to the first activity in steps of 7) shows a 30-day window
+that the same arrows slide 7 days at a time, rescaled to the visible days. « Quand tu travailles » shows one
+weekday x hour grid per week (`s['heat_weeks']`), current week first, with ← / → to change week.
 
 
 ## Navbar, stats et admin (2026-11-15)
