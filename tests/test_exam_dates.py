@@ -51,6 +51,21 @@ class ExamDates(unittest.TestCase):
         new = ed.merge(self.syllabus['calendrier'], evs)
         self.assertNotIn('2026-12-14', [n['debut'] for n in new])  # already in syllabus.json
         self.assertEqual(ed.merge([], evs + evs), evs)
+        known = [{'debut': '2026-12-07', 'titre': 'Autre titre', 'type': 'Test à distance'}]
+        self.assertNotIn('2026-12-07', [n['debut'] for n in ed.merge(known, evs)])  # same day, same type
+
+
+    def test_moodle_open_close_pairs_and_course_codes(self):
+        ics = ('BEGIN:VCALENDAR\r\n'
+               'BEGIN:VEVENT\r\nSUMMARY:MATHS APIS : TEST 1 FR 16 novembre s’ouvre\r\nCATEGORIES:S1-MATHS-2031\r\nDTSTART:20261116T060000Z\r\nEND:VEVENT\r\n'
+               'BEGIN:VEVENT\r\nSUMMARY:MATHS APIS : TEST 1 FR 16 novembre se termine\r\nCATEGORIES:S1-MATHS-2031\r\nDTSTART:20261116T120000Z\r\nEND:VEVENT\r\n'
+               'BEGIN:VEVENT\r\nSUMMARY:QCM2 s’ouvre\r\nCATEGORIES:2627_I_INF_FISE_S01_CN_PC_MECA_1\r\nDTSTART:20261123T230000Z\r\nEND:VEVENT\r\n'
+               'BEGIN:VEVENT\r\nSUMMARY:QCM2 se termine\r\nCATEGORIES:2627_I_INF_FISE_S01_CN_PC_MECA_1\r\nDTSTART:20261124T225900Z\r\nEND:VEVENT\r\n'
+               'END:VCALENDAR\r\n')
+        evs = ed.candidates(ed.parse_ics(ics), 'Moodle', self.syllabus, date(2026, 9, 1))
+        self.assertEqual([(e['titre'], e['debut'], e.get('fin'), e['ecue']) for e in evs], [
+            ('MATHS APIS : TEST 1 FR 16 novembre', '2026-11-16', None, 'maths/S1/APIS'),
+            ('QCM2', '2026-11-24', None, 'physique/S1/Mécanique')])  # 00:00-23:59 Paris time: one day
 
 
 if __name__ == '__main__':

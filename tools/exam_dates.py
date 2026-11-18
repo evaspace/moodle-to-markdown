@@ -77,17 +77,26 @@ def to_date(value, params):
     return dt.date()  # TZID=Europe/Paris or floating: already local
 
 
+# Moodle course codes that name no ECUE (category « 2627_I_INF_FISE_S01_CN_PC_MECA_1 »).
+# shortcut: one entry per course seen in the feed, add new ones when « ECUE non reconnue » shows up.
+ALIASES = {'meca': 'physique/S1/Mécanique'}
+# Moodle sends one event when a test opens and one when it closes: merged into one item
+PHASE = re.compile(r"\s+(s[’']ouvre|se termine|doit [eê]tre achev[ée]e?)\s*$", re.I)
+
+
 def ecue_for(text, syllabus):
-    """'matiere/semestre/id' of the ECUE whose title words are all in the text, else None."""
+    """'matiere/semestre/id' of the ECUE whose title words are all in the text, or whose id and
+    subject are both named (« MATHS APIS »), else a course-code alias, else None."""
     have = words(text)
     best = None
     for m in syllabus['matieres']:
         for s in m['semestres']:
             for e in s['ecues']:
                 need = words(e['titre'])
-                if need and need <= have and (best is None or len(need) > best[0]):
+                named = words(e['id']) <= have and words(m['id']) <= have
+                if (need and need <= have or named) and (best is None or len(need) > best[0]):
                     best = (len(need), f"{m['id']}/{s['id']}/{e['id']}")
-    return best and best[1]
+    return best[1] if best else next((v for k, v in ALIASES.items() if k in have), None)
 
 
 def candidates(events, source, syllabus, since):
@@ -97,6 +106,7 @@ def candidates(events, source, syllabus, since):
         if ev['start'] < since or not EXAM.search(text):
             continue
         title = re.sub(r'\s*\((EVAL|EXAMEN)\)\s*$', '', ev.get('summary', '').strip(), flags=re.I)
+        title = PHASE.sub('', title)
         kind = 'Examen' if re.search(r'type:\s*examen|\beval\b|examen|partiel|final|midterm', text, re.I) else 'Test à distance'
         item = {'debut': ev['start'].isoformat()}
         if ev['end'] != ev['start']:
@@ -105,7 +115,14 @@ def candidates(events, source, syllabus, since):
         ecue = ecue_for(text, syllabus)
         if ecue:
             item['ecue'] = ecue
-        out.append(item)
+        same = next((o for o in out if o['titre'] == title), None)
+        if same:  # « s'ouvre » + « se termine »: one item from the first start to the last end
+            dates = sorted({same['debut'], same.get('fin', same['debut']), item['debut'], item.get('fin', item['debut'])})
+            same['debut'], same['fin'] = dates[0], dates[-1]
+            if same['fin'] == same['debut']:
+                del same['fin']
+        else:
+            out.append(item)
     return out
 
 
@@ -114,11 +131,12 @@ def key(item):
 
 
 def merge(known, found):
-    """New items (not already listed on the same start date with the same title), deduplicated."""
+    """New items (not already listed on the same start date with the same title or type), deduplicated."""
     seen = {key(k) for k in known}
+    typed = {(k['debut'], k['type']) for k in known}  # hand-written entries use other titles
     new = []
     for f in found:
-        if key(f) not in seen:
+        if key(f) not in seen and (f['debut'], f['type']) not in typed:
             seen.add(key(f))
             new.append(f)
     return new

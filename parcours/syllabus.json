@@ -53,6 +53,13 @@
    "source": "Moodle S1-MATHS-2031 (annonce du 16 nov. 2026)"
   },
   {
+   "debut": "2026-11-24",
+   "titre": "QCM2",
+   "type": "Test à distance",
+   "source": "Moodle",
+   "ecue": "physique/S1/Mécanique"
+  },
+  {
    "debut": "2026-12-07",
    "titre": "Test à distance : APIS en entier",
    "type": "Test à distance",
