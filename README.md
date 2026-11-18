@@ -435,6 +435,15 @@ that the same arrows slide 7 days at a time, rescaled to the visible days. « Qu
 weekday x hour grid per week (`s['heat_weeks']`), current week first, with ← / → to change week.
 
 
+### Leaderboard (`/classement`)
+Opt-in: `account.leaderboard` (0 by default, added by `init_levels_db`), set by `POST /api/classement {visible}`
+from the checkbox on `/classement` and `/compte`. Hidden accounts are left out of every board.
+`levels.leaderboards(conn, since, subjects)` returns three boards for activity since `since` (UTC, from
+`period_start`: local day, week from Monday, month, year, Europe/Paris): `temps` = sum of `exo_log.secs`
+capped at `MAX_SECS` per attempt, `niveaux` = distinct (path, level) with a `niveau_up`/`niveau_finished`
+event (counted from 2026-11-17, when `event_log` started), `points` = sum of `exo_log.points`.
+Query `?p=jour|semaine|mois|annee&m=<matière id>`; top `BOARD_SIZE` (20) plus the user's own row if lower.
+
 ## Navbar, stats et admin (2026-11-15)
 - `templates/nav.html` : navbar commune, alimentée par `levels.nav_state()` (processeur de contexte `nav`, route `/api/me`). Footer `footer.html` inclus sur toutes les pages sauf les fils plein écran.
 - `/stats` : stats personnelles. `/admin/stats` (HTTP Basic `ADMIN_PASSWORD`, `?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).

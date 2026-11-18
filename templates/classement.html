@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Classement · Epita Doomscrolling</title>
+  {% include "share.html" %}
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/niveaux.css?v=30">
+</head>
+<body class="lv-page">
+{% set active = 'classement' %}{% include 'nav.html' %}
+<div class="lv-wrap">
+  <h1>Classement</h1>
+  <label class="cl-toggle">
+    <input type="checkbox" id="board-visible" data-reload="1"{% if visible %} checked{% endif %}>
+    Apparaître dans le classement
+  </label>
+  <p class="lv-muted" id="board-msg" role="status">{% if not visible %}Tu es caché : les autres ne te voient pas, et tu n'as pas de rang.{% endif %}</p>
+
+  <nav class="lv-tabs cl-tabs" aria-label="Période">
+    {% for key, label in periods.items() %}
+    <a href="?p={{ key }}{% if mat %}&m={{ mat }}{% endif %}"{% if key == period %} aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+  <form class="cl-filter" method="get">
+    <input type="hidden" name="p" value="{{ period }}">
+    <label>Matière
+      <select name="m" onchange="this.form.submit()">
+        <option value="">Toutes</option>
+        {% for m in mats %}<option value="{{ m.id }}"{% if m.id == mat %} selected{% endif %}>{{ m.titre }}</option>{% endfor %}
+      </select>
+    </label>
+    <noscript><button class="lv-btn" type="submit">Filtrer</button></noscript>
+  </form>
+
+  {% for key, title in [('temps', 'Temps de travail'), ('niveaux', 'Niveaux validés'), ('points', 'Points')] %}
+  <section class="cl-board">
+    <h2>{{ title }}</h2>
+    {% if boards[key] %}
+    <table class="st-hist">
+      <tbody>
+      {% for r in boards[key] %}
+        <tr{% if r.me %} class="me"{% endif %}><td>{{ r.rank }}</td><td class="cl-name">{{ r.name }}</td><td>{{ r.value }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="lv-muted">Personne sur cette période.</p>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+<script src="/static/niveaux.js?v=13"></script>
+{% include 'footer.html' %}
+</body>
+</html>

@@ -415,3 +415,45 @@ class Stats(unittest.TestCase):
         self.assertNotIn('rate', now['delta'])  # no rate the week before: no change shown
         self.assertEqual((first['rate'], first['up'], first['delta']), (50, 1, None))
         self.assertEqual(levels.week_history([], [], today), [])
+
+
+class Leaderboard(unittest.TestCase):
+    def test_period_start_is_local_midnight_in_utc(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now = datetime(2026, 11, 18, 10, 0, tzinfo=ZoneInfo('Europe/Paris'))  # a Wednesday, UTC+1
+        self.assertEqual(levels.period_start('jour', now), '2026-11-17 23:00:00')
+        self.assertEqual(levels.period_start('semaine', now), '2026-11-15 23:00:00')
+        self.assertEqual(levels.period_start('mois', now), '2026-10-31 23:00:00')
+        self.assertEqual(levels.period_start('annee', now), '2025-12-31 23:00:00')
+
+    def test_opt_in_period_and_subject_filter(self):
+        import sqlite3
+        conn = sqlite3.connect(':memory:')
+        conn.executescript(levels.SCHEMA)
+        conn.execute('ALTER TABLE account ADD COLUMN leaderboard INTEGER NOT NULL DEFAULT 0')
+        conn.executemany('INSERT INTO account (id, username, pw_hash, leaderboard) VALUES (?, ?, ?, ?)',
+                         [(1, 'ann', 'x', 1), (2, 'ben', 'x', 1), (3, 'hid', 'x', 0)])
+        log = 'INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, points, at) VALUES (?, ?, 1, ?, 1, ?, ?, ?)'
+        conn.executemany(log, [(1, 'a', 'e', 600, 10, '2026-11-18 08:00:00'), (2, 'a', 'e', 99999, 5, '2026-11-18 08:00:00'),
+                               (2, 'b', 'e', 60, 50, '2026-11-18 08:00:00'), (1, 'a', 'e', 900, 99, '2026-11-01 08:00:00'),
+                               (3, 'a', 'e', 5000, 500, '2026-11-18 08:00:00')])
+        ev = 'INSERT INTO event_log (account_id, kind, subject, level, at) VALUES (?, ?, ?, ?, ?)'
+        conn.executemany(ev, [(1, 'niveau_up', 'a', 1, '2026-11-18 08:00:00'), (1, 'niveau_up', 'a', 1, '2026-11-18 09:00:00'),
+                              (1, 'niveau_up', 'a', 2, '2026-11-18 09:00:00'), (2, 'niveau_down', 'a', 1, '2026-11-18 09:00:00')])
+        b = levels.leaderboards(conn, '2026-11-17 23:00:00')
+        self.assertEqual([(r[1], r[2]) for r in b['points']], [('ben', 55), ('ann', 10)])  # hidden and older rows out
+        self.assertEqual([(r[1], r[2]) for r in b['temps']], [('ben', levels.MAX_SECS + 60), ('ann', 600)])  # capped
+        self.assertEqual([(r[1], r[2]) for r in b['niveaux']], [('ann', 2)])  # same level twice counts once
+        self.assertEqual([r[1] for r in levels.leaderboards(conn, '2026-11-17 23:00:00', ['a'])['points']], ['ann', 'ben'])
+
+    def test_page_and_toggle(self):
+        import app as app_module
+        c = app_module.app.test_client()
+        self.assertEqual(c.get('/classement').status_code, 302)
+        c.post('/api/register', json={'username': 'boarduser', 'password': 'secret1'})
+        html = c.get('/classement?p=mois&m=maths').get_data(as_text=True)
+        self.assertIn('morgan-footer', html)
+        self.assertNotIn('boarduser</td>', html)
+        self.assertTrue(c.post('/api/classement', json={'visible': True}).get_json()['visible'])
+        self.assertIn('checked', c.get('/compte').get_data(as_text=True))

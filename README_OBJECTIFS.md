@@ -270,3 +270,7 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 - Boîte mail EPITA : Microsoft 365 refuse l'IMAP par mot de passe ; il faudrait une application OAuth validée par l'EPITA. Sources retenues à la place : l'URL iCal de Moodle (mêmes événements que les notifications) et l'URL iCal secrète du Google Agenda « Planning EPITA ». À fournir par l'utilisateur dans `.env`.
 
 - 2026-11-18 : accueil = bouton noir « SCROLLER LES COURS (EN DEV) » (repliable : « Tout doomscroller » + modules), puis « Niveaux sur papier » et « Lire le cours complet ».
+
+## Décision du 2026-11-18 : classement compétitif
+- « Il faut faire un dashboard. On peut activer le fait d'être vu dans le dashboard ou pas. C'est un dashboard compétitif, il y en a plusieurs : le plus d'heures, le max de niveaux validés (tri possible par matière), le nombre de points. Tout est par rapport à journalier, semaine, mensuel, annuel. »
+- Fait : page `/classement` (lien « Classement » dans la navbar, compte requis). Case « Apparaître dans le classement » sur `/classement` et `/compte`, décochée par défaut : un compte caché n'apparaît nulle part et n'a pas de rang. Trois tableaux : temps de travail, niveaux validés, points ; période aujourd'hui / cette semaine (depuis lundi) / ce mois / cette année (heure de Paris) ; filtre par matière appliqué aux trois tableaux.

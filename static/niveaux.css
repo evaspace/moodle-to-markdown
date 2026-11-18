@@ -368,3 +368,14 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-pages-view { background: none; }
 .st-pages { display: flex; }
 .st-page { flex: 0 0 100%; min-width: 0; }
+/* classement */
+.cl-toggle { display: flex; gap: 10px; align-items: center; margin-top: 16px; font-weight: 600; }
+.cl-toggle input { width: 20px; height: 20px; }
+.cl-tabs { flex-wrap: wrap; }
+.cl-tabs a { border: 2px solid var(--border-color); padding: 10px 16px; font-weight: 700; color: var(--text-color); text-decoration: none; }
+.cl-tabs a[aria-current="page"] { background: var(--text-color); color: #fff; }
+.cl-filter { margin: 16px 0; }
+.cl-filter select { display: block; margin-top: 6px; padding: 8px; font: inherit; }
+.cl-board { margin-top: 24px; }
+.cl-board .st-hist td.cl-name { text-align: left; width: 100%; }
+.cl-board .st-hist tr.me td { font-weight: 700; }

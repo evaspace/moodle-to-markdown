@@ -122,6 +122,9 @@ def init_levels_db(path=DB_PATH):
                           ('timeout', 'INTEGER NOT NULL DEFAULT 0'), ('review', 'INTEGER NOT NULL DEFAULT 0')):
             if col not in cols:
                 conn.execute(f'ALTER TABLE exo_log ADD COLUMN {col} {decl}')
+        if 'leaderboard' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
+            # opt-in: an account shows in /classement only once its owner ticks the box
+            conn.execute('ALTER TABLE account ADD COLUMN leaderboard INTEGER NOT NULL DEFAULT 0')
 
 
 def log_event(conn, uid, kind, subject=None, level=None, exo_id=None):
@@ -387,12 +390,12 @@ def squares(lvl, status):
 # ------------------------------------------------------------ accounts ----
 @bp.route('/compte')
 def account_page():
-    email = None
+    email, board = None, 0
     if session.get('uid'):
         with db() as conn:
-            row = conn.execute('SELECT email FROM account WHERE id=?', (session['uid'],)).fetchone()
-            email = row['email'] if row else None
-    return render_template('compte.html', username=session.get('username'), email=email,
+            row = conn.execute('SELECT email, leaderboard FROM account WHERE id=?', (session['uid'],)).fetchone()
+            email, board = (row['email'], row['leaderboard']) if row else (None, 0)
+    return render_template('compte.html', username=session.get('username'), email=email, board=board,
                            reset_token=request.args.get('reset', '')[:100])
 
 
@@ -1095,3 +1098,74 @@ def stats_page():
     s['feed'] = {'n': n, 'answered': answered, 'rate': round(100 * right / answered) if answered else 0,
                  'minutes': round(ms / 60000), 'combo': best[0] if best else 0}
     return render_template('stats.html', s=s, username=session['username'], xp=total_xp)
+
+
+# ---------------------------------------------------------- classement ----
+PERIODS = {'jour': "Aujourd'hui", 'semaine': 'Cette semaine', 'mois': 'Ce mois', 'annee': 'Cette année'}
+BOARD_SIZE = 20
+
+
+def period_start(period, now):
+    """UTC timestamp text (exo_log.at format) of the start of the local day/week/month/year of `now` (aware)."""
+    from datetime import datetime, time as dtime, timedelta, timezone
+    d = now.date()
+    d = {'jour': d, 'semaine': d - timedelta(days=d.weekday()), 'mois': d.replace(day=1),
+         'annee': d.replace(month=1, day=1)}[period]
+    return datetime.combine(d, dtime(), now.tzinfo).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def leaderboards(conn, since, subjects=None):
+    """{'temps'|'niveaux'|'points': [(account_id, username, value)] best first}: visible accounts only,
+    activity since `since` (UTC text), restricted to `subjects` (path ids) when given."""
+    filt, args = '', [since]
+    if subjects is not None:
+        filt, args = f" AND l.subject IN ({','.join('?' * len(subjects))})", args + list(subjects)
+    q = ('SELECT a.id, a.username, {v} AS v FROM {t} l JOIN account a ON a.id = l.account_id '
+         'WHERE a.leaderboard = 1 AND l.at >= ?' + filt + '{w} GROUP BY a.id HAVING v > 0 ORDER BY v DESC, a.username')
+    return {
+        'temps': conn.execute(q.format(v=f'SUM(MIN(COALESCE(l.secs, 0), {MAX_SECS}))', t='exo_log', w=''), args).fetchall(),
+        # levels passed in the period, each (path, level) once even if passed again after a drop
+        'niveaux': conn.execute(q.format(v="COUNT(DISTINCT l.subject || '/' || l.level)", t='event_log',
+                                         w=" AND l.kind IN ('niveau_up', 'niveau_finished')"), args).fetchall(),
+        'points': conn.execute(q.format(v='SUM(l.points)', t='exo_log', w=''), args).fetchall(),
+    }
+
+
+def _duration(secs):
+    h, m = divmod(round(secs / 60), 60)
+    return f'{h} h {m:02d}' if h else f'{m} min'
+
+
+@bp.route('/api/classement', methods=['POST'])
+@login_required
+def set_leaderboard():
+    visible = bool((request.get_json(silent=True) or {}).get('visible'))
+    with db() as conn:
+        conn.execute('UPDATE account SET leaderboard=? WHERE id=?', (int(visible), session['uid']))
+    return jsonify(ok=True, visible=visible)
+
+
+@bp.route('/classement')
+@login_required
+def leaderboard_page():
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    period = request.args.get('p') if request.args.get('p') in PERIODS else 'semaine'
+    mats = [{'id': m['id'], 'titre': m['titre']} for m in
+            json.loads((PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))['matieres']]
+    mat = request.args.get('m') if request.args.get('m') in {m['id'] for m in mats} else ''
+    subjects = [sid for sid, d in _paths_meta() if d['subject'].get('matiere') == mat] if mat else None
+    uid = session['uid']
+    with db() as conn:
+        raw = leaderboards(conn, period_start(period, datetime.now(ZoneInfo(TZ))), subjects)
+        visible = conn.execute('SELECT leaderboard FROM account WHERE id=?', (uid,)).fetchone()[0]
+    fmt = {'temps': _duration, 'niveaux': str, 'points': str}
+    boards = {}
+    for key, rows in raw.items():
+        ranked = [{'rank': i + 1, 'name': name, 'value': fmt[key](v), 'me': aid == uid}
+                  for i, (aid, name, v) in enumerate(rows)]
+        top = ranked[:BOARD_SIZE]
+        top += [r for r in ranked[BOARD_SIZE:] if r['me']]  # own rank even outside the top
+        boards[key] = top
+    return render_template('classement.html', boards=boards, periods=PERIODS, period=period,
+                           mats=mats, mat=mat, visible=visible)

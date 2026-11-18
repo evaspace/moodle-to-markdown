@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=29">
+  <link rel="stylesheet" href="/static/niveaux.css?v=30">
 </head>
 <body class="lv-page">
 {% set active = '' %}{% include 'nav.html' %}
@@ -27,6 +27,11 @@
       <p class="lv-error" id="email-msg" role="status"></p>
       <button class="lv-btn" type="submit">Enregistrer l'e-mail</button>
     </form>
+    <label class="cl-toggle">
+      <input type="checkbox" id="board-visible"{% if board %} checked{% endif %}>
+      Apparaître dans le <a href="/classement">classement</a> (identifiant, temps, niveaux, points)
+    </label>
+    <p class="lv-muted" id="board-msg" role="status"></p>
   {% elif reset_token %}
     <h1>Nouveau mot de passe</h1>
     <form class="lv-form" id="reset-form" data-token="{{ reset_token }}" novalidate>
@@ -70,7 +75,7 @@
     </details>
   {% endif %}
 </div>
-<script src="/static/niveaux.js?v=12"></script>
+<script src="/static/niveaux.js?v=13"></script>
 {% include 'footer.html' %}
 </body>
 </html>

@@ -53,6 +53,14 @@
     const res = await post('/api/email', { email: emailForm.email.value });
     $('email-msg').textContent = res.ok ? 'E-mail enregistré' : (res.data.error || 'Erreur, réessaie');
   };
+  const board = $('board-visible');
+  if (board) board.onchange = async () => {
+    const res = await post('/api/classement', { visible: board.checked });
+    if (!res.ok) board.checked = !board.checked;
+    else if (board.dataset.reload) return location.reload();
+    $('board-msg').textContent = !res.ok ? 'Erreur, réessaie'
+      : board.checked ? 'Tu apparais dans le classement' : "Tu n'apparais plus dans le classement";
+  };
   const logout = $('logout');
   if (logout) logout.onclick = async () => { await post('/api/logout'); location.href = '/compte'; };
 
