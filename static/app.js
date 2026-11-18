@@ -475,7 +475,7 @@ function launchFeed(catId, subId, themeId = null, fromHistory = false) {
     loadCards();
 
     // Focus sur le feed pour permettre les touches fléchées desktop
-    feed.focus();
+    feed.focus({ preventScroll: true });  // focus alone scrolls #app-viewport and hides the header
 }
 
 function goHome(fromHistory = false) {

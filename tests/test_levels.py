@@ -432,6 +432,7 @@ class Leaderboard(unittest.TestCase):
         conn = sqlite3.connect(':memory:')
         conn.executescript(levels.SCHEMA)
         conn.execute('ALTER TABLE account ADD COLUMN leaderboard INTEGER NOT NULL DEFAULT 0')
+        conn.execute('ALTER TABLE account ADD COLUMN board_ban INTEGER NOT NULL DEFAULT 0')
         conn.executemany('INSERT INTO account (id, username, pw_hash, leaderboard) VALUES (?, ?, ?, ?)',
                          [(1, 'ann', 'x', 1), (2, 'ben', 'x', 1), (3, 'hid', 'x', 0)])
         log = 'INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, points, at) VALUES (?, ?, 1, ?, 1, ?, ?, ?)'
@@ -457,3 +458,31 @@ class Leaderboard(unittest.TestCase):
         self.assertNotIn('boarduser</td>', html)
         self.assertTrue(c.post('/api/classement', json={'visible': True}).get_json()['visible'])
         self.assertIn('checked', c.get('/compte').get_data(as_text=True))
+
+
+class Cheat(unittest.TestCase):
+    def test_suspects(self):
+        authored = {('a', 1): 300, ('b', 1): 300}  # usual time 180 s until MIN_SAMPLES successes
+        honest = [(1, 'a', 1, i % 7 != 0, 150, i * 400) for i in range(60)]
+        fast = [(2, 'a', 1, 1, 10, i * 20) for i in range(6)]  # 10 s < 20 % of 180 s
+        streak = [(3, 'b', 1, 1, 200, i * 400) for i in range(levels.STREAK_FLAG)]
+        ups = [(4, s, n, 100 * n) for s in ('a', 'b') for n in (1, 2)] + [(1, 'a', n, 4000 * n) for n in range(1, 5)]
+        found = levels.suspects(honest + fast + streak, ups, {'a': 'maths', 'b': 'algo'}, authored)
+        self.assertEqual(sorted(found), [2, 3, 4])
+        self.assertIn('6 réussites trop rapides', found[2][0])
+        self.assertIn(f"{levels.STREAK_FLAG} réussites d'affilée", found[3][0])
+        self.assertIn('4 niveaux validés', found[4][0])
+
+    def test_ban_hides_from_board_and_is_admin_only(self):
+        import sqlite3
+        conn = sqlite3.connect(':memory:')
+        conn.executescript(levels.SCHEMA)
+        conn.execute('ALTER TABLE account ADD COLUMN leaderboard INTEGER NOT NULL DEFAULT 1')
+        conn.execute('ALTER TABLE account ADD COLUMN board_ban INTEGER NOT NULL DEFAULT 0')
+        conn.executemany('INSERT INTO account (id, username, pw_hash, board_ban) VALUES (?, ?, ?, ?)', [(1, 'ok', 'x', 0), (2, 'ban', 'x', 1)])
+        conn.executemany("INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, points) VALUES (?, 'a', 1, 'e', 1, 60, 9)", [(1,), (2,)])
+        self.assertEqual([r[1] for r in levels.leaderboards(conn, '2000-01-01 00:00:00')['points']], ['ok'])
+        import app as app_module
+        c = app_module.app.test_client()
+        c.post('/api/register', json={'username': 'notadmin', 'password': 'secret1'})
+        self.assertEqual(c.post('/api/admin/classement', json={'account_id': 1, 'ban': True}).status_code, 403)

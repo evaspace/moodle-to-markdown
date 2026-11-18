@@ -533,10 +533,8 @@ button {
 .social-linkedin:hover { background: #0a66c2; }
 
 /* FEED & CARTES (PUR FLAT) */
-#feed-screen {
-    position: relative;
+#feed-screen {  /* absolute from .screen: under the header, down to the bottom of the frame */
     width: 100%;
-    height: 100%;
     background: var(--bg-color);
 }
 
@@ -1481,3 +1479,16 @@ body:has(#landing-screen.visible) .feed-only { display: none; }
 .scroll-group > .quick-all-btn + .quick-all-btn { margin-top: 10px; }
 .scroll-group > .category-list { margin-top: 10px; }
 .landing-content { width: 100%; }
+
+/* Accueil : barre commune (nav.html). Sur PC, l'accueil a la forme des autres pages ;
+   le fil garde son cadre téléphone, sous la même barre. Sur téléphone, header d'origine. */
+body.home { display: flex; flex-direction: column; }
+body.home > .app-nav { flex: none; }
+body.home #app-viewport { flex: 1; min-height: 0; height: auto; }
+@media (max-width: 640px) { body.home > .app-nav { display: none; } }
+@media (min-width: 641px) {
+    body.home:has(#landing-screen.visible) #app-viewport { max-width: none; border: 0; }
+    body.home:has(#landing-screen.visible) #app-header { display: none; }
+    body.home:has(#landing-screen.visible) .screen { inset: 0; }
+    body.home .landing-content > :not(.morgan-footer) { max-width: 720px; margin-left: auto; margin-right: auto; }
+}

@@ -444,6 +444,22 @@ capped at `MAX_SECS` per attempt, `niveaux` = distinct (path, level) with a `niv
 event (counted from 2026-11-17, when `event_log` started), `points` = sum of `exo_log.points`.
 Query `?p=jour|semaine|mois|annee&m=<matière id>`; top `BOARD_SIZE` (20) plus the user's own row if lower.
 
+### Cheat flags (`/admin/stats`, « Triche possible »)
+Levels are self-graded, so cheating means clicking « Réussi » without doing the work. `levels.suspects`
+(pure, unit-tested) flags an account when: at least `FAST_MIN` (5) successes took under `FAST_RATIO` (20 %)
+of the level's usual time (median of all users' successes, or 60 % of the authored time before
+`MIN_SAMPLES`) and they are at least half of its successes; or it has `STREAK_FLAG` (40) successes in a
+row; or it validated `RUSH_LEVELS` (4) levels in `RUSH_WINDOW` (1 h) across `RUSH_MATIERES` (2) subjects.
+Nothing is automatic: the admin clicks « Exclure » (`POST /api/admin/classement {account_id, ban}`, admin
+only), which sets `account.board_ban` and hides the account from every leaderboard.
+
+### Home page layout
+`templates/index.html` includes `nav.html`. Above 640 px the landing uses the common navbar and a 720 px
+column (CSS at the end of `static/style.css`, `body.home:has(#landing-screen.visible)`); the feed keeps its
+phone frame under the navbar. Under 640 px the navbar is hidden and the original header stays.
+`#feed-screen` is absolutely placed by `.screen` (it used to be `relative` + `top: 54px`, pushing the feed
+54 px below the frame) and `feed.focus({ preventScroll: true })` keeps the header visible.
+
 ## Navbar, stats et admin (2026-11-15)
 - `templates/nav.html` : navbar commune, alimentée par `levels.nav_state()` (processeur de contexte `nav`, route `/api/me`). Footer `footer.html` inclus sur toutes les pages sauf les fils plein écran.
 - `/stats` : stats personnelles. `/admin/stats` (HTTP Basic `ADMIN_PASSWORD`, `?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).

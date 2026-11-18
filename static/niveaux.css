@@ -379,3 +379,4 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .cl-board { margin-top: 24px; }
 .cl-board .st-hist td.cl-name { text-align: left; width: 100%; }
 .cl-board .st-hist tr.me td { font-weight: 700; }
+.cl-suspects td:nth-child(2) { white-space: normal; text-align: left; min-width: 260px; }

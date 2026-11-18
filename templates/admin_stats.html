@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=30">
+  <link rel="stylesheet" href="/static/niveaux.css?v=31">
 </head>
 <body class="lv-page">
 {% set tab = 'stats' %}{% include 'admin_nav.html' %}
@@ -92,9 +92,29 @@
   </table>
   </div>
   {% else %}<p class="lv-muted">Pas encore assez d'essais (5 minimum par exercice).</p>{% endif %}
+
+  <h2>Triche possible</h2>
+  <p class="lv-muted">Réponses trop rapides, séries sans erreur, niveaux de plusieurs matières validés en moins d'une heure. Rien n'est exclu automatiquement.</p>
+  {% if s.suspects %}
+  <div class="st-hist-scroll">
+  <table class="st-hist cl-suspects">
+    <thead><tr><th scope="col">Compte</th><th scope="col">Pourquoi</th><th scope="col">Classement</th></tr></thead>
+    <tbody>{% for u in s.suspects %}<tr><th scope="row">{{ u.username }}</th><td>{{ u.reasons | join(' · ') }}</td>
+      <td><button class="lv-btn" type="button" data-ban="{{ u.id }}" data-to="{{ 0 if u.banned else 1 }}">{{ 'Réintégrer' if u.banned else 'Exclure' }}</button>{% if not u.visible %} <span class="lv-muted">(caché)</span>{% endif %}</td></tr>{% endfor %}</tbody>
+  </table>
+  </div>
+  {% else %}<p class="lv-muted">Aucun compte suspect.</p>{% endif %}
 </div>
 </div>
 <script>
+// « Exclure du classement »: delegated, the #live block is replaced every minute
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-ban]');
+  if (!b) return;
+  const r = await fetch('/api/admin/classement', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ account_id: Number(b.dataset.ban), ban: b.dataset.to === '1' }) });
+  if (r.ok) { b.dataset.to = b.dataset.to === '1' ? '0' : '1'; b.textContent = b.dataset.to === '1' ? 'Exclure' : 'Réintégrer'; }
+});
 // Live data: every minute, refetch this page and swap the figures (no reload, nothing while the tab is hidden).
 setInterval(async () => {
   if (document.hidden) return;

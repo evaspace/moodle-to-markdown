@@ -125,6 +125,9 @@ def init_levels_db(path=DB_PATH):
         if 'leaderboard' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # opt-in: an account shows in /classement only once its owner ticks the box
             conn.execute('ALTER TABLE account ADD COLUMN leaderboard INTEGER NOT NULL DEFAULT 0')
+        if 'board_ban' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
+            # set by the admin from the « Triche possible » list of /admin/stats
+            conn.execute('ALTER TABLE account ADD COLUMN board_ban INTEGER NOT NULL DEFAULT 0')
 
 
 def log_event(conn, uid, kind, subject=None, level=None, exo_id=None):
@@ -1121,7 +1124,7 @@ def leaderboards(conn, since, subjects=None):
     if subjects is not None:
         filt, args = f" AND l.subject IN ({','.join('?' * len(subjects))})", args + list(subjects)
     q = ('SELECT a.id, a.username, {v} AS v FROM {t} l JOIN account a ON a.id = l.account_id '
-         'WHERE a.leaderboard = 1 AND l.at >= ?' + filt + '{w} GROUP BY a.id HAVING v > 0 ORDER BY v DESC, a.username')
+         'WHERE a.leaderboard = 1 AND a.board_ban = 0 AND l.at >= ?' + filt + '{w} GROUP BY a.id HAVING v > 0 ORDER BY v DESC, a.username')
     return {
         'temps': conn.execute(q.format(v=f'SUM(MIN(COALESCE(l.secs, 0), {MAX_SECS}))', t='exo_log', w=''), args).fetchall(),
         # levels passed in the period, each (path, level) once even if passed again after a drop
@@ -1169,3 +1172,87 @@ def leaderboard_page():
         boards[key] = top
     return render_template('classement.html', boards=boards, periods=PERIODS, period=period,
                            mats=mats, mat=mat, visible=visible)
+
+
+# -------------------------------------------------------------- triche ----
+# Levels are self-graded: cheating = clicking « Réussi » without doing the exercise.
+FAST_RATIO = 0.2    # a success in under 20 % of the level's usual time is too fast to be real
+FAST_MIN = 5        # flagged from this many too-fast successes...
+FAST_SHARE = 0.5    # ...when they are at least half of the account's successes
+STREAK_FLAG = 40    # successes in a row without a single miss
+RUSH_WINDOW = 3600  # seconds
+RUSH_LEVELS = 4     # levels validated within RUSH_WINDOW...
+RUSH_MATIERES = 2   # ...spread over at least this many subjects
+
+
+def suspects(logs, ups, matiere_of, authored):
+    """{account_id: [reasons]} for accounts whose answers are too fast or too perfect to be real.
+    logs: (account_id, subject, level, ok, secs, unix time) in id order; ups: (account_id, subject, level,
+    unix time) of niveau_up/finished events; matiere_of: path id -> subject id; authored: (path, level) ->
+    authored mean seconds, used as the usual time until MIN_SAMPLES successes give a median."""
+    from collections import defaultdict
+    from statistics import median
+    times = defaultdict(list)
+    for _, sub, lvl, ok, secs, _ in logs:
+        if ok and secs:
+            times[(sub, lvl)].append(secs)
+    usual = {k: median(v) if len(v) >= MIN_SAMPLES else authored.get(k, 300) * 0.6 for k, v in times.items()}
+    out = defaultdict(list)
+    per = defaultdict(list)
+    for row in logs:
+        per[row[0]].append(row)
+    for aid, rows in per.items():
+        oks = [r for r in rows if r[3]]
+        fast = sum(1 for r in oks if r[4] and r[4] < FAST_RATIO * usual[(r[1], r[2])])
+        if fast >= FAST_MIN and fast >= FAST_SHARE * len(oks):
+            out[aid].append(f'{fast} réussites trop rapides ({round(100 * fast / len(oks))} % de ses réussites)')
+        run = best = 0
+        for r in rows:
+            run = run + 1 if r[3] else 0
+            best = max(best, run)
+        if best >= STREAK_FLAG:
+            out[aid].append(f"{best} réussites d'affilée sans une erreur")
+    by_acc = defaultdict(list)
+    for aid, sub, lvl, at in sorted(ups, key=lambda u: u[3]):
+        by_acc[aid].append((at, matiere_of.get(sub, sub)))
+    for aid, evs in by_acc.items():
+        worst = None
+        for i, (t0, _) in enumerate(evs):
+            win = [m for t, m in evs[i:] if t - t0 <= RUSH_WINDOW]
+            if len(win) >= RUSH_LEVELS and len(set(win)) >= RUSH_MATIERES and (not worst or len(win) > worst[0]):
+                worst = (len(win), len(set(win)))
+        if worst:
+            out[aid].append(f'{worst[0]} niveaux validés en moins d\'1 h dans {worst[1]} matières')
+    return dict(out)
+
+
+def suspect_list(conn):
+    """Rows for the « Triche possible » table of /admin/stats, most reasons first."""
+    paths = load_parcours()
+    matiere_of = {sid: d['subject'].get('matiere', sid) for sid, d in paths.items()}
+    authored = {(sid, l['n']): sum(int(e.get('duree', 5)) * 60 for e in l['exos']) / len(l['exos'])
+                for sid, d in paths.items() for l in d['levels'] if l['exos']}
+    logs = conn.execute("SELECT account_id, subject, level, ok, secs, CAST(strftime('%s', at) AS INTEGER) "
+                        'FROM exo_log ORDER BY id').fetchall()
+    ups = conn.execute("SELECT account_id, subject, level, CAST(strftime('%s', at) AS INTEGER) FROM event_log "
+                       "WHERE kind IN ('niveau_up', 'niveau_finished')").fetchall()
+    found = suspects([tuple(r) for r in logs], [tuple(r) for r in ups], matiere_of, authored)
+    names = {r[0]: (r[1], r[2], r[3]) for r in conn.execute('SELECT id, username, leaderboard, board_ban FROM account')}
+    rows = [{'id': aid, 'username': names[aid][0], 'visible': names[aid][1], 'banned': names[aid][2], 'reasons': why}
+            for aid, why in found.items() if aid in names]
+    return sorted(rows, key=lambda r: (-len(r['reasons']), r['username'].lower()))
+
+
+@bp.route('/api/admin/classement', methods=['POST'])
+@login_required
+def ban_from_leaderboard():
+    if not is_admin():
+        return jsonify(error='réservé à l\'admin'), 403
+    body = request.get_json(silent=True) or {}
+    try:
+        aid = int(body.get('account_id'))
+    except (TypeError, ValueError):
+        return jsonify(error='compte invalide'), 400
+    with db() as conn:
+        conn.execute('UPDATE account SET board_ban=? WHERE id=?', (int(bool(body.get('ban'))), aid))
+    return jsonify(ok=True)

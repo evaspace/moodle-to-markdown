@@ -256,7 +256,7 @@ def admin_stats_page():
     from admin_stats import compute
     from datetime import datetime, timezone
     from zoneinfo import ZoneInfo
-    from levels import TZ, db as levels_db, load_parcours
+    from levels import TZ, db as levels_db, load_parcours, suspect_list
     tz = ZoneInfo(TZ)
     local = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(tz)
     with levels_db() as conn:
@@ -268,6 +268,8 @@ def admin_stats_page():
         progress = [dict(r) for r in conn.execute('SELECT account_id, subject, level, best FROM level_progress')]
     paths = {sid: {'titre': d['subject']['titre'], 'levels': len(d['levels'])} for sid, d in load_parcours().items()}
     stats = compute(accounts, logs, progress, paths, datetime.now(tz).date(), events)
+    with levels_db() as conn:
+        stats['suspects'] = suspect_list(conn)
     stats['updated'] = datetime.now(tz).strftime('%H:%M:%S')
     if request.args.get('format') == 'json':
         return jsonify(stats)
