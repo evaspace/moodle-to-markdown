@@ -373,6 +373,10 @@ COURSES_FILTER = []  # Laisser vide pour tout télécharger
 
 ## Levels mode (`/niveaux`)
 
+![Exercise page of level 4 of the S2 « Espaces vectoriels » path on a 390 px phone screen: statement, chapter sheet and formula helps, answer button, thinking timer](docs/niveau-ev-mobile.png)
+
+Adding S3/S4 (spé): see [CONTRIBUER_S3_S4.md](CONTRIBUER_S3_S4.md).
+
 - Demotion (2026-11-16): `apply_result(..., prev_ko)` drops one level only when the previous non-practice answer on that level was also a miss; a first miss returns event `warn`.
 - Spaced review: `due_reviews(attempts, today)` (pure, tested) puts a missed exercise back at D+1, then D+3, then D+7 after each success on a later day; a miss restarts the cycle. `review_queue` reads `exo_log` (dates in Europe/Paris). `/niveaux/revoir` redirects to the oldest due exercise (`?n=K&exo=ID&revoir=1`; `level_page` honours `exo`), or to `/niveaux?revu=1` when nothing is due. No new table.
 - Combo: `combo(rows)` (pure, tested) counts successes in a row across all paths, a miss halves it, a pause over `COMBO_GAP` (30 min) starts a new run; returned by the result API and rendered by the page (`#combo-hud`). On every success with a combo, `#combo-slam` knocks the old count off screen and crashes the new one in (game style); milestones (5, 10, 20, 30, 50…) add a title, a bigger number and a shake; a miss drops the old count in red and brings in the halved one.

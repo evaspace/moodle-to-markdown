@@ -206,15 +206,24 @@ def check_syllabus():
     """Every link of parcours/syllabus.json must resolve: Moodle chapters, past exams, level paths."""
     syl = json.loads((HERE / "syllabus.json").read_text(encoding="utf-8"))
     root = HERE.parent
-    errors, listed = [], {}
+    errors, listed, skipped = [], {}, set()
     for mat in syl["matieres"]:
         for sem in mat["semestres"]:
             moodle = root / syl["moodle_root"] / sem["moodle"]
+            # Course and exam folders are git-ignored: a contributor only has the semesters they work on.
+            # A missing folder is skipped with a notice; a missing file inside a present folder is an error.
+            if not moodle.is_dir():
+                skipped.add(f"{syl['moodle_root']}/{sem['moodle']}")
             for ecue in sem["ecues"]:
                 where = f"{sem['id']} {ecue['id']}"
-                errors += [f"{where}: Moodle chapter not found: {c}" for c in ecue["chapitres"] if not (moodle / c).is_dir()]
-                errors += [f"{where}: past exam not found: {a}" for a in ecue["annales"]
-                           if not (root / syl["annales_root"] / a).is_file()]
+                if moodle.is_dir():
+                    errors += [f"{where}: Moodle chapter not found: {c}" for c in ecue["chapitres"] if not (moodle / c).is_dir()]
+                for a in ecue["annales"]:
+                    if (root / syl["annales_root"] / a.split("/")[0]).is_dir():
+                        if not (root / syl["annales_root"] / a).is_file():
+                            errors.append(f"{where}: past exam not found: {a}")
+                    else:
+                        skipped.add(f"{syl['annales_root']}/{a.split('/')[0]}")
                 for pid in ecue["parcours"]:
                     listed[pid] = (ecue, sem["id"])
     built = {}
@@ -230,6 +239,8 @@ def check_syllabus():
             errors.append(f"{pid}: ECUE/semester differs from syllabus")
         errors += [f"{pid}: Moodle chapter not in syllabus ECUE: {c}" for c in subj["chapitres_moodle"] if c not in ecue["chapitres"]]
     errors += [f"level path {pid} missing from syllabus.json" for pid in built if pid not in listed]
+    for s in sorted(skipped):
+        print(f"syllabus: not checked, folder absent locally: {s}")
     if errors:
         print("\n".join(errors))
         return False
