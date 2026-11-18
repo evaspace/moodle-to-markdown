@@ -268,3 +268,5 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 - « Pour les exams, il faut se brancher à ma boîte mail ou à Moodle notification et être dynamique sur le rafraîchissement, environ 2 par jour. » Les examens sont annoncés par mail (boîte EPITA, Microsoft 365).
 - Fait : `tools/exam_dates.py --apply` tourne 2 fois par jour (cron 7 h 05 et 19 h 05) et ajoute les nouvelles dates au calendrier.
 - Boîte mail EPITA : Microsoft 365 refuse l'IMAP par mot de passe ; il faudrait une application OAuth validée par l'EPITA. Sources retenues à la place : l'URL iCal de Moodle (mêmes événements que les notifications) et l'URL iCal secrète du Google Agenda « Planning EPITA ». À fournir par l'utilisateur dans `.env`.
+
+- 2026-11-18 : accueil = bouton noir « SCROLLER LES COURS (EN DEV) » (repliable : « Tout doomscroller » + modules), puis « Niveaux sur papier » et « Lire le cours complet ».

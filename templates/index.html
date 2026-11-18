@@ -110,22 +110,21 @@
                     </div>
                 </div>
 
-                <!-- BOUTON TOUT DOOMSCROLLER -->
-                <div class="quick-action-wrap">
+                <!-- SCROLLER LES COURS : tout doomscroller + modules, repliés -->
+                <details class="quick-action-wrap scroll-group">
+                    <summary class="quick-all-btn"><span>SCROLLER LES COURS (EN DEV)</span><span class="quick-all-arrow">↓</span></summary>
                     <button class="quick-all-btn" onclick="launchFeed(null, null)">
                         <span>⚡ TOUT DOOMSCROLLER</span>
                         <span class="quick-all-arrow">→</span>
                     </button>
-                </div>
+                    <div id="category-list" class="category-list">
+                        <div class="loading-state">Chargement des modules...</div>
+                    </div>
+                </details>
 
                 <div class="quick-action-wrap">
                     <a class="quick-all-btn quick-red" href="/niveaux"><span>NIVEAUX SUR PAPIER</span><span class="quick-all-arrow">→</span></a>
                     <a class="quick-all-btn quick-blue" href="/cours/"><span>LIRE LE COURS COMPLET</span><span class="quick-all-arrow">→</span></a>
-                </div>
-
-                <!-- LISTE DES MODULES DIRECTE (SANS TITRE NI TEXTE INTERMÉDIAIRE) -->
-                <div id="category-list" class="category-list">
-                    <div class="loading-state">Chargement des modules...</div>
                 </div>
 
                 {% include 'footer.html' %}

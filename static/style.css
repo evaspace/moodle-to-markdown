@@ -1473,3 +1473,11 @@ body:has(#landing-screen.visible) .feed-only { display: none; }
 
 /* footer at the end of the /scroll feed */
 #feed > .morgan-footer { scroll-snap-align: end; }
+
+/* Accueil : groupe repliable « Scroller les cours » */
+.scroll-group > summary { list-style: none; cursor: pointer; box-sizing: border-box; }
+.scroll-group > summary::-webkit-details-marker { display: none; }
+.scroll-group[open] > summary .quick-all-arrow { transform: rotate(180deg); }
+.scroll-group > .quick-all-btn + .quick-all-btn { margin-top: 10px; }
+.scroll-group > .category-list { margin-top: 10px; }
+.landing-content { width: 100%; }
