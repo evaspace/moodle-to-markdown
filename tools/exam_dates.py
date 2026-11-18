@@ -79,7 +79,8 @@ def to_date(value, params):
 
 # Moodle course codes that name no ECUE (category « 2627_I_INF_FISE_S01_CN_PC_MECA_1 »).
 # shortcut: one entry per course seen in the feed, add new ones when « ECUE non reconnue » shows up.
-ALIASES = {'meca': 'physique/S1/Mécanique'}
+ALIASES = {'meca': 'physique/S1/Mécanique', 'num': 'archi/S1/Numération', 'taa': 'algo/S1/Types algébriques abstraits',
+           'oac': "electronique/S1/Outils d'analyse de circuits", 'pet': 'prog/S1/Programmation C (début)'}
 # Moodle sends one event when a test opens and one when it closes: merged into one item
 PHASE = re.compile(r"\s+(s[’']ouvre|se termine|doit [eê]tre achev[ée]e?)\s*$", re.I)
 
@@ -97,6 +98,89 @@ def ecue_for(text, syllabus):
                 if (need and need <= have or named) and (best is None or len(need) > best[0]):
                     best = (len(need), f"{m['id']}/{s['id']}/{e['id']}")
     return best[1] if best else next((v for k, v in ALIASES.items() if k in have), None)
+
+
+MONTHS = ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre']
+_DAY = r'(?:(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\s+)?'
+OPENING = re.compile(r'^ouverture le \w+ (\d{1,2}) (\w+) (\d{4}), \d\d:\d\d : (.+)$', re.I)
+DATE_WORDS = re.compile(_DAY + r'(\d{1,2})(?:er)?\s+(' + '|'.join(MONTHS) + r')(?:\s+(\d{4}))?', re.I)
+WEEK_OF = re.compile(r'semaine du (\d{1,2})(?:/(\d{1,2})|(?:er)? (' + '|'.join(MONTHS) + '))', re.I)
+GRADES = re.compile(r'vos notes|notes? sur 20|notes? (?:d.examen )?disponibles?', re.I)  # results mails: private, no date to add
+DATE_NUM = re.compile(_DAY + r'(?<![\d/])(\d{1,2})/(\d{1,2})(?:/(\d{2,4}))?(?![\d/])', re.I)
+EXAM_SENTENCE = re.compile(r'aura lieu|auront lieu|examen|exam\b|partiel|test|qcm|contr[oô]le', re.I)
+
+
+def _ascii(text):
+    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode()
+
+
+def _year(day, month, sent, year=None):
+    """Date from day/month; without a year, the one closest to the mail (announcements point ahead)."""
+    try:
+        if year:
+            return date(int(year) + (2000 if int(year) < 100 else 0), month, day)
+        d = date(sent.year, month, day)
+        return d.replace(year=d.year + 1) if d < sent - timedelta(days=60) else d
+    except ValueError:
+        return None
+
+
+def mail_event(subject, body, sent):
+    """Pseudo-iCal event {summary, categories, start, end} from one Moodle mail, else None.
+    subject: decoded Subject; body: plain text; sent: date of the mail."""
+    subject = re.sub(r'\s+', ' ', re.sub(r'^\s*\[EPITA\]\s*', '', subject)).strip()  # \s+ also eats non-breaking spaces
+    if re.match(r'^(re|tr|fwd?)\s*:', subject, re.I) or GRADES.search(subject + ' ' + body[:600]):
+        return None
+    m = OPENING.match(subject)  # « Ouverture le lundi 5 octobre 2026, 07:00 : Test 1 FR : ECUE DP »
+    if m and _ascii(m[2]).lower() in MONTHS:
+        d = date(int(m[3]), MONTHS.index(_ascii(m[2]).lower()) + 1, int(m[1]))
+        return {'summary': m[4], 'categories': '', 'start': d, 'end': d}
+    course, _, title = subject.partition(' : ') if ' : ' in subject else ('', '', subject)
+    # the forum header repeats the post date (« par X, lundi 19 octobre 2026, 12:51 »): only the text after it
+    text = body.split('-' * 20, 1)[-1] if '-' * 20 in body else body
+    for chunk in [title] + [c for c in re.split(r'(?<=[.!?])\s+', text) if EXAM_SENTENCE.search(c)]:
+        a = _ascii(chunk)
+        if (w := WEEK_OF.search(a)) and (d := _year(int(w[1]), int(w[2]) if w[2] else MONTHS.index(w[3].lower()) + 1, sent)):
+            return {'summary': title, 'categories': course, 'start': d, 'end': d + timedelta(days=4)}
+        for rx in (DATE_WORDS, DATE_NUM):
+            if (w := rx.search(a)):
+                month = MONTHS.index(w[2].lower()) + 1 if rx is DATE_WORDS else int(w[2])
+                d = _year(int(w[1]), month, sent, w[3]) if 1 <= month <= 12 else None
+                if d and d >= sent:
+                    return {'summary': title, 'categories': course, 'start': d, 'end': d}
+    return None
+
+
+def fetch_mails(since):
+    """Pseudo-events from the EPITA mailbox (tools/epita_mail.py), mails sent since `since`."""
+    import email
+    import email.header
+    import email.utils
+    import html
+    sys.path.insert(0, str(Path(__file__).parent))
+    import epita_mail
+    dec = lambda h: str(email.header.make_header(email.header.decode_header(h or '')))  # noqa: E731
+    conn = epita_mail.imap()
+    conn.select('INBOX', readonly=True)
+    ids = set()
+    for w in ('examen', 'exam', 'partiel', 'controle', 'QCM', 'test', 'evaluation', 'ouverture', 'rattrapage'):
+        ids |= set(conn.search(None, 'SINCE', since.strftime('%d-%b-%Y'), 'SUBJECT', f'"{w}"')[1][0].split())
+    events = []
+    for i in sorted(ids, key=int):
+        msg = email.message_from_bytes(conn.fetch(i, '(BODY.PEEK[])')[1][0][1])
+        body = ''
+        for part in msg.walk():
+            if part.get_content_type() in ('text/plain', 'text/html') and not part.get_filename():
+                t = part.get_payload(decode=True).decode(part.get_content_charset() or 'utf-8', 'replace')
+                body = html.unescape(re.sub(r'<[^>]+>', ' ', t)) if part.get_content_type() == 'text/html' else t
+                break
+        body = re.sub(r'\{mlang EN\}.*?\{mlang\}', ' ', body, flags=re.S)  # French part only
+        sent = email.utils.parsedate_to_datetime(msg['Date']).astimezone(TZ).date()
+        ev = mail_event(dec(msg['Subject']), re.sub(r'\s+', ' ', body), sent)
+        if ev:
+            events.append(ev)
+    conn.logout()
+    return events
 
 
 def candidates(events, source, syllabus, since):
@@ -134,12 +218,18 @@ def merge(known, found):
     """New items (not already listed on the same start date with the same title or type), deduplicated."""
     seen = {key(k) for k in known}
     typed = {(k['debut'], k['type']) for k in known}  # hand-written entries use other titles
-    new = []
-    for f in found:
-        if key(f) not in seen and (f['debut'], f['type']) not in typed:
-            seen.add(key(f))
-            new.append(f)
-    return new
+    new, slots = [], set()
+    # the same test often comes several times (Moodle feed, announcement, « Ouverture » mail, FR and EN):
+    # an item without ECUE is dropped when another one has the same date and type
+    for f in sorted(found, key=lambda f: 'ecue' not in f):
+        slot = (f['debut'], f['type'], f.get('ecue'))
+        if key(f) in seen or (f['debut'], f['type']) in typed or slot in slots \
+                or ('ecue' not in f and any(s[:2] == slot[:2] for s in slots)):
+            continue
+        seen.add(key(f))
+        slots.add(slot)
+        new.append(f)
+    return sorted(new, key=lambda f: f['debut'])
 
 
 def write_calendar(items):
@@ -164,7 +254,8 @@ def main():
     for var, source in (('MOODLE_CALENDAR_URL', 'Moodle'), ('AURIGA_ICS_URL', 'Auriga')):
         url = env(var)
         if not url:
-            print(f'{var} absent de .env : source {source} ignorée (voir l\'aide en tête du script).')
+            if var == 'MOODLE_CALENDAR_URL':  # Auriga: the user has no link, mails replace it
+                print(f'{var} absent de .env : source {source} ignorée (voir l\'aide en tête du script).')
             continue
         r = requests.get(url, timeout=30, headers={'Accept': 'text/calendar'})
         if r.status_code != 200 or 'BEGIN:VCALENDAR' not in r.text:
@@ -173,6 +264,12 @@ def main():
         evs = candidates(parse_ics(r.text), source, syllabus, since)
         print(f'{source} : {len(evs)} examens ou tests trouvés depuis le {since:%d/%m/%Y}.')
         found += evs
+    try:
+        evs = candidates(fetch_mails(since), 'Mail EPITA', syllabus, since)
+        print(f'Mail EPITA : {len(evs)} examens ou tests trouvés depuis le {since:%d/%m/%Y}.')
+        found += evs
+    except SystemExit as e:  # no token yet, or Microsoft refused it: the other sources still run
+        print(f'Mail EPITA ignoré : {e}')
     known = syllabus.get('calendrier', [])
     new = merge(known, found)
     for n in new:

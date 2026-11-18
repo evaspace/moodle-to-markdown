@@ -12,6 +12,12 @@
    "source": "Auriga"
   },
   {
+   "debut": "2026-09-24",
+   "titre": "TEST 0 FR",
+   "type": "Test à distance",
+   "source": "Mail EPITA"
+  },
+  {
    "debut": "2026-10-05",
    "titre": "Test à distance : dénombrement",
    "type": "Test à distance",
@@ -19,11 +25,40 @@
    "source": "Moodle S1-MATHS-2031"
   },
   {
+   "debut": "2026-10-05",
+   "fin": "2026-10-09",
+   "titre": "TP en condition d'examen",
+   "type": "Examen",
+   "source": "Mail EPITA",
+   "ecue": "prog/S1/Programmation C (début)"
+  },
+  {
+   "debut": "2026-10-09",
+   "titre": "Test Moodle 1",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "archi/S1/Numération"
+  },
+  {
    "debut": "2026-10-19",
    "titre": "Test à distance : probabilités",
    "type": "Test à distance",
    "ecue": "maths/S1/DP",
    "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-10-23",
+   "titre": "[Archi][Numération] Test Moodle 2",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "archi/S1/Numération"
+  },
+  {
+   "debut": "2026-10-23",
+   "titre": "[Elec] Test 1 - Outils d'analyse de circuits",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "electronique/S1/Outils d'analyse de circuits"
   },
   {
    "debut": "2026-10-26",

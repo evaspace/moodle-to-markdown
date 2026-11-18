@@ -50,7 +50,7 @@ class ExamDates(unittest.TestCase):
         evs = ed.candidates(ed.parse_ics(ICS), 'Auriga', self.syllabus, date(2026, 9, 1))
         new = ed.merge(self.syllabus['calendrier'], evs)
         self.assertNotIn('2026-12-14', [n['debut'] for n in new])  # already in syllabus.json
-        self.assertEqual(ed.merge([], evs + evs), evs)
+        self.assertEqual(ed.merge([], evs + evs), sorted(evs, key=lambda e: e['debut']))  # sorted by date
         known = [{'debut': '2026-12-07', 'titre': 'Autre titre', 'type': 'Test à distance'}]
         self.assertNotIn('2026-12-07', [n['debut'] for n in ed.merge(known, evs)])  # same day, same type
 
@@ -66,6 +66,21 @@ class ExamDates(unittest.TestCase):
         self.assertEqual([(e['titre'], e['debut'], e.get('fin'), e['ecue']) for e in evs], [
             ('MATHS APIS : TEST 1 FR 16 novembre', '2026-11-16', None, 'maths/S1/APIS'),
             ('QCM2', '2026-11-24', None, 'physique/S1/Mécanique')])  # 00:00-23:59 Paris time: one day
+
+
+    def test_mail_event(self):
+        sent = date(2026, 10, 19)
+        ev = ed.mail_event('[EPITA]  Ouverture le\xa0lundi 5 octobre 2026, 07:00 : Test 1  FR : ECUE DP', '', date(2026, 10, 3))
+        self.assertEqual((ev['summary'], ev['start']), ('Test 1 FR : ECUE DP', date(2026, 10, 5)))
+        body = ('Annonces -> X par Maxime Richard, lundi 19 octobre 2026, 12:51 ' + '-' * 30 +
+                ' Bonjour à tous, Ci-joint le PLANNING pour les EXAMENS DU B1 qui auront lieu LA SEMAINE DU 26/10. Merci.')
+        ev = ed.mail_event('[EPITA]  Scolarité Prépa Lyon : [EXAMENS B1 _ 2627]', body, sent)
+        self.assertEqual((ev['start'], ev['end'], ev['categories']), (date(2026, 10, 26), date(2026, 10, 30), 'Scolarité Prépa Lyon'))
+        ev = ed.mail_event('[EPITA]  S1-MATHS-2031 : TEST 1 lundi 5 octobre', 'rien', date(2026, 9, 28))
+        self.assertEqual(ev['start'], date(2026, 10, 5))
+        self.assertIsNone(ed.mail_event('[EPITA]  Cours : Partiel physique', 'par X, lundi 19 octobre 2026 ' + '-' * 30 + ' Les notions à revoir.', sent))
+        self.assertIsNone(ed.mail_event('[QCM_SUP_15.09.26]', 'Veuillez trouver vos notes sur 20 du QCM du 15/09/2026', date(2026, 9, 15)))
+        self.assertIsNone(ed.mail_event('RE: [EPITA] Test 1 lundi 5 octobre', '', sent))
 
 
 if __name__ == '__main__':
