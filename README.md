@@ -452,6 +452,9 @@ of the level's usual time (median of all users' successes, or 60 % of the author
 row; or it validated `RUSH_LEVELS` (4) levels in `RUSH_WINDOW` (1 h) across `RUSH_MATIERES` (2) subjects.
 Nothing is automatic: the admin clicks « Exclure » (`POST /api/admin/classement {account_id, ban}`, admin
 only), which sets `account.board_ban` and hides the account from every leaderboard.
+The flagged user sees `FRAUD_WARNING` and the reasons: a banner from `nav.html` (`nav.fraud`, every page)
+and `warning` in the `/result` JSON, shown in the exercise feedback. `all_suspects` rescans `exo_log` on each
+page view (fine at this size, see its `shortcut:` comment).
 
 ### Home page layout
 `templates/index.html` includes `nav.html`. Above 640 px the landing uses the common navbar and a 720 px

@@ -231,6 +231,13 @@
         lines.push(`+${d.points} points ${fast}${d.peek === 2 ? ' · divisé par 2 : fiche du chapitre ouverte' : d.peek ? ' · divisé par 3 : formules de la solution ouvertes' : ''}`);
       }
       fb.replaceChildren(...lines.map((t, i) => { const p = document.createElement('p'); p.textContent = t; if (i) p.className = 'lv-points'; return p; }));
+      if (d.warning) {
+        const w = document.createElement('p');
+        w.className = 'fraud-warn';
+        w.setAttribute('role', 'alert');
+        w.textContent = d.warning;
+        fb.append(w);
+      }
       if (d.prereq && d.prereq.length) {
         const p = document.createElement('p');
         p.className = 'lv-points';

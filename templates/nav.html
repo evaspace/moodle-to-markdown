@@ -23,6 +23,7 @@
     {% endif %}
   </div>
 </header>
+{% if nav.fraud %}<p class="fraud-warn" role="alert"><strong>{{ nav.fraud_warning }}</strong> ({{ nav.fraud | join(' · ') }})</p>{% endif %}
 <script>
 (() => {
   const b = document.querySelector('.app-nav-burger'), m = document.getElementById('app-nav-menu');

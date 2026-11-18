@@ -380,3 +380,6 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .cl-board .st-hist td.cl-name { text-align: left; width: 100%; }
 .cl-board .st-hist tr.me td { font-weight: 700; }
 .cl-suspects td:nth-child(2) { white-space: normal; text-align: left; min-width: 260px; }
+/* fraud warning: shown to the flagged user (nav banner + after each answer) */
+.fraud-warn { margin: 0; padding: 12px 16px; background: var(--error-bg); color: var(--text-color); line-height: 1.45; }
+.lv-feedback .fraud-warn { margin-top: 12px; font-weight: 700; }

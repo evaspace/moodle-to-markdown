@@ -486,3 +486,19 @@ class Cheat(unittest.TestCase):
         c = app_module.app.test_client()
         c.post('/api/register', json={'username': 'notadmin', 'password': 'secret1'})
         self.assertEqual(c.post('/api/admin/classement', json={'account_id': 1, 'ban': True}).status_code, 403)
+
+
+class FraudWarning(unittest.TestCase):
+    def test_flagged_user_sees_warning(self):
+        import app as app_module
+        c = app_module.app.test_client()
+        c.post('/api/register', json={'username': 'fastcheat', 'password': 'secret1'})
+        self.assertNotIn('fraud-warn', c.get('/stats').get_data(as_text=True))
+        with mock.patch.object(levels, 'all_suspects', lambda conn: {levels.session['uid']: ['6 réussites trop rapides']}):
+            html = c.get('/stats').get_data(as_text=True)
+            self.assertIn('fraud-warn', html)
+            self.assertIn('6 réussites trop rapides', html)
+            page = c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True)
+            exo_id = page.split('data-exo="')[1].split('"')[0]
+            d = c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': 1, 'exo_id': exo_id, 'ok': True}).get_json()
+            self.assertIn('Triche suspectée', d['warning'])

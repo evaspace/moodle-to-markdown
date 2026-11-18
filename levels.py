@@ -546,6 +546,7 @@ def nav_state():
         best = {r['subject']: r['best'] for r in conn.execute(
             'SELECT subject, best FROM level_progress WHERE account_id=?', (uid,))}
         points = xp(conn, uid)
+        fraud = all_suspects(conn).get(uid, [])
         hours = [r[0] for r in conn.execute('SELECT DISTINCT substr(at, 1, 13) FROM exo_log WHERE account_id=?', (uid,))]
     days = {datetime.fromisoformat(h + ':00:00').replace(tzinfo=timezone.utc).astimezone(tz).date() for h in hours}
     today = datetime.now(tz).date()
@@ -556,7 +557,8 @@ def nav_state():
     total = sum(len(d['levels']) for _, d in paths)
     done = sum(min(best.get(sid, 0), len(d['levels'])) for sid, d in paths)
     return {'logged': True, 'username': session['username'], 'admin': is_admin(), 'xp': points, 'streak': streak,
-            'levels_done': done, 'levels_total': total, 'percent': percent(done, total)}
+            'levels_done': done, 'levels_total': total, 'percent': percent(done, total),
+            'fraud': fraud, 'fraud_warning': FRAUD_WARNING}
 
 
 @bp.app_context_processor
@@ -785,6 +787,9 @@ def level_result(subject):
         green = sum(1 for v in status.values() if v == 1)
         extra = dict(combo=combo_now, points=pts, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
                      percent=total_percent(st, data))
+        fraud = all_suspects(conn).get(uid)
+        if fraud:
+            extra['warning'] = FRAUD_WARNING + ' (' + ' · '.join(fraud) + ')'
         if not ok:
             extra['prereq'] = [{'id': p, 'titre': get_parcours(p)['subject']['titre']} for p in PREREQ.get(subject, [])]
         if practice:  # practice on another level: logged (squares change), level unchanged
@@ -1226,8 +1231,13 @@ def suspects(logs, ups, matiere_of, authored):
     return dict(out)
 
 
-def suspect_list(conn):
-    """Rows for the « Triche possible » table of /admin/stats, most reasons first."""
+FRAUD_WARNING = ('Triche suspectée : tes réponses sont trop rapides ou trop parfaites pour être réelles. '
+                 "Ton compte est signalé à l'admin et peut être exclu du classement.")
+
+
+def all_suspects(conn):
+    """suspects() over the whole database: {account_id: [reasons]}.
+    shortcut: rescans every exo_log row (called on each page view), cache it once exo_log has ~100k rows."""
     paths = load_parcours()
     matiere_of = {sid: d['subject'].get('matiere', sid) for sid, d in paths.items()}
     authored = {(sid, l['n']): sum(int(e.get('duree', 5)) * 60 for e in l['exos']) / len(l['exos'])
@@ -1236,7 +1246,12 @@ def suspect_list(conn):
                         'FROM exo_log ORDER BY id').fetchall()
     ups = conn.execute("SELECT account_id, subject, level, CAST(strftime('%s', at) AS INTEGER) FROM event_log "
                        "WHERE kind IN ('niveau_up', 'niveau_finished')").fetchall()
-    found = suspects([tuple(r) for r in logs], [tuple(r) for r in ups], matiere_of, authored)
+    return suspects([tuple(r) for r in logs], [tuple(r) for r in ups], matiere_of, authored)
+
+
+def suspect_list(conn):
+    """Rows for the « Triche possible » table of /admin/stats, most reasons first."""
+    found = all_suspects(conn)
     names = {r[0]: (r[1], r[2], r[3]) for r in conn.execute('SELECT id, username, leaderboard, board_ban FROM account')}
     rows = [{'id': aid, 'username': names[aid][0], 'visible': names[aid][1], 'banned': names[aid][2], 'reasons': why}
             for aid, why in found.items() if aid in names]
