@@ -1011,9 +1011,23 @@ def _date_fr(d):
     return f"{'1er' if d.day == 1 else d.day} {MOIS[d.month - 1]} {d.year}"
 
 
-def exam_calendar(today, syllabus=None, paths=None):
+EXAM_TYPES = ('Examen', 'Contrôle')  # on-paper events, shown in red on /calendrier
+
+
+def event_semester(ev):
+    """Semester of a calendar event: explicit `semestre`, else the one of its ECUE, else read from its source (« Moodle S1-MATHS »), else ''."""
+    if ev.get('semestre'):
+        return ev['semestre']
+    if ev.get('ecue'):
+        return ev['ecue'].split('/')[1]
+    m = re.search(r'\bS0?([1-8])(?!\d)', ev.get('source', ''))
+    return f'S{m.group(1)}' if m else ''
+
+
+def exam_calendar(today, syllabus=None, paths=None, sem=None):
     """Exam dates of syllabus.json 'calendrier' split into upcoming / past, each with links to its
-    paths and their first exam level; ECUEs with no date are listed with their periode_examen."""
+    paths and their first exam level; ECUEs with no date are listed with their periode_examen.
+    `sem` ('S3', 'none' for unclassified events) keeps only that semester; `sems` lists the ones present."""
     from datetime import date
     syllabus = syllabus or json.loads((PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))
     paths = load_parcours() if paths is None else paths
@@ -1032,13 +1046,17 @@ def exam_calendar(today, syllabus=None, paths=None):
         return out
 
     upcoming, past, dated = [], [], set()
+    present = set()
     for ev in syllabus.get('calendrier', []):
+        present.add(event_semester(ev) or 'none')
+        if sem and sem != 'tous' and (event_semester(ev) or 'none') != sem:
+            continue
         debut = date.fromisoformat(ev['debut'])
         fin = date.fromisoformat(ev.get('fin', ev['debut']))
         ids = ev.get('parcours') or (ecues[ev['ecue']][2]['parcours'] if ev.get('ecue') else [])
         if ev.get('ecue'):
             dated.add(ev['ecue'])
-        item = {**ev, 'quand': _date_fr(debut) if fin == debut else f'du {_date_fr(debut)} au {_date_fr(fin)}',
+        item = {**ev, 'sem': event_semester(ev), 'quand': _date_fr(debut) if fin == debut else f'du {_date_fr(debut)} au {_date_fr(fin)}',
                 'jours': (debut - today).days, 'en_cours': debut <= today <= fin, 'links': links(ids),
                 'jour': debut.day, 'jour_fin': fin.day if fin != debut else None, 'wd': JOURS[debut.weekday()],
                 'mois': f'{MOIS[debut.month - 1]} {debut.year}', 'ym': (debut.year, debut.month)}
@@ -1046,6 +1064,9 @@ def exam_calendar(today, syllabus=None, paths=None):
     undated = [{'matiere': m['titre'], 'semestre': s['id'], 'titre': e['titre'], 'bloc': e.get('bloc', ''),
                 'periode': e.get('periode_examen', ''), 'links': links(e['parcours'])}
                for key, (m, s, e) in ecues.items() if key not in dated and e['parcours']]
+    present |= {e['semestre'] for e in undated}
+    if sem and sem != 'tous':
+        undated = [e for e in undated if e['semestre'] == sem]
     start = today.year if today.month >= 9 else today.year - 1  # school year: September to July
     months = []
     for k in range(11):
@@ -1054,17 +1075,18 @@ def exam_calendar(today, syllabus=None, paths=None):
         months.append({
             'nom': MOIS[m - 1][:4], 'label': f'{MOIS[m - 1]} {y}', 'anchor': f'm{y}-{m}',
             'now': (y, m) == (today.year, today.month), 'past': (y, m) < (today.year, today.month),
-            'events': evs, 'exams': sum(e['type'] == 'Examen' for e in evs), 'tests': sum(e['type'] != 'Examen' for e in evs),
+            'events': evs, 'exams': sum(e['type'] in EXAM_TYPES for e in evs), 'tests': sum(e['type'] not in EXAM_TYPES for e in evs),
             # undated ECUEs whose usual exam period names this month ("décembre-janvier", "partiel en mai")
             'probable': [e for e in undated if re.search(rf'\b{MOIS[m - 1]}\b', e['periode'].lower())]})
-    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated, 'months': months}
+    sems = sorted(x for x in present if x != 'none') + (['none'] if 'none' in present else [])
+    return {'upcoming': upcoming, 'past': past[::-1], 'undated': undated, 'months': months, 'sems': sems, 'sem': sem or 'tous'}
 
 
 @bp.route('/calendrier')
 def calendar_page():
     from datetime import datetime
     from zoneinfo import ZoneInfo
-    cal = exam_calendar(datetime.now(ZoneInfo(TZ)).date())
+    cal = exam_calendar(datetime.now(ZoneInfo(TZ)).date(), sem=request.args.get('sem') or None)
     pct = {}
     if session.get('uid'):  # readiness bar per path for logged-in users
         with db() as conn:

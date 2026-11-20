@@ -8,13 +8,19 @@
   <meta name="description" content="Dates des examens et tests de la prépa EPITA, avec l'entraînement correspondant pour chacun.">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=32">
+  <link rel="stylesheet" href="/static/niveaux.css?v=33">
 </head>
 <body class="lv-page">
 {% set active = 'calendrier' %}{% include 'nav.html' %}
 {% macro paths(links) %}{% if links %}<ul class="cal-paths">{% for l in links %}<li><a href="{{ l.url }}">{{ l.titre }}</a>{% if l.id in pct %}<span class="cal-meter" role="img" aria-label="{{ pct[l.id] }} % réussi"><i style="width: {{ pct[l.id] }}%"></i></span><b>{{ pct[l.id] }} %</b>{% endif %}</li>{% endfor %}</ul>{% endif %}{% endmacro %}
 <div class="lv-wrap cal">
   <h1>Calendrier des examens</h1>
+  {% if sems|length > 1 %}
+  <nav class="cal-filter" aria-label="Filtrer par semestre">
+    <a class="lv-btn{{ ' primary' if sem == 'tous' }}" href="/calendrier?sem=tous" data-sem="tous">Tous</a>
+    {% for x in sems %}<a class="lv-btn{{ ' primary' if sem == x }}" href="/calendrier?sem={{ x }}" data-sem="{{ x }}">{{ 'Non classé' if x == 'none' else x }}</a>{% endfor %}
+  </nav>
+  {% endif %}
 
   {% set next = upcoming[0] if upcoming else None %}
   {% if next %}
@@ -40,10 +46,10 @@
     </a>
     {% endfor %}
   </nav>
-  <p class="cal-legend"><i class="ex"></i> examen <i></i> test à distance</p>
+  <p class="cal-legend"><i class="ex"></i> examen ou contrôle sur table <i></i> test à distance</p>
 
   {% macro event(e) %}
-    <li class="cal-item{{ ' is-exam' if e.type == 'Examen' }}{{ ' is-past' if e.jours < 0 and not e.en_cours }}">
+    <li class="cal-item{{ ' is-exam' if e.type in ('Examen', 'Contrôle') }}{{ ' is-past' if e.jours < 0 and not e.en_cours }}">
       <div class="cal-day"><small>{{ e.wd }}</small><strong>{{ e.jour }}{% if e.jour_fin %}<span>–{{ e.jour_fin }}</span>{% endif %}</strong></div>
       <div>
         <h3>{{ e.titre }}</h3>
@@ -108,9 +114,18 @@
     {% endfor %}
   </details>
   {% endif %}
-  <p class="lv-muted">Sources : planning Auriga et Moodle.{% if not pct %} <a href="/compte">Connecte-toi</a> pour voir ta progression sur chaque parcours.{% endif %}</p>
+  <p class="lv-muted">Sources : planning Auriga, Moodle et mails EPITA.{% if not pct %} <a href="/compte">Connecte-toi</a> pour voir ta progression sur chaque parcours.{% endif %}</p>
 </div>
 <script>
+// Semester filter: the choice is remembered on this device and applied when the page opens without ?sem=.
+(() => {
+  const KEY = 'calSem';
+  try {
+    document.querySelectorAll('.cal-filter a').forEach(a => a.addEventListener('click', () => localStorage.setItem(KEY, a.dataset.sem)));
+    const saved = localStorage.getItem(KEY);
+    if (!location.search.includes('sem=') && saved && saved !== 'tous' && document.querySelector(`.cal-filter a[data-sem="${saved}"]`)) location.replace('/calendrier?sem=' + encodeURIComponent(saved));
+  } catch (e) { /* storage blocked: the filter still works through the links */ }
+})();
 // A month link inside the folded past section opens it first.
 const openTarget = () => { const t = location.hash && document.querySelector(location.hash); const d = t && t.closest('details'); if (d && !d.open) { d.open = true; t.scrollIntoView(); } };
 addEventListener('hashchange', openTarget); openTarget();
