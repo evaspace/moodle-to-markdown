@@ -1,0 +1,1933 @@
+{
+ "subject": {
+  "id": "physique-s3-quantique",
+  "ordre": 340,
+  "matiere": "physique",
+  "semestre": "S3",
+  "ecue": "QUANT",
+  "titre": "Introduction à la physique quantique",
+  "chapitres_moodle": [
+   "01_Cours et TD",
+   "04_QCM"
+  ],
+  "td": "TD1, TD2, TD3 de mécanique quantique",
+  "examens": [
+   "Examen Physique : Mécanique quantique (décembre)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "rappels",
+   "titre": "Rappels : énergie, ondes, unités",
+   "formule": "$E_c=\\frac12mv^2$ · $p=mv$ · $c=\\lambda f$ · 1 eV $=1{,}6\\times10^{-19}$ J · 1 nm $=10^{-9}$ m",
+   "exemple": "un électron de $2\\times10^6$ m/s : $E_c=\\frac12\\times9\\times10^{-31}\\times(2\\times10^6)^2=1{,}8\\times10^{-18}$ J $\\approx11{,}25$ eV",
+   "cours": "Toujours convertir en unités SI (m, kg, s, J) avant de calculer, ou travailler en eV et en nm pour les photons. Une corde fixée aux deux extrémités ne vibre que sur des fréquences discrètes : c'est le premier exemple de quantification, repris par de Broglie."
+  },
+  {
+   "id": "coulomb",
+   "titre": "Rappels : force de Coulomb et mouvement circulaire",
+   "formule": "$F=\\dfrac{kq_1q_2}{r^2}$ · $k=9\\times10^9$ · $a=\\dfrac{v^2}r$ (cercle, $v$ constant) · $\\sum\\vec F=m\\vec a$ · on pose $e^2=kq^2$",
+   "exemple": "électron et proton à $r=5\\times10^{-11}$ m : $F=\\frac{9\\times10^9\\times(1{,}6\\times10^{-19})^2}{r^2}\\approx9{,}2\\times10^{-8}$ N",
+   "cours": "Mouvement circulaire uniforme : l'accélération est centripète, de norme $\\frac{v^2}r$. Pour l'électron de l'atome, la seule force est l'attraction de Coulomb : $\\frac{ke^2}{r^2}\\to\\frac{mv^2}r=\\frac{e^2}{r^2}$ avec $e^2=kq^2$. Énergie : $E_c=\\frac{e^2}{2r}$, $E_p=-\\frac{e^2}r$."
+  },
+  {
+   "id": "photon",
+   "titre": "Photon et corps noir",
+   "formule": "$E=h\\nu=\\dfrac{hc}\\lambda$ · $h=6{,}6\\times10^{-34}$ J·s · $hc\\approx1240$ eV·nm · $\\Delta E=|E_f-E_i|=\\dfrac{hc}\\lambda$",
+   "exemple": "$\\lambda=620$ nm : $E=\\frac{1240}{620}=2$ eV",
+   "cours": "Le rayonnement du corps noir ne dépend que de la température. Classiquement, l'énergie rayonnée diverge en $\\frac1{\\lambda^4}$ vers l'ultraviolet (catastrophe ultraviolette). Planck (1900) suppose que l'énergie est échangée par paquets $E=h\\nu$ (quanta), ce qui reproduit la mesure. Le spectre est la densité d'énergie rayonnée en fonction de $\\lambda$."
+  },
+  {
+   "id": "photoelec",
+   "titre": "Effet photoélectrique",
+   "formule": "$E_c=h\\nu-W=\\dfrac{hc}\\lambda-W$ · seuil : $h\\nu_s=W$, $\\lambda_s=\\dfrac{hc}W$ · aucun électron si $h\\nu < W$ quelle que soit l'intensité",
+   "exemple": "$\\lambda=300$ nm ($hc=1200$ eV·nm), $E_c=1$ eV : $W=\\frac{1200}{300}-1=3$ eV",
+   "cours": "Einstein (1905) : la lumière est faite de photons d'énergie $h\\nu$, absorbés un par un. Si l'énergie d'un photon dépasse le travail d'extraction $W$ du métal, l'électron sort avec l'énergie cinétique $E_c=h\\nu-W$. L'intensité règle le nombre de photons, donc le nombre d'électrons, pas leur énergie. Dans l'exemple du cours, $E_c=\\frac12m_ec^2\\left(\\frac vc\\right)^2$ avec $m_ec^2\\approx0{,}5$ MeV."
+  },
+  {
+   "id": "bohr",
+   "titre": "Modèle de Bohr : niveaux d'énergie",
+   "formule": "$m r v=n\\hbar$ · $E_n=\\dfrac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=E_i-E_f=E_1\\left(\\dfrac1{n_i^2}-\\dfrac1{n_f^2}\\right)$ · ionisation depuis $n=1$ : $13{,}6$ eV",
+   "exemple": "$3\\to2$ : $\\Delta E=13{,}6\\left(\\frac14-\\frac19\\right)=1{,}89$ eV, $\\lambda=\\frac{1240}{1{,}89}\\approx656$ nm (rouge, série de Balmer)",
+   "cours": "Postulats : orbites circulaires stables sans rayonnement, moment cinétique quantifié $mrv=n\\hbar$, saut entre couches par absorption ou émission d'un photon. Les énergies sont négatives, $0$ correspond à l'atome ionisé ($n\\to\\infty$). Émission : $n_i>n_f$ ; absorption : $n_i < n_f$. Balmer : $n_f=2$ (visible). Un photon d'énergie supérieure à $13{,}6$ eV ionise : l'excédent devient énergie cinétique."
+  },
+  {
+   "id": "hydrogenoide",
+   "titre": "Hydrogénoïdes : rayons et énergies",
+   "formule": "$r_n=\\dfrac{n^2\\hbar^2}{Zme^2}=\\dfrac{n^2a_0}Z$ · $E_n=-\\dfrac{Z^2me^4}{2\\hbar^2n^2}=-13{,}6\\dfrac{Z^2}{n^2}$ eV · $a_0=\\dfrac{\\hbar^2}{me^2}\\approx5\\times10^{-11}$ m",
+   "exemple": "$\\mathrm{He}^+$ ($Z=2$) : $r_1=\\frac{a_0}2=2{,}5\\times10^{-11}$ m, $E_1=-4\\times13{,}6=-54{,}4$ eV",
+   "cours": "Un hydrogénoïde est un ion à un seul électron et $Z$ protons. Coulomb : $\\frac{Ze^2}{r^2}$. PFD avec $a=\\frac{v^2}r$ : $mv^2=\\frac{Ze^2}r$. Avec $mrv=n\\hbar$ : $(mv)^2=\\frac{n^2\\hbar^2}{r^2}=\\frac{Zme^2}r$, d'où $r_n$. Énergie : $E_n=E_c+E_p=-\\frac{Ze^2}{2r_n}$. Plus $Z$ est grand, plus l'électron est proche et lié."
+  },
+  {
+   "id": "debroglie",
+   "titre": "Dualité onde-particule et longueur de de Broglie",
+   "formule": "$\\lambda=\\dfrac hp=\\dfrac h{mv}$ · $h=6{,}62\\times10^{-34}$ J·s · $\\hbar=\\dfrac h{2\\pi}$",
+   "exemple": "balle de tennis, $0{,}05$ kg à $95$ m/s : $\\lambda=\\frac{6{,}62\\times10^{-34}}{0{,}05\\times95}\\approx1{,}4\\times10^{-34}$ m, inobservable",
+   "cours": "Toute particule a une longueur d'onde associée. Elle n'est observable que si elle est comparable aux distances en jeu : électrons (diffraction de Davisson et Germer, fentes d'Young avec électrons), pas objets macroscopiques. La lumière aussi est onde et particule (fentes d'Young avec photons un par un)."
+  },
+  {
+   "id": "heisenberg",
+   "titre": "Principe d'indétermination d'Heisenberg",
+   "formule": "$\\Delta x\\,\\Delta p\\geq\\dfrac\\hbar2$ · $p=mv$, $\\Delta p=m\\,\\Delta v$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$",
+   "exemple": "électron localisé à $\\Delta x=10^{-10}$ m : $\\Delta p\\geq\\frac\\hbar{2\\Delta x}\\approx5\\times10^{-25}$ kg·m·s$^{-1}$",
+   "cours": "Position et quantité de mouvement ne peuvent pas être connues simultanément avec précision : ce n'est pas un défaut de mesure mais une propriété de la matière. Plus on confine une particule, plus l'indétermination sur sa vitesse est grande. Pour un objet macroscopique les valeurs sont négligeables."
+  },
+  {
+   "id": "psi",
+   "titre": "Fonction d'onde et probabilité de présence",
+   "formule": "densité : $|\\psi(x)|^2$ · $P(a:b)=\\displaystyle\\int_a^b|\\psi|^2dx$ · normalisation : $\\displaystyle\\int_{-\\infty}^{+\\infty}|\\psi|^2dx=1$",
+   "exemple": "$\\psi=\\Psi_0e^{-x/x_0}$ sur $[0;+\\infty[$ : $\\Psi_0^2\\frac{x_0}2=1$ donc $\\Psi_0=\\sqrt{\\frac2{x_0}}$",
+   "cours": "Born (1926) : $\\psi$ est une onde de probabilité. $|\\psi|^2$ est une densité de probabilité (par unité de longueur) : on l'intègre pour obtenir une probabilité. La particule étant quelque part, l'intégrale sur tout l'espace vaut $1$ : c'est ce qui fixe la constante de normalisation. Pour $P\\geq95\\%$ sur $[0;A]$, on résout $1-e^{-2A/x_0}\\geq0{,}95$."
+  },
+  {
+   "id": "moyennes",
+   "titre": "Valeurs moyennes et incertitudes",
+   "formule": "$\\langle x\\rangle=\\displaystyle\\int x|\\psi|^2dx$ · $\\langle A\\rangle=\\displaystyle\\int\\psi^*\\hat A\\psi\\,dx$ · $\\hat p=-i\\hbar\\dfrac d{dx}$ · $\\langle p^2\\rangle=\\hbar^2\\displaystyle\\int|\\psi'|^2dx$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$",
+   "exemple": "$\\psi=Ne^{-\\lambda x^2/2}$ : $N=\\left(\\frac\\lambda\\pi\\right)^{1/4}$, $\\langle x^2\\rangle=\\frac1{2\\lambda}$, $\\langle p^2\\rangle=\\frac{\\hbar^2\\lambda}2$, $\\Delta x\\,\\Delta p=\\frac\\hbar2$",
+   "cours": "Intégrales utiles : $\\int_{-\\infty}^{+\\infty}e^{-\\lambda x^2}dx=\\sqrt{\\frac\\pi\\lambda}$ et $\\int_{-\\infty}^{+\\infty}x^2e^{-\\lambda x^2}dx=\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}$. Une fonction d'onde paire donne $\\langle x\\rangle=0$ ($x|\\psi|^2$ est impaire). Pour $\\psi$ réelle, $\\langle p\\rangle=-i\\hbar\\int\\psi\\psi'dx=0$. La gaussienne atteint exactement la borne d'Heisenberg."
+  },
+  {
+   "id": "schrodinger",
+   "titre": "Équation de Schrödinger et puits infini 1D",
+   "formule": "$-\\dfrac{\\hbar^2}{2m}\\psi''+V\\psi=E\\psi$ · puits : $\\psi(0)=\\psi(L)=0$ · $\\psi_n=\\sqrt{\\dfrac2L}\\sin\\dfrac{n\\pi x}L$ · $E_n=\\dfrac{n^2\\pi^2\\hbar^2}{2mL^2}=n^2E_1$",
+   "exemple": "électron dans $L=1$ nm : $E_1=\\frac{h^2}{8mL^2}\\approx0{,}38$ eV",
+   "cours": "Dans $[0;L]$ ($V=0$) : $\\psi''=-k^2\\psi$ avec $k^2=\\frac{2mE}{\\hbar^2}$, soit $\\psi=A\\sin kx+B\\cos kx$. $\\psi(0)=0$ donne $B=0$ ; $\\psi(L)=0$ donne $kL=n\\pi$ avec $n\\geq1$ ($n=0$ est la solution nulle) : l'énergie est quantifiée. La normalisation donne $A=\\sqrt{\\frac2L}$. $\\psi_n$ a $n-1$ n{\\oe}uds."
+  },
+  {
+   "id": "superposition",
+   "titre": "Superposition d'états et énergie moyenne",
+   "formule": "$\\psi=\\sum c_n\\psi_n$ · $c_n=\\displaystyle\\int\\psi_n^*\\psi\\,dx$ · $\\displaystyle\\int\\psi_n^*\\psi_m=\\delta_{nm}$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$",
+   "exemple": "$\\psi=N(3\\psi_1-\\psi_3)$ : $N^2=\\frac1{10}$, $P_1=\\frac9{10}$, $P_3=\\frac1{10}$, $\\langle E\\rangle=\\frac95E_1$",
+   "cours": "Les $\\psi_n$ forment une base orthonormée : $\\int\\psi_n\\psi_m=\\delta_{nm}$ (relation $\\sin a\\sin b=\\frac12[\\cos(a-b)-\\cos(a+b)]$). La normalisation de $\\psi$ devient $\\sum|c_n|^2=1$ ; $|c_n|^2$ est la probabilité de trouver l'énergie $E_n$. Pour $\\sin^3u=\\frac14(3\\sin u-\\sin3u)$, seuls $n=1$ et $n=3$ interviennent."
+  },
+  {
+   "id": "boite2d",
+   "titre": "Boîte 2D et dégénérescence",
+   "formule": "$E_{n_x,n_y}=\\dfrac{\\hbar^2\\pi^2}{2m}\\left(\\dfrac{n_x^2}{a^2}+\\dfrac{n_y^2}{b^2}\\right)$ · $n_x,n_y\\geq1$ · carré $a=b=1$ : $E_{min}=\\dfrac{\\hbar^2\\pi^2}m$",
+   "exemple": "carré : $E_{4,1}=E_{1,4}=\\frac{\\hbar^2\\pi^2}{2m}\\times17=\\frac{17}2E_{min}$ (sixième niveau)",
+   "cours": "Chaque direction est quantifiée. L'énergie minimale n'est pas nulle (énergie de point zéro) : contraire à la mécanique classique, c'est l'indétermination d'Heisenberg (particule confinée donc $\\Delta p\\neq0$). Deux états différents de même énergie, comme $(2,1)$ et $(1,2)$ dans un carré, sont dits dégénérés. Pour compter les niveaux, lister les sommes $n_x^2+n_y^2$ dans l'ordre : $2,5,8,10,13,17,18,\\dots$"
+  },
+  {
+   "id": "qubit",
+   "titre": "Qubits et portes quantiques",
+   "formule": "$|\\psi\\rangle=\\alpha|0\\rangle+\\beta|1\\rangle$, $|\\alpha|^2+|\\beta|^2=1$ · mesure : $|0\\rangle$ avec $|\\alpha|^2$, $|1\\rangle$ avec $|\\beta|^2$ · $X$ : $|0\\rangle\\leftrightarrow|1\\rangle$ · $H|0\\rangle=\\frac{|0\\rangle+|1\\rangle}{\\sqrt2}$, $H|1\\rangle=\\frac{|0\\rangle-|1\\rangle}{\\sqrt2}$ · CNOT · $n$ qubits : $2^n$ coefficients",
+   "exemple": "$|\\psi\\rangle=\\frac35|0\\rangle+\\frac45|1\\rangle$ : $P(0)=\\frac9{25}$, $P(1)=\\frac{16}{25}$",
+   "cours": "Avec $|0\\rangle=\\binom10$ et $|1\\rangle=\\binom01$ (base orthonormée), une porte est une matrice : $X=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$, $H=\\frac1{\\sqrt2}\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$. CNOT inverse le second qubit si le premier vaut $|1\\rangle$ : sur $(\\alpha,\\beta,\\gamma,\\delta)$ dans l'ordre $|00\\rangle,|01\\rangle,|10\\rangle,|11\\rangle$, elle échange $\\gamma$ et $\\delta$. Une mesure donne un seul résultat, avec les probabilités $|\\text{coefficient}|^2$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "rappels",
+   "type": "qcm",
+   "q": "Un électron a une énergie de $1$ eV. En joules, cela fait environ :",
+   "choix": [
+    "$1{,}6\\times10^{-19}$ J",
+    "$1{,}6\\times10^{19}$ J",
+    "$9\\times10^{-31}$ J",
+    "$6{,}6\\times10^{-34}$ J"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rappels",
+   "type": "vf",
+   "q": "Une onde stationnaire sur une corde fixée aux deux extrémités ne peut avoir que certaines longueurs d'onde.",
+   "bonne": true
+  },
+  {
+   "notion": "coulomb",
+   "type": "qcm",
+   "q": "Pour un mouvement circulaire uniforme de rayon $r$ et de vitesse $v$, l'accélération vaut :",
+   "choix": [
+    "$\\dfrac{v^2}r$",
+    "$\\dfrac vr$",
+    "$vr$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "coulomb",
+   "type": "vf",
+   "q": "Si on double la distance entre deux charges, la force de Coulomb est divisée par $4$.",
+   "bonne": true
+  },
+  {
+   "notion": "photon",
+   "type": "qcm",
+   "q": "L'énergie d'un photon de longueur d'onde $\\lambda$ vaut :",
+   "choix": [
+    "$\\dfrac{hc}\\lambda$",
+    "$hc\\lambda$",
+    "$\\dfrac{\\lambda}{hc}$",
+    "$h\\lambda$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "photon",
+   "type": "vf",
+   "q": "La catastrophe ultraviolette désigne la divergence de l'énergie rayonnée par un corps noir prédite par la physique classique.",
+   "bonne": true
+  },
+  {
+   "notion": "photon",
+   "type": "qcm",
+   "q": "Planck explique le rayonnement du corps noir en supposant que :",
+   "choix": [
+    "l'énergie est échangée par paquets $h\\nu$",
+    "la lumière est une onde continue",
+    "les électrons sont sur des orbites",
+    "la matière est continue"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "photoelec",
+   "type": "qcm",
+   "q": "Si la fréquence de la lumière est inférieure au seuil, augmenter son intensité :",
+   "choix": [
+    "ne fait pas apparaître d'électrons",
+    "fait apparaître des électrons",
+    "augmente leur énergie cinétique",
+    "diminue le travail d'extraction"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "photoelec",
+   "type": "vf",
+   "q": "L'énergie cinétique des électrons émis vaut $h\\nu-W$.",
+   "bonne": true
+  },
+  {
+   "notion": "bohr",
+   "type": "qcm",
+   "q": "Pour passer de $n=4$ à $n=3$ dans l'hydrogène, l'électron :",
+   "choix": [
+    "émet un photon",
+    "absorbe un photon",
+    "est ionisé",
+    "ne change pas d'énergie"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bohr",
+   "type": "vf",
+   "q": "Dans le modèle de Bohr, l'énergie de l'électron est négative et vaut $\\frac{E_1}{n^2}$.",
+   "bonne": true
+  },
+  {
+   "notion": "bohr",
+   "type": "qcm",
+   "q": "Énergie minimale à fournir à un atome d'hydrogène fondamental pour l'ioniser :",
+   "choix": [
+    "$13{,}6$ eV",
+    "$-13{,}6$ eV",
+    "$3{,}4$ eV",
+    "$0$ eV"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "hydrogenoide",
+   "type": "qcm",
+   "q": "Le rayon des orbites d'un hydrogénoïde varie comme :",
+   "choix": [
+    "$\\dfrac{n^2}Z$",
+    "$n^2Z$",
+    "$\\dfrac Z{n^2}$",
+    "$\\dfrac{n}{Z^2}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "hydrogenoide",
+   "type": "vf",
+   "q": "L'énergie d'ionisation de $\\mathrm{He}^+$ est environ $4$ fois celle de l'hydrogène.",
+   "bonne": true
+  },
+  {
+   "notion": "debroglie",
+   "type": "qcm",
+   "q": "La longueur d'onde de de Broglie d'une particule de quantité de mouvement $p$ est :",
+   "choix": [
+    "$\\dfrac hp$",
+    "$hp$",
+    "$\\dfrac ph$",
+    "$\\dfrac{h}{p^2}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "debroglie",
+   "type": "vf",
+   "q": "La nature ondulatoire d'une balle de tennis est facilement observable.",
+   "bonne": false
+  },
+  {
+   "notion": "heisenberg",
+   "type": "qcm",
+   "q": "Le principe d'indétermination s'écrit :",
+   "choix": [
+    "$\\Delta x\\,\\Delta p\\geq\\dfrac\\hbar2$",
+    "$\\Delta x\\,\\Delta p=0$",
+    "$\\Delta x+\\Delta p\\geq\\hbar$",
+    "$\\Delta x\\,\\Delta p\\leq\\dfrac\\hbar2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "heisenberg",
+   "type": "vf",
+   "q": "L'indétermination d'Heisenberg vient d'un défaut des appareils de mesure.",
+   "bonne": false
+  },
+  {
+   "notion": "psi",
+   "type": "qcm",
+   "q": "La condition de normalisation d'une fonction d'onde s'écrit :",
+   "choix": [
+    "$\\displaystyle\\int|\\psi|^2dx=1$",
+    "$\\displaystyle\\int\\psi\\,dx=1$",
+    "$|\\psi|=1$",
+    "$\\displaystyle\\int|\\psi|\\,dx=0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "psi",
+   "type": "vf",
+   "q": "$|\\psi(x)|^2$ est une densité de probabilité et peut dépasser $1$.",
+   "bonne": true
+  },
+  {
+   "notion": "moyennes",
+   "type": "qcm",
+   "q": "L'incertitude sur $A$ se calcule par :",
+   "choix": [
+    "$\\sqrt{\\langle A^2\\rangle-\\langle A\\rangle^2}$",
+    "$\\langle A\\rangle^2-\\langle A^2\\rangle$",
+    "$\\langle A\\rangle$",
+    "$\\sqrt{\\langle A\\rangle}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "moyennes",
+   "type": "vf",
+   "q": "Pour une fonction d'onde paire, la position moyenne $\\langle x\\rangle$ est nulle.",
+   "bonne": true
+  },
+  {
+   "notion": "schrodinger",
+   "type": "qcm",
+   "q": "Dans un puits infini de largeur $L$, les énergies sont :",
+   "choix": [
+    "$\\dfrac{n^2\\pi^2\\hbar^2}{2mL^2}$",
+    "$\\dfrac{n\\pi\\hbar}{2mL}$",
+    "$\\dfrac{\\hbar^2}{2mL^2}$",
+    "proportionnelles à $n$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "schrodinger",
+   "type": "vf",
+   "q": "La condition $\\psi(L)=0$ est ce qui impose la quantification de l'énergie.",
+   "bonne": true
+  },
+  {
+   "notion": "schrodinger",
+   "type": "qcm",
+   "q": "La fonction $\\psi_n$ du puits infini possède :",
+   "choix": [
+    "$n-1$ n{\\oe}uds",
+    "$n$ n{\\oe}uds",
+    "$n+1$ n{\\oe}uds",
+    "aucun n{\\oe}ud"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "superposition",
+   "type": "vf",
+   "q": "Si $\\psi=\\sum c_n\\psi_n$ est normalisée, alors $\\sum|c_n|^2=1$.",
+   "bonne": true
+  },
+  {
+   "notion": "superposition",
+   "type": "qcm",
+   "q": "L'énergie moyenne de $\\psi=\\sum c_n\\psi_n$ est :",
+   "choix": [
+    "$\\sum|c_n|^2E_n$",
+    "$\\sum c_nE_n$",
+    "$\\sum E_n$",
+    "$\\sum|c_n|E_n^2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "boite2d",
+   "type": "vf",
+   "q": "Dans une boîte 2D, l'énergie minimale est nulle.",
+   "bonne": false
+  },
+  {
+   "notion": "boite2d",
+   "type": "qcm",
+   "q": "Deux états de même énergie sont dits :",
+   "choix": [
+    "dégénérés",
+    "orthogonaux",
+    "normalisés",
+    "ionisés"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "qubit",
+   "type": "qcm",
+   "q": "Pour $|\\psi\\rangle=\\alpha|0\\rangle+\\beta|1\\rangle$, la mesure donne $|1\\rangle$ avec la probabilité :",
+   "choix": [
+    "$|\\beta|^2$",
+    "$\\beta$",
+    "$\\dfrac12$",
+    "$|\\alpha|^2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "qubit",
+   "type": "vf",
+   "q": "Un système de $n$ qubits est décrit par $2^n$ coefficients.",
+   "bonne": true
+  },
+  {
+   "notion": "qubit",
+   "type": "qcm",
+   "q": "Que fait la porte CNOT ?",
+   "choix": [
+    "inverse le second qubit si le premier vaut $|1\\rangle$",
+    "inverse toujours le premier qubit",
+    "met les deux qubits en superposition",
+    "ne change rien"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappels S1/S2 : énergie, ondes, unités",
+   "notions": [
+    "rappels"
+   ],
+   "exos": [
+    {
+     "id": "qa1",
+     "enonce": "Une balle de $0{,}05$ kg lancée à $95$ m/s. Énergie cinétique (en J) ?",
+     "ans": "1805/8",
+     "sol": "$E_c=\\frac12mv^2=\\frac12\\times0{,}05\\times95^2=225{,}625$ J.",
+     "src": "TD2 de mécanique quantique, ex. 1 (données)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Un chariot de $2$ kg à $3$ m/s. Énergie cinétique (en J) ?",
+       "ans": "9",
+       "sol": "$\\frac12\\times2\\times9=9$ J."
+      }
+     ],
+     "formules": "$E_c=\\frac12mv^2$",
+     "type": "value"
+    },
+    {
+     "id": "qa2",
+     "enonce": "Convertir l'énergie d'ionisation de l'hydrogène, $13{,}6$ eV, en joules ($1$ eV $=1{,}6\\times10^{-19}$ J).",
+     "ans": "2176*10**-21",
+     "sol": "$13{,}6\\times1{,}6\\times10^{-19}=21{,}76\\times10^{-19}=2{,}176\\times10^{-18}$ J.",
+     "src": "Cours de mécanique quantique, exemple 1 (unités)",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Convertir $3$ eV en joules.",
+       "ans": "48*10**-20",
+       "sol": "$3\\times1{,}6\\times10^{-19}=4{,}8\\times10^{-19}$ J."
+      }
+     ],
+     "formules": "1 eV $=1{,}6\\times10^{-19}$ J",
+     "type": "value"
+    },
+    {
+     "id": "qa3",
+     "enonce": "Une onde lumineuse de fréquence $f=5\\times10^{14}$ Hz se propage à $c=3\\times10^8$ m/s. Longueur d'onde (en nm) ?",
+     "ans": "600",
+     "sol": "$\\lambda=\\frac cf=\\frac{3\\times10^8}{5\\times10^{14}}=6\\times10^{-7}$ m $=600$ nm (orange).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Une lumière de fréquence $6\\times10^{14}$ Hz : longueur d'onde (en nm) ?",
+       "ans": "500",
+       "sol": "$\\lambda=\\frac{3\\times10^8}{6\\times10^{14}}=5\\times10^{-7}$ m $=500$ nm."
+      }
+     ],
+     "formules": "$c=\\lambda f$",
+     "type": "value"
+    },
+    {
+     "id": "qa4",
+     "enonce": "Un électron ($m=9\\times10^{-31}$ kg) va à $2\\times10^6$ m/s. Énergie cinétique (en eV) ?",
+     "ans": "45/4",
+     "sol": "$E_c=\\frac12\\times9\\times10^{-31}\\times4\\times10^{12}=1{,}8\\times10^{-18}$ J, soit $\\frac{1{,}8\\times10^{-18}}{1{,}6\\times10^{-19}}=11{,}25$ eV.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un électron ($9\\times10^{-31}$ kg) à $4\\times10^6$ m/s. $E_c$ (en eV) ?",
+       "ans": "45",
+       "sol": "$E_c=\\frac12\\times9\\times10^{-31}\\times16\\times10^{12}=7{,}2\\times10^{-18}$ J $=45$ eV."
+      }
+     ],
+     "formules": "$E_c=\\frac12mv^2$ · 1 eV $=1{,}6\\times10^{-19}$ J",
+     "type": "value"
+    },
+    {
+     "id": "qa5",
+     "enonce": "Une corde de longueur $L$, fixée à ses deux extrémités, vibre en onde stationnaire. Quelles longueurs d'onde sont possibles ? Pourquoi dit-on que la fréquence est « quantifiée » ?",
+     "sol": "Chaque extrémité est un n{\\oe}ud, donc $L$ contient un nombre entier de demi-longueurs d'onde : $L=n\\frac\\lambda2$, soit $\\lambda_n=\\frac{2L}n$ ($n=1,2,3,\\dots$). Avec $c=\\lambda f$, $f_n=n\\frac c{2L}$ : seules des fréquences discrètes sont permises (les notes d'une corde de guitare). C'est cette idée que de Broglie transpose à l'électron, et que l'on retrouve dans le puits de potentiel infini.",
+     "duree": 3,
+     "formules": "$L=n\\frac\\lambda2$ · $c=\\lambda f$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappels : force de Coulomb et mouvement circulaire",
+   "notions": [
+    "coulomb"
+   ],
+   "exos": [
+    {
+     "id": "qc1",
+     "enonce": "Force de Coulomb (en N) entre un proton et un électron distants de $r=5\\times10^{-11}$ m ($k=9\\times10^9$, $q=1{,}6\\times10^{-19}$ C) ?",
+     "ans": "9216*10**-11",
+     "sol": "$F=\\frac{kq^2}{r^2}=\\frac{9\\times10^9\\times2{,}56\\times10^{-38}}{25\\times10^{-22}}=9{,}216\\times10^{-8}$ N.",
+     "src": "TD1 de mécanique quantique, ex. 1 q2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Même force pour $r=10^{-10}$ m (en N) ?",
+       "ans": "2304*10**-11",
+       "sol": "$F=\\frac{2{,}304\\times10^{-28}}{10^{-20}}=2{,}304\\times10^{-8}$ N : divisée par $4$ quand $r$ double."
+      }
+     ],
+     "formules": "$F=\\frac{kq^2}{r^2}$, $k=9\\times10^9$",
+     "type": "value"
+    },
+    {
+     "id": "qc2",
+     "enonce": "Un électron décrit un cercle de rayon $r=5\\times10^{-11}$ m à la vitesse constante $v=2{,}2\\times10^6$ m/s. Norme de son accélération (en m·s$^{-2}$) ?",
+     "ans": "968*10**20",
+     "sol": "Mouvement circulaire uniforme : $a=\\frac{v^2}r=\\frac{4{,}84\\times10^{12}}{5\\times10^{-11}}=9{,}68\\times10^{22}$ m·s$^{-2}$ (centripète).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$v=10^6$ m/s, $r=5\\times10^{-11}$ m. $a$ (en m·s$^{-2}$) ?",
+       "ans": "2*10**22",
+       "sol": "$a=\\frac{10^{12}}{5\\times10^{-11}}=2\\times10^{22}$ m·s$^{-2}$."
+      }
+     ],
+     "formules": "$a=\\frac{v^2}r$",
+     "type": "value"
+    },
+    {
+     "id": "qc3",
+     "enonce": "Le PFD donne $mv^2=\\frac{kq^2}r$. Calculer $mv^2$ (en J) pour $r=5\\times10^{-11}$ m.",
+     "ans": "4608*10**-21",
+     "sol": "$mv^2=\\frac{kq^2}r=\\frac{2{,}304\\times10^{-28}}{5\\times10^{-11}}=4{,}608\\times10^{-18}$ J.",
+     "src": "TD1 de mécanique quantique, ex. 1 q3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$mv^2=\\frac{kq^2}r$ pour $r=10^{-10}$ m (en J) ?",
+       "ans": "2304*10**-21",
+       "sol": "$\\frac{2{,}304\\times10^{-28}}{10^{-10}}=2{,}304\\times10^{-18}$ J."
+      }
+     ],
+     "formules": "$mv^2=\\frac{kq^2}r$",
+     "type": "value"
+    },
+    {
+     "id": "qc4",
+     "enonce": "Énergie cinétique de cet électron $E_c=\\frac12mv^2=\\frac{kq^2}{2r}$ (en eV), pour $r=5\\times10^{-11}$ m ?",
+     "ans": "72/5",
+     "sol": "$E_c=\\frac{2{,}304\\times10^{-28}}{10^{-10}}=2{,}304\\times10^{-18}$ J, soit $\\frac{2{,}304\\times10^{-18}}{1{,}6\\times10^{-19}}=14{,}4$ eV.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$E_c=\\frac{kq^2}{2r}$ pour $r=2\\times10^{-10}$ m (en eV) ?",
+       "ans": "18/5",
+       "sol": "$E_c=\\frac{2{,}304\\times10^{-28}}{4\\times10^{-10}}=5{,}76\\times10^{-19}$ J $=3{,}6$ eV."
+      }
+     ],
+     "formules": "$E_c=\\frac{kq^2}{2r}$ · 1 eV $=1{,}6\\times10^{-19}$ J",
+     "type": "value"
+    },
+    {
+     "id": "qc5",
+     "enonce": "Électron de l'atome d'hydrogène en orbite circulaire de rayon $r$. Avec $e^2=kq^2$, établir $E_c$, $E_p$ puis l'énergie totale $E$ en fonction de $e$ et $r$.",
+     "sol": "PFD : $\\frac{e^2}{r^2}=\\frac{mv^2}r$ donc $mv^2=\\frac{e^2}r$ et $E_c=\\frac12mv^2=\\frac{e^2}{2r}$.\n\nÉnergie potentielle de Coulomb (interaction proton-électron) : $E_p=-\\frac{kq^2}r=-\\frac{e^2}r$.\n\nTotal : $E=E_c+E_p=\\frac{e^2}{2r}-\\frac{e^2}r=-\\frac{e^2}{2r}$. Elle est négative : l'électron est lié, et on retrouve $E=-E_c$.",
+     "src": "TD1 de mécanique quantique, ex. 1 q5",
+     "duree": 5,
+     "formules": "$E_c=\\frac{e^2}{2r}$ · $E_p=-\\frac{e^2}r$ · $E=-\\frac{e^2}{2r}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Photon et corps noir",
+   "notions": [
+    "photon"
+   ],
+   "exos": [
+    {
+     "id": "qp1",
+     "enonce": "Énergie (en eV) d'un photon de longueur d'onde $620$ nm ($hc\\approx1240$ eV·nm) ?",
+     "ans": "2",
+     "sol": "$E=\\frac{hc}\\lambda=\\frac{1240}{620}=2$ eV.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Énergie (en eV) d'un photon de $400$ nm ?",
+       "ans": "31/10",
+       "sol": "$\\frac{1240}{400}=3{,}1$ eV."
+      }
+     ],
+     "formules": "$E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qp2",
+     "enonce": "Fréquence d'un photon d'énergie $3{,}3\\times10^{-19}$ J ($h=6{,}6\\times10^{-34}$ J·s) ?",
+     "ans": "5*10**14",
+     "sol": "$\\nu=\\frac Eh=\\frac{3{,}3\\times10^{-19}}{6{,}6\\times10^{-34}}=5\\times10^{14}$ Hz.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Fréquence (en Hz) d'un photon de $1{,}98\\times10^{-19}$ J ?",
+       "ans": "3*10**14",
+       "sol": "$\\nu=\\frac{1{,}98\\times10^{-19}}{6{,}6\\times10^{-34}}=3\\times10^{14}$ Hz."
+      }
+     ],
+     "formules": "$\\nu=\\frac Eh$",
+     "type": "value"
+    },
+    {
+     "id": "qp3",
+     "enonce": "Un laser de $1$ mW émet à $660$ nm. Nombre de photons émis par seconde ? ($h=6{,}6\\times10^{-34}$, $c=3\\times10^8$)",
+     "ans": "10**16/3",
+     "sol": "Un photon : $E=\\frac{hc}\\lambda=\\frac{6{,}6\\times10^{-34}\\times3\\times10^8}{6{,}6\\times10^{-7}}=3\\times10^{-19}$ J. Nombre par seconde : $\\frac{P}E=\\frac{10^{-3}}{3\\times10^{-19}}\\approx3{,}3\\times10^{15}$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Laser de $2$ mW à $660$ nm : photons par seconde ?",
+       "ans": "2*10**16/3",
+       "sol": "Un photon : $3\\times10^{-19}$ J. $N=\\frac{2\\times10^{-3}}{3\\times10^{-19}}\\approx6{,}7\\times10^{15}$ par seconde."
+      }
+     ],
+     "formules": "$E=\\frac{hc}\\lambda$ · $N=\\frac PE$",
+     "type": "value"
+    },
+    {
+     "id": "qp4",
+     "enonce": "La longueur d'onde du photon associé à une transition entre les niveaux $n=3$ et $n'=2$ vaut-elle $\\lambda=hc\\,|\\Delta E_{3\\to2}|$, $hc\\,\\Delta E_{3\\to2}$, $\\dfrac{hc}{|\\Delta E_{3\\to2}|}$ ou $\\dfrac{hc}{\\Delta E_{3\\to2}}$ ? Justifier.",
+     "sol": "Réponse : $\\lambda=\\dfrac{hc}{|\\Delta E_{3\\to2}|}$. L'énergie du photon est $h\\nu=\\frac{hc}\\lambda=|E_f-E_i|$. On prend la valeur absolue car $\\Delta E$ est négatif pour une émission alors que $\\lambda$ doit être positive. Les propositions avec $hc\\times\\Delta E$ ne sont pas homogènes à une longueur.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 q3",
+     "duree": 3,
+     "formules": "$E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm · $\\lambda=\\frac{hc}{|\\Delta E|}$",
+     "type": "open"
+    },
+    {
+     "id": "qp5",
+     "enonce": "Le spectre du rayonnement d'un corps noir est le graphe de : (a) la densité d'énergie rayonnée en fonction de la température $T$ ; (b) $T$ en fonction de la densité d'énergie ; (c) la densité d'énergie rayonnée en fonction de la longueur d'onde $\\lambda$ ; (d) aucune. Que prédisait la physique classique aux petites longueurs d'onde, et comment Planck a-t-il résolu le problème ?",
+     "sol": "Réponse : (c). Un spectre représente l'énergie rayonnée en fonction de $\\lambda$, à $T$ fixée ; sa forme ne dépend que de $T$, pas du matériau.\n\nLa théorie classique prédit une densité d'énergie qui diverge en $\\frac1{\\lambda^4}$ quand $\\lambda\\to0$ (vers l'ultraviolet) : c'est la catastrophe ultraviolette, absurde puisqu'elle donnerait une énergie infinie.\n\nPlanck (1900) suppose que l'énergie ne s'échange que par paquets $E=h\\nu$ : la divergence disparaît et la courbe mesurée est reproduite.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 q5",
+     "duree": 5,
+     "formules": "catastrophe ultraviolette · quanta de Planck $E=h\\nu$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Effet photoélectrique",
+   "notions": [
+    "photoelec",
+    "photon"
+   ],
+   "exos": [
+    {
+     "id": "qe1",
+     "enonce": "Un métal éclairé à $\\lambda=300$ nm émet des électrons de vitesse $6\\times10^5$ m/s. On prend $hc\\approx1200$ eV·nm et $m_ec^2\\approx0{,}5$ MeV. Travail d'extraction $W$ (en eV) ?",
+     "ans": "3",
+     "sol": "$h\\nu=\\frac{1200}{300}=4$ eV. $E_c=\\frac12m_ec^2\\left(\\frac vc\\right)^2=\\frac12\\times5\\times10^5\\times(2\\times10^{-3})^2=1$ eV. $W=h\\nu-E_c=3$ eV.",
+     "src": "Cours de mécanique quantique, exemple 1",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "$\\lambda=400$ nm, $v=3\\times10^5$ m/s ($hc=1200$ eV·nm, $m_ec^2=0{,}5$ MeV). $W$ (en eV) ?",
+       "ans": "11/4",
+       "sol": "$h\\nu=3$ eV, $E_c=\\frac12\\times5\\times10^5\\times(10^{-3})^2=0{,}25$ eV, $W=2{,}75$ eV."
+      }
+     ],
+     "formules": "$E_c=h\\nu-W$ · $E_c=\\frac12m_ec^2\\left(\\frac vc\\right)^2$ · $\\frac{hc}\\lambda$",
+     "type": "value"
+    },
+    {
+     "id": "qe2",
+     "enonce": "Travail d'extraction du métal $W=2{,}5$ eV. Longueur d'onde seuil $\\lambda_s$ (en nm), avec $hc=1240$ eV·nm ?",
+     "ans": "496",
+     "sol": "Seuil : $h\\nu_s=\\frac{hc}{\\lambda_s}=W$, donc $\\lambda_s=\\frac{1240}{2{,}5}=496$ nm. Au-delà, aucun électron n'est émis, même très intense.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$W=2$ eV : longueur d'onde seuil (en nm, $hc=1240$) ?",
+       "ans": "620",
+       "sol": "$\\lambda_s=\\frac{1240}2=620$ nm."
+      }
+     ],
+     "formules": "$\\lambda_s=\\frac{hc}W$",
+     "type": "value"
+    },
+    {
+     "id": "qe3",
+     "enonce": "Lumière à $200$ nm sur un métal de travail d'extraction $4{,}2$ eV ($hc=1240$ eV·nm). Énergie cinétique des électrons (en eV) ?",
+     "ans": "2",
+     "sol": "$E_c=\\frac{hc}\\lambda-W=\\frac{1240}{200}-4{,}2=6{,}2-4{,}2=2$ eV.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\lambda=250$ nm, $W=3{,}4$ eV, $hc=1240$ eV·nm. $E_c$ (en eV) ?",
+       "ans": "39/25",
+       "sol": "$E_c=4{,}96-3{,}4=1{,}56$ eV."
+      }
+     ],
+     "formules": "$E_c=\\frac{hc}\\lambda-W$",
+     "type": "value"
+    },
+    {
+     "id": "qe4",
+     "enonce": "Un électron émis a l'énergie cinétique $1{,}8$ eV. Sa vitesse (en m/s), avec $m=9\\times10^{-31}$ kg ?",
+     "ans": "8*10**5",
+     "sol": "$E_c=1{,}8\\times1{,}6\\times10^{-19}=2{,}88\\times10^{-19}$ J. $v=\\sqrt{\\frac{2E_c}m}=\\sqrt{\\frac{5{,}76\\times10^{-19}}{9\\times10^{-31}}}=\\sqrt{6{,}4\\times10^{11}}=8\\times10^5$ m/s.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Électron émis d'énergie cinétique $0{,}45$ eV : vitesse (en m/s) ?",
+       "ans": "4*10**5",
+       "sol": "$v=\\sqrt{\\frac{2\\times0{,}45\\times1{,}6\\times10^{-19}}{9\\times10^{-31}}}=\\sqrt{1{,}6\\times10^{11}}=4\\times10^5$ m/s."
+      }
+     ],
+     "formules": "$v=\\sqrt{\\frac{2E_c}m}$ · 1 eV $=1{,}6\\times10^{-19}$ J",
+     "type": "value"
+    },
+    {
+     "id": "qe5",
+     "enonce": "On éclaire un métal avec une lumière de fréquence inférieure au seuil, mais très intense. Observe-t-on des électrons ? Pourquoi la théorie ondulatoire classique ne l'explique-t-elle pas ?",
+     "sol": "Non, aucun. Chaque électron absorbe un seul photon d'énergie $h\\nu$ ; si $h\\nu < W$, il ne sort pas, et augmenter l'intensité ajoute des photons sans augmenter l'énergie de chacun.\n\nUne onde classique continue donnerait de l'énergie aux électrons proportionnellement à l'intensité : une intensité assez forte les ferait sortir, et la fréquence ne ferait que changer le temps nécessaire. Cela contredit l'observation d'un seuil en fréquence. Einstein (1905) explique : $E_c=h\\nu-W$.",
+     "src": "Cours de mécanique quantique, II.2",
+     "duree": 4,
+     "formules": "$E_c=h\\nu-W$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Modèle de Bohr : niveaux d'énergie",
+   "notions": [
+    "bohr",
+    "photon"
+   ],
+   "exos": [
+    {
+     "id": "qb1",
+     "enonce": "Énergie du niveau $n=3$ de l'atome d'hydrogène (en eV), $E_1=-13{,}6$ eV ?",
+     "ans": "-68/45",
+     "sol": "$E_3=\\frac{E_1}{9}=-\\frac{13{,}6}9\\approx-1{,}51$ eV.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 (document 1)",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Énergie du niveau $n=4$ de l'hydrogène (en eV) ?",
+       "ans": "-17/20",
+       "sol": "$E_4=-\\frac{13{,}6}{16}=-0{,}85$ eV."
+      }
+     ],
+     "formules": "$E_n=\\frac{E_1}{n^2}$",
+     "type": "value"
+    },
+    {
+     "id": "qb2",
+     "enonce": "Énergie à fournir pour passer de l'état fondamental à l'orbite $n=5$ (en eV) ?",
+     "ans": "1632/125",
+     "sol": "$\\Delta E=E_5-E_1=13{,}6\\left(1-\\frac1{25}\\right)=13{,}6\\times\\frac{24}{25}=13{,}056\\approx13{,}06$ eV (photon absorbé).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 q2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Énergie à fournir pour passer de $n=1$ à $n=4$ (en eV) ?",
+       "ans": "51/4",
+       "sol": "$13{,}6\\times\\frac{15}{16}=12{,}75$ eV."
+      }
+     ],
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$",
+     "type": "value"
+    },
+    {
+     "id": "qb3",
+     "enonce": "Longueur d'onde (en nm) du photon émis par la désexcitation $3\\to2$ ($hc=1240$ eV·nm) ? Est-elle visible ?",
+     "ans": "11160/17",
+     "sol": "$\\Delta E=13{,}6\\left(\\frac14-\\frac19\\right)=13{,}6\\times\\frac5{36}\\approx1{,}89$ eV. $\\lambda=\\frac{1240}{1{,}89}\\approx656$ nm : rouge, dans le visible. C'est la raie $H_\\alpha$ de la série de Balmer ($n_f=2$).",
+     "src": "TD1 de mécanique quantique, ex. 2 q2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Longueur d'onde (en nm) de $4\\to2$ ($hc=1240$ eV·nm) ?",
+       "ans": "24800/51",
+       "sol": "$\\Delta E=13{,}6\\times\\frac3{16}=2{,}55$ eV, $\\lambda=\\frac{1240}{2{,}55}\\approx486$ nm (bleu-vert, $H_\\beta$)."
+      }
+     ],
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$ · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qb4",
+     "enonce": "On fournit $14$ eV à l'électron de l'atome d'hydrogène dans son état fondamental. Énergie cinétique finale (en eV) ?",
+     "ans": "2/5",
+     "sol": "$14$ eV $>13{,}6$ eV : l'atome est ionisé, l'électron s'échappe avec $E_c=14-13{,}6=0{,}4$ eV, donc avec une vitesse non nulle (réponses b et c du QCM).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 q4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On fournit $15$ eV à l'électron fondamental de l'hydrogène. Énergie cinétique finale (en eV) ?",
+       "ans": "7/5",
+       "sol": "$15-13{,}6=1{,}4$ eV."
+      }
+     ],
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$ · $E_c=h\\nu-|E_1|$",
+     "type": "value"
+    },
+    {
+     "id": "qb5",
+     "enonce": "Longueur d'onde (en nm) de la transition $5\\to2$ ($hc=1240$ eV·nm) ?",
+     "ans": "155000/357",
+     "sol": "$\\Delta E=13{,}6\\left(\\frac14-\\frac1{25}\\right)=13{,}6\\times\\frac{21}{100}=2{,}856$ eV. $\\lambda=\\frac{1240}{2{,}856}\\approx434$ nm : violet-bleu (série de Balmer).",
+     "src": "TD1 de mécanique quantique, ex. 2 q5",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Longueur d'onde (en nm) de $6\\to2$ ($hc=1240$) ?",
+       "ans": "1240/Rational(136,10)*9/2",
+       "sol": "$\\Delta E=13{,}6\\times\\frac29=3{,}02$ eV ; $\\lambda=\\frac{1240}{3{,}02}\\approx410$ nm (violet)."
+      }
+     ],
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$ · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qb6",
+     "enonce": "Pour passer du niveau $4$ au niveau $3$ de l'hydrogène : l'électron a-t-il besoin de recevoir un photon, ou cède-t-il un photon ?",
+     "sol": "$E_4=-0{,}85$ eV est supérieur à $E_3=-1{,}51$ eV : l'électron descend et perd de l'énergie. Il cède donc de l'énergie sous forme d'un photon (émission), d'énergie $E_4-E_3=0{,}66$ eV.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 q1",
+     "duree": 2,
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$",
+     "type": "open"
+    },
+    {
+     "id": "qb7",
+     "enonce": "Sur le diagramme d'énergie de l'hydrogène : où est le niveau fondamental ? Que représente l'énergie nulle ? Comment ioniser l'atome depuis $n=1$ ? Comment interpréter les spectres d'émission et d'absorption ?",
+     "sol": "Fondamental : $n=1$, $E_1=-13{,}6$ eV (le plus bas, état normal de l'électron). L'énergie nulle correspond à l'atome ionisé ($n\\to\\infty$), électron libre au repos.\n\nIonisation depuis $n=1$ : absorber un photon d'énergie au moins $-E_1=13{,}6$ eV ($\\lambda\\leq91$ nm, ultraviolet) ; l'excédent devient énergie cinétique.\n\nÉmission : l'atome excité redescend en émettant des photons d'énergie $E_i-E_f$ : raies brillantes sur fond noir. Absorption : lumière continue, l'atome n'absorbe que les photons d'énergie $E_f-E_i$ : raies noires aux mêmes longueurs d'onde. Spectre discret : les énergies sont quantifiées.",
+     "src": "TD1 de mécanique quantique, ex. 2 q1, q4, q5",
+     "duree": 5,
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$ · $n\\to\\infty$ : $E=0$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Hydrogénoïdes : rayons et énergies",
+   "notions": [
+    "hydrogenoide",
+    "bohr"
+   ],
+   "exos": [
+    {
+     "id": "qr1",
+     "enonce": "Rayon de la couche $n=3$ de l'hydrogène (en m), avec $a_0=\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ m ?",
+     "ans": "45*10**-11",
+     "sol": "$r_3=n^2a_0=9\\times5\\times10^{-11}=4{,}5\\times10^{-10}$ m.",
+     "src": "TD1 de mécanique quantique, ex. 1 q4",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Rayon de la couche $n=2$ de l'hydrogène (en m), $a_0=5\\times10^{-11}$ m ?",
+       "ans": "20*10**-11",
+       "sol": "$r_2=4a_0=2\\times10^{-10}$ m."
+      }
+     ],
+     "formules": "$r_n=n^2a_0$",
+     "type": "value"
+    },
+    {
+     "id": "qr2",
+     "enonce": "Plus petit rayon possible pour l'ion $\\mathrm{He}^+$ ($Z=2$), avec $\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ m (en m) ? Vraisemblable ?",
+     "ans": "25*10**-12",
+     "sol": "$r_1=\\frac{\\hbar^2}{Zme^2}=\\frac{5\\times10^{-11}}2=2{,}5\\times10^{-11}$ m. Deux fois plus petit que pour l'hydrogène : le noyau de charge $2e$ attire plus fortement l'électron. Vraisemblable (largement supérieur à la taille du noyau, $\\sim10^{-15}$ m).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Plus petit rayon de $\\mathrm{Be}^{3+}$ ($Z=4$), $\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ m (en m) ?",
+       "ans": "125*10**-13",
+       "sol": "$r_1=\\frac{5\\times10^{-11}}4=1{,}25\\times10^{-11}$ m."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$",
+     "type": "value"
+    },
+    {
+     "id": "qr3",
+     "enonce": "Même question pour $\\mathrm{Li}^{2+}$ ($Z=3$) : plus petit rayon (en m) ?",
+     "ans": "Rational(5,3)*10**-11",
+     "sol": "$r_1=\\frac{5\\times10^{-11}}3\\approx1{,}67\\times10^{-11}$ m. Plus $Z$ est grand, plus le rayon est petit (en $\\frac1Z$).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Rayon de la couche $n=2$ de $\\mathrm{Li}^{2+}$ (en m), $\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ ?",
+       "ans": "Rational(20,3)*10**-11",
+       "sol": "$r_2=\\frac{n^2a_0}Z=\\frac{4\\times5\\times10^{-11}}3\\approx6{,}7\\times10^{-11}$ m."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$",
+     "type": "value"
+    },
+    {
+     "id": "qr4",
+     "enonce": "Énergie fondamentale de $\\mathrm{He}^+$ en valeur absolue (en eV), avec $E_n=-13{,}6\\frac{Z^2}{n^2}$ ?",
+     "ans": "272/5",
+     "sol": "$|E_1|=13{,}6\\times4=54{,}4$ eV. Valeur expérimentale $54{,}42$ eV : accord très bon (le modèle de Bohr est exact pour un seul électron).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q5",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Énergie d'ionisation de $\\mathrm{Be}^{3+}$ ($Z=4$) depuis le fondamental (en eV) ?",
+       "ans": "1088/5",
+       "sol": "$13{,}6\\times16=217{,}6$ eV."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV",
+     "type": "value"
+    },
+    {
+     "id": "qr5",
+     "enonce": "Énergie fondamentale de $\\mathrm{Li}^{2+}$ en valeur absolue (en eV) ?",
+     "ans": "612/5",
+     "sol": "$|E_1|=13{,}6\\times9=122{,}4$ eV, contre $122{,}45$ eV mesurés. L'énergie d'ionisation croît comme $Z^2$ : $13{,}6$ (H), $54{,}4$ ($\\mathrm{He}^+$), $122{,}4$ ($\\mathrm{Li}^{2+}$).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q5",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Énergie d'ionisation de $\\mathrm{B}^{4+}$ ($Z=5$) (en eV) ?",
+       "ans": "340",
+       "sol": "$13{,}6\\times25=340$ eV."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV",
+     "type": "value"
+    },
+    {
+     "id": "qr6",
+     "enonce": "Longueur d'onde (en nm) du photon émis par $\\mathrm{He}^+$ lors de $n=2\\to n=1$ ($hc=1240$ eV·nm) ?",
+     "ans": "1550/51",
+     "sol": "$\\Delta E=13{,}6\\times4\\times\\left(1-\\frac14\\right)=40{,}8$ eV. $\\lambda=\\frac{1240}{40{,}8}\\approx30{,}4$ nm : ultraviolet.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Photon émis par $\\mathrm{Li}^{2+}$ lors de $3\\to2$ : longueur d'onde (en nm, $hc=1240$) ?",
+       "ans": "1240/17",
+       "sol": "$\\Delta E=13{,}6\\times9\\times\\frac5{36}=17$ eV, $\\lambda=\\frac{1240}{17}\\approx72{,}9$ nm."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qr7",
+     "enonce": "Hydrogénoïde (noyau de $Z$ protons de charge $+q$, un électron de masse $m$, $e^2=kq^2$). 1) Norme de la force de Coulomb. 2) PFD pour trouver $mv^2$ en fonction de $Z$, $e$, $m$, $r$ (accélération $a=\\frac{v^2}r$).",
+     "sol": "1) $F=\\frac{k\\,(Zq)\\,q}{r^2}=\\dfrac{Ze^2}{r^2}$.\n\n2) Seule force : Coulomb, centripète. $\\sum\\vec F=m\\vec a$ donne $\\frac{Ze^2}{r^2}=m\\frac{v^2}r$, soit $mv^2=\\dfrac{Ze^2}r$.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q1, q2",
+     "duree": 5,
+     "formules": "$F=\\frac{ke^2}{r^2}$ · PFD : $\\frac{Ze^2}{r^2}=\\frac{mv^2}r$ · $a=\\frac{v^2}r$",
+     "type": "open"
+    },
+    {
+     "id": "qr8",
+     "enonce": "Avec le 3e postulat $mrv=n\\hbar$ et le résultat précédent, établir le système de deux équations puis le rayon $r_n$ des orbites en fonction de $n$, $m$, $e$, $Z$.",
+     "sol": "Postulat : $mv=\\frac{n\\hbar}r$, donc $(mv)^2=\\frac{n^2\\hbar^2}{r^2}$. PFD : $mv^2=\\frac{Ze^2}r$, donc en multipliant par $m$, $(mv)^2=\\frac{Zme^2}r$.\n\nÉgalité : $\\frac{n^2\\hbar^2}{r^2}=\\frac{Zme^2}r$, d'où $r_n=\\dfrac{n^2\\hbar^2}{Zme^2}=\\dfrac{n^2}Za_0$ avec $a_0=\\frac{\\hbar^2}{me^2}$ (rayon de Bohr, $\\approx5\\times10^{-11}$ m). Rayons en $n^2$ : quantifiés.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q3 ; TD1 de mécanique quantique, ex. 1 q4",
+     "duree": 6,
+     "formules": "$F=\\frac{ke^2}{r^2}$ · PFD : $\\frac{Ze^2}{r^2}=\\frac{mv^2}r$ · $a=\\frac{v^2}r$ · $mrv=n\\hbar$",
+     "type": "open"
+    },
+    {
+     "id": "qr9",
+     "enonce": "Retrouver l'énergie $E_n$ de l'électron d'un hydrogénoïde en fonction de $m$, $e$, $\\hbar$, $n$, $Z$. Comment appelle-t-on $E_1$ pour l'hydrogène ?",
+     "sol": "$E=E_c+E_p=\\frac12mv^2-\\frac{Ze^2}r=\\frac{Ze^2}{2r}-\\frac{Ze^2}r=-\\frac{Ze^2}{2r}$.\n\nAvec $r_n=\\frac{n^2\\hbar^2}{Zme^2}$ : $E_n=-\\dfrac{Z^2me^4}{2\\hbar^2n^2}=-13{,}6\\,\\dfrac{Z^2}{n^2}$ eV.\n\nPour l'hydrogène ($Z=1$), $E_1=-13{,}6$ eV est l'énergie du niveau fondamental ; $-E_1$ est l'énergie d'ionisation (constante de Rydberg en énergie).",
+     "src": "TD1 de mécanique quantique, ex. 1 q5, q6 ; Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q5",
+     "duree": 6,
+     "formules": "$E=E_c+E_p=-\\frac{Ze^2}{2r}$ · $r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "De Broglie et indétermination d'Heisenberg",
+   "notions": [
+    "debroglie",
+    "heisenberg"
+   ],
+   "exos": [
+    {
+     "id": "qd1",
+     "enonce": "Longueur d'onde de de Broglie (en m) d'un électron ($9{,}1\\times10^{-31}$ kg) à $95$ m/s ($h=6{,}62\\times10^{-34}$) ?",
+     "ans": "Rational(662,8645)*10**-4",
+     "sol": "$\\lambda=\\frac h{mv}=\\frac{6{,}62\\times10^{-34}}{9{,}1\\times10^{-31}\\times95}\\approx7{,}7\\times10^{-6}$ m : observable (micromètres).",
+     "src": "TD2 de mécanique quantique, ex. 1 q1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Électron ($9{,}1\\times10^{-31}$ kg) à $10^6$ m/s : $\\lambda$ (en m, $h=6{,}62\\times10^{-34}$) ?",
+       "ans": "Rational(662,91)*10**-10",
+       "sol": "$\\lambda=\\frac{6{,}62\\times10^{-34}}{9{,}1\\times10^{-25}}\\approx7{,}3\\times10^{-10}$ m : de l'ordre de la distance interatomique."
+      }
+     ],
+     "formules": "$\\lambda=\\frac hp=\\frac h{mv}$",
+     "type": "value"
+    },
+    {
+     "id": "qd2",
+     "enonce": "Longueur d'onde de de Broglie (en m) d'une balle de tennis de $50$ g à $95$ m/s ?",
+     "ans": "Rational(662,475)*10**-34",
+     "sol": "$\\lambda=\\frac{6{,}62\\times10^{-34}}{0{,}05\\times95}\\approx1{,}4\\times10^{-34}$ m : bien plus petite que n'importe quelle structure, aucun effet ondulatoire observable.",
+     "src": "TD2 de mécanique quantique, ex. 1 q1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Balle de $0{,}1$ kg à $10$ m/s : $\\lambda$ (en m) ?",
+       "ans": "Rational(662,100)*10**-34",
+       "sol": "$\\lambda=\\frac h{mv}=\\frac{6{,}62\\times10^{-34}}1=6{,}62\\times10^{-34}$ m."
+      }
+     ],
+     "formules": "$\\lambda=\\frac hp=\\frac h{mv}$",
+     "type": "value"
+    },
+    {
+     "id": "qd3",
+     "enonce": "Vitesse de $95$ m/s connue à $0{,}085\\,\\%$ près. Incertitude minimale sur la position de l'électron (en m), avec $\\Delta x\\,\\Delta p=\\frac\\hbar2$ ?",
+     "ans": "Rational(6620000,29393)*10**-5/pi",
+     "sol": "$\\Delta p=m\\,\\Delta v=9{,}1\\times10^{-31}\\times95\\times8{,}5\\times10^{-4}\\approx7{,}35\\times10^{-32}$. $\\Delta x=\\frac\\hbar{2\\Delta p}=\\frac h{4\\pi\\Delta p}\\approx7{,}2\\times10^{-4}$ m, environ $0{,}7$ mm : énorme à l'échelle de l'électron.",
+     "src": "TD2 de mécanique quantique, ex. 1 q2",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Même électron, vitesse connue à $0{,}1\\,\\%$ près : $\\Delta x$ minimale (en m) ?",
+       "ans": "Rational(6620,3458)*10**-3/pi",
+       "sol": "$\\Delta p=9{,}1\\times10^{-31}\\times95\\times10^{-3}=8{,}6\\times10^{-32}$ ; $\\Delta x=\\frac h{4\\pi\\Delta p}\\approx6{,}1\\times10^{-4}$ m."
+      }
+     ],
+     "formules": "$\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$ · $\\Delta x=\\frac h{4\\pi\\Delta p}$",
+     "type": "value"
+    },
+    {
+     "id": "qd4",
+     "enonce": "Même calcul pour la balle de tennis ($0{,}05$ kg) : $\\Delta x$ minimale (en m) ?",
+     "ans": "Rational(1324,323)*10**-32/pi",
+     "sol": "$\\Delta p=0{,}05\\times95\\times8{,}5\\times10^{-4}=4{,}04\\times10^{-3}$. $\\Delta x=\\frac h{4\\pi\\Delta p}\\approx1{,}3\\times10^{-32}$ m : négligeable, la balle est localisée comme en mécanique classique.",
+     "src": "TD2 de mécanique quantique, ex. 1 q2",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Balle de $0{,}1$ kg à $95$ m/s, vitesse à $0{,}085\\,\\%$ : $\\Delta x$ minimale (en m) ?",
+       "ans": "Rational(662,323)*10**-32/pi",
+       "sol": "$\\Delta p=0{,}1\\times95\\times8{,}5\\times10^{-4}=8{,}1\\times10^{-3}$ ; $\\Delta x\\approx6{,}5\\times10^{-33}$ m."
+      }
+     ],
+     "formules": "$\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$",
+     "type": "value"
+    },
+    {
+     "id": "qd5",
+     "enonce": "Un électron est localisé dans un atome, $\\Delta x=10^{-10}$ m. Incertitude minimale sur sa quantité de mouvement (en kg·m·s$^{-1}$) ?",
+     "ans": "Rational(331,200)*10**-24/pi",
+     "sol": "$\\Delta p\\geq\\frac\\hbar{2\\Delta x}=\\frac h{4\\pi\\Delta x}=\\frac{6{,}62\\times10^{-34}}{4\\pi\\times10^{-10}}\\approx5{,}3\\times10^{-25}$. Soit $\\Delta v\\approx6\\times10^5$ m/s : l'électron ne peut pas être « immobile ».",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Électron localisé à $\\Delta x=5\\times10^{-11}$ m : $\\Delta p$ minimale (en kg·m·s$^{-1}$) ?",
+       "ans": "Rational(331,100)*10**-24/pi",
+       "sol": "$\\Delta p=\\frac h{4\\pi\\Delta x}=\\frac{6{,}62\\times10^{-34}}{4\\pi\\times5\\times10^{-11}}\\approx1{,}05\\times10^{-24}$."
+      }
+     ],
+     "formules": "$\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$",
+     "type": "value"
+    },
+    {
+     "id": "qd6",
+     "enonce": "Commenter les résultats pour l'électron et la balle de tennis (TD2, ex. 1) : pourquoi la nature ondulatoire ne se voit-elle que pour les petites particules ?",
+     "sol": "Électron : $\\lambda\\sim10^{-6}$ m et $\\Delta x\\sim10^{-4}$ m sont macroscopiques : sa position est très indéterminée, son comportement ondulatoire est mesurable (diffraction d'électrons).\n\nBalle : $\\lambda\\sim10^{-34}$ m et $\\Delta x\\sim10^{-32}$ m : sans commune mesure avec sa taille. Le terme $h\\approx6{,}6\\times10^{-34}$ J·s est minuscule, donc $\\lambda=\\frac h{mv}$ et $\\Delta x\\propto\\frac h{m\\Delta v}$ ne sont notables que si $m$ est très petite. La mécanique classique est la limite quantique pour les grands objets.",
+     "src": "TD2 de mécanique quantique, ex. 1 q3",
+     "duree": 4,
+     "formules": "$\\lambda=\\frac hp=\\frac h{mv}$ · $\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Fonction d'onde et probabilité de présence",
+   "notions": [
+    "psi"
+   ],
+   "exos": [
+    {
+     "id": "qw1",
+     "enonce": "$\\Psi(x)=\\Psi_0e^{-x/x_0}$ sur $[0;+\\infty[$ avec $x_0=8$ (unité arbitraire). Normaliser : $\\Psi_0$ ?",
+     "ans": "1/2",
+     "sol": "$\\int_0^\\infty\\Psi_0^2e^{-2x/x_0}dx=\\Psi_0^2\\frac{x_0}2=1$, donc $\\Psi_0=\\sqrt{\\frac2{x_0}}=\\sqrt{\\frac28}=\\frac12$.",
+     "src": "TD2 de mécanique quantique, ex. 2 q2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Même normalisation avec $x_0=2$ : $\\Psi_0$ ?",
+       "ans": "1",
+       "sol": "$\\Psi_0=\\sqrt{\\frac2{x_0}}=1$."
+      }
+     ],
+     "formules": "$\\int_0^\\infty\\Psi_0^2e^{-2x/x_0}dx=\\Psi_0^2\\frac{x_0}2$",
+     "type": "value"
+    },
+    {
+     "id": "qw2",
+     "enonce": "$\\Psi(x)=e^{-x/2}$ sur $[0;+\\infty[$ (normalisée, $x_0=2$, $\\Psi_0=1$). Probabilité de trouver la particule dans $[0;2]$ ?",
+     "ans": "1-exp(-2)",
+     "sol": "$P=\\int_0^2|\\Psi|^2dx=\\int_0^2e^{-x}dx=1-e^{-2}\\approx0{,}865$.",
+     "src": "TD2 de mécanique quantique, ex. 2 q3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Même fonction $e^{-x/2}$ : probabilité dans $[0;1]$ ?",
+       "ans": "1-exp(-1)",
+       "sol": "$P=\\int_0^1e^{-x}dx=1-e^{-1}\\approx0{,}632$."
+      }
+     ],
+     "formules": "$\\int|\\psi|^2dx=1$ · $P(a:b)=\\int_a^b|\\psi|^2dx$",
+     "type": "integral"
+    },
+    {
+     "id": "qw3",
+     "enonce": "Pour $x_0=2$, la probabilité sur $[0;A]$ vaut $1-e^{-A}$. Valeur de $A$ pour $P\\geq95\\,\\%$, avec $\\ln(0{,}05)\\approx-3$ ?",
+     "ans": "3",
+     "sol": "Densité $\\frac2{x_0}e^{-2x/x_0}$ ; $P=1-e^{-2A/x_0}\\geq0{,}95\\iff e^{-2A/x_0}\\leq0{,}05\\iff A\\geq-\\frac{x_0}2\\ln0{,}05\\approx\\frac{3x_0}2=3$.",
+     "src": "TD2 de mécanique quantique, ex. 2 q4",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Pour $x_0=4$ : valeur de $A$ pour $P\\geq95\\,\\%$ ($\\ln0{,}05\\approx-3$) ?",
+       "ans": "6",
+       "sol": "$A\\geq-\\frac{x_0}2\\ln0{,}05\\approx\\frac{3x_0}2=6$."
+      }
+     ],
+     "formules": "$\\int|\\psi|^2dx=1$ · $P(a:b)=\\int_a^b|\\psi|^2dx$ · $P=1-e^{-2A/x_0}$",
+     "type": "value"
+    },
+    {
+     "id": "qw4",
+     "enonce": "Particule dans $[0;4]$ avec $\\psi=N\\sin\\left(\\frac{\\pi x}4\\right)$. Calculer $I=\\int_0^4\\sin^2\\left(\\frac{\\pi x}4\\right)dx$ (puis $N=\\frac1{\\sqrt I}$).",
+     "ans": "2",
+     "sol": "$\\sin^2u=\\frac{1-\\cos2u}2$ : $I=\\frac L2=2$. Normalisation : $N^2I=1$ donc $N=\\frac1{\\sqrt2}=\\sqrt{\\frac2L}\\times\\ldots$ avec $L=4$ ($\\sqrt{2/L}=\\frac1{\\sqrt2}$).",
+     "src": "TD3 de mécanique quantique, ex. 1 q4",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Puits de largeur $2$ : $I=\\int_0^2\\sin^2\\left(\\frac{\\pi x}2\\right)dx$ ?",
+       "ans": "1",
+       "sol": "$I=\\frac L2=1$, donc $N=1$."
+      }
+     ],
+     "formules": "$\\sin^2u=\\frac{1-\\cos2u}2$ · $\\int|\\psi|^2dx=1$ · $P(a:b)=\\int_a^b|\\psi|^2dx$",
+     "type": "integral"
+    },
+    {
+     "id": "qw5",
+     "enonce": "Particule dans un puits de largeur $1$ à l'état fondamental, $\\psi=\\sqrt2\\sin(\\pi x)$. Probabilité de la trouver dans le premier tiers $[0;\\frac13]$ ?",
+     "ans": "Rational(1,3)-sqrt(3)/(4*pi)",
+     "sol": "$P=\\int_0^{1/3}2\\sin^2(\\pi x)dx=\\left[x-\\frac{\\sin2\\pi x}{2\\pi}\\right]_0^{1/3}=\\frac13-\\frac{\\sin(2\\pi/3)}{2\\pi}=\\frac13-\\frac{\\sqrt3}{4\\pi}\\approx0{,}196$. Inférieure à $\\frac13$ : la particule est plus souvent au centre.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Même état fondamental, probabilité dans la première moitié $[0;\\frac12]$ ?",
+       "ans": "Rational(1,2)",
+       "sol": "$\\left[x-\\frac{\\sin2\\pi x}{2\\pi}\\right]_0^{1/2}=\\frac12$ (symétrie de $|\\psi|^2$ autour de $\\frac12$)."
+      }
+     ],
+     "formules": "$\\int|\\psi|^2dx=1$ · $P(a:b)=\\int_a^b|\\psi|^2dx$ · $\\sin^2u=\\frac{1-\\cos2u}2$",
+     "type": "integral"
+    },
+    {
+     "id": "qw6",
+     "enonce": "Que représente $|\\psi(x)|^2$ ? Pourquoi $\\int|\\psi|^2dx=1$ ? Une densité de probabilité peut-elle dépasser $1$ ?",
+     "sol": "Interprétation de Born : $|\\psi(x)|^2$ est la densité de probabilité de présence en $x$ (probabilité par unité de longueur). La probabilité de trouver la particule dans $[a;b]$ est $\\int_a^b|\\psi|^2dx$.\n\nLa particule est certainement quelque part : la probabilité sur tout l'espace vaut $1$ (condition de normalisation, qui fixe la constante multiplicative de $\\psi$).\n\nUne densité peut dépasser $1$ (elle est en m$^{-1}$) : seule l'intégrale est une probabilité, donc $\\leq1$. Exemple : $\\psi=\\sqrt2\\sin\\pi x$ sur $[0;1]$ donne $|\\psi|^2=2$ au centre.",
+     "src": "Cours de mécanique quantique, III.4",
+     "duree": 4,
+     "formules": "$\\int|\\psi|^2dx=1$ · $P(a:b)=\\int_a^b|\\psi|^2dx$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Valeurs moyennes et incertitudes",
+   "notions": [
+    "moyennes",
+    "psi",
+    "heisenberg"
+   ],
+   "exos": [
+    {
+     "id": "qm1",
+     "enonce": "$\\psi=Ne^{-\\lambda x^2/2}$ avec $\\lambda=2$. Normalisation avec $\\int e^{-\\lambda x^2}dx=\\sqrt{\\frac\\pi\\lambda}$ : valeur de $N$ ?",
+     "ans": "2**Rational(1,4)/pi**Rational(1,4)",
+     "sol": "$N^2\\sqrt{\\frac\\pi\\lambda}=1$ donc $N^2=\\sqrt{\\frac\\lambda\\pi}$ et $N=\\left(\\frac\\lambda\\pi\\right)^{1/4}=\\left(\\frac2\\pi\\right)^{1/4}\\approx0{,}893$.",
+     "src": "TD2 de mécanique quantique, ex. 3 q1",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\psi=Ne^{-\\lambda x^2/2}$ avec $\\lambda=4\\pi$ : $N$ ?",
+       "ans": "sqrt(2)",
+       "sol": "$N=\\left(\\frac\\lambda\\pi\\right)^{1/4}=4^{1/4}=\\sqrt2$."
+      }
+     ],
+     "formules": "$\\int e^{-\\lambda x^2}=\\sqrt{\\frac\\pi\\lambda}$ · $\\int x^2e^{-\\lambda x^2}=\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}$ · $N^2\\sqrt{\\frac\\pi\\lambda}=1$",
+     "type": "value"
+    },
+    {
+     "id": "qm2",
+     "enonce": "Même fonction ($\\lambda=2$, $N^2=\\sqrt{\\frac2\\pi}$). Calculer $\\langle x^2\\rangle=\\int_{-\\infty}^{+\\infty}x^2|\\psi|^2dx$.",
+     "ans": "Rational(1,4)",
+     "sol": "$\\langle x^2\\rangle=N^2\\int x^2e^{-\\lambda x^2}dx=N^2\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}=\\frac1{2\\lambda}=\\frac14$ (car $N^2\\sqrt{\\frac\\pi\\lambda}=1$).",
+     "src": "TD2 de mécanique quantique, ex. 3 q3",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Même calcul avec $\\lambda=8$ ($N^2=\\sqrt{\\frac8\\pi}$) : $\\langle x^2\\rangle$ ?",
+       "ans": "Rational(1,16)",
+       "sol": "$\\langle x^2\\rangle=\\frac1{2\\lambda}=\\frac1{16}$."
+      }
+     ],
+     "formules": "$\\langle x^2\\rangle=\\int x^2|\\psi|^2$ · $\\int e^{-\\lambda x^2}=\\sqrt{\\frac\\pi\\lambda}$ · $\\int x^2e^{-\\lambda x^2}=\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}$",
+     "type": "integral"
+    },
+    {
+     "id": "qm3",
+     "enonce": "Avec $\\langle x\\rangle=0$, incertitude $\\Delta x=\\sqrt{\\langle x^2\\rangle-\\langle x\\rangle^2}$ pour $\\lambda=8$ (donc $\\langle x^2\\rangle=\\frac1{2\\lambda}$) ?",
+     "ans": "1/4",
+     "sol": "$\\Delta x=\\sqrt{\\frac1{2\\lambda}}=\\sqrt{\\frac1{16}}=\\frac14$.",
+     "src": "TD2 de mécanique quantique, ex. 3 q3",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\lambda=2$ : $\\Delta x=\\sqrt{\\frac1{2\\lambda}}$ ?",
+       "ans": "1/2",
+       "sol": "$\\sqrt{\\frac14}=\\frac12$."
+      }
+     ],
+     "formules": "$\\langle A\\rangle=\\int\\psi^*\\hat A\\psi$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$ · $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$",
+     "type": "value"
+    },
+    {
+     "id": "qm4",
+     "enonce": "$\\psi=Ne^{-\\lambda x^2/2}$, $\\lambda=2$. Calculer $\\frac{\\langle p^2\\rangle}{\\hbar^2}=\\int|\\psi'|^2dx$ (avec $\\psi'=-2x\\psi$).",
+     "ans": "1",
+     "sol": "$|\\psi'|^2=\\lambda^2x^2|\\psi|^2$ : $\\frac{\\langle p^2\\rangle}{\\hbar^2}=\\lambda^2\\langle x^2\\rangle=\\frac{\\lambda^2}{2\\lambda}=\\frac\\lambda2=1$. Donc $\\Delta p=\\hbar\\sqrt{\\lambda/2}=\\hbar$ (car $\\langle p\\rangle=0$).",
+     "src": "TD2 de mécanique quantique, ex. 3 q6",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "$\\lambda=8$ : $\\frac{\\langle p^2\\rangle}{\\hbar^2}=\\int|\\psi'|^2dx$ avec $\\psi'=-8x\\psi$ ?",
+       "ans": "4",
+       "sol": "$\\lambda^2\\langle x^2\\rangle=\\frac{\\lambda}2=4$."
+      }
+     ],
+     "formules": "$\\langle A\\rangle=\\int\\psi^*\\hat A\\psi$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$ · $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$ · $\\psi'=-\\lambda x\\psi$",
+     "type": "integral"
+    },
+    {
+     "id": "qm5",
+     "enonce": "Pour $\\lambda=2$ : $\\Delta x=\\frac12$ et $\\Delta p=\\hbar$. Rapport $\\dfrac{\\Delta x\\,\\Delta p}{\\hbar/2}$ ? Que conclure sur Heisenberg ?",
+     "ans": "1",
+     "sol": "$\\Delta x\\,\\Delta p=\\frac\\hbar2$ : le rapport vaut $1$. L'inégalité $\\Delta x\\,\\Delta p\\geq\\frac\\hbar2$ est respectée, avec égalité (la gaussienne est l'état d'indétermination minimale). Pour tout $\\lambda$ : $\\frac1{\\sqrt{2\\lambda}}\\times\\hbar\\sqrt{\\frac\\lambda2}=\\frac\\hbar2$.",
+     "src": "TD2 de mécanique quantique, ex. 3 q7",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Pour $\\lambda=8$ : $\\Delta x=\\frac14$, $\\Delta p=2\\hbar$. Rapport $\\frac{\\Delta x\\,\\Delta p}{\\hbar/2}$ ?",
+       "ans": "1",
+       "sol": "$\\Delta x\\,\\Delta p=\\frac\\hbar2$ : rapport $1$ (indépendant de $\\lambda$)."
+      }
+     ],
+     "formules": "$\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$",
+     "type": "value"
+    },
+    {
+     "id": "qm6",
+     "enonce": "$\\Psi=\\Psi_0e^{-x/x_0}$ sur $[0;+\\infty[$ avec $x_0=4$ (donc $|\\Psi|^2=\\frac12e^{-x/2}$). Position moyenne $\\langle x\\rangle$ ?",
+     "ans": "2",
+     "sol": "$\\langle x\\rangle=\\int_0^\\infty x\\,\\frac12e^{-x/2}dx$. Par parties : $=\\left[-xe^{-x/2}\\right]_0^\\infty+\\int_0^\\infty e^{-x/2}dx=2$. En général $\\langle x\\rangle=\\frac{x_0}2$.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "$x_0=8$ (donc $|\\Psi|^2=\\frac14e^{-x/4}$) : $\\langle x\\rangle$ ?",
+       "ans": "4",
+       "sol": "$\\langle x\\rangle=\\frac{x_0}2=4$."
+      }
+     ],
+     "formules": "$\\langle x\\rangle=\\int x|\\psi|^2dx$ · intégration par parties",
+     "type": "integral"
+    },
+    {
+     "id": "qm7",
+     "enonce": "Pour une fonction d'onde réelle qui tend vers $0$ à l'infini, montrer que $\\langle p\\rangle=0$ et que $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$.",
+     "sol": "$\\langle p\\rangle=-i\\hbar\\int\\psi\\psi'dx=-i\\hbar\\int\\left(\\frac{\\psi^2}2\\right)'dx=-\\frac{i\\hbar}2\\left[\\psi^2\\right]_{-\\infty}^{+\\infty}=0$.\n\n$\\langle p^2\\rangle=\\int\\psi^*\\left(-\\hbar^2\\psi''\\right)dx=-\\hbar^2\\left[\\psi^*\\psi'\\right]_{-\\infty}^{+\\infty}+\\hbar^2\\int|\\psi'|^2dx$ (intégration par parties). Le crochet est nul car $\\psi\\to0$ : $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$.",
+     "src": "TD2 de mécanique quantique, ex. 3 q4, q5",
+     "duree": 6,
+     "formules": "$\\langle A\\rangle=\\int\\psi^*\\hat A\\psi$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$ · $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$ · $\\hat p=-i\\hbar\\frac d{dx}$",
+     "type": "open"
+    },
+    {
+     "id": "qm8",
+     "enonce": "Expliquer à l'aide d'un dessin pourquoi $\\langle x\\rangle=0$ pour $\\psi=Ne^{-\\lambda x^2/2}$ sur $]-\\infty;+\\infty[$.",
+     "sol": "La gaussienne est une fonction paire, tracée en cloche centrée en $0$ : $|\\psi|^2$ est aussi paire. Alors $x|\\psi|^2$ est impaire et $\\int_{-\\infty}^{+\\infty}x|\\psi|^2dx=0$ : les contributions des deux côtés de l'origine, symétriques, se compensent. Particule aussi souvent à droite qu'à gauche : position moyenne nulle.",
+     "src": "TD2 de mécanique quantique, ex. 3 q2",
+     "duree": 3,
+     "formules": "parité · $\\langle x\\rangle=\\int x|\\psi|^2dx$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Équation de Schrödinger et puits infini 1D",
+   "notions": [
+    "schrodinger"
+   ],
+   "exos": [
+    {
+     "id": "qs1",
+     "enonce": "Électron ($m=9\\times10^{-31}$ kg) dans un puits infini de largeur $L=0{,}5$ nm. $E_1=\\frac{h^2}{8mL^2}$ en eV ($h=6{,}6\\times10^{-34}$, $1$ eV $=1{,}6\\times10^{-19}$ J) ?",
+     "ans": "121/80",
+     "sol": "$E_1=\\frac{\\pi^2\\hbar^2}{2mL^2}=\\frac{h^2}{8mL^2}=\\frac{4{,}356\\times10^{-67}}{8\\times9\\times10^{-31}\\times2{,}5\\times10^{-19}}\\approx2{,}42\\times10^{-19}$ J $\\approx1{,}51$ eV.",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Même électron dans $L=1$ nm : $E_1$ (en eV) ?",
+       "ans": "121/320",
+       "sol": "$E_1\\propto\\frac1{L^2}$ : $\\frac{1{,}51}4\\approx0{,}38$ eV."
+      }
+     ],
+     "formules": "$E_1=\\frac{h^2}{8mL^2}$ · 1 eV $=1{,}6\\times10^{-19}$ J",
+     "type": "value"
+    },
+    {
+     "id": "qs2",
+     "enonce": "Dans un puits où $E_1=0{,}4$ eV, énergie du niveau $n=3$ (en eV) ?",
+     "ans": "18/5",
+     "sol": "$E_n=n^2E_1$ donc $E_3=9\\times0{,}4=3{,}6$ eV.",
+     "src": "TD3 de mécanique quantique, ex. 1 q5",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E_1=0{,}25$ eV : énergie de $n=5$ (en eV) ?",
+       "ans": "25/4",
+       "sol": "$25\\times0{,}25=6{,}25$ eV."
+      }
+     ],
+     "formules": "$E_n=n^2E_1$",
+     "type": "value"
+    },
+    {
+     "id": "qs3",
+     "enonce": "Même puits ($E_1=0{,}4$ eV) : longueur d'onde du photon émis lors de $n=2\\to n=1$ (en nm, $hc=1240$ eV·nm) ?",
+     "ans": "3100/3",
+     "sol": "$\\Delta E=E_2-E_1=4E_1-E_1=3E_1=1{,}2$ eV. $\\lambda=\\frac{1240}{1{,}2}\\approx1033$ nm (infrarouge).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$E_1=0{,}6$ eV : photon de $n=3\\to1$ (en nm, $hc=1240$) ?",
+       "ans": "775/3",
+       "sol": "$\\Delta E=8E_1=4{,}8$ eV, $\\lambda=\\frac{1240}{4{,}8}\\approx258$ nm."
+      }
+     ],
+     "formules": "$E_n=n^2E_1$ · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qs4",
+     "enonce": "Normalisation de $\\psi=A\\sin\\frac{n\\pi x}L$ sur $[0;L]$ : $A^2\\frac L2=1$. Valeur de $A$ pour $L=\\frac12$ ?",
+     "ans": "2",
+     "sol": "$A=\\sqrt{\\frac2L}=\\sqrt4=2$ (car $\\int_0^L\\sin^2\\frac{n\\pi x}Ldx=\\frac L2$).",
+     "src": "TD3 de mécanique quantique, ex. 1 q4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Normalisation pour $L=2$ : $A$ ?",
+       "ans": "1",
+       "sol": "$A=\\sqrt{\\frac2L}=1$."
+      }
+     ],
+     "formules": "$A^2\\frac L2=1$ · $\\int_0^L\\sin^2\\frac{n\\pi x}L=\\frac L2$",
+     "type": "value"
+    },
+    {
+     "id": "qs5",
+     "enonce": "On double la largeur du puits. L'énergie $E_1=2$ eV devient (en eV) ?",
+     "ans": "1/2",
+     "sol": "$E_1\\propto\\frac1{L^2}$ : doubler $L$ divise par $4$ : $\\frac24=0{,}5$ eV.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "On triple la largeur ($E_1=1{,}8$ eV) : nouvelle énergie (en eV) ?",
+       "ans": "1/5",
+       "sol": "$\\frac{1{,}8}9=0{,}2$ eV."
+      }
+     ],
+     "formules": "$E_1\\propto\\frac1{L^2}$",
+     "type": "value"
+    },
+    {
+     "id": "qs6",
+     "enonce": "Particule de masse $m$ dans le puits $V=0$ sur $[0;L]$, $V=+\\infty$ ailleurs. 1) Équation de Schrödinger sur $[0;L]$ ; forme des solutions. 2) Conditions aux limites. 3) Que donne $\\psi(0)$ ?",
+     "sol": "1) $V=0$ : $-\\frac{\\hbar^2}{2m}\\psi''(x)=E\\psi(x)$, soit $\\psi''=-k^2\\psi$ avec $k^2=\\frac{2mE}{\\hbar^2}$. Solutions générales : $\\psi(x)=A\\sin kx+B\\cos kx$.\n\n2) $V=+\\infty$ hors de $[0;L]$ : la particule ne peut s'y trouver, $\\psi=0$ dehors, et $\\psi$ est continue, donc $\\psi(0)=0$ et $\\psi(L)=0$.\n\n3) $\\psi(0)=B=0$ : il reste $\\psi(x)=A\\sin kx$.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 I q1-3 ; TD3 de mécanique quantique, ex. 1 q1-3",
+     "duree": 6,
+     "formules": "$-\\frac{\\hbar^2}{2m}\\psi''=E\\psi$ · $\\psi(0)=\\psi(L)=0$ · $E_n=\\frac{n^2\\pi^2\\hbar^2}{2mL^2}$ · $\\psi_n=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$",
+     "type": "open"
+    },
+    {
+     "id": "qs7",
+     "enonce": "Condition $\\psi(L)=0$ : montrer qu'il y a quantification, donner $k$ puis $E_n$, puis $A$ par normalisation. Quel est le nombre quantique ?",
+     "sol": "$\\psi(L)=A\\sin kL=0$ avec $A\\neq0$ (sinon $\\psi\\equiv0$) : $kL=n\\pi$, $n\\in\\mathbb N^*$ ($n=0$ donne $\\psi=0$). Donc $k=\\frac{n\\pi}L$ : seules des valeurs discrètes.\n\n$k^2=\\frac{2mE}{\\hbar^2}$ : $E_n=\\dfrac{n^2\\pi^2\\hbar^2}{2mL^2}=n^2E_1$ : l'énergie est quantifiée, $n$ est le nombre quantique.\n\nNormalisation : $\\int_0^LA^2\\sin^2\\frac{n\\pi x}Ldx=A^2\\frac L2=1$, d'où $A=\\sqrt{\\frac2L}$ et $\\psi_n(x)=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 I q4-5 ; TD3 de mécanique quantique, ex. 1 q4-5",
+     "duree": 8,
+     "formules": "$-\\frac{\\hbar^2}{2m}\\psi''=E\\psi$ · $\\psi(0)=\\psi(L)=0$ · $E_n=\\frac{n^2\\pi^2\\hbar^2}{2mL^2}$ · $\\psi_n=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$",
+     "type": "open"
+    },
+    {
+     "id": "qs8",
+     "enonce": "Schématiser le diagramme d'énergie du puits infini avec l'allure de $|\\psi_n|^2$ pour $n=1,2,3$.",
+     "sol": "Niveaux $E_n=n^2E_1$ : $E_1$, $4E_1$, $9E_1$ (écart croissant avec $n$). Sur chaque niveau, tracer $|\\psi_n|^2=\\frac2L\\sin^2\\frac{n\\pi x}L$ sur $[0;L]$ : $n=1$ une bosse centrée en $\\frac L2$ ; $n=2$ deux bosses, un n{\\oe}ud en $\\frac L2$ ; $n=3$ trois bosses, deux n{\\oe}uds en $\\frac L3$ et $\\frac{2L}3$. $|\\psi_n|^2$ s'annule en $0$ et $L$ ; $\\psi_n$ a $n-1$ n{\\oe}uds. Classiquement, la densité serait uniforme et l'énergie minimale nulle.",
+     "src": "TD3 de mécanique quantique, ex. 1 q6",
+     "duree": 4,
+     "formules": "$-\\frac{\\hbar^2}{2m}\\psi''=E\\psi$ · $\\psi(0)=\\psi(L)=0$ · $E_n=\\frac{n^2\\pi^2\\hbar^2}{2mL^2}$ · $\\psi_n=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Superposition d'états et énergie moyenne",
+   "notions": [
+    "superposition",
+    "schrodinger"
+   ],
+   "exos": [
+    {
+     "id": "qv1",
+     "enonce": "$\\psi=N(3\\psi_1-\\psi_3)$ avec $\\psi_n$ orthonormés. Probabilité de mesurer l'énergie $E_1$ ?",
+     "ans": "9/10",
+     "sol": "Normalisation : $N^2(9+1)=1$, $N^2=\\frac1{10}$. $P_1=|c_1|^2=\\frac9{10}$ (et $P_3=\\frac1{10}$).",
+     "src": "TD3 de mécanique quantique, ex. 2 q4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\psi=N(2\\psi_1+\\psi_2+2\\psi_3)$ : probabilité de $E_2$ ?",
+       "ans": "1/9",
+       "sol": "$N^2\\times9=1$, $P_2=N^2=\\frac19$."
+      }
+     ],
+     "formules": "$\\psi=\\sum c_n\\psi_n$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$",
+     "type": "value"
+    },
+    {
+     "id": "qv2",
+     "enonce": "Même état : énergie moyenne $\\langle E\\rangle$ en unités de $E_1$ ($E_n=n^2E_1$) ?",
+     "ans": "9/5",
+     "sol": "$\\langle E\\rangle=\\sum|c_n|^2E_n=\\frac9{10}E_1+\\frac1{10}\\times9E_1=\\frac{18}{10}E_1=\\frac95E_1$.",
+     "src": "TD3 de mécanique quantique, ex. 2 q6",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\psi=N(3\\psi_1+4\\psi_2)$ : $\\frac{\\langle E\\rangle}{E_1}$ ?",
+       "ans": "73/25",
+       "sol": "$N^2=\\frac1{25}$ ; $\\langle E\\rangle=\\frac9{25}E_1+\\frac{16}{25}\\times4E_1=\\frac{73}{25}E_1$."
+      }
+     ],
+     "formules": "$\\psi=\\sum c_n\\psi_n$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$ · $E_n=n^2E_1$",
+     "type": "value"
+    },
+    {
+     "id": "qv3",
+     "enonce": "Dans un puits de largeur $1$ : $\\psi_n=\\sqrt2\\sin(n\\pi x)$. Calculer $\\int_0^1\\psi_1\\psi_3\\,dx$.",
+     "ans": "0",
+     "sol": "$\\sin a\\sin b=\\frac12[\\cos(a-b)-\\cos(a+b)]$ : $\\int_0^1[\\cos2\\pi x-\\cos4\\pi x]dx=\\left[\\frac{\\sin2\\pi x}{2\\pi}-\\frac{\\sin4\\pi x}{4\\pi}\\right]_0^1=0$. Orthogonalité : $\\delta_{13}=0$.",
+     "src": "TD3 de mécanique quantique, ex. 2 q2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Largeur $1$ : $\\int_0^1\\psi_2^2\\,dx$ pour $\\psi_2=\\sqrt2\\sin2\\pi x$ ?",
+       "ans": "1",
+       "sol": "Normalisation : $\\delta_{22}=1$."
+      }
+     ],
+     "formules": "$\\sin a\\sin b=\\frac12[\\cos(a-b)-\\cos(a+b)]$ · $\\int\\psi_n\\psi_m=\\delta_{nm}$",
+     "type": "integral"
+    },
+    {
+     "id": "qv4",
+     "enonce": "Calculer $\\int_0^1\\sin^6(\\pi x)\\,dx$ (utile pour normaliser $\\psi=N\\sin^3(\\pi x)$).",
+     "ans": "Rational(5,16)",
+     "sol": "Formule de Wallis : $\\int_0^\\pi\\sin^6u\\,du=\\frac{5\\pi}{16}$, donc $\\int_0^1\\sin^6(\\pi x)dx=\\frac5{16}$ (aussi via $\\sin^3=\\frac14(3\\sin u-\\sin3u)$ : $\\frac1{16}\\cdot\\frac12(9+1)=\\frac5{16}$).",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Calculer $\\int_0^1\\sin^4(\\pi x)\\,dx$.",
+       "ans": "Rational(3,8)",
+       "sol": "$\\sin^4=\\frac38-\\frac12\\cos2u+\\frac18\\cos4u$, donc $\\frac38$."
+      }
+     ],
+     "formules": "$\\sin^3u=\\frac14(3\\sin u-\\sin3u)$ · $\\int_0^\\pi\\sin^6=\\frac{5\\pi}{16}$",
+     "type": "integral"
+    },
+    {
+     "id": "qv5",
+     "enonce": "Constante de normalisation de $\\psi=N\\sin^3(\\pi x)$ sur $[0;1]$ : $N^2=\\frac1{\\int\\sin^6}$. Calculer $N^2$.",
+     "ans": "16/5",
+     "sol": "$N^2\\times\\frac5{16}=1$, $N^2=\\frac{16}5$, $N=\\frac4{\\sqrt5}$. Pour une largeur $L$ : $N=\\frac4{\\sqrt{5L}}$.",
+     "src": "TD3 de mécanique quantique, ex. 2 q3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\psi=N\\sin^2(\\pi x)$ sur $[0;1]$ ($\\int\\sin^4=\\frac38$) : $N^2$ ?",
+       "ans": "8/3",
+       "sol": "$N^2=\\frac83$."
+      }
+     ],
+     "formules": "$\\psi=\\sum c_n\\psi_n$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$",
+     "type": "value"
+    },
+    {
+     "id": "qv6",
+     "enonce": "Montrer l'orthogonalité $\\int_0^L\\psi_n\\psi_m\\,dx=\\delta_{nm}$ pour $\\psi_n=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$.",
+     "sol": "$\\int_0^L\\psi_n\\psi_m=\\frac2L\\int_0^L\\sin\\frac{n\\pi x}L\\sin\\frac{m\\pi x}Ldx=\\frac1L\\int_0^L\\left[\\cos\\frac{(n-m)\\pi x}L-\\cos\\frac{(n+m)\\pi x}L\\right]dx$.\n\nSi $n\\neq m$ : $n\\pm m$ entiers non nuls, $\\int_0^L\\cos\\frac{p\\pi x}Ldx=\\frac L{p\\pi}\\sin p\\pi=0$ : résultat $0$.\n\nSi $n=m$ : $\\frac1L\\int_0^L[1-\\cos\\frac{2n\\pi x}L]dx=\\frac1L\\times L=1$. Donc $\\delta_{nm}$.",
+     "src": "TD3 de mécanique quantique, ex. 2 q2",
+     "duree": 6,
+     "formules": "$\\sin a\\sin b=\\frac12[\\cos(a-b)-\\cos(a+b)]$ · $\\int\\psi_n\\psi_m=\\delta_{nm}$",
+     "type": "open"
+    },
+    {
+     "id": "qv7",
+     "enonce": "Boîte $[0;L]$, $\\psi(x)=N\\sin^3\\frac{\\pi x}L$, avec $\\sin^3u=\\frac14(3\\sin u-\\sin3u)$. 1) Coefficients $c_n$. 2) Normalisation, $N$. 3) Niveaux possibles et probabilités. 4) $\\langle E\\rangle$ en fonction de $E_1$.",
+     "sol": "1) $\\sin^3\\frac{\\pi x}L=\\frac14\\left(3\\sin\\frac{\\pi x}L-\\sin\\frac{3\\pi x}L\\right)$ et $\\sin\\frac{n\\pi x}L=\\sqrt{\\frac L2}\\psi_n$ : $\\psi=\\frac N4\\sqrt{\\frac L2}\\,(3\\psi_1-\\psi_3)$, soit $c_1=\\frac{3N}4\\sqrt{\\frac L2}$, $c_3=-\\frac N4\\sqrt{\\frac L2}$, les autres $c_n=0$.\n\n2) $\\sum|c_n|^2=\\frac{N^2}{16}\\frac L2(9+1)=\\frac{5N^2L}{16}=1$ : $N=\\frac4{\\sqrt{5L}}$.\n\n3) Niveaux $E_1$ et $E_3=9E_1$ seulement, avec $P_1=\\frac9{10}$ et $P_3=\\frac1{10}$.\n\n4) $\\langle E\\rangle=\\sum|c_n|^2E_n=\\frac9{10}E_1+\\frac1{10}\\cdot9E_1=\\frac95E_1$.",
+     "src": "TD3 de mécanique quantique, ex. 2",
+     "duree": 10,
+     "formules": "$\\sin^3u=\\frac14(3\\sin u-\\sin3u)$ · $\\psi=\\sum c_n\\psi_n$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$ · $E_n=n^2E_1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Boîte 2D et dégénérescence",
+   "notions": [
+    "boite2d",
+    "schrodinger"
+   ],
+   "exos": [
+    {
+     "id": "q2a",
+     "enonce": "Boîte carrée $a=b=1$. Énergie du niveau $(n_x,n_y)=(2,1)$ en unités de $\\frac{\\hbar^2\\pi^2}{2m}$ ?",
+     "ans": "5",
+     "sol": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}(n_x^2+n_y^2)$, soit $4+1=5$. Même valeur pour $(1,2)$ : dégénérés.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 II q8",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Boîte carrée : niveau $(3,2)$ en unités de $\\frac{\\hbar^2\\pi^2}{2m}$ ?",
+       "ans": "13",
+       "sol": "$9+4=13$."
+      }
+     ],
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$",
+     "type": "value"
+    },
+    {
+     "id": "q2b",
+     "enonce": "Électron dans une boîte carrée de $1$ nm de côté. $E_{min}=2E_1^{1D}$ avec $E_1^{1D}=\\frac{h^2}{8mL^2}$ ; en eV ($h=6{,}6\\times10^{-34}$, $m=9\\times10^{-31}$) ?",
+     "ans": "121/160",
+     "sol": "$E_{min}=\\frac{\\hbar^2\\pi^2}{2m}(1+1)=\\frac{\\hbar^2\\pi^2}m=2\\times\\frac{h^2}{8mL^2}=2\\times0{,}378\\approx0{,}76$ eV.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 II q6",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Électron dans une boîte carrée de côté $0{,}5$ nm : $E_{min}$ (en eV) ?",
+       "ans": "121/40",
+       "sol": "$E_{min}\\propto\\frac1{L^2}$ : $4\\times0{,}756\\approx3{,}0$ eV."
+      }
+     ],
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$ · $\\frac{\\hbar^2\\pi^2}{m}=2\\times\\frac{h^2}{8mL^2}$",
+     "type": "value"
+    },
+    {
+     "id": "q2c",
+     "enonce": "Boîte carrée : rang de $\\frac{E}{E_{min}}$ pour le sixième niveau, atteint pour $(4,1)$ (les sommes $n_x^2+n_y^2$ ordonnées valent $2,5,8,10,13,17,\\dots$). Calculer $\\frac{E_{4,1}}{E_{min}}$.",
+     "ans": "17/2",
+     "sol": "$E_{min}=\\frac{\\hbar^2\\pi^2}{2m}\\times2$ ; $E_{4,1}=\\frac{\\hbar^2\\pi^2}{2m}\\times17$ : $\\frac{E_{4,1}}{E_{min}}=\\frac{17}2=8{,}5$. Atteint pour $(4,1)$ ou $(1,4)$.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 II q9",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Septième niveau, atteint pour $(3,3)$ ($2,5,8,10,13,17,18$) : $\\frac{E}{E_{min}}$ ?",
+       "ans": "9",
+       "sol": "$\\frac{18}2=9$. Niveau non dégénéré."
+      }
+     ],
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$ · carré : $E\\propto n_x^2+n_y^2$",
+     "type": "value"
+    },
+    {
+     "id": "q2d",
+     "enonce": "Boîte rectangulaire $a=1$, $b=2$ : $E\\propto n_x^2+\\frac{n_y^2}4$ (même unité). Énergie du premier niveau excité, atteint pour $(1,2)$ ?",
+     "ans": "2",
+     "sol": "Niveaux : $(1,1):\\frac54$ ; $(1,2):1+1=2$ ; $(1,3):\\frac{13}4$ ; $(2,1):\\frac{17}4$ ; le premier excité est $(1,2)$ de valeur $2$. Plus de dégénérescence systématique : $a\\neq b$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$a=1$, $b=3$ ($E\\propto n_x^2+\\frac{n_y^2}9$) : premier niveau excité, atteint pour $(1,2)$ ?",
+       "ans": "13/9",
+       "sol": "$1+\\frac49=\\frac{13}9$ (le fondamental vaut $\\frac{10}9$)."
+      }
+     ],
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$",
+     "type": "value"
+    },
+    {
+     "id": "q2e",
+     "enonce": "Boîte carrée : combien de niveaux $(n_x,n_y)$ distincts ont l'énergie $n_x^2+n_y^2=25$ (en $\\frac{\\hbar^2\\pi^2}{2m}$) ? ($n_x,n_y\\geq1$)",
+     "ans": "2",
+     "sol": "$25=9+16$ : $(3,4)$ et $(4,3)$. Pas $(5,0)$ ni $(0,5)$ : $n_x,n_y\\geq1$. Dégénérescence $2$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien de couples $(n_x,n_y)$, avec $n_x,n_y\\geq1$, vérifient $n_x^2+n_y^2=50$ ? ($50=1+49=25+25$)",
+       "ans": "3",
+       "sol": "$(1,7)$, $(7,1)$ et $(5,5)$ : trois niveaux dégénérés."
+      }
+     ],
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$",
+     "type": "value"
+    },
+    {
+     "id": "q2f",
+     "enonce": "Boîte 2D carrée $a=b=1$ : donner $E_{min}$. En quoi est-ce surprenant par rapport à la mécanique classique ?",
+     "sol": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}(n_x^2+n_y^2)$ avec $n_x,n_y\\geq1$ : $E_{min}=E_{1,1}=\\dfrac{\\hbar^2\\pi^2}m$.\n\nClassiquement, une particule peut être au repos au fond de la boîte, d'énergie nulle. Ici l'énergie minimale n'est pas nulle : elle ne peut pas être immobile. C'est cohérent avec Heisenberg : confinée ($\\Delta x\\leq1$), elle a $\\Delta p\\geq\\frac\\hbar{2\\Delta x}\\neq0$.",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 II q6-7",
+     "duree": 4,
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$ · $E_{min}=\\frac{\\hbar^2\\pi^2}m$",
+     "type": "open"
+    },
+    {
+     "id": "q2g",
+     "enonce": "Que peut-on dire des niveaux $(2,1)$ et $(1,2)$ de la boîte carrée ? Comment appelle-t-on cette situation ?",
+     "sol": "$E_{2,1}=\\frac{\\hbar^2\\pi^2}{2m}(4+1)=E_{1,2}$ : même énergie pour deux fonctions d'onde différentes, $\\psi_{2,1}\\neq\\psi_{1,2}$ (symétriques par échange de $x$ et $y$). On parle de dégénérescence (ici d'ordre $2$).",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 II q8",
+     "duree": 3,
+     "formules": "$E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$ · dégénérescence",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Qubits et portes quantiques",
+   "notions": [
+    "qubit"
+   ],
+   "exos": [
+    {
+     "id": "qq1",
+     "enonce": "Qubit $|\\psi\\rangle=\\frac35|0\\rangle+\\frac45|1\\rangle$. Probabilité de mesurer $|0\\rangle$ ?",
+     "ans": "9/25",
+     "sol": "$P(0)=|\\alpha|^2=\\frac9{25}=0{,}36$ ; $P(1)=\\frac{16}{25}$ ; $0{,}36+0{,}64=1$.",
+     "src": "Cours de mécanique quantique, IV.2",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\alpha=\\frac12$ : probabilité de mesurer $|0\\rangle$ ?",
+       "ans": "1/4",
+       "sol": "$|\\alpha|^2=\\frac14$."
+      }
+     ],
+     "formules": "$P(0)=|\\alpha|^2$, $P(1)=|\\beta|^2$ · $|\\alpha|^2+|\\beta|^2=1$",
+     "type": "value"
+    },
+    {
+     "id": "qq2",
+     "enonce": "Un qubit a $\\alpha=\\frac12$ réel. Probabilité de mesurer $|1\\rangle$ (normalisation $|\\alpha|^2+|\\beta|^2=1$) ?",
+     "ans": "3/4",
+     "sol": "$|\\beta|^2=1-|\\alpha|^2=1-\\frac14=\\frac34$, soit $\\beta=\\frac{\\sqrt3}2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\alpha=\\frac35$ : probabilité de mesurer $|1\\rangle$ ?",
+       "ans": "16/25",
+       "sol": "$1-\\frac9{25}=\\frac{16}{25}$."
+      }
+     ],
+     "formules": "$P(0)=|\\alpha|^2$, $P(1)=|\\beta|^2$ · $|\\alpha|^2+|\\beta|^2=1$",
+     "type": "value"
+    },
+    {
+     "id": "qq3",
+     "enonce": "On applique $H$ à $|0\\rangle$ : $\\frac1{\\sqrt2}(|0\\rangle+|1\\rangle)$. Probabilité de mesurer $|1\\rangle$ ?",
+     "ans": "1/2",
+     "sol": "$P(1)=\\left|\\frac1{\\sqrt2}\\right|^2=\\frac12$ : superposition équiprobable ($P(0)=\\frac12$ aussi).",
+     "src": "Cours de mécanique quantique, IV.3",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$H|1\\rangle=\\frac1{\\sqrt2}(|0\\rangle-|1\\rangle)$ : probabilité de mesurer $|1\\rangle$ ?",
+       "ans": "1/2",
+       "sol": "$\\left|-\\frac1{\\sqrt2}\\right|^2=\\frac12$ : le signe n'influence pas la probabilité."
+      }
+     ],
+     "formules": "$H|0\\rangle=\\frac{|0\\rangle+|1\\rangle}{\\sqrt2}$ · $P(0)=|\\alpha|^2$, $P(1)=|\\beta|^2$ · $|\\alpha|^2+|\\beta|^2=1$",
+     "type": "value"
+    },
+    {
+     "id": "qq4",
+     "enonce": "Avec $H=\\frac1{\\sqrt2}\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$, calculer $H^2|0\\rangle$ (coordonnées).",
+     "ans": "Matrix([1,0])",
+     "sol": "$H|0\\rangle=\\frac1{\\sqrt2}\\binom11$, puis $H\\left(\\frac1{\\sqrt2}\\binom11\\right)=\\frac12\\binom{1+1}{1-1}=\\binom10=|0\\rangle$. $H$ est son propre inverse : $H^2=I$.",
+     "src": "Cours de mécanique quantique, IV.3",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Porte $X=\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$ appliquée à $|0\\rangle=\\binom10$ : résultat ?",
+       "ans": "Matrix([0,1])",
+       "sol": "$X|0\\rangle=\\binom01=|1\\rangle$ : NOT."
+      }
+     ],
+     "formules": "$H=\\frac1{\\sqrt2}\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}$ · $H^2=I$",
+     "type": "value"
+    },
+    {
+     "id": "qq5",
+     "enonce": "CNOT (premier qubit de contrôle) sur $(\\alpha,\\beta,\\gamma,\\delta)=(1,2,3,4)$ dans l'ordre $|00\\rangle,|01\\rangle,|10\\rangle,|11\\rangle$ : état de sortie ?",
+     "ans": "Matrix([1,2,4,3])",
+     "sol": "Si le premier qubit vaut $|1\\rangle$, on inverse le second : $|10\\rangle\\leftrightarrow|11\\rangle$, donc $\\gamma$ et $\\delta$ sont échangés : $(1,2,4,3)$.",
+     "src": "Cours de mécanique quantique, IV.4",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "CNOT sur $(5,6,7,8)$ : état de sortie ?",
+       "ans": "Matrix([5,6,8,7])",
+       "sol": "On échange $\\gamma=7$ et $\\delta=8$ : $(5,6,8,7)$."
+      }
+     ],
+     "formules": "CNOT : $(\\alpha,\\beta,\\gamma,\\delta)\\to(\\alpha,\\beta,\\delta,\\gamma)$",
+     "type": "value"
+    },
+    {
+     "id": "qq6",
+     "enonce": "Combien de coefficients complexes décrivent l'état de $10$ qubits ?",
+     "ans": "1024",
+     "sol": "$2^n$ coefficients pour $n$ qubits : $2^{10}=1024$.",
+     "src": "Cours de mécanique quantique, IV.4",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Nombre de coefficients pour $20$ qubits ?",
+       "ans": "1048576",
+       "sol": "$2^{20}=1\\,048\\,576$."
+      }
+     ],
+     "formules": "$n$ qubits : $2^n$ coefficients",
+     "type": "value"
+    },
+    {
+     "id": "qq7",
+     "enonce": "Qu'est-ce que la superposition d'états ? Que donne la mesure d'un qubit $\\alpha|0\\rangle+\\beta|1\\rangle$ ? Que raconte le chat de Schrödinger ?",
+     "sol": "Un système quantique peut être dans une combinaison linéaire de plusieurs états de base à la fois. Pour un qubit $\\alpha|0\\rangle+\\beta|1\\rangle$ avec $|\\alpha|^2+|\\beta|^2=1$.\n\nLa mesure ne donne qu'un seul résultat : $|0\\rangle$ avec la probabilité $|\\alpha|^2$, $|1\\rangle$ avec $|\\beta|^2$. Une seule mesure ne permet pas de connaître $\\alpha$ et $\\beta$. Après la mesure, l'état est celui obtenu.\n\nChat de Schrödinger (1935) : expérience de pensée où un chat est lié à un processus quantique. Avant ouverture de la boîte, son état est une superposition « mort et vivant » ; à l'ouverture (mesure), un seul état est observé, avec les probabilités du processus.",
+     "src": "Cours de mécanique quantique, IV.1-2",
+     "duree": 4,
+     "formules": "$P(0)=|\\alpha|^2$, $P(1)=|\\beta|^2$ · $|\\alpha|^2+|\\beta|^2=1$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Niveau examen : final de mécanique quantique",
+   "notions": [
+    "bohr",
+    "hydrogenoide",
+    "schrodinger",
+    "boite2d",
+    "photon"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "qx1",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 1 (5 points)",
+     "enonce": "Questions de cours (document : niveaux de l'hydrogène $-13{,}6$, $-3{,}4$, $-1{,}51$, $-0{,}850$, $-0{,}54$, $-0{,}37$, $0$ eV). 1. Passer du niveau $4$ au niveau $3$ : l'électron reçoit ou cède un photon ? 2. Énergie à fournir pour aller de $n=1$ à $n=5$. 3. Longueur d'onde de la transition $3\\to2$. 4. On fournit $14$ eV à l'électron fondamental : que se passe-t-il ? 5. Que représente le spectre du rayonnement d'un corps noir ?",
+     "sol": "**1.** $E_4=-0{,}85$ eV est supérieur à $E_3=-1{,}51$ eV : l'électron descend et perd de l'énergie. Il cède donc de l'énergie sous forme d'un photon (émission), d'énergie $E_4-E_3=0{,}66$ eV.\n\n**2.** $\\Delta E=E_5-E_1=13{,}6\\left(1-\\frac1{25}\\right)=13{,}6\\times\\frac{24}{25}=13{,}056\\approx13{,}06$ eV (photon absorbé).\n\n**3.** Réponse : $\\lambda=\\dfrac{hc}{|\\Delta E_{3\\to2}|}$. L'énergie du photon est $h\\nu=\\frac{hc}\\lambda=|E_f-E_i|$. On prend la valeur absolue car $\\Delta E$ est négatif pour une émission alors que $\\lambda$ doit être positive. Les propositions avec $hc\\times\\Delta E$ ne sont pas homogènes à une longueur.\n\n**4.** $14$ eV $>13{,}6$ eV : l'atome est ionisé, l'électron s'échappe avec $E_c=14-13{,}6=0{,}4$ eV, donc avec une vitesse non nulle (réponses b et c du QCM).\n\n**5.** Réponse : (c). Un spectre représente l'énergie rayonnée en fonction de $\\lambda$, à $T$ fixée ; sa forme ne dépend que de $T$, pas du matériau.\n\nLa théorie classique prédit une densité d'énergie qui diverge en $\\frac1{\\lambda^4}$ quand $\\lambda\\to0$ (vers l'ultraviolet) : c'est la catastrophe ultraviolette, absurde puisqu'elle donnerait une énergie infinie.\n\nPlanck (1900) suppose que l'énergie ne s'échange que par paquets $E=h\\nu$ : la divergence disparaît et la courbe mesurée est reproduite.",
+     "formules": "$E_n=\\frac{E_1}{n^2}$, $E_1=-13{,}6$ eV · $h\\nu=|E_i-E_f|$ · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm · $\\lambda=\\frac{hc}{|\\Delta E|}$ · $E_c=h\\nu-|E_1|$ · catastrophe ultraviolette · quanta de Planck $E=h\\nu$",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "qx2",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 (6 points)",
+     "enonce": "Modèle de Bohr pour un hydrogénoïde ($Z$ protons, un électron). 1. Norme de la force de Coulomb. 2. PFD : $mv^2$. 3. Rayons $r_n$ à l'aide de $mrv=n\\hbar$. 4. Plus petit rayon de $\\mathrm{He}^+$ et de $\\mathrm{Li}^{2+}$ (avec $\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ m). 5. Énergies fondamentales de $\\mathrm{He}^+$ et $\\mathrm{Li}^{2+}$ ; commenter avec $54{,}42$ eV et $122{,}45$ eV.",
+     "sol": "**1.** 1) $F=\\frac{k\\,(Zq)\\,q}{r^2}=\\dfrac{Ze^2}{r^2}$.\n\n2) Seule force : Coulomb, centripète. $\\sum\\vec F=m\\vec a$ donne $\\frac{Ze^2}{r^2}=m\\frac{v^2}r$, soit $mv^2=\\dfrac{Ze^2}r$.\n\n**2.** Postulat : $mv=\\frac{n\\hbar}r$, donc $(mv)^2=\\frac{n^2\\hbar^2}{r^2}$. PFD : $mv^2=\\frac{Ze^2}r$, donc en multipliant par $m$, $(mv)^2=\\frac{Zme^2}r$.\n\nÉgalité : $\\frac{n^2\\hbar^2}{r^2}=\\frac{Zme^2}r$, d'où $r_n=\\dfrac{n^2\\hbar^2}{Zme^2}=\\dfrac{n^2}Za_0$ avec $a_0=\\frac{\\hbar^2}{me^2}$ (rayon de Bohr, $\\approx5\\times10^{-11}$ m). Rayons en $n^2$ : quantifiés.\n\n**3.** $r_1=\\frac{\\hbar^2}{Zme^2}=\\frac{5\\times10^{-11}}2=2{,}5\\times10^{-11}$ m. Deux fois plus petit que pour l'hydrogène : le noyau de charge $2e$ attire plus fortement l'électron. Vraisemblable (largement supérieur à la taille du noyau, $\\sim10^{-15}$ m).\n\n**4.** $r_1=\\frac{5\\times10^{-11}}3\\approx1{,}67\\times10^{-11}$ m. Plus $Z$ est grand, plus le rayon est petit (en $\\frac1Z$).\n\n**5.** $|E_1|=13{,}6\\times4=54{,}4$ eV. Valeur expérimentale $54{,}42$ eV : accord très bon (le modèle de Bohr est exact pour un seul électron).\n\n**6.** $|E_1|=13{,}6\\times9=122{,}4$ eV, contre $122{,}45$ eV mesurés. L'énergie d'ionisation croît comme $Z^2$ : $13{,}6$ (H), $54{,}4$ ($\\mathrm{He}^+$), $122{,}4$ ($\\mathrm{Li}^{2+}$).",
+     "formules": "$F=\\frac{ke^2}{r^2}$ · PFD : $\\frac{Ze^2}{r^2}=\\frac{mv^2}r$ · $a=\\frac{v^2}r$ · $mrv=n\\hbar$ · $r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV",
+     "duree": 30,
+     "type": "multi"
+    },
+    {
+     "id": "qx3",
+     "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 3 (9 points)",
+     "enonce": "Boîte quantique 1D puis 2D. I. Particule dans $[0;L]$ ($V=0$ dedans, $V=+\\infty$ dehors) : 1. équation de Schrödinger ; 2. conditions aux limites ; 3. condition en $0$ ; 4. quantification ; 5. niveaux d'énergie. II. Boîte 2D, $a=b=1$ : 6. $E_{min}$ ; 7. en quoi est-ce surprenant ; 8. niveaux $(2,1)$ et $(1,2)$ ; 9. sixième niveau.",
+     "sol": "**1.** 1) $V=0$ : $-\\frac{\\hbar^2}{2m}\\psi''(x)=E\\psi(x)$, soit $\\psi''=-k^2\\psi$ avec $k^2=\\frac{2mE}{\\hbar^2}$. Solutions générales : $\\psi(x)=A\\sin kx+B\\cos kx$.\n\n2) $V=+\\infty$ hors de $[0;L]$ : la particule ne peut s'y trouver, $\\psi=0$ dehors, et $\\psi$ est continue, donc $\\psi(0)=0$ et $\\psi(L)=0$.\n\n3) $\\psi(0)=B=0$ : il reste $\\psi(x)=A\\sin kx$.\n\n**2.** $\\psi(L)=A\\sin kL=0$ avec $A\\neq0$ (sinon $\\psi\\equiv0$) : $kL=n\\pi$, $n\\in\\mathbb N^*$ ($n=0$ donne $\\psi=0$). Donc $k=\\frac{n\\pi}L$ : seules des valeurs discrètes.\n\n$k^2=\\frac{2mE}{\\hbar^2}$ : $E_n=\\dfrac{n^2\\pi^2\\hbar^2}{2mL^2}=n^2E_1$ : l'énergie est quantifiée, $n$ est le nombre quantique.\n\nNormalisation : $\\int_0^LA^2\\sin^2\\frac{n\\pi x}Ldx=A^2\\frac L2=1$, d'où $A=\\sqrt{\\frac2L}$ et $\\psi_n(x)=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$.\n\n**3.** $E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}(n_x^2+n_y^2)$ avec $n_x,n_y\\geq1$ : $E_{min}=E_{1,1}=\\dfrac{\\hbar^2\\pi^2}m$.\n\nClassiquement, une particule peut être au repos au fond de la boîte, d'énergie nulle. Ici l'énergie minimale n'est pas nulle : elle ne peut pas être immobile. C'est cohérent avec Heisenberg : confinée ($\\Delta x\\leq1$), elle a $\\Delta p\\geq\\frac\\hbar{2\\Delta x}\\neq0$.\n\n**4.** $E_{2,1}=\\frac{\\hbar^2\\pi^2}{2m}(4+1)=E_{1,2}$ : même énergie pour deux fonctions d'onde différentes, $\\psi_{2,1}\\neq\\psi_{1,2}$ (symétriques par échange de $x$ et $y$). On parle de dégénérescence (ici d'ordre $2$).\n\n**5.** $E_{min}=\\frac{\\hbar^2\\pi^2}{2m}\\times2$ ; $E_{4,1}=\\frac{\\hbar^2\\pi^2}{2m}\\times17$ : $\\frac{E_{4,1}}{E_{min}}=\\frac{17}2=8{,}5$. Atteint pour $(4,1)$ ou $(1,4)$.",
+     "formules": "$-\\frac{\\hbar^2}{2m}\\psi''=E\\psi$ · $\\psi(0)=\\psi(L)=0$ · $E_n=\\frac{n^2\\pi^2\\hbar^2}{2mL^2}$ · $\\psi_n=\\sqrt{\\frac2L}\\sin\\frac{n\\pi x}L$ · $E_{n_x,n_y}=\\frac{\\hbar^2\\pi^2}{2m}\\left(\\frac{n_x^2}{a^2}+\\frac{n_y^2}{b^2}\\right)$ · $E_{min}=\\frac{\\hbar^2\\pi^2}m$ · dégénérescence · carré : $E\\propto n_x^2+n_y^2$",
+     "duree": 25,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examen + 20 % : problèmes combinés",
+   "notions": [
+    "photoelec",
+    "hydrogenoide",
+    "heisenberg",
+    "schrodinger",
+    "moyennes",
+    "superposition"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "qy1",
+     "enonce": "Lumière à $200$ nm ($hc=1240$ eV·nm) sur un métal de travail d'extraction $4{,}4$ eV. Longueur d'onde de de Broglie des électrons émis (en m), $m=9\\times10^{-31}$, $h=6{,}6\\times10^{-34}$, $1$ eV $=1{,}6\\times10^{-19}$ J ?",
+     "ans": "Rational(11,12)*10**-9",
+     "sol": "$E_c=6{,}2-4{,}4=1{,}8$ eV. $v=\\sqrt{\\frac{2E_c}m}=8\\times10^5$ m/s (voir niveau 4). $\\lambda=\\frac h{mv}=\\frac{6{,}6\\times10^{-34}}{9\\times10^{-31}\\times8\\times10^5}=\\frac{6{,}6\\times10^{-34}}{7{,}2\\times10^{-25}}\\approx9{,}2\\times10^{-10}$ m, de l'ordre de la distance interatomique : diffraction possible dans un cristal.",
+     "duree": 8,
+     "variants": [
+      {
+       "enonce": "Même expérience avec $W=5{,}75$ eV ($200$ nm, $hc=1240$) : $\\lambda_{dB}$ des électrons (en m) ?",
+       "ans": "Rational(11,6)*10**-9",
+       "sol": "$E_c=0{,}45$ eV, $v=4\\times10^5$ m/s, $\\lambda=\\frac{6{,}6\\times10^{-34}}{3{,}6\\times10^{-25}}\\approx1{,}8\\times10^{-9}$ m."
+      }
+     ],
+     "formules": "$E_c=\\frac{hc}\\lambda-W$ · $v=\\sqrt{\\frac{2E_c}m}$ · $\\lambda=\\frac hp=\\frac h{mv}$",
+     "type": "value"
+    },
+    {
+     "id": "qy2",
+     "enonce": "Photon émis par $\\mathrm{He}^+$ lors de $n=3\\to n=2$ : longueur d'onde (en nm) avec $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV et $hc=1240$ eV·nm ?",
+     "ans": "2790/17",
+     "sol": "$\\Delta E=13{,}6\\times4\\times\\left(\\frac14-\\frac19\\right)=13{,}6\\times4\\times\\frac5{36}\\approx7{,}56$ eV. $\\lambda=\\frac{1240}{7{,}56}\\approx164$ nm, ultraviolet : le visible de l'hydrogène (Balmer) est décalé vers l'UV pour $Z=2$.",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "Photon émis par $\\mathrm{Li}^{2+}$ lors de $4\\to2$ (en nm, $hc=1240$) ?",
+       "ans": "24800/459",
+       "sol": "$\\Delta E=13{,}6\\times9\\times\\frac3{16}\\approx22{,}95$ eV, $\\lambda\\approx54$ nm."
+      }
+     ],
+     "formules": "$r_n=\\frac{n^2\\hbar^2}{Zme^2}$ · $E_n=-13{,}6\\frac{Z^2}{n^2}$ eV · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qy3",
+     "enonce": "Puits infini 1D avec $E_1=0{,}4$ eV. Longueur d'onde (en nm) du photon absorbé pour passer de $n=1$ à $n=4$ ($hc=1240$ eV·nm) ?",
+     "ans": "620/3",
+     "sol": "$E_4-E_1=16E_1-E_1=15E_1=6$ eV. $\\lambda=\\frac{1240}6\\approx207$ nm (ultraviolet).",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Puits avec $E_1=0{,}3$ eV : photon pour $n=2\\to4$ (en nm, $hc=1240$) ?",
+       "ans": "3100/9",
+       "sol": "$E_4-E_2=12E_1=3{,}6$ eV, $\\lambda=\\frac{1240}{3{,}6}\\approx344$ nm."
+      }
+     ],
+     "formules": "$E_n=n^2E_1$ · $E=h\\nu=\\frac{hc}\\lambda$ · $hc\\approx1240$ eV·nm",
+     "type": "value"
+    },
+    {
+     "id": "qy4",
+     "enonce": "Électron de l'hydrogène localisé à $\\Delta x=a_0=5\\times10^{-11}$ m. Incertitude minimale sur sa vitesse (en m/s), $h=6{,}62\\times10^{-34}$, $m=9{,}1\\times10^{-31}$ ? À comparer avec la vitesse de Bohr $2{,}2\\times10^6$ m/s.",
+     "ans": "Rational(331,910)*10**7/pi",
+     "sol": "$\\Delta p\\geq\\frac h{4\\pi\\Delta x}=\\frac{6{,}62\\times10^{-34}}{4\\pi\\times5\\times10^{-11}}\\approx1{,}05\\times10^{-24}$. $\\Delta v=\\frac{\\Delta p}m\\approx1{,}2\\times10^6$ m/s : même ordre de grandeur que la vitesse de Bohr, ce qui confirme que la trajectoire n'a pas de sens précis à cette échelle.",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "Électron localisé à $\\Delta x=10^{-10}$ m : $\\Delta v$ minimale (en m/s) ?",
+       "ans": "Rational(331,1820)*10**7/pi",
+       "sol": "$\\Delta p\\approx5{,}3\\times10^{-25}$ ; $\\Delta v=\\frac{\\Delta p}m\\approx5{,}8\\times10^5$ m/s."
+      }
+     ],
+     "formules": "$\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$ · $\\lambda=\\frac hp=\\frac h{mv}$",
+     "type": "value"
+    },
+    {
+     "id": "qy5",
+     "src": "TD2 de mécanique quantique, ex. 3",
+     "enonce": "Fonction d'onde $\\psi(x)=Ne^{-\\lambda x^2/2}$ (gaussienne). Calculer $N$, $\\langle x^2\\rangle$ et $\\Delta x$, démontrer $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$ et $\\langle p\\rangle=0$, puis calculer $\\Delta p$ et $\\Delta x\\,\\Delta p$ (avec $\\lambda=2$ pour les valeurs numériques).",
+     "sol": "**1.** $N^2\\sqrt{\\frac\\pi\\lambda}=1$ donc $N^2=\\sqrt{\\frac\\lambda\\pi}$ et $N=\\left(\\frac\\lambda\\pi\\right)^{1/4}=\\left(\\frac2\\pi\\right)^{1/4}\\approx0{,}893$.\n\n**2.** $\\langle x^2\\rangle=N^2\\int x^2e^{-\\lambda x^2}dx=N^2\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}=\\frac1{2\\lambda}=\\frac14$ (car $N^2\\sqrt{\\frac\\pi\\lambda}=1$).\n\n**3.** $\\Delta x=\\sqrt{\\frac1{2\\lambda}}=\\sqrt{\\frac1{16}}=\\frac14$.\n\n**4.** $\\langle p\\rangle=-i\\hbar\\int\\psi\\psi'dx=-i\\hbar\\int\\left(\\frac{\\psi^2}2\\right)'dx=-\\frac{i\\hbar}2\\left[\\psi^2\\right]_{-\\infty}^{+\\infty}=0$.\n\n$\\langle p^2\\rangle=\\int\\psi^*\\left(-\\hbar^2\\psi''\\right)dx=-\\hbar^2\\left[\\psi^*\\psi'\\right]_{-\\infty}^{+\\infty}+\\hbar^2\\int|\\psi'|^2dx$ (intégration par parties). Le crochet est nul car $\\psi\\to0$ : $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$.\n\n**5.** $|\\psi'|^2=\\lambda^2x^2|\\psi|^2$ : $\\frac{\\langle p^2\\rangle}{\\hbar^2}=\\lambda^2\\langle x^2\\rangle=\\frac{\\lambda^2}{2\\lambda}=\\frac\\lambda2=1$. Donc $\\Delta p=\\hbar\\sqrt{\\lambda/2}=\\hbar$ (car $\\langle p\\rangle=0$).\n\n**6.** $\\Delta x\\,\\Delta p=\\frac\\hbar2$ : le rapport vaut $1$. L'inégalité $\\Delta x\\,\\Delta p\\geq\\frac\\hbar2$ est respectée, avec égalité (la gaussienne est l'état d'indétermination minimale). Pour tout $\\lambda$ : $\\frac1{\\sqrt{2\\lambda}}\\times\\hbar\\sqrt{\\frac\\lambda2}=\\frac\\hbar2$.",
+     "formules": "$\\int e^{-\\lambda x^2}=\\sqrt{\\frac\\pi\\lambda}$ · $\\int x^2e^{-\\lambda x^2}=\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}$ · $N^2\\sqrt{\\frac\\pi\\lambda}=1$ · $\\langle x^2\\rangle=\\int x^2|\\psi|^2$ · $\\langle A\\rangle=\\int\\psi^*\\hat A\\psi$ · $(\\Delta A)^2=\\langle A^2\\rangle-\\langle A\\rangle^2$ · $\\langle p^2\\rangle=\\hbar^2\\int|\\psi'|^2dx$ · $\\hat p=-i\\hbar\\frac d{dx}$ · $\\psi'=-\\lambda x\\psi$ · $\\Delta x\\Delta p\\geq\\frac\\hbar2$ · $\\Delta p=m\\Delta v$",
+     "duree": 30,
+     "type": "multi"
+    },
+    {
+     "id": "qy6",
+     "src": "TD3 de mécanique quantique, ex. 2",
+     "enonce": "Particule dans une boîte $[0;L]$ avec $\\psi(x)=N\\sin^3\\frac{\\pi x}L$. Montrer l'orthogonalité des $\\psi_n$, normaliser $\\psi$, donner les niveaux et probabilités, et l'énergie moyenne en fonction de $E_1$.",
+     "sol": "**1.** $\\int_0^L\\psi_n\\psi_m=\\frac2L\\int_0^L\\sin\\frac{n\\pi x}L\\sin\\frac{m\\pi x}Ldx=\\frac1L\\int_0^L\\left[\\cos\\frac{(n-m)\\pi x}L-\\cos\\frac{(n+m)\\pi x}L\\right]dx$.\n\nSi $n\\neq m$ : $n\\pm m$ entiers non nuls, $\\int_0^L\\cos\\frac{p\\pi x}Ldx=\\frac L{p\\pi}\\sin p\\pi=0$ : résultat $0$.\n\nSi $n=m$ : $\\frac1L\\int_0^L[1-\\cos\\frac{2n\\pi x}L]dx=\\frac1L\\times L=1$. Donc $\\delta_{nm}$.\n\n**2.** Formule de Wallis : $\\int_0^\\pi\\sin^6u\\,du=\\frac{5\\pi}{16}$, donc $\\int_0^1\\sin^6(\\pi x)dx=\\frac5{16}$ (aussi via $\\sin^3=\\frac14(3\\sin u-\\sin3u)$ : $\\frac1{16}\\cdot\\frac12(9+1)=\\frac5{16}$).\n\n**3.** $N^2\\times\\frac5{16}=1$, $N^2=\\frac{16}5$, $N=\\frac4{\\sqrt5}$. Pour une largeur $L$ : $N=\\frac4{\\sqrt{5L}}$.\n\n**4.** Normalisation : $N^2(9+1)=1$, $N^2=\\frac1{10}$. $P_1=|c_1|^2=\\frac9{10}$ (et $P_3=\\frac1{10}$).\n\n**5.** $\\langle E\\rangle=\\sum|c_n|^2E_n=\\frac9{10}E_1+\\frac1{10}\\times9E_1=\\frac{18}{10}E_1=\\frac95E_1$.\n\n**6.** 1) $\\sin^3\\frac{\\pi x}L=\\frac14\\left(3\\sin\\frac{\\pi x}L-\\sin\\frac{3\\pi x}L\\right)$ et $\\sin\\frac{n\\pi x}L=\\sqrt{\\frac L2}\\psi_n$ : $\\psi=\\frac N4\\sqrt{\\frac L2}\\,(3\\psi_1-\\psi_3)$, soit $c_1=\\frac{3N}4\\sqrt{\\frac L2}$, $c_3=-\\frac N4\\sqrt{\\frac L2}$, les autres $c_n=0$.\n\n2) $\\sum|c_n|^2=\\frac{N^2}{16}\\frac L2(9+1)=\\frac{5N^2L}{16}=1$ : $N=\\frac4{\\sqrt{5L}}$.\n\n3) Niveaux $E_1$ et $E_3=9E_1$ seulement, avec $P_1=\\frac9{10}$ et $P_3=\\frac1{10}$.\n\n4) $\\langle E\\rangle=\\sum|c_n|^2E_n=\\frac9{10}E_1+\\frac1{10}\\cdot9E_1=\\frac95E_1$.",
+     "formules": "$\\sin a\\sin b=\\frac12[\\cos(a-b)-\\cos(a+b)]$ · $\\int\\psi_n\\psi_m=\\delta_{nm}$ · $\\sin^3u=\\frac14(3\\sin u-\\sin3u)$ · $\\int_0^\\pi\\sin^6=\\frac{5\\pi}{16}$ · $\\psi=\\sum c_n\\psi_n$ · $\\sum|c_n|^2=1$ · $\\langle E\\rangle=\\sum|c_n|^2E_n$ · $E_n=n^2E_1$",
+     "duree": 30,
+     "type": "multi"
+    }
+   ]
+  }
+ ]
+}

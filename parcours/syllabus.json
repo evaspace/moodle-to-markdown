@@ -275,6 +275,71 @@
        ]
       }
      ]
+    },
+    {
+     "id": "S3",
+     "moodle": ".",
+     "ecues": [
+      {
+       "id": "ASN",
+       "titre": "Analyse et séries numériques",
+       "bloc": "B5",
+       "periode_examen": "octobre (examen B5 de mi-semestre)",
+       "chapitres": [
+        "Analyse, séries numériques"
+       ],
+       "parcours": [
+        "maths-s3-asn"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": [
+        "S3/Midterms/Maths PC/2028/midterm-2028-s3-maths-asn-subject-fr.pdf",
+        "S3/Midterms/Maths PC/2028/midterm-2028-s3-maths-asn-correction-fr.pdf"
+       ]
+      },
+      {
+       "id": "PSE",
+       "titre": "Probabilités et séries entières",
+       "bloc": "B5",
+       "periode_examen": "octobre (examen B5)",
+       "chapitres": [
+        "Probabilités et Séries Entières/06_Fonction génératrice d'une variable aléatoire entière finie",
+        "Probabilités et Séries Entières/07_Séries entières",
+        "Probabilités et Séries Entières/09_Variable aléatoire entière infinie"
+       ],
+       "parcours": [
+        "maths-s3-pse"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      },
+      {
+       "id": "AL",
+       "titre": "Algèbre linéaire : déterminant et diagonalisation",
+       "bloc": "à confirmer",
+       "periode_examen": "décembre-janvier (partiel)",
+       "chapitres": [
+        "Algèbre linéaire/06_Base d'un espace vectoriel",
+        "Algèbre linéaire/07_Dimension d'un espace vectoriel",
+        "Algèbre linéaire/09_Définition d'une application linéaire",
+        "Algèbre linéaire/10_Image et noyau d'une application linéaire",
+        "Algèbre linéaire/12_Démonstrations à connaître",
+        "Algèbre linéaire/14_Déterminant d'une matrice carrée",
+        "Algèbre linéaire/15_Généralités sur la diagonalisation de matrices carrées",
+        "Algèbre linéaire/16_Polynôme caractéristique",
+        "Algèbre linéaire/17_Matrices diagonalisables",
+        "Algèbre linéaire/18_Applications de la diagonalisation"
+       ],
+       "parcours": [
+        "maths-s3-al"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      }
+     ]
     }
    ]
   },
@@ -372,6 +437,45 @@
         "physique-s2-em"
        ],
        "a_faire": [],
+       "annales": []
+      }
+     ]
+    },
+    {
+     "id": "S3",
+     "moodle": ".",
+     "ecues": [
+      {
+       "id": "QUANT",
+       "titre": "Introduction à la physique quantique",
+       "bloc": "à confirmer",
+       "periode_examen": "décembre",
+       "chapitres": [
+        "Introduction à la Physique Quantique/01_Cours et TD",
+        "Introduction à la Physique Quantique/04_QCM"
+       ],
+       "parcours": [
+        "physique-s3-quantique"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      },
+      {
+       "id": "EM2",
+       "titre": "Électromagnétisme : théorème de Gauss et ondes",
+       "bloc": "à confirmer",
+       "periode_examen": "octobre-décembre (à confirmer)",
+       "chapitres": [
+        "Électrostatique et Magnétostatique, ondes électromagnétiques/01_Cours et TD",
+        "Électrostatique et Magnétostatique, ondes électromagnétiques/02_TD Corrigé",
+        "Électrostatique et Magnétostatique, ondes électromagnétiques/05_QCM"
+       ],
+       "parcours": [
+        "physique-s3-em"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
        "annales": []
       }
      ]
@@ -479,6 +583,28 @@
        ]
       }
      ]
+    },
+    {
+     "id": "S3",
+     "moodle": ".",
+     "ecues": [
+      {
+       "id": "ASM68K",
+       "titre": "Assembleur 68000",
+       "bloc": "à confirmer",
+       "periode_examen": "contrôle de mi-semestre et partiel de fin de semestre",
+       "chapitres": [
+        "Les bases de l'assembleur 68000/01_Ressource",
+        "Les bases de l'assembleur 68000/02_Tests en ligne"
+       ],
+       "parcours": [
+        "archi-s3-assembleur-68000"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      }
+     ]
     }
    ]
   },
@@ -559,6 +685,36 @@
         "elec-s2-diodes"
        ],
        "a_faire": [],
+       "annales": []
+      }
+     ]
+    },
+    {
+     "id": "S3",
+     "moodle": ".",
+     "ecues": [
+      {
+       "id": "TB",
+       "titre": "Transistors bipolaires, MOS et portes logiques",
+       "bloc": "à confirmer",
+       "periode_examen": "mi-semestre octobre (bipolaire), fin de semestre (MOS)",
+       "chapitres": [
+        "[Elec] Transistors/01_Révisions",
+        "[Elec] Transistors/02_Transistors Bipolaires",
+        "[Elec] Transistors/03_Cours",
+        "[Elec] Transistors/04_TD",
+        "[Elec] Transistors/05_Pour s'entraîner",
+        "[Elec] Transistors/06_Transistors MOS et portes logiques",
+        "[Elec] Transistors/07_Cours",
+        "[Elec] Transistors/08_TD",
+        "[Elec] Transistors/09_Tests Moodle",
+        "[Elec] Transistors/10_Test 1"
+       ],
+       "parcours": [
+        "electronique-s3-transistors"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
        "annales": []
       }
      ]
@@ -690,6 +846,70 @@
         "S2/Finals/Algo/2022/final-2022-s2-algo-correction-fr.pdf",
         "S2/Finals/Algo/2023/final-2023-s2-algo-correction.py"
        ]
+      }
+     ]
+    },
+    {
+     "id": "S3",
+     "moodle": ".",
+     "ecues": [
+      {
+       "id": "AR2",
+       "titre": "Arbres et recherches 2 : hachage, arbres généraux, B-arbres",
+       "bloc": "B5",
+       "periode_examen": "octobre-novembre",
+       "chapitres": [
+        "[algo] Arbres et Recherches 2/02_👨‍🏫 Méthodes de hachage - Hashing Methods",
+        "[algo] Arbres et Recherches 2/03_1 - Hachage - principe et méthodes de base",
+        "[algo] Arbres et Recherches 2/04_2 - Hachage - résolution des collisions par chaînage",
+        "[algo] Arbres et Recherches 2/05_3 - Hachage - résolution des collisions par calcul",
+        "[algo] Arbres et Recherches 2/01_💻 Tests - Homework (DM)",
+        "[algo] Arbres et Recherches 2/06_🐍 Arbres généraux - General Trees",
+        "[algo] Arbres et Recherches 2/07_🐍 B-arbres - B-Trees"
+       ],
+       "parcours": [
+        "algo-s3-hachage",
+        "algo-s3-arbres"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      },
+      {
+       "id": "Graphes",
+       "titre": "Graphes",
+       "bloc": "à confirmer",
+       "periode_examen": "décembre (partiel)",
+       "chapitres": [
+        "[algo] Graphs/03_Les graphes - description - terminologie",
+        "[algo] Graphs/04_Représentation des graphes",
+        "[algo] Graphs/05_Parcours de graphes",
+        "[algo] Graphs/06_Connexité des graphes non orientés",
+        "[algo] Graphs/07_🐍 Exercises 1- implementations + BFS + DFS",
+        "[algo] Graphs/08_🐍 Exercises 2- Applications"
+       ],
+       "parcours": [
+        "algo-s3-graphes"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
+      },
+      {
+       "id": "THLR",
+       "titre": "Théorie des langages rationnels",
+       "bloc": "à confirmer",
+       "periode_examen": "23 octobre 2026 (examen final)",
+       "chapitres": [
+        "2030_Théorie des langage rationnels/01_Supports",
+        "2030_Théorie des langage rationnels/02_Devoirs - Homework"
+       ],
+       "parcours": [
+        "algo-s3-thlr"
+       ],
+       "a_faire": [],
+       "hors_programme_2030": [],
+       "annales": []
       }
      ]
     }

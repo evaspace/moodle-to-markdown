@@ -1,0 +1,1482 @@
+{
+ "subject": {
+  "id": "maths-s3-asn",
+  "ordre": 240,
+  "matiere": "maths",
+  "semestre": "S3",
+  "ecue": "ASN",
+  "titre": "Analyse et séries numériques",
+  "chapitres_moodle": [
+   "Analyse, séries numériques"
+  ],
+  "td": "TD et MiMos ASN (S3 2026)",
+  "examens": [
+   "Examen B5/ASN (octobre)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "croiss",
+   "titre": "Limites usuelles et croissances comparées (rappel S1)",
+   "formule": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ $(q>1)$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+   "exemple": "$\\frac{n^3}{2^n}\\to0$ : l'exponentielle gagne sur la puissance",
+   "cours": "Ordre de domination en $+\\infty$ : $\\ln n\\ll n^b\\ll q^n\\ll n!\\ll n^n$. Une forme indéterminée se lève en factorisant le terme dominant. Rappel S1 : parcours « Suites numériques » (`maths-s1-apis-suites`)."
+  },
+  {
+   "id": "dl-usuels",
+   "titre": "DL usuels en 0 (rappel S2)",
+   "formule": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x=x-\\frac{x^3}6+\\frac{x^5}{120}$ · $\\cos x=1-\\frac{x^2}2+\\frac{x^4}{24}$ · $\\ln(1+x)=x-\\frac{x^2}2+\\frac{x^3}3$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha=1+\\alpha x+\\frac{\\alpha(\\alpha-1)}2x^2$",
+   "exemple": "$\\sqrt{1+x}=1+\\frac x2-\\frac{x^2}8+\\frac{x^3}{16}+o(x^3)$",
+   "cours": "Le coefficient de $x^k$ dans le DL de $f$ en 0 vaut $\\frac{f^{(k)}(0)}{k!}$ (Taylor-Young). Ces sept DL sont à connaître par cœur. Rappel S2 : parcours « Fonctions » (`maths-s2-apef-fonctions`)."
+  },
+  {
+   "id": "equiv",
+   "titre": "Équivalents usuels",
+   "formule": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$ · $(1+x)^\\alpha-1\\sim\\alpha x$ (en 0)",
+   "exemple": "$\\frac{\\sin 3x}{5x}\\to\\frac35$",
+   "cours": "$u\\sim v\\iff\\frac uv\\to1$. On peut multiplier, diviser, élever à une puissance des équivalents, **pas** les additionner ni les composer par une fonction quelconque. Pour une suite : $\\ln(1+\\frac1n)\\sim\\frac1n$, $\\sin\\frac1n\\sim\\frac1n$, $e^{1/n}-1\\sim\\frac1n$."
+  },
+  {
+   "id": "dl-calc",
+   "titre": "Calcul d'un DL : produit et composée",
+   "formule": "produit : on multiplie les polynômes et on tronque à l'ordre demandé · composée $f(u(x))$ : $u(x)\\to0$, on injecte le DL de $u$ dans celui de $f$",
+   "exemple": "$e^x\\cos x$ : coefficient de $x^3=\\frac16-\\frac12=-\\frac13$",
+   "cours": "Pour le coefficient de $x^k$ d'un produit $f\\times g$ : $\\sum_{i+j=k}a_ib_j$. Pour $\\frac1{1+x+x^2}$ : écrire $\\frac{1-x}{1-x^3}$. On ne garde que les termes de degré $\\le k$."
+  },
+  {
+   "id": "dl-lim",
+   "titre": "Limites par développements limités",
+   "formule": "$\\lim\\frac{f(x)-P(x)}{x^k}$ = coefficient de $x^k$ de $f$ quand $P$ est son DL à l'ordre $k-1$",
+   "exemple": "$\\frac{x-\\sin x}{x^3}\\to\\frac16$",
+   "cours": "On développe numérateur et dénominateur à l'ordre qui fait apparaître le premier terme non nul, puis on simplifie par la puissance de $x$ dominante. Penser à développer assez loin : un terme qui s'annule oblige à monter d'un ordre."
+  },
+  {
+   "id": "geom-tele",
+   "titre": "Séries géométriques et télescopiques",
+   "formule": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ $(|q|<1)$ · $\\sum_{k\\ge1}\\frac1{k(k+1)}=\\sum\\left(\\frac1k-\\frac1{k+1}\\right)=1$",
+   "exemple": "$\\sum_{k\\ge0}\\left(-\\frac13\\right)^k=\\frac1{1+1/3}=\\frac34$",
+   "cours": "Série géométrique : première terme divisé par $1-q$. Série télescopique : décomposer en éléments simples, écrire la somme partielle $S_N$, passer à la limite. Rappel S1 : sommes de suites géométriques."
+  },
+  {
+   "id": "div",
+   "titre": "Condition nécessaire de convergence",
+   "formule": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $u_n\\not\\to0\\Rightarrow\\sum u_n$ diverge grossièrement",
+   "exemple": "$\\sum\\frac n{n+1}$ : $u_n\\to1\\ne0$, divergence grossière",
+   "cours": "La réciproque est **fausse** : $\\sum\\frac1n$ diverge bien que $\\frac1n\\to0$. Si $u_n\\to0$ on ne peut rien conclure et il faut un autre critère."
+  },
+  {
+   "id": "riemann",
+   "titre": "Séries de Riemann",
+   "formule": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$",
+   "exemple": "$\\sum\\frac1{n^2}$ converge ; $\\sum\\frac1{\\sqrt n}$ et $\\sum\\frac1n$ divergent",
+   "cours": "C'est la série de référence pour comparer. Pour un terme général $u_n\\sim\\frac c{n^p}$ : converge $\\iff p>1$. L'exposant se lit sur $-\\frac{\\ln u_n}{\\ln n}\\to p$."
+  },
+  {
+   "id": "comp",
+   "titre": "Séries à termes positifs : comparaison",
+   "formule": "$0\\le u_n\\le v_n$ : $\\sum v_n$ converge $\\Rightarrow\\sum u_n$ converge · $u_n\\sim v_n$ (positifs) : même nature · $u_n=o(v_n)$ : $\\sum v_n$ converge $\\Rightarrow\\sum u_n$ converge",
+   "exemple": "$\\frac{\\ln n}{n^2}=o\\left(\\frac1{n^{3/2}}\\right)$ donc converge",
+   "cours": "Toujours vérifier le signe avant d'utiliser un équivalent. Choisir la référence $\\frac1{n^\\beta}$ avec $\\beta$ entre 1 et l'exposant pour les puissances de $\\ln n$ (croissances comparées)."
+  },
+  {
+   "id": "dalembert",
+   "titre": "Règle de d'Alembert",
+   "formule": "$u_n>0$ et $\\frac{u_{n+1}}{u_n}\\to\\ell$ : $\\ell<1$ converge · $\\ell>1$ diverge · $\\ell=1$ on ne conclut pas",
+   "exemple": "$u_n=\\frac n{2^n}$ : $\\frac{u_{n+1}}{u_n}=\\frac{n+1}{2n}\\to\\frac12<1$",
+   "cours": "Adaptée aux factorielles et aux produits $a^n$. Elle ne dit rien pour $\\ell=1$ (séries de Riemann). Pour un terme de signe quelconque, l'appliquer à $|u_n|$."
+  },
+  {
+   "id": "cauchy",
+   "titre": "Règle de Cauchy",
+   "formule": "$\\sqrt[n]{u_n}\\to\\ell$ : $\\ell<1$ converge · $\\ell>1$ diverge · $\\ell=1$ on ne conclut pas",
+   "exemple": "$u_n=\\frac{n^3}{3^n}$ : $\\sqrt[n]{u_n}=\\frac{e^{3\\ln n/n}}3\\to\\frac13<1$",
+   "cours": "Adaptée aux puissances $n$-ièmes : $\\left(\\frac n{2n+1}\\right)^n$. On écrit $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$. Même cas d'indécision que d'Alembert."
+  },
+  {
+   "id": "abs",
+   "titre": "Convergence absolue et séries alternées",
+   "formule": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · séries alternées : $|u_n|\\searrow0\\Rightarrow\\sum(-1)^n|u_n|$ converge",
+   "exemple": "$\\sum\\frac{\\sin n}{n^2}$ : $\\left|\\frac{\\sin n}{n^2}\\right|\\le\\frac1{n^2}$, convergence absolue",
+   "cours": "Pour un signe quelconque, étudier d'abord $\\sum|u_n|$. Une série alternée dont $|u_n|\\not\\searrow0$ peut diverger : développer $u_n$ (DL) pour isoler un terme positif de série divergente."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "croiss",
+   "type": "vf",
+   "q": "$\\frac{n^{10}}{2^n}\\to0$.",
+   "bonne": true
+  },
+  {
+   "notion": "croiss",
+   "type": "qcm",
+   "q": "$\\lim\\left(1+\\frac3n\\right)^n=$ ?",
+   "choix": [
+    "$e^3$",
+    "$3e$",
+    "$e$",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-usuels",
+   "type": "qcm",
+   "q": "Le coefficient de $x^3$ dans le DL de $\\sin x$ en 0 est",
+   "choix": [
+    "$-\\frac16$",
+    "$\\frac16$",
+    "$-\\frac12$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-usuels",
+   "type": "vf",
+   "q": "$\\cos x=1-\\frac{x^2}2+\\frac{x^4}{24}+o(x^4)$.",
+   "bonne": true
+  },
+  {
+   "notion": "equiv",
+   "type": "vf",
+   "q": "$1-\\cos x\\sim x$ en 0.",
+   "bonne": false
+  },
+  {
+   "notion": "equiv",
+   "type": "qcm",
+   "q": "En 0, $\\ln(1+x)\\sim$",
+   "choix": [
+    "$x$",
+    "$1$",
+    "$x^2$",
+    "$\\frac1x$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-calc",
+   "type": "vf",
+   "q": "Pour le DL d'un produit, on multiplie les DL et on tronque à l'ordre demandé.",
+   "bonne": true
+  },
+  {
+   "notion": "dl-calc",
+   "type": "qcm",
+   "q": "Le DL de $e^x\\cos x$ à l'ordre 2 est",
+   "choix": [
+    "$1+x$",
+    "$1+x+x^2$",
+    "$1+x-\\frac{x^2}2$",
+    "$1+\\frac{x^2}2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-lim",
+   "type": "qcm",
+   "q": "$\\lim_{x\\to0}\\frac{x-\\sin x}{x^3}=$",
+   "choix": [
+    "$\\frac16$",
+    "$0$",
+    "$\\frac12$",
+    "$1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dl-lim",
+   "type": "vf",
+   "q": "Si le terme de degré 2 s'annule dans un quotient par $x^2$, on peut conclure sans aller plus loin.",
+   "bonne": false
+  },
+  {
+   "notion": "geom-tele",
+   "type": "qcm",
+   "q": "$\\sum_{k=0}^{+\\infty}\\left(\\frac13\\right)^k=$",
+   "choix": [
+    "$\\frac32$",
+    "$3$",
+    "$\\frac13$",
+    "$\\frac23$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "geom-tele",
+   "type": "vf",
+   "q": "$\\sum_{k\\ge1}\\frac1{k(k+1)}=1$.",
+   "bonne": true
+  },
+  {
+   "notion": "div",
+   "type": "vf",
+   "q": "Si $u_n\\to0$ alors $\\sum u_n$ converge.",
+   "bonne": false
+  },
+  {
+   "notion": "div",
+   "type": "qcm",
+   "q": "$\\sum\\frac n{n+1}$ est",
+   "choix": [
+    "grossièrement divergente",
+    "convergente",
+    "absolument convergente",
+    "de somme $1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "riemann",
+   "type": "vf",
+   "q": "$\\sum\\frac1{n^{3/2}}$ converge.",
+   "bonne": true
+  },
+  {
+   "notion": "riemann",
+   "type": "qcm",
+   "q": "$\\sum\\frac1{n^\\alpha}$ converge si et seulement si",
+   "choix": [
+    "$\\alpha>1$",
+    "$\\alpha\\ge1$",
+    "$\\alpha<1$",
+    "$\\alpha>0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "comp",
+   "type": "vf",
+   "q": "On peut utiliser un équivalent pour conclure sur la nature d'une série à termes de signe quelconque.",
+   "bonne": false
+  },
+  {
+   "notion": "comp",
+   "type": "qcm",
+   "q": "$\\frac{\\ln n}{n^2}=o\\left(\\frac1{n^{3/2}}\\right)$ donc la série $\\sum\\frac{\\ln n}{n^2}$",
+   "choix": [
+    "converge",
+    "diverge",
+    "est indéterminée",
+    "vaut $0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dalembert",
+   "type": "vf",
+   "q": "Si $\\frac{u_{n+1}}{u_n}\\to1$, d'Alembert prouve la divergence.",
+   "bonne": false
+  },
+  {
+   "notion": "dalembert",
+   "type": "qcm",
+   "q": "$u_n=\\frac{3^n}{n!}$ : $\\frac{u_{n+1}}{u_n}\\to$",
+   "choix": [
+    "$0$",
+    "$3$",
+    "$1$",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cauchy",
+   "type": "vf",
+   "q": "$\\sqrt[n]{u_n}\\to\\frac13$ implique que $\\sum u_n$ converge.",
+   "bonne": true
+  },
+  {
+   "notion": "cauchy",
+   "type": "qcm",
+   "q": "$u_n=\\left(\\frac n{2n+1}\\right)^n$ : $\\sqrt[n]{u_n}\\to$",
+   "choix": [
+    "$\\frac12$",
+    "$0$",
+    "$1$",
+    "$2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "abs",
+   "type": "vf",
+   "q": "Une série absolument convergente converge.",
+   "bonne": true
+  },
+  {
+   "notion": "abs",
+   "type": "vf",
+   "q": "$\\sum\\frac{(-1)^n}{\\sqrt n}$ converge absolument.",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1 : limites et croissances comparées",
+   "notions": [
+    "croiss"
+   ],
+   "exos": [
+    {
+     "id": "c1",
+     "enonce": "Limite de $\\frac{n^2}{2^n}$ ?",
+     "ans": "0",
+     "sol": "Croissances comparées : $2^n\\gg n^2$, donc $\\frac{n^2}{2^n}\\to0$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{n^3}{3^n}$ ?",
+       "ans": "0",
+       "sol": "$3^n\\gg n^3$ : $\\frac{n^3}{3^n}\\to0$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c2",
+     "enonce": "Limite de $\\frac{\\ln n}{\\sqrt n}$ ?",
+     "ans": "0",
+     "sol": "$\\frac{(\\ln n)^a}{n^b}\\to0$ avec $a=1$, $b=\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{(\\ln n)^2}n$ ?",
+       "ans": "0",
+       "sol": "$\\frac{(\\ln n)^2}{n}\\to0$ (croissances comparées)."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c3",
+     "enonce": "Limite de $\\frac{3^n}{n!}$ ?",
+     "ans": "0",
+     "sol": "$\\frac{q^n}{n!}\\to0$ pour tout $q$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{5^n}{n!}$ ?",
+       "ans": "0",
+       "sol": "$\\frac{q^n}{n!}\\to0$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c4",
+     "enonce": "Limite de $\\frac{e^n}{n^5}$ ?",
+     "ans": "oo",
+     "sol": "L'exponentielle domine : $\\frac{e^n}{n^5}\\to+\\infty$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\frac{e^n}{n^3}$ ?",
+       "ans": "oo",
+       "sol": "$\\frac{e^n}{n^3}\\to+\\infty$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c5",
+     "enonce": "Limite de $\\left(1+\\frac1n\\right)^n$ ?",
+     "ans": "E",
+     "sol": "$\\left(1+\\frac an\\right)^n\\to e^a$ avec $a=1$ : la limite est $e$.",
+     "variants": [
+      {
+       "enonce": "Limite de $\\left(1+\\frac2n\\right)^n$ ?",
+       "ans": "exp(2)",
+       "sol": "$\\left(1+\\frac an\\right)^n\\to e^a$ avec $a=2$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c6",
+     "enonce": "Limite de $n\\sin\\frac1n$ ?",
+     "ans": "1",
+     "sol": "$\\sin\\frac1n\\sim\\frac1n$, donc $n\\sin\\frac1n\\to1$.",
+     "variants": [
+      {
+       "enonce": "Limite de $n\\left(e^{1/n}-1\\right)$ ?",
+       "ans": "1",
+       "sol": "$e^{1/n}-1\\sim\\frac1n$."
+      }
+     ],
+     "formules": "$\\frac{(\\ln n)^a}{n^b}\\to0$ · $\\frac{n^b}{q^n}\\to0$ · $\\frac{q^n}{n!}\\to0$ · $\\left(1+\\frac an\\right)^n\\to e^a$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S2 : DL usuels en 0",
+   "notions": [
+    "dl-usuels"
+   ],
+   "exos": [
+    {
+     "id": "d1",
+     "enonce": "Coefficient de $x^4$ dans le DL de $e^x$ en 0 ?",
+     "ans": "Rational(1,24)",
+     "sol": "$\\frac1{4!}=\\frac1{24}$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^5$ dans le DL de $e^x$ en 0 ?",
+       "ans": "Rational(1,120)",
+       "sol": "$\\frac1{5!}=\\frac1{120}$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d2",
+     "enonce": "Coefficient de $x^5$ dans le DL de $\\sin x$ en 0 ?",
+     "ans": "Rational(1,120)",
+     "sol": "$\\sin x=x-\\frac{x^3}6+\\frac{x^5}{120}$ : le coefficient est $\\frac1{5!}=\\frac1{120}$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^3$ dans le DL de $\\sin x$ en 0 ?",
+       "ans": "Rational(-1,6)",
+       "sol": "$-\\frac1{3!}=-\\frac16$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d3",
+     "enonce": "Coefficient de $x^2$ dans le DL de $\\cos x$ en 0 ?",
+     "ans": "Rational(-1,2)",
+     "sol": "$\\cos x=1-\\frac{x^2}2+\\dots$ : $-\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^4$ dans le DL de $\\cos x$ en 0 ?",
+       "ans": "Rational(1,24)",
+       "sol": "$\\frac1{4!}=\\frac1{24}$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d4",
+     "enonce": "Coefficient de $x^4$ dans le DL de $\\ln(1+x)$ en 0 ?",
+     "ans": "Rational(-1,4)",
+     "sol": "$\\ln(1+x)=\\sum(-1)^{k+1}\\frac{x^k}k$ : pour $k=4$, $-\\frac14$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^3$ dans le DL de $\\ln(1+x)$ en 0 ?",
+       "ans": "Rational(1,3)",
+       "sol": "$\\frac{(-1)^{3+1}}3=\\frac13$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d5",
+     "enonce": "Coefficient de $x^2$ dans le DL de $\\sqrt{1+x}$ en 0 ?",
+     "ans": "Rational(-1,8)",
+     "sol": "$\\frac{\\alpha(\\alpha-1)}2$ avec $\\alpha=\\frac12$ : $\\frac{\\frac12\\times(-\\frac12)}2=-\\frac18$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^3$ dans le DL de $\\sqrt{1+x}$ en 0 ?",
+       "ans": "Rational(1,16)",
+       "sol": "$\\frac{\\alpha(\\alpha-1)(\\alpha-2)}6$ avec $\\alpha=\\frac12$ : $\\frac{\\frac12\\cdot(-\\frac12)\\cdot(-\\frac32)}6=\\frac1{16}$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d6",
+     "enonce": "Coefficient de $x^7$ dans le DL de $\\frac1{1-x}$ en 0 ?",
+     "ans": "1",
+     "sol": "$\\frac1{1-x}=\\sum x^k$ : tous les coefficients valent 1.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^5$ dans le DL de $\\frac1{1+x}$ en 0 ?",
+       "ans": "-1",
+       "sol": "$\\frac1{1+x}=\\sum(-1)^kx^k$ : $(-1)^5=-1$."
+      }
+     ],
+     "formules": "$e^x=\\sum\\frac{x^k}{k!}$ · $\\sin x$ · $\\cos x$ · $\\ln(1+x)$ · $\\frac1{1-x}=\\sum x^k$ · $(1+x)^\\alpha$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Équivalents usuels",
+   "notions": [
+    "equiv"
+   ],
+   "exos": [
+    {
+     "id": "e1",
+     "enonce": "Limite en $0$ de $\\frac{\\sin 3x}{5x}$ ?",
+     "ans": "Rational(3,5)",
+     "sol": "$\\sin3x\\sim3x$, donc $\\frac{3x}{5x}=\\frac35$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{\\sin4x}{2x}$ ?",
+       "ans": "2",
+       "sol": "$\\sin4x\\sim4x$ : $\\frac{4x}{2x}=2$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e2",
+     "enonce": "Limite en $0$ de $\\frac{e^{2x}-1}x$ ?",
+     "ans": "2",
+     "sol": "$e^{2x}-1\\sim2x$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{e^{3x}-1}x$ ?",
+       "ans": "3",
+       "sol": "$e^{3x}-1\\sim3x$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e3",
+     "enonce": "Limite en $0$ de $\\frac{\\ln(1+x^2)}{x^2}$ ?",
+     "ans": "1",
+     "sol": "$\\ln(1+u)\\sim u$ avec $u=x^2\\to0$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{\\ln(1+x^3)}{x^3}$ ?",
+       "ans": "1",
+       "sol": "$\\ln(1+u)\\sim u$ avec $u=x^3$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e4",
+     "enonce": "Limite en $0$ de $\\frac{1-\\cos x}{x^2}$ ?",
+     "ans": "Rational(1,2)",
+     "sol": "$1-\\cos x\\sim\\frac{x^2}2$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{1-\\cos2x}{x^2}$ ?",
+       "ans": "2",
+       "sol": "$1-\\cos2x\\sim\\frac{(2x)^2}2=2x^2$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e5",
+     "enonce": "Limite en $+\\infty$ de $\\frac{\\sqrt{n^2+n}}n$ ?",
+     "ans": "1",
+     "sol": "$\\sqrt{n^2+n}=n\\sqrt{1+\\frac1n}\\sim n$.",
+     "variants": [
+      {
+       "enonce": "Limite en $+\\infty$ de $\\frac{\\sqrt{n^2+3n}}n$ ?",
+       "ans": "1",
+       "sol": "$\\sqrt{n^2+3n}\\sim n$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e6",
+     "enonce": "Limite en $+\\infty$ de $\\frac{\\ln(n+1)}{\\ln n}$ ?",
+     "ans": "1",
+     "sol": "$\\ln(n+1)=\\ln n+\\ln\\left(1+\\frac1n\\right)\\sim\\ln n$.",
+     "variants": [
+      {
+       "enonce": "Limite en $+\\infty$ de $\\frac{\\ln(2n)}{\\ln n}$ ?",
+       "ans": "1",
+       "sol": "$\\ln(2n)=\\ln2+\\ln n\\sim\\ln n$."
+      }
+     ],
+     "formules": "$\\sin x\\sim x$ · $e^x-1\\sim x$ · $\\ln(1+x)\\sim x$ · $1-\\cos x\\sim\\frac{x^2}2$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Calcul d'un DL : produit et composée",
+   "notions": [
+    "dl-calc"
+   ],
+   "exos": [
+    {
+     "id": "p1",
+     "enonce": "Coefficient de $x^3$ dans le DL de $e^x\\cos x$ en 0 ?",
+     "ans": "Rational(-1,3)",
+     "sol": "$e^x=1+x+\\frac{x^2}2+\\frac{x^3}6$, $\\cos x=1-\\frac{x^2}2$ : $x^3$ : $\\frac16+1\\times\\left(-\\frac12\\right)=-\\frac13$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^3$ dans le DL de $\\sin x\\cos x$ en 0 ?",
+       "ans": "Rational(-2,3)",
+       "sol": "$\\sin x\\cos x=\\frac{\\sin2x}2=x-\\frac{(2x)^3}{12}=x-\\frac23x^3$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p2",
+     "enonce": "Coefficient de $x^3$ dans le DL de $e^x\\sin x$ en 0 ?",
+     "ans": "Rational(1,3)",
+     "sol": "$\\sin x=x-\\frac{x^3}6$ : $x^3$ : $\\frac12\\times1+1\\times\\left(-\\frac16\\right)=\\frac13$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans le DL de $e^x\\sin x$ en 0 ?",
+       "ans": "1",
+       "sol": "$x\\times x=x^2$ : coefficient $1$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p3",
+     "enonce": "Coefficient de $x^2$ dans le DL de $\\ln(1+\\sin x)$ en 0 ?",
+     "ans": "Rational(-1,2)",
+     "sol": "$u=\\sin x=x+o(x^2)$ ; $\\ln(1+u)=u-\\frac{u^2}2$ : $x^2$ : $-\\frac12$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans le DL de $\\ln(1+\\tan x)$ en 0 ?",
+       "ans": "Rational(-1,2)",
+       "sol": "$\\tan x=x+o(x^2)$ : $\\ln(1+u)=u-\\frac{u^2}2$ donne $-\\frac12$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p4",
+     "enonce": "Coefficient de $x^3$ dans le DL de $\\frac1{1+x+x^2}$ en 0 ?",
+     "ans": "1",
+     "sol": "$\\frac1{1+x+x^2}=\\frac{1-x}{1-x^3}=(1-x)(1+x^3+\\dots)=1-x+x^3-\\dots$ : le coefficient de $x^3$ est $1$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^3$ dans le DL de $\\frac1{1-x+x^2}$ en 0 ?",
+       "ans": "-1",
+       "sol": "$\\frac1{1-x+x^2}=\\frac{1+x}{1+x^3}=(1+x)(1-x^3+\\dots)$ : $x^3$ : $-1$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p5",
+     "enonce": "Coefficient de $x^3$ dans le DL de $\\frac{e^x}{1-x}$ en 0 ?",
+     "ans": "Rational(8,3)",
+     "sol": "Coefficient de $\\frac1{1-x}\\times e^x$ : somme des $\\frac1{k!}$ pour $k\\le3$ : $1+1+\\frac12+\\frac16=\\frac83$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans le DL de $\\frac{e^x}{1-x}$ en 0 ?",
+       "ans": "Rational(5,2)",
+       "sol": "$1+1+\\frac12=\\frac52$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p6",
+     "enonce": "Coefficient de $x^2$ dans le DL de $\\cos^2x$ en 0 ?",
+     "ans": "-1",
+     "sol": "$\\cos^2x=\\left(1-\\frac{x^2}2\\right)^2=1-x^2+\\dots$ : $-1$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans le DL de $\\sin^2x$ en 0 ?",
+       "ans": "1",
+       "sol": "$\\sin^2x=x^2+o(x^2)$."
+      }
+     ],
+     "formules": "coefficient d'un produit $\\sum_{i+j=k}a_ib_j$ · DL usuels · composée $f(u(x))$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Limites par développements limités",
+   "notions": [
+    "dl-lim",
+    "dl-usuels"
+   ],
+   "exos": [
+    {
+     "id": "l1",
+     "enonce": "Limite en $0$ de $\\frac{e^x-1-x}{x^2}$ ?",
+     "ans": "Rational(1,2)",
+     "sol": "$e^x-1-x=\\frac{x^2}2+o(x^2)$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{e^x-1-x-\\frac{x^2}2}{x^3}$ ?",
+       "ans": "Rational(1,6)",
+       "sol": "Le terme suivant du DL est $\\frac{x^3}6$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l2",
+     "enonce": "Limite en $0$ de $\\frac{x-\\sin x}{x^3}$ ?",
+     "ans": "Rational(1,6)",
+     "sol": "$x-\\sin x=\\frac{x^3}6+o(x^3)$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{\\sin x-x+\\frac{x^3}6}{x^5}$ ?",
+       "ans": "Rational(1,120)",
+       "sol": "Le terme suivant est $\\frac{x^5}{120}$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l3",
+     "enonce": "Limite en $0$ de $\\frac{\\cos x-1+\\frac{x^2}2}{x^4}$ ?",
+     "ans": "Rational(1,24)",
+     "sol": "$\\cos x=1-\\frac{x^2}2+\\frac{x^4}{24}+o(x^4)$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{e^{2x}-1-2x}{x^2}$ ?",
+       "ans": "2",
+       "sol": "$e^{2x}=1+2x+\\frac{4x^2}2+\\dots$ : $2x^2$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l4",
+     "enonce": "Limite en $0$ de $\\frac{e^x-\\cos x-x}{x^2}$ ?",
+     "ans": "1",
+     "sol": "$e^x-\\cos x-x=\\left(\\frac{x^2}2\\right)-\\left(-\\frac{x^2}2\\right)+o(x^2)=x^2+o(x^2)$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{x\\cos x-\\sin x}{x^3}$ ?",
+       "ans": "Rational(-1,3)",
+       "sol": "$x\\cos x-\\sin x=\\left(x-\\frac{x^3}2\\right)-\\left(x-\\frac{x^3}6\\right)=-\\frac{x^3}3$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l5",
+     "enonce": "Limite en $0$ de $\\frac1{x^2}-\\frac1{\\sin^2x}$ ?",
+     "ans": "Rational(-1,3)",
+     "sol": "$\\sin^2x=x^2-\\frac{x^4}3+o(x^4)$, donc $\\frac1{\\sin^2x}=\\frac1{x^2}\\left(1+\\frac{x^2}3+o(x^2)\\right)=\\frac1{x^2}+\\frac13+o(1)$ : la limite vaut $-\\frac13$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac1x-\\frac1{\\ln(1+x)}$ ?",
+       "ans": "Rational(-1,2)",
+       "sol": "$\\frac1{\\ln(1+x)}=\\frac1x\\left(1+\\frac x2-\\dots\\right)=\\frac1x+\\frac12+o(1)$ : limite $-\\frac12$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l6",
+     "enonce": "Limite en $0$ de $\\frac{\\ln(1+x)-x}{x^2}$ ?",
+     "ans": "Rational(-1,2)",
+     "sol": "$\\ln(1+x)-x=-\\frac{x^2}2+o(x^2)$.",
+     "variants": [
+      {
+       "enonce": "Limite en $0$ de $\\frac{\\ln(1+x)-x+\\frac{x^2}2}{x^3}$ ?",
+       "ans": "Rational(1,3)",
+       "sol": "Le terme suivant du DL est $\\frac{x^3}3$."
+      }
+     ],
+     "formules": "DL usuels · Taylor-Young : coefficient de $x^k$ $=\\frac{f^{(k)}(0)}{k!}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Séries géométriques et télescopiques",
+   "notions": [
+    "geom-tele"
+   ],
+   "exos": [
+    {
+     "id": "s1",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(\\frac12\\right)^k$.",
+     "ans": "2",
+     "sol": "$\\frac1{1-\\frac12}=2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(\\frac13\\right)^k$.",
+       "ans": "Rational(3,2)",
+       "sol": "$\\frac1{1-\\frac13}=\\frac32$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s2",
+     "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac1{k(k+1)}$.",
+     "ans": "1",
+     "sol": "$\\frac1{k(k+1)}=\\frac1k-\\frac1{k+1}$ : $S_N=1-\\frac1{N+1}\\to1$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=2}^{+\\infty}\\frac1{k(k+1)}$.",
+       "ans": "Rational(1,2)",
+       "sol": "$S_N=\\frac12-\\frac1{N+1}\\to\\frac12$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s3",
+     "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\left(\\frac23\\right)^k$.",
+     "ans": "2",
+     "sol": "$\\frac{q}{1-q}=\\frac{2/3}{1/3}=2$ (la somme commence à $k=1$).",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\left(\\frac34\\right)^k$.",
+       "ans": "3",
+       "sol": "$\\frac{3/4}{1/4}=3$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s4",
+     "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac1{k(k+2)}$.",
+     "ans": "Rational(3,4)",
+     "sol": "$\\frac1{k(k+2)}=\\frac12\\left(\\frac1k-\\frac1{k+2}\\right)$ : $S_N=\\frac12\\left(1+\\frac12-\\frac1{N+1}-\\frac1{N+2}\\right)\\to\\frac34$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac1{k(k+3)}$.",
+       "ans": "Rational(11,18)",
+       "sol": "$\\frac13\\left(1+\\frac12+\\frac13\\right)=\\frac13\\times\\frac{11}6=\\frac{11}{18}$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s5",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(-\\frac13\\right)^k$.",
+     "ans": "Rational(3,4)",
+     "sol": "$\\frac1{1-q}$ avec $q=-\\frac13$ : $\\frac1{4/3}=\\frac34$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(-\\frac12\\right)^k$.",
+       "ans": "Rational(2,3)",
+       "sol": "$\\frac1{1+\\frac12}=\\frac23$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s6",
+     "enonce": "Calculer $\\sum_{k=2}^{+\\infty}\\frac1{k^2-1}$.",
+     "ans": "Rational(3,4)",
+     "sol": "$\\frac1{k^2-1}=\\frac12\\left(\\frac1{k-1}-\\frac1{k+1}\\right)$ : $S_N=\\frac12\\left(1+\\frac12-\\frac1N-\\frac1{N+1}\\right)\\to\\frac34$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac1{4k^2-1}$.",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac1{4k^2-1}=\\frac12\\left(\\frac1{2k-1}-\\frac1{2k+1}\\right)$ : somme $\\frac12$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · décomposition en éléments simples · somme partielle $S_N$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Condition nécessaire de convergence",
+   "notions": [
+    "div"
+   ],
+   "exos": [
+    {
+     "id": "g1",
+     "enonce": "Étudier la nature de $\\sum\\frac n{n+1}$.",
+     "sol": "$u_n=\\frac n{n+1}\\to1\\ne0$ : la série diverge grossièrement.",
+     "duree": 2,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    },
+    {
+     "id": "g2",
+     "enonce": "Étudier la nature de $\\sum\\left(1+\\frac1n\\right)^n$.",
+     "sol": "$u_n\\to e\\ne0$ : divergence grossière.",
+     "duree": 2,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    },
+    {
+     "id": "g3",
+     "enonce": "Étudier la nature de $\\sum\\cos\\frac1n$.",
+     "sol": "$\\cos\\frac1n\\to1\\ne0$ : divergence grossière.",
+     "duree": 2,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    },
+    {
+     "id": "g4",
+     "enonce": "Étudier la nature de $\\sum(-1)^n$.",
+     "sol": "$(-1)^n$ n'a pas de limite, donc ne tend pas vers $0$ : divergence grossière.",
+     "duree": 2,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    },
+    {
+     "id": "g5",
+     "enonce": "$\\frac1n\\to0$ : peut-on en déduire que $\\sum\\frac1n$ converge ? Montrer que $\\sum\\frac1n$ diverge.",
+     "sol": "Non, la réciproque de la condition nécessaire est fausse. Comme $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$, $\\sum_{k=1}^n\\frac1k\\ge\\sum_{k=1}^n\\ln\\frac{k+1}k=\\ln(n+1)\\to+\\infty$ : la série harmonique diverge.",
+     "duree": 4,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    },
+    {
+     "id": "g6",
+     "enonce": "Si $u_n\\to0$, que peut-on dire de la nature de $\\sum u_n$ ?",
+     "sol": "Rien : $\\sum\\frac1n$ diverge et $\\sum\\frac1{n^2}$ converge, toutes deux avec $u_n\\to0$. Il faut un autre critère (comparaison, d'Alembert...).",
+     "duree": 2,
+     "formules": "$\\sum u_n$ converge $\\Rightarrow u_n\\to0$ · $\\ln\\left(1+\\frac1k\\right)\\le\\frac1k$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Séries de Riemann",
+   "notions": [
+    "riemann"
+   ],
+   "exos": [
+    {
+     "id": "r1",
+     "enonce": "Nature de $\\sum\\frac1{n^2}$ ?",
+     "sol": "Série de Riemann avec $\\alpha=2>1$ : elle converge.",
+     "duree": 1,
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "type": "open"
+    },
+    {
+     "id": "r2",
+     "enonce": "Nature de $\\sum\\frac1{\\sqrt n}$ ?",
+     "sol": "Riemann avec $\\alpha=\\frac12\\le1$ : elle diverge.",
+     "duree": 1,
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "type": "open"
+    },
+    {
+     "id": "r3",
+     "enonce": "Nature de $\\sum\\frac1{n^{3/2}}$ ?",
+     "sol": "Riemann avec $\\alpha=\\frac32>1$ : elle converge.",
+     "duree": 1,
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "type": "open"
+    },
+    {
+     "id": "r4",
+     "enonce": "Pour quelles valeurs du réel $\\alpha$ la série $\\sum\\frac1{n^\\alpha}$ converge-t-elle ?",
+     "sol": "Exactement pour $\\alpha>1$.",
+     "duree": 1,
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "type": "open"
+    },
+    {
+     "id": "r5",
+     "enonce": "$u_n=\\frac{\\sqrt n}{n^2+1}\\sim\\frac1{n^p}$. Quelle est la valeur de $p$ ? (la série converge-t-elle ?)",
+     "ans": "Rational(3,2)",
+     "sol": "$u_n\\sim\\frac{n^{1/2}}{n^2}=\\frac1{n^{3/2}}$ : $p=\\frac32>1$, la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{n^2+1}{n^4+n}\\sim\\frac1{n^p}$. Quelle est la valeur de $p$ ?",
+       "ans": "2",
+       "sol": "$u_n\\sim\\frac{n^2}{n^4}=\\frac1{n^2}$ : $p=2$."
+      }
+     ],
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r6",
+     "enonce": "$u_n=\\frac{n+1}{n^3+n}\\sim\\frac1{n^p}$. Quelle est la valeur de $p$ ? (la série converge-t-elle ?)",
+     "ans": "2",
+     "sol": "$u_n\\sim\\frac n{n^3}=\\frac1{n^2}$ : $p=2>1$, la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{\\sqrt n}{n+1}\\sim\\frac1{n^p}$. Quelle est la valeur de $p$ ?",
+       "ans": "Rational(1,2)",
+       "sol": "$u_n\\sim\\frac{n^{1/2}}n=\\frac1{n^{1/2}}$ : $p=\\frac12\\le1$, la série diverge."
+      }
+     ],
+     "formules": "$\\sum\\frac1{n^\\alpha}$ converge $\\iff\\alpha>1$ · $u_n\\sim\\frac c{n^p}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Séries à termes positifs : comparaison",
+   "notions": [
+    "comp",
+    "riemann",
+    "equiv"
+   ],
+   "exos": [
+    {
+     "id": "k1",
+     "enonce": "Nature de $\\sum\\frac1{n^2+n}$ ?",
+     "sol": "$0\\le\\frac1{n^2+n}\\le\\frac1{n^2}$ et $\\sum\\frac1{n^2}$ converge : la série converge.",
+     "duree": 2,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    },
+    {
+     "id": "k2",
+     "enonce": "Nature de $\\sum\\frac1{\\sqrt n+1}$ ?",
+     "sol": "$\\frac1{\\sqrt n+1}\\sim\\frac1{\\sqrt n}$ (termes positifs), et $\\sum\\frac1{\\sqrt n}$ diverge ($\\alpha=\\frac12$) : la série diverge.",
+     "duree": 2,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    },
+    {
+     "id": "k3",
+     "enonce": "Nature de $\\sum\\sin\\frac1{n^2}$ ?",
+     "sol": "Pour $n\\ge1$, $\\sin\\frac1{n^2}>0$ et $\\sin\\frac1{n^2}\\sim\\frac1{n^2}$ : même nature que $\\sum\\frac1{n^2}$, convergente.",
+     "duree": 2,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    },
+    {
+     "id": "k4",
+     "enonce": "Nature de $\\sum\\ln\\left(1+\\frac1n\\right)$ ?",
+     "sol": "$\\ln\\left(1+\\frac1n\\right)\\sim\\frac1n>0$ : même nature que la série harmonique, elle diverge.",
+     "duree": 2,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    },
+    {
+     "id": "k5",
+     "enonce": "Nature de $\\sum\\left(e^{1/n}-1\\right)$ ?",
+     "sol": "$e^{1/n}-1\\sim\\frac1n>0$ : elle diverge.",
+     "duree": 2,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    },
+    {
+     "id": "k6",
+     "enonce": "Nature de $\\sum\\frac{\\ln n}{n^2}$ ?",
+     "sol": "Par croissances comparées, $\\frac{\\ln n}{n^2}=\\frac{\\ln n}{\\sqrt n}\\times\\frac1{n^{3/2}}=o\\left(\\frac1{n^{3/2}}\\right)$ et $\\sum\\frac1{n^{3/2}}$ converge : la série converge.",
+     "duree": 3,
+     "formules": "$0\\le u_n\\le v_n$ · $u_n\\sim v_n$ · $u_n=o(v_n)$ · Riemann · équivalents usuels",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Règle de d'Alembert",
+   "notions": [
+    "dalembert"
+   ],
+   "exos": [
+    {
+     "id": "a1",
+     "enonce": "$u_n=\\frac n{2^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$ puis conclure.",
+     "ans": "Rational(1,2)",
+     "sol": "$\\frac{u_{n+1}}{u_n}=\\frac{n+1}{2n}\\to\\frac12<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac n{3^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$.",
+       "ans": "Rational(1,3)",
+       "sol": "$\\frac{n+1}{3n}\\to\\frac13<1$ : converge."
+      }
+     ],
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a2",
+     "enonce": "$u_n=\\frac{3^n}{n!}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$ puis conclure.",
+     "ans": "0",
+     "sol": "$\\frac{u_{n+1}}{u_n}=\\frac3{n+1}\\to0<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{5^n}{n!}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$.",
+       "ans": "0",
+       "sol": "$\\frac5{n+1}\\to0$ : converge."
+      }
+     ],
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a3",
+     "enonce": "$u_n=\\frac{n^2}{e^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$ puis conclure.",
+     "ans": "exp(-1)",
+     "sol": "$\\frac{u_{n+1}}{u_n}=\\left(\\frac{n+1}n\\right)^2e^{-1}\\to\\frac1e<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{n^3}{e^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$.",
+       "ans": "exp(-1)",
+       "sol": "$\\left(\\frac{n+1}n\\right)^3e^{-1}\\to\\frac1e$ : converge."
+      }
+     ],
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a4",
+     "enonce": "$u_n=\\frac{n!}{n^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$ puis conclure.",
+     "ans": "exp(-1)",
+     "sol": "$\\frac{u_{n+1}}{u_n}=\\frac{(n+1)!\\,n^n}{(n+1)^{n+1}n!}=\\left(\\frac n{n+1}\\right)^n=\\left(1+\\frac1n\\right)^{-n}\\to\\frac1e<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{(2n)!}{(n!)^2\\,5^n}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$.",
+       "ans": "Rational(4,5)",
+       "sol": "$\\frac{(2n+1)(2n+2)}{(n+1)^2\\times5}\\to\\frac45<1$ : converge."
+      }
+     ],
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a5",
+     "enonce": "$u_n=\\frac{2^n}{n^2}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$ puis conclure.",
+     "ans": "2",
+     "sol": "$\\frac{u_{n+1}}{u_n}=2\\left(\\frac n{n+1}\\right)^2\\to2>1$ : la série diverge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{3^n}{n^3}$. Calculer $\\lim\\frac{u_{n+1}}{u_n}$.",
+       "ans": "3",
+       "sol": "$3\\left(\\frac n{n+1}\\right)^3\\to3>1$ : diverge."
+      }
+     ],
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a6",
+     "enonce": "Que dit la règle de d'Alembert pour $\\sum\\frac1n$ et $\\sum\\frac1{n^2}$ ? Que conclure ?",
+     "sol": "Dans les deux cas $\\frac{u_{n+1}}{u_n}\\to1$ : la règle ne permet pas de conclure, alors que la première diverge et la seconde converge. Il faut comparer avec Riemann.",
+     "duree": 3,
+     "formules": "d'Alembert : $\\frac{u_{n+1}}{u_n}\\to\\ell$ · $\\left(1+\\frac1n\\right)^n\\to e$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Règle de Cauchy",
+   "notions": [
+    "cauchy"
+   ],
+   "exos": [
+    {
+     "id": "h1",
+     "enonce": "$u_n=\\frac{n^3}{3^n}$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "Rational(1,3)",
+     "sol": "$\\sqrt[n]{u_n}=\\frac{n^{3/n}}3=\\frac{e^{3\\ln n/n}}3\\to\\frac13<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{n^2}{5^n}$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "Rational(1,5)",
+       "sol": "$\\frac{n^{2/n}}5\\to\\frac15<1$ : converge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h2",
+     "enonce": "$u_n=\\left(\\frac n{2n+1}\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "Rational(1,2)",
+     "sol": "$\\sqrt[n]{u_n}=\\frac n{2n+1}\\to\\frac12<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\left(\\frac{n}{3n+1}\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "Rational(1,3)",
+       "sol": "$\\frac n{3n+1}\\to\\frac13<1$ : converge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h3",
+     "enonce": "$u_n=\\left(1+\\frac1n\\right)^{-n^2}$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "exp(-1)",
+     "sol": "$\\sqrt[n]{u_n}=\\left(1+\\frac1n\\right)^{-n}\\to\\frac1e<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\left(1-\\frac1n\\right)^{n^2}$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "exp(-1)",
+       "sol": "$\\left(1-\\frac1n\\right)^n\\to e^{-1}<1$ : converge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h4",
+     "enonce": "$u_n=\\left(\\frac{2n+1}{n+3}\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "2",
+     "sol": "$\\sqrt[n]{u_n}=\\frac{2n+1}{n+3}\\to2>1$ : la série diverge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\left(\\frac{3n+2}{n+5}\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "3",
+       "sol": "$\\to3>1$ : diverge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h5",
+     "enonce": "$u_n=\\left(\\frac{\\ln n}n\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "0",
+     "sol": "$\\sqrt[n]{u_n}=\\frac{\\ln n}n\\to0<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\left(\\frac{\\ln n}{\\sqrt n}\\right)^n$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "0",
+       "sol": "$\\frac{\\ln n}{\\sqrt n}\\to0<1$ : converge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h6",
+     "enonce": "$u_n=\\frac{n^2}{2^n}$. Calculer $\\lim\\sqrt[n]{u_n}$ puis conclure.",
+     "ans": "Rational(1,2)",
+     "sol": "$\\sqrt[n]{u_n}=\\frac{n^{2/n}}2\\to\\frac12<1$ : la série converge.",
+     "variants": [
+      {
+       "enonce": "$u_n=\\frac{n^5}{4^n}$. Calculer $\\lim\\sqrt[n]{u_n}$.",
+       "ans": "Rational(1,4)",
+       "sol": "$\\frac{n^{5/n}}4\\to\\frac14<1$ : converge."
+      }
+     ],
+     "formules": "Cauchy : $\\sqrt[n]{u_n}\\to\\ell$ · $\\sqrt[n]{u_n}=e^{\\frac1n\\ln u_n}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Convergence absolue et séries alternées",
+   "notions": [
+    "abs"
+   ],
+   "exos": [
+    {
+     "id": "b1",
+     "enonce": "Nature de $\\sum\\frac{\\sin n}{n^2}$ ?",
+     "sol": "$\\left|\\frac{\\sin n}{n^2}\\right|\\le\\frac1{n^2}$ et $\\sum\\frac1{n^2}$ converge : la série converge absolument, donc converge.",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    },
+    {
+     "id": "b2",
+     "enonce": "Nature de $\\sum\\frac{(-1)^n}{\\sqrt n}$ ?",
+     "sol": "Série alternée, $\\frac1{\\sqrt n}$ décroît vers $0$ : elle converge (critère des séries alternées). Elle ne converge pas absolument car $\\sum\\frac1{\\sqrt n}$ diverge.",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    },
+    {
+     "id": "b3",
+     "enonce": "Nature de $\\sum\\frac{(-1)^nn}{n+1}$ ?",
+     "sol": "$|u_n|=\\frac n{n+1}\\to1$ : $u_n\\not\\to0$, divergence grossière (le critère des séries alternées ne s'applique pas).",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    },
+    {
+     "id": "b4",
+     "enonce": "Nature de $\\sum\\frac{(-1)^n}{\\ln n}$ ($n\\ge2$) ?",
+     "sol": "$\\frac1{\\ln n}$ décroît vers $0$ : série alternée convergente. Pas absolument convergente : $\\frac1{\\ln n}\\ge\\frac1n$ et $\\sum\\frac1n$ diverge.",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    },
+    {
+     "id": "b5",
+     "enonce": "Nature de $\\sum\\frac{\\cos n}{n^2+1}$ ?",
+     "sol": "$\\left|\\frac{\\cos n}{n^2+1}\\right|\\le\\frac1{n^2}$ : convergence absolue, donc convergence.",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    },
+    {
+     "id": "b6",
+     "enonce": "$\\sum|u_n|$ diverge. Peut-on dire que $\\sum u_n$ diverge ?",
+     "sol": "Non : $u_n=\\frac{(-1)^n}n$ converge (alternée) alors que $\\sum|u_n|=\\sum\\frac1n$ diverge.",
+     "duree": 3,
+     "formules": "$\\sum|u_n|$ converge $\\Rightarrow\\sum u_n$ converge · critère des séries alternées",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Niveau examen : B5/ASN octobre 2024",
+   "notions": [
+    "abs",
+    "dalembert",
+    "cauchy",
+    "comp",
+    "riemann"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mx1",
+     "src": "Examen B5/ASN octobre 2024, ex. 1 (9 points)",
+     "enonce": "Déterminer la nature des séries de terme général (justifier proprement) :\n1. $u_n=\\frac{\\sin n}{n^2}$. 2. $u_n=\\frac{n^3}{3^n}$. 3. $u_n=\\frac{(-1)^nn}{e^n}$.",
+     "sol": "**1.** Pour $n\\ge1$, $\\left|\\frac{\\sin n}{n^2}\\right|\\le\\frac1{n^2}$ et $\\sum\\frac1{n^2}$ converge (Riemann, $\\alpha=2$) : $\\sum u_n$ converge absolument, donc converge.\n\n**2.** Règle de Cauchy : $\\sqrt[n]{u_n}=\\frac{n^{3/n}}3$ et $n^{3/n}=\\exp\\left(\\frac{3\\ln n}n\\right)\\to e^0=1$ car $\\frac{\\ln n}n\\to0$. Donc $\\sqrt[n]{u_n}\\to\\frac13<1$ : la série converge.\n\n**3.** On applique d'Alembert à $|u_n|=\\frac n{e^n}>0$ : $\\frac{|u_{n+1}|}{|u_n|}=\\frac{n+1}n\\times\\frac1e\\to\\frac1e<1$. Donc $\\sum|u_n|$ converge : $\\sum u_n$ converge absolument, donc converge.",
+     "formules": "$\\left|\\frac{\\sin n}{n^2}\\right|\\le\\frac1{n^2}$ · Riemann $\\alpha=2$ · convergence absolue · Cauchy : $\\sqrt[n]{u_n}\\to\\ell<1$ · $n^{3/n}=e^{3\\ln n/n}\\to1$ · d'Alembert sur $|u_n|$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "mx2",
+     "src": "Examen B5/ASN octobre 2024, ex. 2 (6 points)",
+     "enonce": "Soit $\\alpha\\in\\mathbb R$. On étudie la nature de $\\sum\\frac{\\ln n}{n^\\alpha}$.\n1. Montrer que pour tout $\\beta<\\alpha$, $\\frac{\\ln n}{n^\\alpha}=o\\left(\\frac1{n^\\beta}\\right)$.\n2. En déduire que la série converge si $\\alpha>1$. 3. Montrer qu'elle diverge si $\\alpha\\le1$.",
+     "sol": "**1.** $\\frac{\\ln n}{n^\\alpha}\\Big/\\frac1{n^\\beta}=\\frac{\\ln n}{n^{\\alpha-\\beta}}\\to0$ par croissances comparées, car $\\alpha-\\beta>0$.\n\n**2.** Si $\\alpha>1$, on prend $\\beta=\\frac{1+\\alpha}2\\in]1,\\alpha[$. Alors $\\frac{\\ln n}{n^\\alpha}=o\\left(\\frac1{n^\\beta}\\right)$ et $\\sum\\frac1{n^\\beta}$ converge ($\\beta>1$) : la série converge.\n\n**3.** Pour $n\\ge3$, $\\ln n\\ge1$, donc $\\frac{\\ln n}{n^\\alpha}\\ge\\frac1{n^\\alpha}\\ge\\frac1n$ (car $n^\\alpha\\le n$ pour $\\alpha\\le1$). Or $\\sum\\frac1n$ diverge : par comparaison de séries positives, $\\sum\\frac{\\ln n}{n^\\alpha}$ diverge. (Corrigé rédigé.)",
+     "formules": "$\\frac{\\ln n}{n^{\\alpha-\\beta}}\\to0$ (croissances comparées) · $u_n=o(v_n)$ · $u_n=o(v_n)$ et $\\sum v_n$ converge · Riemann $\\beta>1$ · $0\\le v_n\\le u_n$ et $\\sum v_n$ diverge · Riemann $\\alpha\\le1$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "x3",
+     "enonce": "Nature de $\\sum\\frac{n!}{n^n}\\times\\frac{(-1)^n}{2}$, puis de $\\sum\\left(\\frac{\\ln n}{n}\\right)^n\\sin n$ ?",
+     "sol": "1. $\\left|\\frac{(-1)^nn!}{2n^n}\\right|=\\frac{n!}{2n^n}$ ; d'Alembert : $\\frac{u_{n+1}}{u_n}=\\left(1+\\frac1n\\right)^{-n}\\to\\frac1e<1$ : convergence absolue, donc convergence. 2. $\\left|\\left(\\frac{\\ln n}n\\right)^n\\sin n\\right|\\le\\left(\\frac{\\ln n}n\\right)^n$ et Cauchy : $\\frac{\\ln n}n\\to0<1$ : convergence absolue, donc convergence.",
+     "src": "Examen B5/ASN octobre 2024, style ex. 1",
+     "duree": 10,
+     "formules": "Riemann · Cauchy · d'Alembert · convergence absolue · croissances comparées",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Plus dur que l'examen (+20 %)",
+   "notions": [
+    "comp",
+    "abs",
+    "dl-lim",
+    "equiv"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "z1",
+     "enonce": "Montrer que $\\sum\\left(\\frac1n-\\ln\\left(1+\\frac1n\\right)\\right)$ converge.",
+     "sol": "$\\ln(1+u)=u-\\frac{u^2}2+o(u^2)$ avec $u=\\frac1n$ : $\\frac1n-\\ln\\left(1+\\frac1n\\right)=\\frac1{2n^2}+o\\left(\\frac1{n^2}\\right)\\sim\\frac1{2n^2}>0$. Même nature que $\\sum\\frac1{n^2}$ : elle converge.",
+     "duree": 8,
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+o(u^2)$ · comparaison · séries alternées · croissances comparées",
+     "type": "open"
+    },
+    {
+     "id": "z2",
+     "enonce": "Étudier la nature de $\\sum\\frac{(-1)^n}{\\sqrt n+(-1)^n}$ ($n\\ge2$).",
+     "sol": "$u_n=\\frac{(-1)^n}{\\sqrt n}\\cdot\\frac1{1+\\frac{(-1)^n}{\\sqrt n}}=\\frac{(-1)^n}{\\sqrt n}\\left(1-\\frac{(-1)^n}{\\sqrt n}+O\\left(\\frac1n\\right)\\right)=\\frac{(-1)^n}{\\sqrt n}-\\frac1n+O\\left(\\frac1{n^{3/2}}\\right)$. $\\sum\\frac{(-1)^n}{\\sqrt n}$ converge, $\\sum O\\left(\\frac1{n^{3/2}}\\right)$ converge, mais $\\sum\\frac1n$ diverge : la série **diverge**, bien que $|u_n|$ n'ait pas de signe constant. (Le critère des séries alternées ne s'applique pas : $|u_n|$ n'est pas décroissante.)",
+     "duree": 12,
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+o(u^2)$ · comparaison · séries alternées · croissances comparées",
+     "type": "open"
+    },
+    {
+     "id": "z3",
+     "enonce": "Étudier la nature de $\\sum\\frac{(\\ln n)^2}{n^{3/2}}$.",
+     "sol": "Croissances comparées : $(\\ln n)^2=o(n^{1/4})$, donc $\\frac{(\\ln n)^2}{n^{3/2}}=o\\left(\\frac1{n^{5/4}}\\right)$ et $\\sum\\frac1{n^{5/4}}$ converge ($\\frac54>1)$ : la série converge.",
+     "duree": 8,
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+o(u^2)$ · comparaison · séries alternées · croissances comparées",
+     "type": "open"
+    },
+    {
+     "id": "z4",
+     "enonce": "Étudier la nature de $\\sum\\left(\\sqrt{n+1}-\\sqrt n\\right)$ et de $\\sum\\left(\\sqrt{n+1}-\\sqrt n\\right)^2$.",
+     "sol": "$\\sqrt{n+1}-\\sqrt n=\\frac1{\\sqrt{n+1}+\\sqrt n}\\sim\\frac1{2\\sqrt n}>0$ : $\\sum\\frac1{2\\sqrt n}$ diverge, donc la première série diverge (télescopique : $S_N=\\sqrt{N+1}-1\\to+\\infty$). La seconde : terme $\\sim\\frac1{4n}>0$ : elle diverge aussi.",
+     "duree": 8,
+     "formules": "$\\ln(1+u)=u-\\frac{u^2}2+o(u^2)$ · comparaison · séries alternées · croissances comparées",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

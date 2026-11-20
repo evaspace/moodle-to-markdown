@@ -1,0 +1,2429 @@
+{
+ "subject": {
+  "id": "algo-s3-thlr",
+  "ordre": 695,
+  "matiere": "algo",
+  "semestre": "S3",
+  "ecue": "THLR",
+  "titre": "Théorie des langages rationnels : mots, expressions rationnelles, automates",
+  "chapitres_moodle": [
+   "01_Supports",
+   "02_Devoirs - Homework"
+  ],
+  "td": "TD 1 à 5 de THLR (supports de cours, version 2026), devoirs Moodle 1 à 5",
+  "examens": [
+   "Mi-parcours THLR (QCM Moodle, 30 min)",
+   "Examen final THLR (60 min, 23 octobre 2026)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "ens",
+   "titre": "Rappel S1/S2 : ensembles, parties, produit cartésien",
+   "formule": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2=\\frac{n(n-1)}2$",
+   "exemple": "$|E|=5$ : $E$ a $2^5=32$ parties (c'est la borne de la déterminisation)",
+   "cours": "Un automate à $n$ états a $2^n$ ensembles d'états possibles. Un ensemble est une collection d'éléments distincts : $\\{0,0,1\\}$ n'est pas un ensemble. Rappel S1 : parcours « Ensembles » (`obm`)."
+  },
+  {
+   "id": "rec",
+   "titre": "Rappel S1/S2 : récurrence, relations d'équivalence, listes",
+   "formule": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · classes d'équivalence = partition · un mot est une liste de lettres · $k^n$ mots de longueur $n$ sur $k$ lettres",
+   "exemple": "Mots de longueur $\\le3$ sur $\\{a,b\\}$ : $1+2+4+8=15$",
+   "cours": "Récurrence : cas de base, puis hérédité. Une relation d'équivalence (réflexive, symétrique, transitive) découpe l'ensemble en classes disjointes : c'est ce que fera l'indistinguabilité des états. Principe des tiroirs : $n+1$ objets dans $n$ boîtes, une boîte en contient deux (base du lemme de l'étoile). Rappel : parcours `algo-s1-taa` (listes)."
+  },
+  {
+   "id": "mots",
+   "titre": "Alphabet, mots, longueur, concaténation, puissance",
+   "formule": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ = nombre de $a$ · $w^R$ miroir · $\\varepsilon$ neutre, $uv\\neq vu$",
+   "exemple": "$w=011101$ : $|w|=6$, $|w|_1=4$",
+   "cours": "Un alphabet $\\Sigma$ est un ensemble fini de lettres, un mot une suite finie de lettres, $\\Sigma^*$ l'ensemble de tous les mots. La concaténation est associative, non commutative, de neutre $\\varepsilon$. Un palindrome vérifie $w=w^R$."
+  },
+  {
+   "id": "pref",
+   "titre": "Préfixes, suffixes et facteurs",
+   "formule": "$w=xy$ : $x\\in\\mathrm{Pref}(w)$ · $w=yz$ : $z\\in\\mathrm{Suff}(w)$ · $w=xyz$ : $y\\in\\mathrm{Fact}(w)$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+   "exemple": "$\\mathrm{Pref}(SUP)=\\{\\varepsilon,S,SU,SUP\\}$",
+   "cours": "$\\varepsilon$ et $w$ sont toujours préfixe, suffixe et facteur de $w$. Les préfixes ont des longueurs toutes différentes : $|\\mathrm{Pref}(w)|=|w|+1$, de même pour les suffixes. Pour les facteurs il peut y avoir des doublons (dans $abab$, $ab$ apparaît deux fois), donc $|\\mathrm{Fact}(w)|\\le\\frac{|w|(|w|+1)}2+1$."
+  },
+  {
+   "id": "dist",
+   "titre": "Distance d'édition",
+   "formule": "$d_e(u,v)$ = nombre minimal d'insertions et suppressions de lettres · $d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$",
+   "exemple": "$d_e(dog,bugs)=5$",
+   "cours": "Séparation, symétrie, inégalité triangulaire : c'est une distance. On l'obtient par programmation dynamique : si les dernières lettres sont égales, $d(i,j)=d(i-1,j-1)$, sinon $1+\\min(d(i-1,j),d(i,j-1))$. PLSC : plus longue sous-suite commune."
+  },
+  {
+   "id": "lang",
+   "titre": "Opérations sur les langages",
+   "formule": "$L_1L_2=\\{uv\\mid u\\in L_1,v\\in L_2\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup_{n\\ge0}L^n$ · $\\varepsilon\\in L^*$ toujours · $\\varnothing^*=\\{\\varepsilon\\}$",
+   "exemple": "$\\{ab,ac\\}\\{cd,de\\}=\\{abcd,abde,accd,acde\\}$",
+   "cours": "Un langage est un ensemble de mots ($L\\subseteq\\Sigma^*$). $L^k\\neq\\{u^k\\mid u\\in L\\}$ : on concatène $k$ mots éventuellement différents. $L^+=LL^*$ ne contient $\\varepsilon$ que si $\\varepsilon\\in L$."
+  },
+  {
+   "id": "rx-sem",
+   "titre": "Expressions rationnelles : syntaxe et sémantique",
+   "formule": "$L(\\varnothing)=\\varnothing$ · $L(\\varepsilon)=\\{\\varepsilon\\}$ · $L(a)=\\{a\\}$ · $L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$",
+   "exemple": "$L((a+b)^*b)$ = mots terminant par $b$",
+   "cours": "Priorités : étoile, puis concaténation, puis $+$. Sucre : $e?=\\varepsilon+e$, $e^+=ee^*$, $[a\\text{-}c]=a+b+c$. Pas d'intersection ni de complément dans la syntaxe. Un langage est rationnel s'il est décrit par une expression."
+  },
+  {
+   "id": "rx-desc",
+   "titre": "Équivalences d'expressions rationnelles",
+   "formule": "$(ef)^*e\\equiv e(fe)^*$ · $e^{**}\\equiv e^*$ · $(e^*f^*)^*\\equiv(e+f)^*\\equiv(e^*+f)^*$ · $e\\varnothing\\equiv\\varnothing$ · $e\\varepsilon\\equiv e$ · $e(f+g)\\equiv ef+eg$",
+   "exemple": "$((abc)^*(acb)^*)^*\\equiv(abc+acb)^*$",
+   "cours": "Pour comparer deux expressions : chercher un mot dans l'une et pas l'autre (souvent $\\varepsilon$ ou un mot court) pour prouver qu'elles diffèrent ; sinon réécrire avec les identités. Les relations possibles : égalité, inclusion stricte dans un sens ou dans l'autre, incomparables."
+  },
+  {
+   "id": "rx-ecr",
+   "titre": "Écrire l'expression rationnelle d'un langage",
+   "formule": "mots de longueur paire : $((a+b)(a+b))^*$ · finissant par $ab$ : $(a+b)^*ab$ · sans facteur $aa$ : $(b+ab)^*(\\varepsilon+a)$",
+   "exemple": "exactement deux $a$ : $b^*ab^*ab^*$",
+   "cours": "Méthode : découper le langage en blocs concaténés ; une disjonction de cas devient $+$, une répétition devient une étoile. Vérifier avec des mots courts, dont $\\varepsilon$ et un mot juste hors du langage."
+  },
+  {
+   "id": "afd",
+   "titre": "Automates finis : mot accepté, DFA et NFA",
+   "formule": "$A=(Q,\\Sigma,\\delta,I,F)$ · $w$ accepté s'il existe un chemin de $I$ vers $F$ étiqueté $w$ · DFA : un seul état initial, au plus une arête par lettre et état",
+   "exemple": "un NFA peut avoir plusieurs chemins étiquetés par $w$ : un seul chemin acceptant suffit",
+   "cours": "Deux façons de refuser un mot : un chemin existe mais finit hors de $F$, ou aucun chemin n'existe (arête manquante). Dans un DFA, un mot a au plus un chemin. Deux automates sont équivalents s'ils reconnaissent le même langage."
+  },
+  {
+   "id": "afd-build",
+   "titre": "Construire un automate pour un langage",
+   "formule": "un état = ce qu'il faut retenir de la partie lue · multiples de 3 en binaire : $r\\mapsto(2r+c)\\bmod3$ · « avant-dernière lettre $a$ » : NFA à 3 états",
+   "exemple": "mots terminant par $ab$ : NFA à 3 états, boucle sur $0$, puis $a$, puis $b$",
+   "cours": "Décider ce que la mémoire finie doit retenir (reste, parité, dernier motif lu) : chaque valeur possible est un état. Pour un NFA on devine l'endroit où le motif commence. Toujours tester sur des mots acceptés et refusés."
+  },
+  {
+   "id": "compl",
+   "titre": "Complétion et complément",
+   "formule": "complet : $\\forall q,\\forall a$, une arête au moins · complétion : état puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet seulement)",
+   "exemple": "un DFA à $n$ états sur $k$ lettres, complété, a au plus $(n+1)k$ transitions",
+   "cours": "Le complément d'un langage rationnel est rationnel. Il faut un DFA complet : sinon un mot sans chemin resterait refusé des deux côtés ; il faut un DFA : sinon un mot avec un chemin acceptant et un chemin refusant serait accepté des deux côtés."
+  },
+  {
+   "id": "thompson",
+   "titre": "ε-NFA et algorithme de Thompson",
+   "formule": "un seul état initial $i$, un seul état final $f$ distinct · atomes $a$, $\\varepsilon$, $\\varnothing$ · $e_1e_2$ : $f_1\\xrightarrow\\varepsilon i_2$ · $e_1+e_2$ et $e^*$ : deux nouveaux états · $2n$ états",
+   "exemple": "$(a+b)^*abb$ : $n=7$ (5 lettres, un $+$, une étoile) donc 14 états",
+   "cours": "Théorème de Kleene (sens expression $\\to$ automate) : toute expression a un ε-NFA équivalent. Ne pas fusionner $f_1$ et $i_2$ à la concaténation (contre-exemple $a(ba)^*a(ba)^*$). L'étoile ajoute les ε-arêtes $i\\to i_1$, $f_1\\to f$, $i\\to f$ (mot vide) et $f_1\\to i_1$ (répétition)."
+  },
+  {
+   "id": "eps",
+   "titre": "Suppression des ε-transitions (retour arrière)",
+   "formule": "$\\varepsilon\\text{-clôture}(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow a r$ si $p\\xrightarrow ar$ avec $p\\in$ clôture$(q)$ · $q$ final si clôture$(q)\\cap F\\ne\\varnothing$",
+   "exemple": "$a^*b^*c^*$ : clôture$(0)=\\{0,1,2\\}$",
+   "cours": "On calcule les clôtures par point fixe : colonne 0 = $q$ et ses successeurs par $\\varepsilon$, colonne $i+1$ = union des cellules des éléments de la colonne $i$, jusqu'à stabilité. Même nombre d'états, aucune ε-transition. Ne pas oublier les nouveaux états finaux."
+  },
+  {
+   "id": "emond",
+   "titre": "Émondage",
+   "formule": "accessible : atteint depuis $I$ · co-accessible : atteint $F$ · utile = les deux · l'automate émondé garde les états utiles",
+   "exemple": "un état puits est accessible mais pas co-accessible : il disparaît",
+   "cours": "Accessibles : parcours depuis $I$. Co-accessibles : parcours depuis $F$ en inversant les arêtes. Le langage ne change pas. Un DFA complet émondé perd son état puits : il redevient incomplet."
+  },
+  {
+   "id": "det",
+   "titre": "Déterminisation (construction des sous-ensembles)",
+   "formule": "état = ensemble d'états · initial $I$ · $S\\xrightarrow aS_a=\\{q\\mid\\exists p\\in S,p\\xrightarrow aq\\}$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états",
+   "exemple": "avant-dernière lettre $a$ : NFA à 3 états, DFA à 4 états",
+   "cours": "Table : une ligne par ensemble découvert, une colonne par lettre ; on commence par $I$ et on ajoute tout nouvel ensemble jusqu'à stabilité. L'ensemble vide est un état (puits). On applique d'abord la suppression des ε. Le DFA est complet. Le « $n$-ième symbole avant la fin est $a$ » donne $2^n$ états : l'explosion est atteinte."
+  },
+  {
+   "id": "min",
+   "titre": "Minimisation (Moore) et Myhill-Nerode",
+   "formule": "$p\\sim q$ si $\\forall w$ ($pw\\in F\\iff qw\\in F$) · classes initiales $F$ et $Q\\setminus F$ · séparer si les successeurs sont dans des classes différentes · un état = une classe",
+   "exemple": "6 états $\\to$ 4 classes",
+   "cours": "On part d'un DFA complet accessible. Moore : raffiner la partition tant qu'une cellule contient deux états dont les successeurs par une lettre sont dans des classes différentes. Le DFA minimal est unique (Myhill-Nerode) : son nombre d'états est le nombre de classes d'indistinguabilité. Un mot distingue deux états si l'un l'accepte et pas l'autre."
+  },
+  {
+   "id": "pomp",
+   "titre": "Lemme de l'étoile (lemme de pompage)",
+   "formule": "$L$ rationnel $\\Rightarrow\\exists n_0,\\forall w\\in L,|w|\\ge n_0,\\ w=xyz,\\ y\\ne\\varepsilon,\\ xy^*z\\subseteq L$ · DFA à $n$ états : tout mot de longueur $\\ge n$ repasse par un état",
+   "exemple": "$\\{a^nb^n\\}$ n'est pas rationnel (prendre $w=a^{n_0}b^{n_0}$)",
+   "cours": "Pour prouver qu'un langage n'est pas rationnel : par l'absurde, fixer $n_0$, choisir un mot $w$ de $L$ de longueur $\\ge n_0$ (en fonction de $n_0$), considérer **toute** décomposition $w=xyz$ avec $y\\ne\\varepsilon$ (et $|xy|\\le n_0$ si on l'utilise), et trouver $k$ avec $xy^kz\\notin L$. Le lemme est une condition nécessaire, jamais suffisante. Pour prouver qu'un langage est rationnel, on donne un automate."
+  },
+  {
+   "id": "bmc",
+   "titre": "Élimination d'états (Brzozowski-McCluskey)",
+   "formule": "étiquettes = expressions · $p\\xrightarrow xq\\xrightarrow yr$ avec boucle $z$ sur $q$ : $p\\xrightarrow{xz^*y}r$ · $(\\text{entrantes})\\times(\\text{sortantes})$ nouvelles arêtes · arêtes parallèles : $+$",
+   "exemple": "$p\\xrightarrow aq\\xrightarrow cr$ avec boucle $b$ sur $q$ : $p\\xrightarrow{ab^*c}r$",
+   "cours": "On ajoute un état initial $i$ sans arête entrante et un état final $f$ sans arête sortante (liés par $\\varepsilon$), puis on supprime les autres états un par un. À la fin il reste une arête $i\\to f$ étiquetée par $e$. Le résultat dépend de l'ordre mais le langage est le même. C'est l'autre sens du théorème de Kleene : automate $\\to$ expression."
+  },
+  {
+   "id": "stab",
+   "titre": "Stabilité et décidabilité des langages rationnels",
+   "formule": "stables par $\\cup,\\cdot,{}^*$, complément, $\\cap=\\overline{\\overline{L_1}\\cup\\overline{L_2}}$, miroir, Pref, Suff, Fact · produit synchronisé : $\\le n_1n_2$ états · $L=\\varnothing$ ? parcours · $L_1=L_2$ ? vide$(L_1\\cap\\overline{L_2})$ et vide$(L_2\\cap\\overline{L_1})$",
+   "exemple": "$L_1\\setminus L_2=L_1\\cap\\overline{L_2}$ est rationnel",
+   "cours": "Produit synchronisé de deux DFA complets : états $(p,q)$, $(p,q)\\xrightarrow a(p',q')$, final si les deux composantes sont finales (intersection). Si les langages diffèrent, la recherche du vide renvoie un contre-exemple. Pour montrer qu'un langage n'est pas rationnel on peut aussi l'intersecter avec un rationnel ($a^*b^*$) et obtenir un langage connu non rationnel."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "ens",
+   "type": "vf",
+   "q": "Un ensemble à $n$ éléments a $2^n$ parties.",
+   "bonne": true
+  },
+  {
+   "notion": "ens",
+   "type": "qcm",
+   "q": "$|A|=7$, $|B|=5$, $|A\\cap B|=2$ : $|A\\cup B|=$",
+   "choix": [
+    "$10$",
+    "$12$",
+    "$14$",
+    "$9$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rec",
+   "type": "vf",
+   "q": "Une récurrence demande un cas de base et une hérédité.",
+   "bonne": true
+  },
+  {
+   "notion": "rec",
+   "type": "qcm",
+   "q": "Nombre de mots de longueur $3$ sur $\\{a,b\\}$ :",
+   "choix": [
+    "$8$",
+    "$6$",
+    "$9$",
+    "$3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "mots",
+   "type": "vf",
+   "q": "La concaténation de mots est commutative.",
+   "bonne": false
+  },
+  {
+   "notion": "mots",
+   "type": "qcm",
+   "q": "$|w^k|=$",
+   "choix": [
+    "$k|w|$",
+    "$|w|^k$",
+    "$|w|+k$",
+    "$k$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "pref",
+   "type": "vf",
+   "q": "$\\varepsilon$ est préfixe, suffixe et facteur de tout mot.",
+   "bonne": true
+  },
+  {
+   "notion": "pref",
+   "type": "qcm",
+   "q": "Nombre de préfixes distincts de $\\mathtt{abcd}$ (avec $\\varepsilon$) :",
+   "choix": [
+    "$5$",
+    "$4$",
+    "$10$",
+    "$11$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dist",
+   "type": "vf",
+   "q": "La distance d'édition (insertions et suppressions) est symétrique.",
+   "bonne": true
+  },
+  {
+   "notion": "dist",
+   "type": "qcm",
+   "q": "$d_e(\\mathtt{dog},\\mathtt{bugs})=$",
+   "choix": [
+    "$5$",
+    "$3$",
+    "$4$",
+    "$7$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lang",
+   "type": "vf",
+   "q": "$\\varepsilon\\in L^*$ pour tout langage $L$.",
+   "bonne": true
+  },
+  {
+   "notion": "lang",
+   "type": "qcm",
+   "q": "$L=\\{a,bc\\}$ : $\\mathrm{Pref}(L)=$",
+   "choix": [
+    "$\\{\\varepsilon,a,b,bc\\}$",
+    "$\\{a,b,bc\\}$",
+    "$\\{\\varepsilon,a,bc\\}$",
+    "$\\{a,bc\\}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rx-sem",
+   "type": "vf",
+   "q": "L'intersection est un opérateur de la syntaxe des expressions rationnelles.",
+   "bonne": false
+  },
+  {
+   "notion": "rx-sem",
+   "type": "qcm",
+   "q": "$e^+$ est une abréviation de",
+   "choix": [
+    "$ee^*$",
+    "$e^*e^*$",
+    "$\\varepsilon+e$",
+    "$e+e$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rx-desc",
+   "type": "vf",
+   "q": "$(a+b)^*\\equiv a^*+b^*$.",
+   "bonne": false
+  },
+  {
+   "notion": "rx-desc",
+   "type": "vf",
+   "q": "$(e^*f^*)^*\\equiv(e+f)^*$.",
+   "bonne": true
+  },
+  {
+   "notion": "rx-ecr",
+   "type": "qcm",
+   "q": "Une expression des mots de longueur paire sur $\\{a,b\\}$ :",
+   "choix": [
+    "$((a+b)(a+b))^*$",
+    "$(a+b)^*$",
+    "$(a+b)(a+b)^*$",
+    "$(aa+bb)^*$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rx-ecr",
+   "type": "vf",
+   "q": "$b^*ab^*ab^*$ décrit les mots avec exactement deux $a$.",
+   "bonne": true
+  },
+  {
+   "notion": "afd",
+   "type": "vf",
+   "q": "Dans un NFA, un seul chemin acceptant suffit pour accepter un mot.",
+   "bonne": true
+  },
+  {
+   "notion": "afd",
+   "type": "qcm",
+   "q": "Un DFA vérifie :",
+   "choix": [
+    "un seul état initial et au plus une arête par lettre et état",
+    "aucune boucle",
+    "un seul état final",
+    "toutes les lettres sont utilisées"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "afd-build",
+   "type": "vf",
+   "q": "Pour les multiples de $3$ en binaire, un DFA à $3$ états suffit.",
+   "bonne": true
+  },
+  {
+   "notion": "afd-build",
+   "type": "qcm",
+   "q": "Dans $D_3$ (multiples de $3$), $\\delta(r,c)=$",
+   "choix": [
+    "$(2r+c)\\bmod3$",
+    "$(r+c)\\bmod3$",
+    "$(r+2c)\\bmod3$",
+    "$(2r)\\bmod3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "compl",
+   "type": "vf",
+   "q": "Pour échanger finaux et non finaux, le DFA doit être complet.",
+   "bonne": true
+  },
+  {
+   "notion": "compl",
+   "type": "qcm",
+   "q": "Un DFA complet à $n$ états sur $k$ lettres a",
+   "choix": [
+    "$nk$ transitions",
+    "$n+k$ transitions",
+    "$k^n$ transitions",
+    "au plus $n$ transitions"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "thompson",
+   "type": "vf",
+   "q": "L'automate de Thompson d'une expression à $n$ occurrences (lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$) a $2n$ états.",
+   "bonne": true
+  },
+  {
+   "notion": "thompson",
+   "type": "qcm",
+   "q": "Dans l'automate de Thompson, l'étoile ajoute",
+   "choix": [
+    "$i\\to i_1$, $f_1\\to f$, $i\\to f$, $f_1\\to i_1$",
+    "seulement $f_1\\to i_1$",
+    "deux boucles",
+    "un état puits"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "eps",
+   "type": "vf",
+   "q": "Après suppression des $\\varepsilon$, le nombre d'états ne change pas.",
+   "bonne": true
+  },
+  {
+   "notion": "eps",
+   "type": "qcm",
+   "q": "$q$ devient final si",
+   "choix": [
+    "sa $\\varepsilon$-clôture contient un état final",
+    "il a une boucle",
+    "il est accessible",
+    "il est initial"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "emond",
+   "type": "vf",
+   "q": "Un état utile est accessible et co-accessible.",
+   "bonne": true
+  },
+  {
+   "notion": "emond",
+   "type": "qcm",
+   "q": "Un état puits est",
+   "choix": [
+    "accessible mais pas co-accessible",
+    "co-accessible mais pas accessible",
+    "utile",
+    "final"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "det",
+   "type": "vf",
+   "q": "L'ensemble vide peut être un état du DFA déterminisé.",
+   "bonne": true
+  },
+  {
+   "notion": "det",
+   "type": "qcm",
+   "q": "Un NFA à $n$ états donne un DFA d'au plus",
+   "choix": [
+    "$2^n$ états",
+    "$n^2$ états",
+    "$2n$ états",
+    "$n!$ états"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "min",
+   "type": "vf",
+   "q": "Le DFA minimal d'un langage rationnel est unique (à renommage près).",
+   "bonne": true
+  },
+  {
+   "notion": "min",
+   "type": "qcm",
+   "q": "On commence l'algorithme de Moore avec les classes",
+   "choix": [
+    "$F$ et $Q\\setminus F$",
+    "une classe par état",
+    "$I$ et $Q\\setminus I$",
+    "une seule classe"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "pomp",
+   "type": "vf",
+   "q": "Un langage qui vérifie la conclusion du lemme de l'étoile est forcément rationnel.",
+   "bonne": false
+  },
+  {
+   "notion": "pomp",
+   "type": "qcm",
+   "q": "Pour prouver que $\\{a^nb^n\\}$ n'est pas rationnel, on pompe le mot",
+   "choix": [
+    "$a^{n_0}b^{n_0}$",
+    "$a^{n_0}$",
+    "$b^{n_0}a^{n_0}$",
+    "$(ab)^{n_0}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bmc",
+   "type": "vf",
+   "q": "Lors de la suppression d'un état de boucle $z$, on insère $z^*$ entre l'arête entrante et l'arête sortante.",
+   "bonne": true
+  },
+  {
+   "notion": "bmc",
+   "type": "qcm",
+   "q": "Supprimer un état avec $2$ arêtes entrantes et $3$ sortantes crée",
+   "choix": [
+    "$6$ arêtes",
+    "$5$ arêtes",
+    "$2$ arêtes",
+    "$3$ arêtes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "stab",
+   "type": "vf",
+   "q": "Le complément d'un langage rationnel est rationnel.",
+   "bonne": true
+  },
+  {
+   "notion": "stab",
+   "type": "qcm",
+   "q": "Dans le produit synchronisé de deux DFA complets, les états finaux de l'intersection sont les couples",
+   "choix": [
+    "dont les deux composantes sont finales",
+    "dont une composante est finale",
+    "initiaux",
+    "dont aucune composante n'est finale"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1/S2 : ensembles, parties, produit cartésien",
+   "notions": [
+    "ens"
+   ],
+   "exos": [
+    {
+     "id": "n1",
+     "enonce": "$|A|=12$, $|B|=9$ et $|A\\cap B|=4$. Que vaut $|A\\cup B|$ ?",
+     "ans": "17",
+     "sol": "**Réponse :** $17$\n\n$|A\\cup B|=|A|+|B|-|A\\cap B|=12+9-4=17$.",
+     "variants": [
+      {
+       "enonce": "$|A|=15$, $|B|=8$ et $|A\\cap B|=5$. Que vaut $|A\\cup B|$ ?",
+       "ans": "18",
+       "sol": "**Réponse :** $18$\n\n$15+8-5=18$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "n2",
+     "enonce": "Un ensemble $E$ a $6$ éléments. Combien de parties (sous-ensembles) a-t-il ?",
+     "ans": "64",
+     "sol": "**Réponse :** $64$\n\nChaque élément est dedans ou dehors : $2^6=64$. C'est la borne du nombre d'états d'un automate déterminisé.",
+     "variants": [
+      {
+       "enonce": "Un ensemble $E$ a $8$ éléments. Combien de parties a-t-il ?",
+       "ans": "256",
+       "sol": "**Réponse :** $256$\n\n$2^8=256$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "n3",
+     "enonce": "$|A|=5$ et $|B|=4$. Que vaut $|A\\times B|$ ?",
+     "ans": "20",
+     "sol": "**Réponse :** $20$\n\n$|A\\times B|=|A|\\times|B|=5\\times4=20$.",
+     "variants": [
+      {
+       "enonce": "$|A|=6$ et $|B|=7$. Que vaut $|A\\times B|$ ?",
+       "ans": "42",
+       "sol": "**Réponse :** $42$\n\n$6\\times7=42$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "n4",
+     "enonce": "Combien de sous-ensembles à $2$ éléments un ensemble à $7$ éléments a-t-il ?",
+     "ans": "21",
+     "sol": "**Réponse :** $21$\n\n$\\binom72=\\frac{7\\times6}2=21$.",
+     "variants": [
+      {
+       "enonce": "Combien de sous-ensembles à $2$ éléments un ensemble à $9$ éléments a-t-il ?",
+       "ans": "36",
+       "sol": "**Réponse :** $36$\n\n$\\binom92=36$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "n5",
+     "enonce": "Un automate a $3$ états et un alphabet à $2$ lettres. Combien de triplets (état, lettre, état) existe-t-il, c'est-à-dire quelle est la taille maximale de $\\delta\\subseteq Q\\times\\Sigma\\times Q$ ?",
+     "ans": "18",
+     "sol": "**Réponse :** $18$\n\n$|Q\\times\\Sigma\\times Q|=3\\times2\\times3=18$.",
+     "variants": [
+      {
+       "enonce": "Un automate a $4$ états et $3$ lettres. Combien de triplets (état, lettre, état) existe-t-il ?",
+       "ans": "48",
+       "sol": "**Réponse :** $48$\n\n$4\\times3\\times4=48$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "n6",
+     "enonce": "Combien d'entiers de $1$ à $20$ sont multiples de $2$ ou de $3$ ?",
+     "ans": "13",
+     "sol": "**Réponse :** $13$\n\n$10$ multiples de $2$, $6$ de $3$, $3$ de $6$ : $10+6-3=13$.",
+     "variants": [
+      {
+       "enonce": "Combien d'entiers de $1$ à $30$ sont multiples de $2$ ou de $5$ ?",
+       "ans": "18",
+       "sol": "**Réponse :** $18$\n\n$15+6-3=18$."
+      }
+     ],
+     "formules": "$|A\\cup B|=|A|+|B|-|A\\cap B|$ · $|A\\times B|=|A||B|$ · $|\\mathcal P(E)|=2^{|E|}$ · $\\binom n2$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1/S2 : récurrence, relations d'équivalence, listes",
+   "notions": [
+    "rec"
+   ],
+   "exos": [
+    {
+     "id": "r1",
+     "enonce": "Calculer $\\sum_{k=0}^{5}2^k$ (nombre de mots de longueur $\\le5$ sur $\\{a,b\\}$).",
+     "ans": "63",
+     "sol": "**Réponse :** $63$\n\n$\\sum_{k=0}^n2^k=2^{n+1}-1=2^6-1=63$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{7}2^k$.",
+       "ans": "255",
+       "sol": "**Réponse :** $255$\n\n$2^8-1=255$."
+      }
+     ],
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r2",
+     "enonce": "Sur $\\{0,\\dots,15\\}$, $x\\sim y$ si $x\\equiv y\\pmod4$ (relation d'équivalence). Combien de couples $(x,y)$ vérifient $x\\sim y$ ?",
+     "ans": "64",
+     "sol": "**Réponse :** $64$\n\nIl y a $4$ classes de $4$ éléments ; chaque classe fournit $4\\times4=16$ couples : $4\\times16=64$.",
+     "variants": [
+      {
+       "enonce": "Sur $\\{0,\\dots,11\\}$, $x\\sim y$ si $x\\equiv y\\pmod3$. Combien de couples $(x,y)$ vérifient $x\\sim y$ ?",
+       "ans": "48",
+       "sol": "**Réponse :** $48$\n\n$3$ classes de $4$ éléments : $3\\times16=48$."
+      }
+     ],
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r3",
+     "enonce": "Un mot est une liste de lettres. Combien de listes de longueur $4$ peut-on former avec l'alphabet $\\{a,b,c\\}$ ?",
+     "ans": "81",
+     "sol": "**Réponse :** $81$\n\n$3$ choix par position : $3^4=81$.",
+     "variants": [
+      {
+       "enonce": "Combien de listes de longueur $3$ avec l'alphabet $\\{a,b,c,d\\}$ ?",
+       "ans": "64",
+       "sol": "**Réponse :** $64$\n\n$4^3=64$."
+      }
+     ],
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r4",
+     "enonce": "Démontrer par récurrence : $\\forall n\\ge0$, $\\sum_{k=0}^n2^k=2^{n+1}-1$.",
+     "sol": "**Base** $n=0$ : $2^0=1=2^1-1$. **Hérédité** : si $\\sum_{k=0}^n2^k=2^{n+1}-1$, alors $\\sum_{k=0}^{n+1}2^k=2^{n+1}-1+2^{n+1}=2\\cdot2^{n+1}-1=2^{n+2}-1$. La propriété est vraie pour tout $n$ (il y a donc $2^{n+1}-1$ mots de longueur $\\le n$ sur $\\{a,b\\}$).",
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "r5",
+     "enonce": "Montrer par récurrence sur $n$ qu'il y a $k^n$ mots de longueur $n$ sur un alphabet à $k$ lettres.",
+     "sol": "**Base** $n=0$ : un seul mot, $\\varepsilon$, et $k^0=1$. **Hérédité** : un mot de longueur $n+1$ s'écrit de façon unique $wa$ avec $|w|=n$ ($k^n$ choix par hypothèse) et $a\\in\\Sigma$ ($k$ choix) : $k^n\\cdot k=k^{n+1}$.",
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "r6",
+     "enonce": "Principe des tiroirs : un chemin de $m$ arêtes dans un graphe à $n$ sommets visite $m+1$ sommets. Montrer que si $m\\ge n$ un sommet est visité deux fois.",
+     "sol": "Le chemin visite $m+1\\ge n+1$ sommets (avec répétition) pris parmi $n$ sommets distincts : par le principe des tiroirs, deux positions du chemin portent le même sommet. Le morceau entre ces deux positions est une boucle. C'est l'idée du lemme de l'étoile (un mot de longueur $\\ge n$ lu par un automate à $n$ états passe deux fois par un même état).",
+     "formules": "$\\sum_{k=0}^n2^k=2^{n+1}-1$ · $k^n$ mots de longueur $n$ · principe des tiroirs",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Mots : longueur, occurrences, puissance, miroir",
+   "notions": [
+    "mots"
+   ],
+   "exos": [
+    {
+     "id": "m1",
+     "enonce": "Quelle est la longueur du mot $w=\\mathtt{CatCatDog}$ (alphabet latin) ?",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\nNeuf lettres : $\\mathtt{C,a,t,C,a,t,D,o,g}$.",
+     "variants": [
+      {
+       "enonce": "Longueur du mot $w=\\mathtt{EPITAEPITA}$ ?",
+       "ans": "10",
+       "sol": "**Réponse :** $10$\n\nDix lettres."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m2",
+     "enonce": "Soit $w=011101$. Que vaut $|w|_1$ (nombre de $1$) ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nLes positions $2,3,4,6$ valent $1$ : $|w|_1=4$ (et $|w|_0=2$, $|w|=6$).",
+     "variants": [
+      {
+       "enonce": "Soit $w=1001011$. Que vaut $|w|_0$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nLes positions $2,3,5$ valent $0$."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m3",
+     "enonce": "Soit $w=\\mathtt{abca}$. Que vaut $|w^5|$ ?",
+     "ans": "20",
+     "sol": "**Réponse :** $20$\n\n$|w^k|=k|w|=5\\times4=20$.",
+     "variants": [
+      {
+       "enonce": "Soit $w=\\mathtt{bca}$. Que vaut $|w^6|$ ?",
+       "ans": "18",
+       "sol": "**Réponse :** $18$\n\n$6\\times3=18$."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m4",
+     "enonce": "Le mot $w=\\mathtt{radar}$ est-il un palindrome ($w=w^R$) ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n$w^R=\\mathtt{radar}=w$ : oui.",
+     "variants": [
+      {
+       "enonce": "Le mot $\\mathtt{abca}$ est-il un palindrome ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\n$w^R=\\mathtt{acba}\\ne w$."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m5",
+     "enonce": "Combien de mots de longueur $4$ sur $\\{0,1\\}$ contiennent exactement deux $1$ ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nOn choisit les positions des deux $1$ : $\\binom42=6$.",
+     "variants": [
+      {
+       "enonce": "Combien de mots de longueur $5$ sur $\\{0,1\\}$ contiennent exactement trois $1$ ?",
+       "ans": "10",
+       "sol": "**Réponse :** $10$\n\n$\\binom53=10$."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m6",
+     "enonce": "Soient $u=\\mathtt{abc}$ et $v=\\mathtt{de}$. Quelle est la longueur de $u\\cdot v\\cdot u^R$ ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\n$|uvu^R|=|u|+|v|+|u|=3+2+3=8$ (la longueur est additive).",
+     "variants": [
+      {
+       "enonce": "Soient $u=\\mathtt{ab}$ et $v=\\mathtt{cde}$. Longueur de $u\\cdot v\\cdot u^R$ ?",
+       "ans": "7",
+       "sol": "**Réponse :** $7$\n\n$2+3+2=7$."
+      }
+     ],
+     "formules": "$|uv|=|u|+|v|$ · $|w^k|=k|w|$ · $|w|_a$ · $w^R$ · $\\binom nk$ pour placer des lettres",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Préfixes, suffixes et facteurs",
+   "notions": [
+    "pref"
+   ],
+   "exos": [
+    {
+     "id": "p1",
+     "enonce": "Combien de préfixes (distincts, $\\varepsilon$ compris) le mot $\\mathtt{SUP}$ a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\n$\\mathrm{Pref}(SUP)=\\{\\varepsilon,S,SU,SUP\\}$ : $|w|+1=4$.",
+     "variants": [
+      {
+       "enonce": "Combien de préfixes distincts le mot $\\mathtt{EPITA}$ a-t-il ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$|w|+1=6$."
+      }
+     ],
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p2",
+     "enonce": "Combien de suffixes distincts le mot $\\mathtt{abcabc}$ a-t-il ?",
+     "ans": "7",
+     "sol": "**Réponse :** $7$\n\nLes suffixes ont des longueurs $0$ à $6$, donc sont distincts : $7$.",
+     "variants": [
+      {
+       "enonce": "Combien de suffixes distincts le mot $\\mathtt{banana}$ a-t-il ?",
+       "ans": "7",
+       "sol": "**Réponse :** $7$\n\nLongueurs $0$ à $6$ : $7$."
+      }
+     ],
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p3",
+     "enonce": "Combien de facteurs distincts (mot vide compris) le mot $\\mathtt{abab}$ a-t-il ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\n$\\varepsilon,a,b,ab,ba,aba,bab,abab$. Les facteurs $a$, $b$, $ab$ apparaissent deux fois mais comptent une fois.",
+     "variants": [
+      {
+       "enonce": "Combien de facteurs distincts le mot $\\mathtt{aaaa}$ a-t-il ?",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\n$\\varepsilon,a,aa,aaa,aaaa$ : un par longueur."
+      }
+     ],
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p4",
+     "enonce": "Le mot $\\mathtt{ba}$ est-il un facteur de $\\mathtt{aabba}$ ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n$\\mathtt{aabba}=\\mathtt{aab}\\cdot\\mathtt{ba}$ : c'est même un suffixe.",
+     "variants": [
+      {
+       "enonce": "Le mot $\\mathtt{bb}$ est-il un facteur de $\\mathtt{ababa}$ ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\n$\\mathtt{ababa}$ n'a pas deux $b$ consécutifs."
+      }
+     ],
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p5",
+     "enonce": "On appelle facteurs propres de $w$ ceux qui ne sont ni préfixes ni suffixes de $w$. Combien $\\mathtt{aaabbb}$ en a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nFacteurs de $a^3b^3$ : $\\varepsilon$, $a^i$, $b^j$, $a^ib^j$ ($1\\le i,j\\le3$) soit $16$. Préfixes et suffixes réunis : $12$. Reste $\\mathtt{ab},\\mathtt{aab},\\mathtt{abb},\\mathtt{aabb}$ : $4$.",
+     "variants": [
+      {
+       "enonce": "Combien de facteurs propres (ni préfixes ni suffixes) le mot $\\mathtt{aabb}$ a-t-il ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\nFacteurs : $9$ ; préfixes et suffixes réunis : $8$ ; reste $\\mathtt{ab}$."
+      }
+     ],
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p6",
+     "enonce": "Montrer que $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$, puis que l'égalité $\\mathrm{Fact}(L)=\\mathrm{Pref}(L)\\cup\\mathrm{Suff}(L)$ est fausse en général.",
+     "sol": "**Première égalité.** Si $y\\in\\mathrm{Fact}(w)$, $w=xyz$ ; $yz$ est un suffixe de $w$ et $y$ est un préfixe de $yz$, donc $y\\in\\mathrm{Pref}(\\mathrm{Suff}(w))$. Réciproquement, si $y$ est préfixe d'un suffixe $s$ de $w$, $w=xs$ et $s=yz$, donc $w=xyz$ et $y$ est facteur. **Contre-exemple.** $L=\\{abc\\}$ : $b\\in\\mathrm{Fact}(L)$ mais $b$ n'est ni préfixe ni suffixe de $abc$ (vérifié : $\\mathrm{Pref}=\\{\\varepsilon,a,ab,abc\\}$, $\\mathrm{Suff}=\\{\\varepsilon,c,bc,abc\\}$).",
+     "formules": "$\\mathrm{Pref}$, $\\mathrm{Suff}$, $\\mathrm{Fact}$ · $|\\mathrm{Pref}(w)|=|w|+1$ · $\\mathrm{Fact}(w)=\\mathrm{Pref}(\\mathrm{Suff}(w))$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Distance d'édition",
+   "notions": [
+    "dist"
+   ],
+   "exos": [
+    {
+     "id": "d1",
+     "enonce": "Distance d'édition (insertions et suppressions) entre $\\mathtt{dog}$ et $\\mathtt{bugs}$ ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nPlus longue sous-suite commune : $\\mathtt g$ (longueur $1$). $d_e=3+4-2\\times1=5$.",
+     "variants": [
+      {
+       "enonce": "Distance d'édition entre $\\mathtt{cat}$ et $\\mathtt{cart}$ ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\nInsérer $r$ : $3+4-2\\times3=1$."
+      }
+     ],
+     "formules": "$d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$ · séparation, symétrie, triangle",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d2",
+     "enonce": "Distance d'édition entre $\\mathtt{EPITA}$ et $\\mathtt{EPUISE}$ ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nPlus longue sous-suite commune : $\\mathtt{EPI}$ (longueur $3$) ; $d_e=5+6-2\\times3=5$.",
+     "variants": [
+      {
+       "enonce": "Distance d'édition entre $\\mathtt{EPITA}$ et $\\mathtt{PITA}$ ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\nSupprimer le $E$."
+      }
+     ],
+     "formules": "$d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$ · séparation, symétrie, triangle",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d3",
+     "enonce": "Distance d'édition entre $\\mathtt{abc}$ et $\\mathtt{bca}$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nSous-suite commune $\\mathtt{bc}$ : $d_e=3+3-4=2$ (supprimer le $a$ initial, ajouter un $a$ final).",
+     "variants": [
+      {
+       "enonce": "Distance d'édition entre $\\mathtt{abcd}$ et $\\mathtt{dcba}$ ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\nPlus longue sous-suite commune de longueur $1$ : $4+4-2=6$."
+      }
+     ],
+     "formules": "$d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$ · séparation, symétrie, triangle",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d4",
+     "enonce": "Distance d'édition entre $\\mathtt{abcde}$ et $\\mathtt{ace}$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n$\\mathtt{ace}$ est une sous-suite de $\\mathtt{abcde}$ : supprimer $b$ et $d$, soit $5+3-6=2$.",
+     "variants": [
+      {
+       "enonce": "Distance d'édition entre $\\mathtt{aab}$ et $\\mathtt{abb}$ ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nSous-suite commune $\\mathtt{ab}$ : $3+3-4=2$."
+      }
+     ],
+     "formules": "$d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$ · séparation, symétrie, triangle",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d5",
+     "enonce": "Montrer que $d_e$ est symétrique et que $d_e(u,v)=0\\iff u=v$. Que dire de l'inégalité triangulaire ?",
+     "sol": "**Symétrie** : une suite d'insertions/suppressions qui transforme $u$ en $v$, lue à l'envers en échangeant insertions et suppressions, transforme $v$ en $u$ avec le même nombre d'opérations. **Séparation** : $0$ opération signifie $u=v$ ; si $u=v$, $0$ opération suffit. **Triangle** : transformer $u$ en $v$ puis $v$ en $w$ est une façon (peut-être non optimale) de transformer $u$ en $w$, donc $d_e(u,w)\\le d_e(u,v)+d_e(v,w)$. C'est donc une distance.",
+     "formules": "$d_e(u,v)=|u|+|v|-2|\\mathrm{PLSC}(u,v)|$ · séparation, symétrie, triangle",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Opérations sur les langages : concaténation, puissance, étoile",
+   "notions": [
+    "lang"
+   ],
+   "exos": [
+    {
+     "id": "l1",
+     "enonce": "$L_1=\\{ab,ac\\}$ et $L_2=\\{cd,de\\}$. Combien de mots a $L_1\\cdot L_2$ ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\n$\\{abcd,abde,accd,acde\\}$ : $2\\times2=4$ mots, tous distincts.",
+     "variants": [
+      {
+       "enonce": "$L_1=\\{a,ab\\}$ et $L_2=\\{b,bb\\}$. Combien de mots a $L_1L_2$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$ab,abb,abb,abbb$ : $3$ mots distincts (deux produits donnent $abb$)."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l2",
+     "enonce": "$L=\\{ab,cd,e\\}$. Combien de mots a $L^2$ ?",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\n$abab,abcd,abe,cdab,cdcd,cde,eab,ecd,ee$ : $3\\times3=9$, tous distincts. Attention : $L^2\\ne\\{u^2\\mid u\\in L\\}$ (qui n'a que $3$ mots).",
+     "variants": [
+      {
+       "enonce": "$L=\\{a,ab,b\\}$. Combien de mots a $L^2$ ?",
+       "ans": "9",
+       "sol": "**Réponse :** $9$\n\n$aa,aab,ab,aba,abab,abb,ba,bab,bb$ : $9$ produits, tous distincts."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l3",
+     "enonce": "$L=\\{a,aa\\}$. Combien de mots a $L^3$ ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\n$L^3=\\{a^3,a^4,a^5,a^6\\}$ : sommes de trois nombres dans $\\{1,2\\}$, soit $3$ à $6$. Les $8$ produits donnent seulement $4$ mots distincts.",
+     "variants": [
+      {
+       "enonce": "$L=\\{a,aaa\\}$. Combien de mots a $L^2$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$aa,aaaa,aaaaaa$ ($a\\cdot aaa$ et $aaa\\cdot a$ coïncident)."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l4",
+     "enonce": "$L=\\{ab,c\\}$. Le mot $\\mathtt{abcab}$ appartient-il à $L^*$ ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n$\\mathtt{abcab}=ab\\cdot c\\cdot ab\\in L^3\\subseteq L^*$.",
+     "variants": [
+      {
+       "enonce": "$L=\\{ab,c\\}$. Le mot $\\mathtt{abca}$ est-il dans $L^*$ ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\nAprès $ab\\cdot c$ reste $a$, qui n'est pas un mot de $L$."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l5",
+     "enonce": "Combien de mots a $\\mathrm{Pref}(\\{a,bc\\})$ ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\n$\\{\\varepsilon,a,b,bc\\}$.",
+     "variants": [
+      {
+       "enonce": "Combien de mots a $\\mathrm{Pref}(\\{ab,c,ba\\})$ ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$\\{\\varepsilon,a,ab,c,b,ba\\}$."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l6",
+     "enonce": "Combien de mots de longueur $\\le3$ le langage $\\{a,b\\}^*$ contient-il ?",
+     "ans": "15",
+     "sol": "**Réponse :** $15$\n\n$1+2+4+8=15$.",
+     "variants": [
+      {
+       "enonce": "Combien de mots de longueur $\\le2$ le langage $\\{a,b,c\\}^*$ contient-il ?",
+       "ans": "13",
+       "sol": "**Réponse :** $13$\n\n$1+3+9=13$."
+      }
+     ],
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l7",
+     "enonce": "Vrai ou faux en général (langages $L_1,L_2,L_3$) ? Si faux, donner un contre-exemple. (a) $\\{ab\\}\\cup\\{ba\\}=\\{abba\\}$ ; (b) $\\{a,b\\}^2=\\{a^2,b^2\\}$ ; (c) $\\{a\\}^*=\\{a^n\\mid n\\ge0\\}$ ; (d) $L_1(L_2\\cup L_3)=L_1L_2\\cup L_1L_3$ ; (e) $(L_1\\cup L_2)^2=L_1^2\\cup L_2^2$.",
+     "sol": "**(a) Faux** : $\\{ab,ba\\}\\ne\\{abba\\}$ (l'union n'est pas la concaténation). **(b) Faux** : $\\{a,b\\}^2=\\{aa,ab,ba,bb\\}$ contient $ab$. **(c) Vrai** : $\\{a\\}^*=\\bigcup_n\\{a^n\\}$. **(d) Vrai** (la concaténation se distribue sur l'union : un mot de gauche est $u\\,w$ avec $w\\in L_2$ ou $w\\in L_3$). **(e) Faux** : avec $L_1=\\{a\\}$, $L_2=\\{b\\}$, $(L_1\\cup L_2)^2\\ni ab$ mais $L_1^2\\cup L_2^2=\\{aa,bb\\}$ ; il manque $L_1L_2\\cup L_2L_1$.\n\nContrôles sur des ensembles finis : (a) $\\{ab\\}\\cup\\{ba\\}\\ne\\{abba\\}$ ; (b) $\\{a,b\\}^2\\ni ab\\notin\\{aa,bb\\}$ ; (d) distributivité vérifiée sur $L_1=\\{x,xy\\}$, $L_2=\\{z\\}$, $L_3=\\{zz\\}$ ; (e) $ab\\in(\\{a\\}\\cup\\{b\\})^2\\setminus(\\{a\\}^2\\cup\\{b\\}^2)$.",
+     "formules": "$L_1L_2=\\{uv\\}$ · $L^0=\\{\\varepsilon\\}$ · $L^*=\\bigcup L^n$ · $\\mathrm{Pref}(L)$ · distributivité sur $\\cup$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Expressions rationnelles : le mot est-il décrit ?",
+   "notions": [
+    "rx-sem"
+   ],
+   "exos": [
+    {
+     "id": "x1",
+     "enonce": "Le mot $\\mathtt{abab}$ appartient-il à $L\\big(a(a+b)^*b\\big)$ ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nIl commence par $a$, finit par $b$, et $\\mathtt{ba}$ au milieu est dans $(a+b)^*$.",
+     "variants": [
+      {
+       "enonce": "Le mot $\\mathtt{abba}$ appartient-il à $L\\big(a(a+b)^*b\\big)$ ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\nIl finit par $a$."
+      }
+     ],
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x2",
+     "enonce": "Combien de mots de longueur $\\le3$ le langage $L(a^*b)$ contient-il ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nLes mots de $L(a^*b)$ sont $a^nb$ : $b$, $ab$, $aab$.",
+     "variants": [
+      {
+       "enonce": "Combien de mots de longueur $\\le3$ le langage $L(a^*bb^*)$ contient-il ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$a^ib^j$, $j\\ge1$, $i+j\\le3$ : $b,bb,bbb,ab,abb,aab$."
+      }
+     ],
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x3",
+     "enonce": "Alphabet $\\{v,f,t,u,m\\}$ ($v$ = very, $f$ = fat, $t$ = tall, $u$ = ugly, $m$ = man) et $e=v\\,v^*(\\varepsilon+f)(t+u)m$. Parmi $\\mathtt{vfm}$, $\\mathtt{ftm}$, $\\mathtt{vvfum}$, $\\mathtt{vvvtm}$, $\\mathtt{vfu}$, $\\mathtt{tm}$, combien sont décrits par $e$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nIl faut au moins un $v$, un $f$ facultatif, un $t$ ou $u$, puis $m$. Seuls $\\mathtt{vvfum}$ et $\\mathtt{vvvtm}$ conviennent : $\\mathtt{vfm}$ n'a ni $t$ ni $u$, $\\mathtt{ftm}$ et $\\mathtt{tm}$ n'ont pas de $v$, $\\mathtt{vfu}$ n'a pas de $m$.",
+     "variants": [
+      {
+       "enonce": "Même alphabet et même expression $e=v\\,v^*(\\varepsilon+f)(t+u)m$. Parmi $\\mathtt{vtm}$, $\\mathtt{vfum}$, $\\mathtt{tm}$, $\\mathtt{vvm}$, $\\mathtt{vftm}$, $\\mathtt{vfm}$, combien sont décrits par $e$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nConviennent $\\mathtt{vtm}$, $\\mathtt{vfum}$, $\\mathtt{vftm}$ ; $\\mathtt{tm}$ n'a pas de $v$, $\\mathtt{vvm}$ et $\\mathtt{vfm}$ n'ont ni $t$ ni $u$."
+      }
+     ],
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x4",
+     "enonce": "Combien de mots contient $L\\big((a+b)(\\varepsilon+c)(a+b)\\big)$ ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\n$2\\times2\\times2=8$ mots, tous distincts ($aa,ab,ba,bb,aca,acb,bca,bcb$).",
+     "variants": [
+      {
+       "enonce": "Combien de mots contient $L\\big((a+b+c)(\\varepsilon+d)\\big)$ ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$3\\times2=6$."
+      }
+     ],
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x5",
+     "enonce": "Quelle est la longueur du plus court mot de $L\\big((aab+b)(ab)^*a\\big)$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nOn choisit $b$ puis $0$ répétition de $ab$ puis $a$ : $\\mathtt{ba}$, de longueur $2$.",
+     "variants": [
+      {
+       "enonce": "Quelle est la longueur du plus court mot de $L\\big((ab+c)(d+g)(\\varepsilon+f)\\big)$ ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$c\\cdot d\\cdot\\varepsilon=\\mathtt{cd}$, longueur $2$."
+      }
+     ],
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x6",
+     "enonce": "Alphabet $\\{a,b,c\\}$. Réécrire avec les seuls opérateurs $+$, concaténation et $^*$ : (i) $a?b^+$ ; (ii) $[a\\text{-}c]^+$ ; (iii) $(ab)^+$.",
+     "sol": "(i) $a?=\\varepsilon+a$ et $b^+=bb^*$ : $(\\varepsilon+a)bb^*$. (ii) $[a\\text{-}c]=a+b+c$ et $e^+=ee^*$ : $(a+b+c)(a+b+c)^*$. (iii) $(ab)^+=ab(ab)^*$.\n\nVérifié sur tous les mots de longueur $\\le7$ contre les opérateurs étendus de Python (`a?b+`, `[a-c]+`, `(ab)+`).",
+     "formules": "$L(e+f)=L(e)\\cup L(f)$ · $L(ef)=L(e)L(f)$ · $L(e^*)=L(e)^*$ · $e^+=ee^*$ · $e?=\\varepsilon+e$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Décrire un langage, comparer des expressions",
+   "notions": [
+    "rx-desc"
+   ],
+   "exos": [
+    {
+     "id": "q1",
+     "enonce": "Décrire en français le langage $L\\big(b^*ab^*ab^*\\big)$ sur $\\{a,b\\}$.",
+     "sol": "Les mots qui contiennent **exactement deux $a$** (les $b$ sont libres avant, entre et après).\n\nVérifié sur tous les mots de longueur $\\le9$.",
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "q2",
+     "enonce": "Décrire en français le langage $L\\big(a^*(ba^*ba^*)^*\\big)$ sur $\\{a,b\\}$.",
+     "sol": "Les mots qui contiennent un **nombre pair de $b$** (les $b$ viennent par paires, séparés par des blocs de $a$ quelconques).\n\nVérifié sur tous les mots de longueur $\\le9$.",
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "q3",
+     "enonce": "Décrire en français le langage $L\\big((b+ab)^*(\\varepsilon+a)\\big)$ sur $\\{a,b\\}$.",
+     "sol": "Les mots qui **ne contiennent pas $aa$** : chaque $a$ est suivi d'un $b$ (bloc $ab$), sauf éventuellement le dernier $a$ du mot.\n\nVérifié sur tous les mots de longueur $\\le10$.",
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "q4",
+     "enonce": "Sur $\\Sigma=\\{a,b,c\\}$, on compare neuf couples $(e,f)$ : $a^*b(ab)^*$ / $a^*(bab)^*$ ; $a(bb)^*$ / $ab^*$ ; $a(a+b)^*b$ / $a^*(a+b)^*b^*$ ; $abc+acb$ / $a(b+c)(c+b)$ ; $a^*bc+a^*cb$ / $a^*(bc+a^*cb)$ ; $(abc+acb)^*$ / $((abc)^*(acb)^*)^*$ ; $(abc+acb)^+$ / $((abc)^*(acb)^*)^+$ ; $(abc+acb)^*$ / $(abc(acb)^*)^*$ ; $(abc+acb)^*$ / $(a(bc)^*(cb)^*)^*$. Pour combien de couples a-t-on $L(e)=L(f)$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nÉgalité pour le **cinquième** couple ($a^*(bc+a^*cb)\\equiv a^*bc+a^*a^*cb\\equiv a^*bc+a^*cb$) et le **sixième** (identité $(e^*f^*)^*\\equiv(e+f)^*$). Les autres diffèrent : voir l'exercice suivant pour les contre-exemples.",
+     "src": "TD 2, ex. 3 (THLR, TD 2016-2017 et 2026)",
+     "variants": [
+      {
+       "enonce": "Même liste de neuf couples. Pour combien de couples a-t-on $L(e)\\subsetneq L(f)$ (inclusion stricte dans ce sens) ?",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\nCouples $2,3,4,7,9$ ; le couple $8$ est l'inclusion inverse ($f\\subsetneq e$) et le couple $1$ est incomparable."
+      }
+     ],
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q5",
+     "enonce": "Pour chacun des neuf couples de l'exercice précédent, dire si $L(e)=L(f)$, $L(e)\\subsetneq L(f)$, $L(e)\\supsetneq L(f)$ ou s'ils sont incomparables, et donner un mot qui sépare les deux langages.",
+     "sol": "- 1. $a^*b(ab)^*$ / $a^*(bab)^*$ : incomparables, mot qui sépare : $\\varepsilon$\n- 2. $a(bb)^*$ / $ab^*$ : inclusion stricte $L(e)\\subsetneq L(f)$, mot qui sépare : $\\mathtt{ab}$\n- 3. $a(a+b)^*b$ / $a^*(a+b)^*b^*$ : inclusion stricte $L(e)\\subsetneq L(f)$, mot qui sépare : $\\varepsilon$\n- 4. $abc+acb$ / $a(b+c)(c+b)$ : inclusion stricte $L(e)\\subsetneq L(f)$, mot qui sépare : $\\mathtt{abb}$\n- 5. $a^*bc+a^*cb$ / $a^*(bc+a^*cb)$ : égaux\n- 6. $(abc+acb)^*$ / $((abc)^*(acb)^*)^*$ : égaux\n- 7. $(abc+acb)(abc+acb)^*$ / $(abc)^*(acb)^*((abc)^*(acb)^*)^*$ : inclusion stricte $L(e)\\subsetneq L(f)$, mot qui sépare : $\\varepsilon$\n- 8. $(abc+acb)^*$ / $(abc(acb)^*)^*$ : inclusion stricte $L(e)\\supsetneq L(f)$, mot qui sépare : $\\mathtt{acb}$\n- 9. $(abc+acb)^*$ / $(a(bc)^*(cb)^*)^*$ : inclusion stricte $L(e)\\subsetneq L(f)$, mot qui sépare : $\\mathtt{a}$\n\nTous ces verdicts sont calculés exactement (automates déterminisés, produit, recherche du plus court mot de $L(e)\\setminus L(f)$ et de $L(f)\\setminus L(e)$).",
+     "src": "TD 2, ex. 3 (THLR, TD 2016-2017 et 2026)",
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "q6",
+     "enonce": "Quelle est la longueur du plus court mot qui appartient à exactement un des langages $L(a(bb)^*)$ et $L(ab^*)$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n$a$ et $abb$, $abbbb\\dots$ sont dans les deux ; $\\mathtt{ab}\\in L(ab^*)\\setminus L(a(bb)^*)$ : longueur $2$ (on a bien $L(a(bb)^*)\\subsetneq L(ab^*)$).",
+     "variants": [
+      {
+       "enonce": "Quelle est la longueur du plus court mot qui appartient à exactement un des langages $L\\big((abc+acb)^*\\big)$ et $L\\big((abc(acb)^*)^*\\big)$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$\\mathtt{acb}$ est dans le premier et pas dans le second (qui ne peut commencer que par $abc$) ; aucun mot plus court ne les sépare."
+      }
+     ],
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q7",
+     "enonce": "Vrai ou faux pour toutes expressions $e,f$ ? (a) $(e^*)^*\\equiv e^*$ ; (b) $(e+f)^*\\equiv e^*+f^*$ ; (c) $(ef)^*\\equiv e^*f^*$ ; (d) $(ef)^*e\\equiv e(fe)^*$ ; (e) $e^*e^*\\equiv e^*$.",
+     "sol": "**(a) Vrai.** **(b) Faux** : $e=a$, $f=b$ : $ab\\in L((a+b)^*)$ mais $ab\\notin L(a^*+b^*)$. **(c) Faux** : $e=a$, $f=b$ : $abab\\in L((ab)^*)$ mais $abab\\notin L(a^*b^*)$. **(d) Vrai** (les deux décrivent $e,efe,efefe,\\dots$). **(e) Vrai** (concaténer deux suites de mots de $L(e)$ donne une suite de mots de $L(e)$).\n\nContrôle exact sur $e=a$, $f=b$ : (a) vrai, (b) faux, (c) faux, (d) vrai, (e) vrai.",
+     "formules": "$(ef)^*e\\equiv e(fe)^*$ · $(e^*f^*)^*\\equiv(e+f)^*$ · $e^{**}\\equiv e^*$ · mot séparateur",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Écrire l'expression rationnelle d'un langage",
+   "notions": [
+    "rx-ecr"
+   ],
+   "exos": [
+    {
+     "id": "w1",
+     "enonce": "Alphabet $\\{a,b\\}$ : écrire une expression rationnelle des mots de longueur paire.",
+     "sol": "$$e=\\big((a+b)(a+b)\\big)^*$$ Une paire de lettres quelconques, répétée $0$ fois ou plus ($\\varepsilon$ est de longueur $0$, paire).\n\nVérifiée sur tous les mots de longueur $\\le10$.",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w2",
+     "enonce": "Alphabet $\\{0,1\\}$ : écrire une expression des entiers pairs écrits en binaire sans zéro en tête ($0$ s'écrit $0$).",
+     "sol": "$$e=0+1(0+1)^*0$$ Soit le mot $0$, soit un mot qui commence par $1$ et finit par $0$ (bit de poids faible nul : le nombre est pair).\n\nVérifiée : tous les mots de longueur $\\le12$ décrits par $e$ sont exactement ceux dont la valeur binaire est paire, sans zéro en tête.",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w3",
+     "enonce": "Alphabet $\\{a,b\\}$ : écrire une expression des mots qui ne contiennent pas deux $a$ consécutifs.",
+     "sol": "$$e=(b+ab)^*(\\varepsilon+a)$$ On lit des blocs $b$ ou $ab$ (un $a$ est toujours suivi d'un $b$), puis un $a$ final facultatif.\n\nVérifiée sur tous les mots de longueur $\\le11$.",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w4",
+     "enonce": "Alphabet $\\{a,b\\}$ : écrire une expression des mots qui contiennent exactement un nombre de $a$ multiple de $3$ (c'est-à-dire $0,3,6,\\dots$).",
+     "sol": "$$e=b^*(ab^*ab^*ab^*)^*$$ Les $a$ sont lus par groupes de trois, avec des $b$ libres partout.\n\nVérifiée sur tous les mots de longueur $\\le10$.",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w5",
+     "enonce": "Alphabet $\\Sigma=\\{-,0,1,\\dots,9\\}$ : écrire une expression des entiers relatifs écrits sans zéro en tête et sans $-0$ ($0$ s'écrit $0$).",
+     "sol": "$$e=0+(\\varepsilon+\\text{-})[1\\text{-}9][0\\text{-}9]^*$$ Soit $0$, soit un signe facultatif, un chiffre non nul, puis des chiffres quelconques. On lit l'énoncé comme : « $-$ en première position s'il apparaît, pas de $0$ en tête sauf pour $0$ » et on exclut $-0$.\n\nVérifiée sur tous les mots de longueur $\\le4$ de $\\Sigma^*$ contre `0|-?[1-9][0-9]*`.",
+     "src": "TD 2, ex. 1.1 (THLR, TD 2016-2017 et 2026)",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w6",
+     "enonce": "Alphabet des chiffres $\\{0,\\dots,9\\}$ : écrire une expression des entiers naturels multiples de $20$ écrits sans zéro en tête.",
+     "sol": "$$e=0+[1\\text{-}9][0\\text{-}9]^*(00+20+40+60+80)+(20+40+60+80)$$ Un multiple de $20$ est $0$ ou se termine par $00,20,40,60,80$ ; s'il a au moins trois chiffres, il commence par un chiffre non nul suivi de chiffres quelconques ; s'il en a deux, c'est $20,40,60,80$.\n\nVérifiée sur tous les mots de longueur $\\le4$ : décrits par $e$ si et seulement si `int(w) % 20 == 0` et pas de zéro en tête.",
+     "src": "TD 2, ex. 1.4 (THLR, TD 2016-2017 et 2026)",
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "w7",
+     "enonce": "Combien de mots de longueur $4$ le langage $L\\big(b^*ab^*ab^*\\big)$ contient-il ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nMots de longueur $4$ avec exactement deux $a$ : on choisit leurs positions, $\\binom42=6$.",
+     "variants": [
+      {
+       "enonce": "Combien de mots de longueur $5$ le langage $L\\big(b^*ab^*ab^*\\big)$ contient-il ?",
+       "ans": "10",
+       "sol": "**Réponse :** $10$\n\n$\\binom52=10$."
+      }
+     ],
+     "formules": "blocs concaténés · $+$ pour les cas · $^*$ pour les répétitions · test sur mots courts et $\\varepsilon$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Automates : le mot est-il accepté ? (DFA et NFA)",
+   "notions": [
+    "afd"
+   ],
+   "exos": [
+    {
+     "id": "a1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nLe DFA ci-dessus (alphabet $\\{a,b\\}$) accepte-t-il $\\mathtt{baabab}$ ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nLecture : $0\\xrightarrow b0\\xrightarrow a1\\xrightarrow a1\\xrightarrow b2\\xrightarrow a1\\xrightarrow b2$. On finit dans l'état final $2$ : mot accepté (le langage est « finit par $ab$ »).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nLe même DFA accepte-t-il $\\mathtt{abba}$ ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\n$0\\to1\\to2\\to0\\to1$ : état $1$ non final."
+      }
+     ],
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nDans le même DFA, dans quel état est-on après avoir lu $\\mathtt{abba}$ ?",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n$0\\xrightarrow a1\\xrightarrow b2\\xrightarrow b0\\xrightarrow a1$ : état $1$ (refusé, car $1$ n'est pas final).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nDans quel état est-on après avoir lu $\\mathtt{abab}$ ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$0\\to1\\to2\\to1\\to2$."
+      }
+     ],
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -b-> 2 ; 2 -a-> 3](/static/automates/thlr-ff15583bc128.svg)\n\nCe NFA a $0$ pour état initial et $3$ pour état final. Combien de chemins **acceptants** sont étiquetés par $\\mathtt{ababa}$ ?",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nPour finir en $3$ il faut lire $a$ de $2$ à $3$ en dernier, donc les trois dernières lettres $\\mathtt{aba}$ suivent $0\\to1\\to2\\to3$ ; le début $\\mathtt{ab}$ boucle en $0$. Un seul chemin. Il y a pourtant plusieurs chemins étiquetés $\\mathtt{ababa}$ au total : un seul chemin acceptant suffit pour accepter.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -b-> 2 ; 2 -a-> 3](/static/automates/thlr-ff15583bc128.svg)\n\nCombien de chemins acceptants sont étiquetés par $\\mathtt{abab}$ ?",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\nPour finir en $3$ il faut finir par $\\mathtt{aba}$ ; $\\mathtt{abab}$ finit par $\\mathtt{bab}$ : aucun."
+      }
+     ],
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a4",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -b-> 2 ; 2 -a-> 3](/static/automates/thlr-ff15583bc128.svg)\n\nQuelle est la longueur du plus court mot accepté par ce NFA ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nIl faut parcourir $0\\to1\\to2\\to3$ : mot $\\mathtt{aba}$, de longueur $3$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nQuelle est la longueur du plus court mot accepté par ce DFA ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$\\mathtt{ab}$."
+      }
+     ],
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a5",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nCombien de mots de longueur $4$ le DFA $D$ de la figure accepte-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nLes mots acceptés finissent par $ab$ : $\\mathtt{??ab}$, soit $2\\times2=4$ mots.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-68914cbed586.svg)\n\nCombien de mots de longueur $5$ ce DFA accepte-t-il ?",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\n$\\mathtt{???ab}$ : $2^3=8$."
+      }
+     ],
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a6",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -b-> 2 ; 1 -c-> 3 ; 3 -a-> 0](/static/automates/thlr-976ec7d9b51f.svg)\n\nPour chacun des mots $\\mathtt{ab}$, $\\mathtt{aca}$, $\\mathtt{acb}$, $\\mathtt{acaab}$, dire s'il est accepté et, s'il est refusé, dire de quelle façon.",
+     "sol": "- $\\mathtt{ab}$ : accepté\n- $\\mathtt{aca}$ : refusé (il existe un chemin, mais il se termine dans l'état 0, non final)\n- $\\mathtt{acb}$ : refusé (aucun chemin : il manque une arête)\n- $\\mathtt{acaab}$ : accepté\n\n**Deux façons de refuser un mot :** le chemin existe mais ne finit pas dans un état final ($\\mathtt{aca}$ finit en $0$), ou il n'y a pas de chemin du tout ($\\mathtt{acb}$ : depuis $3$ il n'y a pas d'arête $b$). Passer par un état final ne suffit pas : il faut y finir.",
+     "formules": "chemin de $I$ à $F$ étiqueté $w$ · DFA : un chemin au plus · deux façons de refuser",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Construire un automate pour un langage",
+   "notions": [
+    "afd-build"
+   ],
+   "exos": [
+    {
+     "id": "b1",
+     "enonce": "Alphabet $\\{a,b\\}$. Construire un DFA **complet** des mots qui commencent par $\\mathtt{ab}$.",
+     "sol": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 3 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 2 ; 3 -a-> 3 ; 3 -b-> 3](/static/automates/thlr-9e6b8ad693a7.svg)\n\nÉtats : $0$ rien lu de bon, $1$ on a lu $a$, $2$ on a lu $ab$ (final, absorbant), $3$ puits (début incorrect). Vérifié sur tous les mots de longueur $\\le10$ : DFA, complet, langage « commence par $ab$ ».",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "b2",
+     "enonce": "Alphabet $\\{a,b\\}$. Construire un NFA des mots qui finissent par $\\mathtt{ab}$ (le plus petit possible).",
+     "sol": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -b-> 2](/static/automates/thlr-609505210f34.svg)\n\nL'état $0$ boucle sur toutes les lettres (on lit le début quelconque), puis le NFA « devine » que les deux dernières lettres commencent : $a$ vers $1$, $b$ vers $2$ (final). Pas d'arête après $2$ : si le mot continue, ce chemin meurt. Vérifié sur tous les mots de longueur $\\le10$.",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "b3",
+     "enonce": "Alphabet $\\{a,b\\}$. Construire un NFA des mots dont la **troisième lettre avant la fin** est $a$ (par exemple $\\mathtt{abb}$ et $\\mathtt{bbaab}$).",
+     "sol": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2 ; 2 -a-> 3 ; 2 -b-> 3](/static/automates/thlr-7f08a8df3dda.svg)\n\nL'état $0$ boucle sur tout ; le NFA devine quel $a$ est le bon : il le lit vers $1$, puis deux lettres quelconques vers $2$ puis $3$ (final), de sorte qu'il reste exactement deux lettres après ce $a$. Vérifié sur tous les mots de longueur $\\le10$ (un mot de moins de $3$ lettres est refusé).",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "b4",
+     "enonce": "Alphabet $\\{0,1\\}$. Construire un DFA des écritures binaires des entiers multiples de $3$ (le mot vide, de valeur $0$, est accepté).",
+     "sol": "![Automate sur {0,1}, état initial 0, états finaux 0. Transitions : 0 -0-> 0 ; 0 -1-> 1 ; 1 -0-> 2 ; 1 -1-> 0 ; 2 -0-> 1 ; 2 -1-> 2](/static/automates/thlr-fc60eed03dc1.svg)\n\nL'état $r$ mémorise la valeur lue modulo $3$ : lire le bit $c$ transforme la valeur $v$ en $2v+c$, donc $r\\mapsto(2r+c)\\bmod3$. Initial et final : $0$. Vérifié sur tous les mots de longueur $\\le12$ contre `int(w, 2) % 3 == 0`.",
+     "src": "DM 3, ex. 2 (THLR, DM 2016-2017)",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "b5",
+     "enonce": "Alphabet $\\{a,b\\}$. Construire un DFA des mots qui ont un nombre pair de $a$ **et** un nombre impair de $b$.",
+     "sol": "![Automate sur {a,b}, état initial 00, états finaux 01. Transitions : 00 -a-> 10 ; 00 -b-> 01 ; 10 -a-> 00 ; 10 -b-> 11 ; 01 -a-> 11 ; 01 -b-> 00 ; 11 -a-> 01 ; 11 -b-> 10](/static/automates/thlr-a697e37ad4c8.svg)\n\nL'état note la parité de $(|w|_a,|w|_b)$ : $a$ change la première, $b$ la seconde. Initial $00$, final $01$ (pair, impair). Quatre états, c'est le produit de deux automates à deux états. Vérifié sur tous les mots de longueur $\\le10$.",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "b6",
+     "enonce": "Un DFA **complet** a $5$ états sur l'alphabet $\\{a,b,c\\}$. Combien a-t-il de transitions ?",
+     "ans": "15",
+     "sol": "**Réponse :** $15$\n\nExactement une arête par couple (état, lettre) : $5\\times3=15$.",
+     "variants": [
+      {
+       "enonce": "Un DFA **complet** a $7$ états sur $\\{a,b\\}$. Combien a-t-il de transitions ?",
+       "ans": "14",
+       "sol": "**Réponse :** $14$\n\n$7\\times2=14$."
+      }
+     ],
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Complétion et complément d'un DFA",
+   "notions": [
+    "compl"
+   ],
+   "exos": [
+    {
+     "id": "c1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -a-> 1 ; 1 -b-> 2](/static/automates/thlr-03e507e5da18.svg)\n\nCe DFA (alphabet $\\{a,b\\}$) est incomplet. On le complète avec un état puits. Combien de transitions l'automate complet a-t-il ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\nIl y a maintenant $4$ états ($0,1,2$ et le puits) et $2$ lettres : une arête par couple (état, lettre), soit $4\\times2=8$. Les $3$ arêtes d'origine restent ; on ajoute $(0,b)$, $(2,a)$, $(2,b)$ vers le puits, plus les deux boucles du puits : $3+5=8$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 1 -b-> 1](/static/automates/thlr-3c09d3148020.svg)\n\nOn complète ce DFA avec un puits. Combien de transitions l'automate complet a-t-il ?",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$3$ états $\\times$ $2$ lettres."
+      }
+     ],
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -a-> 1 ; 1 -b-> 2](/static/automates/thlr-03e507e5da18.svg)\n\nOn complète ce DFA puis on échange états finaux et non finaux. Combien de mots de longueur $\\le3$ le DFA obtenu accepte-t-il ?",
+     "ans": "13",
+     "sol": "**Réponse :** $13$\n\nIl reconnaît le complément de $L(I_1)=\\{a^nb\\mid n\\ge1\\}$. Parmi les $15$ mots de longueur $\\le3$, deux sont dans $L(I_1)$ ($\\mathtt{ab}$, $\\mathtt{aab}$) : $15-2=13$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 1 -b-> 1](/static/automates/thlr-3c09d3148020.svg)\n\nOn complète puis on prend le complément. Combien de mots de longueur $\\le3$ ce DFA accepte-t-il ?",
+       "ans": "12",
+       "sol": "**Réponse :** $12$\n\n$L(I_2)=\\{ab^n\\}$ : $a,ab,abb$ de longueur $\\le3$ ; $15-3=12$."
+      }
+     ],
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -a-> 1 ; 1 -b-> 2](/static/automates/thlr-03e507e5da18.svg)\n\nLe complément de $L(I_1)$ (calculé sur le DFA complété) contient-il $\\mathtt{aab}$ ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "0",
+     "sol": "**Réponse :** $0$\n\n$\\mathtt{aab}\\in L(I_1)$, donc il n'est pas dans le complément.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 1 -b-> 1](/static/automates/thlr-3c09d3148020.svg)\n\nLe complément de $L(I_2)$ contient-il $\\mathtt b$ ? ($1$ oui, $0$ non)",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n$\\mathtt b\\notin L(ab^*)$, donc il est dans le complément."
+      }
+     ],
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c4",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -a-> 1 ; 1 -b-> 2](/static/automates/thlr-03e507e5da18.svg)\n\nCombien d'états finaux le DFA complément (du DFA complété) a-t-il ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nLe DFA complété a $4$ états dont $1$ final ($2$) ; le complément a pour finaux les $3$ autres : $0,1$ et le puits.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 1 -b-> 1](/static/automates/thlr-3c09d3148020.svg)\n\nCombien d'états finaux le DFA complément (du DFA complété) a-t-il ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$3$ états dont $1$ final ; le complément a $2$ finaux."
+      }
+     ],
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c5",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 1 -b-> 1](/static/automates/thlr-3c09d3148020.svg)\n\nAlphabet $\\{a,b\\}$. Compléter ce DFA puis construire un DFA du langage complémentaire.",
+     "sol": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 2 ; 1 -a-> 2 ; 1 -b-> 1 ; 2 -a-> 2 ; 2 -b-> 2](/static/automates/thlr-fc2c01fe1937.svg)\n\nDFA complet : on ajoute le puits $2$ (arêtes $(0,b)$, $(1,a)$ et ses deux boucles).\n\n![Automate sur {a,b}, état initial 0, états finaux 0,2. Transitions : 0 -a-> 1 ; 0 -b-> 2 ; 1 -a-> 2 ; 1 -b-> 1 ; 2 -a-> 2 ; 2 -b-> 2](/static/automates/thlr-359521219e27.svg)\n\nComplément : on échange finaux et non finaux, finaux $\\{0,2\\}$. Il reconnaît $\\Sigma^*\\setminus L(ab^*)$. Vérifié sur tous les mots de longueur $\\le9$.",
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "c6",
+     "enonce": "Pourquoi faut-il un DFA **complet** pour échanger états finaux et non finaux ? Et pourquoi **déterministe** ? Donner un contre-exemple pour chaque condition.",
+     "sol": "**Complet.** Dans le DFA incomplet $I_1$ ci-dessus, le mot $\\mathtt{b}$ n'a pas de chemin : il est refusé. Après échange des finaux sans compléter, il serait encore refusé (aucun chemin), alors qu'il est dans le complément. **Déterministe.** Le NFA $N$ : états $0,1$, arêtes $0\\xrightarrow a0$ et $0\\xrightarrow a1$, initial $0$, final $1$. $L(N)=\\{a^n\\mid n\\ge1\\}$. En échangeant les finaux (final $0$), le mot $\\mathtt a$ est encore accepté (chemin $0\\to0$), alors qu'il est dans $L(N)$ : ce n'est pas le complément. Vérifié : le NFA échangé accepte $\\mathtt{a}$, comme le NFA initial.",
+     "formules": "complet : $(n+1)k$ transitions avec puits · complément : échanger $F$ et $Q\\setminus F$ (DFA complet)",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Algorithme de Thompson : de l'expression à l'ε-NFA",
+   "notions": [
+    "thompson"
+   ],
+   "exos": [
+    {
+     "id": "t1",
+     "enonce": "Combien d'états l'automate de Thompson de $e=(a+b)^*abb$ a-t-il ?",
+     "ans": "14",
+     "sol": "**Réponse :** $14$\n\nOccurrences de lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$ (concaténations exclues) : $5$ lettres, un $+$, une étoile : $n=7$. Il y a $2n=14$ états.",
+     "variants": [
+      {
+       "enonce": "Combien d'états l'automate de Thompson de $(ab+c)^*a$ a-t-il ?",
+       "ans": "12",
+       "sol": "**Réponse :** $12$\n\n$4$ lettres, un $+$, une étoile : $n=6$, soit $12$ états."
+      }
+     ],
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t2",
+     "enonce": "Combien de transitions spontanées ($\\varepsilon$) l'automate de Thompson de $(a+b)^*abb$ a-t-il ?",
+     "ans": "11",
+     "sol": "**Réponse :** $11$\n\nLe $+$ en ajoute $4$, l'étoile $4$, chacune des $3$ concaténations $1$ : $4+4+3=11$.",
+     "variants": [
+      {
+       "enonce": "Combien de transitions spontanées l'automate de Thompson de $(ab+c)^*a$ a-t-il ?",
+       "ans": "10",
+       "sol": "**Réponse :** $10$\n\n$4$ ($+$) $+4$ (étoile) $+2$ concaténations (entre $a$ et $b$, entre l'étoile et $a$) $=10$."
+      }
+     ],
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t3",
+     "enonce": "Combien de transitions étiquetées par une lettre l'automate de Thompson de $(a+b)^*abb$ a-t-il ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nUne par occurrence de lettre dans l'expression : $a,b,a,b,b$ soit $5$.",
+     "variants": [
+      {
+       "enonce": "Combien de transitions étiquetées par une lettre l'automate de Thompson de $(ab+c)^*a$ a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nUne par lettre : $a,b,c,a$."
+      }
+     ],
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t4",
+     "enonce": "Alphabet $\\{a,b,c\\}$. Construire avec l'algorithme de Thompson un ε-NFA de $c(ab+c)$ (numéroter les états dans l'ordre de construction).",
+     "sol": "Expression $e=c(ab+c)$ : $n=5$ (lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$, sans les concaténations), donc l'automate a $2n=10$ états. On construit chaque sous-expression avec deux nouveaux états (entrée, sortie), on relie par $\\varepsilon$ la sortie de $e_1$ à l'entrée de $e_2$ pour une concaténation, et on ajoute deux états et quatre $\\varepsilon$ pour $+$ et $*$ (l'étoile ajoute $i\\to f$ pour le mot vide et $f_1\\to i_1$ pour répéter). États numérotés dans l'ordre de construction.\n\nÉtat initial $0$, état final $9$. Transitions : $0\\xrightarrow{c}1, 1\\xrightarrow{\\varepsilon}8, 2\\xrightarrow{a}3, 3\\xrightarrow{\\varepsilon}4, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}9, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}2, 8\\xrightarrow{\\varepsilon}6$.\n\nVérifié : cet automate accepte exactement les mots de $L(e)$ de longueur $\\le7$ (comparaison avec `re`), et $|Q|=10=2n$.",
+     "src": "TD 3, ex. 3.1 (THLR, TD 2016-2017 et 2026)",
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "t5",
+     "enonce": "Alphabet $\\{a,b,c\\}$. Calculer avec l'algorithme de Thompson un ε-NFA de $a^*+bc$.",
+     "sol": "Expression $e=a^*+bc$ : $n=5$ (lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$, sans les concaténations), donc l'automate a $2n=10$ états. On construit chaque sous-expression avec deux nouveaux états (entrée, sortie), on relie par $\\varepsilon$ la sortie de $e_1$ à l'entrée de $e_2$ pour une concaténation, et on ajoute deux états et quatre $\\varepsilon$ pour $+$ et $*$ (l'étoile ajoute $i\\to f$ pour le mot vide et $f_1\\to i_1$ pour répéter). États numérotés dans l'ordre de construction.\n\nÉtat initial $8$, état final $9$. Transitions : $0\\xrightarrow{a}1, 1\\xrightarrow{\\varepsilon}0, 1\\xrightarrow{\\varepsilon}3, 2\\xrightarrow{\\varepsilon}0, 2\\xrightarrow{\\varepsilon}3, 3\\xrightarrow{\\varepsilon}9, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}6, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}2, 8\\xrightarrow{\\varepsilon}4$.\n\nVérifié : cet automate accepte exactement les mots de $L(e)$ de longueur $\\le7$ (comparaison avec `re`), et $|Q|=10=2n$.",
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "t6",
+     "enonce": "Alphabet $\\{a,b,c\\}$. Calculer avec l'algorithme de Thompson un ε-NFA de $(a^*+bc^*)b$.",
+     "sol": "Expression $e=(a^*+bc^*)b$ : $n=7$ (lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$, sans les concaténations), donc l'automate a $2n=14$ états. On construit chaque sous-expression avec deux nouveaux états (entrée, sortie), on relie par $\\varepsilon$ la sortie de $e_1$ à l'entrée de $e_2$ pour une concaténation, et on ajoute deux états et quatre $\\varepsilon$ pour $+$ et $*$ (l'étoile ajoute $i\\to f$ pour le mot vide et $f_1\\to i_1$ pour répéter). États numérotés dans l'ordre de construction.\n\nÉtat initial $10$, état final $13$. Transitions : $0\\xrightarrow{a}1, 1\\xrightarrow{\\varepsilon}0, 1\\xrightarrow{\\varepsilon}3, 2\\xrightarrow{\\varepsilon}0, 2\\xrightarrow{\\varepsilon}3, 3\\xrightarrow{\\varepsilon}11, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}8, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}6, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}6, 8\\xrightarrow{\\varepsilon}9, 9\\xrightarrow{\\varepsilon}11, 10\\xrightarrow{\\varepsilon}2, 10\\xrightarrow{\\varepsilon}4, 11\\xrightarrow{\\varepsilon}12, 12\\xrightarrow{b}13$.\n\nVérifié : cet automate accepte exactement les mots de $L(e)$ de longueur $\\le7$ (comparaison avec `re`), et $|Q|=14=2n$.",
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Suppression des ε-transitions (clôtures, retour arrière)",
+   "notions": [
+    "eps"
+   ],
+   "exos": [
+    {
+     "id": "k1",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nCombien d'états la $\\varepsilon$-clôture avant de l'état $0$ contient-elle ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\n$0\\xrightarrow\\varepsilon1\\xrightarrow\\varepsilon2$ : $\\{0,1,2\\}$ (un état est toujours dans sa propre clôture).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nCombien d'états la $\\varepsilon$-clôture avant de l'état $1$ contient-elle ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$\\{1,2\\}$."
+      }
+     ],
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k2",
+     "enonce": "![Automate sur {a}, état initial 0, états finaux 3. Transitions : 0 -ε-> 1 ; 1 -a-> 2 ; 2 -ε-> 3](/static/automates/thlr-2eada1f11471.svg)\n\nOn supprime les $\\varepsilon$-transitions de cet automate (retour arrière). Combien d'états finaux l'automate obtenu a-t-il ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nUn état devient final si sa clôture contient un état final : $\\{3\\}$ pour $2$ ($2\\xrightarrow\\varepsilon3$) et pour $3$ ; $0$ et $1$ ne rejoignent pas $3$ par $\\varepsilon$. Finaux : $2$ et $3$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nOn supprime les $\\varepsilon$-transitions (retour arrière). Combien d'états finaux l'automate obtenu a-t-il ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nChaque clôture contient l'état final $2$ : $0,1,2$ deviennent finals."
+      }
+     ],
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k3",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nCombien de transitions étiquetées par une lettre l'automate sans $\\varepsilon$ obtenu par retour arrière a-t-il ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nClôtures : $\\mathrm{cl}(0)=\\{0,1,2\\}$, $\\mathrm{cl}(1)=\\{1,2\\}$, $\\mathrm{cl}(2)=\\{2\\}$. Depuis $0$ : $a\\to0$, $b\\to1$, $c\\to2$ ; depuis $1$ : $b\\to1$, $c\\to2$ ; depuis $2$ : $c\\to2$. Total $3+2+1=6$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a}, état initial 0, états finaux 3. Transitions : 0 -ε-> 1 ; 1 -a-> 2 ; 2 -ε-> 3](/static/automates/thlr-2eada1f11471.svg)\n\nCombien de transitions étiquetées par une lettre l'automate sans $\\varepsilon$ obtenu a-t-il ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\n$\\mathrm{cl}(0)=\\{0,1\\}$ donne $0\\xrightarrow a2$ ; $1\\xrightarrow a2$ existe déjà ; $\\mathrm{cl}(2)=\\{2,3\\}$ ne donne rien : $2$ arêtes."
+      }
+     ],
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k4",
+     "enonce": "Table des clôtures de l'automate à $4$ états dont les $\\varepsilon$-arêtes sont $0\\to1,\\ 0\\to3,\\ 1\\to2,\\ 2\\to3,\\ 3\\to0$ : colonne $0$ = $\\{q\\}$ et ses successeurs directs, colonne $i+1$ = union des cellules de la colonne $i$. À quelle colonne $i$ la table est-elle stable (colonne $i$ = colonne $i+1$) ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nColonne 0 : $0:\\{0,1,3\\}$, $1:\\{1,2\\}$, $2:\\{2,3\\}$, $3:\\{0,3\\}$. Colonne 1 : $0:\\{0,1,2,3\\}$, $1:\\{1,2,3\\}$, $2:\\{0,2,3\\}$, $3:\\{0,1,3\\}$. Colonne 2 : tous les états ont $\\{0,1,2,3\\}$. La colonne 3 est identique à la 2 : point fixe atteint en $i=2$.",
+     "variants": [
+      {
+       "enonce": "Même question pour l'automate à $3$ états dont les $\\varepsilon$-arêtes sont $0\\to1$, $1\\to2$, $2\\to0$ : à quelle colonne $i$ la table des clôtures est-elle stable ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\nColonne 0 : $\\{0,1\\},\\{1,2\\},\\{2,0\\}$ ; colonne 1 : tous les états ont $\\{0,1,2\\}$ ; la colonne 2 est identique : $i=1$."
+      }
+     ],
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k5",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nSupprimer les $\\varepsilon$-transitions de cet automate (alphabet $\\{a,b,c\\}$) avec la méthode du cours : table des clôtures, nouvelles arêtes, nouveaux états finaux.",
+     "sol": "Clôtures : $\\mathrm{cl}(0)=\\{0,1,2\\}$, $\\mathrm{cl}(1)=\\{1,2\\}$, $\\mathrm{cl}(2)=\\{2\\}$. Pour chaque $q$ et chaque $p\\in\\mathrm{cl}(q)$, une arête $p\\xrightarrow ar$ donne $q\\xrightarrow ar$ ; tout état dont la clôture contient $2$ devient final.\n\n![Automate sur {a,b,c}, état initial 0, états finaux 0,1,2. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 0 -c-> 2 ; 1 -b-> 1 ; 1 -c-> 2 ; 2 -c-> 2](/static/automates/thlr-afdca0f6be19.svg)\n\nFinaux : $\\{0,1,2\\}$ (la clôture de chaque état contient $2$). Même nombre d'états, aucune $\\varepsilon$, langage $a^*b^*c^*$ ; vérifié sur tous les mots de longueur $\\le8$.",
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "k6",
+     "enonce": "Alphabet $\\{a,b,c\\}$. Soit $T$ l'automate de Thompson de $a^*+bc$ (état initial $8$, final $9$ dans la numérotation de construction). Calculer la clôture de chaque état, puis l'automate sans $\\varepsilon$.",
+     "sol": "Transitions de $T$ : $0\\xrightarrow{a}1, 1\\xrightarrow{\\varepsilon}0, 1\\xrightarrow{\\varepsilon}3, 2\\xrightarrow{\\varepsilon}0, 2\\xrightarrow{\\varepsilon}3, 3\\xrightarrow{\\varepsilon}9, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}6, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}2, 8\\xrightarrow{\\varepsilon}4$, initial $\\{8\\}$, final $\\{9\\}$.\n\nClôtures : $\\mathrm{cl}(0)=\\{0\\}$, $\\mathrm{cl}(1)=\\{0,1,3,9\\}$, $\\mathrm{cl}(2)=\\{0,2,3,9\\}$, $\\mathrm{cl}(3)=\\{3,9\\}$, $\\mathrm{cl}(4)=\\{4\\}$, $\\mathrm{cl}(5)=\\{5,6\\}$, $\\mathrm{cl}(6)=\\{6\\}$, $\\mathrm{cl}(7)=\\{7,9\\}$, $\\mathrm{cl}(8)=\\{0,2,3,4,8,9\\}$, $\\mathrm{cl}(9)=\\{9\\}$.\n\nAprès retour arrière : $0\\xrightarrow{a}1, 1\\xrightarrow{a}1, 2\\xrightarrow{a}1, 4\\xrightarrow{b}5, 5\\xrightarrow{c}7, 6\\xrightarrow{c}7, 8\\xrightarrow{a}1, 8\\xrightarrow{b}5$, états finaux $\\{1,2,3,7,8,9\\}$ (ceux dont la clôture contient $9$). Les états devenus inutiles sont supprimés à l'étape suivante (émondage). Vérifié : $R$ n'a pas de $\\varepsilon$ et reconnaît le même langage que $T$ (équivalence exacte).",
+     "formules": "clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Émondage : états accessibles, co-accessibles, utiles",
+   "notions": [
+    "emond"
+   ],
+   "exos": [
+    {
+     "id": "g1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 4. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -b-> 2 ; 2 -a-> 4 ; 3 -a-> 3 ; 4 -b-> 1 ; 5 -a-> 4](/static/automates/thlr-b734853da922.svg)\n\nCombien d'états utiles (à la fois accessibles et co-accessibles) cet automate (initial $0$, final $4$) a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nAccessibles : $0,1,2,4,3$ (pas $5$). Co-accessibles : $4,2,1,0,5$ (pas $3$ : il boucle sur $a$ sans atteindre $4$). Utiles : $\\{0,1,2,4\\}$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 2 ; 2 -b-> 2 ; 3 -b-> 3 ; 4 -a-> 2](/static/automates/thlr-35f1e6f5ffea.svg)\n\nCombien d'états utiles cet automate (initial $0$, final $2$) a-t-il ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nAccessibles $0,1,2,3$ ; co-accessibles $0,1,2,4$ ; utiles $0,1,2$."
+      }
+     ],
+     "formules": "accessible · co-accessible · utile = les deux · l'émondé garde les utiles",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 4. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -b-> 2 ; 2 -a-> 4 ; 3 -a-> 3 ; 4 -b-> 1 ; 5 -a-> 4](/static/automates/thlr-b734853da922.svg)\n\nCombien d'états accessibles ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nDepuis $0$ on atteint $1,3$ puis $2$ puis $4$ : $\\{0,1,2,3,4\\}$ ; $5$ n'a pas d'arête entrante.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 2 ; 2 -b-> 2 ; 3 -b-> 3 ; 4 -a-> 2](/static/automates/thlr-35f1e6f5ffea.svg)\n\nCombien d'états accessibles ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n$\\{0,1,2,3\\}$ ($4$ n'a pas d'arête entrante)."
+      }
+     ],
+     "formules": "accessible · co-accessible · utile = les deux · l'émondé garde les utiles",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 4. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -b-> 2 ; 2 -a-> 4 ; 3 -a-> 3 ; 4 -b-> 1 ; 5 -a-> 4](/static/automates/thlr-b734853da922.svg)\n\nCombien d'états co-accessibles ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nParcours depuis $4$ en remontant les arêtes : $4$, puis $2$ et $5$ ($2\\to4$, $5\\to4$), puis $1$ (par $1\\to2$ et $4\\to1$), puis $0$ : $\\{0,1,2,4,5\\}$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 2 ; 2 -b-> 2 ; 3 -b-> 3 ; 4 -a-> 2](/static/automates/thlr-35f1e6f5ffea.svg)\n\nCombien d'états co-accessibles ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n$\\{0,1,2,4\\}$ ($3$ ne mène qu'à lui-même)."
+      }
+     ],
+     "formules": "accessible · co-accessible · utile = les deux · l'émondé garde les utiles",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g4",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 4. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -b-> 2 ; 2 -a-> 4 ; 3 -a-> 3 ; 4 -b-> 1 ; 5 -a-> 4](/static/automates/thlr-b734853da922.svg)\n\nCombien de transitions l'automate émondé a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nOn garde $0,1,2,4$ et les arêtes entre eux : $0\\xrightarrow a1$, $1\\xrightarrow b2$, $2\\xrightarrow a4$, $4\\xrightarrow b1$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 2 ; 2 -b-> 2 ; 3 -b-> 3 ; 4 -a-> 2](/static/automates/thlr-35f1e6f5ffea.svg)\n\nCombien de transitions l'automate émondé a-t-il ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$0\\xrightarrow a1$, $1\\xrightarrow a2$, $2\\xrightarrow b2$."
+      }
+     ],
+     "formules": "accessible · co-accessible · utile = les deux · l'émondé garde les utiles",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g5",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 2 ; 2 -b-> 2 ; 3 -b-> 3 ; 4 -a-> 2](/static/automates/thlr-35f1e6f5ffea.svg)\n\nÉmonder cet automate (initial $0$, final $2$) : donner les états accessibles, co-accessibles, l'automate émondé.",
+     "sol": "Accessibles : $\\{0,1,2,3\\}$ (le $4$ n'a pas d'arête entrante). Co-accessibles : $\\{0,1,2,4\\}$ (le $3$ ne mène qu'à lui-même). Utiles : $\\{0,1,2\\}$.\n\n![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -a-> 2 ; 2 -b-> 2](/static/automates/thlr-650c7aafc0dd.svg)\n\nLe langage ne change pas ($aab^*$) ; vérifié par équivalence exacte et sur tous les mots de longueur $\\le8$.",
+     "formules": "accessible · co-accessible · utile = les deux · l'émondé garde les utiles",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "titre": "Déterminisation : construction des sous-ensembles",
+   "notions": [
+    "det"
+   ],
+   "exos": [
+    {
+     "id": "s1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2](/static/automates/thlr-dcd6d4cf8713.svg)\n\nCe NFA (initial $0$, final $2$) reconnaît les mots dont l'avant-dernière lettre est $a$. Combien d'états a le DFA obtenu par déterminisation ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nEnsembles atteints : $\\{0\\}$, $\\{0,1\\}$, $\\{0,1,2\\}$, $\\{0,2\\}$ : $4$ états, soit $2^2$ (borne $2^3=8$ non atteinte).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -b-> 2 ; 2 -a-> 3](/static/automates/thlr-ff15583bc128.svg)\n\nCe NFA reconnaît les mots (alphabet $\\{a,b\\}$) qui finissent par $\\mathtt{aba}$. Combien d'états le DFA déterminisé a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nOn retient la longueur du plus long suffixe qui est préfixe de $\\mathtt{aba}$ : $0,1,2,3$ : $4$ états."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2 ; 2 -a-> 3 ; 2 -b-> 3](/static/automates/thlr-7f08a8df3dda.svg)\n\nCe NFA reconnaît les mots dont la troisième lettre avant la fin est $a$. Combien d'états le DFA déterminisé a-t-il ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\nTous les ensembles qui contiennent $0$ sont atteints : $2^3=8$ (la mémoire retient les trois dernières lettres).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 4. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2 ; 2 -a-> 3 ; 2 -b-> 3 ; 3 -a-> 4 ; 3 -b-> 4](/static/automates/thlr-0b5eeb2e0cf2.svg)\n\nCe NFA reconnaît les mots dont la quatrième lettre avant la fin est $a$. Combien d'états le DFA déterminisé a-t-il ?",
+       "ans": "16",
+       "sol": "**Réponse :** $16$\n\n$2^4=16$ : on retient les quatre dernières lettres."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2 ; 2 -a-> 3 ; 2 -b-> 3](/static/automates/thlr-7f08a8df3dda.svg)\n\nCombien d'états **finaux** le DFA déterminisé de ce NFA a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nUn ensemble est final s'il contient $3$ ; parmi les $8$ ensembles contenant $0$, ceux qui contiennent aussi $3$ sont au nombre de $2^2=4$ ($1$ et $2$ libres).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2](/static/automates/thlr-dcd6d4cf8713.svg)\n\nCombien d'états finaux le DFA déterminisé de ce NFA (final $2$) a-t-il ?",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nLes ensembles qui contiennent $2$ : $\\{0,1,2\\}$ et $\\{0,2\\}$."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s4",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2](/static/automates/thlr-dcd6d4cf8713.svg)\n\nDans la déterminisation de ce NFA, quel est le cardinal de l'état atteint depuis $\\{0,1\\}$ en lisant $b$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n$\\delta(0,b)=\\{0\\}$ et $\\delta(1,b)=\\{2\\}$ : $\\{0,2\\}$, de cardinal $2$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2](/static/automates/thlr-dcd6d4cf8713.svg)\n\nQuel est le cardinal de l'état atteint depuis $\\{0,1,2\\}$ en lisant $a$ ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$\\delta(0,a)=\\{0,1\\}$, $\\delta(1,a)=\\{2\\}$, $\\delta(2,a)=\\varnothing$ : $\\{0,1,2\\}$."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s5",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 4. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 0 -c-> 0 ; 1 -b-> 2 ; 2 -a-> 3 ; 3 -b-> 4](/static/automates/thlr-efb4dfac9234.svg)\n\nAlphabet $\\{a,b,c\\}$. Ce NFA reconnaît les mots qui finissent par $\\mathtt{abab}$. Combien d'états le DFA déterminisé a-t-il ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nOn retient la longueur du plus long suffixe du mot lu qui est préfixe de $\\mathtt{abab}$ : $0,1,2,3,4$ : $5$ états (le DFA est complet, aucun puits).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 3. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 0 -c-> 0 ; 1 -b-> 2 ; 2 -a-> 3](/static/automates/thlr-3eb27cf191be.svg)\n\nAlphabet $\\{a,b,c\\}$ ; ce NFA reconnaît les mots qui finissent par $\\mathtt{aba}$. Combien d'états le DFA déterminisé a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nLongueur du plus long suffixe qui est préfixe de $\\mathtt{aba}$ : $4$ états."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s6",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 2 ; 1 -b-> 2](/static/automates/thlr-dcd6d4cf8713.svg)\n\nDéterminiser ce NFA (alphabet $\\{a,b\\}$) : donner la table complète et le DFA.",
+     "sol": "Table des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|cc}\\text{état} & a & b\\\\\\hline \\rightarrow\\;\\{0\\} & \\{0,1\\} & \\{0\\}\\\\ \\;\\{0,1\\} & \\{0,1,2\\} & \\{0,2\\}\\\\ *\\;\\{0,1,2\\} & \\{0,1,2\\} & \\{0,2\\}\\\\ *\\;\\{0,2\\} & \\{0,1\\} & \\{0\\}\\end{array}$$Le DFA est **complet** et a **4 états**.\n\n![Automate sur {a,b}, état initial A, états finaux C,D. Transitions : A -a-> B ; A -b-> A ; B -a-> C ; B -b-> D ; C -a-> C ; C -b-> D ; D -a-> B ; D -b-> A](/static/automates/thlr-7bfdc3d56709.svg)\n\nLégende : $A=\\{0\\}$, $B=\\{0,1\\}$, $C=\\{0,1,2\\}$, $D=\\{0,2\\}$.",
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "s7",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 4. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -b-> 0 ; 0 -c-> 0 ; 1 -b-> 2 ; 2 -a-> 3 ; 3 -b-> 4](/static/automates/thlr-efb4dfac9234.svg)\n\nAlphabet $\\{a,b,c\\}$. Soit $L$ le langage des mots qui ont $m=\\mathtt{abab}$ pour suffixe. Le NFA ci-dessus le reconnaît. Le transformer en un DFA complet équivalent en détaillant la table, puis expliquer pourquoi il est complet et émondé.",
+     "sol": "Table des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|ccc}\\text{état} & a & b & c\\\\\\hline \\rightarrow\\;\\{0\\} & \\{0,1\\} & \\{0\\} & \\{0\\}\\\\ \\;\\{0,1\\} & \\{0,1\\} & \\{0,2\\} & \\{0\\}\\\\ \\;\\{0,2\\} & \\{0,1,3\\} & \\{0\\} & \\{0\\}\\\\ \\;\\{0,1,3\\} & \\{0,1\\} & \\{0,2,4\\} & \\{0\\}\\\\ *\\;\\{0,2,4\\} & \\{0,1,3\\} & \\{0\\} & \\{0\\}\\end{array}$$Le DFA est **complet** et a **5 états**.\n\n**Pourquoi complet et émondé.** Complet : la construction définit un successeur (éventuellement $\\varnothing$) pour chaque ensemble et chaque lettre. Émondé : tout ensemble est atteint par construction (accessible) et on peut en sortir vers un ensemble final en lisant $\\mathtt{abab}$ puisque $0$ est dans chaque ensemble (co-accessible) : aucun état inutile, donc aucun puits.",
+     "src": "TD 4, ex. 3.1-3.3 (THLR, TD 2016-2017 et 2026)",
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "s8",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -a-> 0 ; 0 -a-> 1 ; 0 -c-> 0 ; 1 -b-> 2 ; 1 -c-> 1 ; 2 -a-> 2](/static/automates/thlr-c0a38207d8a3.svg)\n\nAlphabet $\\{a,b,c\\}$. Déterminiser ce NFA (initial $0$, final $2$).",
+     "sol": "Table des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|ccc}\\text{état} & a & b & c\\\\\\hline \\rightarrow\\;\\{0\\} & \\{0,1\\} & \\varnothing & \\{0\\}\\\\ \\;\\{0,1\\} & \\{0,1\\} & \\{2\\} & \\{0,1\\}\\\\ \\;\\varnothing & \\varnothing & \\varnothing & \\varnothing\\\\ *\\;\\{2\\} & \\{2\\} & \\varnothing & \\varnothing\\end{array}$$Le DFA est **complet** et a **4 états**.",
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "s9",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -ε-> 1 ; 0 -a-> 0 ; 1 -ε-> 2 ; 1 -b-> 1 ; 2 -c-> 2](/static/automates/thlr-bdbf013501c2.svg)\n\nDéterminiser cet $\\varepsilon$-NFA (alphabet $\\{a,b,c\\}$) : que faut-il faire d'abord ?",
+     "sol": "Les sous-ensembles se calculent sur un automate **sans** $\\varepsilon$ : on supprime d'abord les $\\varepsilon$ (exercice précédent : finaux $\\{0,1,2\\}$, arêtes $0\\xrightarrow a0$, $0\\xrightarrow b1$, $0\\xrightarrow c2$, $1\\xrightarrow b1$, $1\\xrightarrow c2$, $2\\xrightarrow c2$), puis on applique la table.\n\nTable des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|ccc}\\text{état} & a & b & c\\\\\\hline \\rightarrow*\\;\\{0\\} & \\{0\\} & \\{1\\} & \\{2\\}\\\\ *\\;\\{1\\} & \\varnothing & \\{1\\} & \\{2\\}\\\\ *\\;\\{2\\} & \\varnothing & \\varnothing & \\{2\\}\\\\ \\;\\varnothing & \\varnothing & \\varnothing & \\varnothing\\end{array}$$Le DFA est **complet** et a **4 états**.\n\nLangage $a^*b^*c^*$ : vérifié sur tous les mots de longueur $\\le8$.",
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "s10",
+     "enonce": "Combien d'états le DFA **minimal** du langage « la troisième lettre avant la fin est $a$ » (alphabet $\\{a,b\\}$) a-t-il ?",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\nLe DFA déterminisé a $8$ états ; deux ensembles distincts sont distingués par une suite de $3$ lettres bien choisie, donc il est déjà minimal : $8=2^3$. Pour « la $n$-ième lettre avant la fin », $2^n$ : un NFA à $n+1$ états donne un DFA à $2^n$ états, l'explosion est inévitable.",
+     "variants": [
+      {
+       "enonce": "Combien d'états le DFA complet minimal du langage « la quatrième lettre avant la fin est $a$ » a-t-il ?",
+       "ans": "16",
+       "sol": "**Réponse :** $16$\n\n$2^4=16$."
+      }
+     ],
+     "formules": "$S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 17,
+   "titre": "Minimisation d'un DFA (Moore)",
+   "notions": [
+    "min"
+   ],
+   "exos": [
+    {
+     "id": "h1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 5. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 4 ; 2 -b-> 5 ; 3 -a-> 0 ; 3 -b-> 4 ; 4 -a-> 2 ; 4 -b-> 5 ; 5 -a-> 5 ; 5 -b-> 5](/static/automates/thlr-6ad33e8c07f4.svg)\n\nCe DFA complet (initial $0$, final $5$) est accessible. Combien de classes d'indistinguabilité a-t-il (nombre d'états du DFA minimal) ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nMoore : $\\{0,1,2,3,4\\},\\{5\\}$ puis $\\{0,1,3\\},\\{2,4\\},\\{5\\}$ (car $2$ et $4$ vont en $5$ par $b$) puis $\\{0\\},\\{1,3\\},\\{2,4\\},\\{5\\}$ (car $1,3$ vont par $b$ en $\\{2,4\\}$ alors que $0$ va en $3$). Stable : $4$ classes.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0 ; 3 -a-> 1 ; 3 -b-> 0](/static/automates/thlr-5294c12cf2e7.svg)\n\nCombien de classes d'indistinguabilité ce DFA complet accessible a-t-il ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$\\{0,3\\},\\{1\\},\\{2\\}$."
+      }
+     ],
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 5. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 4 ; 2 -b-> 5 ; 3 -a-> 0 ; 3 -b-> 4 ; 4 -a-> 2 ; 4 -b-> 5 ; 5 -a-> 5 ; 5 -b-> 5](/static/automates/thlr-6ad33e8c07f4.svg)\n\nQuelle est la longueur du plus court mot qui distingue les états $0$ et $1$ (accepté depuis l'un, refusé depuis l'autre) ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nDepuis $0$ ou $1$, ni $\\varepsilon$, ni $a$, ni $b$, ni $ab$ n'aboutit à un état final de manière différente ; $\\mathtt{bb}$ : $1\\to2\\to5$ (accepté) mais $0\\to3\\to4$ (refusé). Longueur $2$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 5. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 4 ; 2 -b-> 5 ; 3 -a-> 0 ; 3 -b-> 4 ; 4 -a-> 2 ; 4 -b-> 5 ; 5 -a-> 5 ; 5 -b-> 5](/static/automates/thlr-6ad33e8c07f4.svg)\n\nQuelle est la longueur du plus court mot qui distingue les états $3$ et $4$ ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n$\\mathtt b$ : $4\\xrightarrow b5$ (final), $3\\xrightarrow b4$ (non final)."
+      }
+     ],
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0 ; 3 -a-> 1 ; 3 -b-> 0](/static/automates/thlr-5294c12cf2e7.svg)\n\nCe DFA complet (initial $0$, final $2$) a un état redondant. Combien d'états le DFA minimal a-t-il ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\n$0$ et $3$ ont les mêmes successeurs ($a\\to1$, $b\\to$ classe de $0$) : indistinguables. Classes $\\{0,3\\},\\{1\\},\\{2\\}$ : $3$ états (c'est le DFA des mots finissant par $ab$).",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 5. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 4 ; 2 -b-> 5 ; 3 -a-> 0 ; 3 -b-> 4 ; 4 -a-> 2 ; 4 -b-> 5 ; 5 -a-> 5 ; 5 -b-> 5](/static/automates/thlr-6ad33e8c07f4.svg)\n\nCombien d'états le DFA minimal a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n$\\{0\\},\\{1,3\\},\\{2,4\\},\\{5\\}$."
+      }
+     ],
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h4",
+     "enonce": "Combien d'états le DFA minimal du langage des mots de longueur multiple de $3$ sur $\\{a,b\\}$ a-t-il ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nIl suffit de retenir la longueur modulo $3$ : $3$ états ; les trois restes sont deux à deux distingués par $\\varepsilon$ et par des mots de longueur $1$ ou $2$.",
+     "variants": [
+      {
+       "enonce": "Combien d'états le DFA minimal des mots de longueur multiple de $4$ sur $\\{a,b\\}$ a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nLa longueur modulo $4$ : $4$ états."
+      }
+     ],
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "h5",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 5. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 4 ; 2 -b-> 5 ; 3 -a-> 0 ; 3 -b-> 4 ; 4 -a-> 2 ; 4 -b-> 5 ; 5 -a-> 5 ; 5 -b-> 5](/static/automates/thlr-6ad33e8c07f4.svg)\n\nMinimiser ce DFA avec l'algorithme de Moore : donner les partitions successives, puis le DFA minimal.",
+     "sol": "Partitions : $\\{0,1,2,3,4\\},\\ \\{5\\}$ ; puis $\\{0,1,3\\},\\ \\{2,4\\},\\ \\{5\\}$ ; puis $\\{0\\},\\ \\{1,3\\},\\ \\{2,4\\},\\ \\{5\\}$. Un état est mis à part quand ses successeurs par une lettre sont dans des classes différentes de ceux de son voisin.\n\nDFA minimal (classes numérotées dans l'ordre) : $4$ états.\n\n![Automate sur {a,b}, état initial 0, états finaux 3. Transitions : 0 -a-> 1 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 3 ; 3 -a-> 3 ; 3 -b-> 3](/static/automates/thlr-aeae7b07bcad.svg)\n\nVérifié : équivalent à l'automate de départ (équivalence exacte) et minimal (aucun couple d'états indistinguable).",
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "h6",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 3 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0 ; 3 -a-> 1 ; 3 -b-> 0](/static/automates/thlr-5294c12cf2e7.svg)\n\nMinimiser ce DFA complet.",
+     "sol": "Partitions : $\\{0,1,3\\},\\ \\{2\\}$ ; puis $\\{0,3\\},\\ \\{1\\},\\ \\{2\\}$.\n\nLe DFA minimal a $3$ états :\n\n![Automate sur {a,b}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 1 ; 2 -b-> 0](/static/automates/thlr-fd2a5d175929.svg)\n\nVérifié : équivalent à l'automate de départ et au DFA « finit par $ab$ » ($\\mathtt{DAB}$).",
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "h7",
+     "enonce": "Soient $p$ et $p'$ deux états indistinguables d'un DFA, avec $p\\xrightarrow aq$ et $p'\\xrightarrow aq'$. Montrer que $q$ et $q'$ sont indistinguables. En quoi cette propriété justifie-t-elle l'algorithme de Moore ?",
+     "sol": "Par l'absurde : si un mot $w$ distingue $q$ et $q'$ (accepté depuis l'un, refusé depuis l'autre), alors $aw$ distingue $p$ et $p'$ (car $p\\xrightarrow aq\\xrightarrow w$ et $p'\\xrightarrow aq'\\xrightarrow w$), contradiction. **Conséquence :** dans une classe, les successeurs par chaque lettre doivent tomber dans une même classe ; si ce n'est pas le cas, les états ne sont pas indistinguables et on sépare la classe. On raffine jusqu'à ce que la propriété soit vérifiée : la partition obtenue est alors l'indistinguabilité.",
+     "formules": "partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 18,
+   "titre": "Lemme de l'étoile et langages non rationnels",
+   "notions": [
+    "pomp"
+   ],
+   "exos": [
+    {
+     "id": "u1",
+     "enonce": "Un DFA a $6$ états. Quelle est la plus petite longueur $m$ telle que tout chemin de $m$ arêtes visite forcément deux fois le même état ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nUn chemin de $m$ arêtes visite $m+1$ états ; sans répétition il en faut au plus $6$ distincts, donc $m\\le5$ sans répétition possible. À $m=6$ ($7$ états visités) un état se répète : tout mot de longueur $\\ge6$ passe par une boucle. Le seuil de pompage $n_0=n+1=7$ du cours convient donc a fortiori.",
+     "variants": [
+      {
+       "enonce": "Un DFA a $9$ états. Quelle est la plus petite longueur $m$ telle que tout chemin de $m$ arêtes repasse par un état ?",
+       "ans": "9",
+       "sol": "**Réponse :** $9$\n\n$m+1>9$ états visités dès $m=9$."
+      }
+     ],
+     "formules": "$xy^*z\\subseteq L$, $y\\ne\\varepsilon$, $|xy|\\le n_0$ · choisir $w$ puis $i$ tel que $xy^iz\\notin L$ · principe des tiroirs",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u2",
+     "enonce": "Montrer que $L=\\{a^nb^n\\mid n\\ge0\\}$ n'est pas rationnel.",
+     "sol": "Supposons $L$ rationnel et soit $n_0$ son seuil de pompage. Posons $w=a^{n_0}b^{n_0}\\in L$, de longueur $2n_0\\ge n_0$. Il existe $w=xyz$, $y\\ne\\varepsilon$, avec $xy^*z\\subseteq L$ (et $|xy|\\le n_0$ : la boucle se forme dans les $n_0$ premières lettres). Alors $y=a^k$, $k\\ge1$ : trois cas selon le cours (plus de $a$ que de $b$ dans $y$, autant, plus de $b$) se réduisent ici au premier, car $y$ ne contient que des $a$. Le mot $xy^2z=a^{n_0+k}b^{n_0}$ a plus de $a$ que de $b$, donc n'est pas dans $L$ : contradiction. (Sans la borne $|xy|\\le n_0$ : si $y=a^ub^v$ avec $u>v$, $xy^2z$ a $n_0+u$ $a$ et $n_0+v$ $b$ ; si $u=v\\ge1$, $xy^2z$ contient $ba$ ; si $u < v$, trop de $b$.) Donc $L$ n'est pas rationnel : un automate fini ne peut pas compter jusqu'à $n$ pour $n$ non borné.",
+     "duree": 10,
+     "formules": "$xy^*z\\subseteq L$, $y\\ne\\varepsilon$, $|xy|\\le n_0$ · choisir $w$ puis $i$ tel que $xy^iz\\notin L$ · principe des tiroirs",
+     "type": "open"
+    },
+    {
+     "id": "u3",
+     "enonce": "Montrer que $L=\\{a^{n^2}\\mid n\\ge0\\}$ (mots de longueur un carré parfait) n'est pas rationnel.",
+     "sol": "Supposons $L$ rationnel, de seuil $n_0$ (avec la forme $|xy|\\le n_0$, qui découle du DFA : la boucle apparaît dans les $n_0$ premières lettres). Posons $w=a^{n_0^2}$ avec $n_0\\ge2$ et $w=xyz$, $y=a^k$, $1\\le k\\le n_0$. Alors $|xy^2z|=n_0^2+k$ avec $n_0^2 < n_0^2+k\\le n_0^2+n_0 < (n_0+1)^2$ : ce n'est pas un carré parfait, donc $xy^2z\\notin L$. Contradiction.\n\nVérifié par calcul pour $n_0=2,\\dots,8$ : aucune décomposition $w=xyz$ avec $|xy|\\le n_0$ et $y\\ne\\varepsilon$ ne donne un mot de $xy^2z$ de longueur carrée.",
+     "duree": 12,
+     "formules": "$xy^*z\\subseteq L$, $y\\ne\\varepsilon$, $|xy|\\le n_0$ · choisir $w$ puis $i$ tel que $xy^iz\\notin L$ · principe des tiroirs",
+     "type": "open"
+    },
+    {
+     "id": "u4",
+     "enonce": "Alphabet $\\{0,\\dots,9\\}$. Montrer que l'ensemble des écritures décimales des multiples de $3$ (avec zéros en tête autorisés, mot vide accepté) est rationnel.",
+     "sol": "Un nombre est multiple de $3$ si et seulement si la somme de ses chiffres l'est. Le DFA retient la somme modulo $3$ :\n\n![Automate sur {0,1,2,3,4,5,6,7,8,9}, état initial 0, états finaux 0. Transitions : 0 -0-> 0 ; 0 -1-> 1 ; 0 -2-> 2 ; 0 -3-> 0 ; 0 -4-> 1 ; 0 -5-> 2 ; 0 -6-> 0 ; 0 -7-> 1 ; 0 -8-> 2 ; 0 -9-> 0 ; 1 -0-> 1 ; 1 -1-> 2 ; 1 -2-> 0 ; 1 -3-> 1 ; 1 -4-> 2 ; 1 -5-> 0 ; 1 -6-> 1 ; 1 -7-> 2 ; 1 -8-> 0 ; 1 -9-> 1 ; 2 -0-> 2 ; 2 -1-> 0 ; 2 -2-> 1 ; 2 -3-> 2 ; 2 -4-> 0 ; 2 -5-> 1 ; 2 -6-> 2 ; 2 -7-> 0 ; 2 -8-> 1 ; 2 -9-> 2](/static/automates/thlr-f60b4cb9b765.svg)\n\nL'état $r$ lit le chiffre $d$ et passe à $(r+d)\\bmod3$ ; les étiquettes regroupent les chiffres de même reste. Initial et final : $0$. Vérifié sur tous les mots de longueur $\\le4$ contre `int(w) % 3 == 0`.",
+     "formules": "$xy^*z\\subseteq L$, $y\\ne\\varepsilon$, $|xy|\\le n_0$ · choisir $w$ puis $i$ tel que $xy^iz\\notin L$ · principe des tiroirs",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "u5",
+     "enonce": "Montrer que $L=\\{a^nb^m\\mid n\\ge m\\ge0\\}$ n'est pas rationnel.",
+     "sol": "Par l'absurde, soit $n_0$ le seuil de pompage et $w=a^{n_0}b^{n_0}\\in L$. Soit $w=xyz$ avec $y\\ne\\varepsilon$ et $|xy|\\le n_0$ : $y=a^k$, $k\\ge1$. Pompons vers le bas : $xy^0z=a^{n_0-k}b^{n_0}$ a moins de $a$ que de $b$, donc n'est pas dans $L$ : contradiction. (Pomper vers le haut ne suffit pas : $a^{n_0+k}b^{n_0}\\in L$. Choisir le bon $i$ dans $xy^iz$ est la clé.)",
+     "duree": 10,
+     "formules": "$xy^*z\\subseteq L$, $y\\ne\\varepsilon$, $|xy|\\le n_0$ · choisir $w$ puis $i$ tel que $xy^iz\\notin L$ · principe des tiroirs",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 19,
+   "titre": "Élimination d'états : de l'automate à l'expression (BMC)",
+   "notions": [
+    "bmc"
+   ],
+   "exos": [
+    {
+     "id": "y1",
+     "enonce": "On supprime un état $q$ qui a $2$ arêtes entrantes (venant de $2$ états distincts, différents de $q$) et $3$ arêtes sortantes (vers $3$ états distincts, différents de $q$). Combien de nouvelles arêtes crée-t-on ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\nUn chemin $p\\to q\\to r$ par couple (entrante, sortante) : $2\\times3=6$ nouvelles arêtes, éventuellement fusionnées avec des arêtes existantes par $+$.",
+     "variants": [
+      {
+       "enonce": "On supprime un état qui a $3$ arêtes entrantes (de $3$ états distincts) et $4$ sortantes (vers $4$ états distincts). Combien de nouvelles arêtes crée-t-on ?",
+       "ans": "12",
+       "sol": "**Réponse :** $12$\n\n$3\\times4=12$."
+      }
+     ],
+     "formules": "$p\\xrightarrow xq\\xrightarrow yr$, boucle $z$ : $p\\xrightarrow{xz^*y}r$ · entrantes $\\times$ sortantes · $+$ pour les arêtes parallèles",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "y2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\nAppliquer l'algorithme de Brzozowski-McCluskey à ce DFA (alphabet $\\{a,b\\}$) : donner une expression rationnelle de son langage.",
+     "sol": "On ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $1$, $0$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $1$ : $0\\to 0$ : $b+ab^*a$\n- On supprime l'état $0$ : $i\\to f$ : $(b+ab^*a)^*$\n\n**Résultat :** $e=(b+ab^*a)^*$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le10$. L'ordre de suppression change l'écriture, pas le langage.",
+     "formules": "$p\\xrightarrow xq\\xrightarrow yr$, boucle $z$ : $p\\xrightarrow{xz^*y}r$ · entrantes $\\times$ sortantes · $+$ pour les arêtes parallèles",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "y3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\nAppliquer l'algorithme de Brzozowski-McCluskey à ce DFA (alphabet $\\{a,b\\}$).",
+     "sol": "On ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $0$, $1$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $0$ : $1\\to 1$ : $a+bb^*a$, $i\\to 1$ : $b^*a$\n- On supprime l'état $1$ : $i\\to f$ : $b^*a(a+bb^*a)^*$\n\n**Résultat :** $e=b^*a(a+bb^*a)^*$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le10$. L'ordre de suppression change l'écriture, pas le langage.",
+     "formules": "$p\\xrightarrow xq\\xrightarrow yr$, boucle $z$ : $p\\xrightarrow{xz^*y}r$ · entrantes $\\times$ sortantes · $+$ pour les arêtes parallèles",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "y4",
+     "enonce": "![Automate sur {a,b,c}, état initial 0, états finaux 2. Transitions : 0 -a-> 1 ; 1 -b-> 1 ; 1 -c-> 2 ; 2 -a-> 1](/static/automates/thlr-60e189f28c82.svg)\n\nAppliquer l'algorithme à cet automate (alphabet $\\{a,b,c\\}$). Attention : il y a une arête de retour $2\\to1$ ; la boucle de $1$ est facultative.",
+     "sol": "On ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $1$, $2$, $0$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $1$ : $0\\to 2$ : $ab^*c$, $2\\to 2$ : $ab^*c$\n- On supprime l'état $2$ : $0\\to f$ : $ab^*c(ab^*c)^*$\n- On supprime l'état $0$ : $i\\to f$ : $ab^*c(ab^*c)^*$\n\n**Résultat :** $e=ab^*c(ab^*c)^*$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le8$. L'ordre de suppression change l'écriture, pas le langage.",
+     "formules": "$p\\xrightarrow xq\\xrightarrow yr$, boucle $z$ : $p\\xrightarrow{xz^*y}r$ · entrantes $\\times$ sortantes · $+$ pour les arêtes parallèles",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "y5",
+     "enonce": "![Automate sur {0,1}, état initial 0, états finaux 0. Transitions : 0 -0-> 0 ; 0 -1-> 1 ; 1 -0-> 2 ; 1 -1-> 0 ; 2 -0-> 1 ; 2 -1-> 2](/static/automates/thlr-fc60eed03dc1.svg)\n\nAlphabet $\\{0,1\\}$. Appliquer l'algorithme à ce DFA des multiples de $3$ en binaire (supprimer $1$ puis $2$ puis $0$).",
+     "sol": "On ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $1$, $2$, $0$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $1$ : $0\\to 2$ : $10$, $0\\to 0$ : $0+11$, $2\\to 2$ : $1+00$, $2\\to 0$ : $01$\n- On supprime l'état $2$ : $0\\to 0$ : $0+11+10(1+00)^*(01)$\n- On supprime l'état $0$ : $i\\to f$ : $(0+11+10(1+00)^*(01))^*$\n\n**Résultat :** $e=(0+11+10(1+00)^*(01))^*$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le10$. L'ordre de suppression change l'écriture, pas le langage.",
+     "formules": "$p\\xrightarrow xq\\xrightarrow yr$, boucle $z$ : $p\\xrightarrow{xz^*y}r$ · entrantes $\\times$ sortantes · $+$ pour les arêtes parallèles",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 20,
+   "titre": "Stabilité, produit synchronisé et décidabilité",
+   "notions": [
+    "stab"
+   ],
+   "exos": [
+    {
+     "id": "z1",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nCes deux DFA complets (« nombre pair de $a$ » et « finit par $b$ ») ont $2$ états chacun. Combien d'états le produit synchronisé (partie accessible depuis le couple des états initiaux) a-t-il ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nDepuis $(0,0)$ : $a\\to(1,0)$, $b\\to(0,1)$ ; $(1,0)$ : $a\\to(0,0)$, $b\\to(1,1)$ ; $(0,1)$ : $a\\to(1,0)$, $b\\to(0,1)$ ; $(1,1)$ : $a\\to(0,0)$, $b\\to(1,1)$. Les $4=2\\times2$ couples sont accessibles.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nDFA « finit par $a$ » et « finit par $b$ ». Combien d'états le produit synchronisé (partie accessible) a-t-il ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$(0,0)\\xrightarrow a(1,0)$, $(0,0)\\xrightarrow b(0,1)$ ; depuis ces deux couples on revient sur eux : $3$ états ($(1,1)$ n'est pas accessible)."
+      }
+     ],
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z2",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nCombien d'états finaux le produit synchronisé de ces deux DFA a-t-il pour **l'intersection** (les deux composantes finales) ?",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nFinal dans le premier : $0$ ; final dans le second : $1$. Le seul couple final est $(0,1)$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nCombien d'états finaux le produit (intersection) a-t-il parmi les états accessibles ?",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\nIl faudrait $(1,1)$, qui n'est pas accessible : l'intersection est vide."
+      }
+     ],
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z3",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\nLe premier DFA reconnaît « finit par $b$ », le second « finit par $a$ ». L'intersection $L_1\\cap L_2$ est-elle vide ? Répondre $1$ si oui, $0$ sinon.",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\nUn mot ne peut pas finir à la fois par $a$ et par $b$ (ni être vide : $\\varepsilon$ n'est dans aucun des deux) ; dans le produit, aucun état final n'est accessible. On décide le vide par un parcours.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\n« nombre pair de $a$ » $\\cap$ « finit par $a$ » est-il vide ? ($1$ oui, $0$ non)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\n$\\mathtt{aa}$ appartient aux deux."
+      }
+     ],
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z4",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\nPremier DFA : « finit par $b$ ». Second : « nombre pair de $a$ ». Quelle est la longueur du plus court mot de $L_1\\setminus L_2$ ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nOn cherche un mot qui finit par $b$ avec un nombre impair de $a$ : le plus court est $\\mathtt{ab}$ (le parcours en largeur du produit $L_1\\cap\\overline{L_2}$ le trouve). Longueur $2$.",
+     "variants": [
+      {
+       "enonce": "![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 1 ; 1 -b-> 0](/static/automates/thlr-9f33a3d96414.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nPremier DFA « finit par $a$ », second « finit par $b$ ». Longueur du plus court mot de $L_1\\setminus L_2$ ?",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n$\\mathtt a$."
+      }
+     ],
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z5",
+     "enonce": "Posons $\\Sigma=\\{a,b\\}$ et $L=L\\big(a^*(ba^*ba^*ba^*)^*\\big)$. On veut une expression rationnelle du complémentaire $\\overline L=\\Sigma^*\\setminus L$. (1) $\\overline L$ est-il rationnel ? (2) Donner un DFA de $L$. (3) En déduire un DFA de $\\overline L$. (4) Appliquer BMC. (5) Que changer si $\\Sigma=\\{a,b,c\\}$ ?",
+     "sol": "**(1) Oui** : les langages rationnels sont stables par complément. **(2)** $L$ = mots dont le nombre de $b$ est multiple de $3$. DFA à $3$ états (nombre de $b$ modulo $3$) :\n\n![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 0](/static/automates/thlr-5f099e3c7d27.svg)\n\n**(3)** DFA complet : on échange les finaux, finaux $\\{1,2\\}$ (nombre de $b$ non multiple de $3$).\n\n![Automate sur {a,b}, état initial 0, états finaux 1,2. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 0](/static/automates/thlr-be6e397c7121.svg)\n\nOn ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $0$, $1$, $2$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $0$ : $2\\to 1$ : $ba^*b$, $i\\to 1$ : $a^*b$\n- On supprime l'état $1$ : $2\\to 2$ : $a+ba^*ba^*b$, $2\\to f$ : $\\varepsilon+ba^*ba^*$, $i\\to 2$ : $a^*ba^*b$, $i\\to f$ : $a^*ba^*$\n- On supprime l'état $2$ : $i\\to f$ : $a^*ba^*+a^*ba^*b(a+ba^*ba^*b)^*(\\varepsilon+ba^*ba^*)$\n\n**Résultat :** $e=a^*ba^*+a^*ba^*b(a+ba^*ba^*b)^*(\\varepsilon+ba^*ba^*)$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le10$. L'ordre de suppression change l'écriture, pas le langage.\n\n**(5)** Avec $\\Sigma=\\{a,b,c\\}$ le DFA doit lire $c$ : il faut le compléter (puits atteint par $c$, boucle sur toute lettre) **avant** d'échanger les finaux ; le puits devient alors final : tout mot contenant un $c$ est dans le complémentaire. Sinon l'expression ne décrirait que le complémentaire dans $\\{a,b\\}^*$.",
+     "src": "TD 5, ex. 1 (THLR, TD 2016-2017 et 2026)",
+     "duree": 12,
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "type": "open"
+    },
+    {
+     "id": "z6",
+     "enonce": "(1) $L_2\\subset L_1$ rationnels : $L_1\\setminus L_2$ est-il rationnel ? (2) $L_2\\subset L_1$ avec $L_2$ rationnel : $L_1$ est-il forcément rationnel ?",
+     "sol": "**(1) Oui** : $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$ ; $\\overline{L_2}$ est rationnel (complément) et l'intersection de deux rationnels l'est (produit synchronisé, ou $\\overline{\\overline{A}\\cup\\overline{B}}$). **(2) Non** : $L_2=\\varnothing$ est rationnel et inclus dans $L_1=\\{a^nb^n\\mid n\\ge0\\}$, non rationnel (lemme de l'étoile). Un sous-langage rationnel ne dit rien du langage qui le contient.",
+     "src": "TD 5, ex. 2 (THLR, TD 2016-2017 et 2026)",
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "z7",
+     "enonce": "![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 1 ; 0 -b-> 0 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-f1e0d32f86a3.svg)\n\n![Automate sur {a,b}, état initial 0, états finaux 1. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 0 ; 1 -b-> 1](/static/automates/thlr-d38475d7dec8.svg)\n\nDonner le produit synchronisé de ces deux DFA (table, états finaux pour l'intersection). En déduire le langage $L_1\\cap L_2$ et décider s'il est vide.",
+     "sol": "Table du produit ($(p,q)$ : $p$ état du premier DFA, $q$ du second) :\n$$\\begin{array}{l|cc}\\text{état} & a & b\\\\\\hline \\rightarrow\\;00 & 10 & 01\\\\ \\;10 & 00 & 11\\\\ *\\;01 & 10 & 01\\\\ \\;11 & 00 & 11\\end{array}$$\nÉtat initial $00$. L'unique état final est $01$ (premier final en $0$, second final en $1$). Le produit a $4\\le2\\times2$ états. $L_1\\cap L_2$ = mots avec un nombre pair de $a$ **et** qui finissent par $b$ : non vide (plus court mot : $\\mathtt{b}$). Vérifié sur tous les mots de longueur $\\le10$.",
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 21,
+   "titre": "Niveau examen : enchaîner expression, automate, DFA, complément",
+   "notions": [
+    "thompson",
+    "eps",
+    "emond",
+    "det",
+    "min",
+    "stab",
+    "afd-build"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mx1",
+     "src": "TD 3, ex. 3 et TD 4, ex. 2 (THLR 2016-2017 et 2026) : chaîne du cours",
+     "enonce": "Alphabet $\\{a,b,c\\}$, expression $e=c(ab+c)$.\n1. Construire l'ε-NFA de Thompson. 2. Supprimer les $\\varepsilon$-transitions. 3. Émonder. 4. Déterminiser (table complète). 5. Combien d'états a le DFA complet minimal ?",
+     "sol": "**1.** Expression $e=c(ab+c)$ : $n=5$ (lettres, $\\varepsilon$, $\\varnothing$, $+$, $*$, sans les concaténations), donc l'automate a $2n=10$ états. On construit chaque sous-expression avec deux nouveaux états (entrée, sortie), on relie par $\\varepsilon$ la sortie de $e_1$ à l'entrée de $e_2$ pour une concaténation, et on ajoute deux états et quatre $\\varepsilon$ pour $+$ et $*$ (l'étoile ajoute $i\\to f$ pour le mot vide et $f_1\\to i_1$ pour répéter). États numérotés dans l'ordre de construction.\n\nÉtat initial $0$, état final $9$. Transitions : $0\\xrightarrow{c}1, 1\\xrightarrow{\\varepsilon}8, 2\\xrightarrow{a}3, 3\\xrightarrow{\\varepsilon}4, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}9, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}2, 8\\xrightarrow{\\varepsilon}6$.\n\nVérifié : cet automate accepte exactement les mots de $L(e)$ de longueur $\\le7$ (comparaison avec `re`), et $|Q|=10=2n$.\n\n**2.** Transitions de $T$ : $0\\xrightarrow{c}1, 1\\xrightarrow{\\varepsilon}8, 2\\xrightarrow{a}3, 3\\xrightarrow{\\varepsilon}4, 4\\xrightarrow{b}5, 5\\xrightarrow{\\varepsilon}9, 6\\xrightarrow{c}7, 7\\xrightarrow{\\varepsilon}9, 8\\xrightarrow{\\varepsilon}2, 8\\xrightarrow{\\varepsilon}6$ ; initial $\\{0\\}$, final $\\{9\\}$.\n\nClôtures : $\\mathrm{cl}(0)=\\{0\\}$, $\\mathrm{cl}(1)=\\{1,2,6,8\\}$, $\\mathrm{cl}(2)=\\{2\\}$, $\\mathrm{cl}(3)=\\{3,4\\}$, $\\mathrm{cl}(4)=\\{4\\}$, $\\mathrm{cl}(5)=\\{5,9\\}$, $\\mathrm{cl}(6)=\\{6\\}$, $\\mathrm{cl}(7)=\\{7,9\\}$, $\\mathrm{cl}(8)=\\{2,6,8\\}$, $\\mathrm{cl}(9)=\\{9\\}$.\n\nRetour arrière : $0\\xrightarrow{c}1, 1\\xrightarrow{a}3, 1\\xrightarrow{c}7, 2\\xrightarrow{a}3, 3\\xrightarrow{b}5, 4\\xrightarrow{b}5, 6\\xrightarrow{c}7, 8\\xrightarrow{a}3, 8\\xrightarrow{c}7$ ; états finaux $\\{5,7,9\\}$ (clôture contenant l'état final de $T$).\n\nVérifié : aucun $\\varepsilon$ et langage inchangé (équivalence exacte avec $T$).\n\n**3.** Accessibles : $\\{0,1,3,5,7\\}$. Co-accessibles : $\\{0,1,2,3,4,5,6,7,8,9\\}$. États utiles : $\\{0,1,3,5,7\\}$ (5 états).\n\nAutomate émondé : $0\\xrightarrow{c}1, 1\\xrightarrow{a}3, 1\\xrightarrow{c}7, 3\\xrightarrow{b}5$, initial $\\{0\\}$, finals $\\{5,7\\}$. Langage : $\\{cab,cc\\}$.\n\nVérifié : équivalent à l'automate de Thompson ; langage $\\{cab,cc\\}$ sur tous les mots de longueur $\\le6$.\n\n**4.** Table des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|ccc}\\text{état} & a & b & c\\\\\\hline \\rightarrow\\;\\{0\\} & \\varnothing & \\varnothing & \\{1\\}\\\\ \\;\\varnothing & \\varnothing & \\varnothing & \\varnothing\\\\ \\;\\{1\\} & \\{3\\} & \\varnothing & \\{7\\}\\\\ \\;\\{3\\} & \\varnothing & \\{5\\} & \\varnothing\\\\ *\\;\\{7\\} & \\varnothing & \\varnothing & \\varnothing\\\\ *\\;\\{5\\} & \\varnothing & \\varnothing & \\varnothing\\end{array}$$Le DFA est **complet** et a **6 états**.\n\n**5.** **Réponse :** $5$\n\n$L=\\{cab,cc\\}$. États : $0$ (début), $1$ (lu $c$), $2$ (lu $ca$), $3$ (mot de $L$ lu, final), $4$ (puits). Transitions : $0\\xrightarrow c1$, $1\\xrightarrow a2$, $1\\xrightarrow c3$, $2\\xrightarrow b3$, le reste va au puits. Ces $5$ états sont deux à deux distingués. Le DFA déterminisé en a 6 avant minimisation (Moore).",
+     "formules": "atomes $a$, $\\varepsilon$, $\\varnothing$ · concaténation $f_1\\xrightarrow\\varepsilon i_2$ · $+$ et $*$ : 2 états, 4 $\\varepsilon$ · $2n$ états · clôture$(q)=\\{p\\mid q\\xrightarrow{\\varepsilon^*}p\\}$ · $q\\xrightarrow ar$ si $p\\xrightarrow ar$, $p\\in$ clôture$(q)$ · final si clôture $\\cap F\\ne\\varnothing$ · point fixe · accessible · co-accessible · utile = les deux · l'émondé garde les utiles · $S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état · partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "mx2",
+     "src": "TD 4, ex. 3 (THLR 2016-2017 et 2026) : recherche de motifs",
+     "enonce": "Alphabet $\\{a,b,c\\}$. $L$ est le langage des mots qui ont $m=\\mathtt{abab}$ pour suffixe.\n1. Donner un NFA de $L$. 2. Le déterminiser en un DFA complet (table). 3. On exécute le DFA sur $u=\\mathtt{abababc}$ en comptant $c\\leftarrow c+1$ à chaque fois qu'on se trouve dans un état final après une lettre : que vaut $c$ à la fin ? 4. Que calcule cet algorithme, avec quelle complexité ?",
+     "sol": "**1.** Le NFA ci-dessus : $0$ boucle sur toutes les lettres ($u$), puis il lit $m=\\mathtt{abab}$ lettre par lettre vers $1,2,3,4$ (final). Il reconnaît $L$ ; un langage reconnu par un automate fini est rationnel (théorème de Kleene). Vérifié sur tous les mots de longueur $\\le9$.\n\n**2.** Table des sous-ensembles (on part de $I$, on ajoute chaque ensemble nouveau) :\n$$\\begin{array}{l|ccc}\\text{état} & a & b & c\\\\\\hline \\rightarrow\\;\\{0\\} & \\{0,1\\} & \\{0\\} & \\{0\\}\\\\ \\;\\{0,1\\} & \\{0,1\\} & \\{0,2\\} & \\{0\\}\\\\ \\;\\{0,2\\} & \\{0,1,3\\} & \\{0\\} & \\{0\\}\\\\ \\;\\{0,1,3\\} & \\{0,1\\} & \\{0,2,4\\} & \\{0\\}\\\\ *\\;\\{0,2,4\\} & \\{0,1,3\\} & \\{0\\} & \\{0\\}\\end{array}$$Le DFA est **complet** et a **5 états**.\n\n**Pourquoi complet et émondé.** Complet : la construction définit un successeur (éventuellement $\\varnothing$) pour chaque ensemble et chaque lettre. Émondé : tout ensemble est atteint par construction (accessible) et on peut en sortir vers un ensemble final en lisant $\\mathtt{abab}$ puisque $0$ est dans chaque ensemble (co-accessible) : aucun état inutile, donc aucun puits.\n\n**3.** **Réponse :** $2$\n\nLes préfixes $\\mathtt{abab}$ (longueur $4$) et $\\mathtt{ababab}$ (longueur $6$) finissent par $\\mathtt{abab}$ : on est en état final après la $4^e$ et la $6^e$ lettre. Après le $c$ final, non. Donc $c=2$ (occurrences chevauchantes comprises).\n\n**4.** Il compte les **occurrences de $m$ dans $u$** (une par position où un préfixe de $u$ finit par $m$), chevauchements compris. Complexité : une transition (accès à un tableau) par lettre, soit $O(|u|)$ (le DFA est fixé). Pour $u=\\mathtt{cabbababababc}$ : $c=3$ (les occurrences $\\mathtt{abab}$ en positions $5,7,9$ se chevauchent). Pour les occurrences disjointes : après un état final, on reprend depuis l'état initial (on redirige les arêtes sortantes d'un état final comme celles de l'état initial). Vérifié par parcours du DFA et par recherche naïve.",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif · $S\\xrightarrow aS_a$ · initial $I$ · final si $S\\cap F\\ne\\varnothing$ · au plus $2^n$ états · $\\varnothing$ est un état",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "mx3",
+     "src": "DM 3, ex. 2 (THLR, DM 2016-2017) : multiples de 3 et de 7",
+     "enonce": "Soit $D_3$ le DFA à $3$ états des écritures binaires des multiples de $3$ (états $0,1,2$ = reste ; $\\delta(r,c)=(2r+c)\\bmod3$ ; initial et final $0$).\n1. $D_3$ accepte-t-il $101010$ ? (répondre $1$ ou $0$). 2. Justifier que $D_3$ reconnaît les multiples de $3$. 3. Construire $D_7$ pour les multiples de $7$ (alphabet $\\{0,1\\}$). 4. Combien d'états le DFA minimal de $D_7$ a-t-il ?",
+     "sol": "**1.** **Réponse :** $1$\n\n$\\mathtt{101010}=42=3\\times14$ : on lit $0\\to1\\to2\\to2\\to1\\to0\\to0$ ; final.\n\n**2.** **Invariant :** après avoir lu le mot $w$ (de valeur binaire $\\mathrm{val}(w)$, $\\mathrm{val}(\\varepsilon)=0$), l'état est $\\mathrm{val}(w)\\bmod3$. Base : $\\varepsilon$, état $0$. Hérédité : $\\mathrm{val}(wc)=2\\,\\mathrm{val}(w)+c$, et $\\delta(r,c)=(2r+c)\\bmod3$, donc l'état après $wc$ est $(2\\,\\mathrm{val}(w)+c)\\bmod3$. Le mot est accepté si l'état final $0$ est atteint, c'est-à-dire si $3\\mid\\mathrm{val}(w)$. Vérifié par calcul sur tous les mots de longueur $\\le12$.\n\n**3.** Même idée : $7$ états $0,\\dots,6$, $\\delta(r,c)=(2r+c)\\bmod7$, initial et final $0$.\n$$\\begin{array}{l|cc}\\text{état} & 0 & 1\\\\\\hline \\rightarrow*\\;0 & 0 & 1\\\\ \\;1 & 2 & 3\\\\ \\;2 & 4 & 5\\\\ \\;3 & 6 & 0\\\\ \\;4 & 1 & 2\\\\ \\;5 & 3 & 4\\\\ \\;6 & 5 & 6\\end{array}$$Vérifié sur tous les mots de longueur $\\le12$ contre `int(w, 2) % 7 == 0`.\n\n**4.** **Réponse :** $7$\n\nDeux restes différents $r\\ne r'$ sont distingués par un mot binaire $w$ tel que $r\\cdot2^{|w|}+\\mathrm{val}(w)\\equiv0\\pmod7$ pour l'un seul ; le DFA à $7$ états est donc minimal.",
+     "formules": "un état = une information retenue · $(2r+c)\\bmod3$ · NFA : deviner le début du motif · invariant : état $=\\mathrm{val}(w)\\bmod3$ · $\\mathrm{val}(wc)=2\\,\\mathrm{val}(w)+c$ · partition initiale $F$, $Q\\setminus F$ · raffiner selon les classes des successeurs · classes = états minimaux · mot distingueur",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "mx4",
+     "src": "TD 5, ex. 1 et 2 (THLR 2016-2017 et 2026) : complément et stabilité",
+     "enonce": "Alphabet $\\{a,b\\}$.\n1. Écrire une expression rationnelle du complémentaire de $L(a^*(ba^*ba^*ba^*)^*)$ (DFA, complément, BMC). 2. Si $L_2\\subset L_1$ sont rationnels, $L_1\\setminus L_2$ l'est-il ? Si $L_2$ seul est rationnel, $L_1$ l'est-il ?",
+     "sol": "**1.** **(1) Oui** : les langages rationnels sont stables par complément. **(2)** $L$ = mots dont le nombre de $b$ est multiple de $3$. DFA à $3$ états (nombre de $b$ modulo $3$) :\n\n![Automate sur {a,b}, état initial 0, états finaux 0. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 0](/static/automates/thlr-5f099e3c7d27.svg)\n\n**(3)** DFA complet : on échange les finaux, finaux $\\{1,2\\}$ (nombre de $b$ non multiple de $3$).\n\n![Automate sur {a,b}, état initial 0, états finaux 1,2. Transitions : 0 -a-> 0 ; 0 -b-> 1 ; 1 -a-> 1 ; 1 -b-> 2 ; 2 -a-> 2 ; 2 -b-> 0](/static/automates/thlr-be6e397c7121.svg)\n\nOn ajoute un état initial $i$ (lié par $\\varepsilon$ à l'état initial) et un état final $f$ (lié par $\\varepsilon$ depuis le final), puis on supprime les états $0$, $1$, $2$ dans cet ordre. Un état $q$ de boucle $z$ relie $p\\xrightarrow xq\\xrightarrow yr$ en $p\\xrightarrow{xz^*y}r$.\n\n- On supprime l'état $0$ : $2\\to 1$ : $ba^*b$, $i\\to 1$ : $a^*b$\n- On supprime l'état $1$ : $2\\to 2$ : $a+ba^*ba^*b$, $2\\to f$ : $\\varepsilon+ba^*ba^*$, $i\\to 2$ : $a^*ba^*b$, $i\\to f$ : $a^*ba^*$\n- On supprime l'état $2$ : $i\\to f$ : $a^*ba^*+a^*ba^*b(a+ba^*ba^*b)^*(\\varepsilon+ba^*ba^*)$\n\n**Résultat :** $e=a^*ba^*+a^*ba^*b(a+ba^*ba^*b)^*(\\varepsilon+ba^*ba^*)$.\n\nVérifié : $e$ est équivalent à l'automate (équivalence exacte) et décrit le langage attendu sur tous les mots de longueur $\\le10$. L'ordre de suppression change l'écriture, pas le langage.\n\n**(5)** Avec $\\Sigma=\\{a,b,c\\}$ le DFA doit lire $c$ : il faut le compléter (puits atteint par $c$, boucle sur toute lettre) **avant** d'échanger les finaux ; le puits devient alors final : tout mot contenant un $c$ est dans le complémentaire. Sinon l'expression ne décrirait que le complémentaire dans $\\{a,b\\}^*$.\n\n**2.** **(1) Oui** : $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$ ; $\\overline{L_2}$ est rationnel (complément) et l'intersection de deux rationnels l'est (produit synchronisé, ou $\\overline{\\overline{A}\\cup\\overline{B}}$). **(2) Non** : $L_2=\\varnothing$ est rationnel et inclus dans $L_1=\\{a^nb^n\\mid n\\ge0\\}$, non rationnel (lemme de l'étoile). Un sous-langage rationnel ne dit rien du langage qui le contient.",
+     "formules": "produit synchronisé $(p,q)$ · $\\cap$ : les deux finaux · vide : parcours · $L_1\\setminus L_2=L_1\\cap\\overline{L_2}$",
+     "duree": 10,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 22,
+   "titre": "Plus dur que l'examen (+20 %)",
+   "notions": [
+    "pomp",
+    "stab",
+    "min",
+    "rx-desc"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "ex1",
+     "enonce": "Montrer que le langage $L=\\{w\\in\\{a,b\\}^*\\mid|w|_a=|w|_b\\}$ n'est pas rationnel **sans** refaire de lemme de l'étoile sur $L$ lui-même (on connaît déjà $\\{a^nb^n\\}$).",
+     "sol": "Par l'absurde : si $L$ était rationnel, comme $a^*b^*$ l'est aussi, $L\\cap a^*b^*$ serait rationnel (stabilité par intersection : produit synchronisé de deux automates). Or un mot $a^ib^j$ a autant de $a$ que de $b$ si et seulement si $i=j$ : $L\\cap a^*b^*=\\{a^nb^n\\mid n\\ge0\\}$, non rationnel (lemme de l'étoile). Contradiction.\n\nVérifié sur tous les mots de longueur $\\le12$ : $L\\cap a^*b^*=\\{a^nb^n\\}$.",
+     "duree": 12,
+     "formules": "intersection avec $a^*b^*$ · complément · produit et parcours en largeur · $2^n$ états",
+     "type": "open"
+    },
+    {
+     "id": "ex2",
+     "enonce": "Montrer que $L=\\{a^nb^m\\mid n\\ne m\\}$ n'est pas rationnel.",
+     "sol": "Par l'absurde : si $L$ était rationnel, $\\overline L$ le serait (complément) et $\\overline L\\cap a^*b^*$ aussi (intersection avec un rationnel). Or les mots de $a^*b^*$ qui ne sont pas dans $L$ sont ceux avec $n=m$ : $\\overline L\\cap a^*b^*=\\{a^nb^n\\}$, non rationnel. Contradiction. (Attention : $\\overline L$ contient aussi des mots hors $a^*b^*$, comme $\\mathtt{ba}$ ; c'est l'intersection qui les retire.)\n\nVérifié sur tous les mots de longueur $\\le12$ : $a^*b^*\\setminus L=\\{a^nb^n\\}$.",
+     "duree": 12,
+     "formules": "intersection avec $a^*b^*$ · complément · produit et parcours en largeur · $2^n$ états",
+     "type": "open"
+    },
+    {
+     "id": "ex3",
+     "enonce": "Alphabet $\\{a,b\\}$. Combien d'états le DFA complet minimal du langage des mots qui **contiennent** $\\mathtt{abab}$ comme facteur a-t-il ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nOn retient la longueur du plus long préfixe de $\\mathtt{abab}$ qui est suffixe du mot lu : $0,1,2,3$ ; l'état $4$ (motif trouvé) est final et absorbant. Ces $5$ états sont deux à deux distingués (par des suffixes de $\\mathtt{abab}$) : le minimal en a $5$.",
+     "duree": 8,
+     "variants": [
+      {
+       "enonce": "Alphabet $\\{a,b\\}$. Combien d'états le DFA complet minimal des mots qui contiennent $\\mathtt{aba}$ comme facteur a-t-il ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nOn retient la longueur du plus long préfixe de $\\mathtt{aba}$ suffixe du mot lu : $0,1,2$ ; l'état $3$ est final absorbant : $4$ états."
+      }
+     ],
+     "formules": "intersection avec $a^*b^*$ · complément · produit et parcours en largeur · $2^n$ états",
+     "type": "value"
+    },
+    {
+     "id": "ex4",
+     "enonce": "Décrire un algorithme qui décide si deux expressions rationnelles $e$ et $f$ sont équivalentes (en renvoyant un contre-exemple sinon), puis l'appliquer à $e=(a+ab)^*$ et $f=(a+ba)^*$ sur $\\{a,b\\}$.",
+     "sol": "**Algorithme.** (1) Calculer deux DFA complets $A_e$, $A_f$ (Thompson, suppression des $\\varepsilon$, déterminisation). (2) Calculer les compléments $\\overline{A_e}$, $\\overline{A_f}$ et les produits $A_e\\times\\overline{A_f}$, $A_f\\times\\overline{A_e}$. (3) Parcours en largeur de chaque produit depuis l'état initial : un état final accessible fournit un mot $w$ qui est dans $L(e)\\setminus L(f)$ (ou l'inverse) ; si aucun n'est accessible, $L(e)=L(f)$.\n\n**Application.** $L(e)$ : mots sans $bb$ qui ne commencent pas par $b$ ; $L(f)$ : mots sans $bb$ qui ne finissent pas par $b$. Le plus court mot qui les sépare a pour longueur $2$ : $\\mathtt{ab}$, qui est dans $L(e)$ et pas dans l'autre. Les deux langages ne sont donc pas équivalents. Vérifié : calcul exact par produit.",
+     "formules": "intersection avec $a^*b^*$ · complément · produit et parcours en largeur · $2^n$ états",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "ex5",
+     "enonce": "Alphabet $\\{a,b\\}$. Combien d'états le DFA complet minimal du langage « la quatrième lettre avant la fin est $a$ » a-t-il ?",
+     "ans": "16",
+     "sol": "**Réponse :** $16$\n\nUn NFA à $5$ états ; le DFA déterminisé a $2^4=16$ états (on retient les $4$ dernières lettres), tous distinguables : $16$. La déterminisation peut être exponentielle.",
+     "variants": [
+      {
+       "enonce": "Combien d'états le DFA complet minimal de « la troisième lettre avant la fin est $a$ » a-t-il ?",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\n$2^3=8$."
+      }
+     ],
+     "formules": "intersection avec $a^*b^*$ · complément · produit et parcours en largeur · $2^n$ états",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

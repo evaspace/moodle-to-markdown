@@ -49,7 +49,18 @@ FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-inte
 PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-obm'],
           'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm'],
           'maths-s2-apef-fonctions': ['maths-s1-apis-suites'],
-          'maths-s2-ev': ['maths-s2-apef-polynomes'], 'maths-s2-alm': ['maths-s2-ev']}
+          'maths-s2-ev': ['maths-s2-apef-polynomes'], 'maths-s2-alm': ['maths-s2-ev'],
+          'maths-s3-asn': ['maths-s1-apis-suites', 'maths-s2-apef-fonctions'],
+          'maths-s3-pse': ['maths-s1-dp', 'maths-s3-asn'],
+          'maths-s3-al': ['maths-s2-ev', 'maths-s2-alm'],
+          'physique-s3-quantique': ['physique-s1-meca', 'physique-s2-energie'],
+          'physique-s3-em': ['physique-s2-em', 'maths-s1-apis-integrales'],
+          'electronique-s3-transistors': ['elec-s1-circuits', 'elec-s2-diodes'],
+          'algo-s3-hachage': ['algo-s1-taa'],
+          'algo-s3-arbres': ['algo-s2-abg'],
+          'algo-s3-graphes': ['algo-s1-python', 'algo-s1-taa', 'algo-s2-abg'],
+          'algo-s3-thlr': ['algo-s1-taa', 'maths-s1-obm'],
+          'archi-s3-assembleur-68000': ['archi-s1-numeration', 'archi-s2-microprocesseur']}
 TIMEOUT_BONUS = 0.5        # +50 % time per timeout on the same exercise since its last success
 TIMEOUT_MAX = 3.0          # at most x3
 MIN_SAMPLES = 5            # successful attempts needed before the users' average replaces the authored time

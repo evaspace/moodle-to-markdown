@@ -1,0 +1,1252 @@
+{
+ "subject": {
+  "id": "algo-s3-arbres",
+  "ordre": 685,
+  "matiere": "algo",
+  "semestre": "S3",
+  "ecue": "AR2",
+  "titre": "Arbres généraux et B-arbres",
+  "chapitres_moodle": [
+   "06_🐍 Arbres généraux - General Trees",
+   "07_🐍 B-arbres - B-Trees"
+  ],
+  "td": "TD 1 arbres généraux et TD 2 B-arbres (S3 2026), DM 1.2 arbres généraux",
+  "examens": [
+   "Examen B5 d'algorithmique, Arbres et Recherches 2 (octobre, Python, 2 h)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "bin",
+   "titre": "Rappel S2 : arbres binaires, mesures (taille, hauteur, feuilles)",
+   "formule": "$T$ : nombre de nœuds · hauteur : racine $=0$, arbre vide $=-1$ · feuille : aucun fils · au plus $2^{h+1}-1$ nœuds · $LC=\\sum$ des profondeurs",
+   "exemple": "$\\langle 8,\\langle3,1,6\\rangle,10\\rangle$ : $T=5$, $h=2$, $N_e=3$ feuilles, $LC=0+1+1+2+2=6$",
+   "cours": "Rappel S2 : parcours « Arbres binaires et généraux » (`algo-s2-abg`). Un arbre binaire est vide ou formé d'une racine et de deux sous-arbres. La profondeur d'un nœud compte les liens depuis la racine ; la hauteur de l'arbre est la plus grande profondeur. Un arbre de hauteur $h$ a au plus $2^{h+1}-1$ nœuds."
+  },
+  {
+   "id": "abr",
+   "titre": "Rappel S1/S2 : arbres binaires de recherche et AVL",
+   "formule": "ABR : clés de $G$ $<$ racine $<$ clés de $D$, parcours infixe $=$ ordre croissant · AVL : $|h(G)-h(D)|\\le1$ en tout nœud · $N(h)=N(h-1)+N(h-2)+1$ nœuds au minimum, $N(0)=1$, $N(1)=2$ · rotation : conserve l'ordre infixe",
+   "exemple": "Insertion de $4,2,6,1,3$ : racine $4$, infixe $1,2,3,4,6$ ; un AVL de hauteur $4$ a au moins $12$ nœuds",
+   "cours": "Un ABR s'obtient par insertions successives en feuille ; sa forme dépend de l'ordre des insertions. Un AVL se rééquilibre par rotations (simple ou double) quand le déséquilibre atteint $2$. Les B-arbres du cours généralisent l'ABR (plusieurs clés par nœud) et reprennent l'idée des rotations pour la suppression."
+  },
+  {
+   "id": "gen-mes",
+   "titre": "Arbres généraux : vocabulaire et mesures",
+   "formule": "arbre général $=$ racine $+$ liste de fils (jamais vide) · arité d'un nœud : nombre de fils · arité de l'arbre : maximum · $\\text{arcs}=T-1=\\sum\\text{arités}$ · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$",
+   "exemple": "Arbre à $18$ nœuds dont $8$ internes : $17$ arcs, arité moyenne $\\frac{17}8=2{,}125$",
+   "cours": "Un arbre général n'est jamais vide. Un nœud interne a au moins un fils, une feuille aucun. La taille est le nombre de nœuds, la hauteur la profondeur maximale (racine à $0$). L'arité moyenne se calcule sur les nœuds internes seulement : on divise le nombre total de fils par $N_i$."
+  },
+  {
+   "id": "gen-rep",
+   "titre": "Représentations : n-uplets, premier fils - frère droit, forme linéaire",
+   "formule": "tuple : `T.key`, `T.children` (liste), `T.nbchildren` · premier fils - frère droit : `B.key`, `B.child`, `B.sibling` · linéaire : $A=\\langle o,A_1,\\dots,A_N\\rangle\\to$ `(o A1 ... AN)`",
+   "exemple": "$\\langle1,2,\\langle3,4\\rangle\\rangle$ s'écrit `(1(2)(3(4)))` ; en premier fils - frère droit, `B.child` $=2$, `2.sibling` $=3$, `3.child` $=4$",
+   "cours": "Les deux implémentations représentent le même arbre. Pour parcourir les fils : `for C in T.children` (n-uplets) ou `C = B.child` puis `C = C.sibling` jusqu'à `None` (premier fils - frère droit). Dans la forme binaire, `child` vaut `None` pour une feuille et `sibling` pour un dernier fils ; la racine n'a jamais de frère. Le nombre de `sibling` non vides est $T-1-N_i$."
+  },
+  {
+   "id": "gen-par",
+   "titre": "Parcours : préfixe, suffixe, largeur",
+   "formule": "préfixe : racine puis fils de gauche à droite · suffixe : fils puis racine · largeur : niveau par niveau (file) · $T$ lignes « fin » dans un parcours qui en imprime une par appel",
+   "exemple": "$\\langle1,\\langle2,5\\rangle,3\\rangle$ : préfixe $1,2,5,3$ ; suffixe $5,2,3,1$ ; largeur $1,2,3,5$",
+   "cours": "Parcours profondeur $=$ récursion : on exprime la solution à partir des sous-arbres. Largeur $=$ file ; pour repérer les changements de niveau, on enfile un marqueur (`None`) après chaque niveau et on ne le réenfile que si la file n'est pas vide. Le parcours suffixe d'un arbre général correspond au parcours infixe de sa forme binaire premier fils - frère droit."
+  },
+  {
+   "id": "gen-code",
+   "titre": "Écrire une fonction sur un arbre général",
+   "formule": "profondeur ou largeur ? · parcours interrompu ? · récupérer le résultat des appels · `taille` $=1+\\sum$ tailles des fils · `hauteur` $=1+\\max$ hauteurs des fils (feuille : $0$)",
+   "exemple": "`size(T)` : `1 + sum` des `size(C)` pour `C` dans `T.children` ; en premier fils - frère droit : boucle `C = B.child ... C = C.sibling`",
+   "cours": "Méthode du cours : (1) quel parcours ? un parcours profondeur donne une fonction récursive, la largeur une file ; (2) le parcours peut-il être interrompu (recherche, test de propriété) ? Dans ce cas on ne retourne jamais directement l'appel récursif : on teste son résultat et on s'arrête seulement quand la réponse est connue ; (3) un résultat retourné qui n'est pas utilisé est perdu. Il faut penser à passer en paramètre ce dont les fils ont besoin (profondeur, arité du père) et à renvoyer un couple quand on remonte deux valeurs."
+  },
+  {
+   "id": "bt-def",
+   "titre": "B-arbres : définition, nombre de clés, hauteur",
+   "formule": "degré $t$ : $t-1\\le$ clés $\\le2t-1$ par nœud (racine : $1$ à $2t-1$) · un nœud à $k$ clés a $k+1$ fils · feuilles toutes à la même profondeur · $n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · au plus $(2t)^{h+1}-1$ clés",
+   "exemple": "$t=3$, $h=2$ : au plus $6^3-1=215$ clés, au moins $2\\times3^2-1=17$",
+   "cours": "Un B-arbre de degré $t$ (ou ordre $t$) est un arbre de recherche équilibré : les clés d'un nœud sont triées, le fils $i$ contient les clés comprises entre les clés $i-1$ et $i$, et toutes les feuilles sont à la même profondeur. Un nœud à $2t-1$ clés est plein (un « $2t$-nœud »). Pour $t=2$ on retrouve l'arbre 2-3-4. Le minimum de clés pour une hauteur $h$ : racine à une clé, deux fils, puis chaque nœud a au moins $t$ fils, d'où $1+2(t-1)\\frac{t^h-1}{t-1}=2t^h-1$. Valeur minimum : clé la plus à gauche de la feuille la plus à gauche ; maximum : la plus à droite de la feuille la plus à droite."
+  },
+  {
+   "id": "bt-lect",
+   "titre": "B-arbres : recherche, parcours croissant, prédécesseur",
+   "formule": "recherche : `i = binary_search_pos(B.keys, x)` puis clé trouvée ou fils `i` · parcours croissant : fils $0$, clé $0$, fils $1$, clé $1$, ... · prédécesseur de la clé $i$ d'un nœud interne : clé la plus à droite du fils $i$",
+   "exemple": "Racine $[40]$, fils gauche $[7\\;20\\;35]$ : le prédécesseur de $40$ est la dernière clé de la dernière feuille du fils gauche",
+   "cours": "Dans un nœud, la recherche dichotomique donne la position `i` de `x` ou celle où il devrait être. Si `x` n'est pas là, on descend dans `B.children[i]` ; une feuille sans `x` termine la recherche. Le parcours en ordre croissant intercale les clés et les fils (comme le parcours infixe). Le coût d'une recherche est au plus $h+1$ nœuds lus, d'où l'intérêt pour les disques : $h$ reste très petit."
+  },
+  {
+   "id": "bt-ins",
+   "titre": "B-arbres : insertion avec éclatement",
+   "formule": "éclater un $2t$-nœud : clé médiane (indice $t-1$) monte, deux nœuds à $t-1$ clés · à la descente : tout nœud plein rencontré est éclaté avant d'y entrer · racine pleine : nouvelle racine, hauteur $+1$ · insertion toujours dans une feuille non pleine",
+   "exemple": "$t=2$, nœud $[12\\;14\\;18]$ éclaté : $14$ monte, il reste $[12]$ et $[18]$",
+   "cours": "On insère dans une feuille. Si elle est pleine on ne peut pas ajouter : le principe de précaution consiste à éclater, en descendant, tout nœud plein (racine comprise) avant d'y entrer. Ainsi le père a toujours de la place pour recevoir la clé médiane. La hauteur n'augmente que si la racine est éclatée. Une clé déjà présente n'est pas insérée, mais des éclatements ont pu avoir lieu avant qu'on la trouve. Variante « à la remontée » (bonus du TD) : on n'éclate qu'en cas de besoin."
+  },
+  {
+   "id": "bt-del",
+   "titre": "B-arbres : suppression avec rotation et fusion",
+   "formule": "descendre dans un fils à $t-1$ clés : rotation (emprunt à un frère à $\\ge t$ clés) sinon fusion avec un frère et le séparateur · clé interne : prédécesseur (fils gauche à $\\ge t$ clés), sinon successeur, sinon fusion · racine vide : disparaît, hauteur $-1$",
+   "exemple": "$t=2$ : suppression de $9$ dans la feuille $[9]$ avec frère gauche $[6\\;7]$ : rotation droite, $8$ descend, $7$ monte",
+   "cours": "À la descente, on garantit que le nœud où l'on entre a au moins $t$ clés (sauf la racine). Un fils à $t-1$ clés est donc complété : rotation gauche (le premier fils du frère droit remonte, le séparateur descend) ou rotation droite (symétrique), sinon fusion des deux fils avec le séparateur (la fusion de deux fils à $t-1$ clés donne $2t-1$ clés). Pour une clé interne on la remplace par son prédécesseur (ou son successeur) qu'on supprime ensuite dans une feuille. On préfère toujours le côté gauche. Même une clé absente peut entraîner des modifications (principe de précaution) ; la variante « à la remontée » modifie l'arbre seulement quand c'est nécessaire."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "bin",
+   "type": "qcm",
+   "q": "Nombre maximal de nœuds d'un arbre binaire de hauteur $h$ (racine à $0$) :",
+   "choix": [
+    "$2^{h+1}-1$",
+    "$2^h$",
+    "$2h+1$",
+    "$2^{h}-1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bin",
+   "type": "vf",
+   "q": "La hauteur d'un arbre binaire réduit à sa racine vaut $0$.",
+   "bonne": true
+  },
+  {
+   "notion": "abr",
+   "type": "qcm",
+   "q": "Quel parcours d'un ABR donne les clés en ordre croissant ?",
+   "choix": [
+    "préfixe",
+    "suffixe",
+    "infixe",
+    "largeur"
+   ],
+   "bonne": 2
+  },
+  {
+   "notion": "abr",
+   "type": "vf",
+   "q": "Dans un AVL, les hauteurs des deux sous-arbres d'un nœud diffèrent d'au plus $1$.",
+   "bonne": true
+  },
+  {
+   "notion": "gen-mes",
+   "type": "vf",
+   "q": "Un arbre général peut être vide.",
+   "bonne": false
+  },
+  {
+   "notion": "gen-mes",
+   "type": "qcm",
+   "q": "Un arbre général a $T$ nœuds dont $N_i$ internes. Son arité moyenne vaut :",
+   "choix": [
+    "$\\frac{T}{N_i}$",
+    "$\\frac{T-1}{N_i}$",
+    "$\\frac{T-1}{T}$",
+    "$\\frac{N_i}{T-1}$"
+   ],
+   "bonne": 1
+  },
+  {
+   "notion": "gen-rep",
+   "type": "qcm",
+   "q": "Dans la forme premier fils - frère droit, une feuille a :",
+   "choix": [
+    "`sibling == None`",
+    "`child` et `sibling` vides",
+    "`child == None`",
+    "un `sibling` non vide"
+   ],
+   "bonne": 2
+  },
+  {
+   "notion": "gen-rep",
+   "type": "vf",
+   "q": "La racine d'un arbre en premier fils - frère droit a toujours `sibling == None`.",
+   "bonne": true
+  },
+  {
+   "notion": "gen-par",
+   "type": "qcm",
+   "q": "Le parcours suffixe d'un arbre général visite :",
+   "choix": [
+    "les fils puis la racine",
+    "la racine puis les fils",
+    "niveau par niveau",
+    "les feuilles seulement"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gen-par",
+   "type": "vf",
+   "q": "Pour repérer les changements de niveau dans un parcours en largeur, on réenfile le marqueur même quand la file est vide.",
+   "bonne": false
+  },
+  {
+   "notion": "gen-code",
+   "type": "vf",
+   "q": "Dans un parcours interrompu, on peut retourner directement le résultat de l'appel récursif.",
+   "bonne": false
+  },
+  {
+   "notion": "gen-code",
+   "type": "qcm",
+   "q": "La hauteur d'un arbre général est :",
+   "choix": [
+    "le nombre de nœuds",
+    "le nombre de feuilles",
+    "$1+$ la hauteur du premier fils",
+    "$\\max(1+\\text{hauteur d'un fils})$, $0$ pour une feuille"
+   ],
+   "bonne": 3
+  },
+  {
+   "notion": "bt-def",
+   "type": "qcm",
+   "q": "Un nœud non racine d'un B-arbre de degré $t$ contient :",
+   "choix": [
+    "de $t-1$ à $2t-1$ clés",
+    "de $t$ à $2t$ clés",
+    "de $1$ à $2t-1$ clés",
+    "exactement $t$ clés"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bt-def",
+   "type": "vf",
+   "q": "Toutes les feuilles d'un B-arbre sont à la même profondeur.",
+   "bonne": true
+  },
+  {
+   "notion": "bt-def",
+   "type": "qcm",
+   "q": "Nombre maximal de clés d'un B-arbre de degré $2$ et de hauteur $1$ :",
+   "choix": [
+    "$7$",
+    "$3$",
+    "$15$",
+    "$16$"
+   ],
+   "bonne": 2
+  },
+  {
+   "notion": "bt-lect",
+   "type": "qcm",
+   "q": "Où se trouve la plus grande clé d'un B-arbre ?",
+   "choix": [
+    "dernière clé de la racine",
+    "première clé de la dernière feuille",
+    "dans un nœud interne",
+    "dernière clé de la feuille la plus à droite"
+   ],
+   "bonne": 3
+  },
+  {
+   "notion": "bt-lect",
+   "type": "vf",
+   "q": "Pour un nœud interne, le prédécesseur de la clé $i$ est la clé la plus à droite du fils $i$.",
+   "bonne": true
+  },
+  {
+   "notion": "bt-ins",
+   "type": "qcm",
+   "q": "Dans un B-arbre de degré $t$, on éclate un nœud plein. Quelle clé monte ?",
+   "choix": [
+    "la plus petite",
+    "la médiane (indice $t-1$)",
+    "la plus grande",
+    "une clé au hasard"
+   ],
+   "bonne": 1
+  },
+  {
+   "notion": "bt-ins",
+   "type": "vf",
+   "q": "La hauteur d'un B-arbre n'augmente que lorsque la racine est éclatée.",
+   "bonne": true
+  },
+  {
+   "notion": "bt-ins",
+   "type": "vf",
+   "q": "Avec le principe de précaution, insérer une clé déjà présente ne modifie jamais l'arbre.",
+   "bonne": false
+  },
+  {
+   "notion": "bt-del",
+   "type": "qcm",
+   "q": "On descend dans un fils à $t-1$ clés, un frère a $t$ clés. On fait :",
+   "choix": [
+    "une rotation",
+    "une fusion",
+    "un éclatement",
+    "rien"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "bt-del",
+   "type": "vf",
+   "q": "La fusion de deux nœuds à $t-1$ clés avec le séparateur donne un nœud à $2t-1$ clés.",
+   "bonne": true
+  },
+  {
+   "notion": "bt-del",
+   "type": "qcm",
+   "q": "Une suppression à la descente vide la racine. Alors :",
+   "choix": [
+    "la hauteur augmente de $1$",
+    "l'arbre est vide",
+    "la hauteur diminue de $1$",
+    "on éclate un fils"
+   ],
+   "bonne": 2
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S2 : mesures d'un arbre binaire",
+   "notions": [
+    "bin"
+   ],
+   "exos": [
+    {
+     "id": "b11",
+     "enonce": "Convention : la racine est à la profondeur $0$ ; la hauteur d'un arbre est la profondeur maximale de ses nœuds. Quelle est la hauteur de l'arbre binaire $B$ ?\n\n![B = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-3b355faf3f83.svg)",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nLe nœud le plus profond est $4$, à la profondeur $3$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Convention : la racine est à la profondeur $0$ ; la hauteur d'un arbre est la profondeur maximale de ses nœuds. Quelle est la hauteur de l'arbre binaire $B$ ?\n\n![B = ⟨20, ⟨10, ⟨5, ⟨2, _, _⟩, _⟩, ⟨15, _, _⟩⟩, ⟨30, _, ⟨40, ⟨35, _, _⟩, ⟨50, _, _⟩⟩⟩⟩](/static/arbres/abg-670541eb3114.svg)",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\nLe nœud le plus profond est $2$, à la profondeur $3$."
+      }
+     ],
+     "formules": "$T$ · hauteur : racine $=0$ · feuille : aucun fils · au plus $2^{h+1}-1$ nœuds · $LC=\\sum$ profondeurs",
+     "type": "value"
+    },
+    {
+     "id": "b12",
+     "enonce": "Combien l'arbre binaire $B$ a-t-il de feuilles ?\n\n![B = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-3b355faf3f83.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nUne feuille est un nœud sans fils : on les compte.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien l'arbre binaire $B$ a-t-il de feuilles ?\n\n![B = ⟨1, ⟨2, ⟨4, ⟨8, _, _⟩, ⟨9, _, _⟩⟩, ⟨5, _, _⟩⟩, ⟨3, ⟨6, _, _⟩, ⟨7, _, ⟨10, _, _⟩⟩⟩⟩](/static/arbres/abg-2070995ee385.svg)",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\nUne feuille est un nœud sans fils : on les compte."
+      }
+     ],
+     "formules": "$T$ · hauteur : racine $=0$ · feuille : aucun fils · au plus $2^{h+1}-1$ nœuds · $LC=\\sum$ profondeurs",
+     "type": "value"
+    },
+    {
+     "id": "b13",
+     "enonce": "Longueur de cheminement $LC$ (somme des profondeurs des nœuds, racine à $0$) de $B$ ?\n\n![B = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, _⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-3b355faf3f83.svg)",
+     "ans": "17",
+     "sol": "**Réponse :** $17$\n\n$LC=LCE+LCI=11+6$ (feuilles puis nœuds internes).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Longueur de cheminement $LC$ de $B$ (racine à $0$) ?\n\n![B = ⟨20, ⟨10, ⟨5, ⟨2, _, _⟩, _⟩, ⟨15, _, _⟩⟩, ⟨30, _, ⟨40, ⟨35, _, _⟩, ⟨50, _, _⟩⟩⟩⟩](/static/arbres/abg-670541eb3114.svg)",
+       "ans": "17",
+       "sol": "**Réponse :** $17$\n\n$LC=LCE+LCI=11+6$."
+      }
+     ],
+     "formules": "$T$ · hauteur : racine $=0$ · feuille : aucun fils · au plus $2^{h+1}-1$ nœuds · $LC=\\sum$ profondeurs",
+     "type": "value"
+    },
+    {
+     "id": "b14",
+     "enonce": "Nombre maximal de nœuds d'un arbre binaire de hauteur $5$ (racine à la profondeur $0$) ?",
+     "ans": "63",
+     "sol": "**Réponse :** $63$\n\nUn niveau $p$ contient au plus $2^p$ nœuds : $\\sum_{p=0}^{5}2^p=2^6-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre maximal de nœuds d'un arbre binaire de hauteur $7$ (racine à $0$) ?",
+       "ans": "255",
+       "sol": "**Réponse :** $255$\n\n$\\sum_{p=0}^{7}2^p=2^8-1$."
+      }
+     ],
+     "formules": "$T$ · hauteur : racine $=0$ · feuille : aucun fils · au plus $2^{h+1}-1$ nœuds · $LC=\\sum$ profondeurs",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1/S2 : ABR et AVL",
+   "notions": [
+    "abr"
+   ],
+   "exos": [
+    {
+     "id": "r21",
+     "enonce": "On insère successivement les clés $50, 30, 70, 20, 40, 60, 80, 35, 45, 65$ dans un ABR initialement vide. Quelle est la hauteur de l'arbre obtenu ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nArbre obtenu :\n\n![ABR = ⟨50, ⟨30, ⟨20, _, _⟩, ⟨40, ⟨35, _, _⟩, ⟨45, _, _⟩⟩⟩, ⟨70, ⟨60, _, ⟨65, _, _⟩⟩, ⟨80, _, _⟩⟩⟩](/static/arbres/abg-2c05adb43c0b.svg)\n\nLe chemin le plus long est $50\\to30\\to40\\to35$ : hauteur $3$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On insère successivement les clés $8, 3, 10, 1, 6, 14, 4, 7, 13, 5$ dans un ABR vide. Quelle est la hauteur de l'arbre obtenu ?",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\nArbre obtenu :\n\n![ABR = ⟨8, ⟨3, ⟨1, _, _⟩, ⟨6, ⟨4, _, ⟨5, _, _⟩⟩, ⟨7, _, _⟩⟩⟩, ⟨10, _, ⟨14, ⟨13, _, _⟩, _⟩⟩⟩](/static/arbres/abg-457f8b5bf006.svg)"
+      }
+     ],
+     "formules": "ABR : infixe $=$ ordre croissant · AVL : $|h(G)-h(D)|\\le1$ · $N(h)=N(h-1)+N(h-2)+1$",
+     "type": "value"
+    },
+    {
+     "id": "r22",
+     "enonce": "On insère successivement les clés $50, 30, 70, 20, 40, 60, 80, 35, 45, 65$ dans un ABR vide. Quelle est la $6^e$ clé dans le parcours infixe ?",
+     "ans": "50",
+     "sol": "**Réponse :** $50$\n\nLe parcours infixe d'un ABR donne les clés triées : $20, 30, 35, 40, 45, 50, 60, 65, 70, 80$. La $6^e$ est $50$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On insère successivement les clés $40, 20, 60, 10, 30, 50, 70, 5, 25, 35, 45$ dans un ABR vide. Quelle est la $7^e$ clé dans le parcours infixe ?",
+       "ans": "40",
+       "sol": "**Réponse :** $40$\n\nInfixe $=$ ordre croissant : $5, 10, 20, 25, 30, 35, 40, 45, 50, 60, 70$."
+      }
+     ],
+     "formules": "ABR : infixe $=$ ordre croissant · AVL : $|h(G)-h(D)|\\le1$ · $N(h)=N(h-1)+N(h-2)+1$",
+     "type": "value"
+    },
+    {
+     "id": "r23",
+     "enonce": "Nombre minimal de nœuds d'un AVL de hauteur $6$ (racine à $0$) ?",
+     "ans": "33",
+     "sol": "**Réponse :** $33$\n\n$N(h)=N(h-1)+N(h-2)+1$ avec $N(0)=1$, $N(1)=2$ : $1,2,4,7,12,20,33$. Un AVL minimal a un sous-arbre de hauteur $h-1$ et un de hauteur $h-2$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre minimal de nœuds d'un AVL de hauteur $7$ (racine à $0$) ?",
+       "ans": "54",
+       "sol": "**Réponse :** $54$\n\n$N(7)=N(6)+N(5)+1=33+20+1$."
+      }
+     ],
+     "formules": "ABR : infixe $=$ ordre croissant · AVL : $|h(G)-h(D)|\\le1$ · $N(h)=N(h-1)+N(h-2)+1$",
+     "type": "value"
+    },
+    {
+     "id": "r24",
+     "enonce": "On insère $1,2,3,4,5,6,7$ dans cet ordre dans un AVL vide. Quelle est la clé à la racine ?",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nChaque insertion ascendante déséquilibre à droite et déclenche une rotation gauche (4 rotations au total). Arbre final, parfait :\n\n![AVL = ⟨4, ⟨2, ⟨1, _, _⟩, ⟨3, _, _⟩⟩, ⟨6, ⟨5, _, _⟩, ⟨7, _, _⟩⟩⟩](/static/arbres/abg-c0c01defcee1.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On insère $1,2,\\dots,15$ dans cet ordre dans un AVL vide. Quelle est la clé à la racine ?",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\nInsertions croissantes dans un AVL : l'arbre final est parfait, la racine est la clé médiane $8$."
+      }
+     ],
+     "formules": "ABR : infixe $=$ ordre croissant · AVL : $|h(G)-h(D)|\\le1$ · $N(h)=N(h-1)+N(h-2)+1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Arbres généraux : mesures",
+   "notions": [
+    "gen-mes"
+   ],
+   "exos": [
+    {
+     "id": "g31",
+     "enonce": "Convention : la racine est à la profondeur $0$ ; la hauteur d'un arbre est la profondeur maximale de ses nœuds. Quelle est la hauteur de l'arbre général $T$ ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nLe nœud le plus profond est $18$ (chemin $1\\to2\\to7\\to14\\to18$), à la profondeur $4$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Convention : la racine est à la profondeur $0$ ; la hauteur d'un arbre est la profondeur maximale de ses nœuds. Hauteur de l'arbre général $T$ ?\n\n![T = (20, ((5, (1, 2)), (6, ((3, (7)), 8, 9)), 4))](/static/arbres/abg-963e669e1460.svg)",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$T=10$ nœuds, $N_e=6$ feuilles, $N_i=4$ nœuds internes, hauteur $3$, arité $3$."
+      }
+     ],
+     "formules": "arcs $=T-1=\\sum$ arités · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$ · hauteur : racine $=0$",
+     "type": "value"
+    },
+    {
+     "id": "g32",
+     "enonce": "Combien l'arbre général $T$ a-t-il de feuilles ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "10",
+     "sol": "**Réponse :** $10$\n\nFeuilles : $6, 18, 15, 8, 9, 10, 16, 17, 12, 13$. $T=18$ nœuds, $N_e=10$ feuilles, $N_i=8$ nœuds internes, hauteur $4$, arité $4$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien l'arbre général $T$ a-t-il de feuilles ?\n\n![T = (1, ((2, ((5, ((9, (10)))), 6)), (3, (7)), 4))](/static/arbres/abg-ff936483b270.svg)",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n$T=9$ nœuds, $N_e=4$ feuilles, $N_i=5$ nœuds internes, hauteur $4$, arité $3$."
+      }
+     ],
+     "formules": "arcs $=T-1=\\sum$ arités · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$ · hauteur : racine $=0$",
+     "type": "value"
+    },
+    {
+     "id": "g33",
+     "enonce": "Quelle est l'arité de l'arbre $T$ (arité maximale de ses nœuds) ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nLe nœud $1$ et le nœud $4$ ont chacun $4$ fils, aucun nœud n'en a davantage.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Arité de l'arbre $T$ (maximum des arités des nœuds) ?\n\n![T = (50, ((10, (20, (30, (40, 60)))), (70, (80)), 90, (5, (15, 25))))](/static/arbres/abg-dcea27bbc31d.svg)",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n$T=12$ nœuds, $N_e=7$ feuilles, $N_i=5$ nœuds internes, hauteur $3$, arité $4$."
+      }
+     ],
+     "formules": "arcs $=T-1=\\sum$ arités · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$ · hauteur : racine $=0$",
+     "type": "value"
+    },
+    {
+     "id": "g34",
+     "enonce": "Arité moyenne de $T$ : somme des nombres de fils divisée par le nombre de nœuds **internes** (fraction) ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "17/8",
+     "sol": "**Réponse :** $\\dfrac{17}{8}$\n\n$T=18$ nœuds, $N_e=10$ feuilles, $N_i=8$ nœuds internes, hauteur $4$, arité $4$. Chaque nœud sauf la racine est le fils d'un nœud : $T-1=17$ fils au total, donc $\\frac{17}{8}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Arité moyenne de $T$ (somme des nombres de fils divisée par le nombre de nœuds internes, fraction) ?\n\n![T = (20, ((5, (1, 2)), (6, ((3, (7)), 8, 9)), 4))](/static/arbres/abg-963e669e1460.svg)",
+       "ans": "9/4",
+       "sol": "**Réponse :** $\\dfrac{9}{4}$\n\n$T=10$ nœuds, $N_e=6$ feuilles, $N_i=4$ nœuds internes, hauteur $3$, arité $3$."
+      }
+     ],
+     "formules": "arcs $=T-1=\\sum$ arités · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$ · hauteur : racine $=0$",
+     "type": "value"
+    },
+    {
+     "id": "g35",
+     "enonce": "Profondeur moyenne interne $PMI=\\frac{LCI}{N_i}$ de $T$ (racine à $0$, fraction) ?\n\n![T = (10, ((2, (0, 1, 9, 4)), 5, (8, ((7, ((6, (3, 11))))))))](/static/arbres/abg-9770f741830c.svg)",
+     "ans": "7/5",
+     "sol": "**Réponse :** $\\dfrac{7}{5}$\n\nNœuds internes et profondeurs : $10$ ($0$), $2$ ($1$), $8$ ($1$), $7$ ($2$), $6$ ($3$) : $LCI=7$, $N_i=5$.",
+     "duree": 3,
+     "src": "Examen B5 ARB2 octobre 2024 (dossier 2028), ex. 2 (exemple de l'énoncé)",
+     "variants": [
+      {
+       "enonce": "Profondeur moyenne interne $PMI$ de $T$ (racine à $0$, fraction) ?\n\n![T = (50, ((10, (20, (30, (40, 60)))), (70, (80)), 90, (5, (15, 25))))](/static/arbres/abg-dcea27bbc31d.svg)",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n$T=12$ nœuds, $N_e=7$ feuilles, $N_i=5$ nœuds internes, hauteur $3$, arité $4$."
+      }
+     ],
+     "formules": "arcs $=T-1=\\sum$ arités · arité moyenne $=\\frac{T-1}{N_i}$ · $PMI=\\frac{LCI}{N_i}$ · hauteur : racine $=0$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Représentations : n-uplets, premier fils - frère droit, forme linéaire",
+   "notions": [
+    "gen-rep"
+   ],
+   "exos": [
+    {
+     "id": "p41",
+     "enonce": "On représente l'arbre général $T$ en premier fils - frère droit (arbre binaire : gauche $=$ `child`, droite $=$ `sibling`). Quelle est la hauteur de cet arbre binaire (racine à $0$) ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "8",
+     "sol": "**Réponse :** $8$\n\nL'arbre binaire est :\n\n![B = ⟨1, ⟨2, ⟨6, _, ⟨7, ⟨14, ⟨18, _, _⟩, ⟨15, _, _⟩⟩, _⟩⟩, ⟨3, ⟨8, _, _⟩, ⟨4, ⟨9, _, ⟨10, _, ⟨11, ⟨16, _, ⟨17, _, _⟩⟩, ⟨12, _, _⟩⟩⟩⟩, ⟨5, ⟨13, _, _⟩, _⟩⟩⟩⟩, _⟩](/static/arbres/abg-f213d124eb4d.svg)\n\nLe nœud le plus profond est $17$ : on descend d'un cran à gauche pour chaque niveau de l'arbre général et d'un cran à droite pour chaque frère à passer.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Hauteur de l'arbre binaire premier fils - frère droit de $T$ (racine à $0$) ?\n\n![T = (20, ((5, (1, 2)), (6, ((3, (7)), 8, 9)), 4))](/static/arbres/abg-963e669e1460.svg)",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\n![B = ⟨20, ⟨5, ⟨1, _, ⟨2, _, _⟩⟩, ⟨6, ⟨3, ⟨7, _, _⟩, ⟨8, _, ⟨9, _, _⟩⟩⟩, ⟨4, _, _⟩⟩⟩, _⟩](/static/arbres/abg-68e9f5c87218.svg)"
+      }
+     ],
+     "formules": "tuple : `children` · binaire : `child`, `sibling` · `sibling` non vides $=T-1-N_i$ · linéaire `(o A1 ... AN)`",
+     "type": "value"
+    },
+    {
+     "id": "p42",
+     "enonce": "Donner la représentation linéaire `(o A1 ... AN)` de l'arbre $T$ (clé de la racine suivie des représentations des fils, sans espace).\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "sol": "`(1(2(6)(7(14(18))(15)))(3(8))(4(9)(10)(11(16)(17))(12))(5(13)))`\n\nChaque sous-arbre est parenthésé : une feuille $k$ s'écrit `(k)`, un nœud de clé $k$ et de fils $A_1,\\dots,A_N$ s'écrit `(k A1 ... AN)`. Les parenthèses sont bien équilibrées, et le nombre de `(` vaut la taille $T=18$.",
+     "duree": 6,
+     "formules": "tuple : `children` · binaire : `child`, `sibling` · `sibling` non vides $=T-1-N_i$ · linéaire `(o A1 ... AN)`",
+     "type": "open"
+    },
+    {
+     "id": "p43",
+     "enonce": "Quelle est la hauteur de l'arbre représenté par `(12(2(25)(6)(-7))(0(18(1)(8))(9))(4(3)(11)))` (racine à $0$) ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nOn lit : la racine $12$ a trois fils $2$, $0$, $4$ ; $2$ a pour fils $25,6,-7$ ; $0$ a pour fils $18$ (de fils $1,8$) et $9$ ; $4$ a pour fils $3,11$.\n\n![T = (12, ((2, (25, 6, -7)), (0, ((18, (1, 8)), 9)), (4, (3, 11))))](/static/arbres/abg-a8b03506dbb0.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Quelle est la hauteur de l'arbre représenté par `(7(1(2(3)(4))(5)(6(8)))(9))` (racine à $0$) ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n![T = (7, ((1, ((2, (3, 4)), 5, (6, (8)))), 9))](/static/arbres/abg-724b69d745dc.svg)"
+      }
+     ],
+     "formules": "tuple : `children` · binaire : `child`, `sibling` · `sibling` non vides $=T-1-N_i$ · linéaire `(o A1 ... AN)`",
+     "type": "value"
+    },
+    {
+     "id": "p44",
+     "enonce": "Dans la représentation premier fils - frère droit de $T$, combien de liens `sibling` sont différents de `None` ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\nUn nœud a un frère droit s'il n'est pas le dernier fils de son père. Il y a $T-1=17$ nœuds qui ne sont pas la racine, dont $N_i=8$ derniers fils (un par nœud interne) : $17-8=9$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien de liens `sibling` de la forme premier fils - frère droit de $T$ sont différents de `None` ?\n\n![T = (50, ((10, (20, (30, (40, 60)))), (70, (80)), 90, (5, (15, 25))))](/static/arbres/abg-dcea27bbc31d.svg)",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\n$T-1-N_i=11-5$."
+      }
+     ],
+     "formules": "tuple : `children` · binaire : `child`, `sibling` · `sibling` non vides $=T-1-N_i$ · linéaire `(o A1 ... AN)`",
+     "type": "value"
+    },
+    {
+     "id": "p45",
+     "enonce": "Dessiner l'arbre binaire premier fils - frère droit de $T$.\n\n![T = (10, ((2, (0, 1, 9, 4)), 5, (8, ((7, ((6, (3, 11))))))))](/static/arbres/abg-9770f741830c.svg)",
+     "sol": "![B = ⟨10, ⟨2, ⟨0, _, ⟨1, _, ⟨9, _, ⟨4, _, _⟩⟩⟩⟩, ⟨5, _, ⟨8, ⟨7, ⟨6, ⟨3, _, ⟨11, _, _⟩⟩, _⟩, _⟩, _⟩⟩⟩, _⟩](/static/arbres/abg-1260a1fca643.svg)\n\nRègle : le fils gauche d'un nœud est son premier fils, le fils droit est son frère droit (jamais de frère pour la racine). Les feuilles de $T$ sont les nœuds sans fils gauche.",
+     "duree": 6,
+     "formules": "tuple : `children` · binaire : `child`, `sibling` · `sibling` non vides $=T-1-N_i$ · linéaire `(o A1 ... AN)`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Parcours : préfixe, suffixe, largeur",
+   "notions": [
+    "gen-par"
+   ],
+   "exos": [
+    {
+     "id": "q51",
+     "enonce": "Rang (à partir de $1$) du nœud $14$ dans le parcours préfixe de $T$ ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nPréfixe : $1, 2, 6, 7, 14, 18, 15, 3, 8, 4, 9, 10, 11, 16, 17, 12, 5, 13$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Rang du nœud $6$ dans le parcours préfixe de $T$ ?\n\n![T = (1, ((2, ((5, ((9, (10)))), 6)), (3, (7)), 4))](/static/arbres/abg-ff936483b270.svg)",
+       "ans": "6",
+       "sol": "**Réponse :** $6$\n\nPréfixe : $1, 2, 5, 9, 10, 6, 3, 7, 4$."
+      }
+     ],
+     "formules": "préfixe : racine, fils · suffixe : fils, racine · largeur : file · un affichage par appel $\\Rightarrow T$",
+     "type": "value"
+    },
+    {
+     "id": "q52",
+     "enonce": "Rang (à partir de $1$) du nœud $4$ dans le parcours suffixe de $T$ ?\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)",
+     "ans": "15",
+     "sol": "**Réponse :** $15$\n\nSuffixe (fils puis père) : $6, 18, 14, 15, 7, 2, 8, 3, 9, 10, 16, 17, 11, 12, 4, 13, 5, 1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Rang du nœud $6$ dans le parcours suffixe de $T$ ?\n\n![T = (20, ((5, (1, 2)), (6, ((3, (7)), 8, 9)), 4))](/static/arbres/abg-963e669e1460.svg)",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\nSuffixe : $1, 2, 5, 7, 3, 8, 9, 6, 4, 20$."
+      }
+     ],
+     "formules": "préfixe : racine, fils · suffixe : fils, racine · largeur : file · un affichage par appel $\\Rightarrow T$",
+     "type": "value"
+    },
+    {
+     "id": "q53",
+     "enonce": "Rang (à partir de $1$) du nœud $7$ dans le parcours en largeur de $T$ ?\n\n![T = (10, ((2, (0, 1, 9, 4)), 5, (8, ((7, ((6, (3, 11))))))))](/static/arbres/abg-9770f741830c.svg)",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\nLargeur, niveau par niveau et de gauche à droite : $10, 2, 5, 8, 0, 1, 9, 4, 7, 6, 3, 11$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Rang du nœud $80$ dans le parcours en largeur de $T$ ?\n\n![T = (50, ((10, (20, (30, (40, 60)))), (70, (80)), 90, (5, (15, 25))))](/static/arbres/abg-dcea27bbc31d.svg)",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\nLargeur : $50, 10, 70, 90, 5, 20, 30, 80, 15, 25, 40, 60$."
+      }
+     ],
+     "formules": "préfixe : racine, fils · suffixe : fils, racine · largeur : file · un affichage par appel $\\Rightarrow T$",
+     "type": "value"
+    },
+    {
+     "id": "q54",
+     "enonce": "On applique `count_print(B)` à l'arbre $B$ ci-dessous, en implémentation premier fils - frère droit (`TreeAsBin`). Combien de fois le mot « three » est-il affiché ?\n\n```python\ndef count_print(B):\n    if B.child == None:\n        print(\"one\")\n    else:\n        print(\"two\")\n        C = B.child\n        while C.sibling != None:\n            count_print(C)\n            print(\"three\")\n            C = C.sibling\n        count_print(C)\n    print(\"four\")\n```\n\n![B = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-c54e8da1fdc3.svg)",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\nLe code a été exécuté sur l'arbre. Affichages : « one » 10 fois (une par feuille), « two » 8 fois (une par nœud interne, $N_i=8$), « four » 18 fois (une par appel, soit $T=18$) et « three » 9 fois : un nœud interne à $a$ fils affiche « three » $a-1$ fois (tous les fils sauf le dernier), d'où $\\sum(a-1)=(T-1)-N_i=9$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On applique `count_print(B)` à l'arbre $B$ ci-dessous, en implémentation premier fils - frère droit (`TreeAsBin`). Combien de fois le mot « three » est-il affiché ?\n\n```python\ndef count_print(B):\n    if B.child == None:\n        print(\"one\")\n    else:\n        print(\"two\")\n        C = B.child\n        while C.sibling != None:\n            count_print(C)\n            print(\"three\")\n            C = C.sibling\n        count_print(C)\n    print(\"four\")\n```\n\n![B = (20, ((5, (1, 2)), (6, ((3, (7)), 8, 9)), 4))](/static/arbres/abg-14d311eb8432.svg)",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\nLe code a été exécuté sur l'arbre. Affichages : « one » 6 fois (une par feuille), « two » 4 fois (une par nœud interne, $N_i=4$), « four » 10 fois (une par appel, soit $T=10$) et « three » 5 fois : un nœud interne à $a$ fils affiche « three » $a-1$ fois (tous les fils sauf le dernier), d'où $\\sum(a-1)=(T-1)-N_i=5$."
+      }
+     ],
+     "formules": "préfixe : racine, fils · suffixe : fils, racine · largeur : file · un affichage par appel $\\Rightarrow T$",
+     "type": "value"
+    },
+    {
+     "id": "q55",
+     "enonce": "Dans le vecteur construit en plaçant chaque clé deux fois (à la première rencontre, ordre préfixe, et à la dernière, ordre suffixe, du parcours profondeur), quel est le $9^e$ élément de l'arbre $T$ ?\n\n![T = (10, ((2, (0, 1, 9, 4)), 5, (8, ((7, ((6, (3, 11))))))))](/static/arbres/abg-9770f741830c.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\nVecteur : $10, 2, 0, 0, 1, 1, 9, 9, 4, 4, 2, 5, 5, 8, 7, 6, 3, 3, 11, 11, 6, 7, 8, 10$ (longueur $2T=24$).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$11^e$ élément du vecteur préfixe - suffixe (chaque clé placée à la première et à la dernière rencontre du parcours profondeur) de $T$ ?\n\n![T = (50, ((10, (20, (30, (40, 60)))), (70, (80)), 90, (5, (15, 25))))](/static/arbres/abg-dcea27bbc31d.svg)",
+       "ans": "10",
+       "sol": "**Réponse :** $10$\n\nVecteur : $50, 10, 20, 20, 30, 40, 40, 60, 60, 30, 10, 70, 80, 80, 70, 90, 90, 5, 15, 15, 25, 25, 5, 50$."
+      }
+     ],
+     "formules": "préfixe : racine, fils · suffixe : fils, racine · largeur : file · un affichage par appel $\\Rightarrow T$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Écrire des fonctions sur les arbres généraux (taille, hauteur, largeur, forme linéaire)",
+   "notions": [
+    "gen-code",
+    "gen-rep"
+   ],
+   "exos": [
+    {
+     "id": "c61",
+     "enonce": "Écrire `size(T)` (arbre par n-uplets, classe `Tree`) et `size_bin(B)` (premier fils - frère droit, classe `TreeAsBin`) qui retournent la taille (nombre de nœuds) de l'arbre.\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)\n\nExemples d'applications :\n\n```\n>>> size(T)\n18\n>>> size(Tree(5))\n1\n>>> size_bin(B)\n18\n```",
+     "sol": "```python\ndef size(T):\n    n = 1\n    for C in T.children:\n        n += size(C)\n    return n\n\n\ndef size_bin(B):\n    n = 1\n    C = B.child\n    while C != None:\n        n += size_bin(C)\n        C = C.sibling\n    return n\n```\n\nParcours profondeur : la taille est $1+\\sum$ des tailles des fils. Dans la version binaire, on parcourt la liste des fils par `C = C.sibling` ; on n'appelle jamais la fonction sur `B.sibling` directement depuis `B`, sinon on compterait aussi les frères de `B`.",
+     "duree": 6,
+     "formules": "`taille` $=1+\\sum$ · `hauteur` $=\\max(1+h_{fils})$ · largeur : file + marqueur `None` · `C = C.sibling`",
+     "type": "open"
+    },
+    {
+     "id": "c62",
+     "enonce": "Écrire `height(T)` (n-uplets) et `height_bin(B)` (premier fils - frère droit) qui retournent la hauteur de l'arbre (une feuille a la hauteur $0$).\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)\n\nExemples d'applications :\n\n```\n>>> height(T)\n4\n>>> height(Tree(5))\n0\n>>> height_bin(B)\n4\n```",
+     "sol": "```python\ndef height(T):\n    h = 0\n    for C in T.children:\n        h = max(h, 1 + height(C))\n    return h\n\n\ndef height_bin(B):\n    h = 0\n    C = B.child\n    while C != None:\n        h = max(h, 1 + height_bin(C))\n        C = C.sibling\n    return h\n```\n\nLa hauteur est le maximum des $1+$ hauteurs des fils. L'accumulateur `h` vaut $0$ pour une feuille car la boucle ne s'exécute pas. En version binaire, la hauteur de l'arbre général n'est **pas** celle de l'arbre binaire : on ne descend pas vers `B.sibling` comme vers un fils.",
+     "duree": 6,
+     "formules": "`taille` $=1+\\sum$ · `hauteur` $=\\max(1+h_{fils})$ · largeur : file + marqueur `None` · `C = C.sibling`",
+     "type": "open"
+    },
+    {
+     "id": "c63",
+     "enonce": "Écrire `width(T)` (arbre par n-uplets) qui retourne la largeur de l'arbre : le plus grand nombre de nœuds sur un même niveau. Utiliser un parcours en largeur avec la classe `Queue` (`enqueue`, `dequeue`, `isempty`).\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)\n\nExemples d'applications :\n\n```\n>>> width(T)\n8\n>>> width(Tree(5))\n1\n>>> width(U)\n5\n```",
+     "sol": "```python\ndef width(T):\n    \"\"\"largest number of nodes on one level\"\"\"\n    q = Queue()\n    q.enqueue(T)\n    q.enqueue(None)              # end-of-level marker\n    best = cur = 0\n    while not q.isempty():\n        t = q.dequeue()\n        if t == None:\n            best = max(best, cur)\n            cur = 0\n            if not q.isempty():  # re-enqueue the marker only if a next level exists\n                q.enqueue(None)\n        else:\n            cur += 1\n            for C in t.children:\n                q.enqueue(C)\n    return best\n```\n\nParcours largeur : on repère les changements de niveau avec un marqueur `None` enfilé après la racine, puis après chaque niveau terminé. Le marqueur n'est réenfilé que si la file n'est pas vide, sinon la boucle ne s'arrêterait jamais. Le compteur `cur` compte les nœuds du niveau en cours.",
+     "duree": 8,
+     "formules": "`taille` $=1+\\sum$ · `hauteur` $=\\max(1+h_{fils})$ · largeur : file + marqueur `None` · `C = C.sibling`",
+     "type": "open"
+    },
+    {
+     "id": "c64",
+     "enonce": "Écrire `to_linear(T)` qui retourne la représentation linéaire de l'arbre (arbre par n-uplets) sous forme de chaîne : `(o A1 ... AN)` sans espace, par exemple `(1(2)(3))` pour une racine $1$ et deux feuilles $2$ et $3$.\n\n![T = (1, ((2, (6, (7, ((14, (18)), 15)))), (3, (8)), (4, (9, 10, (11, (16, 17)), 12)), (5, (13))))](/static/arbres/abg-90af28f18d40.svg)\n\nExemples d'applications :\n\n```\n>>> to_linear(T)\n'(1(2(6)(7(14(18))(15)))(3(8))(4(9)(10)(11(16)(17))(12))(5(13)))'\n>>> to_linear(Tree(7))\n'(7)'\n```",
+     "sol": "```python\ndef to_linear(T):\n    s = \"(\" + str(T.key)\n    for C in T.children:\n        s += to_linear(C)\n    return s + \")\"\n```\n\nParcours préfixe : on écrit la parenthèse ouvrante et la clé, puis la représentation de chaque fils dans l'ordre, puis la parenthèse fermante.",
+     "duree": 6,
+     "formules": "`taille` $=1+\\sum$ · `hauteur` $=\\max(1+h_{fils})$ · largeur : file + marqueur `None` · `C = C.sibling`",
+     "type": "open"
+    },
+    {
+     "id": "c65",
+     "enonce": "Dans cet exercice on remplit une liste avec les clés d'un arbre général : chaque clé est placée deux fois, lors de la première rencontre (ordre préfixe) et lors de la dernière (ordre suffixe) du parcours profondeur. Écrire `prefsuff(B)` avec l'implémentation premier fils - frère droit.\n\n![T = ('A', (('B', ('E', 'F')), ('C', ('G', 'H', 'I')), ('D', ('J'))))](/static/arbres/abg-c741c1f1f1d0.svg)\n\nExemples d'applications :\n\n```\n>>> prefsuff(B)\n['A', 'B', 'E', 'E', 'F', 'F', 'B', 'C', 'G', 'G', 'H', 'H', 'I', 'I', 'C', 'D', 'J', 'J', 'D', 'A']\n```",
+     "sol": "```python\ndef _ps(B, L):\n    L.append(B.key)              # first meeting: prefix\n    C = B.child\n    while C != None:\n        _ps(C, L)\n        C = C.sibling\n    L.append(B.key)              # last meeting: suffix\n\n\ndef prefsuff(B):\n    L = []\n    _ps(B, L)\n    return L\n```\n\nOn ajoute la clé avant de parcourir les fils et après. Une feuille apparaît deux fois de suite. Vérifié par exécution sur l'exemple de l'énoncé (liste de $20$ éléments), corrigé rédigé.",
+     "src": "Contrôle C3 du 7 novembre 2017 (dossier 2021), ex. 2 : Préfixe - Suffixe",
+     "duree": 8,
+     "formules": "`taille` $=1+\\sum$ · `hauteur` $=\\max(1+h_{fils})$ · largeur : file + marqueur `None` · `C = C.sibling`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "B-arbres : nombre de clés et de fils",
+   "notions": [
+    "bt-def"
+   ],
+   "exos": [
+    {
+     "id": "t71",
+     "enonce": "Quel est le nombre maximal de clés d'un nœud d'un B-arbre de degré $t=5$ ?",
+     "ans": "9",
+     "sol": "**Réponse :** $9$\n\nUn nœud porte au plus $2t-1$ clés (il est alors plein, c'est un $2t$-nœud à $2t$ fils) : $2\\times5-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre maximal de clés d'un nœud d'un B-arbre de degré $t=8$ ?",
+       "ans": "15",
+       "sol": "**Réponse :** $15$\n\n$2t-1=15$."
+      }
+     ],
+     "formules": "nœud : $t-1$ à $2t-1$ clés · $k$ clés $\\Rightarrow k+1$ fils · max $(2t)^{h+1}-1$ · min $2t^h-1$",
+     "type": "value"
+    },
+    {
+     "id": "t72",
+     "enonce": "Quel est le nombre minimal de clés d'un nœud non racine d'un B-arbre de degré $t=6$ ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nUn nœud non racine a au moins $t$ fils, donc au moins $t-1$ clés : $6-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre minimal de clés d'un nœud non racine d'un B-arbre de degré $t=9$ ?",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\n$t-1=8$."
+      }
+     ],
+     "formules": "nœud : $t-1$ à $2t-1$ clés · $k$ clés $\\Rightarrow k+1$ fils · max $(2t)^{h+1}-1$ · min $2t^h-1$",
+     "type": "value"
+    },
+    {
+     "id": "t73",
+     "enonce": "Nombre maximal de clés d'un B-arbre de degré $t=3$ et de hauteur $2$ (racine à la profondeur $0$) ?",
+     "ans": "215",
+     "sol": "**Réponse :** $215$\n\nTous les nœuds sont pleins : $2t-1=5$ clés par nœud et $2t=6$ fils par nœud. Nœuds : $1+6+36=43$. Clés : $43\\times5=215=(2t)^{h+1}-1=6^3-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre maximal de clés d'un B-arbre de degré $t=4$ et de hauteur $2$ ?",
+       "ans": "511",
+       "sol": "**Réponse :** $511$\n\n$(2t)^{h+1}-1=8^3-1$."
+      }
+     ],
+     "formules": "nœud : $t-1$ à $2t-1$ clés · $k$ clés $\\Rightarrow k+1$ fils · max $(2t)^{h+1}-1$ · min $2t^h-1$",
+     "type": "value"
+    },
+    {
+     "id": "t74",
+     "enonce": "Nombre minimal de clés d'un B-arbre de degré $t=3$ et de hauteur $2$ ?",
+     "ans": "17",
+     "sol": "**Réponse :** $17$\n\nRacine à $1$ clé donc $2$ fils ; chaque autre nœud interne a $t=3$ fils et chaque nœud non racine $t-1=2$ clés. Nœuds : $1+2+2\\times3=9$ ; clés : $1+8\\times2=17=2t^h-1=2\\times9-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Nombre minimal de clés d'un B-arbre de degré $t=4$ et de hauteur $3$ ?",
+       "ans": "127",
+       "sol": "**Réponse :** $127$\n\n$2t^h-1=2\\times4^3-1$."
+      }
+     ],
+     "formules": "nœud : $t-1$ à $2t-1$ clés · $k$ clés $\\Rightarrow k+1$ fils · max $(2t)^{h+1}-1$ · min $2t^h-1$",
+     "type": "value"
+    },
+    {
+     "id": "t75",
+     "enonce": "Un nœud d'un B-arbre contient au plus $11$ clés. Quel est le degré $t$ ?",
+     "ans": "6",
+     "sol": "**Réponse :** $6$\n\n$2t-1=11$ donc $t=6$ : un nœud porte alors de $5$ à $11$ clés.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Un nœud d'un B-arbre contient au plus $15$ clés. Quel est le degré $t$ ?",
+       "ans": "8",
+       "sol": "**Réponse :** $8$\n\n$2t-1=15$."
+      }
+     ],
+     "formules": "nœud : $t-1$ à $2t-1$ clés · $k$ clés $\\Rightarrow k+1$ fils · max $(2t)^{h+1}-1$ · min $2t^h-1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "B-arbres : hauteur, recherche, parcours croissant, prédécesseur",
+   "notions": [
+    "bt-def",
+    "bt-lect"
+   ],
+   "exos": [
+    {
+     "id": "u81",
+     "enonce": "Un B-arbre de degré $t=3$ contient $n=1000$ clés. Quelle est sa hauteur maximale (racine à $0$) ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nUne hauteur $h$ exige au moins $2t^h-1$ clés : $2\\times3^h-1\\le1000$ donne $3^h\\le500{,}5$. $3^5=243$ convient, $3^6=729$ non : $h_{\\max}=5$ (soit $h\\le\\log_3\\frac{n+1}2$).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Hauteur maximale d'un B-arbre de degré $t=2$ contenant $500$ clés ?",
+       "ans": "7",
+       "sol": "**Réponse :** $7$\n\n$2\\times2^h-1\\le500$ donne $2^h\\le250{,}5$ : $h\\le7$."
+      }
+     ],
+     "formules": "$n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · $n\\le(2t)^{h+1}-1$ · recherche : $\\le h+1$ nœuds · prédécesseur : clé la plus à droite du fils gauche",
+     "type": "value"
+    },
+    {
+     "id": "u82",
+     "enonce": "Un B-arbre de degré $t=2$ contient $n=100$ clés. Quelle est sa hauteur minimale ?",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nUne hauteur $h$ permet au plus $(2t)^{h+1}-1=4^{h+1}-1$ clés. $4^3-1=63 < 100$ et $4^4-1=255\\ge100$ : $h+1=4$, donc $h=3$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Hauteur minimale d'un B-arbre de degré $t=3$ contenant $500$ clés ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n$6^{h+1}-1\\ge500$ : $6^3=216 < 501$, $6^4=1296$, donc $h+1=4$."
+      }
+     ],
+     "formules": "$n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · $n\\le(2t)^{h+1}-1$ · recherche : $\\le h+1$ nœuds · prédécesseur : clé la plus à droite du fils gauche",
+     "type": "value"
+    },
+    {
+     "id": "u83",
+     "enonce": "Combien de nœuds lit-on pour chercher la clé $38$ dans ce B-arbre de degré $2$ (racine comprise) ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+     "ans": "3",
+     "sol": "**Réponse :** $3$\n\nOn part de la racine $[22]$ : $38>22$, fils de droite $[27\\;41]$ ; $38 > 27$ et $38 < 41$, fils du milieu $[30\\;35\\;38]$ où l'on trouve $38$. Trois nœuds lus : $h+1$ au plus.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien de nœuds lit-on pour chercher la clé $15$ dans ce B-arbre ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+       "ans": "2",
+       "sol": "**Réponse :** $2$\n\nLa clé $15$ est dans le fils gauche de la racine."
+      }
+     ],
+     "formules": "$n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · $n\\le(2t)^{h+1}-1$ · recherche : $\\le h+1$ nœuds · prédécesseur : clé la plus à droite du fils gauche",
+     "type": "value"
+    },
+    {
+     "id": "u84",
+     "enonce": "Quel est le prédécesseur de $40$ (plus grande clé strictement inférieure) dans ce B-arbre ?\n\n![B = (40 : (7 20 35 : (2 5 6) (13 14 15 16) (22 27 29 30) (36 39)) (72 83 : (42 51) (79 81) (87 91 93 96 99)))](/static/arbres/bt-896774a1f5ff.svg)",
+     "ans": "39",
+     "sol": "**Réponse :** $39$\n\n$40$ est à la racine, un nœud interne : son prédécesseur est la clé la plus à droite du fils gauche, donc on descend toujours par le dernier fils : $[7\\;20\\;35]$ puis la feuille $[36\\;39]$, dont la dernière clé est $39$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Prédécesseur de $87$ dans ce B-arbre ?\n\n![B = (40 : (7 20 35 : (2 5 6) (13 14 15 16) (22 27 29 30) (36 39)) (72 83 : (42 51) (79 81) (87 91 93 96 99)))](/static/arbres/bt-896774a1f5ff.svg)",
+       "ans": "83",
+       "sol": "**Réponse :** $83$\n\n$87$ est la première clé de sa feuille : son prédécesseur est la clé du père qui la précède, $83$."
+      }
+     ],
+     "formules": "$n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · $n\\le(2t)^{h+1}-1$ · recherche : $\\le h+1$ nœuds · prédécesseur : clé la plus à droite du fils gauche",
+     "type": "value"
+    },
+    {
+     "id": "u85",
+     "enonce": "Dans le parcours en ordre croissant de ce B-arbre, quelle est la $10^e$ clé ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+     "ans": "27",
+     "sol": "**Réponse :** $27$\n\nLe parcours intercale fils et clés : $8, 12, 15, 18, 19, 20, 22, 24, 25, 27, 30, 35, 38, 41, 45, 48$. La $10^e$ est $27$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$8^e$ clé du parcours croissant de ce B-arbre ?\n\n![B = (10 21 38 : (3 7) (14 17) (23 25 29) (40 51))](/static/arbres/bt-1f84da45eb33.svg)",
+       "ans": "25",
+       "sol": "**Réponse :** $25$\n\nParcours : $3, 7, 10, 14, 17, 21, 23, 25, 29, 38, 40, 51$."
+      }
+     ],
+     "formules": "$n\\ge2t^h-1$ donc $h\\le\\log_t\\frac{n+1}2$ · $n\\le(2t)^{h+1}-1$ · recherche : $\\le h+1$ nœuds · prédécesseur : clé la plus à droite du fils gauche",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "B-arbres : insertion et éclatement",
+   "notions": [
+    "bt-ins"
+   ],
+   "exos": [
+    {
+     "id": "i91",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Combien d'éclatements (splits) a-t-on effectués après l'insertion successive de $36$ puis de $42$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n**Insertion de $36$** : éclatement d'un nœud plein : la clé $35$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (27 35 41 : (24 25) (30) (36 38) (45 48)))](/static/arbres/bt-24dc48e5bdaa.svg)\n\n**Insertion de $42$** : éclatement d'un nœud plein : la clé $35$ monte.\n\n![(22 35 : (15 : (8 12) (18 19 20)) (27 : (24 25) (30)) (41 : (36 38) (42 45 48)))](/static/arbres/bt-670998faac61.svg)\n\nUn éclatement pour chaque insertion (nœud plein rencontré à la descente).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Combien d'éclatements a-t-on effectués après l'insertion successive de $11$, $32$ puis $20$ dans ce B-arbre de degré $2$ ?\n\n![B = (10 21 38 : (3 7) (14 17) (23 25 29) (40 51))](/static/arbres/bt-1f84da45eb33.svg)",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n**Insertion de $11$** : éclatement d'un nœud plein : la clé $21$ monte.\n\n![(21 : (10 : (3 7) (11 14 17)) (38 : (23 25 29) (40 51)))](/static/arbres/bt-33822b9133d6.svg)\n\n**Insertion de $32$** : éclatement d'un nœud plein : la clé $25$ monte.\n\n![(21 : (10 : (3 7) (11 14 17)) (25 38 : (23) (29 32) (40 51)))](/static/arbres/bt-f8b18109e2ce.svg)\n\n**Insertion de $20$** : éclatement d'un nœud plein : la clé $14$ monte.\n\n![(21 : (10 14 : (3 7) (11) (17 20)) (25 38 : (23) (29 32) (40 51)))](/static/arbres/bt-c3e2e702aa3d.svg)"
+      }
+     ],
+     "formules": "éclater : médiane (indice $t-1$) monte · racine pleine : hauteur $+1$ · nœuds $=1+$ éclatements $+h$",
+     "type": "value"
+    },
+    {
+     "id": "i92",
+     "enonce": "On éclate un nœud plein d'un B-arbre de degré $t=3$ contenant les clés $[4\\;9\\;15\\;21\\;33]$. Quelle clé monte dans le père ?",
+     "ans": "15",
+     "sol": "**Réponse :** $15$\n\nLa clé médiane, d'indice $t-1=2$ (en comptant à partir de $0$) : $[4\\;9]$ et $[21\\;33]$ restent, $15$ monte.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On éclate un nœud plein d'un B-arbre de degré $t=4$ contenant $[2\\;5\\;8\\;11\\;14\\;17\\;20]$. Quelle clé monte dans le père ?",
+       "ans": "11",
+       "sol": "**Réponse :** $11$\n\nLa médiane, d'indice $t-1=3$ : $11$."
+      }
+     ],
+     "formules": "éclater : médiane (indice $t-1$) monte · racine pleine : hauteur $+1$ · nœuds $=1+$ éclatements $+h$",
+     "type": "value"
+    },
+    {
+     "id": "i93",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Construire le B-arbre de degré $2$ (arbre 2-3-4) obtenu par insertions successives, dans un arbre vide, de $5, 15, 40, 25, 12, 14, 18, 16, 45, 38, 9$. Dessiner l'arbre après chaque insertion.",
+     "sol": "**Insertion de $5$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5)](/static/arbres/bt-32dd556acdd5.svg)\n\n**Insertion de $15$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5 15)](/static/arbres/bt-9cf4aae85476.svg)\n\n**Insertion de $40$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5 15 40)](/static/arbres/bt-a9dd208edbfe.svg)\n\n**Insertion de $25$** : éclatement d'un nœud plein : la clé $15$ monte.\n\n![(15 : (5) (25 40))](/static/arbres/bt-d8f56eb7a509.svg)\n\n**Insertion de $12$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(15 : (5 12) (25 40))](/static/arbres/bt-03e45391ce9f.svg)\n\n**Insertion de $14$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(15 : (5 12 14) (25 40))](/static/arbres/bt-f84314159f60.svg)\n\n**Insertion de $18$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(15 : (5 12 14) (18 25 40))](/static/arbres/bt-a11cb444c8c7.svg)\n\n**Insertion de $16$** : éclatement d'un nœud plein : la clé $25$ monte.\n\n![(15 25 : (5 12 14) (16 18) (40))](/static/arbres/bt-b2039646099f.svg)\n\n**Insertion de $45$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(15 25 : (5 12 14) (16 18) (40 45))](/static/arbres/bt-1531bf96cd96.svg)\n\n**Insertion de $38$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(15 25 : (5 12 14) (16 18) (38 40 45))](/static/arbres/bt-9e5043ce2aea.svg)\n\n**Insertion de $9$** : éclatement d'un nœud plein : la clé $12$ monte.\n\n![(12 15 25 : (5 9) (14) (16 18) (38 40 45))](/static/arbres/bt-0fd625c83b47.svg)\n\nArbre final :\n\n![final = (12 15 25 : (5 9) (14) (16 18) (38 40 45))](/static/arbres/bt-8b85d4a6a7ad.svg)\n\nChaque état a été calculé par un programme de contrôle qui vérifie aussi les propriétés du B-arbre (nombre de clés, ordre, feuilles au même niveau).",
+     "duree": 10,
+     "formules": "éclater : médiane (indice $t-1$) monte · racine pleine : hauteur $+1$ · nœuds $=1+$ éclatements $+h$",
+     "type": "open"
+    },
+    {
+     "id": "i94",
+     "enonce": "Combien de nœuds a le B-arbre de degré $2$ obtenu par insertions successives de $5, 15, 40, 25, 12, 14, 18, 16, 45, 38, 9$ dans un arbre vide ?",
+     "ans": "5",
+     "sol": "**Réponse :** $5$\n\nArbre final :\n\n![final = (12 15 25 : (5 9) (14) (16 18) (38 40 45))](/static/arbres/bt-8b85d4a6a7ad.svg)\n\nIl y a eu 3 éclatements : chaque éclatement crée un nœud, et celui de la racine en crée deux (nouvelle racine et nouveau frère) : $1+3+1=5$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Combien de nœuds a le B-arbre de degré $2$ obtenu par insertions successives de $10, 20, 30, 40, 50, 60, 70, 80$ dans un arbre vide ?",
+       "ans": "5",
+       "sol": "**Réponse :** $5$\n\n![final = (20 40 60 : (10) (30) (50) (70 80))](/static/arbres/bt-0f54e62f2c49.svg)"
+      }
+     ],
+     "formules": "éclater : médiane (indice $t-1$) monte · racine pleine : hauteur $+1$ · nœuds $=1+$ éclatements $+h$",
+     "type": "value"
+    },
+    {
+     "id": "i95",
+     "enonce": "On insère $1,2,3,\\dots,15$ dans cet ordre dans un B-arbre de degré $2$ initialement vide. Quelle est la hauteur finale (racine à $0$) ?",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\nArbre final :\n\n![B = (4 8 : (2 : (1) (3)) (6 : (5) (7)) (10 12 : (9) (11) (13 14 15)))](/static/arbres/bt-0054d410812b.svg)\n\n8 éclatements au total. Une insertion croissante remplit toujours la feuille de droite, qui éclate dès qu'elle est pleine.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On insère $1,2,\\dots,30$ dans cet ordre dans un B-arbre de degré $2$ vide. Quelle est la hauteur finale ?",
+       "ans": "3",
+       "sol": "**Réponse :** $3$\n\n![final = (8 16 : (4 : (2 : (1) (3)) (6 : (5) (7))) (12 : (10 : (9) (11)) (14 : (13) (15))) (20 24 : (18 : (17) (19)) (22 : (21) (23)) (26 28 : (25) (27) (29 30))))](/static/arbres/bt-743f737612ca.svg)"
+      }
+     ],
+     "formules": "éclater : médiane (indice $t-1$) monte · racine pleine : hauteur $+1$ · nœuds $=1+$ éclatements $+h$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "B-arbres : insertions à la descente, cas délicats",
+   "notions": [
+    "bt-ins"
+   ],
+   "exos": [
+    {
+     "id": "i101",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Dessiner l'arbre (degré $3$) après l'insertion successive de $22$ puis de $97$.\n\n![B = (30 60 : (5 10 15 20 25) (40 50) (70 80 90 95 99))](/static/arbres/bt-3bce1b93c062.svg)",
+     "sol": "**Insertion de $22$** : éclatement d'un nœud plein : la clé $15$ monte.\n\n![(15 30 60 : (5 10) (20 22 25) (40 50) (70 80 90 95 99))](/static/arbres/bt-e0895fad6652.svg)\n\n**Insertion de $97$** : éclatement d'un nœud plein : la clé $90$ monte.\n\n![(15 30 60 90 : (5 10) (20 22 25) (40 50) (70 80) (95 97 99))](/static/arbres/bt-adfc8f59da5f.svg)\n\nLa feuille $[5\\;10\\;15\\;20\\;25]$ est pleine ($2t-1=5$) : on l'éclate à la descente, la médiane $15$ monte dans la racine, avant d'y insérer $22$. Même chose pour la feuille $[70\\;80\\;90\\;95\\;99]$ avec la médiane $90$.",
+     "duree": 8,
+     "formules": "éclatement à la descente · médiane vers le père · racine pleine : nouvelle racine · doublon : peut éclater",
+     "type": "open"
+    },
+    {
+     "id": "i102",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Insérer successivement $1,2,3,\\dots,10$ dans un B-arbre de degré $2$ initialement vide. Dessiner l'arbre après chaque insertion. Quelle est la hauteur finale ?",
+     "sol": "**Insertion de $1$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(1)](/static/arbres/bt-ff688b76b16c.svg)\n\n**Insertion de $2$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(1 2)](/static/arbres/bt-6b491ba2a7d6.svg)\n\n**Insertion de $3$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(1 2 3)](/static/arbres/bt-7c05d10efc0d.svg)\n\n**Insertion de $4$** : éclatement d'un nœud plein : la clé $2$ monte.\n\n![(2 : (1) (3 4))](/static/arbres/bt-c1c12fc81d7d.svg)\n\n**Insertion de $5$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(2 : (1) (3 4 5))](/static/arbres/bt-ad826035d4de.svg)\n\n**Insertion de $6$** : éclatement d'un nœud plein : la clé $4$ monte.\n\n![(2 4 : (1) (3) (5 6))](/static/arbres/bt-93e8ac80e19a.svg)\n\n**Insertion de $7$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(2 4 : (1) (3) (5 6 7))](/static/arbres/bt-564e7b7c8e11.svg)\n\n**Insertion de $8$** : éclatement d'un nœud plein : la clé $6$ monte.\n\n![(2 4 6 : (1) (3) (5) (7 8))](/static/arbres/bt-09608003d739.svg)\n\n**Insertion de $9$** : éclatement d'un nœud plein : la clé $4$ monte.\n\n![(4 : (2 : (1) (3)) (6 : (5) (7 8 9)))](/static/arbres/bt-11b11cc51721.svg)\n\n**Insertion de $10$** : éclatement d'un nœud plein : la clé $8$ monte.\n\n![(4 : (2 : (1) (3)) (6 8 : (5) (7) (9 10)))](/static/arbres/bt-84fe6112636c.svg)\n\nHauteur finale : $2$. La racine n'est éclatée que lorsqu'elle est pleine ; la hauteur augmente alors de $1$, et c'est le seul cas.",
+     "duree": 10,
+     "formules": "éclatement à la descente · médiane vers le père · racine pleine : nouvelle racine · doublon : peut éclater",
+     "type": "open"
+    },
+    {
+     "id": "i103",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Insérer la clé $3$ dans ce B-arbre de degré $2$ alors qu'elle est **déjà présente**. L'arbre est-il modifié ?\n\n![B = (10 : (3 5 7) (15 20))](/static/arbres/bt-674c840c59eb.svg)",
+     "sol": "Oui, il est modifié. On descend dans le fils gauche $[3\\;5\\;7]$, plein ($2t-1=3$ clés), et on l'éclate **avant** de savoir que $3$ y est (la clé $3$ n'est pas la médiane, seule la médiane est testée avant l'éclatement) :\n\n![après = (5 10 : (3) (7) (15 20))](/static/arbres/bt-11d89ed02aef.svg)\n\nLa clé n'est pas ajoutée (pas de doublon), mais l'éclatement préventif a eu lieu. C'est le défaut du principe de précaution, corrigé par l'insertion « à la remontée » (bonus du TD).",
+     "duree": 6,
+     "formules": "éclatement à la descente · médiane vers le père · racine pleine : nouvelle racine · doublon : peut éclater",
+     "type": "open"
+    },
+    {
+     "id": "i104",
+     "enonce": "On insère $1,2,\\dots,30$ dans cet ordre dans un B-arbre de degré $3$ initialement vide. Combien d'éclatements a-t-on effectués au total ?",
+     "ans": "11",
+     "sol": "**Réponse :** $11$\n\nHauteur finale $2$, $14$ nœuds. Chaque éclatement crée un nœud, et celui de la racine en crée deux : nœuds $=1+$ éclatements $+h$, soit $1+11+2=14$ (le nombre d'éclatements s'en déduit).",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "On insère $1,2,\\dots,40$ dans cet ordre dans un B-arbre de degré $2$ initialement vide. Combien d'éclatements au total ?",
+       "ans": "31",
+       "sol": "**Réponse :** $31$\n\nHauteur finale $4$, $36$ nœuds : $1+\\text{éclatements}+h=36$."
+      }
+     ],
+     "formules": "éclatement à la descente · médiane vers le père · racine pleine : nouvelle racine · doublon : peut éclater",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "B-arbres : suppression, rotation et fusion",
+   "notions": [
+    "bt-del"
+   ],
+   "exos": [
+    {
+     "id": "d111",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Dessiner l'arbre (degré $2$) après la suppression successive de $27, 24, 25, 35$.\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+     "sol": "**Suppression de $27$** : clé interne remplacée par son prédécesseur $25$.\n\n![(22 : (15 : (8 12) (18 19 20)) (25 41 : (24) (30 35 38) (45 48)))](/static/arbres/bt-b9e3d5fc8fc5.svg)\n\n**Suppression de $24$** : rotation gauche (emprunt au frère droit) : $25$ descend, $30$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (30 41 : (25) (35 38) (45 48)))](/static/arbres/bt-546e3d2cd3c2.svg)\n\n**Suppression de $25$** : rotation gauche (emprunt au frère droit) : $30$ descend, $35$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (35 41 : (30) (38) (45 48)))](/static/arbres/bt-01a08ebea745.svg)\n\n**Suppression de $35$** : fusion des deux fils autour de $35$ (la clé descend).\n\n![(22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-10cd5d6216a8.svg)\n\nBilan : $27$ est une clé interne (prédécesseur ou successeur), puis deux rotations gauches, puis une fusion.",
+     "duree": 10,
+     "formules": "rotation gauche/droite si un frère a $\\ge t$ clés · sinon fusion avec le séparateur · prédécesseur d'une clé interne",
+     "type": "open"
+    },
+    {
+     "id": "d112",
+     "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Combien de rotations (gauches ou droites) effectue-t-on en supprimant successivement $27, 24, 25, 35$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n**Suppression de $27$** : clé interne remplacée par son prédécesseur $25$.\n\n![(22 : (15 : (8 12) (18 19 20)) (25 41 : (24) (30 35 38) (45 48)))](/static/arbres/bt-b9e3d5fc8fc5.svg)\n\n**Suppression de $24$** : rotation gauche (emprunt au frère droit) : $25$ descend, $30$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (30 41 : (25) (35 38) (45 48)))](/static/arbres/bt-546e3d2cd3c2.svg)\n\n**Suppression de $25$** : rotation gauche (emprunt au frère droit) : $30$ descend, $35$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (35 41 : (30) (38) (45 48)))](/static/arbres/bt-01a08ebea745.svg)\n\n**Suppression de $35$** : fusion des deux fils autour de $35$ (la clé descend).\n\n![(22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-10cd5d6216a8.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Combien de rotations effectue-t-on en supprimant successivement $8, 12, 15, 18, 19, 20$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $22$ descend, $27$ monte.\n\n![(27 : (15 22 : (12) (18 19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-f994143cfd64.svg)\n\n**Suppression de $12$** : rotation gauche (emprunt au frère droit) : $15$ descend, $18$ monte.\n\n![(27 : (18 22 : (15) (19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-7959b5122e27.svg)\n\n**Suppression de $15$** : rotation gauche (emprunt au frère droit) : $18$ descend, $19$ monte.\n\n![(27 : (19 22 : (18) (20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-82c3e7097ab0.svg)\n\n**Suppression de $18$** : fusion des deux fils autour de $19$ (la clé descend).\n\n![(27 : (22 : (19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-a3901befb4fb.svg)\n\n**Suppression de $19$** : fusion des deux fils autour de $27$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(22 27 41 : (20) (24 25) (30 35 38) (45 48))](/static/arbres/bt-dbc02ec99bfb.svg)\n\n**Suppression de $20$** : rotation gauche (emprunt au frère droit) : $22$ descend, $24$ monte.\n\n![(24 27 41 : (22) (25) (30 35 38) (45 48))](/static/arbres/bt-6d822a545b8d.svg)"
+      }
+     ],
+     "formules": "rotation gauche/droite si un frère a $\\ge t$ clés · sinon fusion avec le séparateur · prédécesseur d'une clé interne",
+     "type": "value"
+    },
+    {
+     "id": "d113",
+     "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Dans ce B-arbre de degré $2$ on supprime successivement $15, 22, 8, 20, 30, 18, 45, 12, 48, 19, 41$. Combien de fusions effectue-t-on ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-8898081fb056.svg)",
+     "ans": "4",
+     "sol": "**Réponse :** $4$\n\n**Suppression de $15$** : fusion des deux fils autour de $22$ (la clé descend) ; clé interne remplacée par son prédécesseur $12$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(12 22 41 : (8) (18 19 20) (30 38) (45 48))](/static/arbres/bt-a35291d944b0.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(12 20 41 : (8) (18 19) (30 38) (45 48))](/static/arbres/bt-95c3342baf2e.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(18 20 41 : (12) (19) (30 38) (45 48))](/static/arbres/bt-287eeba8f2cb.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $30$.\n\n![(18 30 41 : (12) (19) (38) (45 48))](/static/arbres/bt-8e29184bb59c.svg)\n\n**Suppression de $30$** : fusion des deux fils autour de $30$ (la clé descend).\n\n![(18 41 : (12) (19 38) (45 48))](/static/arbres/bt-9e133c2a0bc8.svg)\n\n**Suppression de $18$** : clé interne remplacée par son successeur $19$.\n\n![(19 41 : (12) (38) (45 48))](/static/arbres/bt-5c1eb3eac78e.svg)\n\n**Suppression de $45$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(19 41 : (12) (38) (48))](/static/arbres/bt-d169085b1651.svg)\n\n**Suppression de $12$** : fusion des deux fils autour de $19$ (la clé descend).\n\n![(41 : (19 38) (48))](/static/arbres/bt-8b8e574a5767.svg)\n\n**Suppression de $48$** : rotation droite (emprunt au frère gauche) : $41$ descend, $38$ monte.\n\n![(38 : (19) (41))](/static/arbres/bt-3ab3d8784cb9.svg)\n\n**Suppression de $19$** : fusion des deux fils autour de $38$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(38 41)](/static/arbres/bt-21452a6fbd8a.svg)\n\n**Suppression de $41$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(38)](/static/arbres/bt-a3cb757cca21.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Combien de fusions effectue-t-on en supprimant successivement $15, 22, 8, 20, 30$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+       "ans": "0",
+       "sol": "**Réponse :** $0$\n\n**Suppression de $15$** : rotation gauche (emprunt au frère droit) : $22$ descend, $27$ monte ; clé interne remplacée par son prédécesseur $12$.\n\n![(27 : (12 22 : (8) (18 19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-dc1afbe6a363.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(27 : (12 20 : (8) (18 19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-79a185c930d8.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(27 : (18 20 : (12) (19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-60f0cd619197.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $24$.\n\n![(27 : (18 24 : (12) (19) (25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-e76cc24e38a8.svg)\n\n**Suppression de $30$** : rotation droite (emprunt au frère gauche) : $27$ descend, $24$ monte.\n\n![(24 : (18 : (12) (19)) (27 41 : (25) (35 38) (45 48)))](/static/arbres/bt-4a3713f2be91.svg)"
+      }
+     ],
+     "formules": "rotation gauche/droite si un frère a $\\ge t$ clés · sinon fusion avec le séparateur · prédécesseur d'une clé interne",
+     "type": "value"
+    },
+    {
+     "id": "d114",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Dessiner l'arbre de degré $3$ après la suppression successive de $5$, $55$ puis $40$.\n\n![B = (20 40 : (5 10) (25 30) (45 50 55))](/static/arbres/bt-3594028cb6c5.svg)",
+     "sol": "**Suppression de $5$** : fusion des deux fils autour de $20$ (la clé descend).\n\n![(40 : (10 20 25 30) (45 50 55))](/static/arbres/bt-beeb3a7d4ae5.svg)\n\n**Suppression de $55$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(40 : (10 20 25 30) (45 50))](/static/arbres/bt-18fc89091711.svg)\n\n**Suppression de $40$** : clé interne remplacée par son prédécesseur $30$.\n\n![(30 : (10 20 25) (45 50))](/static/arbres/bt-a2622451b3f9.svg)\n\nAvec $t=3$ un nœud non racine garde au moins $2$ clés : la feuille $[5\\;10]$ n'a plus de clé à perdre et son frère $[25\\;30]$ non plus, donc fusion avec le séparateur $20$ (la fusion de deux nœuds à $t-1$ clés donne un nœud plein, $2t-1=5$ clés).",
+     "duree": 8,
+     "formules": "rotation gauche/droite si un frère a $\\ge t$ clés · sinon fusion avec le séparateur · prédécesseur d'une clé interne",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "B-arbres : suppressions enchaînées, cas délicats",
+   "notions": [
+    "bt-del"
+   ],
+   "exos": [
+    {
+     "id": "d121",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Dans ce B-arbre de degré $2$, supprimer successivement $15, 22, 8, 20, 30, 18, 45, 12, 48, 19, 41$ en limitant les destructions de nœuds. Dessiner l'arbre après chaque suppression.\n\n![B = (22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-8898081fb056.svg)",
+     "sol": "**Suppression de $15$** : fusion des deux fils autour de $22$ (la clé descend) ; clé interne remplacée par son prédécesseur $12$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(12 22 41 : (8) (18 19 20) (30 38) (45 48))](/static/arbres/bt-a35291d944b0.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(12 20 41 : (8) (18 19) (30 38) (45 48))](/static/arbres/bt-95c3342baf2e.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(18 20 41 : (12) (19) (30 38) (45 48))](/static/arbres/bt-287eeba8f2cb.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $30$.\n\n![(18 30 41 : (12) (19) (38) (45 48))](/static/arbres/bt-8e29184bb59c.svg)\n\n**Suppression de $30$** : fusion des deux fils autour de $30$ (la clé descend).\n\n![(18 41 : (12) (19 38) (45 48))](/static/arbres/bt-9e133c2a0bc8.svg)\n\n**Suppression de $18$** : clé interne remplacée par son successeur $19$.\n\n![(19 41 : (12) (38) (45 48))](/static/arbres/bt-5c1eb3eac78e.svg)\n\n**Suppression de $45$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(19 41 : (12) (38) (48))](/static/arbres/bt-d169085b1651.svg)\n\n**Suppression de $12$** : fusion des deux fils autour de $19$ (la clé descend).\n\n![(41 : (19 38) (48))](/static/arbres/bt-8b8e574a5767.svg)\n\n**Suppression de $48$** : rotation droite (emprunt au frère gauche) : $41$ descend, $38$ monte.\n\n![(38 : (19) (41))](/static/arbres/bt-3ab3d8784cb9.svg)\n\n**Suppression de $19$** : fusion des deux fils autour de $38$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(38 41)](/static/arbres/bt-21452a6fbd8a.svg)\n\n**Suppression de $41$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(38)](/static/arbres/bt-a3cb757cca21.svg)\n\nL'arbre final est $[38]$ après deux diminutions de hauteur : chaque fois que la racine et ses deux fils n'ont que $t-1$ clés, la fusion vide la racine.",
+     "duree": 15,
+     "formules": "rotation, fusion, prédécesseur avant successeur · racine vide : hauteur $-1$ · clé absente : arbre peut changer",
+     "type": "open"
+    },
+    {
+     "id": "d122",
+     "enonce": "Conventions du cours : B-arbre de degré $t$ (un nœud porte de $t-1$ à $2t-1$ clés, la racine de $1$ à $2t-1$) ; insertion et suppression « à la descente » (principe de précaution). Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. On supprime la clé $12$, **absente** de ce B-arbre de degré $2$. L'arbre est-il modifié ?\n\n![B = (10 : (4) (15))](/static/arbres/bt-a4d4c0645cd4.svg)",
+     "sol": "Oui. La recherche descend vers le fils de droite $[15]$ qui n'a que $t-1=1$ clé : par précaution on le complète avant d'y entrer. Le frère gauche $[4]$ n'a que $t-1$ clés et ne peut pas prêter : fusion avec lui et le séparateur $10$ :\n\n![après = (4 10 15)](/static/arbres/bt-192e4b3ebec0.svg)\n\nLa clé $12$ n'est pas dans la feuille et rien n'est supprimé, mais l'arbre a perdu un niveau. Avec la suppression « à la remontée » (exercice 2.6 du TD), on ne modifie l'arbre qu'au retour de la récursion, donc seulement quand une clé a vraiment été supprimée.",
+     "duree": 8,
+     "formules": "rotation, fusion, prédécesseur avant successeur · racine vide : hauteur $-1$ · clé absente : arbre peut changer",
+     "type": "open"
+    },
+    {
+     "id": "d123",
+     "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Quelle est la hauteur de l'arbre après la suppression successive de $15, 22, 8, 20, 30, 18, 45$ dans ce B-arbre de degré $2$ (racine à $0$) ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-8898081fb056.svg)",
+     "ans": "1",
+     "sol": "**Réponse :** $1$\n\n**Suppression de $15$** : fusion des deux fils autour de $22$ (la clé descend) ; clé interne remplacée par son prédécesseur $12$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(12 22 41 : (8) (18 19 20) (30 38) (45 48))](/static/arbres/bt-a35291d944b0.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(12 20 41 : (8) (18 19) (30 38) (45 48))](/static/arbres/bt-95c3342baf2e.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(18 20 41 : (12) (19) (30 38) (45 48))](/static/arbres/bt-287eeba8f2cb.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $30$.\n\n![(18 30 41 : (12) (19) (38) (45 48))](/static/arbres/bt-8e29184bb59c.svg)\n\n**Suppression de $30$** : fusion des deux fils autour de $30$ (la clé descend).\n\n![(18 41 : (12) (19 38) (45 48))](/static/arbres/bt-9e133c2a0bc8.svg)\n\n**Suppression de $18$** : clé interne remplacée par son successeur $19$.\n\n![(19 41 : (12) (38) (45 48))](/static/arbres/bt-5c1eb3eac78e.svg)\n\n**Suppression de $45$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(19 41 : (12) (38) (48))](/static/arbres/bt-d169085b1651.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Hauteur de l'arbre après suppression successive de $15, 22, 8, 20, 30, 18, 45$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+       "ans": "1",
+       "sol": "**Réponse :** $1$\n\n**Suppression de $15$** : rotation gauche (emprunt au frère droit) : $22$ descend, $27$ monte ; clé interne remplacée par son prédécesseur $12$.\n\n![(27 : (12 22 : (8) (18 19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-dc1afbe6a363.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(27 : (12 20 : (8) (18 19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-79a185c930d8.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(27 : (18 20 : (12) (19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-60f0cd619197.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $24$.\n\n![(27 : (18 24 : (12) (19) (25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-e76cc24e38a8.svg)\n\n**Suppression de $30$** : rotation droite (emprunt au frère gauche) : $27$ descend, $24$ monte.\n\n![(24 : (18 : (12) (19)) (27 41 : (25) (35 38) (45 48)))](/static/arbres/bt-4a3713f2be91.svg)\n\n**Suppression de $18$** : rotation gauche (emprunt au frère droit) : $24$ descend, $27$ monte ; fusion des deux fils autour de $18$ (la clé descend).\n\n![(27 : (24 : (12 19) (25)) (41 : (35 38) (45 48)))](/static/arbres/bt-09678e48d3b0.svg)\n\n**Suppression de $45$** : fusion des deux fils autour de $27$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(24 27 41 : (12 19) (25) (35 38) (48))](/static/arbres/bt-924910a407a9.svg)"
+      }
+     ],
+     "formules": "rotation, fusion, prédécesseur avant successeur · racine vide : hauteur $-1$ · clé absente : arbre peut changer",
+     "type": "value"
+    },
+    {
+     "id": "d124",
+     "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Combien de rotations (gauches ou droites) effectue-t-on en supprimant successivement $15, 22, 8, 20, 30, 18, 45, 12, 48, 19, 41$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (41 : (30 38) (45 48)))](/static/arbres/bt-8898081fb056.svg)",
+     "ans": "2",
+     "sol": "**Réponse :** $2$\n\n**Suppression de $15$** : fusion des deux fils autour de $22$ (la clé descend) ; clé interne remplacée par son prédécesseur $12$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(12 22 41 : (8) (18 19 20) (30 38) (45 48))](/static/arbres/bt-a35291d944b0.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(12 20 41 : (8) (18 19) (30 38) (45 48))](/static/arbres/bt-95c3342baf2e.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(18 20 41 : (12) (19) (30 38) (45 48))](/static/arbres/bt-287eeba8f2cb.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $30$.\n\n![(18 30 41 : (12) (19) (38) (45 48))](/static/arbres/bt-8e29184bb59c.svg)\n\n**Suppression de $30$** : fusion des deux fils autour de $30$ (la clé descend).\n\n![(18 41 : (12) (19 38) (45 48))](/static/arbres/bt-9e133c2a0bc8.svg)\n\n**Suppression de $18$** : clé interne remplacée par son successeur $19$.\n\n![(19 41 : (12) (38) (45 48))](/static/arbres/bt-5c1eb3eac78e.svg)\n\n**Suppression de $45$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(19 41 : (12) (38) (48))](/static/arbres/bt-d169085b1651.svg)\n\n**Suppression de $12$** : fusion des deux fils autour de $19$ (la clé descend).\n\n![(41 : (19 38) (48))](/static/arbres/bt-8b8e574a5767.svg)\n\n**Suppression de $48$** : rotation droite (emprunt au frère gauche) : $41$ descend, $38$ monte.\n\n![(38 : (19) (41))](/static/arbres/bt-3ab3d8784cb9.svg)\n\n**Suppression de $19$** : fusion des deux fils autour de $38$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(38 41)](/static/arbres/bt-21452a6fbd8a.svg)\n\n**Suppression de $41$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(38)](/static/arbres/bt-a3cb757cca21.svg)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Pour une suppression, on préfère le côté gauche : rotation avec le frère gauche avant le frère droit, prédécesseur avant successeur, fusion avec le frère gauche. Combien de rotations effectue-t-on en supprimant successivement $15, 22, 8, 20, 30, 18, 45$ dans ce B-arbre de degré $2$ ?\n\n![B = (22 : (15 : (8 12) (18 19 20)) (27 41 : (24 25) (30 35 38) (45 48)))](/static/arbres/bt-329322299bb1.svg)",
+       "ans": "4",
+       "sol": "**Réponse :** $4$\n\n**Suppression de $15$** : rotation gauche (emprunt au frère droit) : $22$ descend, $27$ monte ; clé interne remplacée par son prédécesseur $12$.\n\n![(27 : (12 22 : (8) (18 19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-dc1afbe6a363.svg)\n\n**Suppression de $22$** : clé interne remplacée par son prédécesseur $20$.\n\n![(27 : (12 20 : (8) (18 19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-79a185c930d8.svg)\n\n**Suppression de $8$** : rotation gauche (emprunt au frère droit) : $12$ descend, $18$ monte.\n\n![(27 : (18 20 : (12) (19) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-60f0cd619197.svg)\n\n**Suppression de $20$** : clé interne remplacée par son successeur $24$.\n\n![(27 : (18 24 : (12) (19) (25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-e76cc24e38a8.svg)\n\n**Suppression de $30$** : rotation droite (emprunt au frère gauche) : $27$ descend, $24$ monte.\n\n![(24 : (18 : (12) (19)) (27 41 : (25) (35 38) (45 48)))](/static/arbres/bt-4a3713f2be91.svg)\n\n**Suppression de $18$** : rotation gauche (emprunt au frère droit) : $24$ descend, $27$ monte ; fusion des deux fils autour de $18$ (la clé descend).\n\n![(27 : (24 : (12 19) (25)) (41 : (35 38) (45 48)))](/static/arbres/bt-09678e48d3b0.svg)\n\n**Suppression de $45$** : fusion des deux fils autour de $27$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(24 27 41 : (12 19) (25) (35 38) (48))](/static/arbres/bt-924910a407a9.svg)"
+      }
+     ],
+     "formules": "rotation, fusion, prédécesseur avant successeur · racine vide : hauteur $-1$ · clé absente : arbre peut changer",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Examens : arbres généraux et B-arbres",
+   "notions": [
+    "gen-code",
+    "gen-par",
+    "bt-ins",
+    "bt-del",
+    "bt-lect"
+   ],
+   "exos": [
+    {
+     "id": "m28",
+     "enonce": "Reconstitution des exercices 2 à 5 de l'Examen B5 ARB2 du 22 octobre 2024 (dossier 2028) (Arbres et Recherches 2, hachage exclu, Python, $2$ h).",
+     "src": "Examen B5 ARB2 du 22 octobre 2024 (dossier 2028), ex. 2 à 5",
+     "duree": 60,
+     "sol": "**1.** ```python\ndef _aux(T, d):\n    \"\"\"(number of internal nodes, sum of their depths) of the subtree T whose root is at depth d\"\"\"\n    if T.children == []:\n        return (0, 0)\n    (n, s) = (1, d)\n    for C in T.children:\n        (nc, sc) = _aux(C, d + 1)\n        n += nc\n        s += sc\n    return (n, s)\n\n\ndef internal_average_depth(T):\n    (n, s) = _aux(T, 0)\n    return s / n if n > 0 else 0\n```\n\nUn parcours profondeur qui descend la profondeur `d` en paramètre et remonte le couple (nombre de nœuds internes, somme de leurs profondeurs) : un appel sur une feuille renvoie `(0, 0)`. Ici $\\frac{LCI}{N_i}=\\frac{7}{5}=1{,}4$. Pas de corrigé officiel : corrigé rédigé, vérifié par exécution sur l'arbre de l'énoncé.\n\n**2.** ```python\ndef _same(B, a):\n    \"\"\"a: arity already met on an internal node (0 if none yet).\n    Returns the common arity (0 if no internal node), -1 if two arities differ.\"\"\"\n    if B.child == None:\n        return a\n    k = 0\n    C = B.child\n    while C != None:\n        k += 1\n        C = C.sibling\n    if a != 0 and k != a:\n        return -1\n    a = k\n    C = B.child\n    while C != None and a != -1:\n        a = _same(C, a)\n        C = C.sibling\n    return a\n\n\ndef same_arity(B):\n    return _same(B, 0) != -1\n```\n\nParcours profondeur interrompu : dès que deux arités différentes sont vues, on renvoie $-1$ et on cesse de parcourir les frères (`and a != -1`). L'arité est comptée en parcourant la liste des fils par `sibling`. Un arbre sans nœud interne a la propriété (arité $0$). Corrigé rédigé, vérifié par exécution sur cinq arbres dont la réponse est calculée indépendamment.\n\n**3.** **Insertion de $25$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5 40 : (0 2 4) (10 12 25) (42 45))](/static/arbres/bt-44fdb2b01e65.svg)\n\n**Insertion de $3$** : éclatement d'un nœud plein : la clé $2$ monte.\n\n![(2 5 40 : (0) (3 4) (10 12 25) (42 45))](/static/arbres/bt-fc949215f187.svg)\n\n**Insertion de $41$** : éclatement d'un nœud plein : la clé $5$ monte.\n\n![(5 : (2 : (0) (3 4)) (40 : (10 12 25) (41 42 45)))](/static/arbres/bt-552fe39f028c.svg)\n\n**4.** **Suppression de $50$** : fusion des deux fils autour de $41$ (la clé descend) ; clé interne remplacée par son prédécesseur $49$ ; fusion des deux fils autour de $48$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(22 41 49 : (15 : (8 12) (18 20)) (27 : (24 25) (30 35)) (45 : (44) (46 48)) (71 : (66) (80)))](/static/arbres/bt-0e599531f71e.svg)\n\nCorrigé rédigé (le sujet n'a pas de corrigé officiel). Convention : on préfère le côté gauche (prédécesseur), comme au TD. Le sujet ne fixe pas ce choix : le successeur donnerait un autre B-arbre tout aussi valide, d'où l'intérêt d'indiquer la règle utilisée sur la copie.\n\n**5.** | appel | résultat |\n|---|---|\n| `what(BT, 2)` | `None` |\n| `what(BT, 20)` | `16` |\n| `what(BT, 40)` | `39` |\n| `what(BT, 41)` | `None` |\n| `what(BT, 42)` | `40` |\n| `what(BT, 87)` | `83` |\n\n`what(B, x)` retourne le **prédécesseur** de `x` : la plus grande clé strictement inférieure à `x` dans le B-arbre, si `x` est présent et n'est pas le minimum ; `None` si `x` est absent ou si c'est la plus petite clé. Dans une feuille, c'est la clé précédente, ou à défaut `p`, la dernière clé « à gauche » rencontrée pendant la descente ; dans un nœud interne, c'est la clé la plus à droite du fils gauche. Le code a été exécuté pour obtenir le tableau (corrigé rédigé).",
+     "formules": "parcours profondeur · $PMI=\\frac{LCI}{N_i}$ · couple (nombre internes, somme des profondeurs) · arité par parcours des frères · parcours profondeur interrompu · `C = C.sibling` · éclater les nœuds pleins à la descente · médiane vers le père · racine pleine : hauteur $+1$ · rotation si un frère a $\\ge t$ clés · sinon fusion · prédécesseur d'une clé interne · `binary_search_pos` · prédécesseur : clé la plus à droite du fils gauche · parcours en descente avec mémoire `p`",
+     "type": "multi"
+    },
+    {
+     "id": "m25",
+     "enonce": "Reconstitution des exercices 2 à 5 du Contrôle C3 du 9 novembre 2021 (dossier 2025) (arbres généraux, B-arbres, Python).",
+     "src": "Contrôle C3 du 9 novembre 2021 (dossier 2025), ex. 2 à 5",
+     "duree": 60,
+     "sol": "**1.** ```python\ndef morechildren(B, nbc=0):          # nbc: number of children of the father of B\n    k = 0\n    C = B.child\n    while C:\n        k += 1\n        C = C.sibling\n    if B.child and k <= nbc:\n        return False\n    else:\n        C = B.child\n        while C and morechildren(C, k):\n            C = C.sibling\n        return C == None\n```\n\nOn passe en paramètre le nombre de fils du père (`nbc`, $0$ pour la racine). Le nombre de fils s'obtient en parcourant les frères. Parcours interrompu : la boucle `while C and morechildren(C, k)` s'arrête dès qu'un fils échoue, et on retourne `C == None` (tous les fils ont réussi). Dans $T_1$, le nœud $3$ a $2$ fils comme son père $1$ : faux ; dans $T_2$ il en a $3$ : vrai.\n\n**2.** ```python\ndef __decrease(B, L):\n    if B.children == []:\n        for i in range(B.nbkeys - 1, -1, -1):\n            L.append(B.keys[i])\n    else:\n        for i in range(B.nbkeys, 0, -1):\n            __decrease(B.children[i], L)\n            L.append(B.keys[i - 1])\n        __decrease(B.children[0], L)\n\n\ndef decrease(B):\n    L = []\n    if B:\n        __decrease(B, L)\n    return L\n```\n\nParcours en ordre croissant inversé : dans un nœud interne on parcourt le dernier fils, puis la dernière clé, puis l'avant-dernier fils... et enfin le fils $0$. Dans une feuille, on lit les clés à l'envers. Arbre vide : liste vide.\n\n**3.** Arbre final :\n\n![final = (21 : (10 14 : (3 7) (11) (17 20)) (25 38 : (23) (29 32) (40 51)))](/static/arbres/bt-175359828ccb.svg)\n\nÉtapes :\n\n**Insertion de $11$** : éclatement d'un nœud plein : la clé $21$ monte.\n\n![(21 : (10 : (3 7) (11 14 17)) (38 : (23 25 29) (40 51)))](/static/arbres/bt-33822b9133d6.svg)\n\n**Insertion de $32$** : éclatement d'un nœud plein : la clé $25$ monte.\n\n![(21 : (10 : (3 7) (11 14 17)) (25 38 : (23) (29 32) (40 51)))](/static/arbres/bt-f8b18109e2ce.svg)\n\n**Insertion de $20$** : éclatement d'un nœud plein : la clé $14$ monte.\n\n![(21 : (10 14 : (3 7) (11) (17 20)) (25 38 : (23) (29 32) (40 51)))](/static/arbres/bt-c3e2e702aa3d.svg)\n\nRésultat identique au corrigé officiel du contrôle.\n\n**4.** Arbre final :\n\n![final = (27 : (18 22 : (8) (19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-22de5077b6af.svg)\n\nÉtapes :\n\n**Suppression de $15$** : rotation gauche (emprunt au frère droit) : $22$ descend, $27$ monte ; clé interne remplacée par son successeur $18$.\n\n![(27 : (18 22 : (8) (19 20) (24 25)) (41 : (30 35 38) (45 48)))](/static/arbres/bt-92d3d87dd716.svg)\n\nRésultat identique au corrigé officiel du contrôle : la racine $[22]$ n'a que $1$ clé et le fils $[15]$ aussi, mais le fils droit $[27\\;41]$ peut prêter.\n\n**5.** | appel | résultat | nombre d'appels |\n|---|---|---|\n| (a) | `True` | 8 |\n| (b) | `False` | 6 |\n| (c) | `False` | 8 |\n\nLe code a été exécuté avec un compteur : ces valeurs sont celles du corrigé officiel. `mystery(B, a, b)` vérifie que `B` est bien « ordonné » : c'est un arbre de recherche dont toutes les clés sont dans l'intervalle $[a,b]$ (clés triées dans chaque nœud, clés du fils $i$ comprises entre la clé $i-1$ et la clé $i$). Dans $B_3$, la feuille $[27, 34, 35, 42]$ contient $42>41$ (borne donnée par le père) : l'arbre n'est pas ordonné. L'appel (c) le détecte sur cette feuille, après $8$ appels ; l'appel (b) échoue plus tôt, sur le fils droit de la racine dont les clés dépassent la borne $b=20$ (aucune feuille de droite n'est visitée).",
+     "formules": "nombre de fils du père en paramètre · `C = C.sibling` · parcours interrompu · parcours croissant inversé · dernier fils d'abord · feuille : clés à l'envers · éclater les nœuds pleins à la descente · médiane vers le père · rotation gauche (frère droit à $\\ge t$ clés) · prédécesseur ou successeur d'une clé interne · arbre de recherche : clés triées dans $[a,b]$ · clé $i$ borne le fils $i$ · compte des appels",
+     "type": "multi"
+    },
+    {
+     "id": "m23",
+     "enonce": "Reconstitution des exercices 2 à 4 du Contrôle C3 de novembre 2019 (dossier 2023) (arbres généraux et B-arbres, Python).",
+     "src": "Contrôle C3 de novembre 2019 (dossier 2023), ex. 2 à 4",
+     "duree": 60,
+     "sol": "**1.** ```python\ndef arity(B):\n    if B.child == None:\n        (links, nodes) = (0, 0)\n    else:\n        (lc, nc) = arity(B.child)\n        (links, nodes) = (lc + 1, nc + 1)\n    if B.sibling != None:\n        (ls, ns) = arity(B.sibling)\n        links += ls + 1\n        nodes += ns\n    return (links, nodes)\n\n\ndef average_arity(B):\n    (links, nodes) = arity(B)\n    return links / nodes if nodes else 0\n```\n\nOn remonte le couple (nombre de liens, nombre de nœuds internes). Dans la forme binaire, le lien `child` compte pour un fils et chaque lien `sibling` pour un fils de plus : au total $T-1$ liens. Corrigé officiel (une seule fonction récursive sur la forme binaire, qui traite aussi les frères).\n\n**2.** **Insertion de $36$** : éclatement d'un nœud plein : la clé $35$ monte.\n\n![(22 : (15 : (8 12) (18 19 20)) (27 35 41 : (24 25) (30) (36 38) (45 48)))](/static/arbres/bt-24dc48e5bdaa.svg)\n\n**Insertion de $42$** : éclatement d'un nœud plein : la clé $35$ monte.\n\n![(22 35 : (15 : (8 12) (18 19 20)) (27 : (24 25) (30)) (41 : (36 38) (42 45 48)))](/static/arbres/bt-670998faac61.svg)\n\nRésultat identique au corrigé officiel du contrôle.\n\n**3.** ```python\ndef __insert(B, x):\n    i = search_pos(B.keys, x)\n    if i < B.nbkeys and B.keys[i] == x:\n        return False\n    elif B.children == []:\n        B.keys.insert(i, x)\n        return True\n    else:\n        if B.children[i].nbkeys == 2 * B.degree - 1:\n            if B.children[i].keys[B.degree - 1] == x:\n                return False\n            split(B, i)\n            if x > B.keys[i]:\n                i += 1\n        return __insert(B.children[i], x)\n```\n\nOn cherche la position `i`. Clé présente : `False`. Feuille : insertion en position `i`. Sinon, si le fils `i` est plein, on teste d'abord si sa clé médiane est `x` (alors `x` est présente, aucun éclatement inutile), sinon on éclate ce fils ; la clé médiane est montée en position `i` dans `B` et il faut descendre à droite si `x` lui est supérieure (`i += 1`). Le code a été exécuté sur dix insertions et comparé, état par état, à la fonction de contrôle d'insertion du parcours.\n\n**4.** `degree = 2` et `nodes = [[22], [15], [27, 41], [8, 12], [18, 19, 20], [24, 25], [30, 35, 38], [45, 48]]`.\n\nLa fonction lit `nodes` comme les nœuds du B-arbre **en parcours en largeur** : `nodes[0]` est la racine ; la file contient des couples (nœud, position dans `nodes` de son premier fils) ; un nœud à $k$ clés reçoit les $k+1$ nœuds consécutifs suivants, et `end` repère le début des fils du prochain nœud défilé. Vérifié par exécution : `build(nodes, 2)` redonne exactement l'arbre de la figure.",
+     "formules": "arité moyenne $=\\frac{T-1}{N_i}$ · liens $child$ et $sibling$ · couple (liens, nœuds internes) · éclater les nœuds pleins à la descente · racine pleine : hauteur $+1$ · `search_pos` · éclater le fils plein avant d'y descendre · `i += 1` si $x>$ médiane · parcours en largeur · $k$ clés $\\Rightarrow k+1$ fils consécutifs · `end` = début des fils suivants",
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Plus dur que l'examen : arbres généraux, B-arbres, mélange",
+   "notions": [
+    "gen-code",
+    "bt-lect",
+    "bt-ins",
+    "bt-del"
+   ],
+   "exos": [
+    {
+     "id": "m31",
+     "enonce": "Trois fonctions sur les arbres généraux, avec parcours interrompu (largeur, profondeur, propriété sur les sous-arbres).",
+     "duree": 60,
+     "sol": "**1.** ```python\ndef keys_after(T, x):\n    q = Queue()\n    q.enqueue(T)\n    q.enqueue(None)                # end-of-level marker\n    found = False\n    res = []\n    while not q.isempty():\n        t = q.dequeue()\n        if t == None:\n            if found:              # the level of the first x is finished\n                return res\n            if not q.isempty():\n                q.enqueue(None)\n        else:\n            if found:\n                res.append(t.key)\n            elif t.key == x:\n                found = True\n            for C in t.children:\n                q.enqueue(C)\n    return res\n```\n\nIl faut les niveaux : parcours en largeur avec marqueur `None`. Tant que `x` n'est pas trouvé on l'attend ; une fois trouvé, on range les clés suivantes du même niveau ; au marqueur de fin de niveau, on retourne (parcours interrompu : inutile de parcourir les niveaux suivants). La « première valeur `x` » est la première rencontrée en largeur, donc la plus haute puis la plus à gauche. Vérifié par exécution : les six résultats sont ceux de l'énoncé du TD 1.\n\n**2.** ```python\ndef _avg(B):\n    \"\"\"(ok, sum of the keys, number of nodes) of the subtree rooted at B (B's siblings ignored)\"\"\"\n    s = B.key\n    n = 1\n    C = B.child\n    while C != None:\n        (ok, sc, nc) = _avg(C)\n        if not ok or sc > B.key * nc:     # mean of the subtree C greater than the key of its father\n            return (False, 0, 0)\n        s += sc\n        n += nc\n        C = C.sibling\n    return (True, s, n)\n\n\ndef average_subtrees(B):\n    return _avg(B)[0]\n```\n\nParcours profondeur interrompu qui remonte un triplet (propriété vraie ?, somme des clés, nombre de nœuds) du sous-arbre de chaque fils. On compare la moyenne du fils $\\frac{s_c}{n_c}>$ clé du père sans diviser : `sc > B.key * nc`. Dès qu'un sous-arbre échoue, on arrête (le résultat d'un appel récursif ne doit pas être perdu : on le teste). Les frères sont parcourus par `C.sibling` et jamais inclus dans le sous-arbre du nœud courant. Les réponses attendues sont calculées indépendamment par un contrôle direct sur les arbres de l'énoncé.\n\n**3.** ```python\ndef ancestors(T, x):\n    if T.key == x:\n        return [x]\n    for C in T.children:\n        p = ancestors(C, x)\n        if p != None:\n            return [T.key] + p     # the first answer found is returned, no further search\n    return None\n```\n\nParcours interrompu : on ne retourne **jamais** directement le résultat de l'appel récursif. On le range dans `p`, on le teste, et on ne s'arrête que si `p != None` ; sinon on essaie le fils suivant. Le chemin se construit au retour de la récursion en ajoutant la clé du nœud en tête.",
+     "formules": "largeur avec marqueur `None` · parcours interrompu · fin de niveau · couple (ok, somme, nombre) · moyenne $>$ clé $\\iff s_c>\\text{clé}\\times n_c$ · parcours des frères · parcours interrompu : tester le résultat de l'appel · chemin reconstruit au retour",
+     "type": "multi"
+    },
+    {
+     "id": "m32",
+     "enonce": "B-arbres de degré 2 : insertion avec éclatements en cascade, suppression avec fusions jusqu'à la racine, et un comptage par intervalle.",
+     "duree": 60,
+     "sol": "**1.** **Insertion de $38$** : éclatement d'un nœud plein : la clé $80$ monte ; éclatement d'un nœud plein : la clé $20$ monte ; éclatement d'un nœud plein : la clé $37$ monte.\n\n![(80 : (20 40 : (10 : (5) (15)) (30 37 : (25) (35) (38 39)) (60 : (50) (70))) (120 : (100 : (90) (110)) (140 : (130) (150))))](/static/arbres/bt-22ced63ff026.svg)\n\n**Insertion de $95$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(80 : (20 40 : (10 : (5) (15)) (30 37 : (25) (35) (38 39)) (60 : (50) (70))) (120 : (100 : (90 95) (110)) (140 : (130) (150))))](/static/arbres/bt-429ee9f79a56.svg)\n\nLa racine, un nœud du deuxième niveau et la feuille $[35\\;37\\;39]$ sont tous pleins sur le chemin de $38$ : trois éclatements consécutifs dans la même descente (racine, puis nœud interne, puis feuille), et la hauteur passe de $2$ à $3$. L'insertion de $95$ ne déclenche rien.\n\n**2.** **Suppression de $10$** : fusion des deux fils autour de $40$ (la clé descend) ; fusion des deux fils autour de $20$ (la clé descend) ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(40 60 : (20 30) (50) (70))](/static/arbres/bt-09faf815622c.svg)\n\n**Suppression de $70$** : fusion des deux fils autour de $60$ (la clé descend).\n\n![(40 : (20 30) (50 60))](/static/arbres/bt-727985a1582c.svg)\n\n**Suppression de $50$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(40 : (20 30) (60))](/static/arbres/bt-1f6d149bea1f.svg)\n\nTous les nœuds ont $t-1=1$ clé : la racine et ses deux fils fusionnent d'abord (la hauteur diminue), puis une deuxième fusion a lieu au niveau des feuilles avant de supprimer $10$. Chaque fusion de deux nœuds à $t-1$ clés fournit un nœud plein ($3$ clés), qui peut ensuite perdre une clé sans autre transformation.\n\n**3.** ```python\ndef count_range(B, a, b):\n    \"\"\"number of keys k of the B-tree B with a <= k <= b (empty tree: 0), without visiting useless subtrees\"\"\"\n    if B == None:\n        return 0\n    i = binary_search_pos(B.keys, a)        # first key >= a\n    c = 0\n    if B.children == []:\n        while i < B.nbkeys and B.keys[i] <= b:\n            c += 1\n            i += 1\n        return c\n    c = count_range(B.children[i], a, b)\n    while i < B.nbkeys and B.keys[i] <= b:\n        c += 1 + count_range(B.children[i + 1], a, b)\n        i += 1\n    return c\n```\n\nComme pour une recherche, on saute au fils `i` où devrait se trouver `a`. On compte ensuite les clés tant qu'elles restent $\\le b$, chacune accompagnée de tout son fils de droite ; dès qu'une clé dépasse $b$ on s'arrête : les fils suivants sont hors intervalle. Au plus un chemin de descente par borne : coût $O(h+k)$ lectures de nœuds pour $k$ résultats. Résultats vérifiés contre un comptage direct sur la liste triée des clés.",
+     "formules": "éclatements en cascade · médiane vers le père · racine pleine : hauteur $+1$ · fusion si fils et frère à $t-1$ clés · racine vide : hauteur $-1$ · prédécesseur · `binary_search_pos` · descente vers $a$ · arrêt dès une clé $>b$ · fils droit de chaque clé comptée",
+     "type": "multi"
+    },
+    {
+     "id": "m33",
+     "enonce": "B-arbres : suite d'opérations mélangées (insertions et suppressions), nombre de nœuds final et gap maximum.",
+     "duree": 60,
+     "sol": "**1.** **Insertion de $6$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5 40 : (0 2 4) (6 10 12) (42 45))](/static/arbres/bt-c495f5127812.svg)\n\n**Insertion de $8$** : éclatement d'un nœud plein : la clé $10$ monte.\n\n![(5 10 40 : (0 2 4) (6 8) (12) (42 45))](/static/arbres/bt-60e0dd15149b.svg)\n\n**Insertion de $11$** : éclatement d'un nœud plein : la clé $10$ monte ; la racine est éclatée, la hauteur augmente de 1.\n\n![(10 : (5 : (0 2 4) (6 8)) (40 : (11 12) (42 45)))](/static/arbres/bt-f7be346ddadd.svg)\n\n**Suppression de $5$** : fusion des deux fils autour de $10$ (la clé descend) ; clé interne remplacée par son prédécesseur $4$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(4 10 40 : (0 2) (6 8) (11 12) (42 45))](/static/arbres/bt-470fe7c1f334.svg)\n\n**Suppression de $40$** : clé interne remplacée par son prédécesseur $12$.\n\n![(4 10 12 : (0 2) (6 8) (11) (42 45))](/static/arbres/bt-7b65d94b969f.svg)\n\n**Suppression de $0$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(4 10 12 : (2) (6 8) (11) (42 45))](/static/arbres/bt-b0e19ec0f563.svg)\n\nLe suivi montre les deux sens de variation de la hauteur : un éclatement de la racine la fait croître, une fusion qui vide la racine la fait diminuer.\n\n**2.** **Réponse :** $5$\n\nArbre final :\n\n![final = (4 10 12 : (2) (6 8) (11) (42 45))](/static/arbres/bt-b69e31c8fac5.svg)\n\n**Insertion de $6$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(5 40 : (0 2 4) (6 10 12) (42 45))](/static/arbres/bt-c495f5127812.svg)\n\n**Insertion de $8$** : éclatement d'un nœud plein : la clé $10$ monte.\n\n![(5 10 40 : (0 2 4) (6 8) (12) (42 45))](/static/arbres/bt-60e0dd15149b.svg)\n\n**Insertion de $11$** : éclatement d'un nœud plein : la clé $10$ monte ; la racine est éclatée, la hauteur augmente de 1.\n\n![(10 : (5 : (0 2 4) (6 8)) (40 : (11 12) (42 45)))](/static/arbres/bt-f7be346ddadd.svg)\n\n**Suppression de $5$** : fusion des deux fils autour de $10$ (la clé descend) ; clé interne remplacée par son prédécesseur $4$ ; la racine vide disparaît, la hauteur diminue de 1.\n\n![(4 10 40 : (0 2) (6 8) (11 12) (42 45))](/static/arbres/bt-470fe7c1f334.svg)\n\n**Suppression de $40$** : clé interne remplacée par son prédécesseur $12$.\n\n![(4 10 12 : (0 2) (6 8) (11) (42 45))](/static/arbres/bt-7b65d94b969f.svg)\n\n**Suppression de $0$** : aucune transformation, la clé est simplement ajoutée ou retirée dans une feuille.\n\n![(4 10 12 : (2) (6 8) (11) (42 45))](/static/arbres/bt-b0e19ec0f563.svg)\n\n**3.** ```python\ndef maxgap(B):\n    \"\"\"largest difference between two consecutive keys of a same node (0 for the empty tree)\"\"\"\n    if B == None:\n        return 0\n    g = 0\n    for i in range(B.nbkeys - 1):\n        g = max(g, B.keys[i + 1] - B.keys[i])\n    for C in B.children:\n        g = max(g, maxgap(C))\n    return g\n```\n\nUn nœud à une seule clé a un gap nul. Parcours profondeur : maximum entre le gap du nœud et celui de chacun de ses fils. Résultat vérifié contre un calcul direct par un autre programme (sur l'arbre de l'énoncé, le gap maximum est celui du nœud interne $[7\\;20\\;35]$ : $35-20=15$).",
+     "formules": "éclatement à la descente · rotation, fusion · racine éclatée ou vide : hauteur $\\pm1$ · nœuds $=1+$ éclatements $+h$ (insertions seules) · fusions : $-1$ nœud · gap d'un nœud $=\\max(k_{i+1}-k_i)$ · maximum sur tous les nœuds · arbre vide : $0$",
+     "type": "multi"
+    }
+   ]
+  }
+ ]
+}
