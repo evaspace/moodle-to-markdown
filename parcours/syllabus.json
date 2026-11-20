@@ -18,6 +18,27 @@
    "source": "Mail EPITA"
   },
   {
+   "debut": "2026-09-28",
+   "titre": "[DM] Tests notés - premier test **officiel** le 28 sept.",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "algo/S3/AR2"
+  },
+  {
+   "debut": "2026-09-28",
+   "titre": "Examen de mi-parcours / Mid-term Exam",
+   "type": "Examen",
+   "source": "Mail EPITA",
+   "semestre": "S3"
+  },
+  {
+   "debut": "2026-10-05",
+   "titre": "Contrôle de cours le 5 octobre",
+   "type": "Contrôle",
+   "source": "Mail EPITA",
+   "semestre": "S3"
+  },
+  {
    "debut": "2026-10-05",
    "titre": "Test à distance : dénombrement",
    "type": "Test à distance",
@@ -33,6 +54,20 @@
    "ecue": "prog/S1/Programmation C (début)"
   },
   {
+   "debut": "2026-10-07",
+   "titre": "Re: [DM] Prochain test noté mercredi 7 octobre",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "algo/S3/AR2"
+  },
+  {
+   "debut": "2026-10-08",
+   "titre": "[DM] Prochain test noté mercredi 8 octobre",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "algo/S3/AR2"
+  },
+  {
    "debut": "2026-10-09",
    "titre": "Test Moodle 1",
    "type": "Test à distance",
@@ -40,11 +75,48 @@
    "ecue": "archi/S1/Numération"
   },
   {
+   "debut": "2026-10-12",
+   "fin": "2026-10-16",
+   "titre": "TP en condition d'examen",
+   "type": "Examen",
+   "source": "Mail EPITA",
+   "semestre": "S3"
+  },
+  {
+   "debut": "2026-10-16",
+   "titre": "[Elec] Test 1 - Transistor Bipolaire",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "electronique/S3/TB"
+  },
+  {
+   "debut": "2026-10-17",
+   "titre": "QCM2",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "semestre": "S3"
+  },
+  {
+   "debut": "2026-10-19",
+   "fin": "2026-10-23",
+   "titre": "[EXAMENS B5 _ 2627]",
+   "type": "Examen",
+   "source": "Mail EPITA",
+   "semestre": "S3"
+  },
+  {
    "debut": "2026-10-19",
    "titre": "Test à distance : probabilités",
    "type": "Test à distance",
    "ecue": "maths/S1/DP",
    "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-10-23",
+   "titre": "Examen final / Final exam",
+   "type": "Examen",
+   "source": "Mail EPITA",
+   "semestre": "S3"
   },
   {
    "debut": "2026-10-23",
@@ -69,6 +141,13 @@
    "source": "Auriga"
   },
   {
+   "debut": "2026-10-30",
+   "titre": "Tests notés / Graded tests",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "algo/S3/Graphes"
+  },
+  {
    "debut": "2026-11-16",
    "titre": "Test à distance : primitives, IPP, changement de variable",
    "type": "Test à distance",
@@ -76,6 +155,20 @@
     "maths-s1-apis-integrales"
    ],
    "source": "Moodle S1-MATHS-2031"
+  },
+  {
+   "debut": "2026-11-23",
+   "titre": "Contrôle de cours du 23/11",
+   "type": "Contrôle",
+   "source": "Mail EPITA",
+   "ecue": "maths/S3/PSE"
+  },
+  {
+   "debut": "2026-11-23",
+   "titre": "Contrôle de cours AL (30 min), 11h30 à 12h30 (12h50 tiers-temps)",
+   "type": "Contrôle",
+   "source": "Mail EPITA",
+   "ecue": "maths/S3/AL"
   },
   {
    "debut": "2026-11-23",
@@ -93,6 +186,13 @@
    "type": "Test à distance",
    "source": "Moodle",
    "ecue": "physique/S1/Mécanique"
+  },
+  {
+   "debut": "2026-11-27",
+   "titre": "[Archi] Test Moodle 2",
+   "type": "Test à distance",
+   "source": "Mail EPITA",
+   "ecue": "archi/S3/ASM68K"
   },
   {
    "debut": "2026-12-07",
