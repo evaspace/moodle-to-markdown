@@ -9,11 +9,11 @@ et le téléchargement des fichiers.
 import argparse
 import os
 import sys
-from typing import List
+from datetime import datetime
 
 import config
 from exporter import CourseExporter
-from moodle_client import MoodleClient
+from moodle_client import MoodleClient, SessionExpired
 
 
 def print_banner():
@@ -81,7 +81,14 @@ def parse_arguments():
     parser.add_argument("--course", "-c", type=str, action="append", help="Filtrer un ou plusieurs cours par ID ou mot-clé")
     parser.add_argument("--list", "-l", action="store_true", help="Lister uniquement les cours inscrits sans télécharger")
     parser.add_argument("--no-files", action="store_true", help="Ne pas télécharger les documents (générer uniquement le Markdown)")
-    parser.add_argument("--download-videos", action="store_true", help="Télécharger les vidéos en local avec yt-dlp")
+    parser.add_argument("--download-videos", action="store_true", help="Télécharger les vidéos en local (yt-dlp + vidéos hébergées par Moodle)")
+    parser.add_argument("--video-quality", type=int, default=720, help="Hauteur max des vidéos téléchargées (défaut 720)")
+    parser.add_argument("--youtube-cookies", type=str, default="", help="Fichier cookies.txt YouTube (requis si YouTube bloque : « Sign in to confirm you're not a bot »)")
+    parser.add_argument("--workers", type=int, default=4, help="Téléchargements simultanés (défaut 4)")
+    parser.add_argument("--delay", type=float, default=0.15, help="Délai minimal entre deux requêtes, en secondes (défaut 0.15)")
+    parser.add_argument("--course-id", type=int, action="append", help="Scraper ce cours par son ID même s'il n'est pas listé (répétable)")
+    parser.add_argument("--resume", action="store_true", help="Reprendre une exécution interrompue (cookie expiré) sans refaire les cours terminés")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Afficher les incidents et retries en direct")
     return parser.parse_args()
 
 
@@ -98,7 +105,8 @@ def main():
     download_files = not args.no_files and config.DOWNLOAD_FILES
     download_videos = args.download_videos or config.DOWNLOAD_VIDEOS
 
-    client = MoodleClient(base_url=base_url, token=token, session_cookie=session_cookie)
+    client = MoodleClient(base_url=base_url, token=token, session_cookie=session_cookie,
+                          min_delay=args.delay, verbose=args.verbose)
 
     # 1. Vérification si identifiants fournis pour token direct
     if not client.token and not client.session_cookie and username and password:
@@ -115,7 +123,8 @@ def main():
     if not is_valid:
         if sys.stdin.isatty():
             session_cookie = prompt_for_cookie(base_url)
-            client = MoodleClient(base_url=base_url, token=token, session_cookie=session_cookie)
+            client = MoodleClient(base_url=base_url, token=token, session_cookie=session_cookie,
+                                  min_delay=args.delay, verbose=args.verbose)
             is_valid, msg = client.validate_auth()
 
     if not is_valid:
@@ -131,6 +140,12 @@ def main():
     # 4. Récupération de la liste des cours
     print("🔍 Récupération de la liste de vos cours inscrits...")
     enrolled_courses = client.get_enrolled_courses()
+
+    known_ids = {c["id"] for c in enrolled_courses}
+    for extra_id in args.course_id or []:
+        if extra_id not in known_ids:
+            enrolled_courses.append({"id": extra_id, "fullname": f"Cours {extra_id}", "shortname": "", "summary": "",
+                                     "url": f"{base_url}/course/view.php?id={extra_id}"})
 
     if not enrolled_courses:
         print("❌ Aucun cours trouvé. Vérifiez que vous êtes bien inscrit à des cours sur cette plateforme.")
@@ -174,62 +189,82 @@ def main():
         download_files=download_files,
         download_videos=download_videos,
         state_file=config.STATE_FILE,
+        workers=args.workers,
+        video_quality=args.video_quality,
+        youtube_cookies=args.youtube_cookies,
     )
 
-    all_stats = {}
+    run = exporter.state.get("run", {}) if args.resume else {}
+    done_ids = set(run.get("done", []))
+    exporter.state["run"] = {"started": run.get("started") or datetime.now().isoformat(timespec="seconds"),
+                             "done": sorted(done_ids), "stats": run.get("stats", {})}
+    all_stats = dict(exporter.state["run"]["stats"])
+    processed = []
+
     print("\n" + "=" * 70)
     print("🚀 Début de l'extraction et de la génération des notes Markdown...")
+    if done_ids:
+        print(f"   ↩️  Reprise : {len(done_ids)} cours déjà terminés ignorés")
     print("=" * 70)
 
+    interrupted = False
     for c_idx, c in enumerate(courses_to_process, 1):
-        cid = c["id"]
-        cname = c["fullname"]
+        cid, cname = c["id"], c["fullname"]
+        if cid in done_ids:
+            processed.append(c)
+            continue
         print(f"\n📚 [{c_idx}/{len(courses_to_process)}] Traitement du cours : {cname} (ID: {cid})")
-        print("   🔍 Analyse de l'arborescence et des sections...")
+        try:
+            course_data = client.get_course_details(cid)
+            if not course_data.get("fullname"):
+                course_data["fullname"] = cname
+            n_mods = sum(len(s["modules"]) for s in course_data.get("sections", []))
+            print(f"   📂 {len(course_data.get('sections', []))} sections, {n_mods} activités. Export en cours...")
+            stats = exporter.export_course(course_data)
+        except SessionExpired as e:
+            interrupted = True
+            print(f"\n🔒 {e}")
+            print("   Le cookie MoodleSession a expiré. Reconnectez-vous dans le navigateur, copiez le nouveau cookie et relancez :")
+            print('   python main.py --resume --cookie "NOUVEAU_COOKIE"')
+            break
+        except Exception as e:  # un cours défaillant ne doit pas arrêter les autres
+            client.note_error(f"cours {cname} ({cid})", e)
+            print(f"   ❌ Cours ignoré après erreur : {e}")
+            continue
 
-        course_data = client.get_course_details(cid)
-        # Conserver le nom propre si renvoyé vide
-        if not course_data.get("fullname"):
-            course_data["fullname"] = cname
-
-        sec_count = len(course_data.get("sections", []))
-        print(f"   📂 {sec_count} sections/chapitres détectés. Extraction en cours...")
-
-        stats = exporter.export_course(course_data)
         all_stats[str(cid)] = stats
+        processed.append(c)
+        exporter.state["run"]["done"].append(cid)
+        exporter.state["run"]["stats"] = all_stats
+        exporter._save_state()
+        print(f"   ✅ {stats['pages']} pages, {stats['qcms']} QCM ({stats['questions']} questions), "
+              f"{stats['videos']} vidéos/liens, {stats['files']} fichiers, {stats['books']} livres, "
+              f"{stats['forums']} forums" + (f", ⚠️ {stats['failed']} échecs" if stats["failed"] else ""))
 
-        print(f"   ✅ Cours exporté :")
-        print(f"      • {stats['sections']} sections rédigées en Markdown")
-        print(f"      • {stats['pages']} pages de cours extraites")
-        print(f"      • {stats['qcms']} QCM & tests répertoriés")
-        print(f"      • {stats['videos']} vidéos / contenus interactifs")
-        if download_files:
-            print(f"      • {stats['files']} documents téléchargés")
-
-    # 7. Génération du README global à la racine
-    exporter.build_global_index(courses_to_process, all_stats)
+    # 7. Index global + manifeste + rapport (même si interrompu : on garde ce qui est fait)
+    exporter.build_global_index(processed, all_stats)
+    report = exporter.write_report(processed, all_stats)
+    if not interrupted:
+        exporter.state.pop("run", None)
+    exporter._save_state()
 
     # 8. Résumé final
-    total_sections = sum(s["sections"] for s in all_stats.values())
-    total_pages = sum(s["pages"] for s in all_stats.values())
-    total_qcms = sum(s["qcms"] for s in all_stats.values())
-    total_videos = sum(s["videos"] for s in all_stats.values())
-    total_files = sum(s["files"] for s in all_stats.values())
+    def total(key):
+        return sum(s.get(key, 0) for s in all_stats.values())
 
     print("\n" + "=" * 70)
-    print("🎉 SYNCHRONISATION TERMINÉE AVEC SUCCÈS !")
+    print("⚠️  EXTRACTION INTERROMPUE (session expirée)" if interrupted else "🎉 SYNCHRONISATION TERMINÉE")
     print("=" * 70)
-    print(f"📊 Bilan général :")
-    print(f"   • Cours traités : {len(courses_to_process)}")
-    print(f"   • Sections / Chapitres : {total_sections}")
-    print(f"   • Pages de cours créées : {total_pages}")
-    print(f"   • QCM & Corrigés intégrés : {total_qcms}")
-    print(f"   • Liens Vidéos & H5P : {total_videos}")
-    if download_files:
-        print(f"   • Fichiers & Feuilles de TD téléchargés : {total_files}")
-    print(f"\n📂 Emplacement de vos notes : {os.path.abspath(output_dir)}")
-    print("💡 Astuce : Ouvrez ce dossier dans Obsidian ou VS Code pour réviser et prendre des notes !")
+    print(f"   • Cours traités : {len(processed)}/{len(courses_to_process)}")
+    print(f"   • Sections : {total('sections')} | Pages (livres inclus) : {total('pages')} | Autres modules : {total('others')}")
+    print(f"   • QCM : {total('qcms')} ({total('questions')} questions) | Vidéos & liens : {total('videos')}")
+    print(f"   • Fichiers téléchargés : {total('files')} | Échecs : {total('failed')} | Incidents : {len(client.errors)}")
+    print(f"\n📂 Notes : {os.path.abspath(output_dir)}")
+    print(f"📋 Rapport détaillé : {os.path.abspath(report)}")
+    print("   Suite : make convert (PDF -> Markdown), make md-cards-b (QCM -> cartes), make sync-all (site)")
     print("=" * 70)
+    if interrupted:
+        sys.exit(2)
 
 
 if __name__ == "__main__":
