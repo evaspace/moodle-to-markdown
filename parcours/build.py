@@ -12,7 +12,7 @@ import sympy as sp
 
 HERE = Path(__file__).parent
 PATHS = ["obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
-         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus", "elec_filtres", "elec_transitoires", "elec_diodes", "algo_taa", "algo_caml", "algo_python", "algo_matrices", "algo_abg", "algo_recherche", "prog_c_debut"]
+         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus", "elec_filtres", "elec_transitoires", "elec_diodes", "algo_taa", "algo_caml", "algo_python", "algo_matrices", "algo_abg", "algo_recherche", "prog_c_debut", "maths_s3_asn", "maths_s3_pse", "maths_s3_al", "phys_s3_quantique", "phys_s3_em", "elec_s3_transistors", "algo_s3_hachage", "algo_s3_arbres", "algo_s3_graphes", "algo_s3_thlr", "archi_s3_68000"]
 x, t = sp.symbols("x t", real=True)
 i, k = sp.symbols("i k", integer=True)
 n = sp.symbols("n", integer=True, positive=True)
@@ -82,11 +82,107 @@ def _cover(expr, names, ones, dcs=()):
     return sp.Integer(1)
 
 
-NS = {"x": x, "t": t, "E": sp.E, "pi": sp.pi, "log": sp.log, "sqrt": sp.sqrt,
+def _parc(mode, adj, s=0, base=0):
+    """Graph search for `calc`: adj[v - base] = successors of v (read in this order). Full search, first launch on s then
+    on the unvisited vertices in increasing order. Row matrix of: bfs / dfs (prefix) / suf (suffix) order, dist (from s, -1 if
+    unreachable), cc (component number of each vertex, 1-based)."""
+    adj, s = [[int(y) - base for y in a] for a in adj], int(s) - base
+    nv, seen, pre, suf, dist, cc = len(adj), set(), [], [], [-1] * len(adj), [0] * len(adj)
+
+    def dfs(v, c):
+        seen.add(v)
+        pre.append(v)
+        cc[v] = c
+        for y in adj[v]:
+            if y not in seen:
+                dfs(y, c)
+        suf.append(v)
+
+    def bfs(v, c):
+        seen.add(v)
+        q, j = [v], 0
+        dist[v], cc[v] = 0, c
+        while j < len(q):
+            for y in adj[q[j]]:
+                if y not in seen:
+                    seen.add(y)
+                    dist[y], cc[y] = dist[q[j]] + 1, c
+                    q.append(y)
+            j += 1
+        return q
+
+    order, c = [], 0
+    for v in [s] + ([] if mode == "dist" else list(range(nv))):
+        if v not in seen:
+            c += 1
+            if mode in ("bfs", "dist"):
+                order += bfs(v, c)
+            else:
+                dfs(v, c)
+    res = {"bfs": order, "dfs": pre, "suf": suf, "dist": dist, "cc": cc}[mode]
+    return sp.Matrix([[(y + base if mode in ("bfs", "dfs", "suf") else y) for y in res]])
+
+
+def _hach(kind, m, hs, what, d=1, ds=None):
+    """Hash table after inserting elements 1..n (hash values hs, in order). kind: lin (step d), dbl (steps ds), coal (no reserve), sep (tail insertion).
+    what: tab/lien/len (Matrix row), pos (cell of the last element), probes (cells examined), coll, prim, sec, succ (comparisons to find every element), maxlen."""
+    n, T, L, probes, prim, sec, coll = len(hs), [0] * m, [-1] * m, 0, 0, 0, 0
+    lists = [[] for _ in range(m)]
+    pos = None
+    for e, h in enumerate(hs, 1):
+        if kind == "sep":
+            coll += bool(lists[h])
+            lists[h].append(e)
+        elif kind == "coal":
+            if not T[h]:
+                T[h], pos, probes = e, h, probes + 1
+                continue
+            coll += 1
+            if hs[T[h] - 1] == h:
+                prim += 1
+            else:
+                sec += 1
+            c, probes = h, probes + 1
+            while L[c] != -1:
+                c, probes = L[c], probes + 1
+            r = m - 1
+            while T[r]:
+                r -= 1
+            T[r], L[c], pos = e, r, r
+        else:
+            step = d if kind == "lin" else ds[e - 1]
+            for j in range(m):
+                c = (h + step * j) % m
+                probes += 1
+                if not T[c]:
+                    T[c], pos = e, c
+                    break
+                coll += j == 0
+    if kind == "coal":  # position of each element in its collision list
+        succ = 0
+        for h in set(hs):
+            c, k = h, 1
+            while c != -1 and T[c]:
+                succ += k * (hs[T[c] - 1] == h)
+                c, k = L[c], k + 1
+        probes = succ
+    if kind == "sep":
+        succ = sum(len(q) * (len(q) + 1) // 2 for q in lists)
+    else:
+        succ = probes
+    res = {"tab": T, "lien": L, "len": [len(q) for q in lists]}
+    if what in res:
+        return sp.Matrix([res[what]])
+    return sp.Integer({"pos": pos, "probes": probes, "coll": coll, "prim": prim, "sec": sec, "succ": succ,
+                       "maxlen": max(len(q) for q in lists)}[what])
+
+
+NS = {"hach": _hach, "parc": _parc, "x": x, "t": t, "E": sp.E, "pi": sp.pi, "log": sp.log, "sqrt": sp.sqrt,
       "exp": sp.exp, "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "atan": sp.atan,
       "Rational": sp.Rational, "i": i, "k": k, "binomial": sp.binomial,
       "factorial": sp.factorial, "summation": sp.summation,
       "n": n, "oo": sp.oo, "limit": sp.limit,
+      "coef": lambda f, k: sp.series(f, x, 0, k + 1).removeO().coeff(x, k),  # coefficient of x^k of the DL of f at 0
       "bits": lambda s: _sym(s, 2), "hexa": lambda s: _sym(s, 16), "octal": lambda s: _sym(s, 8), "tc": _tc,
       "f32": _f32, "f32d": lambda h: _fdec(h, ">f"), "f64d": lambda h: _fdec(h, ">d"), "f64": _f64, "eqv": _eqv, "seqD": lambda n, sq, ex: _seq("D", n, list(sq), list(ex)), "seqJK": lambda n, sq, ex: _seq("JK", n, list(sq), list(ex)),
       "Q0": sp.Symbol("Q0"), "Q1": sp.Symbol("Q1"), "Q2": sp.Symbol("Q2"), "Q3": sp.Symbol("Q3"), "cover": _cover, "A": sp.Symbol("A"), "B": sp.Symbol("B"),
@@ -161,6 +257,8 @@ def build(name):
     by_id = {e["id"]: e for lvl in mod.LEVELS for e in lvl["exos"] if e["kind"] != "multi"}
     by_id.update({e["id"]: e for e in mod.EXTRA_PARTS})
     errors = []
+    all_ids = [e["id"] for lvl in mod.LEVELS for e in lvl["exos"]] + [e["id"] for e in mod.EXTRA_PARTS]
+    errors += [f"duplicate exercise id: {i}" for i in dict.fromkeys(all_ids) if all_ids.count(i) > 1]
     formules = getattr(mod, "FORMULES", {})  # per exercise: the formulas its solution uses
     errors += [f"FORMULES: unknown exercise {i}" for i in formules if i not in by_id]
     for e in by_id.values():
@@ -237,7 +335,8 @@ def check_syllabus():
             continue
         if (subj["ecue"], subj["semestre"]) != (ecue["id"], sem):
             errors.append(f"{pid}: ECUE/semester differs from syllabus")
-        errors += [f"{pid}: Moodle chapter not in syllabus ECUE: {c}" for c in subj["chapitres_moodle"] if c not in ecue["chapitres"]]
+        errors += [f"{pid}: Moodle chapter not in syllabus ECUE: {c}" for c in subj["chapitres_moodle"]
+                   if not any(x == c or x.endswith("/" + c) for x in ecue["chapitres"])]
     errors += [f"level path {pid} missing from syllabus.json" for pid in built if pid not in listed]
     for s in sorted(skipped):
         print(f"syllabus: not checked, folder absent locally: {s}")

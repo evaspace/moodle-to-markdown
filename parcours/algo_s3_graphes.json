@@ -1,0 +1,1422 @@
+{
+ "subject": {
+  "id": "algo-s3-graphes",
+  "ordre": 690,
+  "matiere": "algo",
+  "semestre": "S3",
+  "ecue": "Graphes",
+  "titre": "Graphes : terminologie, représentations, parcours, connexité, applications",
+  "chapitres_moodle": [
+   "03_Les graphes - description - terminologie",
+   "04_Représentation des graphes",
+   "05_Parcours de graphes",
+   "06_Connexité des graphes non orientés",
+   "07_🐍 Exercises 1- implementations + BFS + DFS",
+   "08_🐍 Exercises 2- Applications"
+  ],
+  "td": "TD 1 (implémentations et parcours) et TD 2 (applications) de novembre 2026, partiels P3 et contrôles C3 des annales S3",
+  "examens": [
+   "Examen écrit de fin de bloc B6 d'algorithmique, graphes (Python, 2 h, décembre)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "rappel-complexite",
+   "titre": "Compter les opérations d'une boucle (rappel S1)",
+   "formule": "`range(a, b, p)` : $\\lceil\\frac{b-a}p\\rceil$ tours · deux boucles imbriquées : $n^2$ · boucle triangulaire : $\\frac{n(n-1)}2$ · doublement : $\\lceil\\log_2 n\\rceil$",
+   "exemple": "`for i in range(n): for j in range(i + 1, n):` fait $\\frac{n(n-1)}2$ tours ; pour $n=10$ : $45$",
+   "cours": "La complexité d'un parcours de graphe se lit sur ces boucles : parcourir toute une matrice $n\\times n$ coûte $n^2$, parcourir toutes les listes d'adjacence coûte $n+m$. Rappel S1 : parcours « Algorithmique Python » (`algo-s1-python`)."
+  },
+  {
+   "id": "rappel-files-arbres",
+   "titre": "Files, piles et parcours d'arbres généraux (rappel S1/S2)",
+   "formule": "file : premier entré, premier sorti (`enqueue`, `dequeue`) · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : niveau par niveau (file)",
+   "exemple": "Arbre de racine $0$ et de fils $1,2,3$ : préfixe $0,1,\\dots$ ; largeur $0,1,2,3,\\dots$",
+   "cours": "Un graphe se parcourt comme un arbre général, avec deux différences : un sommet peut être rencontré plusieurs fois (il faut le marquer) et il n'y a pas de racine (on choisit le départ). Le parcours en largeur utilise une file, le parcours en profondeur la récursion (donc une pile). Rappels : parcours « Types algébriques abstraits » (`algo-s1-taa`) et « Arbres binaires et généraux » (`algo-s2-abg`)."
+  },
+  {
+   "id": "terminologie",
+   "titre": "Terminologie : ordre, degrés, graphes complets",
+   "formule": "$G=\\langle S,A\\rangle$, ordre $n=|S|$ · non orienté : $\\sum_x d^\\circ(x)=2m$ · orienté : $\\sum d^{\\circ+}=\\sum d^{\\circ-}=m$ · $d^\\circ(x)=d^{\\circ+}(x)+d^{\\circ-}(x)$ · complet : $m=\\binom n2$ (non orienté), $n(n-1)$ (orienté)",
+   "exemple": "Graphe simple d'ordre $9$ complet : $\\binom92=36$ arêtes",
+   "cours": "Arête $\\{x,y\\}$ (non orienté) ou arc $(x,y)$ (orienté, $x$ extrémité initiale, $y$ terminale). Un sommet de degré nul est isolé. Une boucle compte double dans le degré. Un graphe simple n'a ni boucle ni arête multiple ; un $p$-graphe a au plus $p$ arcs de mêmes extrémités. Un sous-graphe garde un sous-ensemble de sommets et toutes leurs liaisons ; un graphe partiel garde tous les sommets et une partie des liaisons."
+  },
+  {
+   "id": "chemins",
+   "titre": "Chemins, chaînes, cycles et puissances de la matrice d'adjacence",
+   "formule": "chemin de longueur $k$ : $(s_0,\\dots,s_k)$ avec $s_i\\to s_{i+1}$ arc · nombre de chemins de longueur $k$ de $x$ à $y$ : $(M^k)_{xy}$ · accessibilité : $(I+M)^{n-1}$",
+   "exemple": "$(M^2)_{02}$ compte les sommets $z$ avec $0\\to z\\to2$",
+   "cours": "Un chemin élémentaire ne répète aucun sommet. Un circuit (graphe orienté) ou un cycle (non orienté) est un chemin fermé aux arcs ou arêtes distincts. Dans un graphe non orienté, $\\operatorname{tr}(M^3)/6$ est le nombre de triangles. Il existe un chemin de $x$ à $y$ si et seulement si $((I+M)^{n-1})_{xy}>0$."
+  },
+  {
+   "id": "representations",
+   "titre": "Représentations : matrice et listes d'adjacence",
+   "formule": "matrice : $n^2$ cases, arc $(x,y)$ en $O(1)$, successeurs en $O(n)$, parcours complet $O(n^2)$ · listes : $n+m$ éléments ($n+2m$ non orienté), arc $(x,y)$ en $O(d^{\\circ+}(x))$, parcours complet $O(n+m)$",
+   "exemple": "Graphe non orienté simple de $11$ arêtes : $22$ cases à $1$ dans la matrice (symétrique), $22$ successeurs dans les listes",
+   "cours": "Matrice : booléens pour un graphe simple, entiers pour un multigraphe ; symétrique pour un graphe non orienté ; matrice de coûts pour un graphe valué. Listes : chaque arête $x$—$y$ apparaît deux fois. Pour avoir les prédécesseurs avec des listes, il faut des listes de prédécesseurs ou un parcours complet. Les sommets doivent être numérotés (de $0$ à $n-1$ en Python)."
+  },
+  {
+   "id": "parcours-largeur",
+   "titre": "Parcours en largeur (BFS)",
+   "formule": "file : enfiler le départ, marquer · défiler $x$, enfiler ses successeurs non marqués (en les marquant) · distances par niveaux · $O(n+m)$ (listes), $O(n^2)$ (matrice)",
+   "exemple": "Graphe $0$—$1$, $0$—$2$, $1$—$3$ : ordre $0,1,2,3$ ; distances $0,1,1,2$",
+   "cours": "On marque un sommet **au moment où on l'enfile**, pas quand on le défile : sinon un sommet peut être enfilé deux fois. L'algorithme d'appel relance le parcours sur chaque sommet non marqué pour obtenir un parcours complet ; l'ordre de rencontre dépend de l'ordre des listes (croissant par convention). Le parcours en largeur donne les plus courtes chaînes en nombre d'arêtes."
+  },
+  {
+   "id": "parcours-profondeur",
+   "titre": "Parcours en profondeur (DFS) : préfixe et suffixe",
+   "formule": "marquer $x$ (préfixe) · pour chaque successeur non marqué : récursion · fin de $x$ (suffixe) · $O(n+m)$ (listes), $O(n^2)$ (matrice)",
+   "exemple": "Arbre $0$—$1$, $0$—$2$, $2$—$3$ : préfixe $0,1,2,3$ ; suffixe $1,3,2,0$",
+   "cours": "Le préfixe est l'ordre de première rencontre, le suffixe l'ordre de dernière rencontre (le sommet est terminé quand tous ses successeurs sont traités). Avec un compteur unique, chaque sommet reçoit deux numéros : `pref` et `suff`. Le parcours est une extension du parcours d'un arbre général ; la forêt couvrante a une racine par lancement depuis l'algorithme d'appel."
+  },
+  {
+   "id": "classification",
+   "titre": "Forêt couvrante et classification des arcs",
+   "formule": "couvrant : $y$ découvert depuis $x$ · avant : $y$ descendant non direct de $x$ ($\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$) · arrière : $y$ ascendant de $x$ ($\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$) · croisé : ni l'un ni l'autre",
+   "exemple": "$x$ atteint $y$ déjà marqué mais non terminé : arc arrière, donc circuit",
+   "cours": "Dans un graphe non orienté, toute arête qui n'est pas couvrante est un arc arrière (pas d'arc avant ni croisé). Un graphe orienté est sans circuit si et seulement si le parcours en profondeur ne rencontre aucun arc arrière. Dans un graphe sans circuit, l'ordre suffixe inverse est un tri topologique."
+  },
+  {
+   "id": "connexite",
+   "titre": "Connexité statique : composantes, fermeture transitive, Warshall",
+   "formule": "connexe : une seule composante · chaque arbre de la forêt couvrante = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$, $O(n^3)$ · connexe $\\iff$ fermeture complète",
+   "exemple": "Fermeture à blocs de $4$, $6$ et $4$ sommets : $3$ composantes, $16+36+16=68$ cases à $1$",
+   "cours": "On numérote les sommets par composante (vecteur d'entiers au lieu du vecteur de booléens) ; pour tester la connexité un seul parcours depuis un sommet quelconque suffit. La fermeture transitive d'un graphe non orienté est une matrice de blocs de 1 : le rang de la matrice est le nombre de composantes. Warshall sert aussi aux graphes orientés (chemins)."
+  },
+  {
+   "id": "trouver-reunir",
+   "titre": "Connexité évolutive : trouver-réunir",
+   "formule": "vecteur des pères $p$ : racine $p[x]=-1$ (ou $-$taille avec l'union pondérée) · `trouver` remonte jusqu'à la racine · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : le petit sous la racine du grand · compression : tout le chemin pointe sur la racine",
+   "exemple": "$p=[-1,0,0,-1]$ : composantes $\\{0,1,2\\}$ et $\\{3\\}$",
+   "cours": "Une composante = un arbre, de racine son représentant. Sans optimisation, la hauteur peut valoir $n-1$. Avec l'union pondérée seule la hauteur est au plus $\\log_2 n$ ; avec la compression des chemins elle tend vers 2. Pour savoir si un vecteur est possible, chaque arbre doit couvrir exactement une composante, et avec l'union pondérée chaque racine porte l'opposé de la taille de son arbre."
+  },
+  {
+   "id": "applications",
+   "titre": "Applications : distances, bipartition, cycles, tri topologique",
+   "formule": "distance (BFS) · excentricité $\\max_y d(x,y)$, rayon $=\\min$, diamètre $=\\max$, centre · biparti : 2-coloration par BFS · arbre : connexe et $m=n-1$ · acyclique : DFS sans arc arrière · Euler : connexe et $0$ ou $2$ sommets de degré impair",
+   "exemple": "Chaîne $0$—$1$—$2$ : excentricités $2,1,2$, rayon $1$, centre $\\{1\\}$, diamètre $2$",
+   "cours": "Chaque problème est un parcours modifié : levels = BFS qui range les sommets par distance ; bipartite = BFS en alternant deux couleurs, échec dès qu'une arête relie deux sommets de même couleur ; cycle = DFS qui repère une arête vers un sommet déjà vu autre que le père ; acyclique orienté = DFS avec trois états (non vu, en cours, terminé) ; tri topologique = ordre suffixe inverse."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "rappel-complexite",
+   "type": "qcm",
+   "q": "Combien de tours fait `for i in range(2, 20, 3):` ?",
+   "choix": [
+    "$6$",
+    "$7$",
+    "$18$",
+    "$5$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rappel-complexite",
+   "type": "vf",
+   "q": "Parcourir toutes les cases d'une matrice $n\\times n$ coûte $O(n)$.",
+   "bonne": false
+  },
+  {
+   "notion": "rappel-files-arbres",
+   "type": "qcm",
+   "q": "Le parcours en largeur utilise :",
+   "choix": [
+    "une file",
+    "une pile",
+    "un tri",
+    "un arbre binaire de recherche"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rappel-files-arbres",
+   "type": "vf",
+   "q": "Dans l'ordre suffixe d'un arbre général, la racine est le dernier nœud.",
+   "bonne": true
+  },
+  {
+   "notion": "terminologie",
+   "type": "qcm",
+   "q": "La somme des degrés d'un graphe non orienté simple de $m$ arêtes vaut :",
+   "choix": [
+    "$2m$",
+    "$m$",
+    "$m^2$",
+    "$m(m-1)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "terminologie",
+   "type": "vf",
+   "q": "Un sommet de degré nul est dit isolé.",
+   "bonne": true
+  },
+  {
+   "notion": "terminologie",
+   "type": "qcm",
+   "q": "Un graphe orienté simple complet d'ordre $n$ a combien d'arcs ?",
+   "choix": [
+    "$n(n-1)$",
+    "$\\frac{n(n-1)}2$",
+    "$n^2$",
+    "$2n$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "chemins",
+   "type": "qcm",
+   "q": "Le coefficient $(M^3)_{xy}$ compte :",
+   "choix": [
+    "les chemins de longueur $3$ de $x$ à $y$",
+    "les chemins de longueur $\\le3$",
+    "les chemins élémentaires de $x$ à $y$",
+    "les arcs entre $x$ et $y$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "chemins",
+   "type": "vf",
+   "q": "Un cycle élémentaire d'un graphe simple a au moins $3$ sommets.",
+   "bonne": true
+  },
+  {
+   "notion": "representations",
+   "type": "qcm",
+   "q": "Tester l'existence d'un arc $(x,y)$ avec une matrice d'adjacence coûte :",
+   "choix": [
+    "$O(1)$",
+    "$O(n)$",
+    "$O(d^{\\circ+}(x))$",
+    "$O(n^2)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "representations",
+   "type": "vf",
+   "q": "Pour un graphe peu dense, les listes d'adjacence occupent moins de place que la matrice.",
+   "bonne": true
+  },
+  {
+   "notion": "representations",
+   "type": "qcm",
+   "q": "Dans les listes d'adjacence d'un graphe non orienté, une arête $\\{x,y\\}$ apparaît :",
+   "choix": [
+    "deux fois",
+    "une fois",
+    "jamais",
+    "trois fois"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "parcours-largeur",
+   "type": "qcm",
+   "q": "Dans un parcours en largeur, on marque un sommet :",
+   "choix": [
+    "quand on l'enfile",
+    "quand on le défile",
+    "à la fin du parcours",
+    "jamais"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "parcours-largeur",
+   "type": "vf",
+   "q": "Le parcours en largeur donne les distances en nombre d'arêtes depuis le départ.",
+   "bonne": true
+  },
+  {
+   "notion": "parcours-profondeur",
+   "type": "qcm",
+   "q": "L'ordre suffixe note un sommet :",
+   "choix": [
+    "quand tous ses successeurs sont traités",
+    "à sa première rencontre",
+    "quand on l'enfile",
+    "quand il est isolé"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "parcours-profondeur",
+   "type": "vf",
+   "q": "La complexité d'un parcours en profondeur avec listes d'adjacence est $O(n+m)$.",
+   "bonne": true
+  },
+  {
+   "notion": "classification",
+   "type": "qcm",
+   "q": "Dans un graphe non orienté, une arête non couvrante est :",
+   "choix": [
+    "un arc arrière",
+    "un arc avant",
+    "un arc croisé",
+    "impossible"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "classification",
+   "type": "vf",
+   "q": "Un graphe orienté est sans circuit si et seulement si le parcours en profondeur ne rencontre aucun arc arrière.",
+   "bonne": true
+  },
+  {
+   "notion": "connexite",
+   "type": "qcm",
+   "q": "La complexité de l'algorithme de Warshall pour $n$ sommets est :",
+   "choix": [
+    "$O(n^3)$",
+    "$O(n^2)$",
+    "$O(n+m)$",
+    "$O(n\\log n)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "connexite",
+   "type": "vf",
+   "q": "Un graphe non orienté est connexe si et seulement si un seul parcours depuis un sommet quelconque marque tous les sommets.",
+   "bonne": true
+  },
+  {
+   "notion": "trouver-reunir",
+   "type": "qcm",
+   "q": "Dans le vecteur des pères, une racine est marquée par :",
+   "choix": [
+    "une valeur négative",
+    "$0$",
+    "son propre numéro uniquement",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "trouver-reunir",
+   "type": "vf",
+   "q": "L'union pondérée rattache le plus petit arbre à la racine du plus grand.",
+   "bonne": true
+  },
+  {
+   "notion": "applications",
+   "type": "qcm",
+   "q": "Le rayon d'un graphe est :",
+   "choix": [
+    "la plus petite excentricité",
+    "la plus grande excentricité",
+    "la somme des distances",
+    "le nombre de sommets du centre"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "applications",
+   "type": "vf",
+   "q": "Un graphe est biparti si et seulement si il ne contient aucun cycle de longueur impaire.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1 : compter les tours de boucles et la complexité",
+   "notions": [
+    "rappel-complexite"
+   ],
+   "exos": [
+    {
+     "id": "g11",
+     "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nc = 0\nfor i in range(10):\n    for j in range(i + 1, 10):\n        c += 1\nprint(c)\n```",
+     "ans": "45",
+     "sol": "Pour $i$ de $0$ à $9$ la boucle interne fait $9-i$ tours : $9+8+\\dots+0=\\frac{10\\times9}2=45$. C'est le nombre de paires $\\{i,j\\}$ : la forme du parcours de la moitié d'une matrice symétrique.",
+     "variants": [
+      {
+       "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nc = 0\nfor i in range(12):\n    for j in range(i + 1, 12):\n        c += 1\nprint(c)\n```",
+       "ans": "66",
+       "sol": "$11+10+\\dots+0=\\frac{12\\times11}2=66$."
+      }
+     ],
+     "formules": "`range(a, b, p)` : $\\lfloor\\frac{b-1-a}p\\rfloor+1$ tours · boucle triangulaire $\\frac{n(n-1)}2$ · doublement $\\lceil\\log_2 n\\rceil$ · deux boucles imbriquées $n^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g12",
+     "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nc = 0\nfor i in range(3, 100, 7):\n    c += 1\nprint(c)\n```",
+     "ans": "14",
+     "sol": "`range(3, 100, 7)` donne $3,10,\\dots,94$ : $\\lfloor\\frac{99-3}7\\rfloor+1=13+1=14$ valeurs.",
+     "variants": [
+      {
+       "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nc = 0\nfor i in range(2, 60, 5):\n    c += 1\nprint(c)\n```",
+       "ans": "12",
+       "sol": "$2,7,\\dots,57$ : $\\lfloor\\frac{59-2}5\\rfloor+1=11+1=12$."
+      }
+     ],
+     "formules": "`range(a, b, p)` : $\\lfloor\\frac{b-1-a}p\\rfloor+1$ tours · boucle triangulaire $\\frac{n(n-1)}2$ · doublement $\\lceil\\log_2 n\\rceil$ · deux boucles imbriquées $n^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g13",
+     "enonce": "Quelle valeur affiche ce programme ?\n\n```python\ni = 1\nc = 0\nwhile i < 1000:\n    i = i * 2\n    c += 1\nprint(c)\n```",
+     "ans": "10",
+     "sol": "On double jusqu'à dépasser $1000$ : $2^{10}=1024\\ge1000$ et $2^9=512<1000$ ; $\\lceil\\log_21000\\rceil=10$ tours.",
+     "variants": [
+      {
+       "enonce": "Quelle valeur affiche ce programme ?\n\n```python\ni = 1\nc = 0\nwhile i < 5000:\n    i = i * 2\n    c += 1\nprint(c)\n```",
+       "ans": "13",
+       "sol": "$2^{13}=8192\\ge5000$ et $2^{12}=4096<5000$ : $13$ tours."
+      }
+     ],
+     "formules": "`range(a, b, p)` : $\\lfloor\\frac{b-1-a}p\\rfloor+1$ tours · boucle triangulaire $\\frac{n(n-1)}2$ · doublement $\\lceil\\log_2 n\\rceil$ · deux boucles imbriquées $n^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g14",
+     "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nn = 200\nc = 0\nfor x in range(n):\n    for y in range(n):\n        c += 1\nprint(c)\n```",
+     "ans": "40000",
+     "sol": "Deux boucles de $n$ tours imbriquées : $n^2=40000$. C'est le coût d'un parcours complet d'une matrice d'adjacence de $200$ sommets.",
+     "variants": [
+      {
+       "enonce": "Quelle valeur affiche ce programme ?\n\n```python\nn = 30\nc = 0\nfor x in range(n):\n    for y in range(n):\n        c += 1\nprint(c)\n```",
+       "ans": "900",
+       "sol": "$n^2=900$."
+      }
+     ],
+     "formules": "`range(a, b, p)` : $\\lfloor\\frac{b-1-a}p\\rfloor+1$ tours · boucle triangulaire $\\frac{n(n-1)}2$ · doublement $\\lceil\\log_2 n\\rceil$ · deux boucles imbriquées $n^2$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1/S2 : files, piles et parcours d'arbres généraux",
+   "notions": [
+    "rappel-files-arbres"
+   ],
+   "exos": [
+    {
+     "id": "g21",
+     "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—2, 0—3, 1—4, 1—5, 3—6, 3—7, 3—8, 6—9](/static/graphes/gr-4a6a34994f51.svg)\n\nDonner l'ordre préfixe des nœuds.",
+     "ans": "Matrix([[0,1,4,5,2,3,6,9,7,8]])",
+     "sol": "Ordre préfixe : $0, 1, 4, 5, 2, 3, 6, 9, 7, 8$. On note la racine, puis on descend dans chaque fils en entier avant de passer au suivant.",
+     "variants": [
+      {
+       "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—2, 1—3, 1—4, 2—5, 2—6, 4—7, 6—8](/static/graphes/gr-4098e5aaf97f.svg)\n\nDonner l'ordre préfixe des nœuds.",
+       "ans": "Matrix([[0,1,3,4,7,2,5,6,8]])",
+       "sol": "Ordre préfixe : $0, 1, 3, 4, 7, 2, 5, 6, 8$. On note la racine, puis on descend dans chaque fils en entier avant de passer au suivant."
+      }
+     ],
+     "formules": "file : premier entré, premier sorti · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : file",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g22",
+     "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—2, 0—3, 1—4, 1—5, 3—6, 3—7, 3—8, 6—9](/static/graphes/gr-4a6a34994f51.svg)\n\nDonner l'ordre suffixe des nœuds.",
+     "ans": "Matrix([[4,5,1,2,9,6,7,8,3,0]])",
+     "sol": "Ordre suffixe : $4, 5, 1, 2, 9, 6, 7, 8, 3, 0$. On note un nœud après tous ses fils : la racine est la dernière.",
+     "variants": [
+      {
+       "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—2, 1—3, 1—4, 2—5, 2—6, 4—7, 6—8](/static/graphes/gr-4098e5aaf97f.svg)\n\nDonner l'ordre suffixe des nœuds.",
+       "ans": "Matrix([[3,7,4,1,5,8,6,2,0]])",
+       "sol": "Ordre suffixe : $3, 7, 4, 1, 5, 8, 6, 2, 0$. On note un nœud après tous ses fils : la racine est la dernière."
+      }
+     ],
+     "formules": "file : premier entré, premier sorti · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : file",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g23",
+     "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—2, 0—3, 1—4, 1—5, 3—6, 3—7, 3—8, 6—9](/static/graphes/gr-4a6a34994f51.svg)\n\nDonner l'ordre en largeur des nœuds.",
+     "ans": "Matrix([[0,1,2,3,4,5,6,7,8,9]])",
+     "sol": "Ordre en largeur : $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. On range les nœuds niveau par niveau avec une file : on défile $x$ et on enfile ses fils.",
+     "variants": [
+      {
+       "enonce": "Arbre général de racine $0$ (les fils sont rangés dans l'ordre croissant des numéros).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—2, 1—3, 1—4, 2—5, 2—6, 4—7, 6—8](/static/graphes/gr-4098e5aaf97f.svg)\n\nDonner l'ordre en largeur des nœuds.",
+       "ans": "Matrix([[0,1,2,3,4,5,6,7,8]])",
+       "sol": "Ordre en largeur : $0, 1, 2, 3, 4, 5, 6, 7, 8$. On range les nœuds niveau par niveau avec une file : on défile $x$ et on enfile ses fils."
+      }
+     ],
+     "formules": "file : premier entré, premier sorti · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : file",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g24",
+     "enonce": "On part d'une file vide et on exécute : `enqueue(4)`, `enqueue(7)`, `enqueue(2)`, `dequeue()`, `enqueue(9)`, `dequeue()`, `enqueue(5)`, `dequeue()`, `dequeue()`. Donner, dans l'ordre, les valeurs retirées et le contenu final.",
+     "sol": "Une file est « premier entré, premier sorti ». Valeurs retirées : $4, 7, 2, 9$ ; contenu final (du premier au dernier entré) : $5$. Avec l'autre structure on aurait obtenu $2, 9, 5, 7$ : c'est la différence entre largeur (file) et profondeur (pile).",
+     "formules": "file : premier entré, premier sorti · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : file",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g25",
+     "enonce": "On part d'une pile vide et on exécute : `push(4)`, `push(7)`, `push(2)`, `pop()`, `push(9)`, `pop()`, `push(5)`, `pop()`, `pop()`. Donner, dans l'ordre, les valeurs retirées et le contenu final.",
+     "sol": "Une pile est « dernier entré, premier sorti ». Valeurs retirées : $2, 9, 5, 7$ ; contenu final (du premier au dernier entré) : $4$. Avec l'autre structure on aurait obtenu $4, 7, 2, 9$ : c'est la différence entre largeur (file) et profondeur (pile).",
+     "formules": "file : premier entré, premier sorti · pile : dernier entré, premier sorti · préfixe : racine puis fils · suffixe : fils puis racine · largeur : file",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Degrés et demi-degrés, graphes complets",
+   "notions": [
+    "terminologie"
+   ],
+   "exos": [
+    {
+     "id": "g31",
+     "enonce": "Soit le graphe non orienté simple ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—3, 0—4, 2—5, 2—6, 2—7, 4—9, 5—7, 5—8, 6—7, 7—8](/static/graphes/gr-2e6b7a411959.svg)\n\nQuel est le degré du sommet $7$ ?",
+     "ans": "4",
+     "sol": "Les voisins de $7$ sont $2, 5, 6, 8$ : $d^\\circ(7)=4$. Dans la matrice d'adjacence, c'est la somme de la ligne $7$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe non orienté simple ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-062e16fcb362.svg)\n\nQuel est le degré du sommet $4$ ?",
+       "ans": "3",
+       "sol": "Les voisins de $4$ sont $3, 5, 6$ : $d^\\circ(4)=3$. Dans la matrice d'adjacence, c'est la somme de la ligne $4$."
+      }
+     ],
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g32",
+     "enonce": "Un graphe non orienté simple d'ordre $10$ a pour degrés $3, 1, 3, 1, 2, 3, 2, 4, 2, 1$ (sommets $0$ à $9$). Combien d'arêtes a-t-il ?",
+     "ans": "11",
+     "sol": "$\\sum d^\\circ(x)=2m$ : la somme des degrés vaut $22$, donc $m=11$.",
+     "variants": [
+      {
+       "enonce": "Un graphe non orienté simple d'ordre $9$ a pour degrés $2, 3, 1, 3, 3, 2, 2, 2, 2$ (sommets $0$ à $8$). Combien d'arêtes a-t-il ?",
+       "ans": "10",
+       "sol": "$\\sum d^\\circ(x)=2m$ : la somme des degrés vaut $20$, donc $m=10$."
+      }
+     ],
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g33",
+     "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-2fe70e017ac4.svg)\n\nQuel est le demi-degré intérieur $d^{\\circ-}$ du sommet $4$ ?",
+     "ans": "3",
+     "sol": "Les prédécesseurs de $4$ sont $0, 1, 5$ : $d^{\\circ-}(4)=3$. Dans la matrice : somme de la colonne $4$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6 ; arcs 0 → 1, 0 → 2, 1 → 3, 2 → 3, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 4](/static/graphes/gr-01a42bee2c29.svg)\n\nQuel est le demi-degré intérieur $d^{\\circ-}$ du sommet $3$ ?",
+       "ans": "3",
+       "sol": "Les prédécesseurs de $3$ sont $1, 2, 5$ : $d^{\\circ-}(3)=3$. Dans la matrice : somme de la colonne $3$."
+      }
+     ],
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g34",
+     "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-2fe70e017ac4.svg)\n\nQuel est le demi-degré extérieur $d^{\\circ+}$ du sommet $0$ ?",
+     "ans": "4",
+     "sol": "Les successeurs de $0$ sont $1, 3, 4, 5$ : $d^{\\circ+}(0)=4$. Dans la matrice : somme de la ligne $0$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6 ; arcs 0 → 1, 0 → 2, 1 → 3, 2 → 3, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 4](/static/graphes/gr-01a42bee2c29.svg)\n\nQuel est le demi-degré extérieur $d^{\\circ+}$ du sommet $2$ ?",
+       "ans": "2",
+       "sol": "Les successeurs de $2$ sont $3, 6$ : $d^{\\circ+}(2)=2$. Dans la matrice : somme de la ligne $2$."
+      }
+     ],
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g35",
+     "enonce": "Combien d'arêtes a un graphe non orienté simple complet d'ordre $9$ ?",
+     "ans": "36",
+     "sol": "Chaque sommet est relié aux $n-1=8$ autres : $n(n-1)=72$ extrémités ; chaque arête en compte deux : $\\binom{9}2=36$ arêtes.",
+     "variants": [
+      {
+       "enonce": "Combien d'arêtes a un graphe non orienté simple complet d'ordre $12$ ?",
+       "ans": "66",
+       "sol": "Chaque sommet est relié aux $n-1=11$ autres : $n(n-1)=132$ extrémités ; chaque arête en compte deux : $\\binom{12}2=66$ arêtes."
+      },
+      {
+       "enonce": "Combien d'arcs a un graphe orienté simple complet d'ordre $7$ ? (une liaison dans chaque sens entre deux sommets distincts)",
+       "ans": "42",
+       "sol": "Chaque sommet est relié aux $n-1=6$ autres : $n(n-1)=42$ extrémités comptées comme des arcs sortants : $42$ arcs."
+      }
+     ],
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Chemins et puissances de la matrice d'adjacence",
+   "notions": [
+    "chemins"
+   ],
+   "exos": [
+    {
+     "id": "g41",
+     "enonce": "Soit le graphe orienté ci-dessous, de matrice d'adjacence $M$.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4 ; arcs 0 → 1, 0 → 2, 1 → 2, 1 → 3, 2 → 0, 2 → 3, 3 → 4, 4 → 1](/static/graphes/gr-d530a12dacd8.svg)\n\nCombien y a-t-il de chemins de longueur $2$ (sommets non nécessairement distincts) de $0$ vers $3$ ?",
+     "ans": "2",
+     "sol": "Le coefficient $(M^2)_{03}$ compte les chemins de longueur $2$ de $0$ à $3$. Un calcul de $M^2$ donne $2$. Vérification à la main : on additionne sur le sommet intermédiaire $z$ le produit « arcs $x\\to z$ » par « chemins de $z$ à $y$ ».",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous, de matrice d'adjacence $M$.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4 ; arcs 0 → 1, 0 → 2, 1 → 2, 1 → 3, 2 → 0, 2 → 3, 3 → 4, 4 → 1](/static/graphes/gr-d530a12dacd8.svg)\n\nCombien y a-t-il de chemins de longueur $2$ (sommets non nécessairement distincts) de $1$ vers $4$ ?",
+       "ans": "1",
+       "sol": "Le coefficient $(M^2)_{14}$ compte les chemins de longueur $2$ de $1$ à $4$. Un calcul de $M^2$ donne $1$. Vérification à la main : on additionne sur le sommet intermédiaire $z$ le produit « arcs $x\\to z$ » par « chemins de $z$ à $y$ »."
+      }
+     ],
+     "formules": "$(M^k)_{xy}$ = chemins de longueur $k$ · $\\operatorname{tr}(A^3)/6$ = triangles · accessibilité $(I+M)^{n-1}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g42",
+     "enonce": "Soit le graphe orienté ci-dessous, de matrice d'adjacence $M$.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4 ; arcs 0 → 1, 0 → 2, 1 → 2, 1 → 3, 2 → 0, 2 → 3, 3 → 4, 4 → 1](/static/graphes/gr-d530a12dacd8.svg)\n\nCombien y a-t-il de chemins de longueur $3$ (sommets non nécessairement distincts) de $0$ vers $4$ ?",
+     "ans": "2",
+     "sol": "Le coefficient $(M^3)_{04}$ compte les chemins de longueur $3$ de $0$ à $4$. Un calcul de $M^3$ donne $2$. Vérification à la main : on additionne sur le sommet intermédiaire $z$ le produit « arcs $x\\to z$ » par « chemins de $z$ à $y$ ».",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous, de matrice d'adjacence $M$.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4 ; arcs 0 → 1, 0 → 2, 1 → 2, 1 → 3, 2 → 0, 2 → 3, 3 → 4, 4 → 1](/static/graphes/gr-d530a12dacd8.svg)\n\nCombien y a-t-il de chemins de longueur $3$ (sommets non nécessairement distincts) de $2$ vers $1$ ?",
+       "ans": "1",
+       "sol": "Le coefficient $(M^3)_{21}$ compte les chemins de longueur $3$ de $2$ à $1$. Un calcul de $M^3$ donne $1$. Vérification à la main : on additionne sur le sommet intermédiaire $z$ le produit « arcs $x\\to z$ » par « chemins de $z$ à $y$ »."
+      }
+     ],
+     "formules": "$(M^k)_{xy}$ = chemins de longueur $k$ · $\\operatorname{tr}(A^3)/6$ = triangles · accessibilité $(I+M)^{n-1}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g43",
+     "enonce": "Combien le graphe non orienté ci-dessous contient-il de triangles (cycles de longueur $3$) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-99598b30b78f.svg)",
+     "ans": "2",
+     "sol": "$(A^3)_{xx}$ compte les chemins fermés de longueur $3$ issus de $x$ ; un triangle est compté $3$ fois (point de départ) $\\times2$ (sens) $=6$ fois dans la trace : $\\operatorname{tr}(A^3)/6=2$.",
+     "variants": [
+      {
+       "enonce": "Combien le graphe non orienté ci-dessous contient-il de triangles (cycles de longueur $3$) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3 ; arêtes 0—1, 0—2, 0—3, 1—2, 1—3, 2—3](/static/graphes/gr-054e898aa124.svg)",
+       "ans": "4",
+       "sol": "$(A^3)_{xx}$ compte les chemins fermés de longueur $3$ issus de $x$ ; un triangle est compté $3$ fois (point de départ) $\\times2$ (sens) $=6$ fois dans la trace : $\\operatorname{tr}(A^3)/6=4$."
+      }
+     ],
+     "formules": "$(M^k)_{xy}$ = chemins de longueur $k$ · $\\operatorname{tr}(A^3)/6$ = triangles · accessibilité $(I+M)^{n-1}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g44",
+     "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5 ; arcs 0 → 1, 1 → 2, 1 → 4, 2 → 0, 2 → 3, 3 → 4, 4 → 5, 5 → 3](/static/graphes/gr-0c1a5555bde6.svg)\n\nExiste-t-il un chemin de $3$ vers $0$ ? (répondre $1$ si oui, $0$ sinon)",
+     "ans": "0",
+     "sol": "Il existe un chemin de $3$ à $0$ si et seulement si $((I+M)^{5})_{30}>0$ (un chemin élémentaire a au plus $n-1$ arcs). Ici la réponse est 0 : aucun sommet atteint depuis $x$ n'est $y$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5 ; arcs 0 → 1, 1 → 2, 1 → 4, 2 → 0, 2 → 3, 3 → 4, 4 → 5, 5 → 3](/static/graphes/gr-0c1a5555bde6.svg)\n\nExiste-t-il un chemin de $0$ vers $5$ ? (répondre $1$ si oui, $0$ sinon)",
+       "ans": "1",
+       "sol": "Il existe un chemin de $0$ à $5$ si et seulement si $((I+M)^{5})_{05}>0$ (un chemin élémentaire a au plus $n-1$ arcs). Ici la réponse est 1 : par exemple en $d(x,y)=3$ arcs."
+      }
+     ],
+     "formules": "$(M^k)_{xy}$ = chemins de longueur $k$ · $\\operatorname{tr}(A^3)/6$ = triangles · accessibilité $(I+M)^{n-1}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g45",
+     "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5 ; arcs 0 → 1, 1 → 2, 1 → 4, 2 → 0, 2 → 3, 3 → 4, 4 → 5, 5 → 3](/static/graphes/gr-0c1a5555bde6.svg)\n\nExiste-t-il un chemin de $5$ vers $4$ ? (répondre $1$ si oui, $0$ sinon)",
+     "ans": "1",
+     "sol": "Il existe un chemin de $5$ à $4$ si et seulement si $((I+M)^{5})_{54}>0$ (un chemin élémentaire a au plus $n-1$ arcs). Ici la réponse est 1 : par exemple en $d(x,y)=2$ arcs.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5 ; arcs 0 → 1, 1 → 2, 1 → 4, 2 → 0, 2 → 3, 3 → 4, 4 → 5, 5 → 3](/static/graphes/gr-0c1a5555bde6.svg)\n\nExiste-t-il un chemin de $4$ vers $0$ ? (répondre $1$ si oui, $0$ sinon)",
+       "ans": "0",
+       "sol": "Il existe un chemin de $4$ à $0$ si et seulement si $((I+M)^{5})_{40}>0$ (un chemin élémentaire a au plus $n-1$ arcs). Ici la réponse est 0 : aucun sommet atteint depuis $x$ n'est $y$."
+      }
+     ],
+     "formules": "$(M^k)_{xy}$ = chemins de longueur $k$ · $\\operatorname{tr}(A^3)/6$ = triangles · accessibilité $(I+M)^{n-1}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Matrice et listes d'adjacence : lecture, tailles, conversion",
+   "notions": [
+    "representations"
+   ],
+   "exos": [
+    {
+     "id": "g51",
+     "enonce": "Combien de cases contient la matrice d'adjacence d'un graphe d'ordre $1000$ ?",
+     "ans": "1000000",
+     "sol": "Une matrice carrée $n\\times n$ : $1000^2=1000000$ cases, quel que soit le nombre de liaisons.",
+     "variants": [
+      {
+       "enonce": "Combien de cases contient la matrice d'adjacence d'un graphe d'ordre $365$ ?",
+       "ans": "133225",
+       "sol": "Une matrice carrée $n\\times n$ : $365^2=133225$ cases, quel que soit le nombre de liaisons."
+      }
+     ],
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g52",
+     "enonce": "Un graphe non orienté simple d'ordre $10$ a $11$ arêtes. Combien de cases de sa matrice d'adjacence valent $1$ (vrai) ?",
+     "ans": "22",
+     "sol": "Un arc $(x,y)$ met un $1$ en $(x,y)$ : une arête $\\{x,y\\}$ met un $1$ en $(x,y)$ et en $(y,x)$ (matrice symétrique) : $2m=22$ cases.",
+     "variants": [
+      {
+       "enonce": "Un graphe non orienté simple d'ordre $12$ a $20$ arêtes. Combien de cases de sa matrice d'adjacence valent $1$ (vrai) ?",
+       "ans": "40",
+       "sol": "Un arc $(x,y)$ met un $1$ en $(x,y)$ : une arête $\\{x,y\\}$ met un $1$ en $(x,y)$ et en $(y,x)$ (matrice symétrique) : $2m=40$ cases."
+      },
+      {
+       "enonce": "Un graphe orienté simple d'ordre $8$ a $15$ arcs. Combien de cases de sa matrice d'adjacence valent $1$ (vrai) ?",
+       "ans": "15",
+       "sol": "Un arc $(x,y)$ met un $1$ en $(x,y)$ : $15$ cases."
+      }
+     ],
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g53",
+     "enonce": "Un graphe non orienté simple d'ordre $10$ a $11$ arêtes. Combien de successeurs (éléments) sont stockés au total dans ses listes d'adjacence ?",
+     "ans": "22",
+     "sol": "Chaque arc apparaît une fois, dans la liste de son extrémité initiale : chaque arête apparaît deux fois ($y$ dans la liste de $x$ et $x$ dans celle de $y$) : $2m=22$. Place totale : $n+2m$ en ordre de grandeur, contre $n^2$ pour la matrice.",
+     "variants": [
+      {
+       "enonce": "Un graphe non orienté simple d'ordre $20$ a $33$ arêtes. Combien de successeurs (éléments) sont stockés au total dans ses listes d'adjacence ?",
+       "ans": "66",
+       "sol": "Chaque arc apparaît une fois, dans la liste de son extrémité initiale : chaque arête apparaît deux fois ($y$ dans la liste de $x$ et $x$ dans celle de $y$) : $2m=66$. Place totale : $n+2m$ en ordre de grandeur, contre $n^2$ pour la matrice."
+      },
+      {
+       "enonce": "Un graphe orienté simple d'ordre $20$ a $33$ arcs. Combien de successeurs (éléments) sont stockés au total dans ses listes d'adjacence ?",
+       "ans": "33",
+       "sol": "Chaque arc apparaît une fois, dans la liste de son extrémité initiale : $33$. Place totale : $n+m$ en ordre de grandeur, contre $n^2$ pour la matrice."
+      }
+     ],
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g54",
+     "enonce": "Un graphe orienté d'ordre $9$ (sommets $0$ à $8$) est représenté par listes d'adjacence : $0:\\{1, 3, 4, 5\\}$, $1:\\{4\\}$, $2:\\{3\\}$, $3:\\{6\\}$, $4:\\{\\}$, $5:\\{0, 2, 4\\}$, $6:\\{0, 5\\}$, $7:\\{0, 1, 8\\}$, $8:\\{6\\}$.\n\nQuel est, au pire, le nombre de successeurs à examiner pour décider si $(0,5)$ est un arc ?",
+     "ans": "4",
+     "sol": "On parcourt la liste de $0$ jusqu'à trouver $5$ ou la fin : au pire $d^{\\circ+}(0)=4$ éléments, contre $1$ case lue avec une matrice. Ici $5$ est dans la liste : $(0,5)$ est un arc.",
+     "variants": [
+      {
+       "enonce": "Un graphe orienté d'ordre $8$ (sommets $0$ à $7$) est représenté par listes d'adjacence : $0:\\{1, 3\\}$, $1:\\{2\\}$, $2:\\{0, 6\\}$, $3:\\{4\\}$, $4:\\{5\\}$, $5:\\{3\\}$, $6:\\{7\\}$, $7:\\{6\\}$.\n\nQuel est, au pire, le nombre de successeurs à examiner pour décider si $(2,6)$ est un arc ?",
+       "ans": "2",
+       "sol": "On parcourt la liste de $2$ jusqu'à trouver $6$ ou la fin : au pire $d^{\\circ+}(2)=2$ éléments, contre $1$ case lue avec une matrice. Ici $6$ est dans la liste : $(2,6)$ est un arc."
+      }
+     ],
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g55",
+     "enonce": "Donner la matrice d'adjacence et les listes d'adjacence du graphe orienté suivant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-2fe70e017ac4.svg)",
+     "sol": "Listes (successeurs en ordre croissant) :\n\n```\n0 : {1, 3, 4, 5}\n1 : {4}\n2 : {3}\n3 : {6}\n4 : {}\n5 : {0, 2, 4}\n6 : {0, 5}\n7 : {0, 1, 8}\n8 : {6}\n```\n\nMatrice (ligne = origine, colonne = extrémité ; $1$ = liaison) :\n\n```\n0: 0 1 0 1 1 1 0 0 0\n1: 0 0 0 0 1 0 0 0 0\n2: 0 0 0 1 0 0 0 0 0\n3: 0 0 0 0 0 0 1 0 0\n4: 0 0 0 0 0 0 0 0 0\n5: 1 0 1 0 1 0 0 0 0\n6: 1 0 0 0 0 1 0 0 0\n7: 1 1 0 0 0 0 0 0 1\n8: 0 0 0 0 0 0 1 0 0\n```\n\nLes sommes des lignes sont les demi-degrés extérieurs, celles des colonnes les demi-degrés intérieurs. Nombre de $1$ : $16$.",
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g56",
+     "enonce": "Donner la matrice d'adjacence et les listes d'adjacence du graphe non orienté suivant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—3, 0—4, 2—5, 2—6, 2—7, 4—9, 5—7, 5—8, 6—7, 7—8](/static/graphes/gr-2e6b7a411959.svg)",
+     "sol": "Listes (successeurs en ordre croissant) :\n\n```\n0 : {1, 3, 4}\n1 : {0}\n2 : {5, 6, 7}\n3 : {0}\n4 : {0, 9}\n5 : {2, 7, 8}\n6 : {2, 7}\n7 : {2, 5, 6, 8}\n8 : {5, 7}\n9 : {4}\n```\n\nMatrice (ligne = origine, colonne = extrémité ; $1$ = liaison) :\n\n```\n0: 0 1 0 1 1 0 0 0 0 0\n1: 1 0 0 0 0 0 0 0 0 0\n2: 0 0 0 0 0 1 1 1 0 0\n3: 1 0 0 0 0 0 0 0 0 0\n4: 1 0 0 0 0 0 0 0 0 1\n5: 0 0 1 0 0 0 0 1 1 0\n6: 0 0 1 0 0 0 0 1 0 0\n7: 0 0 1 0 0 1 1 0 1 0\n8: 0 0 0 0 0 1 0 1 0 0\n9: 0 0 0 0 1 0 0 0 0 0\n```\n\nLa matrice est symétrique et chaque arête apparaît deux fois dans les listes. Nombre de $1$ : $22$.",
+     "formules": "matrice $n^2$ cases, arc en $O(1)$ · listes $n+2m$ (non orienté), arc en $O(d^{\\circ+}(x))$ · matrice symétrique si non orienté",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Parcours en largeur : ordre, distances, excentricité",
+   "notions": [
+    "parcours-largeur"
+   ],
+   "exos": [
+    {
+     "id": "g61",
+     "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\\}$ et $A=\\{\\{0,4\\}, \\{0,6\\}, \\{0,8\\}, \\{0,9\\}, \\{1,6\\}, \\{1,12\\}, \\{2,3\\}, \\{2,4\\}, \\{2,5\\}, \\{3,5\\}, \\{4,7\\}, \\{4,10\\}, \\{5,6\\}, \\{7,9\\}, \\{7,10\\}, \\{8,9\\}, \\{8,11\\}, \\{8,12\\}, \\{9,11\\}, \\{11,12\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en largeur complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[0,4,6,8,9,2,7,10,1,5,11,12,3]])",
+     "sol": "On enfile le départ en le marquant ; on défile $x$ et on enfile ses successeurs non marqués dans l'ordre croissant, en les marquant. Si des sommets restent, on relance depuis le plus petit non marqué.\n\nOrdre : $0, 4, 6, 8, 9, 2, 7, 10, 1, 5, 11, 12, 3$.\n\n**Trace :**\n\n- relance depuis $0$ : file $[0]$\n- défiler $0$, enfiler $4, 6, 8, 9$ : file $[4, 6, 8, 9]$\n- défiler $4$, enfiler $2, 7, 10$ : file $[6, 8, 9, 2, 7, 10]$\n- défiler $6$, enfiler $1, 5$ : file $[8, 9, 2, 7, 10, 1, 5]$\n- défiler $8$, enfiler $11, 12$ : file $[9, 2, 7, 10, 1, 5, 11, 12]$\n- défiler $9$, enfiler rien : file $[2, 7, 10, 1, 5, 11, 12]$\n- défiler $2$, enfiler $3$ : file $[7, 10, 1, 5, 11, 12, 3]$\n- défiler $7$, enfiler rien : file $[10, 1, 5, 11, 12, 3]$\n- défiler $10$, enfiler rien : file $[1, 5, 11, 12, 3]$\n- défiler $1$, enfiler rien : file $[5, 11, 12, 3]$\n- défiler $5$, enfiler rien : file $[11, 12, 3]$\n- défiler $11$, enfiler rien : file $[12, 3]$\n- défiler $12$, enfiler rien : file $[3]$\n- défiler $3$, enfiler rien : file $[]$",
+     "variants": [
+      {
+       "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7\\}$ et $A=\\{\\{0,1\\}, \\{0,2\\}, \\{1,2\\}, \\{2,3\\}, \\{3,4\\}, \\{4,5\\}, \\{4,6\\}, \\{5,6\\}, \\{6,7\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-99598b30b78f.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en largeur complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[0,1,2,3,4,5,6,7]])",
+       "sol": "On enfile le départ en le marquant ; on défile $x$ et on enfile ses successeurs non marqués dans l'ordre croissant, en les marquant. Si des sommets restent, on relance depuis le plus petit non marqué.\n\nOrdre : $0, 1, 2, 3, 4, 5, 6, 7$.\n\n**Trace :**\n\n- relance depuis $0$ : file $[0]$\n- défiler $0$, enfiler $1, 2$ : file $[1, 2]$\n- défiler $1$, enfiler rien : file $[2]$\n- défiler $2$, enfiler $3$ : file $[3]$\n- défiler $3$, enfiler $4$ : file $[4]$\n- défiler $4$, enfiler $5, 6$ : file $[5, 6]$\n- défiler $5$, enfiler rien : file $[6]$\n- défiler $6$, enfiler $7$ : file $[7]$\n- défiler $7$, enfiler rien : file $[]$"
+      }
+     ],
+     "formules": "file · marquer à l'enfilage · distances par niveaux · excentricité $=\\max$ des distances · $O(n+m)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g62",
+     "enonce": "Soit le graphe ci-dessous. Donner le vecteur des distances (nombre minimal d'arêtes) du sommet $0$ à tous les sommets, dans l'ordre des sommets $0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12$ (écrire $-1$ pour un sommet inaccessible).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)",
+     "ans": "Matrix([[0,2,2,3,1,2,1,2,1,1,2,2,2]])",
+     "sol": "Un parcours en largeur depuis $0$ donne la distance du niveau de chaque sommet : $0, 2, 2, 3, 1, 2, 1, 2, 1, 1, 2, 2, 2$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe ci-dessous. Donner le vecteur des distances (nombre minimal d'arêtes) du sommet $4$ à tous les sommets, dans l'ordre des sommets $0, 1, 2, 3, 4, 5, 6, 7, 8$ (écrire $-1$ pour un sommet inaccessible).\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—3, 1—2, 1—4, 3—4, 3—6, 4—5, 5—8, 6—7, 7—8](/static/graphes/gr-69e19e3747f5.svg)",
+       "ans": "Matrix([[2,1,2,1,0,1,2,3,2]])",
+       "sol": "Un parcours en largeur depuis $4$ donne la distance du niveau de chaque sommet : $2, 1, 2, 1, 0, 1, 2, 3, 2$."
+      }
+     ],
+     "formules": "file · marquer à l'enfilage · distances par niveaux · excentricité $=\\max$ des distances · $O(n+m)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g63",
+     "enonce": "Soit le graphe non orienté connexe ci-dessous. Quelle est l'excentricité du sommet $0$ (plus grande distance de $0$ à un autre sommet) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)",
+     "ans": "3",
+     "sol": "Distances depuis $0$ : $0, 2, 2, 3, 1, 2, 1, 2, 1, 1, 2, 2, 2$. L'excentricité est le maximum : $3$ (c'est le nombre de niveaux du parcours en largeur moins un).",
+     "variants": [
+      {
+       "enonce": "Soit le graphe non orienté connexe ci-dessous. Quelle est l'excentricité du sommet $11$ (plus grande distance de $11$ à un autre sommet) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)",
+       "ans": "5",
+       "sol": "Distances depuis $11$ : $2, 2, 4, 5, 3, 4, 3, 2, 1, 1, 3, 0, 1$. L'excentricité est le maximum : $5$ (c'est le nombre de niveaux du parcours en largeur moins un)."
+      }
+     ],
+     "formules": "file · marquer à l'enfilage · distances par niveaux · excentricité $=\\max$ des distances · $O(n+m)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g64",
+     "enonce": "Soit le graphe orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$ et $A=\\{(0,1), (0,3), (0,4), (0,5), (1,4), (2,3), (3,6), (5,0), (5,2), (5,4), (6,0), (6,5), (7,0), (7,1), (7,8), (8,6)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-2fe70e017ac4.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en largeur complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[0,1,3,4,5,6,2,7,8]])",
+     "sol": "On enfile le départ en le marquant ; on défile $x$ et on enfile ses successeurs non marqués dans l'ordre croissant, en les marquant. Si des sommets restent, on relance depuis le plus petit non marqué.\n\nOrdre : $0, 1, 3, 4, 5, 6, 2, 7, 8$.\n\n**Trace :**\n\n- relance depuis $0$ : file $[0]$\n- défiler $0$, enfiler $1, 3, 4, 5$ : file $[1, 3, 4, 5]$\n- défiler $1$, enfiler rien : file $[3, 4, 5]$\n- défiler $3$, enfiler $6$ : file $[4, 5, 6]$\n- défiler $4$, enfiler rien : file $[5, 6]$\n- défiler $5$, enfiler $2$ : file $[6, 2]$\n- défiler $6$, enfiler rien : file $[2]$\n- défiler $2$, enfiler rien : file $[]$\n- relance depuis $7$ : file $[7]$\n- défiler $7$, enfiler $8$ : file $[8]$\n- défiler $8$, enfiler rien : file $[]$",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7\\}$ et $A=\\{(0,1), (0,3), (1,2), (2,0), (2,6), (3,4), (4,5), (5,3), (6,7), (7,6)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arcs 0 → 1, 0 → 3, 1 → 2, 2 → 0, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 7, 7 → 6](/static/graphes/gr-7df4403f73f9.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en largeur complet depuis le sommet $6$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[6,7,0,1,3,2,4,5]])",
+       "sol": "On enfile le départ en le marquant ; on défile $x$ et on enfile ses successeurs non marqués dans l'ordre croissant, en les marquant. Si des sommets restent, on relance depuis le plus petit non marqué.\n\nOrdre : $6, 7, 0, 1, 3, 2, 4, 5$.\n\n**Trace :**\n\n- relance depuis $6$ : file $[6]$\n- défiler $6$, enfiler $7$ : file $[7]$\n- défiler $7$, enfiler rien : file $[]$\n- relance depuis $0$ : file $[0]$\n- défiler $0$, enfiler $1, 3$ : file $[1, 3]$\n- défiler $1$, enfiler $2$ : file $[3, 2]$\n- défiler $3$, enfiler $4$ : file $[2, 4]$\n- défiler $2$, enfiler rien : file $[4]$\n- défiler $4$, enfiler $5$ : file $[5]$\n- défiler $5$, enfiler rien : file $[]$"
+      }
+     ],
+     "formules": "file · marquer à l'enfilage · distances par niveaux · excentricité $=\\max$ des distances · $O(n+m)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g65",
+     "enonce": "Dans le graphe ci-dessous, quel est le dernier sommet rencontré par un parcours en largeur complet depuis $6$ (successeurs en ordre croissant) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)",
+     "ans": "11",
+     "sol": "Ordre de rencontre : $6, 0, 1, 5, 4, 8, 9, 12, 2, 3, 7, 10, 11$. Le dernier est $11$ (le parcours en largeur finit par les sommets les plus éloignés).",
+     "variants": [
+      {
+       "enonce": "Dans le graphe ci-dessous, quel est le dernier sommet rencontré par un parcours en largeur complet depuis $5$ (successeurs en ordre croissant) ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-99598b30b78f.svg)",
+       "ans": "1",
+       "sol": "Ordre de rencontre : $5, 4, 6, 3, 7, 2, 0, 1$. Le dernier est $1$ (le parcours en largeur finit par les sommets les plus éloignés)."
+      }
+     ],
+     "formules": "file · marquer à l'enfilage · distances par niveaux · excentricité $=\\max$ des distances · $O(n+m)$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Parcours en profondeur : ordres préfixe et suffixe",
+   "notions": [
+    "parcours-profondeur"
+   ],
+   "exos": [
+    {
+     "id": "g71",
+     "enonce": "Soit le graphe orienté ci-dessous ($S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$ et $A=\\{(1,2), (1,6), (1,7), (2,3), (2,6), (3,1), (3,5), (4,3), (4,8), (4,9), (4,10), (5,1), (7,6), (8,5), (8,10), (10,9)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; arcs 1 → 2, 1 → 6, 1 → 7, 2 → 3, 2 → 6, 3 → 1, 3 → 5, 4 → 3, 4 → 8, 4 → 9, 4 → 10, 5 → 1, 7 → 6, 8 → 5, 8 → 10, 10 → 9](/static/graphes/gr-35e1e879a5e0.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $1$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[1,2,3,5,6,7,4,8,10,9]])",
+     "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $1, 2, 3, 5, 6, 7, 4, 8, 10, 9$.",
+     "src": "Partiel P3 algo, 19 décembre 2017 (Past-Exams S3/Finals/Algo/2021), ex. 2 (graphe)",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6\\}$ et $A=\\{(0,1), (0,2), (1,3), (2,3), (2,6), (3,4), (4,5), (5,3), (6,4)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6 ; arcs 0 → 1, 0 → 2, 1 → 3, 2 → 3, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 4](/static/graphes/gr-01a42bee2c29.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[0,1,3,4,5,2,6]])",
+       "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $0, 1, 3, 4, 5, 2, 6$."
+      }
+     ],
+     "formules": "préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g72",
+     "enonce": "Soit le graphe orienté ci-dessous ($S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{(1,2), (1,6), (2,3), (2,5), (3,1), (3,4), (3,5), (4,5), (4,8), (6,2), (6,5), (7,5), (7,6), (7,8), (8,5), (8,9), (9,4), (9,7)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arcs 1 → 2, 1 → 6, 2 → 3, 2 → 5, 3 → 1, 3 → 4, 3 → 5, 4 → 5, 4 → 8, 6 → 2, 6 → 5, 7 → 5, 7 → 6, 7 → 8, 8 → 5, 8 → 9, 9 → 4, 9 → 7](/static/graphes/gr-bf20f6026615.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $3$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[3,1,2,5,6,4,8,9,7]])",
+     "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $3, 1, 2, 5, 6, 4, 8, 9, 7$.",
+     "src": "Contrôle C3 algo, 9 novembre 2021 (Past-Exams S3/Midterms/Algo/2025), ex. 1.2",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7\\}$ et $A=\\{(0,1), (0,3), (1,2), (2,0), (2,6), (3,4), (4,5), (5,3), (6,7), (7,6)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arcs 0 → 1, 0 → 3, 1 → 2, 2 → 0, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 7, 7 → 6](/static/graphes/gr-7df4403f73f9.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $3$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[3,4,5,0,1,2,6,7]])",
+       "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $3, 4, 5, 0, 1, 2, 6, 7$."
+      }
+     ],
+     "formules": "préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g73",
+     "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{\\{1,2\\}, \\{1,3\\}, \\{3,4\\}, \\{3,5\\}, \\{4,6\\}, \\{4,7\\}, \\{7,8\\}, \\{7,9\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 1—2, 1—3, 3—4, 3—5, 4—6, 4—7, 7—8, 7—9](/static/graphes/gr-94851f6b74c7.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre suffixe) complet depuis le sommet $1$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[2,6,8,9,7,4,5,3,1]])",
+     "sol": "On note un sommet quand tous ses successeurs sont traités (dernière rencontre) : on remonte, le départ est noté en dernier pour son arbre.\n\nOrdre : $2, 6, 8, 9, 7, 4, 5, 3, 1$.",
+     "src": "Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 1.2",
+     "variants": [
+      {
+       "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$ et $A=\\{\\{0,1\\}, \\{0,3\\}, \\{1,2\\}, \\{1,4\\}, \\{3,4\\}, \\{3,6\\}, \\{4,5\\}, \\{5,8\\}, \\{6,7\\}, \\{7,8\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—3, 1—2, 1—4, 3—4, 3—6, 4—5, 5—8, 6—7, 7—8](/static/graphes/gr-69e19e3747f5.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre suffixe) complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[2,5,8,7,6,3,4,1,0]])",
+       "sol": "On note un sommet quand tous ses successeurs sont traités (dernière rencontre) : on remonte, le départ est noté en dernier pour son arbre.\n\nOrdre : $2, 5, 8, 7, 6, 3, 4, 1, 0$."
+      }
+     ],
+     "formules": "préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g74",
+     "enonce": "Soit le graphe orienté ci-dessous ($S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$ et $A=\\{(1,2), (1,6), (1,7), (2,3), (2,6), (3,1), (3,5), (4,3), (4,8), (4,9), (4,10), (5,1), (7,6), (8,5), (8,10), (10,9)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; arcs 1 → 2, 1 → 6, 1 → 7, 2 → 3, 2 → 6, 3 → 1, 3 → 5, 4 → 3, 4 → 8, 4 → 9, 4 → 10, 5 → 1, 7 → 6, 8 → 5, 8 → 10, 10 → 9](/static/graphes/gr-35e1e879a5e0.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre suffixe) complet depuis le sommet $1$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[5,3,6,2,7,1,9,10,8,4]])",
+     "sol": "On note un sommet quand tous ses successeurs sont traités (dernière rencontre) : on remonte, le départ est noté en dernier pour son arbre.\n\nOrdre : $5, 3, 6, 2, 7, 1, 9, 10, 8, 4$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6\\}$ et $A=\\{(0,1), (0,2), (1,3), (2,3), (2,6), (3,4), (4,5), (5,3), (6,4)\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6 ; arcs 0 → 1, 0 → 2, 1 → 3, 2 → 3, 2 → 6, 3 → 4, 4 → 5, 5 → 3, 6 → 4](/static/graphes/gr-01a42bee2c29.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre suffixe) complet depuis le sommet $0$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[5,4,3,1,6,2,0]])",
+       "sol": "On note un sommet quand tous ses successeurs sont traités (dernière rencontre) : on remonte, le départ est noté en dernier pour son arbre.\n\nOrdre : $5, 4, 3, 1, 6, 2, 0$."
+      }
+     ],
+     "formules": "préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g75",
+     "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{\\{0,1\\}, \\{0,3\\}, \\{0,4\\}, \\{2,5\\}, \\{2,6\\}, \\{2,7\\}, \\{4,9\\}, \\{5,7\\}, \\{5,8\\}, \\{6,7\\}, \\{7,8\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—3, 0—4, 2—5, 2—6, 2—7, 4—9, 5—7, 5—8, 6—7, 7—8](/static/graphes/gr-2e6b7a411959.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $7$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+     "ans": "Matrix([[7,2,5,8,6,0,1,3,4,9]])",
+     "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $7, 2, 5, 8, 6, 0, 1, 3, 4, 9$.",
+     "variants": [
+      {
+       "enonce": "Soit le graphe non orienté ci-dessous ($S=\\{0, 1, 2, 3, 4, 5, 6, 7\\}$ et $A=\\{\\{0,1\\}, \\{0,2\\}, \\{1,2\\}, \\{2,3\\}, \\{3,4\\}, \\{4,5\\}, \\{4,6\\}, \\{5,6\\}, \\{6,7\\}\\}$). Les successeurs sont pris en ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-99598b30b78f.svg)\n\nDonner l'ordre de rencontre des sommets pour un parcours en profondeur (ordre préfixe) complet depuis le sommet $5$ (si des sommets restent non visités, on relance le parcours sur le plus petit d'entre eux).",
+       "ans": "Matrix([[5,4,3,2,0,1,6,7]])",
+       "sol": "On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $5, 4, 3, 2, 0, 1, 6, 7$."
+      }
+     ],
+     "formules": "préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Forêt couvrante et classification des arcs",
+   "notions": [
+    "classification",
+    "parcours-profondeur"
+   ],
+   "exos": [
+    {
+     "id": "g81",
+     "enonce": "Soit le graphe orienté $S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$ et $A=\\{(1,2), (1,6), (1,7), (2,3), (2,6), (3,1), (3,5), (4,3), (4,8), (4,9), (4,10), (5,1), (7,6), (8,5), (8,10), (10,9)\\}$.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; arcs 1 → 2, 1 → 6, 1 → 7, 2 → 3, 2 → 6, 3 → 1, 3 → 5, 4 → 3, 4 → 8, 4 → 9, 4 → 10, 5 → 1, 7 → 6, 8 → 5, 8 → 10, 10 → 9](/static/graphes/gr-35e1e879a5e0.svg)\n\nDessiner la forêt couvrante associée au parcours en profondeur depuis le sommet $1$ (sommets choisis en ordre croissant) et ajouter les autres liaisons en les qualifiant par une légende explicite.",
+     "sol": "Ordre préfixe : $1, 2, 3, 5, 6, 7, 4, 8, 10, 9$ ; ordre suffixe : $5, 3, 6, 2, 7, 1, 9, 10, 8, 4$. Racines des arbres : $1, 4$.\n\nForêt (notation racine(fils)) : `1(2(3(5), 6), 7) 4(8(10(9)))`.\n\n![Forêt couvrante : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; arcs 1 → 2, 1 → 6, 1 → 7, 2 → 3, 2 → 6, 3 → 1, 3 → 5, 4 → 3, 4 → 8, 4 → 9, 4 → 10, 5 → 1, 7 → 6, 8 → 5, 8 → 10, 10 → 9](/static/graphes/gr-16da588d4b80.svg)\n\n- arcs de la forêt : (1,2), (2,3), (3,5), (2,6), (1,7), (4,8), (8,10), (10,9)\n- arcs avant (vers un descendant non direct) : (1,6), (4,9), (4,10)\n- arcs arrière (vers un ascendant) : (3,1), (5,1)\n- arcs croisés (aucun lien de descendance) : (7,6), (4,3), (8,5)\n\nIl y a au moins un arc arrière : le graphe contient un circuit. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.",
+     "src": "Partiel P3 algo, 19 décembre 2017 (Past-Exams S3/Finals/Algo/2021), ex. 2.3",
+     "duree": 8,
+     "formules": "couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "type": "open"
+    },
+    {
+     "id": "g82",
+     "enonce": "Soit le graphe orienté $S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$ et $A=\\{(0,1), (0,3), (0,4), (0,5), (1,4), (2,3), (3,6), (5,0), (5,2), (5,4), (6,0), (6,5), (7,0), (7,1), (7,8), (8,6)\\}$.\n\n![Graphe : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-2fe70e017ac4.svg)\n\nDessiner la forêt couvrante associée au parcours en profondeur depuis le sommet $0$ (sommets choisis en ordre croissant) et ajouter les autres liaisons en les qualifiant par une légende explicite. Donner aussi les tableaux `pref` et `suff` (compteur unique commençant à 1).",
+     "sol": "Ordre préfixe : $0, 1, 4, 3, 6, 5, 2, 7, 8$ ; ordre suffixe : $4, 1, 2, 5, 6, 3, 0, 8, 7$. Racines des arbres : $0, 7$.\n\nForêt (notation racine(fils)) : `0(1(4), 3(6(5(2)))) 7(8)`.\n\n![Forêt couvrante : orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arcs 0 → 1, 0 → 3, 0 → 4, 0 → 5, 1 → 4, 2 → 3, 3 → 6, 5 → 0, 5 → 2, 5 → 4, 6 → 0, 6 → 5, 7 → 0, 7 → 1, 7 → 8, 8 → 6](/static/graphes/gr-7b26761e2e01.svg)\n\n- arcs de la forêt : (0,1), (1,4), (0,3), (3,6), (6,5), (5,2), (7,8)\n- arcs avant (vers un descendant non direct) : (0,4), (0,5)\n- arcs arrière (vers un ascendant) : (6,0), (5,0), (2,3)\n- arcs croisés (aucun lien de descendance) : (5,4), (7,0), (7,1), (8,6)\n\nAvec un compteur unique commençant à $1$ (numéro pris à la première puis à la dernière rencontre) :\n\n```\nsommet :   0   1   2   3   4   5   6   7   8\npref   :   1   2   9   6   3   8   7  15  16\nsuff   :  14   5  10  13   4  11  12  18  17\n```\n\nIl y a au moins un arc arrière : le graphe contient un circuit. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.",
+     "duree": 8,
+     "formules": "couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "type": "open"
+    },
+    {
+     "id": "g83",
+     "enonce": "Soit le graphe non orienté $S=\\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{\\{0,1\\}, \\{0,3\\}, \\{0,4\\}, \\{2,5\\}, \\{2,6\\}, \\{2,7\\}, \\{4,9\\}, \\{5,7\\}, \\{5,8\\}, \\{6,7\\}, \\{7,8\\}\\}$.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—3, 0—4, 2—5, 2—6, 2—7, 4—9, 5—7, 5—8, 6—7, 7—8](/static/graphes/gr-2e6b7a411959.svg)\n\nDessiner la forêt couvrante associée au parcours en profondeur depuis le sommet $0$ (sommets choisis en ordre croissant) et ajouter les autres liaisons en les qualifiant par une légende explicite.",
+     "sol": "Ordre préfixe : $0, 1, 3, 4, 9, 2, 5, 7, 6, 8$ ; ordre suffixe : $1, 3, 9, 4, 0, 6, 8, 7, 5, 2$. Racines des arbres : $0, 2$.\n\nForêt (notation racine(fils)) : `0(1, 3, 4(9)) 2(5(7(6, 8)))`.\n\n![Forêt couvrante : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arêtes 0—1, 0—3, 0—4, 2—5, 2—6, 2—7, 4—9, 5—7, 5—8, 6—7, 7—8](/static/graphes/gr-a8603d2052ad.svg)\n\n- arcs de la forêt : {0,1}, {0,3}, {0,4}, {4,9}, {2,5}, {5,7}, {7,6}, {7,8}\n- arcs arrière (vers un ascendant) : {7,2}, {6,2}, {8,5}\n\nChaque arête non couvrante est un arc arrière : ici il y en a 3. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.",
+     "duree": 8,
+     "formules": "couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "type": "open"
+    },
+    {
+     "id": "g84",
+     "enonce": "Lors d'un parcours en profondeur d'un graphe orienté avec un compteur unique, on obtient pour un arc $(x,y)$ non couvrant $\\text{pref}[y]<\\text{pref}[x]$ et $\\text{suff}[y]<\\text{suff}[x]$. De quel type d'arc s'agit-il ? Donner les conditions des trois types d'arcs non couvrants.",
+     "sol": "**Arc croisé** : $y$ a été entièrement traité avant que $x$ soit découvert. Conditions : avant : $\\text{pref}[x]<\\text{pref}[y]$ et $\\text{suff}[y]<\\text{suff}[x]$ ($y$ est un descendant de $x$) ; arrière : $\\text{pref}[y]<\\text{pref}[x]$ et $\\text{suff}[x]<\\text{suff}[y]$ ($y$ est un ascendant de $x$) ; croisé : $\\text{pref}[y]<\\text{pref}[x]$ et $\\text{suff}[y]<\\text{suff}[x]$. Dans un graphe non orienté il n'y a que des arcs arrière.",
+     "formules": "couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g85",
+     "enonce": "Soit le graphe orienté $S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{(1,2), (1,6), (2,3), (2,5), (3,1), (3,4), (3,5), (4,5), (4,8), (6,2), (6,5), (7,5), (7,6), (7,8), (8,5), (8,9), (9,4), (9,7)\\}$.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arcs 1 → 2, 1 → 6, 2 → 3, 2 → 5, 3 → 1, 3 → 4, 3 → 5, 4 → 5, 4 → 8, 6 → 2, 6 → 5, 7 → 5, 7 → 6, 7 → 8, 8 → 5, 8 → 9, 9 → 4, 9 → 7](/static/graphes/gr-bf20f6026615.svg)\n\nDessiner la forêt couvrante associée au parcours en profondeur depuis le sommet $3$ (sommets choisis en ordre croissant) et ajouter les autres liaisons en les qualifiant par une légende explicite. Donner aussi les tableaux `pref` et `suff` (compteur unique commençant à 1).",
+     "sol": "Ordre préfixe : $3, 1, 2, 5, 6, 4, 8, 9, 7$ ; ordre suffixe : $5, 2, 6, 1, 7, 9, 8, 4, 3$. Racines des arbres : $3$.\n\nForêt (notation racine(fils)) : `3(1(2(5), 6), 4(8(9(7))))`.\n\n![Forêt couvrante : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arcs 1 → 2, 1 → 6, 2 → 3, 2 → 5, 3 → 1, 3 → 4, 3 → 5, 4 → 5, 4 → 8, 6 → 2, 6 → 5, 7 → 5, 7 → 6, 7 → 8, 8 → 5, 8 → 9, 9 → 4, 9 → 7](/static/graphes/gr-ff250a7f9ea5.svg)\n\n- arcs de la forêt : (3,1), (1,2), (2,5), (1,6), (3,4), (4,8), (8,9), (9,7)\n- arcs avant (vers un descendant non direct) : (3,5)\n- arcs arrière (vers un ascendant) : (2,3), (9,4), (7,8)\n- arcs croisés (aucun lien de descendance) : (6,2), (6,5), (4,5), (8,5), (7,5), (7,6)\n\nAvec un compteur unique commençant à $1$ (numéro pris à la première puis à la dernière rencontre) :\n\n```\nsommet :   1   2   3   4   5   6   7   8   9\npref   :   2   3   1  10   4   7  13  11  12\nsuff   :   9   6  18  17   5   8  14  16  15\n```\n\nIl y a au moins un arc arrière : le graphe contient un circuit. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.",
+     "duree": 8,
+     "formules": "couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Connexité : composantes et fermeture transitive (Warshall)",
+   "notions": [
+    "connexite"
+   ],
+   "exos": [
+    {
+     "id": "g91",
+     "enonce": "Combien le graphe non orienté ci-dessous a-t-il de composantes connexes ? Le graphe est-il connexe ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ; arêtes 0—5, 0—6, 1—3, 1—7, 1—8, 2—5, 2—6, 3—8, 3—13, 4—9, 4—11, 5—6, 7—10, 8—10, 9—12, 10—13, 11—12](/static/graphes/gr-dfa0bf60c859.svg)",
+     "ans": "3",
+     "sol": "Un parcours complet lance une recherche par composante : $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8, 10, 13\\}$ ; $\\{4, 9, 11, 12\\}$. Il y a $3$ composante(s) : le graphe n'est pas connexe.",
+     "variants": [
+      {
+       "enonce": "Combien le graphe non orienté ci-dessous a-t-il de composantes connexes ? Le graphe est-il connexe ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—1, 0—3, 1—2, 1—4, 3—4, 3—6, 4—5, 5—8, 6—7, 7—8](/static/graphes/gr-69e19e3747f5.svg)",
+       "ans": "1",
+       "sol": "Un parcours complet lance une recherche par composante : $\\{0, 1, 2, 3, 4, 5, 6, 7, 8\\}$. Il y a $1$ composante(s) : le graphe est connexe."
+      },
+      {
+       "enonce": "Combien le graphe non orienté ci-dessous a-t-il de composantes connexes ? Le graphe est-il connexe ?\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5 ; arêtes 0—1, 0—5, 1—2, 2—3, 3—4, 4—5](/static/graphes/gr-2db677881c86.svg)",
+       "ans": "1",
+       "sol": "Un parcours complet lance une recherche par composante : $\\{0, 1, 2, 3, 4, 5\\}$. Il y a $1$ composante(s) : le graphe est connexe."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g92",
+     "enonce": "Donner le vecteur des composantes du graphe ci-dessous : pour chaque sommet $0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13$ le numéro de sa composante, numérotées dans l'ordre où le parcours les découvre en lançant la recherche sur les sommets non visités dans l'ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ; arêtes 0—5, 0—6, 1—3, 1—7, 1—8, 2—5, 2—6, 3—8, 3—13, 4—9, 4—11, 5—6, 7—10, 8—10, 9—12, 10—13, 11—12](/static/graphes/gr-dfa0bf60c859.svg)",
+     "ans": "Matrix([[1,2,1,2,3,1,1,2,2,3,2,3,3,2]])",
+     "sol": "Vecteur : $1, 2, 1, 2, 3, 1, 1, 2, 2, 3, 2, 3, 3, 2$. On remplace le vecteur de booléens par un vecteur d'entiers ; le numéro courant augmente à chaque relance de l'algorithme d'appel.",
+     "variants": [
+      {
+       "enonce": "Donner le vecteur des composantes du graphe ci-dessous : pour chaque sommet $0, 1, 2, 3, 4, 5, 6, 7, 8$ le numéro de sa composante, numérotées dans l'ordre où le parcours les découvre en lançant la recherche sur les sommets non visités dans l'ordre croissant.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8 ; arêtes 0—4, 1—3, 2—5, 3—7, 5—8](/static/graphes/gr-316dd531e50d.svg)",
+       "ans": "Matrix([[1,2,3,2,1,3,4,2,3]])",
+       "sol": "Vecteur : $1, 2, 3, 2, 1, 3, 4, 2, 3$. On remplace le vecteur de booléens par un vecteur d'entiers ; le numéro courant augmente à chaque relance de l'algorithme d'appel."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g93",
+     "enonce": "Le graphe non orienté ci-dessous est-il connexe ? (répondre $1$ si oui, $0$ sinon)\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)",
+     "ans": "1",
+     "sol": "Un seul parcours depuis un sommet quelconque suffit : le graphe est connexe si et seulement si tous les sommets sont marqués au retour. Ici tous les sommets sont atteints depuis 0 : réponse $1$.",
+     "variants": [
+      {
+       "enonce": "Le graphe non orienté ci-dessous est-il connexe ? (répondre $1$ si oui, $0$ sinon)\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7 ; arêtes 0—1, 0—2, 1—2, 2—3, 3—4, 4—5, 4—6, 5—6, 6—7](/static/graphes/gr-99598b30b78f.svg)",
+       "ans": "1",
+       "sol": "Un seul parcours depuis un sommet quelconque suffit : le graphe est connexe si et seulement si tous les sommets sont marqués au retour. Ici tous les sommets sont atteints depuis 0 : réponse $1$."
+      },
+      {
+       "enonce": "Le graphe non orienté ci-dessous est-il connexe ? (répondre $1$ si oui, $0$ sinon)\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ; arêtes 0—5, 0—6, 1—3, 1—7, 1—8, 2—5, 2—6, 3—8, 3—13, 4—9, 4—11, 5—6, 7—10, 8—10, 9—12, 10—13, 11—12](/static/graphes/gr-dfa0bf60c859.svg)",
+       "ans": "0",
+       "sol": "Un seul parcours depuis un sommet quelconque suffit : le graphe est connexe si et seulement si tous les sommets sont marqués au retour. Ici des sommets restent non marqués : réponse $0$."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g94",
+     "enonce": "L'algorithme de Warshall appliqué à un graphe non orienté d'ordre $10$ (sommets $0$ à $9$) a donné la matrice suivante (ligne = sommet, $1$ = chaîne entre les deux sommets).\n\n```\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n0 0 0 0 1 0 0 0 0 1\n1 0 1 0 0 1 1 0 0 0\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n0 1 0 1 0 0 0 1 1 0\n0 0 0 0 1 0 0 0 0 1\n```\n\nCombien le graphe a-t-il de composantes connexes ?",
+     "ans": "3",
+     "sol": "La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8\\}$ ; $\\{4, 9\\}$. Il y en a $3$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $16+16+4=36$.",
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 1.1",
+     "variants": [
+      {
+       "enonce": "L'algorithme de Warshall appliqué à un graphe non orienté d'ordre $14$ (sommets $0$ à $13$) a donné la matrice suivante (ligne = sommet, $1$ = chaîne entre les deux sommets).\n\n```\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n0 0 0 0 0 0 1 0 0 0 0 0 0 1\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 0 0 0 0 0 1 0 0 0 0 0 0 1\n```\n\nCombien le graphe a-t-il de composantes connexes ?",
+       "ans": "4",
+       "sol": "La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 3, 4, 8, 12\\}$ ; $\\{1, 7, 9, 10\\}$ ; $\\{2, 5, 11\\}$ ; $\\{6, 13\\}$. Il y en a $4$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $25+16+9+4=54$."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g95",
+     "enonce": "L'algorithme de Warshall appliqué à un graphe non orienté d'ordre $14$ (sommets $0$ à $13$) a donné la matrice suivante (ligne = sommet, $1$ = chaîne entre les deux sommets).\n\n```\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n0 0 0 0 0 0 1 0 0 0 0 0 0 1\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 1 0 0 0 0 0 1 0 1 1 0 0 0\n0 0 1 0 0 1 0 0 0 0 0 1 0 0\n1 0 0 1 1 0 0 0 1 0 0 0 1 0\n0 0 0 0 0 0 1 0 0 0 0 0 0 1\n```\n\nCombien le graphe a-t-il de composantes connexes ?",
+     "ans": "4",
+     "sol": "La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 3, 4, 8, 12\\}$ ; $\\{1, 7, 9, 10\\}$ ; $\\{2, 5, 11\\}$ ; $\\{6, 13\\}$. Il y en a $4$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $25+16+9+4=54$.",
+     "src": "Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 2.1",
+     "variants": [
+      {
+       "enonce": "L'algorithme de Warshall appliqué à un graphe non orienté d'ordre $10$ (sommets $0$ à $9$) a donné la matrice suivante (ligne = sommet, $1$ = chaîne entre les deux sommets).\n\n```\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n0 0 0 0 1 0 0 0 0 1\n1 0 1 0 0 1 1 0 0 0\n1 0 1 0 0 1 1 0 0 0\n0 1 0 1 0 0 0 1 1 0\n0 1 0 1 0 0 0 1 1 0\n0 0 0 0 1 0 0 0 0 1\n```\n\nCombien le graphe a-t-il de composantes connexes ?",
+       "ans": "3",
+       "sol": "La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8\\}$ ; $\\{4, 9\\}$. Il y en a $3$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $16+16+4=36$."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g96",
+     "enonce": "Un graphe non orienté d'ordre $10$ a pour composantes connexes de tailles $4$, $4$, $2$. Combien de cases à $1$ contient sa fermeture transitive (diagonale comprise) ?",
+     "ans": "36",
+     "sol": "Une composante de $s$ sommets donne un bloc $s\\times s$ de $1$ : $4^2+4^2+2^2=36$.",
+     "variants": [
+      {
+       "enonce": "Un graphe non orienté d'ordre $14$ a pour composantes connexes de tailles $5$, $4$, $3$, $2$. Combien de cases à $1$ contient sa fermeture transitive (diagonale comprise) ?",
+       "ans": "54",
+       "sol": "Une composante de $s$ sommets donne un bloc $s\\times s$ de $1$ : $5^2+4^2+3^2+2^2=54$."
+      }
+     ],
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Connexité évolutive : trouver-réunir",
+   "notions": [
+    "trouver-reunir"
+   ],
+   "exos": [
+    {
+     "id": "g101",
+     "enonce": "Soit un graphe non orienté d'ordre $14$ (sommets $0$ à $13$). Les algorithmes `trouver` et `reunir` (union pondérée) ont construit le vecteur des pères\n\n```\nsommet :   0   1   2   3   4   5   6   7   8   9  10  11  12  13\np      :   5   8   5   8  11  -4   5  10  -6  12   8  12  -4   8\n```\n\nDonner le nombre de sommets de chaque composante connexe de $G$ et le nombre minimal d'arêtes à ajouter pour que $G$ soit connexe. Parmi les chaînes suivantes, lesquelles ne peuvent pas exister dans $G$ : $3\\to7$, $11\\to6$, $0\\to13$, $4\\to9$ ?",
+     "sol": "Les racines sont les cases négatives ; chaque arbre est une composante, et la valeur négative donne sa taille : composantes $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8, 10, 13\\}$ ; $\\{4, 9, 11, 12\\}$, tailles $4, 4, 6$. Il y a $3$ composantes : il suffit de $2$ arêtes, qui relient chacune deux composantes différentes (par exemple entre racines : $5$—$8$, $8$—$12$).\n\nUne chaîne entre $a$ et $b$ existe si et seulement si $a$ et $b$ ont la même racine. Impossibles : $11\\to6$ (racines $12$ et $5$), $0\\to13$ (racines $5$ et $8$).",
+     "src": "Partiel P3 algo, 19 décembre 2017 (Past-Exams S3/Finals/Algo/2021), ex. 1",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g102",
+     "enonce": "Soit un graphe non orienté d'ordre $10$ dont les composantes connexes sont $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8\\}$ ; $\\{4, 9\\}$. On applique `trouver` et `reunir` (versions non optimisées) à la liste des arêtes. Parmi les vecteurs des pères suivants (sommets $0$ à 9), lesquels pourraient correspondre au résultat ?\n\n```\nP_1:   2  -1  -1   1   1   2   2   1   1   4\nP_2:   2  -1  -1   1  -1   2   2   1   1   4\nP_3:   5  -1  -1   1  -1   2   5   1   3   4\nP_4:   5  -1  -1   1  -1   2   5   1   3  -1\n```",
+     "sol": "Conditions : un arbre par composante, tout père dans la composante de son fils.\n\n- $P_1$ : impossible, le sommet $4$ a pour père $1$ d'une autre composante.\n- $P_2$ : possible (chaque arbre couvre une composante).\n- $P_3$ : possible (chaque arbre couvre une composante).\n- $P_4$ : impossible, les arbres ne couvrent pas exactement les composantes (une composante est coupée en plusieurs arbres).\n\n(On ne connaît pas la liste des arêtes : ce sont des conditions nécessaires, qui suffisent à éliminer les vecteurs impossibles.)",
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 1.2",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g103",
+     "enonce": "Soit un graphe non orienté d'ordre $14$ dont les composantes connexes sont $\\{0, 3, 4, 8, 12\\}$ ; $\\{1, 7, 9, 10\\}$ ; $\\{2, 5, 11\\}$ ; $\\{6, 13\\}$. On applique `trouver` et `reunir` (versions non optimisées) à la liste des arêtes. Parmi les vecteurs des pères suivants (sommets $0$ à 13), lesquels pourraient correspondre au résultat ?\n\n```\nP_1:   4  10  11  12  -1  11  -1   9   4  -1   9  -1   4   6\nP_2:   4  10  12  11  11  12  -1   9   4  10  -1  -1  -1   6\nP_3:   4  10  11  12  12  11  -1   9   4  10  -1  -1  -1   6\nP_4:   4  10  11  12  -1  11  -1   9   2  -1   9  -1  10   6\n```",
+     "sol": "Conditions : un arbre par composante, tout père dans la composante de son fils.\n\n- $P_1$ : possible (chaque arbre couvre une composante).\n- $P_2$ : impossible, le sommet $2$ a pour père $12$ d'une autre composante.\n- $P_3$ : possible (chaque arbre couvre une composante).\n- $P_4$ : impossible, le sommet $8$ a pour père $2$ d'une autre composante.\n\n(On ne connaît pas la liste des arêtes : ce sont des conditions nécessaires, qui suffisent à éliminer les vecteurs impossibles.)",
+     "src": "Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 2.2",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g104",
+     "enonce": "On part de $8$ sommets isolés ($p[x]=-1$ pour tout $x$) et on ajoute dans l'ordre les arêtes $0$—$1$, $2$—$3$, $0$—$2$, $4$—$5$, $6$—$7$, $4$—$6$, $0$—$4$, avec union pondérée. Donner le vecteur des pères après chaque arête. (Règle : `reunir(x, y)` rattache la racine de $y$ à celle de $x$ ; avec l'union pondérée, le plus petit arbre est rattaché au plus grand, à égalité $y$ sous $x$.)",
+     "sol": "- arête $0$—$1$ : $-2, 0, -1, -1, -1, -1, -1, -1$\n- arête $2$—$3$ : $-2, 0, -2, 2, -1, -1, -1, -1$\n- arête $0$—$2$ : $-4, 0, 0, 2, -1, -1, -1, -1$\n- arête $4$—$5$ : $-4, 0, 0, 2, -2, 4, -1, -1$\n- arête $6$—$7$ : $-4, 0, 0, 2, -2, 4, -2, 6$\n- arête $4$—$6$ : $-4, 0, 0, 2, -4, 4, 4, 6$\n- arête $0$—$4$ : $-8, 0, 0, 2, 0, 4, 4, 6$\n\nDans le vecteur, la racine d'un arbre porte l'opposé de sa taille.",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g105",
+     "enonce": "Avec l'union pondérée (sans compression), quelle est la hauteur maximale d'un arbre de $32$ sommets (racine = hauteur $0$) ? On donne $n$ puissance de $2$.",
+     "ans": "5",
+     "sol": "Un sommet n'augmente sa profondeur que lorsque son arbre est rattaché à un arbre au moins aussi grand : la taille de son arbre au moins double. Il y a au plus $\\log_2 n$ doublements : hauteur maximale $\\log_232=5$ (atteinte en réunissant des arbres de même taille deux à deux).",
+     "variants": [
+      {
+       "enonce": "Avec l'union pondérée (sans compression), quelle est la hauteur maximale d'un arbre de $256$ sommets (racine = hauteur $0$) ? On donne $n$ puissance de $2$.",
+       "ans": "8",
+       "sol": "Un sommet n'augmente sa profondeur que lorsque son arbre est rattaché à un arbre au moins aussi grand : la taille de son arbre au moins double. Il y a au plus $\\log_2 n$ doublements : hauteur maximale $\\log_2256=8$ (atteinte en réunissant des arbres de même taille deux à deux)."
+      }
+     ],
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g106",
+     "enonce": "On part de $6$ sommets isolés ($p[x]=-1$ pour tout $x$) et on ajoute dans l'ordre les arêtes $0$—$1$, $1$—$2$, $2$—$3$, $3$—$4$, $4$—$5$, avec union simple. Donner le vecteur des pères après chaque arête. (Règle : `reunir(x, y)` rattache la racine de $y$ à celle de $x$.)",
+     "sol": "- arête $0$—$1$ : $-1, 0, -1, -1, -1, -1$\n- arête $1$—$2$ : $-1, 0, 0, -1, -1, -1$\n- arête $2$—$3$ : $-1, 0, 0, 0, -1, -1$\n- arête $3$—$4$ : $-1, 0, 0, 0, 0, -1$\n- arête $4$—$5$ : $-1, 0, 0, 0, 0, 0$\n\nDans le vecteur, la racine d'un arbre porte $-1$.",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    },
+    {
+     "id": "g107",
+     "enonce": "Soit un graphe non orienté d'ordre $14$ (sommets $0$ à $13$). Les algorithmes `trouver` et `reunir` (union pondérée) ont construit le vecteur des pères\n\n```\nsommet :   0   1   2   3   4   5   6   7   8   9  10  11  12  13\np      :   5   8   5   8  11  -4   5  10  -6  12   8  12  -4   8\n```\n\nDonner le nombre de sommets de chaque composante connexe de $G$ et le nombre minimal d'arêtes à ajouter pour que $G$ soit connexe. Parmi les chaînes suivantes, lesquelles ne peuvent pas exister dans $G$ : $3\\to7$, $11\\to6$, $0\\to13$, $4\\to9$ ? On ajoute ensuite l'arête $7$—$4$ (union pondérée et compression des chemins) : donner le nouveau vecteur.",
+     "sol": "Les racines sont les cases négatives ; chaque arbre est une composante, et la valeur négative donne sa taille : composantes $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8, 10, 13\\}$ ; $\\{4, 9, 11, 12\\}$, tailles $4, 4, 6$. Il y a $3$ composantes : il suffit de $2$ arêtes, qui relient chacune deux composantes différentes (par exemple entre racines : $5$—$8$, $8$—$12$).\n\nUne chaîne entre $a$ et $b$ existe si et seulement si $a$ et $b$ ont la même racine. Impossibles : $11\\to6$ (racines $12$ et $5$), $0\\to13$ (racines $5$ et $8$).\n\nAjout de l'arête $7$—$4$ (union pondérée + compression) : `trouver(7)` = $8$, `trouver(4)` = $12$ ; le plus petit arbre est rattaché à la racine du plus grand. Nouveau vecteur : $5, 8, 5, 8, 12, -4, 5, 8, -10, 12, 8, 12, 8, 8$.",
+     "src": "Partiel P3 algo, 5 janvier 2021 (Past-Exams S3/Finals/Algo/2024), ex. 2",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 5,
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Écrire les parcours en Python : degrés, BFS, DFS, composantes",
+   "notions": [
+    "representations",
+    "parcours-largeur",
+    "parcours-profondeur",
+    "connexite"
+   ],
+   "exos": [
+    {
+     "id": "g111",
+     "enonce": "Écrire la fonction `degrees(G)` qui retourne la liste des degrés des sommets d'un graphe non orienté représenté par listes d'adjacence.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> degrees(T2)\n[3, 1, 3, 1, 2, 3, 2, 4, 2, 1]\n>>> degrees(K4)\n[3, 3, 3, 3]\n```",
+     "sol": "```python\ndef degrees(G):\n    deg = []\n    for x in range(G.order):\n        deg.append(len(G.adjlists[x]))\n    return deg\n```\n\nComplexité : $O(n)$ (le degré est la longueur de la liste : `len`, sans la parcourir).",
+     "duree": 8,
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    },
+    {
+     "id": "g112",
+     "enonce": "Écrire la fonction `in_out_degrees(G)` qui retourne le couple de listes (demi-degrés intérieurs, demi-degrés extérieurs) d'un graphe orienté représenté par listes d'adjacence.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> in_out_degrees(T1)\n([3, 2, 1, 2, 3, 2, 2, 0, 1], [4, 1, 1, 1, 0, 3, 2, 3, 1])\n>>> in_out_degrees(D1)\n([0, 1, 1, 3, 2, 1, 1], [2, 1, 2, 1, 1, 1, 1])\n```",
+     "sol": "```python\ndef in_out_degrees(G):\n    inn = [0] * G.order\n    out = [0] * G.order\n    for x in range(G.order):\n        out[x] = len(G.adjlists[x])\n        for y in G.adjlists[x]:\n            inn[y] += 1\n    return (inn, out)\n```\n\nLe demi-degré extérieur est la longueur de la liste ; le demi-degré intérieur s'obtient en comptant, pour chaque arc rencontré, l'extrémité. Complexité $O(n+m)$.",
+     "duree": 8,
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    },
+    {
+     "id": "g113",
+     "enonce": "Écrire la fonction `bfs_order(G, src)` qui retourne la liste des sommets accessibles depuis `src` dans l'ordre d'un parcours en largeur.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> bfs_order(GC, 0)\n[0, 4, 6, 8, 9, 2, 7, 10, 1, 5, 11, 12, 3]\n>>> bfs_order(T1, 7)\n[7, 0, 1, 8, 3, 4, 5, 6, 2]\n```",
+     "sol": "```python\ndef bfs_order(G, src):\n    mark = [False] * G.order\n    q = Queue()\n    q.enqueue(src)\n    mark[src] = True\n    order = []\n    while not q.isempty():\n        x = q.dequeue()\n        order.append(x)\n        for y in G.adjlists[x]:\n            if not mark[y]:\n                mark[y] = True\n                q.enqueue(y)\n    return order\n```\n\nOn marque à l'enfilage. Complexité $O(n+m)$ avec des listes d'adjacence.",
+     "duree": 8,
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    },
+    {
+     "id": "g114",
+     "enonce": "Écrire la fonction `dfs_orders(G, src)` qui retourne le couple (ordre préfixe, ordre suffixe) d'un parcours en profondeur complet lancé sur `src` puis sur les sommets non marqués (ordre croissant).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> dfs_orders(T1, 0)\n([0, 1, 4, 3, 6, 5, 2, 7, 8], [4, 1, 2, 5, 6, 3, 0, 8, 7])\n>>> dfs_orders(T2, 7)\n([7, 2, 5, 8, 6, 0, 1, 3, 4, 9], [8, 5, 6, 2, 7, 1, 3, 9, 4, 0])\n```",
+     "sol": "```python\ndef _dfs(G, x, mark, pre, suf):\n    mark[x] = True\n    pre.append(x)\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            _dfs(G, y, mark, pre, suf)\n    suf.append(x)\n\ndef dfs_orders(G, src):\n    mark = [False] * G.order\n    pre = []\n    suf = []\n    _dfs(G, src, mark, pre, suf)\n    for x in range(G.order):\n        if not mark[x]:\n            _dfs(G, x, mark, pre, suf)\n    return (pre, suf)\n```\n\nLe préfixe est noté avant la boucle sur les successeurs, le suffixe après. Complexité $O(n+m)$.",
+     "duree": 8,
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    },
+    {
+     "id": "g115",
+     "enonce": "Écrire la fonction `components(G)` qui détermine les composantes connexes d'un graphe non orienté. Elle retourne un couple : le nombre de composantes et le vecteur des composantes (pour chaque sommet, le numéro de sa composante).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemple avec `G3CC`, le graphe ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ; arêtes 0—5, 0—6, 1—3, 1—7, 1—8, 2—5, 2—6, 3—8, 3—13, 4—9, 4—11, 5—6, 7—10, 8—10, 9—12, 10—13, 11—12](/static/graphes/gr-dfa0bf60c859.svg)\n\nExemples d'applications :\n\n```\n>>> components(G3CC)\n(3, [1, 2, 1, 2, 3, 1, 1, 2, 2, 3, 2, 3, 3, 2])\n>>> components(C6)\n(1, [1, 1, 1, 1, 1, 1])\n```",
+     "sol": "```python\ndef _comp(G, x, nocc, cc):\n    cc[x] = nocc\n    for y in G.adjlists[x]:\n        if cc[y] == 0:\n            _comp(G, y, nocc, cc)\n\ndef components(G):\n    cc = [0] * G.order\n    nocc = 0\n    for x in range(G.order):\n        if cc[x] == 0:\n            nocc += 1\n            _comp(G, x, nocc, cc)\n    return (nocc, cc)\n```\n\nLe vecteur d'entiers remplace le vecteur de booléens ; $0$ signifie « non visité ». Le numéro augmente à chaque relance : un parcours complet en $O(n+m)$.",
+     "duree": 8,
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 3",
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    },
+    {
+     "id": "g116",
+     "enonce": "Écrire la fonction `is_connected(G)` qui indique si un graphe non orienté (non vide) est connexe, avec un seul parcours en profondeur.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> is_connected(GC)\nTrue\n>>> is_connected(G3CC)\nFalse\n>>> is_connected(TREE)\nTrue\n```",
+     "sol": "```python\ndef _visit(G, x, mark):\n    mark[x] = True\n    count = 1\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            count += _visit(G, y, mark)\n    return count\n\ndef is_connected(G):\n    mark = [False] * G.order\n    return _visit(G, 0, mark) == G.order\n```\n\nUn seul parcours depuis un sommet quelconque : le graphe est connexe si et seulement si il a marqué les $n$ sommets (ici on compte les sommets visités).",
+     "duree": 8,
+     "formules": "listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Écrire des applications : niveaux, biparti, arbre, centre, tri topologique",
+   "notions": [
+    "applications",
+    "classification"
+   ],
+   "exos": [
+    {
+     "id": "g121",
+     "enonce": "Écrire la fonction `levels(G, src)` qui retourne une liste `L` de longueur $exc(src)+1$ dans laquelle `L[i]` contient les sommets à distance $i$ de `src` (graphe non orienté connexe).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemple avec `GC`, le graphe ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)\n\nExemples d'applications :\n\n```\n>>> levels(GC, 0)\n[[0], [4, 6, 8, 9], [2, 7, 10, 1, 5, 11, 12], [3]]\n>>> levels(TREE, 0)\n[[0], [1, 2, 3], [4, 5, 6, 7, 8], [9]]\n```",
+     "sol": "```python\ndef levels(G, src):\n    dist = [-1] * G.order\n    dist[src] = 0\n    res = [[src]]\n    q = Queue()\n    q.enqueue(src)\n    while not q.isempty():\n        x = q.dequeue()\n        for y in G.adjlists[x]:\n            if dist[y] == -1:\n                dist[y] = dist[x] + 1\n                if dist[y] == len(res):\n                    res.append([])\n                res[dist[y]].append(y)\n                q.enqueue(y)\n    return res\n```\n\nUn parcours en largeur : les sommets sortent de la file par distance croissante. On ajoute une sous-liste quand on rencontre pour la première fois une nouvelle distance. Complexité $O(n+m)$.",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 12 mai 2021 (Past-Exams S3/Finals/Algo/2025#), ex. 4",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g122",
+     "enonce": "Écrire la fonction `density_components(G)` qui retourne la liste des densités $p/n$ ($p$ arêtes, $n$ sommets) des composantes connexes d'un graphe non orienté simple (dans l'ordre où le parcours les découvre).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemple avec `G3CC`, le graphe ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ; arêtes 0—5, 0—6, 1—3, 1—7, 1—8, 2—5, 2—6, 3—8, 3—13, 4—9, 4—11, 5—6, 7—10, 8—10, 9—12, 10—13, 11—12](/static/graphes/gr-dfa0bf60c859.svg)\n\nExemples d'applications :\n\n```\n>>> density_components(G3CC)\n[1.25, 1.3333333333333333, 1.0]\n>>> density_components(C6)\n[1.0]\n```",
+     "sol": "```python\ndef _comp(G, x, nocc, cc):\n    cc[x] = nocc\n    for y in G.adjlists[x]:\n        if cc[y] == 0:\n            _comp(G, y, nocc, cc)\n\ndef density_components(G):\n    cc = [0] * G.order\n    nocc = 0\n    for x in range(G.order):\n        if cc[x] == 0:\n            nocc += 1\n            _comp(G, x, nocc, cc)\n    nbv = [0] * nocc\n    nbl = [0] * nocc\n    for x in range(G.order):\n        nbv[cc[x] - 1] += 1\n        nbl[cc[x] - 1] += len(G.adjlists[x])\n    res = []\n    for c in range(nocc):\n        res.append(nbl[c] / 2 / nbv[c])\n    return res\n```\n\nLe nombre d'arêtes d'une composante est la moitié de la somme des longueurs des listes de ses sommets (chaque arête apparaît deux fois). Pour un graphe connexe simple : $p$ va de $n-1$ (arbre) à $\\frac{n(n-1)}2$ (graphe complet).",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 12 mai 2021 (Past-Exams S3/Finals/Algo/2025#), ex. 3.2",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g123",
+     "enonce": "Écrire la fonction `is_bipartite(G)` qui teste, avec un parcours en largeur, si un graphe non orienté est biparti (ses sommets se colorent avec deux couleurs sans arête entre deux sommets de même couleur).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> is_bipartite(C6)\nTrue\n>>> is_bipartite(K4)\nFalse\n>>> is_bipartite(TREE)\nTrue\n```",
+     "sol": "```python\ndef is_bipartite(G):\n    color = [0] * G.order\n    for s in range(G.order):\n        if color[s] == 0:\n            color[s] = 1\n            q = Queue()\n            q.enqueue(s)\n            while not q.isempty():\n                x = q.dequeue()\n                for y in G.adjlists[x]:\n                    if color[y] == 0:\n                        color[y] = 3 - color[x]\n                        q.enqueue(y)\n                    elif color[y] == color[x]:\n                        return False\n    return True\n```\n\nOn colore le départ en $1$ puis chaque voisin non coloré avec la couleur opposée $3-c$ ; une arête vers un sommet de même couleur prouve un cycle impair, donc que le graphe n'est pas biparti. On relance sur chaque composante.",
+     "duree": 8,
+     "src": "Partiel P3 algo, 19 décembre 2017 (Past-Exams S3/Finals/Algo/2021), ex. 3",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g124",
+     "enonce": "Écrire la fonction `acyclic(G)` qui vérifie qu'un graphe orienté est sans circuit, en utilisant un unique vecteur de marques à trois valeurs (non vu, première rencontre, dernière rencontre).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> acyclic(DAG)\nTrue\n>>> acyclic(T1)\nFalse\n>>> acyclic(D1)\nFalse\n```",
+     "sol": "```python\ndef _dfs(G, x, mark):\n    mark[x] = 1\n    for y in G.adjlists[x]:\n        if mark[y] == 1:\n            return False\n        if mark[y] == 0 and not _dfs(G, y, mark):\n            return False\n    mark[x] = 2\n    return True\n\ndef acyclic(G):\n    mark = [0] * G.order\n    for x in range(G.order):\n        if mark[x] == 0 and not _dfs(G, x, mark):\n            return False\n    return True\n```\n\nUn arc vers un sommet à la première rencontre (en cours de traitement) est un arc arrière, donc un circuit. Un arc vers un sommet terminé est avant ou croisé : sans danger.",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 12 mai 2021 (Past-Exams S3/Finals/Algo/2025#), ex. 2",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g125",
+     "enonce": "Écrire la fonction `is_tree(G)` qui vérifie, avec un parcours en profondeur, qu'un graphe non orienté est un arbre (connexe et sans cycle).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> is_tree(TREE)\nTrue\n>>> is_tree(C6)\nFalse\n>>> is_tree(G3CC)\nFalse\n```",
+     "sol": "```python\ndef _dfs(G, x, father, mark):\n    mark[x] = True\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            if not _dfs(G, y, x, mark):\n                return False\n        elif y != father:\n            return False\n    return True\n\ndef is_tree(G):\n    mark = [False] * G.order\n    if not _dfs(G, 0, -1, mark):\n        return False\n    for x in range(G.order):\n        if not mark[x]:\n            return False\n    return True\n```\n\nSans cycle : pendant le parcours, un voisin déjà marqué qui n'est pas le père prouve un cycle. Connexe : tous les sommets sont marqués après un seul parcours.",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 15 mai (Past-Exams S3/Finals/Algo/2022#), ex. 3 ; Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 3",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g126",
+     "enonce": "Écrire la fonction `center(G)` qui retourne le centre d'un graphe non orienté connexe : l'ensemble des sommets d'excentricité minimale (excentricité $=$ plus grande distance aux autres sommets ; rayon $=$ plus petite excentricité).\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemple avec `GC`, le graphe ci-dessous.\n\n![Graphe : non orienté, sommets 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ; arêtes 0—4, 0—6, 0—8, 0—9, 1—6, 1—12, 2—3, 2—4, 2—5, 3—5, 4—7, 4—10, 5—6, 7—9, 7—10, 8—9, 8—11, 8—12, 9—11, 11—12](/static/graphes/gr-b6aa6403528d.svg)\n\nExemples d'applications :\n\n```\n>>> center(GC)\n[0, 4, 6]\n>>> center(TREE)\n[0, 3]\n```",
+     "sol": "```python\ndef _ecc(G, s):\n    dist = [-1] * G.order\n    dist[s] = 0\n    q = Queue()\n    q.enqueue(s)\n    best = 0\n    while not q.isempty():\n        x = q.dequeue()\n        best = max(best, dist[x])\n        for y in G.adjlists[x]:\n            if dist[y] == -1:\n                dist[y] = dist[x] + 1\n                q.enqueue(y)\n    return best\n\ndef center(G):\n    ecc = []\n    for x in range(G.order):\n        ecc.append(_ecc(G, x))\n    radius = ecc[0]\n    for x in range(G.order):\n        radius = min(radius, ecc[x])\n    res = []\n    for x in range(G.order):\n        if ecc[x] == radius:\n            res.append(x)\n    return res\n```\n\nUn parcours en largeur depuis chaque sommet donne son excentricité : $O(n(n+m))$.",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 15 mai (Past-Exams S3/Finals/Algo/2022#), ex. 2 ; Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 4",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g127",
+     "enonce": "Écrire la fonction `topological_sort(G)` qui retourne une liste des sommets d'un graphe orienté sans circuit telle que pour tout arc $(x,y)$, $x$ soit avant $y$ (tri topologique). Utiliser un parcours en profondeur.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> topological_sort(DAG)\n[0, 3, 4, 6, 1, 2, 5, 7]\n```",
+     "sol": "```python\ndef _dfs(G, x, mark, res):\n    mark[x] = True\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            _dfs(G, y, mark, res)\n    res.insert(0, x)\n\ndef topological_sort(G):\n    mark = [False] * G.order\n    res = []\n    for x in range(G.order):\n        if not mark[x]:\n            _dfs(G, x, mark, res)\n    return res\n```\n\nDans un graphe sans circuit, pour tout arc $(u,v)$ on a $\\text{suff}[v]<\\text{suff}[u]$ : trier les sommets par suffixe décroissant (insertion en tête de liste à la fin du traitement de chaque sommet) donne un tri topologique.",
+     "duree": 8,
+     "src": "Rattrapage P3 algo, 14 mai 2019 (Past-Exams S3/Finals/Algo/2023#), ex. 4.2",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g128",
+     "enonce": "Écrire la fonction `is_eulerian(G)` qui vérifie si un graphe non orienté simple possède une chaîne ou un cycle eulérien : il est connexe et a $0$ ou $2$ sommets de degré impair (théorème d'Euler). Utiliser un parcours en profondeur pour la connexité.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> is_eulerian(C6)\nTrue\n>>> is_eulerian(K4)\nFalse\n>>> is_eulerian(TREE)\nFalse\n```",
+     "sol": "```python\ndef _visit(G, x, mark):\n    mark[x] = True\n    count = 1\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            count += _visit(G, y, mark)\n    return count\n\ndef is_eulerian(G):\n    mark = [False] * G.order\n    if _visit(G, 0, mark) != G.order:\n        return False\n    odd = 0\n    for x in range(G.order):\n        if len(G.adjlists[x]) % 2 == 1:\n            odd += 1\n    return odd == 0 or odd == 2\n```\n\nLe degré d'un sommet est `len(G.adjlists[x])`. $K_4$ a quatre sommets de degré $3$ : non eulérien.",
+     "duree": 8,
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 5",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    },
+    {
+     "id": "g129",
+     "enonce": "Écrire la fonction `diameter(G)` qui calcule le diamètre d'un graphe qui est un arbre : depuis un sommet quelconque on cherche un sommet $s_1$ le plus éloigné, puis depuis $s_1$ un sommet $s_2$ le plus éloigné ; la distance de $s_1$ à $s_2$ est le diamètre.\n\nLes classes `Graph` (attributs `order`, `directed`, `adjlists` ; méthodes `addedge(src, dst)`, `addvertex()`) et `Queue` (`Queue()`, `enqueue`, `dequeue`, `isempty`) sont supposées importées ; les listes d'adjacence sont en ordre croissant. Fonctions permises : `len`, `range`, `min`, `max`, `append`, `pop`, `insert` ; pas de compréhension.\n\nExemples d'applications :\n\n```\n>>> diameter(TREE)\n5\n>>> diameter(TREE2)\n6\n```",
+     "sol": "```python\ndef _farthest(G, s):\n    dist = [-1] * G.order\n    dist[s] = 0\n    q = Queue()\n    q.enqueue(s)\n    last = s\n    while not q.isempty():\n        last = q.dequeue()\n        for y in G.adjlists[last]:\n            if dist[y] == -1:\n                dist[y] = dist[last] + 1\n                q.enqueue(y)\n    return (last, dist[last])\n\ndef diameter(G):\n    s1 = _farthest(G, 0)[0]\n    return _farthest(G, s1)[1]\n```\n\nLe dernier sommet défilé d'un parcours en largeur est à distance maximale. Deux parcours : $O(n)$ dans un arbre.",
+     "duree": 8,
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 4",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Examens : extraits de partiels et de contrôles",
+   "notions": [
+    "terminologie",
+    "parcours-profondeur",
+    "classification",
+    "connexite",
+    "trouver-reunir",
+    "applications"
+   ],
+   "exos": [
+    {
+     "id": "g131",
+     "src": "Contrôle C3 algo, 9 novembre 2021 (Past-Exams S3/Midterms/Algo/2025), ex. 1 (Graphes et composantes)",
+     "enonce": "**Exercice (5 points).** Soit le graphe orienté $G$ avec $S=\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$ et $A=\\{(1,2), (1,6), (2,3), (2,5), (3,1), (3,4), (3,5), (4,5), (4,8), (6,2), (6,5), (7,5), (7,6), (7,8), (8,5), (8,9), (9,4), (9,7)\\}$.\n\n![Graphe : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arcs 1 → 2, 1 → 6, 2 → 3, 2 → 5, 3 → 1, 3 → 4, 3 → 5, 4 → 5, 4 → 8, 6 → 2, 6 → 5, 7 → 5, 7 → 6, 7 → 8, 8 → 5, 8 → 9, 9 → 4, 9 → 7](/static/graphes/gr-bf20f6026615.svg)\n\nRépondre dans l'ordre aux cinq questions.",
+     "sol": "**1.** $d^{\\circ-}(x)$ = nombre d'arcs qui arrivent en $x$ (somme de la colonne $x$ de la matrice) : $1, 2, 1, 2, 6, 2, 1, 2, 1$ (total $18$ = nombre d'arcs).\n\n**2.** On note un sommet à sa première rencontre, puis on descend dans son premier successeur non marqué ; au retour on passe au suivant.\n\nOrdre : $3, 1, 2, 5, 6, 4, 8, 9, 7$.\n\n**3.** Fortement connexe : un chemin de $x$ à $y$ pour toute paire ordonnée. On calcule la fermeture (Warshall) : elle n'est pas pleine, donc réponse $0$. Composantes fortement connexes : $\\{1, 2, 3, 4, 6, 7, 8, 9\\}$ ; $\\{5\\}$ : $2$ composantes.\n\n**4.** Deux sommets sont dans la même composante fortement connexe s'ils s'atteignent mutuellement (fermeture de Warshall) : $\\{1, 2, 3, 4, 6, 7, 8, 9\\}$ ; $\\{5\\}$. Il y en a $2$. (nombre vérifié par le calcul des classes d'équivalence)\n\n**5.** Un sommet de degré nul est isolé : $d^\\circ(x)=d^{\\circ+}(x)+d^{\\circ-}(x)=0$. Ici chaque sommet est extrémité d'au moins un arc (demi-degrés intérieurs $1, 2, 1, 2, 6, 2, 1, 2, 1$, extérieurs $2, 2, 3, 2, 0, 2, 3, 2, 2$, jamais nuls tous les deux) : réponse $0$.",
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$ · préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués · un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "g132",
+     "src": "Partiel P3 algo, 19 décembre 2017 (Past-Exams S3/Finals/Algo/2021), ex. 1, 2 et 3",
+     "enonce": "**Partiel de décembre 2017 (extraits).** Union-find, dessin d'un graphe orienté, graphes bipartis.",
+     "sol": "**1.** Les racines sont les cases négatives ; chaque arbre est une composante, et la valeur négative donne sa taille : composantes $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8, 10, 13\\}$ ; $\\{4, 9, 11, 12\\}$, tailles $4, 4, 6$. Il y a $3$ composantes : il suffit de $2$ arêtes, qui relient chacune deux composantes différentes (par exemple entre racines : $5$—$8$, $8$—$12$).\n\nUne chaîne entre $a$ et $b$ existe si et seulement si $a$ et $b$ ont la même racine. Impossibles : $11\\to6$ (racines $12$ et $5$), $0\\to13$ (racines $5$ et $8$).\n\n**2.** $d^{\\circ-}(x)$ = nombre d'arcs qui arrivent en $x$ (somme de la colonne $x$ de la matrice) : $2, 1, 2, 0, 2, 3, 1, 1, 2, 2$ (total $16$ = nombre d'arcs).\n\n**3.** Ordre préfixe : $1, 2, 3, 5, 6, 7, 4, 8, 10, 9$ ; ordre suffixe : $5, 3, 6, 2, 7, 1, 9, 10, 8, 4$. Racines des arbres : $1, 4$.\n\nForêt (notation racine(fils)) : `1(2(3(5), 6), 7) 4(8(10(9)))`.\n\n![Forêt couvrante : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ; arcs 1 → 2, 1 → 6, 1 → 7, 2 → 3, 2 → 6, 3 → 1, 3 → 5, 4 → 3, 4 → 8, 4 → 9, 4 → 10, 5 → 1, 7 → 6, 8 → 5, 8 → 10, 10 → 9](/static/graphes/gr-16da588d4b80.svg)\n\n- arcs de la forêt : (1,2), (2,3), (3,5), (2,6), (1,7), (4,8), (8,10), (10,9)\n- arcs avant (vers un descendant non direct) : (1,6), (4,9), (4,10)\n- arcs arrière (vers un ascendant) : (3,1), (5,1)\n- arcs croisés (aucun lien de descendance) : (7,6), (4,3), (8,5)\n\nIl y a au moins un arc arrière : le graphe contient un circuit. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.\n\n**4.** ```python\ndef is_bipartite(G):\n    color = [0] * G.order\n    for s in range(G.order):\n        if color[s] == 0:\n            color[s] = 1\n            q = Queue()\n            q.enqueue(s)\n            while not q.isempty():\n                x = q.dequeue()\n                for y in G.adjlists[x]:\n                    if color[y] == 0:\n                        color[y] = 3 - color[x]\n                        q.enqueue(y)\n                    elif color[y] == color[x]:\n                        return False\n    return True\n```\n\nOn colore le départ en $1$ puis chaque voisin non coloré avec la couleur opposée $3-c$ ; une arête vers un sommet de même couleur prouve un cycle impair, donc que le graphe n'est pas biparti. On relance sur chaque composante.",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins · $\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$ · couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$ · BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "g133",
+     "src": "Partiel P3 algo, 17 décembre 2019 (Past-Exams S3/Finals/Algo/2023), ex. 1 et 2",
+     "enonce": "**Partiel de décembre 2019 (extraits).** Représentation, ordre suffixe, Warshall et trouver-réunir.",
+     "sol": "**1.** La fermeture transitive $G^*$ relie deux sommets si et seulement si une chaîne les relie dans $G$. Propriétés : (1) c'est un graphe non orienté **symétrique** et réflexif si on compte la diagonale ; (2) ses composantes connexes sont des **graphes complets** : $G^*$ est une réunion de cliques, une par composante ; (3) $G$ est connexe si et seulement si $G^*$ est complet. Ici $G$ est un arbre de $9$ sommets : $G^*=K_9$ (36 arêtes).\n\n**2.** On note un sommet quand tous ses successeurs sont traités (dernière rencontre) : on remonte, le départ est noté en dernier pour son arbre.\n\nOrdre : $2, 6, 8, 9, 7, 4, 5, 3, 1$.\n\n**3.** La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 3, 4, 8, 12\\}$ ; $\\{1, 7, 9, 10\\}$ ; $\\{2, 5, 11\\}$ ; $\\{6, 13\\}$. Il y en a $4$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $25+16+9+4=54$.\n\n**4.** Conditions : un arbre par composante, tout père dans la composante de son fils.\n\n- $P_1$ : impossible, le sommet $4$ a pour père $1$ d'une autre composante.\n- $P_2$ : possible (chaque arbre couvre une composante).\n- $P_3$ : possible (chaque arbre couvre une composante).\n- $P_4$ : impossible, les arbres ne couvrent pas exactement les composantes (une composante est coupée en plusieurs arbres).\n\n(On ne connaît pas la liste des arêtes : ce sont des conditions nécessaires, qui suffisent à éliminer les vecteurs impossibles.)",
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$ · préfixe : première rencontre · suffixe : dernière rencontre · récursion · $O(n+m)$ · relance sur les sommets non marqués · racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "g134",
+     "src": "Contrôle C3 algo, novembre 2019 (Past-Exams S3/Midterms/Algo/2023), ex. 1 ; Rattrapage P3 algo, 14 mai 2019 (Past-Exams S3/Finals/Algo/2023#), ex. 4 ; Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 5",
+     "enonce": "**Terminologie, tri topologique et chaîne eulérienne.**",
+     "sol": "**1.** L'ordre est $|S|=10$. Un sommet de degré nul s'appelle un sommet isolé (ici : aucun, tous sont extrémité d'un arc). Demi-degré extérieur nul (aucune liste de successeurs) : $6, 9$. Demi-degré intérieur égal à $1$ : $2, 7, 8$ (demi-degrés intérieurs $2, 1, 2, 0, 2, 3, 1, 1, 2, 2$).\n\n**2.** ```python\ndef _dfs(G, x, mark, res):\n    mark[x] = True\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            _dfs(G, y, mark, res)\n    res.insert(0, x)\n\ndef topological_sort(G):\n    mark = [False] * G.order\n    res = []\n    for x in range(G.order):\n        if not mark[x]:\n            _dfs(G, x, mark, res)\n    return res\n```\n\nDans un graphe sans circuit, pour tout arc $(u,v)$ on a $\\text{suff}[v]<\\text{suff}[u]$ : trier les sommets par suffixe décroissant (insertion en tête de liste à la fin du traitement de chaque sommet) donne un tri topologique.\n\n**3.** ```python\ndef _visit(G, x, mark):\n    mark[x] = True\n    count = 1\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            count += _visit(G, y, mark)\n    return count\n\ndef is_eulerian(G):\n    mark = [False] * G.order\n    if _visit(G, 0, mark) != G.order:\n        return False\n    odd = 0\n    for x in range(G.order):\n        if len(G.adjlists[x]) % 2 == 1:\n            odd += 1\n    return odd == 0 or odd == 2\n```\n\nLe degré d'un sommet est `len(G.adjlists[x])`. $K_4$ a quatre sommets de degré $3$ : non eulérien.",
+     "formules": "$\\sum d^\\circ=2m$ · $d^{\\circ-}$ = somme de la colonne · $d^{\\circ+}$ = somme de la ligne · complet : $\\binom n2$ ou $n(n-1)$ · BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Examens, version plus longue (+20 %)",
+   "notions": [
+    "connexite",
+    "trouver-reunir",
+    "applications",
+    "classification"
+   ],
+   "exos": [
+    {
+     "id": "g141",
+     "src": "Partiel P3 algo, 18 décembre 2018 (Past-Exams S3/Finals/Algo/2022), ex. 1, 3, 4 et 5",
+     "enonce": "**Partiel de décembre 2018 (extraits).** Warshall, composantes, diamètre et graphe eulérien.",
+     "sol": "**1.** La fermeture transitive est constituée de blocs de $1$ : deux sommets sont dans la même composante si et seulement si leur case vaut $1$. Composantes : $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8\\}$ ; $\\{4, 9\\}$. Il y en a $3$, qui est aussi le rang de la matrice (lignes identiques dans un même bloc). Nombre de $1$ : $16+16+4=36$.\n\n**2.** ```python\ndef _comp(G, x, nocc, cc):\n    cc[x] = nocc\n    for y in G.adjlists[x]:\n        if cc[y] == 0:\n            _comp(G, y, nocc, cc)\n\ndef components(G):\n    cc = [0] * G.order\n    nocc = 0\n    for x in range(G.order):\n        if cc[x] == 0:\n            nocc += 1\n            _comp(G, x, nocc, cc)\n    return (nocc, cc)\n```\n\nLe vecteur d'entiers remplace le vecteur de booléens ; $0$ signifie « non visité ». Le numéro augmente à chaque relance : un parcours complet en $O(n+m)$.\n\n**3.** ```python\ndef _farthest(G, s):\n    dist = [-1] * G.order\n    dist[s] = 0\n    q = Queue()\n    q.enqueue(s)\n    last = s\n    while not q.isempty():\n        last = q.dequeue()\n        for y in G.adjlists[last]:\n            if dist[y] == -1:\n                dist[y] = dist[last] + 1\n                q.enqueue(y)\n    return (last, dist[last])\n\ndef diameter(G):\n    s1 = _farthest(G, 0)[0]\n    return _farthest(G, s1)[1]\n```\n\nLe dernier sommet défilé d'un parcours en largeur est à distance maximale. Deux parcours : $O(n)$ dans un arbre.\n\n**4.** ```python\ndef _visit(G, x, mark):\n    mark[x] = True\n    count = 1\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            count += _visit(G, y, mark)\n    return count\n\ndef is_eulerian(G):\n    mark = [False] * G.order\n    if _visit(G, 0, mark) != G.order:\n        return False\n    odd = 0\n    for x in range(G.order):\n        if len(G.adjlists[x]) % 2 == 1:\n            odd += 1\n    return odd == 0 or odd == 2\n```\n\nLe degré d'un sommet est `len(G.adjlists[x])`. $K_4$ a quatre sommets de degré $3$ : non eulérien.",
+     "formules": "un arbre de la forêt = une composante · Warshall : $C[x,y]\\leftarrow C[x,y]\\lor(C[x,i]\\land C[i,y])$ · rang de la fermeture = nombre de composantes · blocs $s^2$ · listes d'adjacence `G.adjlists[x]` · `Queue` : `enqueue`, `dequeue`, `isempty` · marquer à l'enfilage (BFS), à l'entrée (DFS) · vecteur d'entiers pour les composantes · BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "g142",
+     "src": "Partiel P3 algo, 5 janvier 2021 (Past-Exams S3/Finals/Algo/2024), ex. 2 ; Rattrapage P3 algo, 12 mai 2021 (Past-Exams S3/Finals/Algo/2025#), ex. 3 et 4",
+     "enonce": "**Union-find, densité et niveaux.**",
+     "sol": "**1.** Les racines sont les cases négatives ; chaque arbre est une composante, et la valeur négative donne sa taille : composantes $\\{0, 2, 5, 6\\}$ ; $\\{1, 3, 7, 8, 10, 13\\}$ ; $\\{4, 9, 11, 12\\}$, tailles $4, 4, 6$. Il y a $3$ composantes : il suffit de $2$ arêtes, qui relient chacune deux composantes différentes (par exemple entre racines : $5$—$8$, $8$—$12$).\n\nUne chaîne entre $a$ et $b$ existe si et seulement si $a$ et $b$ ont la même racine. Impossibles : $11\\to6$ (racines $12$ et $5$), $0\\to13$ (racines $5$ et $8$).\n\nAjout de l'arête $7$—$4$ (union pondérée + compression) : `trouver(7)` = $8$, `trouver(4)` = $12$ ; le plus petit arbre est rattaché à la racine du plus grand. Nouveau vecteur : $5, 8, 5, 8, 12, -4, 5, 8, -10, 12, 8, 12, 8, 8$.\n\n**2.** ```python\ndef _comp(G, x, nocc, cc):\n    cc[x] = nocc\n    for y in G.adjlists[x]:\n        if cc[y] == 0:\n            _comp(G, y, nocc, cc)\n\ndef density_components(G):\n    cc = [0] * G.order\n    nocc = 0\n    for x in range(G.order):\n        if cc[x] == 0:\n            nocc += 1\n            _comp(G, x, nocc, cc)\n    nbv = [0] * nocc\n    nbl = [0] * nocc\n    for x in range(G.order):\n        nbv[cc[x] - 1] += 1\n        nbl[cc[x] - 1] += len(G.adjlists[x])\n    res = []\n    for c in range(nocc):\n        res.append(nbl[c] / 2 / nbv[c])\n    return res\n```\n\nLe nombre d'arêtes d'une composante est la moitié de la somme des longueurs des listes de ses sommets (chaque arête apparaît deux fois). Pour un graphe connexe simple : $p$ va de $n-1$ (arbre) à $\\frac{n(n-1)}2$ (graphe complet).\n\n**3.** ```python\ndef levels(G, src):\n    dist = [-1] * G.order\n    dist[src] = 0\n    res = [[src]]\n    q = Queue()\n    q.enqueue(src)\n    while not q.isempty():\n        x = q.dequeue()\n        for y in G.adjlists[x]:\n            if dist[y] == -1:\n                dist[y] = dist[x] + 1\n                if dist[y] == len(res):\n                    res.append([])\n                res[dist[y]].append(y)\n                q.enqueue(y)\n    return res\n```\n\nUn parcours en largeur : les sommets sortent de la file par distance croissante. On ajoute une sous-liste quand on rencontre pour la première fois une nouvelle distance. Complexité $O(n+m)$.",
+     "formules": "racine : $p[x]<0$ · `trouver` remonte · `reunir` : $p[r_y]\\leftarrow r_x$ · union pondérée : racine $=-$taille · hauteur $\\le\\log_2 n$ · compression des chemins · BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "g143",
+     "src": "Rattrapage P3 algo, 15 mai (Past-Exams S3/Finals/Algo/2022#), ex. 2 et 3 ; Rattrapage P3 algo, 12 mai 2021 (Past-Exams S3/Finals/Algo/2025#), ex. 2",
+     "enonce": "**Arbre, centre, graphe sans circuit et forêt couvrante.**",
+     "sol": "**1.** ```python\ndef _dfs(G, x, father, mark):\n    mark[x] = True\n    for y in G.adjlists[x]:\n        if not mark[y]:\n            if not _dfs(G, y, x, mark):\n                return False\n        elif y != father:\n            return False\n    return True\n\ndef is_tree(G):\n    mark = [False] * G.order\n    if not _dfs(G, 0, -1, mark):\n        return False\n    for x in range(G.order):\n        if not mark[x]:\n            return False\n    return True\n```\n\nSans cycle : pendant le parcours, un voisin déjà marqué qui n'est pas le père prouve un cycle. Connexe : tous les sommets sont marqués après un seul parcours.\n\n**2.** ```python\ndef _ecc(G, s):\n    dist = [-1] * G.order\n    dist[s] = 0\n    q = Queue()\n    q.enqueue(s)\n    best = 0\n    while not q.isempty():\n        x = q.dequeue()\n        best = max(best, dist[x])\n        for y in G.adjlists[x]:\n            if dist[y] == -1:\n                dist[y] = dist[x] + 1\n                q.enqueue(y)\n    return best\n\ndef center(G):\n    ecc = []\n    for x in range(G.order):\n        ecc.append(_ecc(G, x))\n    radius = ecc[0]\n    for x in range(G.order):\n        radius = min(radius, ecc[x])\n    res = []\n    for x in range(G.order):\n        if ecc[x] == radius:\n            res.append(x)\n    return res\n```\n\nUn parcours en largeur depuis chaque sommet donne son excentricité : $O(n(n+m))$.\n\n**3.** ```python\ndef _dfs(G, x, mark):\n    mark[x] = 1\n    for y in G.adjlists[x]:\n        if mark[y] == 1:\n            return False\n        if mark[y] == 0 and not _dfs(G, y, mark):\n            return False\n    mark[x] = 2\n    return True\n\ndef acyclic(G):\n    mark = [0] * G.order\n    for x in range(G.order):\n        if mark[x] == 0 and not _dfs(G, x, mark):\n            return False\n    return True\n```\n\nUn arc vers un sommet à la première rencontre (en cours de traitement) est un arc arrière, donc un circuit. Un arc vers un sommet terminé est avant ou croisé : sans danger.\n\n**4.** Ordre préfixe : $3, 1, 2, 5, 6, 4, 8, 9, 7$ ; ordre suffixe : $5, 2, 6, 1, 7, 9, 8, 4, 3$. Racines des arbres : $3$.\n\nForêt (notation racine(fils)) : `3(1(2(5), 6), 4(8(9(7))))`.\n\n![Forêt couvrante : orienté, sommets 1, 2, 3, 4, 5, 6, 7, 8, 9 ; arcs 1 → 2, 1 → 6, 2 → 3, 2 → 5, 3 → 1, 3 → 4, 3 → 5, 4 → 5, 4 → 8, 6 → 2, 6 → 5, 7 → 5, 7 → 6, 7 → 8, 8 → 5, 8 → 9, 9 → 4, 9 → 7](/static/graphes/gr-ff250a7f9ea5.svg)\n\n- arcs de la forêt : (3,1), (1,2), (2,5), (1,6), (3,4), (4,8), (8,9), (9,7)\n- arcs avant (vers un descendant non direct) : (3,5)\n- arcs arrière (vers un ascendant) : (2,3), (9,4), (7,8)\n- arcs croisés (aucun lien de descendance) : (6,2), (6,5), (4,5), (8,5), (7,5), (7,6)\n\nAvec un compteur unique commençant à $1$ (numéro pris à la première puis à la dernière rencontre) :\n\n```\nsommet :   1   2   3   4   5   6   7   8   9\npref   :   2   3   1  10   4   7  13  11  12\nsuff   :   9   6  18  17   5   8  14  16  15\n```\n\nIl y a au moins un arc arrière : le graphe contient un circuit. Légende du dessin : trait plein = arc couvrant, pointillé = autre arc, A = avant, R = arrière, C = croisé.",
+     "formules": "BFS par niveaux · 2-coloration $3-c$ · arc arrière = marque « en cours » · arbre : $m=n-1$ et connexe · suffixe inverse = tri topologique · Euler : $0$ ou $2$ degrés impairs · couvrant · avant : $\\text{pref}[x]<\\text{pref}[y]$, $\\text{suff}[y]<\\text{suff}[x]$ · arrière : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[x]<\\text{suff}[y]$ · croisé : $\\text{pref}[y]<\\text{pref}[x]$, $\\text{suff}[y]<\\text{suff}[x]$",
+     "duree": 20,
+     "type": "multi"
+    }
+   ]
+  }
+ ]
+}

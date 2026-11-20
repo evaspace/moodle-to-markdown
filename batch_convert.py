@@ -89,6 +89,26 @@ def call_mistral_cleanup(markdown_text: str, api_key: str, model: str = "mistral
         return markdown_text
 
 
+KEEP_SKIP_EXT = {".md", ".part", ".tmp"}
+
+
+def keep_original(source_path: Path, target_path: Path, stats: Optional[Dict[str, int]] = None) -> None:
+    """
+    Garde l'original (PDF, PPTX, images, vidéos, ZIP...) à côté du Markdown pour que le site
+    puisse le servir (liens ./fichiers/x.pdf des README). Lien physique : aucun octet dupliqué.
+    """
+    if source_path.suffix.lower() in KEEP_SKIP_EXT or source_path.name.startswith("."):
+        return
+    if target_path.exists():
+        return
+    try:
+        os.link(source_path, target_path)
+    except OSError:
+        shutil.copy2(source_path, target_path)
+    if stats is not None:
+        stats["originals"] = stats.get("originals", 0) + 1
+
+
 def process_file(
     source_path: Path,
     target_path: Path,
@@ -101,6 +121,7 @@ def process_file(
     Processes a single file: copies if already markdown, or converts using MarkItDown.
     """
     ext = source_path.suffix.lower()
+    keep_original(source_path, target_path, stats)
     supported_extensions = {".pdf", ".docx", ".pptx", ".xlsx", ".html", ".htm", ".csv", ".json", ".xml"}
 
     if ext == ".md":
@@ -190,7 +211,7 @@ def convert_directory(
             target_file = target_root / file
 
             process_file(
-                source_file=source_file,
+                source_path=source_file,
                 target_path=target_file,
                 md_converter=md_converter,
                 mistral_key=mistral_key,

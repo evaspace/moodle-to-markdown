@@ -1,0 +1,1959 @@
+{
+ "subject": {
+  "id": "physique-s3-em",
+  "ordre": 345,
+  "matiere": "physique",
+  "semestre": "S3",
+  "ecue": "EM2",
+  "titre": "Électromagnétisme II : théorème de Gauss et ondes",
+  "chapitres_moodle": [
+   "01_Cours et TD",
+   "02_TD Corrigé",
+   "05_QCM"
+  ],
+  "td": "TD1 à TD5 EM2 (S3 2026)",
+  "examens": [
+   "Examen B5 Électromagnétisme (octobre)",
+   "Partiel de physique S3 (décembre)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "vect",
+   "titre": "Vecteurs, produit scalaire et vectoriel (rappel S1)",
+   "formule": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=u_xv_x+u_yv_y+u_zv_z=\\|\\vec u\\|\\|\\vec v\\|\\cos\\theta$ · $\\vec u\\wedge\\vec v=(u_yv_z-u_zv_y,\\ u_zv_x-u_xv_z,\\ u_xv_y-u_yv_x)$",
+   "exemple": "$\\vec E$ de norme $10$ incliné de $60^\\circ$ sur $\\vec u_x$ : $E_x=\\vec E\\cdot\\vec u_x=10\\cos60^\\circ=5$",
+   "cours": "Le produit scalaire sert à projeter un vecteur sur un axe (composante) et à calculer un flux ; le produit vectoriel donne la direction de la force de Lorentz $q\\vec v\\wedge\\vec B$ (perpendiculaire aux deux vecteurs, sens de la règle de la main droite). Rappel S1 : parcours de mécanique (`physique-s1-meca`)."
+  },
+  {
+   "id": "integ",
+   "titre": "Intégrales et éléments d'intégration (rappel S1/S2)",
+   "formule": "$dl=dx$ · $dl=R\\,d\\theta$ (anneau) · $d^2S=dx\\,dy$ · $d^2S=r\\,dr\\,d\\theta$ (disque) · $d\\tau=r\\,dr\\,d\\theta\\,dz$ (cylindre) · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$ (sphère) · $Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$",
+   "exemple": "volume de la sphère : $\\int_0^R r^2dr\\int_0^\\pi\\sin\\theta\\,d\\theta\\int_0^{2\\pi}d\\varphi=\\frac{R^3}3\\times2\\times2\\pi=\\frac43\\pi R^3$",
+   "cours": "Choisir les coordonnées adaptées à la géométrie (voir la fiche de coordonnées du cours), écrire la charge élémentaire $dQ=\\rho\\,d\\tau$ puis intégrer sur le domaine. Si la densité dépend de $r$, elle reste sous l'intégrale. Rappel : parcours d'intégrales de S1 (`maths-s1-apis-integrales`) et TD1 ex. 2-3, TD5 ex. 1."
+  },
+  {
+   "id": "coulomb",
+   "titre": "Coulomb, champ et superposition (rappel S2)",
+   "formule": "$F=k\\frac{|q_1q_2|}{r^2}$ · $\\vec E=k\\frac q{r^2}\\vec u_r$ · $\\vec F=q\\vec E$ · $\\vec E_{tot}=\\sum\\vec E_i$ · $k=\\frac1{4\\pi\\varepsilon_0}\\approx9\\times10^9$",
+   "exemple": "$q=1$ nC à $0{,}3$ m : $E=\\frac{9\\times10^9\\times10^{-9}}{0{,}09}=100$ V·m$^{-1}$",
+   "cours": "Le champ d'une charge ponctuelle est radial, sortant si $q>0$, rentrant si $q<0$. Pour plusieurs charges : un champ par charge, projection sur les axes, somme des composantes (jamais la somme des normes). Rappel S2 : parcours `physique-s2-em`."
+  },
+  {
+   "id": "potentiel",
+   "titre": "Potentiel et énergie (rappel S2)",
+   "formule": "$V=k\\frac qr$ (scalaire : somme algébrique) · $E_p=qV$ · $E_{pe}=\\sum_{paires}k\\frac{q_iq_j}{r_{ij}}$ · $\\vec E=-\\overrightarrow{\\mathrm{grad}}\\,V$ · $V_B-V_A=-\\int_A^B\\vec E\\cdot d\\vec l$",
+   "exemple": "$V=ar\\,e^{-b/r}$ : $E_r=-\\frac{dV}{dr}=-ae^{-b/r}\\left(1+\\frac br\\right)$",
+   "cours": "Le potentiel s'additionne sans projection. En un seul paramètre $r$, $E_r=-\\frac{dV}{dr}$ ; inversement $V(r)=-\\int E\\,dr+\\text{cste}$ : la constante se fixe par une référence (par exemple $V(\\infty)=0$) ou par la continuité de $V$. Gradient en cylindriques : $\\left(\\frac\\partial{\\partial r},\\frac1r\\frac\\partial{\\partial\\theta},\\frac\\partial{\\partial z}\\right)$ ; en sphériques : $\\left(\\frac\\partial{\\partial r},\\frac1r\\frac\\partial{\\partial\\theta},\\frac1{r\\sin\\theta}\\frac\\partial{\\partial\\varphi}\\right)$."
+  },
+  {
+   "id": "lorentz",
+   "titre": "Force de Lorentz et spectromètre de masse (rappel S2)",
+   "formule": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $\\frac12mv^2=qU$ · $R=\\frac{mv}{|q|B}$ (cercle) · $\\vec F_{mag}\\perp\\vec v$ : elle ne travaille pas",
+   "exemple": "proton ($m=1{,}6\\times10^{-27}$ kg), $v=10^5$ m·s$^{-1}$, $B=0{,}5$ T : $R=2$ mm",
+   "cours": "Dans une cavité d'accélération, seul $\\vec E$ agit : $E_c=qU$. Dans la zone de séparation, $\\vec B$ perpendiculaire à $\\vec v$ donne un mouvement circulaire uniforme d'accélération $-\\frac{v^2}R\\vec e_r$, d'où $R=\\frac{mv}{|q|B}$ : à $v$ et $B$ fixés, $R\\propto m$, ce qui sépare les isotopes (Examen octobre 2024)."
+  },
+  {
+   "id": "oem",
+   "titre": "Onde plane progressive monochromatique",
+   "formule": "$\\vec E=\\vec E_0\\cos(\\omega t-kx)$ · $c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $\\omega=2\\pi f$ · $T=\\frac1f$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial^2E}{\\partial x^2}=\\frac1{c^2}\\frac{\\partial^2E}{\\partial t^2}$",
+   "exemple": "$f=100$ MHz : $\\lambda=\\frac{3\\times10^8}{10^8}=3$ m",
+   "cours": "Une onde polarisée rectilignement qui se propage selon $x$ avec $\\vec E$ selon $y$ et $\\vec B$ selon $z$ obéit à $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$ et $\\frac{\\partial B}{\\partial x}=-\\frac1{c^2}\\frac{\\partial E}{\\partial t}$ ; on en déduit l'équation d'onde. $\\vec E\\perp\\vec B$, $(\\vec E,\\vec B,\\vec u_x)$ direct. Dans le vide, la célérité est celle de la lumière, $c=3\\times10^8$ m·s$^{-1}$ ; $\\lambda$ en m, $f$ en Hz, $\\omega$ en rad·s$^{-1}$."
+  },
+  {
+   "id": "symetrie",
+   "titre": "Principe de Curie, symétries et invariances",
+   "formule": "plan de symétrie $\\Pi$ : $\\vec E(M)\\in\\Pi$ · plan d'antisymétrie $\\Pi^*$ : $\\vec E(M)\\perp\\Pi^*$ · invariance par translation selon $z$ : $\\vec E$ ne dépend pas de $z$ · invariance par rotation d'angle $\\theta$ : pas de dépendance en $\\theta$",
+   "exemple": "fil infini : deux plans de symétrie $(M,\\vec u_r,\\vec u_z)$ et $(M,\\vec u_r,\\vec u_\\theta)$ donnent $E_\\theta=E_z=0$ ; les invariances donnent $\\vec E=E_r(r)\\vec u_r$",
+   "cours": "Les éléments de symétrie des causes (la distribution de charges) se retrouvent dans les effets (le champ). Méthode : lister les plans de symétrie qui passent par $M$ (le champ est dans leur intersection), puis les invariances (le champ ne dépend pas de ces coordonnées). On passe de trois composantes dépendant de trois variables à une seule composante dépendant d'une seule variable."
+  },
+  {
+   "id": "flux",
+   "titre": "Flux d'un champ à travers une surface",
+   "formule": "$\\Phi=\\iint_S\\vec F\\cdot d\\vec S$ · champ uniforme, surface plane : $\\Phi=FS\\cos\\alpha$ · sphère de rayon $r$, champ radial : $\\Phi=E(r)\\,4\\pi r^2$ · cylindre latéral : $\\Phi=E(r)\\,2\\pi rh$",
+   "exemple": "$E=200$ V·m$^{-1}$ à $60^\\circ$ de la normale d'un disque de rayon $0{,}1$ m : $\\Phi=200\\times\\pi\\times0{,}01\\times\\frac12=\\pi$ V·m",
+   "cours": "Le flux est un scalaire proportionnel à la densité du champ, à l'aire et à l'orientation de la surface. $d\\vec S$ est orienté vers l'extérieur d'une surface fermée. Sur les faces où $\\vec E\\perp d\\vec S$ le flux est nul ; sur celles où $\\vec E\\parallel d\\vec S$ avec $E$ constant, $\\Phi=\\pm E\\,S$."
+  },
+  {
+   "id": "gauss",
+   "titre": "Théorème de Gauss",
+   "formule": "$\\oiint_{S_G}\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $\\varepsilon_0=\\frac1{4\\pi k}\\approx8{,}85\\times10^{-12}$ F·m$^{-1}$",
+   "exemple": "charge ponctuelle : sphère de rayon $r$, $E\\,4\\pi r^2=\\frac q{\\varepsilon_0}$, donc $E=\\frac q{4\\pi\\varepsilon_0r^2}=k\\frac q{r^2}$ (on retrouve Coulomb)",
+   "cours": "Méthode en sept étapes : (1) système de coordonnées, (2) symétries, (3) invariances, (4) surface de Gauss fermée passant par $M$, (5) flux, (6) charge intérieure $Q_{int}$ (intégrale de la densité), (7) conclusion. Toutes les charges créent le champ, mais seules celles à l'intérieur de la surface de Gauss comptent dans $Q_{int}$ : le flux ne voit que l'intérieur."
+  },
+  {
+   "id": "gauss-cyl",
+   "titre": "Gauss : fil et cylindre infinis",
+   "formule": "fil : $\\vec E=\\frac\\lambda{2\\pi\\varepsilon_0r}\\vec u_r$ · cylindre plein ($\\rho$) : $E=\\frac{\\rho r}{2\\varepsilon_0}$ ($r < R$), $E=\\frac{\\rho R^2}{2\\varepsilon_0r}$ ($r > R$) · cylindre creux ($\\sigma$) : $E=0$ ($r < a$), $E=\\frac{\\sigma a}{\\varepsilon_0r}$ ($r > a$)",
+   "exemple": "fil de $\\lambda=1$ nC·m$^{-1}$ à $0{,}2$ m : $E=\\frac{2k\\lambda}r=\\frac{18}{0{,}2}=90$ V·m$^{-1}$",
+   "cours": "Coordonnées cylindriques, $\\vec E=E_r(r)\\vec u_r$. Surface de Gauss : cylindre fermé de rayon $r$ et de hauteur $h$ ; le flux traverse la surface latérale seule : $\\Phi=E_r\\,2\\pi rh$. Charge intérieure : $\\lambda h$ pour un fil, $\\iiint\\rho\\,r\\,dr\\,d\\theta\\,dz$ pour une densité volumique (limite à $R$ si $r > R$). Le champ est discontinu de $\\frac\\sigma{\\varepsilon_0}$ à la traversée d'une nappe chargée en surface."
+  },
+  {
+   "id": "gauss-plan",
+   "titre": "Gauss : plan infini et condensateur plan",
+   "formule": "plan : $\\vec E=\\pm\\frac\\sigma{2\\varepsilon_0}\\vec u_z$ · deux plans $\\pm\\sigma$ : $E=\\frac\\sigma{\\varepsilon_0}$ entre eux, $0$ dehors · $U=Ee=\\frac{\\sigma e}{\\varepsilon_0}$ · $C=\\frac QU=\\frac{\\varepsilon_0S}e$",
+   "exemple": "$S=1$ m$^2$, $e=1$ mm : $C=\\frac{\\varepsilon_0S}e\\approx8{,}85$ nF",
+   "cours": "Coordonnées cartésiennes, $\\vec E=E_z(z)\\vec u_z$, impair en $z$. Surface de Gauss : cylindre fermé de section $S$ traversant le plan : deux bases de flux $E_zS$ chacune, d'où $2E_zS=\\frac{\\sigma S}{\\varepsilon_0}$. Deux plans $\\pm\\sigma$ : superposition. $E=-\\frac{dV}{dz}$ donne $U=Ee$. Pour augmenter $C$ à encombrement donné : réduire $e$ (limité par la tension de claquage, environ $32$ kV·cm$^{-1}$ dans l'air)."
+  },
+  {
+   "id": "gauss-sph",
+   "titre": "Gauss : sphère chargée",
+   "formule": "sphère pleine ($\\rho_0$) : $E=\\frac{\\rho_0r}{3\\varepsilon_0}$ ($r < R$), $E=\\frac{\\rho_0R^3}{3\\varepsilon_0r^2}$ ($r > R$) · sphère creuse ($\\sigma$) : $E=0$ puis $\\frac{\\sigma R^2}{\\varepsilon_0r^2}$ · flux : $E\\,4\\pi r^2$",
+   "exemple": "$\\rho(r)=\\rho_0\\frac{r^2}{R^2}$ : $Q_{int}=\\frac{4\\pi\\rho_0r^5}{5R^2}$, d'où $E=\\frac{\\rho_0r^3}{5\\varepsilon_0R^2}$ ($r < R$)",
+   "cours": "Coordonnées sphériques : tout plan contenant $OM$ est plan de symétrie, donc $\\vec E=E_r(r)\\vec u_r$. Surface de Gauss : sphère de rayon $r$ passant par $M$ ; $Q_{int}=\\int_0^r\\rho(s)\\,4\\pi s^2\\,ds$. À l'extérieur, la sphère se comporte comme une charge ponctuelle $Q_{tot}$ placée en $O$. Si $\\rho$ varie, vérifier la continuité de $E$ en $r=R$ (il n'y a de saut que s'il existe une charge surfacique)."
+  },
+  {
+   "id": "anneau",
+   "titre": "Distribution continue sans Gauss : l'anneau",
+   "formule": "$E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$ · loin : $E\\approx\\frac{kQ}{z^2}$ avec $Q=2\\pi R\\lambda$",
+   "exemple": "carré de côté $L$, charge $q$ à chaque sommet, sur l'axe : $E=\\frac{4kqx}{(x^2+L^2/2)^{3/2}}$, maximal en $x=\\frac L2$",
+   "cours": "Quand il n'y a pas assez de symétries pour Gauss (anneau, disque), on revient à Coulomb : par symétrie le champ est sur l'axe, on projette $dE_z=dE\\cos\\alpha$ avec $\\cos\\alpha=\\frac z{\\sqrt{R^2+z^2}}$, puis on intègre sur $\\theta$ de $0$ à $2\\pi$ avec $dQ=\\lambda R\\,d\\theta$ (TD2). Contrôles de cohérence : analyse dimensionnelle, comportement quand $z$ varie, et $E\\to\\frac{kQ}{z^2}$ quand $z\\gg R$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "vect",
+   "type": "vf",
+   "q": "Le produit scalaire de deux vecteurs orthogonaux est nul.",
+   "bonne": true
+  },
+  {
+   "notion": "vect",
+   "type": "qcm",
+   "q": "Le produit vectoriel $\\vec u\\wedge\\vec v$ est :",
+   "choix": [
+    "orthogonal à $\\vec u$ et à $\\vec v$",
+    "colinéaire à $\\vec u$",
+    "un scalaire",
+    "toujours positif"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "integ",
+   "type": "qcm",
+   "q": "L'élément de longueur d'un anneau de rayon $R$ est :",
+   "choix": [
+    "$R\\,d\\theta$",
+    "$d\\theta$",
+    "$R^2d\\theta$",
+    "$dR$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "integ",
+   "type": "qcm",
+   "q": "L'élément de volume en coordonnées sphériques est :",
+   "choix": [
+    "$r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+    "$r\\,dr\\,d\\theta\\,d\\varphi$",
+    "$dr\\,d\\theta\\,d\\varphi$",
+    "$r\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "integ",
+   "type": "vf",
+   "q": "La densité surfacique de charge s'exprime en C·m$^{-2}$.",
+   "bonne": true
+  },
+  {
+   "notion": "coulomb",
+   "type": "qcm",
+   "q": "La force de Coulomb entre deux charges est multipliée par quoi si la distance est doublée ?",
+   "choix": [
+    "$\\frac14$",
+    "$\\frac12$",
+    "$2$",
+    "$4$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "coulomb",
+   "type": "vf",
+   "q": "La force de Coulomb peut être attractive ou répulsive, contrairement à la force gravitationnelle.",
+   "bonne": true
+  },
+  {
+   "notion": "potentiel",
+   "type": "qcm",
+   "q": "Le potentiel d'une charge ponctuelle $q$ à la distance $r$ est :",
+   "choix": [
+    "$\\frac{kq}r$",
+    "$\\frac{kq}{r^2}$",
+    "$\\frac{kq^2}r$",
+    "$kqr$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "potentiel",
+   "type": "qcm",
+   "q": "La différence de potentiel entre $A$ et $B$ s'écrit :",
+   "choix": [
+    "$V_B-V_A=-\\int_A^B\\vec E\\cdot d\\vec l$",
+    "$V_B-V_A=\\int_A^B\\vec E\\cdot d\\vec l$",
+    "$V_B-V_A=\\vec E\\,AB$",
+    "aucune des propositions précédentes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "potentiel",
+   "type": "vf",
+   "q": "La force électrostatique est conservative.",
+   "bonne": true
+  },
+  {
+   "notion": "lorentz",
+   "type": "qcm",
+   "q": "La force de Lorentz s'écrit :",
+   "choix": [
+    "$q\\vec E+q\\vec v\\wedge\\vec B$",
+    "$q\\vec E+q\\vec v\\cdot\\vec B$",
+    "$q\\vec v\\wedge\\vec E$",
+    "$q\\vec B$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lorentz",
+   "type": "vf",
+   "q": "La force magnétique modifie l'énergie cinétique de la particule.",
+   "bonne": false
+  },
+  {
+   "notion": "lorentz",
+   "type": "qcm",
+   "q": "Dans un champ $\\vec B$ uniforme perpendiculaire à $\\vec v$, la trajectoire est :",
+   "choix": [
+    "un cercle parcouru à vitesse constante",
+    "une droite",
+    "une parabole",
+    "une spirale qui s'élargit"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "oem",
+   "type": "qcm",
+   "q": "La célérité d'une onde se calcule par :",
+   "choix": [
+    "$c=\\lambda\\times f$",
+    "$c=\\lambda-f$",
+    "$c=\\frac\\lambda f$",
+    "$c=\\frac f\\lambda$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "oem",
+   "type": "qcm",
+   "q": "L'unité de la célérité est :",
+   "choix": [
+    "le mètre par seconde",
+    "le mètre",
+    "la seconde",
+    "le hertz"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "oem",
+   "type": "vf",
+   "q": "Pour une OPPM dans le vide, $B_0=\\frac{E_0}c$ et $\\vec E\\perp\\vec B$.",
+   "bonne": true
+  },
+  {
+   "notion": "symetrie",
+   "type": "qcm",
+   "q": "En un point d'un plan de symétrie de la distribution, le champ électrique est :",
+   "choix": [
+    "contenu dans ce plan",
+    "perpendiculaire à ce plan",
+    "nul",
+    "quelconque"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "symetrie",
+   "type": "vf",
+   "q": "Si la distribution est invariante par translation selon $Oz$, $\\vec E$ ne dépend pas de $z$.",
+   "bonne": true
+  },
+  {
+   "notion": "symetrie",
+   "type": "qcm",
+   "q": "Un fil infini chargé uniformément est invariant par :",
+   "choix": [
+    "rotation autour de l'axe et translation le long de l'axe",
+    "translation perpendiculaire à l'axe",
+    "aucune transformation",
+    "rotation autour d'un axe perpendiculaire"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "flux",
+   "type": "qcm",
+   "q": "Le flux d'un champ radial $E(r)$ à travers une sphère de rayon $r$ est :",
+   "choix": [
+    "$E(r)\\,4\\pi r^2$",
+    "$E(r)\\,\\pi r^2$",
+    "$E(r)\\frac43\\pi r^3$",
+    "$E(r)\\,2\\pi r$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "flux",
+   "type": "qcm",
+   "q": "Le flux d'un champ uniforme de norme $E$ qui forme un angle $\\alpha$ avec la normale à un disque de rayon $R$ est :",
+   "choix": [
+    "$\\pi R^2E\\cos\\alpha$",
+    "$4\\pi R^2E\\cos\\alpha$",
+    "$2\\pi RE\\cos\\alpha$",
+    "$\\pi R^2E$ quel que soit $\\alpha$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "flux",
+   "type": "vf",
+   "q": "Le flux d'un champ uniforme à travers une surface fermée est nul.",
+   "bonne": true
+  },
+  {
+   "notion": "gauss",
+   "type": "qcm",
+   "q": "Le théorème de Gauss relie le flux de $\\vec E$ à travers une surface fermée à :",
+   "choix": [
+    "la charge intérieure divisée par $\\varepsilon_0$",
+    "la charge surfacique de la surface",
+    "le nombre d'électrons qui la traversent",
+    "le flux à travers le volume"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss",
+   "type": "vf",
+   "q": "Les charges situées à l'extérieur de la surface de Gauss ne créent aucun champ.",
+   "bonne": false
+  },
+  {
+   "notion": "gauss",
+   "type": "vf",
+   "q": "La surface de Gauss doit passer par le point $M$ où l'on cherche le champ.",
+   "bonne": true
+  },
+  {
+   "notion": "gauss-cyl",
+   "type": "qcm",
+   "q": "Le champ d'un fil infini chargé avec $\\lambda$ vaut :",
+   "choix": [
+    "$\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+    "$\\frac\\lambda{4\\pi\\varepsilon_0r^2}$",
+    "$\\frac\\lambda{2\\varepsilon_0}$",
+    "$\\frac{\\lambda r}{2\\varepsilon_0}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-cyl",
+   "type": "qcm",
+   "q": "Le champ à l'intérieur d'un cylindre creux infini chargé en surface est :",
+   "choix": [
+    "nul",
+    "non nul mais constant",
+    "proportionnel à $r$",
+    "inversement proportionnel à $r$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-cyl",
+   "type": "vf",
+   "q": "Le système de coordonnées adapté à un fil infini est cylindrique.",
+   "bonne": true
+  },
+  {
+   "notion": "gauss-plan",
+   "type": "qcm",
+   "q": "Le champ d'un plan infini de densité $\\sigma$ est :",
+   "choix": [
+    "$\\frac\\sigma{2\\varepsilon_0}$",
+    "$\\frac\\sigma{\\varepsilon_0}$",
+    "$\\frac\\sigma{4\\pi\\varepsilon_0}$",
+    "$\\frac{\\sigma}{2\\pi\\varepsilon_0z}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-plan",
+   "type": "qcm",
+   "q": "La capacité d'un condensateur plan de surface $S$ et d'épaisseur $e$ est :",
+   "choix": [
+    "$\\frac{\\varepsilon_0S}e$",
+    "$\\frac{\\varepsilon_0e}S$",
+    "$\\varepsilon_0Se$",
+    "$\\frac{eS}{\\varepsilon_0}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-plan",
+   "type": "vf",
+   "q": "Entre deux plans infinis chargés $+\\sigma$ et $-\\sigma$, le champ vaut $\\frac\\sigma{\\varepsilon_0}$.",
+   "bonne": true
+  },
+  {
+   "notion": "gauss-sph",
+   "type": "qcm",
+   "q": "Pour une sphère uniformément chargée, on utilise de préférence les coordonnées :",
+   "choix": [
+    "sphériques",
+    "cylindriques",
+    "polaires",
+    "cartésiennes"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-sph",
+   "type": "qcm",
+   "q": "À l'extérieur d'une boule chargée, le champ est celui d'une charge ponctuelle :",
+   "choix": [
+    "égale à la charge totale, placée au centre",
+    "nulle",
+    "égale à $\\rho$, placée au centre",
+    "située sur la surface"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gauss-sph",
+   "type": "vf",
+   "q": "À l'intérieur d'une sphère creuse chargée en surface, le champ est nul.",
+   "bonne": true
+  },
+  {
+   "notion": "anneau",
+   "type": "qcm",
+   "q": "Par symétrie, le champ d'un anneau en un point de son axe est :",
+   "choix": [
+    "porté par l'axe",
+    "perpendiculaire à l'axe",
+    "nul",
+    "orthoradial"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "anneau",
+   "type": "vf",
+   "q": "Loin d'un anneau chargé, son champ se comporte comme celui d'une charge ponctuelle $Q=2\\pi R\\lambda$.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1 : vecteurs et projections",
+   "notions": [
+    "vect"
+   ],
+   "exos": [
+    {
+     "id": "vc1",
+     "enonce": "Norme du vecteur $\\vec u=(3,4,0)$ ?",
+     "ans": "5",
+     "sol": "$\\|\\vec u\\|=\\sqrt{3^2+4^2+0^2}=5$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Norme du vecteur $\\vec u=(2,3,6)$ ?",
+       "ans": "7",
+       "sol": "$\\sqrt{4+9+36}=7$."
+      }
+     ],
+     "formules": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=\\sum u_iv_i$ · $\\vec u\\wedge\\vec v$ · $E_x=E\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "vc2",
+     "enonce": "Produit scalaire de $\\vec u=(1,2,3)$ et $\\vec v=(4,-1,2)$ ?",
+     "ans": "8",
+     "sol": "$\\vec u\\cdot\\vec v=1\\times4+2\\times(-1)+3\\times2=4-2+6=8$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Produit scalaire de $\\vec u=(2,-1,0)$ et $\\vec v=(3,4,5)$ ?",
+       "ans": "2",
+       "sol": "$6-4+0=2$."
+      }
+     ],
+     "formules": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=\\sum u_iv_i$ · $\\vec u\\wedge\\vec v$ · $E_x=E\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "vc3",
+     "enonce": "Composante selon $\\vec u_z$ du produit vectoriel $\\vec u\\wedge\\vec v$ avec $\\vec u=(2,1,0)$ et $\\vec v=(1,3,0)$ ?",
+     "ans": "5",
+     "sol": "$(\\vec u\\wedge\\vec v)_z=u_xv_y-u_yv_x=2\\times3-1\\times1=5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Composante selon $\\vec u_z$ de $\\vec u\\wedge\\vec v$ avec $\\vec u=(1,4,0)$ et $\\vec v=(2,3,0)$ ?",
+       "ans": "-5",
+       "sol": "$u_xv_y-u_yv_x=3-8=-5$."
+      }
+     ],
+     "formules": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=\\sum u_iv_i$ · $\\vec u\\wedge\\vec v$ · $E_x=E\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "vc4",
+     "enonce": "Un champ de norme $10$ V·m$^{-1}$ fait un angle de $60^\\circ$ avec l'axe $Ox$. Sa composante selon $Ox$ ?",
+     "ans": "5",
+     "sol": "$E_x=\\vec E\\cdot\\vec u_x=E\\cos60^\\circ=10\\times\\frac12=5$ V·m$^{-1}$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Un champ de norme $8$ V·m$^{-1}$ fait $30^\\circ$ avec $Oy$. Sa composante selon $Oy$ ?",
+       "ans": "4*sqrt(3)",
+       "sol": "$8\\cos30^\\circ=4\\sqrt3$."
+      }
+     ],
+     "formules": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=\\sum u_iv_i$ · $\\vec u\\wedge\\vec v$ · $E_x=E\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "vc5",
+     "enonce": "Deux champs de norme $E=10$ V·m$^{-1}$ font chacun un angle de $60^\\circ$ avec l'axe $Ox$, l'un au-dessus et l'autre au-dessous. Norme de leur somme (en V·m$^{-1}$) ?",
+     "ans": "10",
+     "sol": "Les composantes sur $Oy$ s'annulent, celles sur $Ox$ s'ajoutent : $2E\\cos60^\\circ=2\\times10\\times\\frac12=10$.",
+     "src": "Cours, partie I.2 (projection) ; TD1 ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Deux champs de norme $E=8$ V·m$^{-1}$ font $\\pm30^\\circ$ avec $Ox$. Norme de leur somme ?",
+       "ans": "8*sqrt(3)",
+       "sol": "$2E\\cos30^\\circ=8\\sqrt3$."
+      }
+     ],
+     "formules": "$\\|\\vec u\\|=\\sqrt{u_x^2+u_y^2+u_z^2}$ · $\\vec u\\cdot\\vec v=\\sum u_iv_i$ · $\\vec u\\wedge\\vec v$ · $E_x=E\\cos\\alpha$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1/S2 : intégrales et éléments d'intégration",
+   "notions": [
+    "integ"
+   ],
+   "exos": [
+    {
+     "id": "in1",
+     "enonce": "Fil de longueur $L=3$ m sur l'axe $Ox$, de densité linéique $\\lambda=x$ (C·m$^{-1}$). Charge totale ?",
+     "ans": "9/2",
+     "sol": "$Q=\\int_0^3x\\,dx=\\frac{3^2}2=\\frac92$ C.",
+     "src": "TD1 EM2, ex. 3",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Fil de longueur $L=4$ m, $\\lambda=x$. Charge totale ?",
+       "ans": "8",
+       "sol": "$\\frac{L^2}2=8$ C."
+      }
+     ],
+     "formules": "$Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$ · $dl=R\\,d\\theta$ · $dS=r\\,dr\\,d\\theta$ · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+     "type": "value"
+    },
+    {
+     "id": "in2",
+     "enonce": "Anneau de rayon $R=2$ m, de densité linéique $\\lambda=5\\alpha$ (avec $\\alpha\\in[0,2\\pi]$ l'angle). Charge totale ?",
+     "ans": "20*pi**2",
+     "sol": "$dl=R\\,d\\alpha$ : $Q=\\int_0^{2\\pi}5\\alpha\\,R\\,d\\alpha=5R\\frac{(2\\pi)^2}2=10\\pi^2R=20\\pi^2$ C.",
+     "src": "TD1 EM2, ex. 3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Anneau de rayon $R=1$ m, $\\lambda=3\\alpha$. Charge totale ?",
+       "ans": "6*pi**2",
+       "sol": "$3R\\frac{(2\\pi)^2}2=6\\pi^2$ C."
+      }
+     ],
+     "formules": "$Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$ · $dl=R\\,d\\theta$ · $dS=r\\,dr\\,d\\theta$ · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+     "type": "value"
+    },
+    {
+     "id": "in3",
+     "enonce": "Disque de rayon $R=2$ m, $\\sigma=5$ C·m$^{-2}$ uniforme. Charge totale ?",
+     "ans": "20*pi",
+     "sol": "$d^2S=r\\,dr\\,d\\theta$ : $Q=5\\int_0^2r\\,dr\\int_0^{2\\pi}d\\theta=5\\times2\\times2\\pi=20\\pi$ C ($=\\sigma\\pi R^2$).",
+     "src": "TD1 EM2, ex. 3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Disque de rayon $R=3$ m, $\\sigma=2$ C·m$^{-2}$ uniforme. Charge totale ?",
+       "ans": "18*pi",
+       "sol": "$\\sigma\\pi R^2=18\\pi$ C."
+      }
+     ],
+     "formules": "$Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$ · $dl=R\\,d\\theta$ · $dS=r\\,dr\\,d\\theta$ · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+     "type": "value"
+    },
+    {
+     "id": "in4",
+     "enonce": "Volume d'une sphère de rayon $R=3$ m par l'intégrale en coordonnées sphériques ?",
+     "ans": "36*pi",
+     "sol": "$V=\\int_0^3r^2dr\\int_0^\\pi\\sin\\theta\\,d\\theta\\int_0^{2\\pi}d\\varphi=9\\times2\\times2\\pi=36\\pi$ m$^3$ ($=\\frac43\\pi R^3$).",
+     "src": "TD5 EM2, ex. 1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Volume d'une sphère de rayon $R=2$ m par l'intégrale en sphériques ?",
+       "ans": "32*pi/3",
+       "sol": "$\\frac43\\pi\\times8=\\frac{32\\pi}3$ m$^3$."
+      }
+     ],
+     "formules": "$Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$ · $dl=R\\,d\\theta$ · $dS=r\\,dr\\,d\\theta$ · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+     "type": "value"
+    },
+    {
+     "id": "in5",
+     "enonce": "Cylindre de rayon $R=1$ m et de hauteur $h=2$ m, $\\rho=4$ C·m$^{-3}$. Charge totale ?",
+     "ans": "8*pi",
+     "sol": "$d\\tau=r\\,dr\\,d\\theta\\,dz$ : $Q=4\\int_0^1r\\,dr\\int_0^{2\\pi}d\\theta\\int_0^2dz=4\\times\\frac12\\times2\\pi\\times2=8\\pi$ C ($=\\rho\\pi R^2h$).",
+     "src": "TD4 EM2, ex. 1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Cylindre de rayon $R=2$ m, hauteur $h=1$ m, $\\rho=3$ C·m$^{-3}$. Charge totale ?",
+       "ans": "12*pi",
+       "sol": "$\\rho\\pi R^2h=12\\pi$ C."
+      }
+     ],
+     "formules": "$Q=\\int\\lambda\\,dl=\\iint\\sigma\\,dS=\\iiint\\rho\\,d\\tau$ · $dl=R\\,d\\theta$ · $dS=r\\,dr\\,d\\theta$ · $d\\tau=r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\varphi$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Rappel S2 : champ de charges ponctuelles et superposition",
+   "notions": [
+    "coulomb",
+    "vect"
+   ],
+   "exos": [
+    {
+     "id": "ch1",
+     "enonce": "Force (en N) entre deux charges de $2$ nC et $3$ nC distantes de $3$ cm ($k=9\\times10^9$) ?",
+     "ans": "6/10**5",
+     "sol": "$F=k\\frac{q_1q_2}{r^2}=\\frac{9\\times10^9\\times6\\times10^{-18}}{9\\times10^{-4}}=6\\times10^{-5}$ N.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Charges de $4$ nC et $1$ nC à $2$ cm. Force (en N) ?",
+       "ans": "9/10**5",
+       "sol": "$\\frac{9\\times10^9\\times4\\times10^{-18}}{4\\times10^{-4}}=9\\times10^{-5}$ N."
+      }
+     ],
+     "formules": "$F=k\\frac{q_1q_2}{r^2}$ · $E=k\\frac q{r^2}$ · $\\vec E_{tot}=\\sum\\vec E_i$ · projection $\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "ch2",
+     "enonce": "Champ (en V·m$^{-1}$) créé par $q=5$ nC à $0{,}5$ m ?",
+     "ans": "180",
+     "sol": "$E=k\\frac q{r^2}=\\frac{45}{0{,}25}=180$ V·m$^{-1}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Champ (en V·m$^{-1}$) créé par $q=2$ nC à $0{,}6$ m ?",
+       "ans": "50",
+       "sol": "$\\frac{18}{0{,}36}=50$."
+      }
+     ],
+     "formules": "$F=k\\frac{q_1q_2}{r^2}$ · $E=k\\frac q{r^2}$ · $\\vec E_{tot}=\\sum\\vec E_i$ · projection $\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "ch3",
+     "enonce": "Deux charges identiques $q=1$ nC en $A$ et $B$ distants de $2a$ ; $C$ est sur la médiatrice, $CA=CB=0{,}5$ m et $OC=d=0{,}3$ m ($O$ milieu de $AB$). Champ total en $C$ (en V·m$^{-1}$) ?",
+     "ans": "216/5",
+     "sol": "Chaque charge crée $\\frac{kq}{a^2}$ avec $a=0{,}5$ ; les composantes parallèles à $AB$ s'annulent, celles selon $OC$ s'ajoutent : $E=2\\frac{kq}{a^2}\\cos\\alpha$ avec $\\cos\\alpha=\\frac da$, soit $E=\\frac{2kqd}{a^3}=\\frac{2\\times9\\times0{,}3}{0{,}125}=43{,}2$ V·m$^{-1}$.",
+     "src": "Contrôle 1 de physique octobre 2016 (dossier 2020), ex. 1",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Mêmes charges, $CA=CB=0{,}5$ m et $OC=0{,}4$ m. Champ en $C$ (en V·m$^{-1}$) ?",
+       "ans": "288/5",
+       "sol": "$\\frac{2kqd}{a^3}=\\frac{2\\times9\\times0{,}4}{0{,}125}=57{,}6$ V·m$^{-1}$."
+      }
+     ],
+     "formules": "$F=k\\frac{q_1q_2}{r^2}$ · $E=k\\frac q{r^2}$ · $\\vec E_{tot}=\\sum\\vec E_i$ · projection $\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "ch4",
+     "enonce": "Trois charges $+q,-q,-q$ ($q=1$ nC) aux sommets $A,B,C$ d'un triangle équilatéral de côté $a=0{,}3$ m. Norme du champ au centre $O$ (en V·m$^{-1}$) ?",
+     "ans": "600",
+     "sol": "$OA=OB=OC=\\frac a{\\sqrt3}$ : chaque charge crée $E_1=\\frac{3kq}{a^2}=300$. Avec $\\vec u_A+\\vec u_B+\\vec u_C=\\vec0$ ($\\vec u$ unitaires de $O$ vers les sommets) : $\\vec E=E_1(-\\vec u_A+\\vec u_B+\\vec u_C)=-2E_1\\vec u_A$, de norme $2E_1=\\frac{6kq}{a^2}=600$ V·m$^{-1}$.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 1",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "Même triangle avec $q=2$ nC et $a=0{,}6$ m. Norme du champ en $O$ ?",
+       "ans": "300",
+       "sol": "$\\frac{6kq}{a^2}=\\frac{108}{0{,}36}=300$ V·m$^{-1}$."
+      }
+     ],
+     "formules": "$F=k\\frac{q_1q_2}{r^2}$ · $E=k\\frac q{r^2}$ · $\\vec E_{tot}=\\sum\\vec E_i$ · projection $\\cos\\alpha$",
+     "type": "value"
+    },
+    {
+     "id": "ch5",
+     "enonce": "Carré $ABCD$ de côté $a=0{,}3$ m : $A$ (en haut à gauche) porte $-q$, $B$ (en haut à droite) $+q$, $D$ (en bas à gauche) $+q$, avec $q=1$ nC ; $C$ (en bas à droite) est vide. Norme du champ en $C$ (en V·m$^{-1}$) ?",
+     "ans": "100*sqrt(2)-50",
+     "sol": "$\\frac{kq}{a^2}=100$. $\\vec E_D(C)=100\\vec u_x$ ; $\\vec E_B(C)=-100\\vec u_y$ ; $A$ est à $a\\sqrt2$ et attire : $E_A=\\frac{kq}{2a^2}=50$, dirigé vers $A$, soit $50\\left(-\\cos45^\\circ,\\sin45^\\circ\\right)$. Somme : $\\vec E=(100-25\\sqrt2,\\ -100+25\\sqrt2)$, de norme $\\sqrt2(100-25\\sqrt2)=100\\sqrt2-50\\approx91{,}4$ V·m$^{-1}$.",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 2",
+     "duree": 8,
+     "variants": [
+      {
+       "enonce": "Même carré avec $q=2$ nC et $a=0{,}6$ m. Norme du champ en $C$ ?",
+       "ans": "50*sqrt(2)-25",
+       "sol": "$\\frac{kq}{a^2}=50$ : $E=50\\sqrt2-25$ V·m$^{-1}$."
+      }
+     ],
+     "formules": "$F=k\\frac{q_1q_2}{r^2}$ · $E=k\\frac q{r^2}$ · $\\vec E_{tot}=\\sum\\vec E_i$ · projection $\\cos\\alpha$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Rappel S2 : potentiel et énergie",
+   "notions": [
+    "potentiel"
+   ],
+   "exos": [
+    {
+     "id": "pe1",
+     "enonce": "Potentiel (en V) en un point à $0{,}3$ m d'une charge de $3$ nC et à $0{,}6$ m d'une charge de $-1$ nC ?",
+     "ans": "75",
+     "sol": "$V=\\sum k\\frac{q_i}{r_i}=9\\times10^9\\left(\\frac{3\\times10^{-9}}{0{,}3}-\\frac{10^{-9}}{0{,}6}\\right)=90-15=75$ V : le potentiel est un scalaire, on additionne sans projeter.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$2$ nC à $0{,}3$ m et $-1$ nC à $0{,}9$ m. Potentiel (en V) ?",
+       "ans": "50",
+       "sol": "$60-10=50$ V."
+      }
+     ],
+     "formules": "$V=\\sum k\\frac{q_i}{r_i}$ · $E_p=qV$ · $E_{pe}=\\sum k\\frac{q_iq_j}{r_{ij}}$ · $E_r=-\\frac{dV}{dr}$",
+     "type": "value"
+    },
+    {
+     "id": "pe2",
+     "enonce": "Trois charges $+q,-q,-q$ ($q=4$ nC) aux sommets d'un triangle équilatéral de côté $a=2$ cm. Potentiel en son centre $O$ (en V) ?",
+     "ans": "-1800*sqrt(3)",
+     "sol": "$OA=OB=OC=\\frac a{\\sqrt3}$ : $V(O)=\\frac{k}{a/\\sqrt3}(q-q-q)=-\\frac{\\sqrt3\\,kq}a=-\\frac{\\sqrt3\\times36}{0{,}02}=-1800\\sqrt3\\approx-3118$ V.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 1",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Même triangle, $q=2$ nC et $a=3$ cm. $V(O)$ (en V) ?",
+       "ans": "-600*sqrt(3)",
+       "sol": "$-\\frac{\\sqrt3kq}a=-\\frac{18\\sqrt3}{0{,}03}=-600\\sqrt3$ V."
+      }
+     ],
+     "formules": "$V=\\sum k\\frac{q_i}{r_i}$ · $E_p=qV$ · $E_{pe}=\\sum k\\frac{q_iq_j}{r_{ij}}$ · $E_r=-\\frac{dV}{dr}$",
+     "type": "value"
+    },
+    {
+     "id": "pe3",
+     "enonce": "Mêmes charges : énergie potentielle électrique (en J) de la charge $+q$ placée en $A$ dans le champ des deux autres ?",
+     "ans": "-144/10**7",
+     "sol": "$V(A)=k\\frac{-q}a+k\\frac{-q}a=-\\frac{2kq}a=-3600$ V, puis $E_p(A)=qV(A)=4\\times10^{-9}\\times(-3600)=-1{,}44\\times10^{-5}$ J.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 1",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Même triangle, $q=2$ nC et $a=3$ cm. Énergie de $+q$ en $A$ (en J) ?",
+       "ans": "-24/10**7",
+       "sol": "$V(A)=-\\frac{2kq}a=-1200$ V, $E_p=2\\times10^{-9}\\times(-1200)=-2{,}4\\times10^{-6}$ J."
+      }
+     ],
+     "formules": "$V=\\sum k\\frac{q_i}{r_i}$ · $E_p=qV$ · $E_{pe}=\\sum k\\frac{q_iq_j}{r_{ij}}$ · $E_r=-\\frac{dV}{dr}$",
+     "type": "value"
+    },
+    {
+     "id": "pe4",
+     "enonce": "On donne $V(r)=a\\,r\\,e^{-b/r}$ ($a$, $b$ constantes). Calculer $E_r=-\\frac{dV}{dr}$.",
+     "ans": "-a*exp(-b/x)*(1+b/x)",
+     "sol": "$\\frac{dV}{dr}=ae^{-b/r}+ar\\cdot\\frac b{r^2}e^{-b/r}=ae^{-b/r}\\left(1+\\frac br\\right)$, donc $E_r=-ae^{-b/r}\\left(1+\\frac br\\right)$.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), QCM 1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$V(r)=a\\,r\\,e^{-r/b}$. Calculer $E_r=-\\frac{dV}{dr}$.",
+       "ans": "-a*exp(-x/b)*(1-x/b)",
+       "sol": "$\\frac{dV}{dr}=ae^{-r/b}\\left(1-\\frac rb\\right)$."
+      }
+     ],
+     "formules": "$V=\\sum k\\frac{q_i}{r_i}$ · $E_p=qV$ · $E_{pe}=\\sum k\\frac{q_iq_j}{r_{ij}}$ · $E_r=-\\frac{dV}{dr}$",
+     "type": "value"
+    },
+    {
+     "id": "pe5",
+     "enonce": "Trois charges de $1$ nC aux sommets d'un triangle équilatéral de côté $0{,}3$ m. Énergie électrostatique du système (en J) ?",
+     "ans": "9/10**8",
+     "sol": "Trois paires, chacune à $0{,}3$ m : $E_{pe}=3\\times k\\frac{q^2}a=3\\times\\frac{9\\times10^9\\times10^{-18}}{0{,}3}=9\\times10^{-8}$ J.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Trois charges de $2$ nC, triangle de côté $0{,}6$ m. Énergie (en J) ?",
+       "ans": "18/10**8",
+       "sol": "$3\\frac{kq^2}a=\\frac{1{,}08\\times10^{-7}}{0{,}6}=1{,}8\\times10^{-7}$ J."
+      }
+     ],
+     "formules": "$V=\\sum k\\frac{q_i}{r_i}$ · $E_p=qV$ · $E_{pe}=\\sum k\\frac{q_iq_j}{r_{ij}}$ · $E_r=-\\frac{dV}{dr}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Rappel S2 : force de Lorentz et spectromètre de masse",
+   "notions": [
+    "lorentz",
+    "vect"
+   ],
+   "exos": [
+    {
+     "id": "lo1",
+     "enonce": "Force (en N) sur $q=2e$ ($e=1{,}6\\times10^{-19}$ C) de vitesse $10^5$ m·s$^{-1}$ perpendiculaire à $B=0{,}2$ T ?",
+     "ans": "64/10**16",
+     "sol": "$F=|q|vB=3{,}2\\times10^{-19}\\times10^5\\times0{,}2=6{,}4\\times10^{-15}$ N.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$q=e$, $v=2\\times10^5$ m·s$^{-1}$, $B=0{,}5$ T perpendiculaire. Force (en N) ?",
+       "ans": "16/10**15",
+       "sol": "$evB=1{,}6\\times10^{-14}$ N."
+      }
+     ],
+     "formules": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $R=\\frac{mv}{|q|B}$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "type": "value"
+    },
+    {
+     "id": "lo2",
+     "enonce": "$\\vec v=(2,0,0)$ et $\\vec B=(0,0,-3)$ en unités SI. Calculer $\\vec v\\wedge\\vec B$.",
+     "ans": "Matrix([0,6,0])",
+     "sol": "$(\\vec v\\wedge\\vec B)=(v_yB_z-v_zB_y,\\ v_zB_x-v_xB_z,\\ v_xB_y-v_yB_x)=(0,\\ -2\\times(-3),\\ 0)=(0,6,0)$ : pour $q>0$ la particule est déviée vers $+\\vec u_y$.",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3 (q. 4)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\vec v=(1,0,0)$ et $\\vec B=(0,0,-5)$. Calculer $\\vec v\\wedge\\vec B$.",
+       "ans": "Matrix([0,5,0])",
+       "sol": "$(0,\\ -1\\times(-5),\\ 0)=(0,5,0)$."
+      }
+     ],
+     "formules": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $R=\\frac{mv}{|q|B}$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "type": "value"
+    },
+    {
+     "id": "lo3",
+     "enonce": "Ion $^{200}$Hg$^{2+}$ ($m=200\\,u$ avec $u=1{,}66\\times10^{-27}$ kg, $q=2e$) à $v_0=10^4$ m·s$^{-1}$ dans $B=0{,}2$ T perpendiculaire. Rayon de la trajectoire (en m) ?",
+     "ans": "83/1600",
+     "sol": "$R=\\frac{mv_0}{qB}=\\frac{3{,}32\\times10^{-25}\\times10^4}{3{,}2\\times10^{-19}\\times0{,}2}=\\frac{3{,}32\\times10^{-21}}{6{,}4\\times10^{-20}}\\approx0{,}052$ m.",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3 (q. 5, données numériques choisies)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Ion $^{202}$Hg$^{2+}$, mêmes $v_0$ et $B$. Rayon (en m) ?",
+       "ans": "8383/160000",
+       "sol": "$R=\\frac{mv_0}{qB}=\\frac{3{,}3532\\times10^{-21}}{6{,}4\\times10^{-20}}\\approx0{,}0524$ m."
+      }
+     ],
+     "formules": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $R=\\frac{mv}{|q|B}$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "type": "value"
+    },
+    {
+     "id": "lo4",
+     "enonce": "Mêmes données avec l'isotope $^{202}$Hg$^{2+}$ : écart $\\Delta y$ (en m) entre les points d'impact des deux isotopes (demi-tour, $y=2R$) ?",
+     "ans": "83/80000",
+     "sol": "À $v_0$ et $B$ fixés, $R\\propto m$ : $\\Delta y=2(R_{202}-R_{200})=\\frac{2\\times2u\\times v_0}{qB}=\\frac{4\\times1{,}66\\times10^{-27}\\times10^4}{6{,}4\\times10^{-20}}\\approx1{,}04\\times10^{-3}$ m.",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Mêmes ions avec $B=0{,}4$ T : écart $\\Delta y$ (en m) ?",
+       "ans": "83/160000",
+       "sol": "$B$ double : $\\Delta y$ est divisé par $2$ : $\\approx5{,}2\\times10^{-4}$ m."
+      }
+     ],
+     "formules": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $R=\\frac{mv}{|q|B}$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "type": "value"
+    },
+    {
+     "id": "lo5",
+     "enonce": "Un proton ($m=1{,}6\\times10^{-27}$ kg, $q=1{,}6\\times10^{-19}$ C), initialement au repos, est accéléré par $U=50$ V. Vitesse (en m·s$^{-1}$) ?",
+     "ans": "100000",
+     "sol": "$\\frac12mv^2=qU$ donne $v=\\sqrt{\\frac{2qU}m}=\\sqrt{\\frac{2\\times1{,}6\\times10^{-19}\\times50}{1{,}6\\times10^{-27}}}=\\sqrt{10^{10}}=10^5$ m·s$^{-1}$.",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3 (q. 3)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Proton accéléré par $U=200$ V. Vitesse (en m·s$^{-1}$) ?",
+       "ans": "200000",
+       "sol": "$v=\\sqrt{\\frac{2qU}m}=\\sqrt{4\\times10^{10}}=2\\times10^5$ m·s$^{-1}$."
+      }
+     ],
+     "formules": "$\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $R=\\frac{mv}{|q|B}$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "type": "value"
+    },
+    {
+     "id": "lo6",
+     "enonce": "Pourquoi la force magnétique ne change-t-elle pas la norme de la vitesse, alors que la force électrique le fait ?",
+     "sol": "La puissance de la force magnétique est $\\vec F_{mag}\\cdot\\vec v=(q\\vec v\\wedge\\vec B)\\cdot\\vec v=0$ car un produit vectoriel est orthogonal à chacun de ses facteurs : elle ne travaille pas, l'énergie cinétique est constante. La force électrique $q\\vec E$ n'est pas orthogonale à $\\vec v$ en général : sa puissance $q\\vec E\\cdot\\vec v$ est non nulle, elle accélère la particule (cavité d'accélération : $E_c=qU$).",
+     "duree": 3,
+     "formules": "$\\vec F_{mag}\\cdot\\vec v=0$ · $E_c=qU$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Onde plane progressive monochromatique",
+   "notions": [
+    "oem"
+   ],
+   "exos": [
+    {
+     "id": "wa1",
+     "enonce": "Longueur d'onde (en m) d'une onde de fréquence $f=100$ MHz dans le vide ($c=3\\times10^8$ m·s$^{-1}$) ?",
+     "ans": "3",
+     "sol": "$\\lambda=\\frac cf=\\frac{3\\times10^8}{10^8}=3$ m.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Longueur d'onde (en m) pour $f=1{,}5$ GHz ?",
+       "ans": "1/5",
+       "sol": "$\\lambda=\\frac{3\\times10^8}{1{,}5\\times10^9}=0{,}2$ m."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    },
+    {
+     "id": "wa2",
+     "enonce": "Nombre d'onde $k$ (en rad·m$^{-1}$) d'une onde de longueur d'onde $\\lambda=0{,}5$ m ?",
+     "ans": "4*pi",
+     "sol": "$k=\\frac{2\\pi}\\lambda=4\\pi$ rad·m$^{-1}$.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "Nombre d'onde (en rad·m$^{-1}$) pour $\\lambda=2$ m ?",
+       "ans": "pi",
+       "sol": "$k=\\frac{2\\pi}2=\\pi$."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    },
+    {
+     "id": "wa3",
+     "enonce": "Amplitude du champ magnétique (en T) d'une OPPM dont l'amplitude électrique est $E_0=300$ V·m$^{-1}$ ?",
+     "ans": "1/10**6",
+     "sol": "$B_0=\\frac{E_0}c=\\frac{300}{3\\times10^8}=10^{-6}$ T.",
+     "duree": 1,
+     "variants": [
+      {
+       "enonce": "$E_0=150$ V·m$^{-1}$. Amplitude $B_0$ (en T) ?",
+       "ans": "5/10**7",
+       "sol": "$B_0=\\frac{150}{3\\times10^8}=5\\times10^{-7}$ T."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    },
+    {
+     "id": "wa4",
+     "enonce": "Fréquence (en THz) de la lumière de longueur d'onde $600$ nm ?",
+     "ans": "500",
+     "sol": "$f=\\frac c\\lambda=\\frac{3\\times10^8}{6\\times10^{-7}}=5\\times10^{14}$ Hz $=500$ THz.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Fréquence (en THz) pour $\\lambda=500$ nm ?",
+       "ans": "600",
+       "sol": "$f=\\frac{3\\times10^8}{5\\times10^{-7}}=6\\times10^{14}$ Hz $=600$ THz."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    },
+    {
+     "id": "wa5",
+     "enonce": "L'onde $E=E_0\\cos(\\omega t-kx)$ vérifie $\\frac{\\partial^2E}{\\partial x^2}=\\frac1{c^2}\\frac{\\partial^2E}{\\partial t^2}$. Exprimer $c$ en fonction de $\\omega$ et $k$ (noté kk).",
+     "ans": "w/kk",
+     "sol": "$\\frac{\\partial^2E}{\\partial x^2}=-k^2E$ et $\\frac{\\partial^2E}{\\partial t^2}=-\\omega^2E$ : l'équation d'onde donne $k^2=\\frac{\\omega^2}{c^2}$, soit $c=\\frac\\omega k$ (relation de dispersion).",
+     "src": "Cours, partie III.3",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Même question avec $E=E_0\\sin(\\omega t-kx)$ : exprimer $c$ (w, kk).",
+       "ans": "w/kk",
+       "sol": "Les deux dérivées secondes valent $-\\omega^2E$ et $-k^2E$ : $c^2=\\frac{\\omega^2}{k^2}$."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    },
+    {
+     "id": "wa6",
+     "enonce": "Avec $E=E_0\\cos(\\omega t-kx)$ (noté kk pour $k$) et $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$, trouver $B(x,t)$ (sans constante).",
+     "ans": "kk*E0*cos(w*t-kk*x)/w",
+     "sol": "$\\frac{\\partial E}{\\partial x}=kE_0\\sin(\\omega t-kx)=-\\frac{\\partial B}{\\partial t}$, donc $B=\\frac{kE_0}\\omega\\cos(\\omega t-kx)=\\frac{E_0}c\\cos(\\omega t-kx)$ : $B_0=\\frac{E_0}c$ et $\\vec B$ en phase avec $\\vec E$.",
+     "src": "Cours, partie III.3",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Avec $E=E_0\\sin(\\omega t-kx)$ (kk pour $k$) et $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$, trouver $B(x,t)$ (sans constante).",
+       "ans": "kk*E0*sin(w*t-kk*x)/w",
+       "sol": "$\\frac{\\partial E}{\\partial x}=-kE_0\\cos(\\omega t-kx)$, donc $\\frac{\\partial B}{\\partial t}=kE_0\\cos(\\omega t-kx)$ et $B=\\frac{kE_0}\\omega\\sin(\\omega t-kx)$."
+      }
+     ],
+     "formules": "$c=\\lambda f=\\frac\\omega k$ · $k=\\frac{2\\pi}\\lambda$ · $B_0=\\frac{E_0}c$ · $\\frac{\\partial E}{\\partial x}=-\\frac{\\partial B}{\\partial t}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Symétries et invariances",
+   "notions": [
+    "symetrie"
+   ],
+   "exos": [
+    {
+     "id": "sy1",
+     "enonce": "Énoncer le principe de Curie. Que peut-on dire de $\\vec E(M)$ si $M$ appartient à un plan de symétrie de la distribution ? à un plan d'antisymétrie ?",
+     "sol": "Principe de Curie : les éléments de symétrie des causes (la distribution de charges) se retrouvent dans les effets (le champ). Si $M\\in\\Pi$ plan de symétrie, $\\vec E(M)$ est contenu dans $\\Pi$ (parallèle à ce plan). Si $M\\in\\Pi^*$ plan d'antisymétrie (la distribution devient opposée), $\\vec E(M)$ est perpendiculaire à $\\Pi^*$. Plusieurs plans : le champ est dans leur intersection.",
+     "src": "Cours, partie I",
+     "duree": 3,
+     "formules": "plan de symétrie : $\\vec E\\in\\Pi$ · antisymétrie : $\\vec E\\perp\\Pi^*$ · invariance : pas de dépendance",
+     "type": "open"
+    },
+    {
+     "id": "sy2",
+     "enonce": "Fil infini (axe $Oz$) chargé uniformément, base $(\\vec u_r,\\vec u_\\theta,\\vec u_z)$. Combien de composantes de $\\vec E(M)$ sont non nulles ?",
+     "ans": "1",
+     "sol": "Les plans $(M,\\vec u_r,\\vec u_z)$ et $(M,\\vec u_r,\\vec u_\\theta)$ sont plans de symétrie : $\\vec E$ est dans leur intersection, la droite portée par $\\vec u_r$. Deux composantes ($E_\\theta,E_z$) sont nulles, il en reste une : $E_r$.",
+     "src": "QCM 2 ; TD4 ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Sphère chargée en volume, base sphérique $(\\vec u_r,\\vec u_\\theta,\\vec u_\\varphi)$. Nombre de composantes de $\\vec E$ non nulles ?",
+       "ans": "1",
+       "sol": "Tout plan contenant $OM$ est de symétrie : $\\vec E=E_r\\vec u_r$."
+      }
+     ],
+     "formules": "plan de symétrie : $\\vec E\\in\\Pi$ · antisymétrie : $\\vec E\\perp\\Pi^*$ · invariance : pas de dépendance",
+     "type": "value"
+    },
+    {
+     "id": "sy3",
+     "enonce": "Fil infini chargé uniformément : de combien de coordonnées parmi $(r,\\theta,z)$ dépend $E_r$ ?",
+     "ans": "1",
+     "sol": "Invariance par rotation autour de $Oz$ : pas de dépendance en $\\theta$ ; invariance par translation le long de $Oz$ : pas de dépendance en $z$. Il reste $E_r(r)$ : une seule variable.",
+     "src": "Cours, partie II.4",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Plan infini chargé uniformément ($Oxy$), base cartésienne : de combien de coordonnées dépend $E_z$ ?",
+       "ans": "1",
+       "sol": "Invariance par translation selon $x$ et $y$ : $E_z$ ne dépend que de $z$."
+      }
+     ],
+     "formules": "plan de symétrie : $\\vec E\\in\\Pi$ · antisymétrie : $\\vec E\\perp\\Pi^*$ · invariance : pas de dépendance",
+     "type": "value"
+    },
+    {
+     "id": "sy4",
+     "enonce": "Quatre charges identiques $q=1$ nC aux sommets d'un carré de côté $a=0{,}3$ m. Norme du champ au centre $O$ (en V·m$^{-1}$) ?",
+     "ans": "0",
+     "sol": "Chaque charge est à $\\frac a{\\sqrt2}$ de $O$ et crée $\\frac{2kq}{a^2}=200$ V·m$^{-1}$ ; les champs de deux sommets opposés sont opposés et s'annulent deux à deux : $\\vec E(O)=\\vec0$. Les diagonales sont des plans de symétrie.",
+     "src": "TD1 EM2, ex. 1 (q. 1)",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Carré $ABCD$ de côté $0{,}3$ m (sommets consécutifs) avec $+q,+q,-q,-q$ en $A,B,C,D$ ($q=1$ nC). Norme du champ en $O$ ?",
+       "ans": "400*sqrt(2)",
+       "sol": "Les quatre champs ont même composante selon $-\\vec u_y$ : $\\vec E=-200\\times\\frac{4}{\\sqrt2}\\vec u_y\\cdot\\frac{1}{\\ }$, soit une norme $400\\sqrt2\\approx566$ V·m$^{-1}$ (somme vectorielle des quatre termes $200$)."
+      }
+     ],
+     "formules": "plan de symétrie : $\\vec E\\in\\Pi$ · antisymétrie : $\\vec E\\perp\\Pi^*$ · invariance : pas de dépendance",
+     "type": "value"
+    },
+    {
+     "id": "sy5",
+     "enonce": "Anneau de rayon $R$, d'axe $Oz$, chargé uniformément. Quelle est la direction de $\\vec E(M)$ pour $M$ sur l'axe ?",
+     "sol": "Tout plan contenant l'axe $Oz$ est plan de symétrie de l'anneau et contient $M$ : $\\vec E(M)$ appartient à tous ces plans, donc à leur intersection, l'axe $Oz$. Ainsi $\\vec E(M)=E_z\\vec u_z$. (Autre argument : pour tout point $P$ de l'anneau, le point diamétralement opposé crée un champ dont la composante perpendiculaire à l'axe est opposée.)",
+     "src": "Partiel 1 de physique décembre 2017 (dossier 2021), ex. 1",
+     "duree": 3,
+     "formules": "plan de symétrie : $\\vec E\\in\\Pi$ · antisymétrie : $\\vec E\\perp\\Pi^*$ · invariance : pas de dépendance",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Flux d'un champ",
+   "notions": [
+    "flux"
+   ],
+   "exos": [
+    {
+     "id": "fl1",
+     "enonce": "Champ uniforme de norme $200$ V·m$^{-1}$ faisant $60^\\circ$ avec la normale d'un disque de rayon $0{,}1$ m. Flux (en V·m) ?",
+     "ans": "pi",
+     "sol": "$\\Phi=ES\\cos\\alpha=200\\times\\pi\\times10^{-2}\\times\\frac12=\\pi$ V·m.",
+     "src": "Partiel de physique (dossier 2024), QCM",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E=100$ V·m$^{-1}$ à $60^\\circ$ de la normale d'un disque de rayon $0{,}2$ m. Flux ?",
+       "ans": "2*pi",
+       "sol": "$100\\times\\pi\\times0{,}04\\times\\frac12=2\\pi$ V·m."
+      }
+     ],
+     "formules": "$\\Phi=\\iint\\vec E\\cdot d\\vec S$ · $\\Phi=ES\\cos\\alpha$ · $4\\pi r^2$ · $2\\pi rh$",
+     "type": "value"
+    },
+    {
+     "id": "fl2",
+     "enonce": "Champ radial $E(r)=100$ V·m$^{-1}$ à $r=0{,}5$ m. Flux (en V·m) à travers la sphère de rayon $0{,}5$ m centrée à l'origine ?",
+     "ans": "100*pi",
+     "sol": "$\\Phi=E(r)\\times4\\pi r^2=100\\times4\\pi\\times0{,}25=100\\pi$ V·m.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), QCM 5",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$E(r)=50$ V·m$^{-1}$ à $r=1$ m. Flux à travers la sphère de rayon $1$ m ?",
+       "ans": "200*pi",
+       "sol": "$E\\times4\\pi r^2=200\\pi$ V·m."
+      }
+     ],
+     "formules": "$\\Phi=\\iint\\vec E\\cdot d\\vec S$ · $\\Phi=ES\\cos\\alpha$ · $4\\pi r^2$ · $2\\pi rh$",
+     "type": "value"
+    },
+    {
+     "id": "fl3",
+     "enonce": "Champ radial $E_r=50$ V·m$^{-1}$ à $r=0{,}2$ m. Flux (en V·m) à travers la surface latérale du cylindre de rayon $0{,}2$ m et de hauteur $h=1$ m ?",
+     "ans": "20*pi",
+     "sol": "$\\Phi=E_r\\times2\\pi rh=50\\times2\\pi\\times0{,}2\\times1=20\\pi$ V·m (les bases n'ont pas de flux : $\\vec E\\perp d\\vec S$).",
+     "src": "Cours, partie II.4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$E_r=100$ V·m$^{-1}$ à $r=0{,}1$ m, hauteur $h=2$ m. Flux latéral ?",
+       "ans": "40*pi",
+       "sol": "$E\\,2\\pi rh=40\\pi$ V·m."
+      }
+     ],
+     "formules": "$\\Phi=\\iint\\vec E\\cdot d\\vec S$ · $\\Phi=ES\\cos\\alpha$ · $4\\pi r^2$ · $2\\pi rh$",
+     "type": "value"
+    },
+    {
+     "id": "fl4",
+     "enonce": "Champ uniforme $E_0\\vec u_z$ à travers un cube de côté $a$ aux faces perpendiculaires aux axes : flux total sortant ?",
+     "ans": "0",
+     "sol": "Face du haut : $+E_0a^2$ ; face du bas : $-E_0a^2$ (normale sortante $-\\vec u_z$) ; les quatre faces latérales : $0$. Total $0$ : un champ uniforme n'a pas de flux sortant net, il ne contient pas de charge.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Champ uniforme $E_0\\vec u_x$ à travers un cylindre fermé d'axe $Ox$, de rayon $R$. Flux total sortant ?",
+       "ans": "0",
+       "sol": "Base de droite : $+E_0\\pi R^2$ ; base de gauche : $-E_0\\pi R^2$ ; surface latérale : $0$. Total nul."
+      }
+     ],
+     "formules": "$\\Phi=\\iint\\vec E\\cdot d\\vec S$ · $\\Phi=ES\\cos\\alpha$ · $4\\pi r^2$ · $2\\pi rh$",
+     "type": "value"
+    },
+    {
+     "id": "fl5",
+     "enonce": "Donner l'expression de $d\\vec S$ (orienté vers l'extérieur) pour une sphère de rayon $r$, pour la surface latérale d'un cylindre et pour ses deux bases.",
+     "sol": "Sphère : $d\\vec S=r^2\\sin\\theta\\,d\\theta\\,d\\varphi\\,\\vec u_r$. Surface latérale du cylindre de rayon $r$ : $d\\vec S=r\\,d\\theta\\,dz\\,\\vec u_r$. Base du haut : $d\\vec S=r\\,dr\\,d\\theta\\,\\vec u_z$ ; base du bas : $d\\vec S=-r\\,dr\\,d\\theta\\,\\vec u_z$.",
+     "src": "TD4 EM2 ; TD5 EM2",
+     "duree": 4,
+     "formules": "$\\Phi=\\iint\\vec E\\cdot d\\vec S$ · $\\Phi=ES\\cos\\alpha$ · $4\\pi r^2$ · $2\\pi rh$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Théorème de Gauss : de la charge au flux",
+   "notions": [
+    "gauss"
+   ],
+   "exos": [
+    {
+     "id": "ga1",
+     "enonce": "Flux (en V·m) du champ électrique à travers une surface fermée contenant $Q=2$ nC ($\\varepsilon_0=\\frac1{4\\pi k}$) ?",
+     "ans": "72*pi",
+     "sol": "$\\Phi=\\frac Q{\\varepsilon_0}=4\\pi kQ=4\\pi\\times9\\times10^9\\times2\\times10^{-9}=72\\pi$ V·m.",
+     "src": "QCM 2, question 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Flux pour une surface fermée contenant $Q=-3$ nC ?",
+       "ans": "-108*pi",
+       "sol": "$4\\pi kQ=-108\\pi$ V·m."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $\\varepsilon_0=\\frac1{4\\pi k}$",
+     "type": "value"
+    },
+    {
+     "id": "ga2",
+     "enonce": "Par Gauss, champ (en V·m$^{-1}$) d'une charge ponctuelle $q=2$ nC à $r=0{,}3$ m : $E\\times4\\pi r^2=\\frac q{\\varepsilon_0}$ avec $\\varepsilon_0=\\frac1{4\\pi k}$.",
+     "ans": "200",
+     "sol": "$E=\\frac q{4\\pi\\varepsilon_0r^2}=\\frac{72\\pi}{4\\pi\\times0{,}09}=200$ V·m$^{-1}$ : on retrouve $\\frac{kq}{r^2}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Par Gauss, champ de $q=5$ nC à $r=0{,}5$ m (V·m$^{-1}$) ?",
+       "ans": "180",
+       "sol": "$E=\\frac{180\\pi}{4\\pi\\times0{,}25}=180$."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $\\varepsilon_0=\\frac1{4\\pi k}$",
+     "type": "value"
+    },
+    {
+     "id": "ga3",
+     "enonce": "Une surface de Gauss contient $2$ nC et $-3$ nC ; une charge de $5$ nC est à l'extérieur. Flux (en V·m) ?",
+     "ans": "-36*pi",
+     "sol": "Seules les charges intérieures comptent : $\\Phi=\\frac{Q_{int}}{\\varepsilon_0}=4\\pi k(2-3)\\times10^{-9}=-36\\pi$ V·m. La charge extérieure crée du champ, mais son flux entrant et sortant se compensent.",
+     "src": "Cours, partie II.3",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Surface contenant $4$ nC et $-1$ nC ; $-7$ nC à l'extérieur. Flux ?",
+       "ans": "108*pi",
+       "sol": "$\\Phi=\\frac{Q_{int}}{\\varepsilon_0}=4\\pi k\\times3\\times10^{-9}=108\\pi$ V·m."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $\\varepsilon_0=\\frac1{4\\pi k}$",
+     "type": "value"
+    },
+    {
+     "id": "ga4",
+     "enonce": "Citer les étapes de la méthode pour calculer un champ avec le théorème de Gauss.",
+     "sol": "1. Choisir les coordonnées adaptées (cylindriques pour un fil, sphériques pour une sphère, cartésiennes pour un plan). 2. Étudier les symétries : directions du champ. 3. Étudier les invariances : variables dont dépend le champ. 4. Schéma et surface de Gauss fermée passant par $M$, sur laquelle $E$ est constant ou $\\vec E\\perp d\\vec S$. 5. Calculer le flux $\\oiint\\vec E\\cdot d\\vec S$. 6. Calculer $Q_{int}$ (intégrale de $\\lambda$, $\\sigma$ ou $\\rho$ sur la partie intérieure). 7. Égaler flux $=\\frac{Q_{int}}{\\varepsilon_0}$ et conclure, en séparant les régions (intérieur/extérieur).",
+     "src": "Cours, partie II ; TD3-TD5",
+     "duree": 4,
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $\\varepsilon_0=\\frac1{4\\pi k}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Gauss : fil infini et cylindre creux",
+   "notions": [
+    "gauss-cyl",
+    "gauss"
+   ],
+   "exos": [
+    {
+     "id": "fi1",
+     "enonce": "Champ (en V·m$^{-1}$) d'un fil infini de densité $\\lambda=1$ nC·m$^{-1}$ à $r=0{,}2$ m ($\\frac1{2\\pi\\varepsilon_0}=2k$) ?",
+     "ans": "90",
+     "sol": "$E=\\frac\\lambda{2\\pi\\varepsilon_0r}=\\frac{2k\\lambda}r=\\frac{2\\times9\\times10^9\\times10^{-9}}{0{,}2}=90$ V·m$^{-1}$.",
+     "src": "Cours, partie II.4",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Fil $\\lambda=2$ nC·m$^{-1}$, $r=0{,}6$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "60",
+       "sol": "$\\frac{2k\\lambda}r=\\frac{36}{0{,}6}=60$."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+     "type": "value"
+    },
+    {
+     "id": "fi2",
+     "enonce": "Fil infini de densité $\\lambda$. Surface de Gauss : cylindre de rayon $r$ et de hauteur $h$. Exprimer $E_r$ en fonction de lam ($\\lambda$), h, r, e0 ($\\varepsilon_0$).",
+     "ans": "lam/(2*pi*e0*r)",
+     "sol": "Flux : $E_r\\,2\\pi rh$ (latéral seul) ; $Q_{int}=\\int_0^h\\lambda\\,dz=\\lambda h$. Donc $E_r=\\frac{\\lambda h}{2\\pi\\varepsilon_0rh}=\\frac\\lambda{2\\pi\\varepsilon_0r}$ : la hauteur arbitraire $h$ disparaît.",
+     "src": "Cours, partie II.4",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Fil de charge totale $Q_0$ (qq) sur la longueur $h$ ($\\lambda=\\frac{Q_0}h$). Champ à $r$ (qq, h, r, e0) ?",
+       "ans": "qq/(2*pi*e0*r*h)",
+       "sol": "$E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}=\\frac{Q_0}{2\\pi\\varepsilon_0rh}$."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+     "type": "value"
+    },
+    {
+     "id": "fi3",
+     "enonce": "À quelle distance (en m) d'un fil de $\\lambda=1$ nC·m$^{-1}$ le champ vaut-il $45$ V·m$^{-1}$ ?",
+     "ans": "2/5",
+     "sol": "$r=\\frac{2k\\lambda}E=\\frac{18}{45}=0{,}4$ m.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$\\lambda=2$ nC·m$^{-1}$, champ $60$ V·m$^{-1}$. Distance (m) ?",
+       "ans": "3/5",
+       "sol": "$r=\\frac{36}{60}=0{,}6$ m."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+     "type": "value"
+    },
+    {
+     "id": "fi4",
+     "enonce": "Cylindre creux infini de rayon $a=0{,}1$ m, chargé en surface ($\\sigma=2$ nC·m$^{-2}$). Champ (en V·m$^{-1}$) à $r=0{,}4$ m de l'axe ($\\varepsilon_0=\\frac1{4\\pi k}$) ?",
+     "ans": "18*pi",
+     "sol": "Gauss : $Q_{int}=\\sigma\\,2\\pi ah$ et flux $E\\,2\\pi rh$ : $E=\\frac{\\sigma a}{\\varepsilon_0r}=\\frac{2\\times10^{-9}\\times0{,}1\\times4\\pi\\times9\\times10^9}{0{,}4}=18\\pi\\approx56{,}5$ V·m$^{-1}$.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), QCM 8 (partie extérieure)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Cylindre creux $a=0{,}2$ m, $\\sigma=1$ nC·m$^{-2}$, $r=0{,}5$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "72*pi/5",
+       "sol": "$\\frac{\\sigma a}{\\varepsilon_0r}=\\frac{10^{-9}\\times0{,}2\\times4\\pi\\times9\\times10^9}{0{,}5}=14{,}4\\pi$."
+      }
+     ],
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+     "type": "value"
+    },
+    {
+     "id": "fi5",
+     "enonce": "Montrer que le champ est nul à l'intérieur d'un cylindre creux infini chargé uniformément en surface.",
+     "sol": "Symétries et invariances : $\\vec E=E_r(r)\\vec u_r$. Surface de Gauss : cylindre de rayon $r < a$ et de hauteur $h$, de flux $E_r\\,2\\pi rh$. Charge intérieure : $Q_{int}=0$ car toute la charge est sur la surface $r=a$. Donc $E_r\\,2\\pi rh=0$ : $\\vec E=\\vec0$ pour $r < a$.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), QCM 8",
+     "duree": 4,
+     "formules": "$\\oiint\\vec E\\cdot d\\vec S=\\frac{Q_{int}}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Gauss : cylindre chargé en volume",
+   "notions": [
+    "gauss-cyl",
+    "integ"
+   ],
+   "exos": [
+    {
+     "id": "cv1",
+     "enonce": "Cylindre infini plein de rayon $R=0{,}2$ m, $\\rho=2$ nC·m$^{-3}$. Champ (en V·m$^{-1}$) à $r=0{,}1$ m de l'axe ($\\frac1{2\\varepsilon_0}=2\\pi k$) ?",
+     "ans": "18*pi/5",
+     "sol": "Pour $r < R$ : $Q_{int}=\\rho\\pi r^2h$ et flux $E\\,2\\pi rh$, donc $E=\\frac{\\rho r}{2\\varepsilon_0}=2\\times10^{-9}\\times0{,}1\\times2\\pi\\times9\\times10^9=3{,}6\\pi\\approx11{,}3$ V·m$^{-1}$.",
+     "src": "TD4 EM2, ex. 1",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\rho=4$ nC·m$^{-3}$, $R=0{,}2$ m, $r=0{,}1$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "36*pi/5",
+       "sol": "$\\frac{\\rho r}{2\\varepsilon_0}=4\\times10^{-9}\\times0{,}1\\times2\\pi\\times9\\times10^9=7{,}2\\pi$."
+      }
+     ],
+     "formules": "$E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $d\\tau=r\\,dr\\,d\\theta\\,dz$ · continuité de $E$",
+     "type": "value"
+    },
+    {
+     "id": "cv2",
+     "enonce": "Même cylindre, mais à $r=0{,}4$ m ($r > R$) ?",
+     "ans": "18*pi/5",
+     "sol": "Pour $r > R$ : $Q_{int}=\\rho\\pi R^2h$, donc $E=\\frac{\\rho R^2}{2\\varepsilon_0r}=\\frac{2\\times10^{-9}\\times0{,}04\\times2\\pi\\times9\\times10^9}{0{,}4}=3{,}6\\pi\\approx11{,}3$ V·m$^{-1}$.",
+     "src": "TD4 EM2, ex. 1",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\rho=4$ nC·m$^{-3}$, $R=0{,}2$ m, $r=0{,}8$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "18*pi/5",
+       "sol": "$\\frac{\\rho R^2}{2\\varepsilon_0r}=\\frac{4\\times10^{-9}\\times0{,}04\\times2\\pi\\times9\\times10^9}{0{,}8}=3{,}6\\pi$."
+      }
+     ],
+     "formules": "$E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $d\\tau=r\\,dr\\,d\\theta\\,dz$ · continuité de $E$",
+     "type": "value"
+    },
+    {
+     "id": "cv3",
+     "enonce": "Vérifier la continuité en $r=R$ : calculer le rapport $\\frac{E(R^+)}{E(R^-)}$ avec $E(r < R)=\\frac{\\rho r}{2\\varepsilon_0}$ et $E(r > R)=\\frac{\\rho R^2}{2\\varepsilon_0r}$ (r, R, rho, e0).",
+     "ans": "1",
+     "sol": "$E(R^+)=\\frac{\\rho R}{2\\varepsilon_0}=E(R^-)$ : le rapport vaut $1$, le champ est continu (pas de charge surfacique).",
+     "src": "TD4 EM2, ex. 1",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Même question pour un cylindre creux : $E(r > a)=\\frac{\\sigma a}{\\varepsilon_0r}$ et $E(a^-)=0$. Calculer $E(a^+)-E(a^-)$ (sig, a, e0).",
+       "ans": "sig/e0",
+       "sol": "$E(a^+)=\\frac\\sigma{\\varepsilon_0}$ : saut égal à $\\frac\\sigma{\\varepsilon_0}$ (charge surfacique)."
+      }
+     ],
+     "formules": "$E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $d\\tau=r\\,dr\\,d\\theta\\,dz$ · continuité de $E$",
+     "type": "value"
+    },
+    {
+     "id": "cv4",
+     "enonce": "Fil de rayon $R=2$ m, $\\rho(r)=\\frac\\lambda r e^{-r/a}$ avec $\\lambda=1$ et $a=2$. Charge (en C) contenue dans le cylindre de rayon $r=2$ m et de hauteur $h=1$ m ?",
+     "ans": "4*pi*(1-exp(-1))",
+     "sol": "$Q_{int}=\\int_0^h\\!\\!\\int_0^{2\\pi}\\!\\!\\int_0^r\\frac\\lambda re^{-s/a}\\,s\\,ds\\,d\\theta\\,dz=2\\pi h\\lambda a\\left(1-e^{-r/a}\\right)=2\\pi\\times1\\times1\\times2\\left(1-e^{-1}\\right)=4\\pi(1-e^{-1})$ (le facteur $r$ du jacobien simplifie le $\\frac1r$).",
+     "src": "TD4 EM2, ex. 2",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "Même densité avec $a=1$, $\\lambda=3$, $r=1$, $h=1$. Charge intérieure ?",
+       "ans": "6*pi*(1-exp(-1))",
+       "sol": "$2\\pi h\\lambda a(1-e^{-r/a})=6\\pi(1-e^{-1})$."
+      }
+     ],
+     "formules": "$E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $d\\tau=r\\,dr\\,d\\theta\\,dz$ · continuité de $E$",
+     "type": "value"
+    },
+    {
+     "id": "cv5",
+     "enonce": "Fil de rayon $R_1$, $\\rho_0$ uniforme, entouré d'un cylindre creux de rayon $R_2$ chargé en surface avec $+Q$ (qq), même hauteur $h$. Champ pour $r > R_2$ en fonction de rho0, R1, h, qq, e0, r.",
+     "ans": "(rho0*pi*R1**2*h+qq)/(2*pi*e0*r*h)",
+     "sol": "$Q_{int}=\\rho_0\\pi R_1^2h+Q$ (toute la charge est à l'intérieur de la surface de Gauss de rayon $r > R_2$), flux $E\\,2\\pi rh$ : $E=\\frac{\\rho_0\\pi R_1^2h+Q}{2\\pi\\varepsilon_0rh}$.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 3",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "Mêmes cylindres avec $\\rho_0=2$, $R_1=1$, $h=1$, $Q=2\\pi$, $r=2$, $\\varepsilon_0=1$ (unités arbitraires). Champ ?",
+       "ans": "1",
+       "sol": "$Q_{int}=2\\pi+2\\pi=4\\pi$ et flux $E\\times2\\pi\\times2\\times1=4\\pi E$ : $E=1$."
+      }
+     ],
+     "formules": "$Q_{int}=\\rho_0\\pi R_1^2h+Q$ · $E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Gauss : plan infini et condensateur plan",
+   "notions": [
+    "gauss-plan",
+    "gauss"
+   ],
+   "exos": [
+    {
+     "id": "pl1",
+     "enonce": "Plan infini de densité $\\sigma=2$ nC·m$^{-2}$. Champ (en V·m$^{-1}$) de part et d'autre ($\\frac1{2\\varepsilon_0}=2\\pi k$) ?",
+     "ans": "36*pi",
+     "sol": "Cylindre de Gauss de section $S$ : $2ES=\\frac{\\sigma S}{\\varepsilon_0}$, donc $E=\\frac\\sigma{2\\varepsilon_0}=2\\times10^{-9}\\times2\\pi\\times9\\times10^9=36\\pi\\approx113$ V·m$^{-1}$, sortant ($z > 0$) ou rentrant ($z < 0$).",
+     "src": "TD3 EM2, ex. 1",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\sigma=1$ nC·m$^{-2}$. Champ du plan (V·m$^{-1}$) ?",
+       "ans": "18*pi",
+       "sol": "$\\frac\\sigma{2\\varepsilon_0}=2\\pi k\\sigma=18\\pi$."
+      }
+     ],
+     "formules": "$2ES=\\frac{\\sigma S}{\\varepsilon_0}$ · $E=\\frac\\sigma{2\\varepsilon_0}$ · $U=Ee$ · $C=\\frac{\\varepsilon_0S}e$",
+     "type": "value"
+    },
+    {
+     "id": "pl2",
+     "enonce": "Deux plans infinis chargés $+\\sigma$ et $-\\sigma$ ($\\sigma=2$ nC·m$^{-2}$). Champ (en V·m$^{-1}$) entre eux ?",
+     "ans": "72*pi",
+     "sol": "Par superposition, entre les plans les champs des deux nappes ont même sens : $E=\\frac\\sigma{2\\varepsilon_0}+\\frac\\sigma{2\\varepsilon_0}=\\frac\\sigma{\\varepsilon_0}=72\\pi$ V·m$^{-1}$ ; à l'extérieur ils se compensent : $\\vec E=\\vec0$.",
+     "src": "TD3 EM2, ex. 2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Deux plans $\\pm\\sigma$, $\\sigma=1$ nC·m$^{-2}$. Champ entre eux (V·m$^{-1}$) ?",
+       "ans": "36*pi",
+       "sol": "$\\frac\\sigma{\\varepsilon_0}=36\\pi$."
+      }
+     ],
+     "formules": "$2ES=\\frac{\\sigma S}{\\varepsilon_0}$ · $E=\\frac\\sigma{2\\varepsilon_0}$ · $U=Ee$ · $C=\\frac{\\varepsilon_0S}e$",
+     "type": "value"
+    },
+    {
+     "id": "pl3",
+     "enonce": "Les plans sont distants de $e=1$ mm. Tension $U$ (en V) entre eux ?",
+     "ans": "9*pi/125",
+     "sol": "$E=-\\frac{dV}{dz}$ donne $U=Ee=\\frac{\\sigma e}{\\varepsilon_0}=72\\pi\\times10^{-3}=\\frac{9\\pi}{125}\\approx0{,}226$ V.",
+     "src": "TD3 EM2, ex. 2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$\\sigma=1$ nC·m$^{-2}$, $e=5$ mm. Tension (V) ?",
+       "ans": "9*pi/50",
+       "sol": "$U=\\frac{\\sigma e}{\\varepsilon_0}=36\\pi\\times5\\times10^{-3}=\\frac{9\\pi}{50}$ V."
+      }
+     ],
+     "formules": "$2ES=\\frac{\\sigma S}{\\varepsilon_0}$ · $E=\\frac\\sigma{2\\varepsilon_0}$ · $U=Ee$ · $C=\\frac{\\varepsilon_0S}e$",
+     "type": "value"
+    },
+    {
+     "id": "pl4",
+     "enonce": "Surface $S=1$ m$^2$ et $e=1$ mm. Capacité $C=\\frac{\\varepsilon_0S}e$ (en F) avec $\\varepsilon_0=\\frac1{4\\pi k}$ ?",
+     "ans": "1/(36*10**6*pi)",
+     "sol": "$C=\\frac QU=\\frac{\\sigma S}{\\sigma e/\\varepsilon_0}=\\frac{\\varepsilon_0S}e=\\frac{1000}{4\\pi\\times9\\times10^9}=\\frac1{36\\times10^6\\pi}\\approx8{,}8\\times10^{-9}$ F.",
+     "src": "TD3 EM2, ex. 2",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$S=2$ m$^2$, $e=1$ mm. Capacité (F) ?",
+       "ans": "1/(18*10**6*pi)",
+       "sol": "$C=\\frac{\\varepsilon_0S}e=\\frac{2000}{4\\pi\\times9\\times10^9}\\approx1{,}8\\times10^{-8}$ F."
+      }
+     ],
+     "formules": "$2ES=\\frac{\\sigma S}{\\varepsilon_0}$ · $E=\\frac\\sigma{2\\varepsilon_0}$ · $U=Ee$ · $C=\\frac{\\varepsilon_0S}e$",
+     "type": "value"
+    },
+    {
+     "id": "pl5",
+     "enonce": "Comment fabriquer un condensateur de grande capacité tout en réduisant la place occupée ? Quelle est la limite ?",
+     "sol": "$C=\\frac{\\varepsilon_0S}e$ : il faut augmenter $S$ et diminuer $e$. Augmenter $S$ augmente l'encombrement (on enroule ou on empile les armatures) ; diminuer $e$ réduit l'encombrement. Limite : la tension de claquage (environ $32$ kV·cm$^{-1}$ dans l'air), au-delà de laquelle une étincelle décharge le condensateur.",
+     "src": "TD3 EM2, ex. 2",
+     "duree": 4,
+     "formules": "$2ES=\\frac{\\sigma S}{\\varepsilon_0}$ · $E=\\frac\\sigma{2\\varepsilon_0}$ · $U=Ee$ · $C=\\frac{\\varepsilon_0S}e$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Gauss : sphère chargée",
+   "notions": [
+    "gauss-sph",
+    "gauss",
+    "integ"
+   ],
+   "exos": [
+    {
+     "id": "sp1",
+     "enonce": "Boule uniformément chargée, $\\rho_0=3$ nC·m$^{-3}$, rayon $R=0{,}2$ m. Champ (en V·m$^{-1}$) à $r=0{,}1$ m ($\\varepsilon_0=\\frac1{4\\pi k}$) ?",
+     "ans": "18*pi/5",
+     "sol": "$r < R$ : $Q_{int}=\\frac43\\pi r^3\\rho_0$, flux $E\\,4\\pi r^2$ : $E=\\frac{\\rho_0r}{3\\varepsilon_0}=\\frac{3\\times10^{-9}\\times0{,}1\\times4\\pi\\times9\\times10^9}3=3{,}6\\pi$ V·m$^{-1}$.",
+     "src": "TD5 EM2, ex. 2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\rho_0=6$ nC·m$^{-3}$, $R=0{,}2$ m, $r=0{,}1$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "36*pi/5",
+       "sol": "$\\frac{\\rho_0r}{3\\varepsilon_0}=7{,}2\\pi$."
+      }
+     ],
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$",
+     "type": "value"
+    },
+    {
+     "id": "sp2",
+     "enonce": "Même boule, mais à $r=0{,}4$ m ?",
+     "ans": "9*pi/5",
+     "sol": "$r > R$ : $Q_{int}=\\frac43\\pi R^3\\rho_0$, donc $E=\\frac{\\rho_0R^3}{3\\varepsilon_0r^2}=\\frac{3\\times10^{-9}\\times0{,}008\\times4\\pi\\times9\\times10^9}{3\\times0{,}16}=1{,}8\\pi$ V·m$^{-1}$ : champ d'une charge ponctuelle placée en $O$.",
+     "src": "TD5 EM2, ex. 2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\rho_0=3$ nC·m$^{-3}$, $R=0{,}2$ m, $r=0{,}4$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "9*pi/5",
+       "sol": "$\\frac{\\rho_0R^3}{3\\varepsilon_0r^2}=1{,}8\\pi$."
+      }
+     ],
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$",
+     "type": "value"
+    },
+    {
+     "id": "sp3",
+     "enonce": "Boule de rayon $R$ avec $\\rho(r)=\\rho_0\\frac{r^2}{R^2}$. Champ pour $r < R$ en fonction de rho0, r, R, e0.",
+     "ans": "rho0*r**3/(5*e0*R**2)",
+     "sol": "$Q_{int}=\\int_0^r\\rho_0\\frac{s^2}{R^2}4\\pi s^2ds=\\frac{4\\pi\\rho_0r^5}{5R^2}$ ; flux $E\\,4\\pi r^2$ : $E=\\frac{\\rho_0r^3}{5\\varepsilon_0R^2}$.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 2",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "$\\rho(r)=\\rho_0\\frac rR$. Champ pour $r < R$ (rho0, r, R, e0) ?",
+       "ans": "rho0*r**2/(4*e0*R)",
+       "sol": "$Q_{int}=\\frac{\\pi\\rho_0r^4}R$ ; $E=\\frac{\\rho_0r^2}{4\\varepsilon_0R}$."
+      }
+     ],
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$",
+     "type": "value"
+    },
+    {
+     "id": "sp4",
+     "enonce": "Noyau de rayon $a$ avec $\\rho(r)=\\rho_0\\left(1-\\frac{r^2}{a^2}\\right)$ et de charge totale $Ze$ (Z, qe, a). Exprimer $\\rho_0$.",
+     "ans": "15*Z*qe/(8*pi*a**3)",
+     "sol": "$Ze=\\rho_0\\int_0^a\\left(1-\\frac{r^2}{a^2}\\right)r^2dr\\times4\\pi=4\\pi\\rho_0\\left(\\frac{a^3}3-\\frac{a^3}5\\right)=\\frac{8\\pi\\rho_0a^3}{15}$, donc $\\rho_0=\\frac{15Ze}{8\\pi a^3}$.",
+     "src": "TD5 EM2, ex. 3",
+     "duree": 6,
+     "variants": [
+      {
+       "enonce": "$\\rho(r)=\\rho_0\\left(1-\\frac ra\\right)$, charge totale $Ze$. Exprimer $\\rho_0$ (Z, qe, a).",
+       "ans": "3*Z*qe/(pi*a**3)",
+       "sol": "$Ze=4\\pi\\rho_0\\left(\\frac{a^3}3-\\frac{a^3}4\\right)=\\frac{\\pi\\rho_0a^3}3$."
+      }
+     ],
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$",
+     "type": "value"
+    },
+    {
+     "id": "sp5",
+     "enonce": "Sphère creuse de rayon $R=0{,}1$ m chargée en surface ($\\sigma=1$ nC·m$^{-2}$). Champ (en V·m$^{-1}$) à $r=0{,}3$ m ($\\varepsilon_0=\\frac1{4\\pi k}$) ?",
+     "ans": "4*pi",
+     "sol": "$Q_{int}=\\sigma4\\pi R^2$ et flux $E\\,4\\pi r^2$ : $E=\\frac{\\sigma R^2}{\\varepsilon_0r^2}=\\frac{10^{-9}\\times0{,}01\\times4\\pi\\times9\\times10^9}{0{,}09}=4\\pi\\approx12{,}6$ V·m$^{-1}$ ; à l'intérieur $Q_{int}=0$ donc $\\vec E=\\vec0$.",
+     "src": "Partiel 1 de physique décembre 2017 (dossier 2021), ex. 2",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$R=0{,}2$ m, $\\sigma=2$ nC·m$^{-2}$, $r=0{,}4$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "18*pi",
+       "sol": "$\\frac{\\sigma R^2}{\\varepsilon_0r^2}=18\\pi$."
+      }
+     ],
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Du champ au potentiel : intégration et gradient",
+   "notions": [
+    "potentiel",
+    "gauss-sph",
+    "gauss-cyl"
+   ],
+   "exos": [
+    {
+     "id": "pg1",
+     "enonce": "Sphère creuse : $E(r)=\\frac{\\sigma R^2}{\\varepsilon_0r^2}$ pour $r > R$. Potentiel $V(r)$ en prenant $V(\\infty)=0$ (sig, R, e0, r).",
+     "ans": "sig*R**2/(e0*r)",
+     "sol": "$V(r)=-\\int E\\,dr=\\frac{\\sigma R^2}{\\varepsilon_0r}+C$ et $V(\\infty)=0$ donne $C=0$. On retrouve $\\frac{kQ}r$ avec $Q=4\\pi R^2\\sigma$.",
+     "src": "Partiel 1 de physique décembre 2017 (dossier 2021), ex. 2 (q. 3)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Boule pleine : $E=\\frac{\\rho_0R^3}{3\\varepsilon_0r^2}$ pour $r > R$. $V(r)$ avec $V(\\infty)=0$ (rho0, R, e0, r).",
+       "ans": "rho0*R**3/(3*e0*r)",
+       "sol": "$V=\\frac{\\rho_0R^3}{3\\varepsilon_0r}$ : potentiel d'une charge ponctuelle $Q=\\frac43\\pi R^3\\rho_0$."
+      }
+     ],
+     "formules": "$E_r=-\\frac{dV}{dr}$ · $V=-\\int E\\,dr+C$ · $V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr$",
+     "type": "value"
+    },
+    {
+     "id": "pg2",
+     "enonce": "Fil infini $\\lambda=1$ nC·m$^{-1}$, $E(r)=\\frac{2k\\lambda}r$. Différence de potentiel $V(0{,}1)-V(0{,}2)$ (en V) ?",
+     "ans": "18*log(2)",
+     "sol": "$V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr=2k\\lambda\\ln\\frac{r_2}{r_1}=18\\ln2\\approx12{,}5$ V.",
+     "src": "Partiel de physique (dossier 2024), ex. 3 (q. 4)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Même fil avec $\\lambda=2$ nC·m$^{-1}$ : $V(0{,}1)-V(0{,}4)$ (V) ?",
+       "ans": "36*log(4)",
+       "sol": "$2k\\lambda\\ln\\frac{0{,}4}{0{,}1}=36\\ln4$ V."
+      }
+     ],
+     "formules": "$E_r=-\\frac{dV}{dr}$ · $V=-\\int E\\,dr+C$ · $V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr$",
+     "type": "value"
+    },
+    {
+     "id": "pg3",
+     "enonce": "Boule uniformément chargée : $E=\\frac{\\rho_0r}{3\\varepsilon_0}$ pour $r < R$. $V(r)$ à une constante près (rho0, e0, r).",
+     "ans": "-rho0*r**2/(6*e0)",
+     "sol": "$V(r)=-\\int\\frac{\\rho_0r}{3\\varepsilon_0}dr=-\\frac{\\rho_0r^2}{6\\varepsilon_0}+C$ : le potentiel est maximal au centre.",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 2 (q. 3)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Cylindre plein : $E=\\frac{\\rho r}{2\\varepsilon_0}$ pour $r < R$. $V(r)$ à une constante près (rho0, e0, r).",
+       "ans": "-rho0*r**2/(4*e0)",
+       "sol": "$V=-\\frac{\\rho r^2}{4\\varepsilon_0}+C$."
+      }
+     ],
+     "formules": "$E_r=-\\frac{dV}{dr}$ · $V=-\\int E\\,dr+C$ · $V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr$",
+     "type": "value"
+    },
+    {
+     "id": "pg4",
+     "enonce": "Potentiel $V(r)=\\frac{kq}r$. Calculer $E_r=-\\frac{dV}{dr}$ (k, q, x).",
+     "ans": "k*q/x**2",
+     "sol": "$E_r=-\\frac{d}{dr}\\left(\\frac{kq}r\\right)=\\frac{kq}{r^2}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "$V(r)=-\\frac\\lambda{2\\pi\\varepsilon_0}\\ln r$. Calculer $E_r$ (lam, e0, x).",
+       "ans": "lam/(2*pi*e0*x)",
+       "sol": "$E_r=\\frac\\lambda{2\\pi\\varepsilon_0r}$ : on retrouve le champ du fil."
+      }
+     ],
+     "formules": "$E_r=-\\frac{dV}{dr}$ · $V=-\\int E\\,dr+C$ · $V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr$",
+     "type": "value"
+    },
+    {
+     "id": "pg5",
+     "enonce": "Pourquoi ne peut-on pas imposer $V(\\infty)=0$ pour un fil infini ? Comment fixer la constante ?",
+     "sol": "$V(r)=-\\int\\frac\\lambda{2\\pi\\varepsilon_0r}dr=-\\frac\\lambda{2\\pi\\varepsilon_0}\\ln r+C$ : $V$ diverge quand $r\\to\\infty$ (la charge est elle-même à l'infini). On choisit une référence $V(r_0)=0$ en un rayon $r_0$ fini : $V(r)=-\\frac\\lambda{2\\pi\\varepsilon_0}\\ln\\frac r{r_0}$. Seules les différences de potentiel ont un sens physique.",
+     "src": "Partiel de physique (dossier 2024), ex. 3 (q. 4)",
+     "duree": 4,
+     "formules": "$E_r=-\\frac{dV}{dr}$ · $V=-\\int E\\,dr+C$ · $V(r_1)-V(r_2)=\\int_{r_1}^{r_2}E\\,dr$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Distributions continues sans Gauss : anneau et axe",
+   "notions": [
+    "anneau",
+    "potentiel"
+   ],
+   "exos": [
+    {
+     "id": "an1",
+     "enonce": "Anneau de rayon $R=0{,}6$ m, $\\lambda=1$ nC·m$^{-1}$. Champ (en V·m$^{-1}$) au point de l'axe à $z=0{,}8$ m ?",
+     "ans": "216*pi/25",
+     "sol": "$E_z=\\frac{k\\,2\\pi R\\lambda\\,z}{(R^2+z^2)^{3/2}}$ avec $R^2+z^2=1$ : $E=9\\times2\\pi\\times0{,}6\\times0{,}8=8{,}64\\pi\\approx27{,}1$ V·m$^{-1}$ ($=\\frac{216\\pi}{25}$).",
+     "src": "TD2 EM2, ex. 1",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Anneau $R=0{,}3$ m, $\\lambda=2$ nC·m$^{-1}$, $z=0{,}4$ m. Champ (V·m$^{-1}$) ?",
+       "ans": "864*pi/25",
+       "sol": "$R^2+z^2=0{,}25$ ; $E=\\frac{18\\times2\\pi\\times0{,}12}{0{,}125}=34{,}56\\pi$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    },
+    {
+     "id": "an2",
+     "enonce": "Un élément de l'anneau, de charge $dQ=\\lambda R\\,d\\theta$, crée sur l'axe $dE_z=\\frac{k\\lambda Rz\\,d\\theta}{(R^2+z^2)^{3/2}}$. Intégrer sur l'anneau (lam, R, z, k).",
+     "ans": "2*pi*k*lam*R*z/(R**2+z**2)**Rational(3,2)",
+     "sol": "Seul $\\theta$ varie : $E_z=\\frac{k\\lambda Rz}{(R^2+z^2)^{3/2}}\\int_0^{2\\pi}d\\theta=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ (les composantes perpendiculaires à l'axe s'annulent par symétrie).",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 3 (q. 2)",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "Mêmes données avec valeurs : $R=0{,}3$, $z=0{,}4$, $k\\lambda=18$. Intégrer $dE_z=\\frac{k\\lambda Rz\\,d\\theta}{(R^2+z^2)^{3/2}}$ sur $[0,2\\pi]$.",
+       "ans": "864*pi/25",
+       "sol": "$\\frac{18\\times0{,}12}{0{,}125}=17{,}28$, puis $\\times2\\pi=34{,}56\\pi$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    },
+    {
+     "id": "an3",
+     "enonce": "Potentiel de l'anneau en $M$ de l'axe : $dV=\\frac{k\\lambda R\\,d\\theta}{\\sqrt{R^2+z^2}}$. Intégrer (lam, R, z, k).",
+     "ans": "2*pi*k*lam*R/sqrt(R**2+z**2)",
+     "sol": "$V(M)=\\frac{k\\lambda R}{\\sqrt{R^2+z^2}}\\int_0^{2\\pi}d\\theta=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}=\\frac{kQ}{\\sqrt{R^2+z^2}}$ : scalaire, aucune projection.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 3 (q. 3)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$R=0{,}3$, $z=0{,}4$, $k\\lambda=9$. Intégrer $dV=\\frac{k\\lambda R\\,d\\theta}{\\sqrt{R^2+z^2}}$ sur $[0,2\\pi]$.",
+       "ans": "54*pi/5",
+       "sol": "$\\frac{9\\times0{,}3}{0{,}5}=5{,}4$ puis $\\times2\\pi=10{,}8\\pi$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    },
+    {
+     "id": "an4",
+     "enonce": "Retrouver le champ à partir de $V(z)=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ avec $E_z=-\\frac{\\partial V}{\\partial z}$ (lam, R, z, k).",
+     "ans": "2*pi*k*lam*R*z/(R**2+z**2)**Rational(3,2)",
+     "sol": "$\\frac d{dz}(R^2+z^2)^{-1/2}=-z(R^2+z^2)^{-3/2}$, donc $E_z=\\frac{2\\pi k\\lambda R\\,z}{(R^2+z^2)^{3/2}}$ : même résultat que par intégration.",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 3 (q. 4)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Disque : $V(z)=\\frac\\sigma{2\\varepsilon_0}\\left(\\sqrt{R^2+z^2}-z\\right)$. $E_z=-\\frac{dV}{dz}$ (sig, e0, R, z).",
+       "ans": "sig/(2*e0)*(1-z/sqrt(R**2+z**2))",
+       "sol": "$\\frac d{dz}\\sqrt{R^2+z^2}=\\frac z{\\sqrt{R^2+z^2}}$, donc $E_z=\\frac\\sigma{2\\varepsilon_0}\\left(1-\\frac z{\\sqrt{R^2+z^2}}\\right)$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    },
+    {
+     "id": "an5",
+     "enonce": "Comportement loin de l'anneau : calculer $\\lim_{z\\to+\\infty}z^2E_z$ avec $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ (lam, R, k).",
+     "ans": "2*pi*k*lam*R",
+     "sol": "$\\frac{z^3}{(R^2+z^2)^{3/2}}\\to1$, donc $E_z\\sim\\frac{2\\pi k\\lambda R}{z^2}=\\frac{kQ}{z^2}$ avec $Q=2\\pi R\\lambda$ : de loin, l'anneau se comporte comme une charge ponctuelle (vérification de vraisemblance).",
+     "src": "TD2 EM2, ex. 1 (q. 5)",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "$\\lim_{z\\to\\infty}zV(z)$ avec $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ (lam, R, k).",
+       "ans": "2*pi*k*lam*R",
+       "sol": "$V\\sim\\frac{kQ}z$ avec $Q=2\\pi R\\lambda$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    },
+    {
+     "id": "an6",
+     "enonce": "Quatre charges $q$ aux sommets d'un carré de côté $L$ créent sur l'axe $E=\\frac{4kqx}{(x^2+L^2/2)^{3/2}}$, maximal en $x=\\frac L2$. Valeur maximale (k, q, L).",
+     "ans": "16*sqrt(3)*k*q/(9*L**2)",
+     "sol": "En $x=\\frac L2$ : $x^2+\\frac{L^2}2=\\frac{3L^2}4$, donc $E_{max}=\\frac{4kq\\frac L2}{\\left(\\frac{3L^2}4\\right)^{3/2}}=\\frac{2kqL}{\\frac{3\\sqrt3L^3}8}=\\frac{16kq}{3\\sqrt3L^2}=\\frac{16\\sqrt3\\,kq}{9L^2}$.",
+     "src": "TD1 EM2, ex. 1 (q. 5)",
+     "duree": 5,
+     "variants": [
+      {
+       "enonce": "$q=1$ nC, $L=0{,}6$ m, $x=\\frac L2$. Champ (V·m$^{-1}$) ?",
+       "ans": "400*sqrt(3)/9",
+       "sol": "$E=\\frac{16kq}{3\\sqrt3L^2}=\\frac{16\\times9}{3\\sqrt3\\times0{,}36}=\\frac{400\\sqrt3}9\\approx77$."
+      }
+     ],
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "titre": "Niveau examen : charges discrètes et spectromètre",
+   "notions": [
+    "coulomb",
+    "potentiel",
+    "lorentz",
+    "vect"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mx1",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 2 (7 points)",
+     "enonce": "Trois charges : $A$ porte $-q$, $B$ et $D$ portent $+q$, $ABCD$ est un carré de côté $a$ ($A$ en haut à gauche, $B$ en haut à droite, $C$ en bas à droite, $D$ en bas à gauche ; $\\vec u_x$ vers la droite, $\\vec u_y$ vers le haut ; $C$ est vide).\n1. Champs de chaque charge en $C$ (schéma). 2. Norme de $\\vec E_A(C)$. 3. Composante $E_x$ du champ total en $C$. 4. Norme du champ total en $C$ (en fonction de $k$, $q$, $a$).",
+     "sol": "**1.** $AC=a\\sqrt2$ (diagonale) donc $E_A(C)=\\frac{kq}{(a\\sqrt2)^2}=\\frac{kq}{2a^2}$, dirigé vers $A$ (charge négative) : $\\vec E_A(C)=\\frac{kq}{2a^2}\\left(-\\cos45^\\circ\\vec u_x+\\sin45^\\circ\\vec u_y\\right)$. Les autres : $\\vec E_B(C)=-\\frac{kq}{a^2}\\vec u_y$ (répulsion par $B$ situé au-dessus de $C$) et $\\vec E_D(C)=\\frac{kq}{a^2}\\vec u_x$ (répulsion par $D$ situé à gauche).\n\n**2.** Seuls $\\vec E_D$ et $\\vec E_A$ ont une composante en $x$ : $E_x=\\frac{kq}{a^2}-\\frac{kq}{2a^2}\\cos45^\\circ=\\frac{kq}{a^2}\\left(1-\\frac{\\sqrt2}4\\right)$. Par symétrie du carré par rapport à la diagonale $AC$, $E_y=-E_x$.\n\n**3.** $E_y=-E_x$, donc $E=\\sqrt{E_x^2+E_y^2}=\\sqrt2\\,E_x=\\frac{kq}{a^2}\\sqrt2\\left(1-\\frac{\\sqrt2}4\\right)=\\frac{kq}{a^2}\\left(\\sqrt2-\\frac12\\right)$ (corrigé rédigé, vérifié par un calcul symbolique).",
+     "formules": "$E=\\frac{kq}{d^2}$ avec $d=a\\sqrt2$ · $E_x=\\sum E_i\\cos\\alpha_i$ · $\\cos45^\\circ=\\frac{\\sqrt2}2$ · $E=\\sqrt{E_x^2+E_y^2}$ · symétrie par rapport à $AC$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "mx2",
+     "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3 (8 points)",
+     "enonce": "Spectromètre de masse : une source émet des ions $^{200}$Hg$^{2+}$ et $^{202}$Hg$^{2+}$ ($q=2e$) qui traversent une cavité d'accélération (plaques $P_1$ et $P_2$, tension $U$, $\\vec v_i\\approx\\vec0$), une cavité de filtrage en vitesse, puis entrent par la fente $F_3$ avec la vitesse $\\vec v_0=v_0\\vec e_x$ dans une zone où règne $\\vec B_3=-B_3\\vec e_z$ ($B_3=200$ mT). Ils décrivent un demi-cercle et frappent un détecteur à l'abscisse $y$.\n1. Sens du champ $\\vec E_1$ d'accélération ? 2. Force de Lorentz en $F_3$ (sens de déviation). 3. Rayon $R$ avec $\\vec a=-\\frac{v^2}R\\vec e_r$. 4. Application : $v_0=10^4$ m·s$^{-1}$, rayon de l'isotope 200. 5. Écart des points d'impact des deux isotopes.",
+     "sol": "**1.** La force électrique $q\\vec E_1$ doit accélérer l'ion de $P_1$ vers $P_2$ ; comme $q=2e > 0$, $\\vec E_1$ a le même sens que la force : il est dirigé de $P_1$ vers $P_2$ (potentiel plus élevé en $P_1$ qu'en $P_2$, $U=V_1-V_2 > 0$). Dans cette cavité il n'y a pas de champ magnétique : $\\vec F=q\\vec E_1$.\n\n**2.** $\\vec F=q\\vec v_0\\wedge\\vec B_3=q\\,v_0\\vec e_x\\wedge(-B_3\\vec e_z)=-qv_0B_3(\\vec e_x\\wedge\\vec e_z)=+qv_0B_3\\vec e_y$ car $\\vec e_x\\wedge\\vec e_z=-\\vec e_y$ : la force est selon $+\\vec e_y$ (perpendiculaire à $\\vec v_0$ et à $\\vec B_3$), l'ion est dévié vers $+y$ et décrit un demi-cercle.\n\n**3.** Mouvement circulaire uniforme : $m\\frac{v_0^2}R=|q|v_0B_3$, d'où $R=\\frac{mv_0}{qB_3}$ ; à $v_0$ et $B_3$ fixés, $R\\propto m$, ce qui sépare les isotopes : $y=2R$ au détecteur.\n\n**4.** $R=\\frac{mv_0}{qB}=\\frac{3{,}32\\times10^{-25}\\times10^4}{3{,}2\\times10^{-19}\\times0{,}2}=\\frac{3{,}32\\times10^{-21}}{6{,}4\\times10^{-20}}\\approx0{,}052$ m.\n\n**5.** À $v_0$ et $B$ fixés, $R\\propto m$ : $\\Delta y=2(R_{202}-R_{200})=\\frac{2\\times2u\\times v_0}{qB}=\\frac{4\\times1{,}66\\times10^{-27}\\times10^4}{6{,}4\\times10^{-20}}\\approx1{,}04\\times10^{-3}$ m.",
+     "formules": "$\\vec F=q\\vec E$ · $q > 0$ · $\\vec F=q\\vec v\\wedge\\vec B$ · $\\vec e_x\\wedge\\vec e_z=-\\vec e_y$ · $m\\frac{v^2}R=|q|vB$ · $R=\\frac{mv}{|q|B}$ · $\\vec F=q\\vec E+q\\vec v\\wedge\\vec B$ · $\\frac12mv^2=qU$ · $R\\propto m$",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "mx3",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 1 (5 points)",
+     "enonce": "Quatre charges $+q$, $-2q$, $+2q$, $-q$ sont placées en $A$, $B$, $C$, $D$, sommets consécutifs d'un carré de côté $a$ (sens de rotation $A\\to B\\to C\\to D$), de centre $O$.\n1. Norme du champ résultant en $O$ (en fonction de $k$, $q$, $a$). 2. Potentiel en $A$. 3. Énergie électrique de la charge placée en $A$.",
+     "sol": "**1.** Chaque charge $q_i$ est à $\\frac a{\\sqrt2}$ de $O$ : $E_i=\\frac{2k|q_i|}{a^2}$ ; avec les vecteurs unitaires $\\vec u_i$ de $O$ vers les sommets, $\\vec E_i=-\\frac{2kq_i}{a^2}\\vec u_i$. Somme : $-\\frac{2kq}{a^2}(\\vec u_A-2\\vec u_B+2\\vec u_C-\\vec u_D)=-\\frac{2kq}{a^2}\\left(0,-\\sqrt2\\right)$ dans la base du carré, de norme $\\frac{2\\sqrt2\\,kq}{a^2}$ ; numériquement $\\frac{kq}{a^2}=100$ : $E=200\\sqrt2\\approx283$ V·m$^{-1}$ (corrigé rédigé : sujet sans corrigé, vérifié par somme vectorielle).\n\n**2.** $V(A)=k\\left(\\frac{-2q}a+\\frac{2q}{a\\sqrt2}+\\frac{-q}a\\right)=\\frac{kq}a\\left(\\sqrt2-3\\right)$ ($B$ et $D$ sont adjacents à $A$, $C$ est à $a\\sqrt2$).\n\n**3.** $E_p(A)=q\\,V(A)=\\frac{kq^2}a\\left(\\sqrt2-3\\right)\\approx-1{,}59\\frac{kq^2}a<0$ : la charge en $A$ est globalement attirée par le reste de la distribution.",
+     "formules": "$E_i=\\frac{kq_i}{(a/\\sqrt2)^2}$ · superposition vectorielle · $V=\\sum\\frac{kq_i}{r_i}$ · $E_p=qV$",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 17,
+   "titre": "Niveau examen : théorème de Gauss et anneau",
+   "notions": [
+    "gauss",
+    "gauss-sph",
+    "gauss-cyl",
+    "anneau",
+    "potentiel"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mx4",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 2 (6 points)",
+     "enonce": "Une sphère de centre $O$ et de rayon $R$ est chargée en volume avec la densité $\\rho(r)=\\rho_0\\frac{r^2}{R^2}$ ($\\rho_0$, $R$ positifs).\n1. Direction de $\\vec E$ et variables dont il dépend. 2. Champ pour $r < R$ et pour $r > R$ (Gauss). 3. Continuité en $r=R$. 4. Potentiel pour $r > R$ ($V(\\infty)=0$).",
+     "sol": "**1.** Tout plan contenant $OM$ est plan de symétrie de la distribution : $\\vec E(M)$ est dans tous ces plans, donc selon leur intersection, la droite $OM$ : $\\vec E=E_r\\vec u_r$. La distribution est invariante par toute rotation autour de $O$ : $E_r$ ne dépend ni de $\\theta$ ni de $\\varphi$. Ainsi $\\vec E=E_r(r)\\vec u_r$.\n\n**2.** $Q_{int}=\\int_0^r\\rho_0\\frac{s^2}{R^2}4\\pi s^2ds=\\frac{4\\pi\\rho_0r^5}{5R^2}$ ; flux $E\\,4\\pi r^2$ : $E=\\frac{\\rho_0r^3}{5\\varepsilon_0R^2}$.\n\n**3.** $Q_{int}=\\frac{4\\pi\\rho_0R^3}5$ (toute la boule), flux $E\\,4\\pi r^2$ : $E=\\frac{\\rho_0R^3}{5\\varepsilon_0r^2}$.\n\n**4.** $E(R^-)=\\frac{\\rho_0R^3}{5\\varepsilon_0R^2}=\\frac{\\rho_0R}{5\\varepsilon_0}$ et $E(R^+)=\\frac{\\rho_0R^3}{5\\varepsilon_0R^2}=\\frac{\\rho_0R}{5\\varepsilon_0}$ : égaux, le champ est continu (il n'y a pas de charge surfacique).\n\n**5.** $E_r=-\\frac{dV}{dr}$ ($\\vec E$ radial, ne dépend que de $r$) : $V(r)=-\\int\\frac{\\rho_0R^3}{5\\varepsilon_0r^2}dr=\\frac{\\rho_0R^3}{5\\varepsilon_0r}+C_2$. Pour $r < R$ : $V=-\\frac{\\rho_0r^4}{20\\varepsilon_0R^2}+C_1$.",
+     "formules": "plans de symétrie · invariance par rotation · $E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$ · continuité de $E$ en $R$ · $E_r=-\\frac{dV}{dr}$",
+     "duree": 25,
+     "type": "multi"
+    },
+    {
+     "id": "mx5",
+     "src": "Partiel de physique décembre 2021 (dossier 2025), ex. 3 (7 points)",
+     "enonce": "Deux cylindres de même axe $Oz$ et de même hauteur $h$ (grande devant les rayons, effets de bords négligés) : le cylindre plein de rayon $R_1$ porte la densité volumique constante $\\rho_0 > 0$ ; le cylindre creux de rayon $R_2 > R_1$ porte la charge $+Q$ uniformément répartie sur sa surface latérale.\nChamp $E(r)$ pour $r < R_1$, $R_1 < r < R_2$ et $r > R_2$.",
+     "sol": "**1.** $Q_{int}=\\rho_0\\pi r^2h$ (cylindre de Gauss de rayon $r < R_1$), flux $E\\,2\\pi rh$ : $E=\\frac{\\rho_0r}{2\\varepsilon_0}$.\n\n**2.** Surface de Gauss de rayon $r$ entre les deux cylindres : seule la charge du cylindre plein est à l'intérieur, $Q_{int}=\\rho_0\\pi R_1^2h$ ; flux $E\\,2\\pi rh$ : $E=\\frac{\\rho_0R_1^2}{2\\varepsilon_0r}$.\n\n**3.** $Q_{int}=\\rho_0\\pi R_1^2h+Q$ (toute la charge est à l'intérieur de la surface de Gauss de rayon $r > R_2$), flux $E\\,2\\pi rh$ : $E=\\frac{\\rho_0\\pi R_1^2h+Q}{2\\pi\\varepsilon_0rh}$.",
+     "formules": "$E\\,2\\pi rh=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\rho_0\\pi r^2h$ · $Q_{int}=\\rho_0\\pi R_1^2h$ · $Q_{int}=\\rho_0\\pi R_1^2h+Q$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "mx6",
+     "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 3 (6 points)",
+     "enonce": "Un anneau de rayon $R$, d'axe $Oz$, est chargé avec la densité linéique constante $\\lambda > 0$. Pour un point $M$ de l'axe, d'altitude $z$ :\n1. Champ $E_z$ créé par l'anneau (intégration). 2. Potentiel $V(M)$. 3. Retrouver le champ avec $\\vec E=-\\overrightarrow{\\mathrm{grad}}\\,V$ (gradient en cylindriques).",
+     "sol": "**1.** Seul $\\theta$ varie : $E_z=\\frac{k\\lambda Rz}{(R^2+z^2)^{3/2}}\\int_0^{2\\pi}d\\theta=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ (les composantes perpendiculaires à l'axe s'annulent par symétrie).\n\n**2.** $V(M)=\\frac{k\\lambda R}{\\sqrt{R^2+z^2}}\\int_0^{2\\pi}d\\theta=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}=\\frac{kQ}{\\sqrt{R^2+z^2}}$ : scalaire, aucune projection.\n\n**3.** $\\frac d{dz}(R^2+z^2)^{-1/2}=-z(R^2+z^2)^{-3/2}$, donc $E_z=\\frac{2\\pi k\\lambda R\\,z}{(R^2+z^2)^{3/2}}$ : même résultat que par intégration.",
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 18,
+   "titre": "Plus dur que l'examen (+20 %)",
+   "notions": [
+    "gauss",
+    "gauss-cyl",
+    "gauss-sph",
+    "anneau",
+    "potentiel"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mh1",
+     "src": "Partiel de physique (dossier 2024), ex. 3 (style : fil et cylindre creux, potentiel)",
+     "enonce": "Un fil infini de densité linéique $\\lambda > 0$ est placé sur l'axe $Oz$ d'un cylindre creux de rayon $R$, de longueur $h$ (grande), portant la charge $+Q$ uniformément répartie sur sa surface latérale (effets de bords négligés).\n1. $E(r)$ pour $r < R$. 2. $E(r)$ pour $r > R$. 3. Saut de $E$ en $r=R$ et lien avec la densité surfacique $\\sigma=\\frac{Q}{2\\pi Rh}$. 4. Potentiel $V(r)$ pour $r > R$ (à une constante près).",
+     "sol": "**1.** $Q_{int}=\\lambda h$ (la charge $Q$ est sur le cylindre, à l'extérieur de la surface de Gauss), flux $E\\,2\\pi rh$ : $E=\\frac\\lambda{2\\pi\\varepsilon_0r}$.\n\n**2.** $Q_{int}=\\lambda h+Q$ : $E=\\frac{\\lambda h+Q}{2\\pi\\varepsilon_0rh}=\\frac\\lambda{2\\pi\\varepsilon_0r}+\\frac Q{2\\pi\\varepsilon_0rh}$.\n\n**3.** $E(R^+)-E(R^-)=\\frac{Q}{2\\pi\\varepsilon_0Rh}=\\frac\\sigma{\\varepsilon_0}$ : le champ n'est pas continu en $r=R$, il saute de $\\frac\\sigma{\\varepsilon_0}$ à la traversée de la nappe chargée.\n\n**4.** $E_r=-\\frac{dV}{dr}$ : $V(r)=-\\frac{\\lambda h+Q}{2\\pi\\varepsilon_0h}\\ln r+C_2$ ; pour $r < R$ : $V=-\\frac\\lambda{2\\pi\\varepsilon_0}\\ln r+C_1$ ; $C_1$ et $C_2$ se relient par la continuité de $V$ en $R$.",
+     "formules": "$E\\,2\\pi rh=\\frac{\\lambda h}{\\varepsilon_0}$ · $E\\,2\\pi rh=\\frac{\\lambda h+Q}{\\varepsilon_0}$ · saut de $E$ : $\\frac\\sigma{\\varepsilon_0}$ · $V=-\\int E\\,dr$",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "mh2",
+     "src": "Partiel 1 de physique décembre 2017 (dossier 2021), ex. 1 (style : deux anneaux coaxiaux)",
+     "enonce": "Deux anneaux de même axe $Oz$, de même centre $O$ et de rayons $R_1 < R_2$ portent respectivement les densités linéiques constantes $+\\lambda$ et $-\\lambda$. Pour $M$ sur l'axe, à la cote $z > 0$ :\n1. Champ créé par chaque anneau (direction et expression). 2. Champ total. 3. Potentiel total. 4. Que vaut le champ total quand $R_1\\to R_2$ ?",
+     "sol": "**1.** Seul $\\theta$ varie : $E_z=\\frac{k\\lambda Rz}{(R^2+z^2)^{3/2}}\\int_0^{2\\pi}d\\theta=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ (les composantes perpendiculaires à l'axe s'annulent par symétrie).\n\n**2.** Chaque anneau crée un champ selon $\\vec u_z$ ; celui de l'anneau $+\\lambda$ s'éloigne de $M$ vers le haut, celui de l'anneau $-\\lambda$ revient vers $O$. Par superposition : $E_z=2\\pi k\\lambda z\\left[\\frac{R_1}{(R_1^2+z^2)^{3/2}}-\\frac{R_2}{(R_2^2+z^2)^{3/2}}\\right]$ (les normes se soustraient car les champs sont opposés).\n\n**3.** Le potentiel est un scalaire : $V=\\frac{2\\pi k\\lambda R_1}{\\sqrt{R_1^2+z^2}}-\\frac{2\\pi k\\lambda R_2}{\\sqrt{R_2^2+z^2}}$.\n\n**4.** Quand $R_1\\to R_2$ les deux anneaux ont des charges opposées au même endroit : le champ total tend vers $0$ (distribution globalement neutre, le crochet s'annule).",
+     "formules": "$dE_z=dE\\cos\\alpha$ · $E_z=\\frac{2\\pi k\\lambda Rz}{(R^2+z^2)^{3/2}}$ · $V=\\frac{2\\pi k\\lambda R}{\\sqrt{R^2+z^2}}$ · $E_z=-\\frac{dV}{dz}$ · $E_i=\\frac{2\\pi k\\lambda_iR_iz}{(R_i^2+z^2)^{3/2}}$ · superposition · $V=\\sum\\frac{2\\pi k\\lambda_iR_i}{\\sqrt{R_i^2+z^2}}$ · limite · neutralité",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "mh3",
+     "src": "TD5 EM2, ex. 3 (noyau atomique)",
+     "enonce": "Un noyau de numéro atomique $Z$ est modélisé par $\\rho(r)=\\rho_0\\left(1-\\frac{r^2}{a^2}\\right)$ pour $r < a$ et $0$ sinon.\n1. Exprimer $\\rho_0$ en fonction de $Z$ et de la charge élémentaire $e$. 2. Champ pour $r < a$. 3. Champ pour $r > a$. 4. Valeur du champ à la surface.",
+     "sol": "**1.** $Ze=\\rho_0\\int_0^a\\left(1-\\frac{r^2}{a^2}\\right)r^2dr\\times4\\pi=4\\pi\\rho_0\\left(\\frac{a^3}3-\\frac{a^3}5\\right)=\\frac{8\\pi\\rho_0a^3}{15}$, donc $\\rho_0=\\frac{15Ze}{8\\pi a^3}$.\n\n**2.** $Q_{int}=4\\pi\\rho_0\\left(\\frac{r^3}3-\\frac{r^5}{5a^2}\\right)$ et flux $E\\,4\\pi r^2$ : $E=\\frac{\\rho_0}{\\varepsilon_0r^2}\\left(\\frac{r^3}3-\\frac{r^5}{5a^2}\\right)$.\n\n**3.** $Q_{int}=\\frac{8\\pi\\rho_0a^3}{15}=Ze$ : $E=\\frac{2\\rho_0a^3}{15\\varepsilon_0r^2}=\\frac{Ze}{4\\pi\\varepsilon_0r^2}$ (champ d'une charge ponctuelle $Ze$).\n\n**4.** $E(a^-)=\\frac{\\rho_0}{\\varepsilon_0a^2}\\left(\\frac{a^3}3-\\frac{a^3}5\\right)=\\frac{2\\rho_0a}{15\\varepsilon_0}$ et $E(a^+)=\\frac{2\\rho_0a^3}{15\\varepsilon_0a^2}=\\frac{2\\rho_0a}{15\\varepsilon_0}$ : continu ; la norme croît de $0$ en $r=0$, atteint un maximum puis décroît en $\\frac1{r^2}$. (Représentation graphique : TD5 ex. 3.3.)",
+     "formules": "$E\\,4\\pi r^2=\\frac{Q_{int}}{\\varepsilon_0}$ · $Q_{int}=\\int\\rho\\,4\\pi s^2ds$ · $\\frac43\\pi R^3$ · $Q_{int}=4\\pi\\rho_0\\left(\\frac{r^3}3-\\frac{r^5}{5a^2}\\right)$ · $Q_{int}=Ze$ · $E=\\frac{Ze}{4\\pi\\varepsilon_0r^2}$ · continuité de $E$ en $a$",
+     "duree": 20,
+     "type": "multi"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1489 @@
+{
+ "subject": {
+  "id": "algo-s3-hachage",
+  "ordre": 680,
+  "matiere": "algo",
+  "semestre": "S3",
+  "ecue": "AR2",
+  "titre": "Hachage : fonctions, chaînage, hachage linéaire et double hachage",
+  "chapitres_moodle": [
+   "02_👨‍🏫 Méthodes de hachage - Hashing Methods",
+   "03_1 - Hachage - principe et méthodes de base",
+   "04_2 - Hachage - résolution des collisions par chaînage",
+   "05_3 - Hachage - résolution des collisions par calcul",
+   "01_💻 Tests - Homework (DM)"
+  ],
+  "td": "DM 1.1 (fonctions de hachage) et DM 2 (résolution des collisions), tests blancs, QCM « S'évaluer » du cours",
+  "examens": [
+   "Contrôle n°3 / Examen B5 d'algorithmique AR2 (octobre-novembre, Python et tables de hachage)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "modulo",
+   "titre": "Division euclidienne et modulo (rappel S1)",
+   "formule": "$a=bq+r$ avec $0\\le r<b$ · $r=a\\bmod b$ · $(a+b)\\bmod m=((a\\bmod m)+(b\\bmod m))\\bmod m$",
+   "exemple": "$125=10\\times12+5$ donc $125\\bmod12=5$ ; $-7\\bmod5=3$ car $-7=-2\\times5+3$",
+   "cours": "Le reste est toujours entre $0$ et $b-1$, même pour un dividende négatif. On peut réduire chaque terme modulo $m$ avant de calculer. Toute la suite repose sur $\\bmod m$ : une fonction de hachage ramène une clé dans $[0,m-1]$. Rappel S1 : parcours « Arithmétique » (`obm`)."
+  },
+  {
+   "id": "tab",
+   "titre": "Tableaux, listes chaînées et complexité (rappel S1/S2)",
+   "formule": "accès à $T[i]$ : $O(1)$ · recherche séquentielle : $O(n)$, $\\frac{n+1}2$ comparaisons en moyenne si la clé est présente · insertion en tête d'une liste chaînée : $O(1)$",
+   "exemple": "liste de $1000$ éléments : au pire $1000$ comparaisons, en moyenne $500{,}5$ pour une clé présente",
+   "cours": "Un tableau donne accès direct par indice, mais insérer au début décale tous les éléments. Une liste chaînée insère en tête en $O(1)$, mais atteindre le $k$-ième maillon coûte $k-1$ liens suivis. Le hachage cherche à retrouver le « accès direct » d'un tableau pour des clés quelconques. Rappel S1 : parcours « Types algébriques abstraits » (`algo-s1-taa`)."
+  },
+  {
+   "id": "principe",
+   "titre": "Principe du hachage, collisions, propriétés",
+   "formule": "$h:\\text{clés}\\to[0,m-1]$ · uniforme, rapide à calculer, déterministe · pas de fonction universelle · collision : $x\\ne y$ et $h(x)=h(y)$",
+   "exemple": "$h(x)=x\\bmod11$ : $h(125)=4$ et $h(15)=4$, collision entre 125 et 15",
+   "cours": "On range les clés d'un univers très grand dans un tableau de $m$ cases, la valeur de hachage $h(x)$ donnant l'indice. Si $h$ est injective il n'y a pas de problème ; sinon plusieurs clés ont la même valeur de hachage primaire : c'est une collision (primaire). Il n'existe pas de fonction de hachage universelle : elle s'adapte aux données. Les méthodes de résolution sont dites directes (par calcul) ou indirectes (par chaînage)."
+  },
+  {
+   "id": "division",
+   "titre": "Fonction de hachage par division",
+   "formule": "$h(x)=x\\bmod m$ · $m$ premier pour limiter les collisions · $h(x)=(ax+b)\\bmod m$",
+   "exemple": "$m=11$, $h(x)=(2x+5)\\bmod11$ : $h(88)=181\\bmod11=5$",
+   "cours": "La valeur de hachage est le reste de la division entière de la clé par $m$. Facile à calculer, mais si $m$ a de petits diviseurs, des clés régulièrement espacées tombent dans peu de cases (clés multiples de 5 avec $m=10$ : seulement les cases 0 et 5). Prendre $m$ premier limite (sans éliminer) les collisions."
+  },
+  {
+   "id": "multi-ext",
+   "titre": "Multiplication et extraction",
+   "formule": "multiplication : $h(e)=\\lfloor((e\\,\\theta)\\bmod1)\\times m\\rfloor$ avec $0<\\theta<1$ · extraction de $p$ bits : $h\\in[0,2^p-1]$, $m=2^p$",
+   "exemple": "$\\theta=0{,}6$, $m=10$, $e=7$ : $7\\times0{,}6=4{,}2$, partie décimale $0{,}2$, $h=2$",
+   "cours": "Multiplication : on garde la partie décimale de $e\\theta$ puis on l'étale sur $[0,m-1]$. Un $\\theta$ trop proche de $0$ ou de $1$ accumule les clés aux extrémités. Extraction : on prend $p$ bits de la clé (par exemple les $p$ bits de poids faible, $x\\bmod2^p$). Facile, mais une partie seulement de la clé est utilisée : à réserver aux données connues d'avance ou aux bits non significatifs."
+  },
+  {
+   "id": "compression",
+   "titre": "Compression (somme, OU exclusif)",
+   "formule": "découpage de la clé en sous-mots · combinaison par OU exclusif (ou somme des codes) · puis $\\bmod m$ · deux anagrammes ont la même valeur",
+   "exemple": "$\\text{AB}$ : $65+66=131$, $131\\bmod11=10$",
+   "cours": "Les bits (ou caractères) de la clé sont découpés en sous-mots de même longueur combinés par des opérateurs sur les bits. ET donne des valeurs systématiquement plus petites, OU plus grandes : on préfère le OU exclusif. Défaut : toutes les permutations d'une clé (anagrammes) ont la même valeur. Remède : des décalages (rotations) qui dépendent de la position, qui peuvent toutefois créer d'autres collisions."
+  },
+  {
+   "id": "charge",
+   "titre": "Facteur de charge et coût de recherche",
+   "formule": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions si $n>m$ · coût moyen d'une recherche réussie = $\\frac{\\text{somme des positions}}n$",
+   "exemple": "$n=15$ clés dans $m=20$ cases : $\\alpha=\\frac34$",
+   "cours": "Le facteur de charge $\\alpha=\\frac nm$ mesure le remplissage. Les méthodes par calcul rangent tout dans le tableau : il faut $n\\le m$ ($\\alpha\\le1$). Le chaînage séparé accepte $\\alpha>1$. Les méthodes sont à peu près équivalentes pour un faible $\\alpha$. Le coût d'une recherche se compte en cases examinées : pour une recherche réussie, c'est le rang de la clé dans sa suite d'essais ou dans sa liste."
+  },
+  {
+   "id": "sep",
+   "titre": "Chaînage séparé",
+   "formule": "case $i$ = liste des clés de valeur $i$ · recherche séquentielle dans la liste · pas de collision secondaire",
+   "exemple": "$m=11$ : clés de valeurs $5,5,8$ : la case $5$ contient une liste de $2$ clés",
+   "cours": "Chaque case du tableau contient la liste (hors du tableau) des éléments de même valeur de hachage primaire. Recherche : on calcule $h(x)$ puis on parcourt la liste. Insertion avec ou sans redondance (avec : plus rapide, listes plus longues). Suppression directe dans la liste. C'est la méthode la plus performante, et la seule qui n'exige pas $m\\ge n$."
+  },
+  {
+   "id": "lin",
+   "titre": "Hachage linéaire",
+   "formule": "$\\text{essai}_i(x)=(h(x)+d\\,(i-1))\\bmod m$ · $d=1$ : cases suivantes · $d$ premier avec $m$ pour parcourir tout le tableau",
+   "exemple": "$m=11$, $h=7$, $d=4$ : essais $7,\\ 0,\\ 4,\\ 8,\\dots$",
+   "cours": "En cas de collision on teste les cases suivantes de $d$ en $d$ (en revenant au début après la dernière case) jusqu'à trouver une case vide. Les clés de même valeur de hachage ont la même suite d'essais ; les groupements d'éléments (clustering) grossissent : la probabilité qu'un groupement de $k$ éléments grandisse est $\\frac{k+2}m$. Méthode très simple, mais la moins rapide."
+  },
+  {
+   "id": "dbl",
+   "titre": "Double hachage",
+   "formule": "$\\text{essai}_i(x)=(h(x)+d(x)\\,(i-1))\\bmod m$ · $\\gcd(d(x),m)=1$ : $m$ premier et $d\\in[1,m-1]$, ou $m=2^p$ et $d$ impair",
+   "exemple": "$m=11$, $h(44)=5$, $d(44)=5$ : essais $5,\\ 10,\\ 4,\\ 9,\\dots$",
+   "cours": "Le pas dépend de la clé grâce à une deuxième fonction de hachage $d$, ce qui disperse les éléments en collision et évite le clustering du hachage linéaire. Pour que les $m$ essais visitent les $m$ cases il faut $\\gcd(d(x),m)=1$ : $m$ premier, ou $m=2^p$ avec $d(x)=2d'(x)+1$ impair. Plus performant que le linéaire, mais deux fonctions à écrire."
+  },
+  {
+   "id": "coal",
+   "titre": "Hachage coalescent",
+   "formule": "chaînage dans le tableau (colonne lien) · débordement depuis la fin du tableau · collision primaire : $h(x)=h(y)$, secondaire : cases partagées",
+   "exemple": "$m=12$ : $125$ et $89$ ont $h=5$ : $89$ va en case $11$ ou plus bas, liée à la case $5$",
+   "cours": "Les éléments en collision sont chaînés à l'intérieur du tableau : chaque case contient l'élément et le lien vers le suivant ($-1$ s'il n'y en a pas). Sans réserve : on cherche la première case libre en partant de la fin du tableau, on la relie au dernier élément de la liste de collisions. Inconvénient : les collisions secondaires (une case de débordement utilisée par $y$ avec $h(y)\\ne i$ gêne la prochaine clé de valeur $i$), les listes se mélangent. Méthode la plus efficace quand la zone mémoire est fixée à l'avance."
+  },
+  {
+   "id": "suppr",
+   "titre": "Suppression, cases libres et bilan des méthodes",
+   "formule": "case : vide · occupée · libre · recherche : on continue sur une case libre · insertion : on réutilise la première case libre rencontrée",
+   "exemple": "supprimer vraiment un élément casserait la suite d'essais des clés placées après lui",
+   "cours": "Sauf avec le chaînage séparé, on ne supprime pas réellement : on marque la case libre (elle a été occupée puis libérée). La recherche ne s'arrête pas sur une case libre, l'insertion garde la première case libre rencontrée mais vérifie d'abord que la clé n'est pas présente. Bilan : le chaînage séparé est le plus performant ; le coalescent est le meilleur pour une zone fixée à l'avance ; le linéaire est le plus simple et le moins rapide ; le double hachage est meilleur que le linéaire ; le marquage allonge les recherches. Les collisions secondaires n'existent qu'avec le coalescent, le clustering qu'avec le linéaire."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "modulo",
+   "type": "qcm",
+   "q": "Le reste de la division euclidienne de $-7$ par $5$ est",
+   "choix": [
+    "$3$",
+    "$-2$",
+    "$2$",
+    "$-3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "modulo",
+   "type": "vf",
+   "q": "$(a+b)\\bmod m=((a\\bmod m)+(b\\bmod m))\\bmod m$.",
+   "bonne": true
+  },
+  {
+   "notion": "tab",
+   "type": "vf",
+   "q": "Insérer en première position d'un tableau de $n$ éléments coûte $O(1)$.",
+   "bonne": false
+  },
+  {
+   "notion": "tab",
+   "type": "qcm",
+   "q": "Nombre moyen de comparaisons d'une recherche séquentielle réussie dans $n$ éléments (positions équiprobables)",
+   "choix": [
+    "$\\frac{n+1}2$",
+    "$n$",
+    "$\\log_2n$",
+    "$1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "principe",
+   "type": "vf",
+   "q": "Une fonction de hachage doit être universelle.",
+   "bonne": false
+  },
+  {
+   "notion": "principe",
+   "type": "qcm",
+   "q": "Parmi ces propriétés, lesquelles doit avoir une fonction de hachage ?",
+   "choix": [
+    "uniforme, rapide à calculer, déterministe",
+    "universelle, injective, aléatoire",
+    "croissante, récursive, aléatoire",
+    "injective, universelle, lente"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "principe",
+   "type": "vf",
+   "q": "Une collision primaire correspond à deux clés différentes de même valeur de hachage.",
+   "bonne": true
+  },
+  {
+   "notion": "division",
+   "type": "qcm",
+   "q": "Avec $h(x)=x\\bmod11$, $h(125)=$",
+   "choix": [
+    "$4$",
+    "$5$",
+    "$3$",
+    "$11$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "division",
+   "type": "vf",
+   "q": "Avec $m=10$ et des clés multiples de $5$, la division n'utilise que deux cases.",
+   "bonne": true
+  },
+  {
+   "notion": "multi-ext",
+   "type": "vf",
+   "q": "L'extraction utilise toute la représentation de la clé.",
+   "bonne": false
+  },
+  {
+   "notion": "multi-ext",
+   "type": "qcm",
+   "q": "Dans la multiplication $h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$, un $\\theta$ trop proche de $0$ ou de $1$",
+   "choix": [
+    "accumule les clés aux extrémités du tableau",
+    "répartit parfaitement les clés",
+    "rend $h$ injective",
+    "rend $m$ inutile"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "compression",
+   "type": "qcm",
+   "q": "Le handicap majeur de la compression est de",
+   "choix": [
+    "hacher de la même façon les anagrammes d'une clé",
+    "n'utiliser qu'une partie de la clé",
+    "nécessiter un majorant du nombre de clés",
+    "ne marcher que pour peu de données"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "compression",
+   "type": "vf",
+   "q": "On préfère le OU exclusif au ET et au OU pour combiner les sous-mots.",
+   "bonne": true
+  },
+  {
+   "notion": "charge",
+   "type": "qcm",
+   "q": "$n=15$ clés dans $m=20$ cases : $\\alpha=$",
+   "choix": [
+    "$\\frac34$",
+    "$\\frac43$",
+    "$5$",
+    "$\\frac15$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "charge",
+   "type": "vf",
+   "q": "Avec $\\alpha>1$, seul le chaînage séparé permet de ranger toutes les clés.",
+   "bonne": true
+  },
+  {
+   "notion": "sep",
+   "type": "vf",
+   "q": "Le chaînage séparé peut produire des collisions secondaires.",
+   "bonne": false
+  },
+  {
+   "notion": "sep",
+   "type": "qcm",
+   "q": "La méthode la plus performante est",
+   "choix": [
+    "le chaînage séparé",
+    "le hachage linéaire",
+    "le double hachage",
+    "le hachage coalescent"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lin",
+   "type": "qcm",
+   "q": "Le hachage linéaire de pas $d$, $m=11$, $h=7$, $d=4$ : le $2$-ème essai est la case",
+   "choix": [
+    "$0$",
+    "$11$",
+    "$4$",
+    "$7$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lin",
+   "type": "vf",
+   "q": "Le hachage linéaire provoque un regroupement (clustering) des éléments.",
+   "bonne": true
+  },
+  {
+   "notion": "dbl",
+   "type": "qcm",
+   "q": "Pour que les essais du double hachage visitent toutes les cases, il faut",
+   "choix": [
+    "$\\gcd(d(x),m)=1$",
+    "$d(x)=m$",
+    "$d(x)$ pair",
+    "$m$ pair"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dbl",
+   "type": "vf",
+   "q": "Avec $m=2^p$, un pas $d(x)$ impair garantit que les $m$ essais sont distincts.",
+   "bonne": true
+  },
+  {
+   "notion": "coal",
+   "type": "vf",
+   "q": "Seul le hachage coalescent génère des collisions secondaires.",
+   "bonne": true
+  },
+  {
+   "notion": "coal",
+   "type": "qcm",
+   "q": "En coalescent sans réserve, une clé en collision est placée dans",
+   "choix": [
+    "la première case libre en partant de la fin du tableau",
+    "la case suivante",
+    "la première case du tableau",
+    "une liste hors du tableau"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "suppr",
+   "type": "vf",
+   "q": "Pour supprimer en hachage linéaire, on rend la case « vide » pour libérer la place.",
+   "bonne": false
+  },
+  {
+   "notion": "suppr",
+   "type": "qcm",
+   "q": "La méthode qui supporte le mieux les suppressions est",
+   "choix": [
+    "le chaînage séparé",
+    "le hachage linéaire",
+    "le double hachage",
+    "le hachage coalescent"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1 : division euclidienne et modulo",
+   "notions": [
+    "modulo"
+   ],
+   "exos": [
+    {
+     "id": "m1",
+     "enonce": "Calculer $125\\bmod12$.",
+     "ans": "5",
+     "sol": "$125=10\\times12+5$ donc le reste est $5$.",
+     "variants": [
+      {
+       "enonce": "Calculer $200\\bmod7$.",
+       "ans": "4",
+       "sol": "$200=28\\times7+4$ donc $4$."
+      }
+     ],
+     "formules": "$a=bq+r$ · $0\\le r<b$ · $(a+b)\\bmod m$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m2",
+     "enonce": "Calculer $(7\\times13+5)\\bmod11$.",
+     "ans": "8",
+     "sol": "$7\\times13+5=96=8\\times11+8$ donc $96\\bmod11=8$.",
+     "variants": [
+      {
+       "enonce": "Calculer $(5\\times9+3)\\bmod7$.",
+       "ans": "6",
+       "sol": "$48=6\\times7+6$ donc $6$."
+      }
+     ],
+     "formules": "$a=bq+r$ · $0\\le r<b$ · $(a+b)\\bmod m$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m3",
+     "enonce": "Quel est le reste de la division euclidienne de $-7$ par $5$ ?",
+     "ans": "3",
+     "sol": "Le reste est entre $0$ et $4$ : $-7=-2\\times5+3$, donc $3$.",
+     "variants": [
+      {
+       "enonce": "Reste de la division euclidienne de $-9$ par $4$ ?",
+       "ans": "3",
+       "sol": "$-9=-3\\times4+3$ donc $3$."
+      }
+     ],
+     "formules": "$a=bq+r$ · $0\\le r<b$ · $(a+b)\\bmod m$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m4",
+     "enonce": "Calculer $2^{10}\\bmod7$.",
+     "ans": "2",
+     "sol": "$2^3=8\\equiv1\\pmod7$ donc $2^{10}=(2^3)^3\\times2\\equiv2$. Vérification : $1024=146\\times7+2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $3^8\\bmod5$.",
+       "ans": "1",
+       "sol": "$3^4=81\\equiv1\\pmod5$ donc $3^8\\equiv1$."
+      }
+     ],
+     "formules": "$a=bq+r$ · $0\\le r<b$ · $(a+b)\\bmod m$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "m5",
+     "enonce": "Calculer $(17+9\\times3)\\bmod11$.",
+     "ans": "0",
+     "sol": "$17+27=44=4\\times11$ : le reste est $0$.",
+     "variants": [
+      {
+       "enonce": "Calculer $(25+4\\times6)\\bmod7$.",
+       "ans": "0",
+       "sol": "$25+24=49=7\\times7$ donc $0$."
+      }
+     ],
+     "formules": "$a=bq+r$ · $0\\le r<b$ · $(a+b)\\bmod m$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1/S2 : tableaux, listes chaînées, complexité",
+   "notions": [
+    "tab"
+   ],
+   "exos": [
+    {
+     "id": "t1",
+     "enonce": "On cherche séquentiellement une clé présente dans une liste non triée de $n=1000$ éléments, chaque position étant équiprobable. Combien de comparaisons en moyenne ?",
+     "ans": "Rational(1001,2)",
+     "sol": "En moyenne $\\frac{n+1}2=\\frac{1001}2=500{,}5$ comparaisons.",
+     "variants": [
+      {
+       "enonce": "Même question avec $n=99$ éléments.",
+       "ans": "50",
+       "sol": "$\\frac{99+1}2=50$."
+      }
+     ],
+     "formules": "accès $O(1)$ · recherche séquentielle $\\frac{n+1}2$ en moyenne · liste chaînée : $k-1$ liens",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t2",
+     "enonce": "Combien de comparaisons au pire pour constater qu'une clé est absente d'une liste non triée de $250$ éléments ?",
+     "ans": "250",
+     "sol": "Il faut examiner tous les éléments : $250$.",
+     "variants": [
+      {
+       "enonce": "Même question avec $37$ éléments.",
+       "ans": "37",
+       "sol": "Les $37$ éléments."
+      }
+     ],
+     "formules": "accès $O(1)$ · recherche séquentielle $\\frac{n+1}2$ en moyenne · liste chaînée : $k-1$ liens",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t3",
+     "enonce": "Un tableau contient $40$ éléments (il reste de la place). Combien d'éléments faut-il décaler pour insérer un nouvel élément en première position ?",
+     "ans": "40",
+     "sol": "Tous les éléments reculent d'une case : $40$ décalages. Dans une liste chaînée, l'insertion en tête ne déplace rien.",
+     "variants": [
+      {
+       "enonce": "Même question avec un tableau de $15$ éléments.",
+       "ans": "15",
+       "sol": "$15$ décalages."
+      }
+     ],
+     "formules": "accès $O(1)$ · recherche séquentielle $\\frac{n+1}2$ en moyenne · liste chaînée : $k-1$ liens",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "t4",
+     "enonce": "Dans une liste simplement chaînée, combien de liens faut-il suivre depuis la tête pour atteindre le $9$-ème maillon ?",
+     "ans": "8",
+     "sol": "Le $1$-er maillon est la tête (aucun lien) : pour le $k$-ième il faut $k-1$ liens, donc $8$.",
+     "variants": [
+      {
+       "enonce": "Combien de liens pour atteindre le $15$-ème maillon ?",
+       "ans": "14",
+       "sol": "$k-1=14$."
+      }
+     ],
+     "formules": "accès $O(1)$ · recherche séquentielle $\\frac{n+1}2$ en moyenne · liste chaînée : $k-1$ liens",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Principe du hachage et fonction par division",
+   "notions": [
+    "principe",
+    "division"
+   ],
+   "exos": [
+    {
+     "id": "d1",
+     "enonce": "Avec $h(x)=x\\bmod11$, quelle est la valeur de hachage de $125$ ?",
+     "ans": "4",
+     "sol": "$125=11\\times11+4$ donc $h(125)=4$.",
+     "variants": [
+      {
+       "enonce": "Avec $h(x)=x\\bmod13$, calculer $h(200)$.",
+       "ans": "5",
+       "sol": "$200=15\\times13+5$ donc $5$."
+      }
+     ],
+     "formules": "$h(x)=x\\bmod m$ · $h(x)=(ax+b)\\bmod m$ · collision : $h(x)=h(y)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d2",
+     "enonce": "Avec $m=11$ et $h(x)=(2x+5)\\bmod11$, calculer $h(88)$.",
+     "ans": "5",
+     "sol": "$2\\times88+5=181=16\\times11+5$ donc $h(88)=5$.",
+     "variants": [
+      {
+       "enonce": "Avec $m=7$ et $h(x)=(3x+1)\\bmod7$, calculer $h(50)$.",
+       "ans": "4",
+       "sol": "$151=21\\times7+4$ donc $4$."
+      }
+     ],
+     "formules": "$h(x)=x\\bmod m$ · $h(x)=(ax+b)\\bmod m$ · collision : $h(x)=h(y)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d3",
+     "enonce": "Table de taille $m=12$, $h(x)=x\\bmod12$, clés $15,24,125,4,26,6,78,55,89$. Combien de clés arrivent dans une case déjà visée par une clé précédente (collisions) ?",
+     "ans": "2",
+     "sol": "Valeurs de hachage : $15\\to3$, $24\\to0$, $125\\to5$, $4\\to4$, $26\\to2$, $6\\to6$, $78\\to6$, $55\\to7$, $89\\to5$. Les clés $78$ (case 6, déjà visée par $6$) et $89$ (case 5, déjà visée par $125$) sont en collision : $2$ collisions.",
+     "variants": [
+      {
+       "enonce": "$m=10$, $h(x)=x\\bmod10$, clés $13,23,33,14,25,35$. Combien de collisions ?",
+       "ans": "3",
+       "sol": "Valeurs $3,3,3,4,5,5$ : $4$ cases utilisées pour $6$ clés, $6-3=3$ collisions."
+      }
+     ],
+     "formules": "$h(x)=x\\bmod m$ · $h(x)=(ax+b)\\bmod m$ · collision : $h(x)=h(y)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d4",
+     "enonce": "Les clés $5,10,15,\\dots,50$ (dix clés) sont rangées avec $h(x)=x\\bmod10$. Combien de collisions ?",
+     "ans": "8",
+     "sol": "Les valeurs sont $5,0,5,0,\\dots$ : seulement $2$ cases utilisées pour $10$ clés, donc $10-2=8$ collisions. Avec $m=11$ (premier) les dix valeurs seraient distinctes.",
+     "variants": [
+      {
+       "enonce": "Les clés $3,6,9,\\dots,30$ (dix clés) sont rangées avec $h(x)=x\\bmod12$. Combien de collisions ?",
+       "ans": "6",
+       "sol": "Valeurs $3,6,9,0,3,6,9,0,3,6$ : seulement $4$ cases utilisées, $10-4=6$ collisions ($m=12$ a des diviseurs communs avec $3$)."
+      }
+     ],
+     "formules": "$h(x)=x\\bmod m$ · $h(x)=(ax+b)\\bmod m$ · collision : $h(x)=h(y)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d5",
+     "enonce": "Citer trois propriétés d'une bonne fonction de hachage. Pourquoi prend-on souvent $m$ premier pour la division ? Une fonction de hachage universelle existe-t-elle ?",
+     "sol": "Une bonne fonction de hachage est **uniforme** (les clés se répartissent le mieux possible dans le tableau), **facile et rapide à calculer** et **déterministe** (même clé, même valeur).\n\nAvec la division, si $m$ a de petits diviseurs, des clés régulièrement espacées tombent sur peu de cases : $m=10$ et des multiples de $5$ donnent seulement les cases $0$ et $5$. Un $m$ premier limite ces collisions (sans les éliminer).\n\nIl n'existe **pas** de fonction de hachage universelle : elle doit être adaptée aux données hachées et à l'application.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 3",
+     "duree": 4,
+     "formules": "uniforme · rapide à calculer · déterministe · $m$ premier",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Multiplication et extraction de bits",
+   "notions": [
+    "multi-ext"
+   ],
+   "exos": [
+    {
+     "id": "x1",
+     "enonce": "Méthode de multiplication, $\\theta=0{,}6$, $m=10$ : calculer $h(7)=\\lfloor((7\\theta)\\bmod1)\\times m\\rfloor$.",
+     "ans": "2",
+     "sol": "$7\\times0{,}6=4{,}2$, partie décimale $0{,}2$, $0{,}2\\times10=2$ : $h(7)=2$.",
+     "variants": [
+      {
+       "enonce": "Multiplication, $\\theta=0{,}7$, $m=10$ : calculer $h(9)$.",
+       "ans": "3",
+       "sol": "$9\\times0{,}7=6{,}3$, décimale $0{,}3$, $h=3$."
+      }
+     ],
+     "formules": "$h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$ · extraction : $x\\bmod2^p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x2",
+     "enonce": "Méthode de multiplication, $\\theta=0{,}618$, $m=16$ : calculer $h(25)$.",
+     "ans": "7",
+     "sol": "$25\\times0{,}618=15{,}45$, partie décimale $0{,}45$, $0{,}45\\times16=7{,}2$, partie entière $7$.",
+     "variants": [
+      {
+       "enonce": "Multiplication, $\\theta=0{,}37$, $m=20$ : calculer $h(18)$.",
+       "ans": "13",
+       "sol": "$18\\times0{,}37=6{,}66$, décimale $0{,}66$, $0{,}66\\times20=13{,}2$ : $13$."
+      }
+     ],
+     "formules": "$h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$ · extraction : $x\\bmod2^p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x3",
+     "enonce": "On extrait les $3$ bits de poids faible de la clé $182=10110110_2$ ($m=2^3=8$). Valeur de hachage ?",
+     "ans": "6",
+     "sol": "Les trois derniers bits sont $110_2=6$ (de même $182\\bmod8=6$).",
+     "variants": [
+      {
+       "enonce": "On extrait les $3$ bits de poids faible de la clé $11010101_2$. Valeur de hachage ?",
+       "ans": "5",
+       "sol": "Les trois derniers bits : $101_2=5$."
+      }
+     ],
+     "formules": "$h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$ · extraction : $x\\bmod2^p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x4",
+     "enonce": "On extrait les bits numérotés $3,4,5$ (le bit $0$ étant celui de poids faible) de la clé $10101101_2$. Valeur de hachage ?",
+     "ans": "5",
+     "sol": "On décale de $3$ bits : $10101_2$, puis on garde $3$ bits : $101_2=5$ (calcul : $173\\div8$ donne $21$, et $21\\bmod8=5$).",
+     "variants": [
+      {
+       "enonce": "On extrait les bits $3,4,5$ de la clé $11100010_2$. Valeur de hachage ?",
+       "ans": "4",
+       "sol": "Décalage de $3$ bits : $11100_2$, puis $3$ bits : $100_2=4$."
+      }
+     ],
+     "formules": "$h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$ · extraction : $x\\bmod2^p$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "x5",
+     "enonce": "Multiplication avec $\\theta=0{,}99$ (trop proche de $1$), $m=10$, clés $1,2,3,4,5$. Combien de collisions ?",
+     "ans": "4",
+     "sol": "$e\\times0{,}99=e-0{,}01e$, partie décimale $1-0{,}01e\\in[0{,}95;0{,}99]$, donc $h=9$ pour les cinq clés : $4$ collisions. Un $\\theta$ trop proche de $0$ ou de $1$ accumule les clés aux extrémités du tableau.",
+     "variants": [
+      {
+       "enonce": "$\\theta=0{,}01$ (trop proche de $0$), $m=10$, clés $1,\\dots,6$. Combien de collisions ?",
+       "ans": "5",
+       "sol": "$e\\theta\\le0{,}06$ donc $h=0$ pour les six clés : $5$ collisions."
+      }
+     ],
+     "formules": "$h(e)=\\lfloor((e\\theta)\\bmod1)\\,m\\rfloor$ · extraction : $x\\bmod2^p$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Compression : somme des codes et OU exclusif",
+   "notions": [
+    "compression"
+   ],
+   "exos": [
+    {
+     "id": "c1",
+     "enonce": "Clé « AB » (codes $65$ et $66$), $m=11$ : $h=(\\text{somme des codes})\\bmod m$.",
+     "ans": "10",
+     "sol": "$65+66=131=11\\times11+10$ : $h=10$.",
+     "variants": [
+      {
+       "enonce": "Clé « CD » (codes $67$ et $68$), $m=13$, somme des codes.",
+       "ans": "5",
+       "sol": "$135=10\\times13+5$ donc $5$."
+      }
+     ],
+     "formules": "somme des codes $\\bmod m$ · OU exclusif bit à bit · anagrammes",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c2",
+     "enonce": "Clé « ECU » (E=69, C=67, U=85), $m=13$ : $h=(\\text{somme des codes})\\bmod13$.",
+     "ans": "0",
+     "sol": "$69+67+85=221=17\\times13$ : $h=0$.",
+     "variants": [
+      {
+       "enonce": "Clé « OUI » (O=79, U=85, I=73), $m=7$, somme des codes.",
+       "ans": "6",
+       "sol": "$237=33\\times7+6$ donc $6$."
+      }
+     ],
+     "formules": "somme des codes $\\bmod m$ · OU exclusif bit à bit · anagrammes",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c3",
+     "enonce": "Les clés RAT, ART et TAR (R=82, A=65, T=84) sont rangées avec $m=17$ et la somme des codes. Combien de collisions ?",
+     "ans": "2",
+     "sol": "Les trois ont pour somme $231=13\\times17+10$ : même valeur $10$, donc $2$ collisions (anagrammes). La somme, comme le OU exclusif, hache de la même façon toutes les permutations d'une clé.",
+     "variants": [
+      {
+       "enonce": "Clés SEL et LES (S=83, E=69, L=76), $m=11$, somme des codes. Combien de collisions ?",
+       "ans": "1",
+       "sol": "Somme $228=20\\times11+8$ pour les deux : $h=8$, une collision (anagrammes)."
+      }
+     ],
+     "formules": "somme des codes $\\bmod m$ · OU exclusif bit à bit · anagrammes",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c4",
+     "enonce": "Compression par OU exclusif de deux sous-mots de $4$ bits : $1011\\oplus0110$. Donner le résultat en décimal.",
+     "ans": "13",
+     "sol": "Bit par bit : $1\\oplus0=1$, $0\\oplus1=1$, $1\\oplus1=0$, $1\\oplus0=1$, soit $1101_2=13$.",
+     "variants": [
+      {
+       "enonce": "Compression par OU exclusif : $1100\\oplus1010$ en décimal ?",
+       "ans": "6",
+       "sol": "Bit par bit : $0,1,1,0$ soit $0110_2=6$."
+      }
+     ],
+     "formules": "somme des codes $\\bmod m$ · OU exclusif bit à bit · anagrammes",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c5",
+     "enonce": "Pourquoi préfère-t-on le OU exclusif au ET et au OU pour combiner les sous-mots ? Quel est le défaut de la compression et comment le corriger ?",
+     "sol": "Un ET donne des résultats systématiquement plus petits (un bit n'est à 1 que si tous les sous-mots l'ont à 1), un OU des résultats systématiquement plus grands. Le OU exclusif ne favorise ni 0 ni 1.\n\nDéfaut : toutes les permutations d'une clé (les anagrammes) donnent la même valeur de hachage. Remède : introduire des décalages (rotations de bits) qui dépendent de la position du caractère. Cela peut supprimer les collisions entre anagrammes mais peut en créer de nouvelles.",
+     "duree": 4,
+     "formules": "somme des codes $\\bmod m$ · OU exclusif bit à bit · anagrammes",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Facteur de charge et coût moyen",
+   "notions": [
+    "charge"
+   ],
+   "exos": [
+    {
+     "id": "a1",
+     "enonce": "$n=15$ clés sont rangées dans un tableau de $m=20$ cases. Quel est le facteur de charge $\\alpha$ ?",
+     "ans": "Rational(3,4)",
+     "sol": "$\\alpha=\\frac nm=\\frac{15}{20}=\\frac34$.",
+     "variants": [
+      {
+       "enonce": "$n=14$ clés dans $m=35$ cases : facteur de charge ?",
+       "ans": "Rational(2,5)",
+       "sol": "$\\alpha=\\frac{14}{35}=\\frac25$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions · coût moyen $=\\frac{\\text{somme des rangs}}n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a2",
+     "enonce": "$n=30$ clés dans $m=11$ cases. Donner $\\alpha$ (quelle méthode de résolution reste possible ?).",
+     "ans": "Rational(30,11)",
+     "sol": "$\\alpha=\\frac{30}{11}>1$ : les méthodes par calcul (linéaire, double hachage) rangent tout dans le tableau et sont impossibles ; seul le chaînage séparé accepte $\\alpha>1$ (listes de longueur moyenne $\\alpha$).",
+     "variants": [
+      {
+       "enonce": "$n=45$ clés dans $m=12$ cases : facteur de charge ?",
+       "ans": "Rational(15,4)",
+       "sol": "$\\alpha=\\frac{45}{12}=\\frac{15}4>1$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions · coût moyen $=\\frac{\\text{somme des rangs}}n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a3",
+     "enonce": "Un tableau de $m=17$ cases est rempli par hachage linéaire, sans suppression, après $12$ insertions. Combien de cases vides ?",
+     "ans": "5",
+     "sol": "Chaque insertion occupe une case : $17-12=5$ cases vides, $\\alpha=\\frac{12}{17}$.",
+     "variants": [
+      {
+       "enonce": "Table de $m=31$ cases après $20$ insertions (linéaire, sans suppression). Cases vides ?",
+       "ans": "11",
+       "sol": "$31-20=11$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions · coût moyen $=\\frac{\\text{somme des rangs}}n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a4",
+     "enonce": "Chaînage séparé, $m=3$, insertion en fin de liste de $6$ clés de valeurs $0,1,0,2,0,1$. Coût moyen d'une recherche réussie (nombre moyen de clés examinées, chaque clé recherchée une fois) ?",
+     "ans": "Rational(5,3)",
+     "sol": "Listes : case $0$ de longueur $3$ (rangs $1,2,3$ : total $6$), case $1$ de longueur $2$ (total $3$), case $2$ de longueur $1$ (total $1$). Total $10$ cases examinées pour $6$ clés : $\\frac{10}6=\\frac53$.",
+     "variants": [
+      {
+       "enonce": "Chaînage séparé, $m=2$, cinq clés de valeurs $0,0,0,0,1$ (insertion en fin de liste). Coût moyen d'une recherche réussie ?",
+       "ans": "Rational(11,5)",
+       "sol": "Liste de $4$ clés : $1+2+3+4=10$ ; liste de $1$ clé : $1$. Total $11$ pour $5$ clés : $\\frac{11}5$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions · coût moyen $=\\frac{\\text{somme des rangs}}n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "a5",
+     "enonce": "Au minimum, combien de collisions (clé arrivant dans une case déjà utilisée) quand on range $n=20$ clés dans $m=15$ cases ?",
+     "ans": "5",
+     "sol": "Au plus $15$ cases peuvent être utilisées sans collision ; les $20-15=5$ autres clés arrivent forcément dans une case déjà utilisée. Minimum : $n-m=5$.",
+     "variants": [
+      {
+       "enonce": "Au minimum, combien de collisions pour $n=40$ clés dans $m=16$ cases ?",
+       "ans": "24",
+       "sol": "$n-m=24$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · au moins $n-m$ collisions · coût moyen $=\\frac{\\text{somme des rangs}}n$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Chaînage séparé",
+   "notions": [
+    "sep"
+   ],
+   "exos": [
+    {
+     "id": "s1",
+     "enonce": "$m=11$, chaînage séparé, clés de valeurs $10,10,4,5,6,8,3,8,1,5$ (beck, cale, clapton, hendrix, hooker, king, richards, vaughan, winter, young). Longueur de la plus longue liste ?",
+     "ans": "2",
+     "sol": "Cases : $10$ : beck, cale ; $4$ : clapton ; $5$ : hendrix, young ; $6$ : hooker ; $8$ : king, vaughan ; $3$ : richards ; $1$ : winter. La plus longue liste a $2$ clés.",
+     "src": "Contrôle n°3 d'algo S3# du 10 mars 2020 (annales S3/Midterms/Algo/2024#, corrigé officiel), ex. 1 (question 2)",
+     "variants": [
+      {
+       "enonce": "$m=11$, chaînage séparé, clés de valeurs $2,5,2,9,5,2,0$. Longueur de la plus longue liste ?",
+       "ans": "3",
+       "sol": "La case $2$ contient $3$ clés."
+      }
+     ],
+     "formules": "case $i$ : liste des clés de valeur $i$ · recherche séquentielle dans la liste",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s2",
+     "enonce": "$m=11$, chaînage séparé, clés de valeurs $4,5,3,1,7,6,2,7,1,7$ (data, kirk, neelix, odo, picard, q, quark, sisko, tuvok, worf). Longueur de la plus longue liste ?",
+     "ans": "3",
+     "sol": "La case $7$ contient picard, sisko, worf ($3$ clés), la case $1$ contient odo et tuvok ; les autres cases ont au plus une clé.",
+     "src": "Contrôle n°3 d'algo S3# du 17 mars 2021 (annales S3/Midterms/Algo/2025#, corrigé officiel), ex. 1 (question 2)",
+     "variants": [
+      {
+       "enonce": "$m=11$, chaînage séparé, clés de valeurs $7,5,9,5,7,6,5,6,1,4,4$. Longueur de la plus longue liste ?",
+       "ans": "3",
+       "sol": "La case $5$ contient $3$ clés."
+      }
+     ],
+     "formules": "case $i$ : liste des clés de valeur $i$ · recherche séquentielle dans la liste",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s3",
+     "enonce": "Mêmes clés que dans l'exercice du hachage de beck à young ($10,10,4,5,6,8,3,8,1,5$, $m=11$, insertion en fin de liste). Nombre total de clés examinées pour retrouver chacune des $10$ clés une fois ?",
+     "ans": "13",
+     "sol": "Cases de longueur $1$ : $1,3,4,6$ donnent $1$ chacune ($4$ au total). Cases de longueur $2$ : $5,8,10$ donnent $1+2=3$ chacune ($9$ au total). Total $4+9=13$.",
+     "variants": [
+      {
+       "enonce": "Clés de valeurs $2,5,2,9,5,2,0$ ($m=11$, fin de liste). Nombre total de clés examinées pour retrouver chaque clé une fois ?",
+       "ans": "11",
+       "sol": "Case $2$ : $1+2+3=6$ ; case $5$ : $1+2=3$ ; cases $9$ et $0$ : $1$ chacune. Total $11$."
+      }
+     ],
+     "formules": "case $i$ : liste des clés de valeur $i$ · recherche séquentielle dans la liste",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s4",
+     "enonce": "Même table que ci-dessus ($m=11$, dix clés de valeurs $10,10,4,5,6,8,3,8,1,5$). Combien de cases ont une liste vide ?",
+     "ans": "4",
+     "sol": "$3$ clés arrivent dans une case déjà utilisée, donc $10-3=7$ cases sont non vides et $11-7=4$ cases sont vides (0, 2, 7 et 9).",
+     "variants": [
+      {
+       "enonce": "Clés de valeurs $2,5,2,9,5,2,0$, $m=11$. Combien de cases vides ?",
+       "ans": "7",
+       "sol": "$3$ collisions donc $4$ cases utilisées, $11-4=7$ vides."
+      }
+     ],
+     "formules": "case $i$ : liste des clés de valeur $i$ · recherche séquentielle dans la liste",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Hachage linéaire",
+   "notions": [
+    "lin"
+   ],
+   "exos": [
+    {
+     "id": "l1",
+     "enonce": "Hachage linéaire, $m=11$, décalage $d=4$. Une clé a $h=9$ : quelle est la case du $3$-ème essai ?",
+     "ans": "6",
+     "sol": "$\\text{essai}_3=(9+4\\times2)\\bmod11=17\\bmod11=6$.",
+     "variants": [
+      {
+       "enonce": "Hachage linéaire $m=13$, $d=3$, $h=5$ : case du $4$-ème essai ?",
+       "ans": "1",
+       "sol": "$(5+9)\\bmod13=1$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h+d(i-1))\\bmod m$ · case vide : on insère",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l2",
+     "enonce": "Hachage linéaire, $m=11$, $d=4$. Les clés de valeurs $4,5,3,1,7,6,2$ sont déjà placées (dans cet ordre, table vide au départ). On insère sisko, de valeur $7$. Dans quelle case ?",
+     "ans": "0",
+     "sol": "La case $7$ est occupée (picard) ; essai suivant : $(7+4)\\bmod11=0$, case libre : sisko va en case $0$.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 1",
+     "variants": [
+      {
+       "enonce": "Mêmes clés ($m=11$) mais $d=3$ : où va sisko ($h=7$) ?",
+       "ans": "10",
+       "sol": "$7$ occupée, $(7+3)\\bmod11=10$ libre."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h+d(i-1))\\bmod m$ · case vide : on insère",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l3",
+     "enonce": "Même table ($m=11$, $d=4$) avec les dix clés de valeurs $4,5,3,1,7,6,2,7,1,7$ insérées dans cet ordre. Dans quelle case arrive la dernière (worf, de valeur $7$) ?",
+     "ans": "8",
+     "sol": "Sisko va en $0$ (voir ci-dessus), tuvok ($h=1$ occupée) en $(1+4)=5$ occupée puis $9$. Worf : $7$ occupée, $0$ occupée (sisko), $4$ occupée (data), $8$ libre : case $8$.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 1",
+     "variants": [
+      {
+       "enonce": "Mêmes dix clés avec $d=3$ : où arrive worf (dernière clé) ?",
+       "ans": "0",
+       "sol": "Worf teste $7,10,2,5,8,0$ ($10$ est sisko) : case $0$ (voir la table du corrigé)."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h+d(i-1))\\bmod m$ · case vide : on insère",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l4",
+     "enonce": "Hachage linéaire $m=11$, $d=3$, clés de valeurs $4,5,3,1,7,6,2,7,1,7$. Nombre total de cases examinées pour insérer les dix clés ?",
+     "ans": "22",
+     "sol": "Sept clés vont en une case ($7$ essais). Sisko : $7,10$ ($2$). Tuvok : $1,4,7,10,2,5,8$ ($7$). Worf : $7,10,2,5,8,0$ ($6$). Total $7+2+7+6=22$.",
+     "src": "Contrôle n°3 d'algo S3# du 17 mars 2021 (annales S3/Midterms/Algo/2025#, corrigé officiel), ex. 1 (question 1)",
+     "variants": [
+      {
+       "enonce": "Mêmes dix clés avec $d=4$ : nombre total de cases examinées ?",
+       "ans": "16",
+       "sol": "Sept clés : $7$ ; sisko $2$ ; tuvok : $1,5,9$ soit $3$ ; worf : $7,0,4,8$ soit $4$. Total $7+2+3+4=16$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h+d(i-1))\\bmod m$ · case vide : on insère",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l5",
+     "enonce": "Hachage linéaire $m=11$, $d=5$, dix clés de valeurs $0,1,4,0,0,5,2,4,8,8$ (aragog à hedwige). Combien de clés trouvent leur case $h(x)$ déjà occupée ?",
+     "ans": "5",
+     "sol": "Les clés fumseck ($0$), missteigne ($0$), nagini ($5$, case prise par fumseck), croutard ($4$) et hedwige ($8$) trouvent leur case occupée : $5$ clés. Les autres ($0,1,4,2,8$ pour aragog, buck, dobby, crockdur, kreattur) vont directement dans leur case.",
+     "src": "Contrôle n°3 d'algo S3# du 5 mars 2019 (annales S3/Midterms/Algo/2023#, corrigé officiel), ex. 1",
+     "variants": [
+      {
+       "enonce": "Valeurs $4,5,3,1,7,6,2,7,1,7$, $m=11$, $d=4$ : combien de clés trouvent leur case $h$ occupée ?",
+       "ans": "3",
+       "sol": "Sisko, tuvok, worf : $3$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h+d(i-1))\\bmod m$ · case vide : on insère",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Double hachage",
+   "notions": [
+    "dbl"
+   ],
+   "exos": [
+    {
+     "id": "b1",
+     "enonce": "$m=11$, $h(x)=(2x+5)\\bmod11$ et $d(x)=7-(x\\bmod7)$. Quelle est la case du $3$-ème essai de $x=44$ ?",
+     "ans": "4",
+     "sol": "$h(44)=93\\bmod11=5$, $d(44)=7-2=5$. Essai $3$ : $(5+5\\times2)\\bmod11=15\\bmod11=4$.",
+     "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 3)",
+     "variants": [
+      {
+       "enonce": "Mêmes fonctions ($m=11$) : case du $4$-ème essai de $x=39$ ?",
+       "ans": "4",
+       "sol": "$h(39)=83\\bmod11=6$, $d(39)=7-4=3$ ; $(6+9)\\bmod11=4$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h(x)+d(x)(i-1))\\bmod m$ · $\\gcd(d,m)=1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b2",
+     "enonce": "Double hachage dans une table de $m=12$ cases : un pas $d(x)=8$ permet-il de visiter toutes les cases ? Combien de cases distinctes la suite d'essais visite-t-elle ?",
+     "ans": "3",
+     "sol": "La suite $h,h+8,h+16,\\dots\\bmod12$ visite $\\frac{m}{\\gcd(m,d)}=\\frac{12}4=3$ cases seulement : non. Il faut $\\gcd(d,m)=1$ ($m$ premier, ou $m=2^p$ avec $d$ impair).",
+     "variants": [
+      {
+       "enonce": "$m=15$, $d(x)=6$ : combien de cases distinctes visitées ?",
+       "ans": "5",
+       "sol": "$\\frac{15}{\\gcd(15,6)}=\\frac{15}3=5$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h(x)+d(x)(i-1))\\bmod m$ · $\\gcd(d,m)=1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b3",
+     "enonce": "$m=11$, $h(x)=(2x+5)\\bmod11$, $d(x)=7-(x\\bmod7)$, clés insérées dans l'ordre $12,44,13,88,23,94,11,39,20,16,5$. Dans quelle case arrive la clé $5$ ?",
+     "ans": "10",
+     "sol": "Valeurs $h$ : $7,5,9,5,7,6,5,6,1,4,4$ ; pas $d$ : $2,5,1,3,5,4,3,3,1,5,2$. Pour $x=5$ : $h=4$ occupée (16), $d=2$ donne $6$ (94) occupée, $8$ (88) occupée, $10$ libre : case $10$.",
+     "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 3)",
+     "variants": [
+      {
+       "enonce": "$m=7$, valeurs $3,3,3,5$, pas $1,2,3,1$ (double hachage). Où arrive la dernière clé ?",
+       "ans": "0",
+       "sol": "Les trois premières en $3$, $5$ ($3+2$), $6$ ($3+3$). La dernière : $5$ occupée, $6$ occupée, $0$ libre."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h(x)+d(x)(i-1))\\bmod m$ · $\\gcd(d,m)=1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b4",
+     "enonce": "Mêmes données qu'à l'exercice précédent. Nombre total de cases examinées pour insérer les onze clés ?",
+     "ans": "24",
+     "sol": "Nombres d'essais clé par clé : $1,1,1,2,2,1,3,4,2,3,4$ (par exemple $88$ : $5,8$ ; $94$ ne bouge pas ; $39$ : $6,9,1,4$ ; $5$ : $4,6,8,10$). Total $24$.",
+     "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 3)",
+     "variants": [
+      {
+       "enonce": "Mêmes données : nombre total de cases examinées ?",
+       "ans": "8",
+       "sol": "$1+2+2+3=8$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h(x)+d(x)(i-1))\\bmod m$ · $\\gcd(d,m)=1$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b5",
+     "enonce": "$m=16=2^4$, $h(x)=x\\bmod16$ et $d(x)=2\\,(x\\bmod8)+1$ (toujours impair). Pour $x=21$, quelle est la case du $3$-ème essai ?",
+     "ans": "11",
+     "sol": "$h(21)=5$, $d(21)=2\\times5+1=11$ (premier avec $16$). Essai $3$ : $(5+11\\times2)\\bmod16=27\\bmod16=11$.",
+     "variants": [
+      {
+       "enonce": "$m=16$, $d(x)=2(x\\bmod8)+1$ : case du $4$-ème essai de $x=30$ ?",
+       "ans": "5",
+       "sol": "$h=14$, $d=2\\times6+1=13$ ; $(14+39)\\bmod16=53\\bmod16=5$."
+      }
+     ],
+     "formules": "$\\text{essai}_i=(h(x)+d(x)(i-1))\\bmod m$ · $\\gcd(d,m)=1$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Hachage coalescent",
+   "notions": [
+    "coal"
+   ],
+   "exos": [
+    {
+     "id": "k1",
+     "enonce": "$m=12$, $h(x)=x\\bmod12$, hachage coalescent sans réserve, clés $15,24,125,4,26,6,78,55,89$ dans cet ordre. Dans quelle case arrive $89$ ?",
+     "ans": "10",
+     "sol": "Valeurs : $3,0,5,4,2,6,6,7,5$. $78$ ($h=6$ occupée par $6$) va en $11$ (première case libre depuis la fin). $89$ ($h=5$ occupée par $125$) : $11$ prise, $10$ libre : case $10$, liée à $125$.",
+     "src": "Examen B5 d'algo AR2 du 22 octobre 2024 (annales S3/Midterms/Algo/2028, sans corrigé officiel : corrigé rédigé), ex. 1",
+     "variants": [
+      {
+       "enonce": "Coalescent, $m=7$, valeurs $3,3,1,3,6$ : où arrive la dernière clé ?",
+       "ans": "4",
+       "sol": "2e clé en $6$ (lien de $3$), 3e en $1$, 4e en $5$ (lien de $6$). 5e ($h=6$ occupée) : $6,5$ occupées, $4$ libre : case $4$."
+      }
+     ],
+     "formules": "coalescent sans réserve : case libre depuis $m-1$ · collision primaire / secondaire · lien",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k2",
+     "enonce": "Même table ($m=12$, mêmes clés). Quelle est la valeur du lien de la case $6$ ?",
+     "ans": "11",
+     "sol": "La clé $6$ (case $6$) est suivie dans sa liste de collisions par $78$, placé en case $11$ : le lien de la case $6$ vaut $11$.",
+     "src": "Examen B5 d'algo AR2 du 22 octobre 2024 (annales S3/Midterms/Algo/2028, sans corrigé officiel : corrigé rédigé), ex. 1",
+     "variants": [
+      {
+       "enonce": "Mêmes clés ($m=7$, valeurs $3,3,1,3,6$) : valeur du lien de la case $3$ ?",
+       "ans": "6",
+       "sol": "Le premier suivant de la case $3$ est en case $6$."
+      }
+     ],
+     "formules": "coalescent sans réserve : case libre depuis $m-1$ · collision primaire / secondaire · lien",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k3",
+     "enonce": "$m=11$, $h(x)=(2x+5)\\bmod11$, hachage coalescent, clés $12,44,13,88,23,94,11,39,20,16,5$. Combien de collisions secondaires ?",
+     "ans": "2",
+     "sol": "Une collision est secondaire quand la case visée contient une clé de valeur $h$ différente. Ici : $16$ ($h=4$) trouve la case $4$ occupée par $11$ ($h=5$, placé en réserve) et $5$ ($h=4$) trouve de même $11$. Les collisions de $88$, $23$, $11$, $39$ sont primaires : $2$ collisions secondaires.",
+     "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 1)",
+     "variants": [
+      {
+       "enonce": "Coalescent, $m=7$, valeurs $3,3,1,3,6$ : combien de collisions secondaires ?",
+       "ans": "1",
+       "sol": "La 5e clé ($h=6$) trouve la case $6$ occupée par une clé de valeur $3$ : $1$ secondaire (les deux autres collisions sont primaires)."
+      }
+     ],
+     "formules": "coalescent sans réserve : case libre depuis $m-1$ · collision primaire / secondaire · lien",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k4",
+     "enonce": "Table coalescente de $m=23$ cases, sans réserve, clés $x_1,\\dots,x_{23}$ de valeurs $5,11,17,8,2,20,7,15,5,8,16,11,16,21,9,14,6,7,19,2,5,8,18$ insérées dans cet ordre. Combien de collisions primaires ?",
+     "ans": "8",
+     "sol": "Il y a $12$ collisions au total ; $8$ sont primaires (la case visée contient une clé de même valeur : $x_9,x_{10},x_{12},x_{13},x_{18},x_{20},x_{21},x_{22}$) et $4$ sont secondaires. Calcul fait clé par clé.",
+     "variants": [
+      {
+       "enonce": "Coalescent, $m=7$, valeurs $1,1,2,2,1,3$. Combien de collisions primaires ?",
+       "ans": "3",
+       "sol": "Les clés $2,4,5$ trouvent une case occupée par une clé de même valeur : $3$ primaires, aucune secondaire."
+      }
+     ],
+     "formules": "coalescent sans réserve : case libre depuis $m-1$ · collision primaire / secondaire · lien",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "k5",
+     "enonce": "Hachage coalescent, $m=11$, clés de valeurs $4,5,3,1,7,6,2,7,1,7$. Dans quelle case arrive la dernière clé (valeur $7$) ?",
+     "ans": "8",
+     "sol": "Sisko ($h=7$, occupée par picard) va en $10$, tuvok ($h=1$, occupée par odo) en $9$. Worf : $7$ occupée, liste $7\\to10$, première case libre depuis la fin : $10$, $9$ prises, $8$ libre : case $8$.",
+     "src": "Contrôle n°3 d'algo S3# du 17 mars 2021 (annales S3/Midterms/Algo/2025#, corrigé officiel), ex. 1 (données)",
+     "variants": [
+      {
+       "enonce": "Coalescent, $m=11$, valeurs $4,5,3,1,7,6,2,7,1,7$ : coût total de recherche (rang de chaque clé dans sa liste) ?",
+       "ans": "14",
+       "sol": "Les clés de la case $7$ ont les rangs $1,2,3$ ; celles de la case $1$ les rangs $1,2$ ; les cinq autres : $1$ chacune. Total $6+3+5=14$."
+      }
+     ],
+     "formules": "coalescent sans réserve : case libre depuis $m-1$ · collision primaire / secondaire · lien",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Coût de recherche : comparer les méthodes",
+   "notions": [
+    "charge",
+    "sep",
+    "lin",
+    "dbl",
+    "coal"
+   ],
+   "exos": [
+    {
+     "id": "u1",
+     "enonce": "Onze clés ($m=11$, valeurs $7,5,9,5,7,6,5,6,1,4,4$). Hachage linéaire ($d=1$) : nombre total de cases examinées pour retrouver chacune des onze clés une fois ?",
+     "ans": "40",
+     "sol": "Pour une clé, le coût de recherche est son nombre d'essais à l'insertion. Nombres d'essais clé par clé (pas $1$) : $1,1,1,2,2,5,7,7,2,1,11$ ; total $40$.",
+     "variants": [
+      {
+       "enonce": "Valeurs $4,5,3,1,7,6,2,7,1,7$, $m=11$, linéaire $d=3$ : coût total pour retrouver chaque clé ?",
+       "ans": "22",
+       "sol": "Total des essais à l'insertion : $22$."
+      }
+     ],
+     "formules": "coût = somme des rangs de recherche · séparé $<$ coalescent $<$ double $<$ linéaire",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u2",
+     "enonce": "Mêmes valeurs, double hachage (pas $2,5,1,3,5,4,3,3,1,5,2$) : nombre total de cases examinées ?",
+     "ans": "24",
+     "sol": "Calcul clé par clé : total $24$, nettement moins que le linéaire ($40$).",
+     "variants": [
+      {
+       "enonce": "Valeurs $4,5,3,1,7,6,2,7,1,7$, $m=11$, double hachage avec les pas $1,1,1,1,1,1,1,3,2,4$ : coût total ?",
+       "ans": "16",
+       "sol": "Sept clés : $7$ ; sisko : $7,10$ ($2$) ; tuvok : $1,3,5,7,9$ ($5$) ; worf : $7,0$ ($2$). Total $7+2+5+2=16$."
+      }
+     ],
+     "formules": "coût = somme des rangs de recherche · séparé $<$ coalescent $<$ double $<$ linéaire",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u3",
+     "enonce": "Mêmes valeurs, hachage coalescent : nombre total de cases examinées pour retrouver chaque clé (position dans sa liste de collisions) ?",
+     "ans": "19",
+     "sol": "Chaque clé est cherchée dans sa liste de collisions (rang dans la liste : $1$, $2$ ou $3$) : total $19$.",
+     "variants": [
+      {
+       "enonce": "Valeurs $4,5,3,1,7,6,2,7,1,7$, $m=11$, coalescent : coût total ?",
+       "ans": "14",
+       "sol": "Total $14$ (voir exercice précédent)."
+      }
+     ],
+     "formules": "coût = somme des rangs de recherche · séparé $<$ coalescent $<$ double $<$ linéaire",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u4",
+     "enonce": "Mêmes valeurs, chaînage séparé (insertion en fin de liste) : nombre total de clés examinées ?",
+     "ans": "17",
+     "sol": "Longueurs des listes : $3$ (case $5$), $2$ (cases $4,6,7$), $1$ (cases $1,9$). Total $6+3+3+3+1+1=17$. Classement : séparé ($17$) $<$ coalescent ($19$) $<$ double ($24$) $<$ linéaire ($40$).",
+     "variants": [
+      {
+       "enonce": "Valeurs $4,5,3,1,7,6,2,7,1,7$, $m=11$, chaînage séparé : coût total ?",
+       "ans": "14",
+       "sol": "Liste de $3$ : $6$ ; liste de $2$ : $3$ ; cinq listes de $1$ : $5$. Total $14$."
+      }
+     ],
+     "formules": "coût = somme des rangs de recherche · séparé $<$ coalescent $<$ double $<$ linéaire",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Tables obtenues par insertions successives (annales)",
+   "notions": [
+    "sep",
+    "lin",
+    "coal"
+   ],
+   "exos": [
+    {
+     "id": "tl20",
+     "enonce": "Table de $m=11$ cases. Valeurs de hachage : data $4$, kirk $5$, neelix $3$, odo $1$, picard $7$, q $6$, quark $2$, sisko $7$, tuvok $1$, worf $7$. Représenter la table après l'ajout, dans cet ordre, de data jusqu'à worf, avec le hachage linéaire de décalage $d=4$.",
+     "sol": "Pas de décalage $d=4$ : après la case $c$ on teste $(c+4) \\bmod 11$.\n\n- sisko (h = 7) : cases 7 occupées, case 0 libre, on y place sisko.\n- tuvok (h = 1) : cases 1, 5 occupées, case 9 libre, on y place tuvok.\n- worf (h = 7) : cases 7, 0, 4 occupées, case 8 libre, on y place worf.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  sisko\n 1  odo\n 2  quark\n 3  neelix\n 4  data\n 5  kirk\n 6  q\n 7  picard\n 8  worf\n 9  tuvok\n10  vide\n```\n\nCe tableau est celui du corrigé officiel.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 1",
+     "duree": 6,
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "type": "open"
+    },
+    {
+     "id": "tl23",
+     "enonce": "Table de $m=11$ cases. Valeurs de hachage : aragog $0$, buck $1$, dobby $4$, fumseck $0$, missteigne $0$, nagini $5$, crockdur $2$, croutard $4$, kreattur $8$, hedwige $8$. Représenter la gestion des collisions pour l'ajout dans cet ordre (de aragog jusqu'à hedwige) avec le hachage linéaire de décalage $d=5$.",
+     "sol": "Pas de décalage $d=5$ : après la case $c$ on teste $(c+5) \\bmod 11$.\n\n- fumseck (h = 0) : cases 0 occupées, case 5 libre, on y place fumseck.\n- missteigne (h = 0) : cases 0, 5 occupées, case 10 libre, on y place missteigne.\n- nagini (h = 5) : cases 5, 10, 4 occupées, case 9 libre, on y place nagini.\n- croutard (h = 4) : cases 4, 9 occupées, case 3 libre, on y place croutard.\n- hedwige (h = 8) : cases 8, 2 occupées, case 7 libre, on y place hedwige.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  aragog\n 1  buck\n 2  crockdur\n 3  croutard\n 4  dobby\n 5  fumseck\n 6  vide\n 7  hedwige\n 8  kreattur\n 9  nagini\n10  missteigne\n```\n\nCe tableau est celui du corrigé officiel.",
+     "src": "Contrôle n°3 d'algo S3# du 5 mars 2019 (annales S3/Midterms/Algo/2023#, corrigé officiel), ex. 1",
+     "duree": 6,
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "type": "open"
+    },
+    {
+     "id": "tl24",
+     "enonce": "Table de $m=11$ cases. Valeurs de hachage : beck $10$, cale $10$, clapton $4$, hendrix $5$, hooker $6$, king $8$, richards $3$, vaughan $8$, winter $1$, young $5$. Représenter la table après l'ajout de beck jusqu'à young avec le hachage linéaire de décalage $d=3$.",
+     "sol": "Pas de décalage $d=3$ : après la case $c$ on teste $(c+3) \\bmod 11$.\n\n- cale (h = 10) : cases 10 occupées, case 2 libre, on y place cale.\n- vaughan (h = 8) : cases 8 occupées, case 0 libre, on y place vaughan.\n- young (h = 5) : cases 5, 8, 0, 3, 6 occupées, case 9 libre, on y place young.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  vaughan\n 1  winter\n 2  cale\n 3  richards\n 4  clapton\n 5  hendrix\n 6  hooker\n 7  vide\n 8  king\n 9  young\n10  beck\n```\n\nCe tableau est celui du corrigé officiel.",
+     "src": "Contrôle n°3 d'algo S3# du 10 mars 2020 (annales S3/Midterms/Algo/2024#, corrigé officiel), ex. 1 (question 1)",
+     "duree": 6,
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "type": "open"
+    },
+    {
+     "id": "ts24",
+     "enonce": "Mêmes clés et mêmes valeurs de hachage (beck $10$, cale $10$, clapton $4$, hendrix $5$, hooker $6$, king $8$, richards $3$, vaughan $8$, winter $1$, young $5$, $m=11$). Représenter la table avec le hachage par chaînage séparé (insertion en fin de liste).",
+     "sol": "Chaque case contient la liste des clés de même valeur de hachage (insertion en fin de liste).\n\n```\n 0  vide\n 1  winter\n 2  vide\n 3  richards\n 4  clapton\n 5  hendrix → young\n 6  hooker\n 7  vide\n 8  king → vaughan\n 9  vide\n10  beck → cale\n```\n\nL'ordre dans une liste dépend de la convention d'insertion (ici en fin de liste, ordre d'arrivée) ; les clés de chaque case sont celles du corrigé.",
+     "src": "Contrôle n°3 d'algo S3# du 10 mars 2020 (annales S3/Midterms/Algo/2024#, corrigé officiel), ex. 1 (question 2)",
+     "duree": 4,
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "type": "open"
+    },
+    {
+     "id": "tc28",
+     "enonce": "Clés $15,24,125,4,26,6,78,55,89$, table de $m=12$ cases, $h(x)=x\\bmod12$. 1. Donner les valeurs de hachage. 2. Remplir la table (colonnes elt et lien) après insertions successives dans cet ordre avec le hachage coalescent.",
+     "sol": "**1.** Valeurs : $h(15)=3$, $h(24)=0$, $h(125)=5$, $h(4)=4$, $h(26)=2$, $h(6)=6$, $h(78)=6$, $h(55)=7$, $h(89)=5$.\n\n**2.** Sans réserve : la place de débordement est la première case libre en partant de la case 11.\n\n- 78 (h = 6) : case 6 occupée, collision primaire. Liste parcourue : 6. Première case libre en partant de la fin : 11, liée à la case 6.\n- 89 (h = 5) : case 5 occupée, collision primaire. Liste parcourue : 5. Première case libre en partant de la fin : 10, liée à la case 5.\n\nTable finale :\n\n```\ncase  elt   lien\n  0  24    -1\n  1        \n  2  26    -1\n  3  15    -1\n  4  4     -1\n  5  125   10\n  6  6     11\n  7  55    -1\n  8        \n  9        \n 10  89    -1\n 11  78    -1\n```\n\nCorrigé rédigé (pas de corrigé officiel) : il a été produit par un simulateur contrôlé sur les corrigés officiels des contrôles de 2017 et 2020 (table coalescente de $11$ clés).",
+     "src": "Examen B5 d'algo AR2 du 22 octobre 2024 (annales S3/Midterms/Algo/2028, sans corrigé officiel : corrigé rédigé), ex. 1",
+     "duree": 6,
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Questions de cours, tableaux valides et suppression",
+   "notions": [
+    "principe",
+    "suppr"
+   ],
+   "exos": [
+    {
+     "id": "q1",
+     "enonce": "1. Citer trois propriétés essentielles d'une fonction de hachage. 2. À quoi doit-on une collision secondaire ? 3. Collisions mises à part, quel phénomène provoque le hachage linéaire et que fait-on pour le résoudre ?",
+     "sol": "1. Uniforme, déterministe, facile et rapide à calculer.\n\n2. Une collision secondaire vient de deux éléments qui se retrouvent en collision sur une case alors que leurs valeurs de hachage primaires sont différentes (hachage coalescent : une case de débordement est occupée par un élément d'une autre liste).\n\n3. Le hachage linéaire provoque le regroupement (accumulation d'éléments, clustering) ; on le résout avec le double hachage.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 3",
+     "duree": 4,
+     "formules": "case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "type": "open"
+    },
+    {
+     "id": "q2",
+     "enonce": "1. Citer deux méthodes de hachage de base. 2. Quelle méthode de hachage génère des collisions secondaires ? 3. Quelle méthode résout le clustering du hachage linéaire ? 4. Citer une méthode utilisant une fonction d'essais successifs. 5. Quelle méthode de résolution des collisions n'exige pas un tableau de taille au moins égale au nombre de clés ?",
+     "sol": "1. Parmi extraction, compression, division, multiplication (le corrigé officiel cite la quatrième sous un autre nom, le cours dit compression).\n\n2. Le hachage coalescent.\n\n3. Le double hachage.\n\n4. Le hachage linéaire ou le double hachage.\n\n5. Le chaînage séparé : les éléments en collision sont chaînés à l'extérieur du tableau, donc $n>m$ est possible.",
+     "src": "Contrôle n°3 d'algo S3# du 5 mars 2019 (annales S3/Midterms/Algo/2023#, corrigé officiel), ex. 2",
+     "duree": 5,
+     "formules": "case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "type": "open"
+    },
+    {
+     "id": "q3",
+     "enonce": "Les clés A à G ont pour valeurs de hachage ($m=7$) : A $2$, B $0$, C $0$, D $4$, E $4$, F $4$, G $2$. On les insère dans un ordre quelconque, par hachage linéaire ($d=1$), dans un tableau vide de $7$ cases. Parmi les tableaux (A) C G B A D E F, (B) F G B D A C E, (C) B C A G E D F, (D) G E C A D B F (cases $0$ à $6$), lesquels ne peuvent pas résulter de ces insertions ?",
+     "sol": "Seul (C) est possible ; (A), (B) et (D) sont impossibles.\n\n(C) : l'ordre B, E, A, C, D, F, G convient (B en 0, E en 4, A en 2, C en 0 puis 1, D en 4 puis 5, F en 4, 5 puis 6, G en 2 puis 3).\n\n(A) : G est en case $1$, valeur $2$ : il a examiné $2,3,4,5,6,0$ donc B (case 2, valeur $0$) était déjà placé. Mais B (valeur $0$) est en case $2$ : il a examiné $0$ et $1$, donc G (case $1$) était déjà placé. Contradiction.\n\n(B) : F (valeur $4$) est en case $0$ : il a examiné $4,5,6$ donc C (case $5$) était déjà placé. Mais C (valeur $0$) est en case $5$ : il a examiné $0,1,2,3,4$, donc F (case $0$) était déjà placé. Contradiction.\n\n(D) : E (valeur $4$) est en case $1$ : il a examiné $4,5,6,0$ donc B (case $5$) était déjà placé. Mais B (valeur $0$) est en case $5$ : il a examiné $0,1,2,3,4$, donc E (case $1$) était déjà placé. Contradiction.\n\nVérifié par énumération des $7!=5040$ ordres d'insertion (corrigé officiel : A, B, D impossibles).",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 2",
+     "duree": 8,
+     "formules": "case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "type": "open"
+    },
+    {
+     "id": "q4",
+     "enonce": "Hachage linéaire ($d=1$), $m=7$, table vide. On insère A, B, C, D de valeurs $2,2,3,2$. On supprime B en marquant sa case « libre ». 1. Dessiner la table. 2. Combien de cases examine la recherche de D ? 3. Que se passerait-il si on avait rendu la case de B « vide » ? 4. On insère E de valeur $2$ : où va-t-il ?",
+     "sol": "**1.** A en $2$ ; B ($h=2$ occupée) en $3$ ; C ($h=3$ occupée) en $4$ ; D ($h=2$) examine $2,3,4$ occupées puis $5$ : D en $5$. Table : case $2$ A, $3$ B, $4$ C, $5$ D, les autres vides. Après la suppression, la case $3$ est « libre ».\n\n**2.** D : $2$ (A, pas D), $3$ (libre : on continue), $4$ (C), $5$ (D trouvé) : $4$ cases.\n\n**3.** Avec une case « vide », la recherche de D s'arrêterait en $3$ et conclurait à tort que D est absent : on ne peut pas supprimer réellement (réorganisation nécessaire).\n\n**4.** On parcourt $2$ (A), $3$ (libre : on retient la première case libre), $4$, $5$ (D), $6$ (vide) : E n'est pas présent, on l'insère dans la première case libre rencontrée, la case $3$.\n\nLe marquage allonge les recherches : c'est le défaut de la suppression dans les méthodes par calcul et dans le coalescent ; seul le chaînage séparé supprime directement.",
+     "duree": 6,
+     "formules": "case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Plus dur que l'examen : trois méthodes, collisions et coûts",
+   "notions": [
+    "lin",
+    "dbl",
+    "coal",
+    "suppr",
+    "charge"
+   ],
+   "exos": [
+    {
+     "id": "p1",
+     "enonce": "Table de $m=13$ cases, $h(x)=(5x+3)\\bmod13$, clés $18,41,22,35,9,54,67,12,26,80$ insérées dans cet ordre. 1. Donner les valeurs de hachage. 2. Dessiner la table obtenue avec le hachage linéaire de décalage $d=2$. 3. Même question avec le double hachage $d(x)=1+(x\\bmod12)$. 4. Même question avec le hachage coalescent sans réserve ; combien de collisions primaires et secondaires ?",
+     "sol": "**1.** $h(18)=2$, $h(41)=0$, $h(22)=9$, $h(35)=9$, $h(9)=9$, $h(54)=0$, $h(67)=0$, $h(12)=11$, $h(26)=3$, $h(80)=0$.\n\n**2. Linéaire ($d=2$).** Pas de décalage $d=2$ : après la case $c$ on teste $(c+2) \\bmod 13$.\n\n- 35 (h = 9) : cases 9 occupées, case 11 libre, on y place 35.\n- 9 (h = 9) : cases 9, 11, 0, 2 occupées, case 4 libre, on y place 9.\n- 54 (h = 0) : cases 0, 2, 4 occupées, case 6 libre, on y place 54.\n- 67 (h = 0) : cases 0, 2, 4, 6 occupées, case 8 libre, on y place 67.\n- 12 (h = 11) : cases 11, 0, 2, 4, 6, 8 occupées, case 10 libre, on y place 12.\n- 80 (h = 0) : cases 0, 2, 4, 6, 8, 10 occupées, case 12 libre, on y place 80.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  41\n 1  vide\n 2  18\n 3  26\n 4  9\n 5  vide\n 6  54\n 7  vide\n 8  67\n 9  22\n10  12\n11  35\n12  80\n```\n\n**3. Double hachage.** Essai $i$ de $x$ : $(h(x)+d(x)\\times(i-1)) \\bmod 13$. Pas $d(x)$ : 18 : 7, 41 : 6, 22 : 11, 35 : 12, 9 : 10, 54 : 7, 67 : 8, 12 : 1, 26 : 3, 80 : 9.\n\n- 35 (h = 9) : cases 9 occupées, case 8 libre, on y place 35.\n- 9 (h = 9) : cases 9 occupées, case 6 libre, on y place 9.\n- 54 (h = 0) : cases 0 occupées, case 7 libre, on y place 54.\n- 67 (h = 0) : cases 0, 8 occupées, case 3 libre, on y place 67.\n- 26 (h = 3) : cases 3, 6, 9 occupées, case 12 libre, on y place 26.\n- 80 (h = 0) : cases 0, 9 occupées, case 5 libre, on y place 80.\n\nTable finale :\n\n```\n 0  41\n 1  vide\n 2  18\n 3  67\n 4  vide\n 5  80\n 6  9\n 7  54\n 8  35\n 9  22\n10  vide\n11  12\n12  26\n```\n\n**4. Coalescent.** Sans réserve : la place de débordement est la première case libre en partant de la case 12.\n\n- 35 (h = 9) : case 9 occupée, collision primaire. Liste parcourue : 9. Première case libre en partant de la fin : 12, liée à la case 9.\n- 9 (h = 9) : case 9 occupée, collision primaire. Liste parcourue : 9, 12. Première case libre en partant de la fin : 11, liée à la case 12.\n- 54 (h = 0) : case 0 occupée, collision primaire. Liste parcourue : 0. Première case libre en partant de la fin : 10, liée à la case 0.\n- 67 (h = 0) : case 0 occupée, collision primaire. Liste parcourue : 0, 10. Première case libre en partant de la fin : 8, liée à la case 10.\n- 12 (h = 11) : case 11 occupée, collision secondaire. Liste parcourue : 11. Première case libre en partant de la fin : 7, liée à la case 11.\n- 80 (h = 0) : case 0 occupée, collision primaire. Liste parcourue : 0, 10, 8. Première case libre en partant de la fin : 6, liée à la case 8.\n\nTable finale :\n\n```\ncase  elt   lien\n  0  41    10\n  1        \n  2  18    -1\n  3  26    -1\n  4        \n  5        \n  6  80    -1\n  7  12    -1\n  8  67    6\n  9  22    12\n 10  54    8\n 11  9     7\n 12  35    11\n```\n\nCollisions : 5 primaires et 1 secondaire(s).",
+     "duree": 12,
+     "formules": "$\\alpha=\\frac nm$ · linéaire · double hachage · coalescent · marquage des cases libres",
+     "type": "open"
+    },
+    {
+     "id": "p2",
+     "enonce": "Mêmes données ($m=13$, valeurs de hachage $2,0,9,9,9,0,0,11,3,0$). Hachage linéaire $d=2$ : coût moyen d'une recherche réussie (cases examinées, chaque clé cherchée une fois) ?",
+     "ans": "Rational(17,5)",
+     "sol": "Somme des rangs d'essai de chaque clé à l'insertion : $34$ cases examinées au total pour $10$ clés, soit $\\frac{34}{10}=\\frac{17}5$. En double hachage le total tombe à $20$ ($2$ en moyenne).",
+     "variants": [
+      {
+       "enonce": "Même question en double hachage (pas $7,6,11,12,10,7,8,1,3,9$) : coût moyen ?",
+       "ans": "2",
+       "sol": "Total $20$ cases examinées pour $10$ clés : $2$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · linéaire · double hachage · coalescent · marquage des cases libres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p3",
+     "enonce": "Mêmes données, double hachage avec les pas $d(x)=7,6,11,12,10,7,8,1,3,9$ (dans l'ordre des clés). Dans quelle case arrive la dernière clé, $80$ ($h=0$) ?",
+     "ans": "5",
+     "sol": "Pas de $80$ : $d=9$ (dernier pas de la liste). Essais : $0$ (occupée), $(0+9)\\bmod13=9$ (occupée), $(0+18)\\bmod13=5$ libre : case $5$ (en $3$ essais).",
+     "variants": [
+      {
+       "enonce": "Mêmes données, hachage coalescent : dans quelle case arrive la dernière clé ($80$) ?",
+       "ans": "6",
+       "sol": "$80$ ($h=0$) : liste de la case $0$ : $0\\to10\\to8$, collision primaire ; première case libre depuis la fin : $6$."
+      }
+     ],
+     "formules": "$\\alpha=\\frac nm$ · linéaire · double hachage · coalescent · marquage des cases libres",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "p4",
+     "enonce": "Hachage linéaire $d=1$, $m=11$, table vide. On insère, dans cet ordre, les clés $a,b,c,d,e$ de valeurs de hachage $3,3,4,3,5$. On supprime $b$ (case marquée libre), puis on cherche $d$, puis on insère $f$ de valeur $3$, enfin on cherche $e$. Pour chaque opération, donner les cases examinées et l'état de la table.",
+     "sol": "**Insertions.** a en $3$ ; b ($h=3$ occupée) en $4$ ; c ($h=4$ occupée) en $5$ ; d ($h=3$) : $3,4,5$ occupées, en $6$ ; e ($h=5$) : $5,6$ occupées, en $7$. Table : $3$ a, $4$ b, $5$ c, $6$ d, $7$ e.\n\n**Suppression de b** : la case $4$ devient libre (pas vide).\n\n**Recherche de d** : $3$ (a), $4$ (libre, on continue), $5$ (c), $6$ (d trouvé) : $4$ cases.\n\n**Insertion de f** ($h=3$) : $3$ (a), $4$ (libre : première case libre retenue), $5$ (c), $6$ (d), $7$ (e), $8$ (vide) : f n'est pas présent, on l'insère dans la case libre $4$. Table : $3$ a, $4$ f, $5$ c, $6$ d, $7$ e. $6$ cases examinées.\n\n**Recherche de e** ($h=5$) : $5$ (c), $6$ (d), $7$ (e) : $3$ cases.",
+     "duree": 10,
+     "formules": "$\\alpha=\\frac nm$ · linéaire · double hachage · coalescent · marquage des cases libres",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Examens : annales de hachage",
+   "notions": [
+    "principe",
+    "division",
+    "sep",
+    "lin",
+    "dbl",
+    "coal",
+    "suppr"
+   ],
+   "exos": [
+    {
+     "id": "ex1",
+     "enonce": "Contrôle n°3 d'algo S3 (24 octobre 2016), partie « Du hachage » : hachage linéaire sur dix clés, tableaux valides et questions de cours.",
+     "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel)",
+     "sol": "**1.** Pas de décalage $d=4$ : après la case $c$ on teste $(c+4) \\bmod 11$.\n\n- sisko (h = 7) : cases 7 occupées, case 0 libre, on y place sisko.\n- tuvok (h = 1) : cases 1, 5 occupées, case 9 libre, on y place tuvok.\n- worf (h = 7) : cases 7, 0, 4 occupées, case 8 libre, on y place worf.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  sisko\n 1  odo\n 2  quark\n 3  neelix\n 4  data\n 5  kirk\n 6  q\n 7  picard\n 8  worf\n 9  tuvok\n10  vide\n```\n\nCe tableau est celui du corrigé officiel.\n\n**2.** Seul (C) est possible ; (A), (B) et (D) sont impossibles.\n\n(C) : l'ordre B, E, A, C, D, F, G convient (B en 0, E en 4, A en 2, C en 0 puis 1, D en 4 puis 5, F en 4, 5 puis 6, G en 2 puis 3).\n\n(A) : G est en case $1$, valeur $2$ : il a examiné $2,3,4,5,6,0$ donc B (case 2, valeur $0$) était déjà placé. Mais B (valeur $0$) est en case $2$ : il a examiné $0$ et $1$, donc G (case $1$) était déjà placé. Contradiction.\n\n(B) : F (valeur $4$) est en case $0$ : il a examiné $4,5,6$ donc C (case $5$) était déjà placé. Mais C (valeur $0$) est en case $5$ : il a examiné $0,1,2,3,4$, donc F (case $0$) était déjà placé. Contradiction.\n\n(D) : E (valeur $4$) est en case $1$ : il a examiné $4,5,6,0$ donc B (case $5$) était déjà placé. Mais B (valeur $0$) est en case $5$ : il a examiné $0,1,2,3,4$, donc E (case $1$) était déjà placé. Contradiction.\n\nVérifié par énumération des $7!=5040$ ordres d'insertion (corrigé officiel : A, B, D impossibles).\n\n**3.** 1. Uniforme, déterministe, facile et rapide à calculer.\n\n2. Une collision secondaire vient de deux éléments qui se retrouvent en collision sur une case alors que leurs valeurs de hachage primaires sont différentes (hachage coalescent : une case de débordement est occupée par un élément d'une autre liste).\n\n3. Le hachage linéaire provoque le regroupement (accumulation d'éléments, clustering) ; on le résout avec le double hachage.",
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau · case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "ex2",
+     "enonce": "Contrôle n°3 d'algo S3# (5 mars 2019), hachage : table linéaire de décalage $d=5$ et questions de cours.",
+     "src": "Contrôle n°3 d'algo S3# du 5 mars 2019 (annales S3/Midterms/Algo/2023#, corrigé officiel)",
+     "sol": "**1.** Pas de décalage $d=5$ : après la case $c$ on teste $(c+5) \\bmod 11$.\n\n- fumseck (h = 0) : cases 0 occupées, case 5 libre, on y place fumseck.\n- missteigne (h = 0) : cases 0, 5 occupées, case 10 libre, on y place missteigne.\n- nagini (h = 5) : cases 5, 10, 4 occupées, case 9 libre, on y place nagini.\n- croutard (h = 4) : cases 4, 9 occupées, case 3 libre, on y place croutard.\n- hedwige (h = 8) : cases 8, 2 occupées, case 7 libre, on y place hedwige.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  aragog\n 1  buck\n 2  crockdur\n 3  croutard\n 4  dobby\n 5  fumseck\n 6  vide\n 7  hedwige\n 8  kreattur\n 9  nagini\n10  missteigne\n```\n\nCe tableau est celui du corrigé officiel.\n\n**2.** 1. Parmi extraction, compression, division, multiplication (le corrigé officiel cite la quatrième sous un autre nom, le cours dit compression).\n\n2. Le hachage coalescent.\n\n3. Le double hachage.\n\n4. Le hachage linéaire ou le double hachage.\n\n5. Le chaînage séparé : les éléments en collision sont chaînés à l'extérieur du tableau, donc $n>m$ est possible.",
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau · case libre : on continue la recherche · insertion : première case libre retenue · uniforme, déterministe, rapide",
+     "duree": 10,
+     "type": "multi"
+    },
+    {
+     "id": "ex3",
+     "enonce": "Contrôle n°3 d'algo S3# (10 mars 2020), exercice 1 : une même série de clés rangée avec le hachage linéaire ($d=3$) puis le chaînage séparé.",
+     "src": "Contrôle n°3 d'algo S3# du 10 mars 2020 (annales S3/Midterms/Algo/2024#, corrigé officiel)",
+     "sol": "**1.** Pas de décalage $d=3$ : après la case $c$ on teste $(c+3) \\bmod 11$.\n\n- cale (h = 10) : cases 10 occupées, case 2 libre, on y place cale.\n- vaughan (h = 8) : cases 8 occupées, case 0 libre, on y place vaughan.\n- young (h = 5) : cases 5, 8, 0, 3, 6 occupées, case 9 libre, on y place young.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  vaughan\n 1  winter\n 2  cale\n 3  richards\n 4  clapton\n 5  hendrix\n 6  hooker\n 7  vide\n 8  king\n 9  young\n10  beck\n```\n\nCe tableau est celui du corrigé officiel.\n\n**2.** Chaque case contient la liste des clés de même valeur de hachage (insertion en fin de liste).\n\n```\n 0  vide\n 1  winter\n 2  vide\n 3  richards\n 4  clapton\n 5  hendrix → young\n 6  hooker\n 7  vide\n 8  king → vaughan\n 9  vide\n10  beck → cale\n```\n\nL'ordre dans une liste dépend de la convention d'insertion (ici en fin de liste, ordre d'arrivée) ; les clés de chaque case sont celles du corrigé.",
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "duree": 10,
+     "type": "multi"
+    },
+    {
+     "id": "ex4",
+     "enonce": "Contrôle n°3 d'algo S3# (17 mars 2021, exercice 1) puis Examen B5 AR2 (22 octobre 2024, exercice 1) : linéaire $d=3$, chaînage séparé et hachage coalescent.",
+     "src": "Contrôle n°3 d'algo S3# du 17 mars 2021 (annales S3/Midterms/Algo/2025#, corrigé officiel) ; Examen B5 d'algo AR2 du 22 octobre 2024 (annales S3/Midterms/Algo/2028, sans corrigé officiel : corrigé rédigé)",
+     "sol": "**1.** Pas de décalage $d=3$ : après la case $c$ on teste $(c+3) \\bmod 11$.\n\n- sisko (h = 7) : cases 7 occupées, case 10 libre, on y place sisko.\n- tuvok (h = 1) : cases 1, 4, 7, 10, 2, 5 occupées, case 8 libre, on y place tuvok.\n- worf (h = 7) : cases 7, 10, 2, 5, 8 occupées, case 0 libre, on y place worf.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  worf\n 1  odo\n 2  quark\n 3  neelix\n 4  data\n 5  kirk\n 6  q\n 7  picard\n 8  tuvok\n 9  vide\n10  sisko\n```\n\nCe tableau est celui du corrigé officiel.\n\n**2.** Chaque case contient la liste des clés de même valeur de hachage (insertion en fin de liste).\n\n```\n 0  vide\n 1  odo → tuvok\n 2  quark\n 3  neelix\n 4  data\n 5  kirk\n 6  q\n 7  picard → sisko → worf\n 8  vide\n 9  vide\n10  vide\n```\n\n**3.** **1.** Valeurs : $h(15)=3$, $h(24)=0$, $h(125)=5$, $h(4)=4$, $h(26)=2$, $h(6)=6$, $h(78)=6$, $h(55)=7$, $h(89)=5$.\n\n**2.** Sans réserve : la place de débordement est la première case libre en partant de la case 11.\n\n- 78 (h = 6) : case 6 occupée, collision primaire. Liste parcourue : 6. Première case libre en partant de la fin : 11, liée à la case 6.\n- 89 (h = 5) : case 5 occupée, collision primaire. Liste parcourue : 5. Première case libre en partant de la fin : 10, liée à la case 5.\n\nTable finale :\n\n```\ncase  elt   lien\n  0  24    -1\n  1        \n  2  26    -1\n  3  15    -1\n  4  4     -1\n  5  125   10\n  6  6     11\n  7  55    -1\n  8        \n  9        \n 10  89    -1\n 11  78    -1\n```\n\nCorrigé rédigé (pas de corrigé officiel) : il a été produit par un simulateur contrôlé sur les corrigés officiels des contrôles de 2017 et 2020 (table coalescente de $11$ clés).",
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "ex5",
+     "enonce": "Contrôle n°3 d'algo S3 (7 novembre 2017), exercice 1 « Quelques résultats différents » : trois méthodes de résolution des collisions sur les mêmes onze clés.",
+     "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel)",
+     "sol": "**1.** Sans réserve : la place de débordement est la première case libre en partant de la case 10.\n\n- 88 (h = 5) : case 5 occupée, collision primaire. Liste parcourue : 5. Première case libre en partant de la fin : 10, liée à la case 5.\n- 23 (h = 7) : case 7 occupée, collision primaire. Liste parcourue : 7. Première case libre en partant de la fin : 8, liée à la case 7.\n- 11 (h = 5) : case 5 occupée, collision primaire. Liste parcourue : 5, 10. Première case libre en partant de la fin : 4, liée à la case 10.\n- 39 (h = 6) : case 6 occupée, collision primaire. Liste parcourue : 6. Première case libre en partant de la fin : 3, liée à la case 6.\n- 16 (h = 4) : case 4 occupée, collision secondaire. Liste parcourue : 4. Première case libre en partant de la fin : 2, liée à la case 4.\n- 5 (h = 4) : case 4 occupée, collision secondaire. Liste parcourue : 4, 2. Première case libre en partant de la fin : 0, liée à la case 2.\n\nTable finale :\n\n```\ncase  elt   lien\n  0  5     -1\n  1  20    -1\n  2  16    0\n  3  39    -1\n  4  11    2\n  5  44    10\n  6  94    3\n  7  12    8\n  8  23    -1\n  9  13    -1\n 10  88    4\n```\n\nCe tableau est celui du corrigé officiel.\n\n**2.** Pas de décalage $d=1$ : après la case $c$ on teste $(c+1) \\bmod 11$.\n\n- 88 (h = 5) : cases 5 occupées, case 6 libre, on y place 88.\n- 23 (h = 7) : cases 7 occupées, case 8 libre, on y place 23.\n- 94 (h = 6) : cases 6, 7, 8, 9 occupées, case 10 libre, on y place 94.\n- 11 (h = 5) : cases 5, 6, 7, 8, 9, 10 occupées, case 0 libre, on y place 11.\n- 39 (h = 6) : cases 6, 7, 8, 9, 10, 0 occupées, case 1 libre, on y place 39.\n- 20 (h = 1) : cases 1 occupées, case 2 libre, on y place 20.\n- 5 (h = 4) : cases 4, 5, 6, 7, 8, 9, 10, 0, 1, 2 occupées, case 3 libre, on y place 5.\n\nLes autres clés vont directement dans leur case $h$.\n\nTable finale :\n\n```\n 0  11\n 1  39\n 2  20\n 3  5\n 4  16\n 5  44\n 6  88\n 7  12\n 8  23\n 9  13\n10  94\n```\n\nCe tableau est celui du corrigé officiel.\n\n**3.** Essai $i$ de $x$ : $(h(x)+d(x)\\times(i-1)) \\bmod 11$. Pas $d(x)$ : 12 : 2, 44 : 5, 13 : 1, 88 : 3, 23 : 5, 94 : 4, 11 : 3, 39 : 3, 20 : 1, 16 : 5, 5 : 2.\n\n- 88 (h = 5) : cases 5 occupées, case 8 libre, on y place 88.\n- 23 (h = 7) : cases 7 occupées, case 1 libre, on y place 23.\n- 11 (h = 5) : cases 5, 8 occupées, case 0 libre, on y place 11.\n- 39 (h = 6) : cases 6, 9, 1 occupées, case 4 libre, on y place 39.\n- 20 (h = 1) : cases 1 occupées, case 2 libre, on y place 20.\n- 16 (h = 4) : cases 4, 9 occupées, case 3 libre, on y place 16.\n- 5 (h = 4) : cases 4, 6, 8 occupées, case 10 libre, on y place 5.\n\nTable finale :\n\n```\n 0  11\n 1  23\n 2  20\n 3  16\n 4  39\n 5  44\n 6  94\n 7  12\n 8  88\n 9  13\n10  5\n```\n\nCe tableau est celui du corrigé officiel.",
+     "formules": "essais successifs · chaînage dans le tableau (elt, lien) · listes hors du tableau",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  }
+ ]
+}

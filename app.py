@@ -380,7 +380,8 @@ def index():
     return render_template('index.html')
 
 
-DOC_ASSET_EXTENSIONS = {'.pdf', '.docx', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'}
+DOC_ASSET_EXTENSIONS = {'.pdf', '.docx', '.pptx', '.xlsx', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp',
+                        '.mp4', '.webm', '.m4v', '.mp3', '.m4a', '.ogg', '.txt'}
 MATHJAX_BLOCK_RE = re.compile(r'\[\s*mathjax\s*\](.*?)\[\s*/mathjax\s*\]', re.S | re.I)
 MATHJAX_INLINE_RE = re.compile(r'\[\s*mathjaxinline\s*\](.*?)\[\s*/mathjaxinline\s*\]', re.S | re.I)
 MATH_SPAN_RE = re.compile(r'\$\$.+?\$\$|\$[^$\n]+?\$|\\\[.+?\\\]|\\\(.+?\\\)', re.S)

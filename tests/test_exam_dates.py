@@ -48,7 +48,8 @@ class ExamDates(unittest.TestCase):
 
     def test_merge_skips_known_dates(self):
         evs = ed.candidates(ed.parse_ics(ICS), 'Auriga', self.syllabus, date(2026, 9, 1))
-        new = ed.merge(self.syllabus['calendrier'], evs)
+        new = ed.merge([{'debut': '2026-12-14', 'fin': '2026-12-18', 'titre': 'Analyse : primitives, intégrales et suites',
+                         'type': 'Examen', 'source': 'Auriga'}], evs)
         self.assertNotIn('2026-12-14', [n['debut'] for n in new])  # already in syllabus.json
         self.assertEqual(ed.merge([], evs + evs), sorted(evs, key=lambda e: e['debut']))  # sorted by date
         known = [{'debut': '2026-12-07', 'titre': 'Autre titre', 'type': 'Test à distance'}]

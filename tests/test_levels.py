@@ -3,6 +3,7 @@
 
 Run: python -m unittest tests.test_levels -v   (needs Flask, Markdown, bleach)
 """
+import json
 import os
 import sys
 import tempfile
@@ -121,6 +122,13 @@ class Selection(unittest.TestCase):
         self.assertEqual(levels.selector(self.P, self.f(sem='S2'))['mats'], ['maths'])
         self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', mat='info'))['sems'], ['S1'])
         self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', sem='S2'))['mats'], ['info', 'maths'])
+
+
+_S1_CAL = [  # fixed calendar for the tests: the real one in syllabus.json changes with every sync
+    {'debut': '2026-10-26', 'fin': '2026-10-30', 'titre': 'Dénombrement et probabilités', 'type': 'Examen', 'source': 'Auriga', 'ecue': 'maths/S1/DP'},
+    {'debut': '2026-12-07', 'titre': 'Test à distance : APIS en entier', 'type': 'Test à distance', 'source': 'Moodle', 'ecue': 'maths/S1/APIS'},
+    {'debut': '2026-12-14', 'fin': '2026-12-18', 'titre': 'Analyse : primitives, intégrales et suites', 'type': 'Examen', 'source': 'Auriga', 'ecue': 'maths/S1/APIS'},
+]
 
 
 class Api(unittest.TestCase):
@@ -329,7 +337,9 @@ class Api(unittest.TestCase):
 
     def test_exam_calendar(self):
         from datetime import date
-        cal = levels.exam_calendar(date(2026, 12, 15))
+        syl = json.loads((levels.PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))
+        syl['calendrier'] = _S1_CAL
+        cal = levels.exam_calendar(date(2026, 12, 15), syllabus=syl)
         apis = next(e for e in cal['upcoming'] if e.get('ecue') == 'maths/S1/APIS' and e['type'] == 'Examen')
         self.assertTrue(apis['en_cours'])  # 14-18 Dec
         self.assertEqual(apis['links'][0]['url'], '/niveaux/maths-s1-apis-integrales')
@@ -344,6 +354,29 @@ class Api(unittest.TestCase):
         html = self.c.get('/calendrier').get_data(as_text=True)  # public page
         self.assertIn('Calendrier des examens', html)
         self.assertIn('morgan-footer', html)
+
+    def test_exam_calendar_semester_filter(self):
+        from datetime import date
+        syl = json.loads((levels.PARCOURS_DIR / 'syllabus.json').read_text(encoding='utf-8'))
+        syl['calendrier'] = _S1_CAL + [
+            {'debut': '2026-11-23', 'titre': 'Contrôle PSE', 'type': 'Contrôle', 'source': 'Mail EPITA', 'ecue': 'maths/S3/PSE'},
+            {'debut': '2026-11-24', 'titre': 'Annonce', 'type': 'Examen', 'source': 'Mail EPITA', 'semestre': 'S3'},
+            {'debut': '2026-11-25', 'titre': 'Sans semestre', 'type': 'Examen', 'source': 'Mail EPITA'}]
+        titres = lambda c: {e['titre'] for m in c['months'] for e in m['events']}  # noqa: E731
+        allc = levels.exam_calendar(date(2026, 11, 20), syllabus=syl)
+        self.assertTrue({'S1', 'S3', 'none'} <= set(allc['sems']) and allc['sems'][-1] == 'none')  # + semesters of undated ECUEs
+        s3 = levels.exam_calendar(date(2026, 11, 20), syllabus=syl, sem='S3')
+        nov = next(m for m in s3['months'] if m['anchor'] == 'm2026-11')
+        self.assertEqual((nov['exams'], nov['tests']), (2, 0))  # Contrôle and Examen are both « exams » (red)
+        self.assertEqual(titres(s3), {'Contrôle PSE', 'Annonce'})  # explicit `semestre` and ECUE semester
+        self.assertEqual(levels.exam_calendar(date(2026, 11, 20), syllabus=syl, sem='none')['upcoming'][0]['titre'], 'Sans semestre')
+        self.assertTrue({'Contrôle PSE', 'Annonce', 'Sans semestre'} < titres(allc))  # no filter: everything stays
+        self.assertTrue(all(e['semestre'] == 'S3' for e in s3['undated']))
+        self.register('cal_user')
+        html = self.c.get('/calendrier?sem=S3').get_data(as_text=True)
+        self.assertIn('data-sem="tous"', html)
+        self.assertIn('Contrôle de cours AL', html)
+        self.assertNotIn('Test Moodle 1', html)  # S1 hidden when S3 is selected
 
     def test_copy_for_ai_button(self):
         self.register('copy_user')

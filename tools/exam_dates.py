@@ -31,7 +31,10 @@ STOP = {'et', 'de', 'des', 'du', 'la', 'le', 'les', 'l', 'd', 'a', 'en', 's1', '
 
 
 def env(key):
-    for line in (ROOT / '.env').read_text(encoding='utf-8').splitlines():
+    envfile = ROOT / '.env'
+    if not envfile.exists():  # mails only: no iCal feeds configured
+        return ''
+    for line in envfile.read_text(encoding='utf-8').splitlines():
         if line.startswith(key + '='):
             return line.split('=', 1)[1].strip().strip('"\'')
     return ''
@@ -80,7 +83,10 @@ def to_date(value, params):
 # Moodle course codes that name no ECUE (category « 2627_I_INF_FISE_S01_CN_PC_MECA_1 »).
 # shortcut: one entry per course seen in the feed, add new ones when « ECUE non reconnue » shows up.
 ALIASES = {'meca': 'physique/S1/Mécanique', 'num': 'archi/S1/Numération', 'taa': 'algo/S1/Types algébriques abstraits',
-           'oac': "electronique/S1/Outils d'analyse de circuits", 'pet': 'prog/S1/Programmation C (début)'}
+           'oac': "electronique/S1/Outils d'analyse de circuits", 'pet': 'prog/S1/Programmation C (début)',
+           # S3 course codes seen in Moodle mails (2627_I_INF_FISE_S03_<UE>_<code>, S3-2030 algo-<code>)
+           'tb': 'electronique/S3/TB', 'ba': 'archi/S3/ASM68K', 'graphs': 'algo/S3/Graphes', 'thlr': 'algo/S3/THLR',
+           'pse': 'maths/S3/PSE', 'al': 'maths/S3/AL'}
 # Moodle sends one event when a test opens and one when it closes: merged into one item
 PHASE = re.compile(r"\s+(s[’']ouvre|se termine|doit [eê]tre achev[ée]e?)\s*$", re.I)
 
@@ -163,7 +169,8 @@ def fetch_mails(since):
     conn = epita_mail.imap()
     conn.select('INBOX', readonly=True)
     ids = set()
-    for w in ('examen', 'exam', 'partiel', 'controle', 'QCM', 'test', 'evaluation', 'ouverture', 'rattrapage'):
+    # ASCII substrings only: Exchange refuses UTF-8 searches, and « controle » does not match « Contrôle »
+    for w in ('examen', 'exam', 'partiel', 'controle', 'QCM', 'test', 'evaluation', 'valuation', 'ouverture', 'rattrapage', 'cours', 'CC'):
         ids |= set(conn.search(None, 'SINCE', since.strftime('%d-%b-%Y'), 'SUBJECT', f'"{w}"')[1][0].split())
     events = []
     for i in sorted(ids, key=int):
@@ -191,7 +198,8 @@ def candidates(events, source, syllabus, since):
             continue
         title = re.sub(r'\s*\((EVAL|EXAMEN)\)\s*$', '', ev.get('summary', '').strip(), flags=re.I)
         title = PHASE.sub('', title)
-        kind = 'Examen' if re.search(r'type:\s*examen|\beval\b|examen|partiel|final|midterm', text, re.I) else 'Test à distance'
+        kind = ('Examen' if re.search(r'type:\s*examen|\beval\b|examen|partiel|final|midterm', text, re.I)
+                else 'Contrôle' if re.search(r'contr[oô]le', text, re.I) else 'Test à distance')
         item = {'debut': ev['start'].isoformat()}
         if ev['end'] != ev['start']:
             item['fin'] = ev['end'].isoformat()
@@ -199,6 +207,9 @@ def candidates(events, source, syllabus, since):
         ecue = ecue_for(text, syllabus)
         if ecue:
             item['ecue'] = ecue
+        sm = re.search(r'_S0?(\d)_|^S0?(\d)-\d{4}', ev.get('categories', ''))  # course codes carry the semester
+        if sm:
+            item['semestre'] = 'S' + (sm.group(1) or sm.group(2))
         same = next((o for o in out if o['titre'] == title), None)
         if same:  # « s'ouvre » + « se termine »: one item from the first start to the last end
             dates = sorted({same['debut'], same.get('fin', same['debut']), item['debut'], item.get('fin', item['debut'])})

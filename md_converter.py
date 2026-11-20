@@ -88,7 +88,8 @@ def clean_moodle_html(html_content: str, base_url: str = "") -> str:
         for tag in soup.find_all(["a", "img"]):
             attr = "href" if tag.name == "a" else "src"
             val = tag.get(attr)
-            if val and not val.startswith(("http://", "https://", "mailto:", "data:")):
+            # « ./ » et « ../ » = chemins locaux écrits par l'exporteur (médias téléchargés) : à conserver
+            if val and not val.startswith(("http://", "https://", "mailto:", "data:", "./", "../", "#")):
                 tag[attr] = urllib.parse.urljoin(base_url, val)
 
     return str(soup)

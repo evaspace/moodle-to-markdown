@@ -420,6 +420,14 @@ run: scrape
 
 sync: run
 
+scrape-full: setup
+	@echo "$(BOLD)$(BLUE)📥 Scraping complet (fichiers + vidéos)...$(RESET)"
+	$(PYTHON) main.py $(SCRAPE_ARGS) --download-videos
+
+scrape-resume: setup
+	@echo "$(BOLD)$(BLUE)↩️  Reprise après cookie expiré...$(RESET)"
+	$(PYTHON) main.py $(SCRAPE_ARGS) --resume
+
 scrape-maths: setup
 	$(PYTHON) main.py $(SCRAPE_ARGS) --course "Mathématiques"
 

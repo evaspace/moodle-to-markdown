@@ -132,6 +132,8 @@ CHOICE_RE = re.compile(r"^-\s+\[(x| )\]\s*(.*)$")
 OPTIONS_HEADER_RE = re.compile(r"^\*\*Options\s*/\s*Réponses\s*:\*\*\s*$")
 FEEDBACK_HEADER_RE = re.compile(r"^(?:>\s*)?\*\*Correction\s*/\s*Feedback\s*:\*\*\s*$")
 CHOICE_LABEL_RE = re.compile(r"^[a-z]\.\s*")
+CORRECT_HEADER_RE = re.compile(r"^\*\*R[ée]ponses?\s+correctes?\s*:?\*\*\s*:?\s*$", re.I)
+CORRECT_ITEM_RE = re.compile(r"^-\s+✔\s*(.+)$")
 ADMIN_LINE_RE = re.compile(
     r"^(?:Correct|Incorrect|Partially correct\b|"
     r"Votre réponse est (?:correcte|incorrecte|partiellement correcte)\.?|"
@@ -204,7 +206,11 @@ def parse_question(block: list[str]) -> tuple[Question | None, str | None]:
     if score is None:
         return None, "note illisible (impossible de certifier que [x] = correction)"
     got, mx = score
-    if got < mx:
+    # Section « Réponses correctes » écrite par le scrapper : vraie correction Moodle, valable
+    # même quand l'élève s'est trompé (la note n'est alors plus un critère).
+    explicit = {re.sub(r"\s+", " ", CHOICE_LABEL_RE.sub("", m.group(1).strip())).casefold()
+                for m in (CORRECT_ITEM_RE.match(ln.strip()) for ln in block) if m}
+    if got < mx and not explicit:
         return None, (
             f"note {got:g}/{mx:g} : [x] = réponse sélectionnée par l'élève, "
             "pas la correction (question rejetée, candidate LLM)"
@@ -232,6 +238,8 @@ def parse_question(block: list[str]) -> tuple[Question | None, str | None]:
         if not m:
             break  # fin de la liste de choix
         marked = m.group(1) == "x"
+        if explicit:
+            marked = re.sub(r"\s+", " ", CHOICE_LABEL_RE.sub("", m.group(2).strip())).casefold() in explicit
         text = CHOICE_LABEL_RE.sub("", m.group(2).strip()).strip()
         if not text:
             continue  # choix dégénéré (« a. » seul, sans contenu)
@@ -246,7 +254,7 @@ def parse_question(block: list[str]) -> tuple[Question | None, str | None]:
     if len(choices) < 2:
         return None, f"moins de 2 choix distincts exploitables ({len(choices)})"
     if not any(c.correct for c in choices):
-        return None, "aucune option cochée [x] à note pleine"
+        return None, "aucune option correcte identifiée"
 
     # correction = bloc « > **Correction / Feedback :** » jusqu'à fin de bloc
     back_lines: list[str] = []

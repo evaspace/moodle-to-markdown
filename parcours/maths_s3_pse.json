@@ -1,0 +1,2126 @@
+{
+ "subject": {
+  "id": "maths-s3-pse",
+  "ordre": 245,
+  "matiere": "maths",
+  "semestre": "S3",
+  "ecue": "PSE",
+  "titre": "Probabilités et séries entières",
+  "chapitres_moodle": [
+   "06_Fonction génératrice d'une variable aléatoire entière finie",
+   "07_Séries entières",
+   "09_Variable aléatoire entière infinie"
+  ],
+  "td": "Support de TD PSE (S3 2026), DM et MiMos PSE",
+  "examens": [
+   "Examen B5/PSE (octobre)"
+  ]
+ },
+ "notions": [
+  {
+   "id": "cond",
+   "titre": "Probabilités conditionnelles, totales, Bayes (rappel S1)",
+   "formule": "$P_A(B)=\\frac{P(A\\cap B)}{P(A)}$ · $P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · indépendants : $P(A\\cap B)=P(A)P(B)$",
+   "exemple": "$P(A)=\\frac3{10}$, $P_A(B)=\\frac12$, $P_{\\bar A}(B)=\\frac15$ : $P(B)=\\frac3{20}+\\frac7{50}=\\frac{29}{100}$",
+   "cours": "On dessine l'arbre : une branche se multiplie, des branches qui mènent au même événement s'additionnent (formule des probabilités totales). Bayes « remonte » l'arbre : numérateur = le chemin $A$ puis $B$, dénominateur = $P(B)$. Rappel S1 : parcours « Dénombrement et probabilités » (`maths-s1-dp`)."
+  },
+  {
+   "id": "esp",
+   "titre": "Espérance et variance d'une variable finie (rappel S1)",
+   "formule": "$E(X)=\\sum x_kP(X=x_k)$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$ et $np(1-p)$",
+   "exemple": "$P(X=0)=\\frac12$, $P(X=2)=\\frac3{10}$, $P(X=3)=\\frac15$ : $E(X)=\\frac65$, $E(X^2)=3$, $V(X)=\\frac{39}{25}$",
+   "cours": "L'espérance est la moyenne pondérée des valeurs, la variance mesure la dispersion autour d'elle. Pour des variables indépendantes, $E(X+Y)=E(X)+E(Y)$ et $V(X+Y)=V(X)+V(Y)$. Bernoulli($p$) : $E=p$, $V=p(1-p)$ ; somme de $n$ Bernoulli indépendantes : binomiale $B(n,p)$."
+  },
+  {
+   "id": "geomexp",
+   "titre": "Séries géométrique et exponentielle (rappel S1/S3)",
+   "formule": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ $(|q| < 1)$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$ pour tout $x$",
+   "exemple": "$\\sum_{k\\ge0}\\left(\\frac13\\right)^k=\\frac32$ · $\\sum_{k\\ge0}\\frac{(-1)^k}{k!}=e^{-1}$",
+   "cours": "Géométrique : premier terme divisé par $1-q$ (si la somme commence à $k=m$, le premier terme est $q^m$). Exponentielle : la somme vaut $e^x$ pour tout $x$ réel. Ce sont les deux séries à connaître absolument : elles interviennent dans toutes les lois infinies. Rappel : parcours « Analyse et séries numériques » (`maths-s3-asn`)."
+  },
+  {
+   "id": "gfin",
+   "titre": "Fonction génératrice d'une variable finie entière",
+   "formule": "$G_X(t)=E(t^X)=\\sum_{k=0}^nP(X=k)\\,t^k$ · $G_X(1)=1$ · $P(X=k)$ = coefficient de $t^k$ · $G_X(0)=P(X=0)$",
+   "exemple": "$G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$ pour $X(\\Omega)=\\{0,2,3\\}$",
+   "cours": "$G_X$ est un polynôme dont les coefficients sont les probabilités. Elle caractérise la loi : deux variables de même fonction génératrice ont la même loi (deux polynômes égaux ont les mêmes coefficients). $G_X(1)=\\sum P(X=k)=1$ permet de déterminer une constante inconnue. $G_X(-1)=P(\\text{pair})-P(\\text{impair})$."
+  },
+  {
+   "id": "gderiv",
+   "titre": "Espérance et variance par la fonction génératrice",
+   "formule": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+   "exemple": "$G=\\left(\\frac{1+t}2\\right)^4$ : $G'(1)=2$, $G''(1)=3$, $V=3+2-4=1$",
+   "cours": "$G'(t)=\\sum kp_kt^{k-1}$ donc $G'(1)=E(X)$ ; $G''(t)=\\sum k(k-1)p_kt^{k-2}$ donc $G''(1)=E(X(X-1))=E(X^2)-E(X)$, d'où $V(X)=E(X^2)-E(X)^2=G''(1)+G'(1)-G'(1)^2$. Attention : $G''(1)$ n'est pas la variance."
+  },
+  {
+   "id": "gsomme",
+   "titre": "Somme de variables indépendantes",
+   "formule": "$X,Y$ indépendantes : $G_{X+Y}=G_X\\times G_Y$ · $B(n,p)$ : $G=(1-p+pt)^n$",
+   "exemple": "$(0{,}5+0{,}4t+0{,}1t^2)(0{,}5+0{,}5t)=0{,}25+0{,}45t+0{,}25t^2+0{,}05t^3$",
+   "cours": "Le coefficient de $t^k$ du produit est $\\sum_{i+j=k}P(X=i)P(Y=j)=P(X+Y=k)$ car $X$ et $Y$ sont indépendantes. Pour $n$ variables indépendantes, on multiplie les $n$ polynômes. Pour $Y=X_1+\\dots+X_n$ de Bernoulli$(p)$ : $G_Y=(1-p+pt)^n$, on développe par le binôme et on lit la loi binomiale. Attention : $X+X$ n'est pas la somme de deux variables indépendantes (c'est $2X$)."
+  },
+  {
+   "id": "rayon",
+   "titre": "Rayon de convergence et règle de d'Alembert",
+   "formule": "$|x| < R$ : converge absolument · $|x| > R$ : diverge · $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ ($\\ell=0$ : $R=+\\infty$)",
+   "exemple": "$\\sum\\frac{x^n}{n!}$ : $\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac1{n+1}\\to0$, donc $R=+\\infty$",
+   "cours": "Pour $\\sum a_nx^n$ il existe $R\\in[0,+\\infty]$ tel que la série converge absolument si $|x| < R$ et diverge si $|x| > R$. Aucun théorème général en $x=\\pm R$ : étude au cas par cas. D'Alembert se calcule sur les coefficients $a_n$ (pas sur $a_nx^n$). Si seules les puissances paires apparaissent ($x^{2n}$), on pose $X=x^2$ et on revient à $x$."
+  },
+  {
+   "id": "sgeo",
+   "titre": "Série géométrique, dérivée et intégrée",
+   "formule": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum\\frac{x^n}n=-\\ln(1-x)$ · $R=1$ pour les trois",
+   "exemple": "$\\sum_{n\\ge1}nx^n=\\frac x{(1-x)^2}$, donc $=2$ pour $x=\\frac12$",
+   "cours": "Dériver ou intégrer terme à terme une série entière ne change pas son rayon $R$ et donne la dérivée ou la primitive de la somme sur $]-R,R[$. Pour $\\frac1{a-x}$ : on factorise $\\frac1a\\times\\frac1{1-x/a}$. Pour $\\ln(a-x)$ : on intègre le résultat précédent. Pour $\\frac1{(1-x)^2}=\\sum(n+1)x^n$ : on dérive, puis on décale l'indice."
+  },
+  {
+   "id": "sexp",
+   "titre": "Série exponentielle et changements d'indice",
+   "formule": "$\\sum\\frac{x^n}{n!}=e^x$ · $\\sum_{n\\ge1}\\frac{x^n}{(n-1)!}=xe^x$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$ · $R=+\\infty$",
+   "exemple": "$\\sum_{n\\ge3}\\frac{x^n}{(n-3)!}=x^3e^x$",
+   "cours": "On se ramène à $\\sum\\frac{u^p}{p!}$ par une substitution $u=-x^2$, $u=2x$... ou en posant $p=n-m$ et en sortant la puissance de $x$. $R=+\\infty$ car l'exponentielle converge pour tout réel. Pour $\\sum n\\frac{x^n}{n!}$ : $\\frac n{n!}=\\frac1{(n-1)!}$."
+  },
+  {
+   "id": "vinf",
+   "titre": "Variable aléatoire entière infinie : loi, espérance, variance",
+   "formule": "$\\sum_{n\\ge0}P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $P(X\\in A)=\\sum_{n\\in A}P(X=n)$",
+   "exemple": "$P(X=n)=\\frac2{3^n}$ $(n\\ge1)$ : $\\sum=1$ et $E(X)=\\frac32$",
+   "cours": "Les sommes sont maintenant infinies : ce sont des limites de séries, qui peuvent diverger. Si $\\sum nP(X=n)$ diverge, $X$ n'a pas d'espérance ; si $\\sum n^2P(X=n)$ diverge, pas de variance. Les propriétés $E(aX+b)=aE(X)+b$, $V(aX+b)=a^2V(X)$ et l'additivité pour des variables indépendantes restent vraies."
+  },
+  {
+   "id": "ginf",
+   "titre": "Fonction génératrice d'une variable infinie",
+   "formule": "$G_X(t)=\\sum_{n\\ge0}P(X=n)t^n$ · $R\\ge1$ · $G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$",
+   "exemple": "$G_X(t)=\\frac{2t}{3-t}$ : $a=\\frac23$, $E=G'(1)=\\frac32$, $V=\\frac34$",
+   "cours": "$G_X$ est la somme d'une série entière : on retrouve la loi en la développant (série géométrique, exponentielle, $\\ln(1-u)$). Rayon $\\ge1$ car $|P(X=n)t^n|\\le P(X=n)$ si $|t|\\le1$. $G_X(1)=1$ détermine la constante $a$. $E$ et $V$ se calculent en dérivant la fraction ou l'exponentielle (pas en dérivant la série terme à terme). On retrouve $G_{X+Y}=G_XG_Y$ pour des variables indépendantes."
+  },
+  {
+   "id": "lois",
+   "titre": "Lois géométrique, de Pascal et de Poisson",
+   "formule": "Géom$(p)$ : $P(X=n)=q^{n-1}p$, $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson$(\\lambda)$ : $P(X=n)=e^{-\\lambda}\\frac{\\lambda^n}{n!}$, $G=e^{\\lambda(t-1)}$, $E=V=\\lambda$",
+   "exemple": "$p=\\frac13$ : $P(X=4)=\\left(\\frac23\\right)^3\\frac13=\\frac8{81}$, $E=3$, $V=6$",
+   "cours": "Géométrique : nombre d'essais pour obtenir le premier succès ($q=1-p$). Somme de $r$ géométriques indépendantes : $G=\\left(\\frac{pt}{1-qt}\\right)^r$, loi de Pascal $P(Y=n)=\\binom{n-1}{r-1}p^rq^{n-r}$. Poisson : nombre d'événements dans un intervalle de temps. Somme de deux Poisson indépendantes : $G=e^{(\\lambda+\\mu)(t-1)}$, c'est une Poisson$(\\lambda+\\mu)$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "cond",
+   "type": "qcm",
+   "q": "$P(B)=$ ?",
+   "choix": [
+    "$P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$",
+    "$P(A)P_A(B)$",
+    "$P(A)+P(B)$",
+    "$P_A(B)+P_{\\bar A}(B)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "cond",
+   "type": "vf",
+   "q": "Si $A$ et $B$ sont indépendants, alors $P_A(B)=P(B)$.",
+   "bonne": true
+  },
+  {
+   "notion": "esp",
+   "type": "vf",
+   "q": "$V(aX+b)=a^2V(X)$.",
+   "bonne": true
+  },
+  {
+   "notion": "esp",
+   "type": "qcm",
+   "q": "$X\\sim B(10,\\frac12)$. $V(X)=$",
+   "choix": [
+    "$\\frac52$",
+    "$5$",
+    "$\\frac{10}4$ et $5$ à la fois",
+    "$10$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "geomexp",
+   "type": "qcm",
+   "q": "$\\sum_{k=0}^{+\\infty}\\frac{x^k}{k!}=$",
+   "choix": [
+    "$e^x$",
+    "$\\frac1{1-x}$",
+    "$\\ln(1+x)$",
+    "$xe^x$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "geomexp",
+   "type": "vf",
+   "q": "$\\sum_{k\\ge0}\\left(\\frac12\\right)^k=2$.",
+   "bonne": true
+  },
+  {
+   "notion": "gfin",
+   "type": "vf",
+   "q": "Pour toute variable aléatoire entière finie, $G_X(1)=1$.",
+   "bonne": true
+  },
+  {
+   "notion": "gfin",
+   "type": "qcm",
+   "q": "$G_X(t)=\\frac12t+\\frac12t^3$. $P(X=3)=$",
+   "choix": [
+    "$\\frac12$",
+    "$1$",
+    "$\\frac32$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gderiv",
+   "type": "qcm",
+   "q": "$E(X)=$ ?",
+   "choix": [
+    "$G_X'(1)$",
+    "$G_X''(1)$",
+    "$G_X(1)$",
+    "$G_X'(0)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "gderiv",
+   "type": "vf",
+   "q": "$V(X)=G_X''(1)$.",
+   "bonne": false
+  },
+  {
+   "notion": "gsomme",
+   "type": "vf",
+   "q": "Pour $X,Y$ indépendantes, $G_{X+Y}=G_X\\times G_Y$.",
+   "bonne": true
+  },
+  {
+   "notion": "gsomme",
+   "type": "vf",
+   "q": "$X+X$ a pour fonction génératrice $G_X^2$.",
+   "bonne": false
+  },
+  {
+   "notion": "gsomme",
+   "type": "qcm",
+   "q": "La somme de $5$ Bernoulli($p$) indépendantes a pour fonction génératrice",
+   "choix": [
+    "$(1-p+pt)^5$",
+    "$5(1-p+pt)$",
+    "$(1-p+pt)+5$",
+    "$(1-p)^5+p^5t^5$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rayon",
+   "type": "qcm",
+   "q": "$\\sum\\frac{x^n}{n!}$ a pour rayon de convergence",
+   "choix": [
+    "$+\\infty$",
+    "$1$",
+    "$0$",
+    "$e$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "rayon",
+   "type": "vf",
+   "q": "Si $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to2$, le rayon de convergence de $\\sum a_nx^n$ est $\\frac12$.",
+   "bonne": true
+  },
+  {
+   "notion": "rayon",
+   "type": "vf",
+   "q": "Le théorème du rayon de convergence donne la nature de la série en $x=R$.",
+   "bonne": false
+  },
+  {
+   "notion": "sgeo",
+   "type": "qcm",
+   "q": "$\\sum_{n\\ge1}nx^{n-1}=$ (pour $|x| < 1$)",
+   "choix": [
+    "$\\frac1{(1-x)^2}$",
+    "$\\frac1{1-x}$",
+    "$\\frac x{1-x}$",
+    "$-\\ln(1-x)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "sgeo",
+   "type": "vf",
+   "q": "Intégrer terme à terme une série entière ne change pas son rayon de convergence.",
+   "bonne": true
+  },
+  {
+   "notion": "sexp",
+   "type": "qcm",
+   "q": "$\\sum_{n\\ge1}\\frac{x^n}{(n-1)!}=$",
+   "choix": [
+    "$xe^x$",
+    "$e^x$",
+    "$e^{x-1}$",
+    "$x^ne^x$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "sexp",
+   "type": "vf",
+   "q": "$\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$.",
+   "bonne": true
+  },
+  {
+   "notion": "vinf",
+   "type": "vf",
+   "q": "Si $X$ est entière infinie, $\\sum_{n\\ge0}P(X=n)=1$.",
+   "bonne": true
+  },
+  {
+   "notion": "vinf",
+   "type": "vf",
+   "q": "Toute variable entière infinie a une espérance.",
+   "bonne": false
+  },
+  {
+   "notion": "ginf",
+   "type": "vf",
+   "q": "Le rayon de convergence de la série génératrice d'une variable entière est au moins $1$.",
+   "bonne": true
+  },
+  {
+   "notion": "ginf",
+   "type": "qcm",
+   "q": "$G_X(t)=\\frac{at}{1-t/3}$ : la valeur de $a$ est",
+   "choix": [
+    "$\\frac23$",
+    "$\\frac13$",
+    "$1$",
+    "$\\frac32$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lois",
+   "type": "qcm",
+   "q": "$X$ géométrique de paramètre $p$ : $E(X)=$",
+   "choix": [
+    "$\\frac1p$",
+    "$p$",
+    "$\\frac{1-p}p$",
+    "$\\frac{1}{p^2}$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "lois",
+   "type": "vf",
+   "q": "La somme de deux Poisson indépendantes de paramètres $\\lambda$ et $\\mu$ est une Poisson de paramètre $\\lambda+\\mu$.",
+   "bonne": true
+  },
+  {
+   "notion": "lois",
+   "type": "qcm",
+   "q": "$X$ de Poisson($\\lambda$) : $G_X(t)=$",
+   "choix": [
+    "$e^{\\lambda(t-1)}$",
+    "$e^{\\lambda t}$",
+    "$\\lambda e^{t}$",
+    "$\\frac1{1-\\lambda t}$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Rappel S1 : probabilités conditionnelles",
+   "notions": [
+    "cond"
+   ],
+   "exos": [
+    {
+     "id": "c1",
+     "enonce": "$P(A)=\\frac3{10}$, $P_A(B)=\\frac12$, $P_{\\bar A}(B)=\\frac15$. Calculer $P(B)$.",
+     "ans": "Rational(29,100)",
+     "sol": "Probabilités totales : $P(B)=\\frac3{10}\\times\\frac12+\\frac7{10}\\times\\frac15=\\frac{15}{100}+\\frac{14}{100}=\\frac{29}{100}$.",
+     "variants": [
+      {
+       "enonce": "$P(A)=\\frac25$, $P_A(B)=\\frac14$, $P_{\\bar A}(B)=\\frac13$. Calculer $P(B)$.",
+       "ans": "Rational(3,10)",
+       "sol": "$\\frac25\\times\\frac14+\\frac35\\times\\frac13=\\frac1{10}+\\frac15=\\frac3{10}$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c2",
+     "enonce": "Mêmes données ($P(A)=\\frac3{10}$, $P_A(B)=\\frac12$, $P_{\\bar A}(B)=\\frac15$). Calculer $P_B(A)$.",
+     "ans": "Rational(15,29)",
+     "sol": "Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}=\\frac{15/100}{29/100}=\\frac{15}{29}$.",
+     "variants": [
+      {
+       "enonce": "$P(A)=\\frac25$, $P_A(B)=\\frac14$, $P_{\\bar A}(B)=\\frac13$. Calculer $P_B(A)$.",
+       "ans": "Rational(1,3)",
+       "sol": "$P_B(A)=\\frac{\\frac1{10}}{\\frac3{10}}=\\frac13$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c3",
+     "enonce": "$A$ et $B$ sont indépendants, $P(A)=\\frac13$ et $P(B)=\\frac35$. Calculer $P(A\\cap B)$.",
+     "ans": "Rational(1,5)",
+     "sol": "Indépendance : $P(A\\cap B)=P(A)P(B)=\\frac13\\times\\frac35=\\frac15$.",
+     "variants": [
+      {
+       "enonce": "$A$ et $B$ indépendants, $P(A)=\\frac14$ et $P(B)=\\frac23$. Calculer $P(A\\cap B)$.",
+       "ans": "Rational(1,6)",
+       "sol": "$\\frac14\\times\\frac23=\\frac16$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c4",
+     "enonce": "Une urne contient 4 boules rouges et 6 boules bleues. On tire deux boules successivement sans remise. Probabilité d'obtenir deux rouges ?",
+     "ans": "Rational(2,15)",
+     "sol": "$P(R_1)=\\frac4{10}$ puis $P_{R_1}(R_2)=\\frac39$ : $P(R_1\\cap R_2)=\\frac4{10}\\times\\frac39=\\frac2{15}$.",
+     "variants": [
+      {
+       "enonce": "Une urne contient 5 boules rouges et 5 blanches. On tire deux boules sans remise. Probabilité d'obtenir deux rouges ?",
+       "ans": "Rational(2,9)",
+       "sol": "$\\frac5{10}\\times\\frac49=\\frac29$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c5",
+     "enonce": "Un filtre antispam : $P(\\text{spam})=\\frac25$ ; il détecte un spam avec la probabilité $\\frac9{10}$ et détecte à tort un message normal avec la probabilité $\\frac1{20}$. Un message est détecté : probabilité que ce soit un spam ?",
+     "ans": "Rational(12,13)",
+     "sol": "$P(D)=\\frac25\\times\\frac9{10}+\\frac35\\times\\frac1{20}=\\frac{36}{100}+\\frac3{100}=\\frac{39}{100}$. Bayes : $P_D(S)=\\frac{36/100}{39/100}=\\frac{12}{13}$.",
+     "variants": [
+      {
+       "enonce": "$P(\\text{spam})=\\frac12$ ; détection d'un spam : $\\frac45$ ; fausse détection : $\\frac1{10}$. Un message est détecté : probabilité que ce soit un spam ?",
+       "ans": "Rational(8,9)",
+       "sol": "$P(D)=\\frac25+\\frac1{20}=\\frac9{20}$ ; $P_D(S)=\\frac{8/20}{9/20}=\\frac89$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "c6",
+     "enonce": "$P(A)=\\frac12$, $P(B)=\\frac13$, $P(A\\cap B)=\\frac16$. Calculer $P(A\\cup B)$.",
+     "ans": "Rational(2,3)",
+     "sol": "$P(A\\cup B)=P(A)+P(B)-P(A\\cap B)=\\frac12+\\frac13-\\frac16=\\frac23$.",
+     "variants": [
+      {
+       "enonce": "$P(A)=\\frac25$, $P(B)=\\frac12$, $P(A\\cap B)=\\frac1{10}$. Calculer $P(A\\cup B)$.",
+       "ans": "Rational(4,5)",
+       "sol": "$\\frac25+\\frac12-\\frac1{10}=\\frac45$."
+      }
+     ],
+     "formules": "$P(B)=P(A)P_A(B)+P(\\bar A)P_{\\bar A}(B)$ · $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}$ · $P(A\\cap B)=P(A)P(B)$ si indépendants",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Rappel S1 : espérance et variance d'une variable finie",
+   "notions": [
+    "esp"
+   ],
+   "exos": [
+    {
+     "id": "e1",
+     "enonce": "$X(\\Omega)=\\{0,2,3\\}$, $P(X=0)=\\frac12$, $P(X=2)=\\frac3{10}$, $P(X=3)=\\frac15$. Calculer $E(X)$.",
+     "ans": "Rational(6,5)",
+     "sol": "$E(X)=0\\times\\frac12+2\\times\\frac3{10}+3\\times\\frac15=\\frac35+\\frac35=\\frac65$.",
+     "variants": [
+      {
+       "enonce": "$X(\\Omega)=\\{1,2,4\\}$, $P(X=1)=\\frac12$, $P(X=2)=\\frac14$, $P(X=4)=\\frac14$. Calculer $E(X)$.",
+       "ans": "2",
+       "sol": "$\\frac12+\\frac12+1=2$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e2",
+     "enonce": "Même variable $X$. Calculer $V(X)$.",
+     "ans": "Rational(39,25)",
+     "sol": "$E(X^2)=4\\times\\frac3{10}+9\\times\\frac15=3$, donc $V(X)=3-\\left(\\frac65\\right)^2=3-\\frac{36}{25}=\\frac{39}{25}$.",
+     "variants": [
+      {
+       "enonce": "Même loi ($X(\\Omega)=\\{1,2,4\\}$, probabilités $\\frac12,\\frac14,\\frac14$). Calculer $V(X)$.",
+       "ans": "Rational(3,2)",
+       "sol": "$E(X^2)=\\frac12+1+4=\\frac{11}2$ et $V=\\frac{11}2-4=\\frac32$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e3",
+     "enonce": "$Y$ suit la loi binomiale $B\\left(10,\\frac3{10}\\right)$. Calculer $E(Y)$.",
+     "ans": "3",
+     "sol": "$E(Y)=np=10\\times\\frac3{10}=3$.",
+     "variants": [
+      {
+       "enonce": "$Y\\sim B\\left(20,\\frac15\\right)$. Calculer $E(Y)$.",
+       "ans": "4",
+       "sol": "$np=4$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e4",
+     "enonce": "$Y$ suit la loi binomiale $B\\left(20,\\frac1{10}\\right)$. Calculer $V(Y)$.",
+     "ans": "Rational(9,5)",
+     "sol": "$V(Y)=np(1-p)=20\\times\\frac1{10}\\times\\frac9{10}=\\frac95$.",
+     "variants": [
+      {
+       "enonce": "$Y\\sim B\\left(15,\\frac13\\right)$. Calculer $V(Y)$.",
+       "ans": "Rational(10,3)",
+       "sol": "$np(1-p)=15\\times\\frac13\\times\\frac23=\\frac{10}3$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e5",
+     "enonce": "$E(X)=\\frac65$. Calculer $E(2X+3)$.",
+     "ans": "Rational(27,5)",
+     "sol": "$E(2X+3)=2E(X)+3=\\frac{12}5+3=\\frac{27}5$.",
+     "variants": [
+      {
+       "enonce": "$E(X)=2$. Calculer $E(3X-1)$.",
+       "ans": "5",
+       "sol": "$3\\times2-1=5$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "e6",
+     "enonce": "$V(X)=\\frac{39}{25}$. Calculer $V(3X-1)$.",
+     "ans": "Rational(351,25)",
+     "sol": "$V(3X-1)=3^2V(X)=9\\times\\frac{39}{25}=\\frac{351}{25}$.",
+     "variants": [
+      {
+       "enonce": "$V(X)=\\frac32$. Calculer $V(2X+5)$.",
+       "ans": "6",
+       "sol": "$2^2\\times\\frac32=6$."
+      }
+     ],
+     "formules": "$E(X)=\\sum x_kp_k$ · $V(X)=E(X^2)-E(X)^2$ · $E(aX+b)=aE(X)+b$ · $V(aX+b)=a^2V(X)$ · $B(n,p)$ : $np$, $np(1-p)$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Rappel : séries géométrique et exponentielle",
+   "notions": [
+    "geomexp"
+   ],
+   "exos": [
+    {
+     "id": "g1",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(\\frac13\\right)^k$.",
+     "ans": "Rational(3,2)",
+     "sol": "$\\frac1{1-\\frac13}=\\frac32$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(\\frac25\\right)^k$.",
+       "ans": "Rational(5,3)",
+       "sol": "$\\frac1{1-\\frac25}=\\frac53$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g2",
+     "enonce": "Calculer $\\sum_{k=2}^{+\\infty}\\left(\\frac23\\right)^k$.",
+     "ans": "Rational(4,3)",
+     "sol": "Premier terme $\\left(\\frac23\\right)^2=\\frac49$, raison $\\frac23$ : $\\frac{4/9}{1/3}=\\frac43$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=2}^{+\\infty}\\left(\\frac12\\right)^k$.",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac{1/4}{1/2}=\\frac12$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g3",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\frac1{k!}$.",
+     "ans": "E",
+     "sol": "C'est $\\sum\\frac{x^k}{k!}=e^x$ en $x=1$ : la somme vaut $e$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\frac{2^k}{k!}$.",
+       "ans": "exp(2)",
+       "sol": "$e^x$ en $x=2$ : $e^2$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g4",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\frac{(-1)^k}{k!}$.",
+     "ans": "exp(-1)",
+     "sol": "C'est $e^x$ en $x=-1$ : $e^{-1}$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\frac{(-2)^k}{k!}$.",
+       "ans": "exp(-2)",
+       "sol": "$e^x$ en $x=-2$ : $e^{-2}$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g5",
+     "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(-\\frac12\\right)^k$.",
+     "ans": "Rational(2,3)",
+     "sol": "$|q|=\\frac12 < 1$ : $\\frac1{1-\\left(-\\frac12\\right)}=\\frac1{3/2}=\\frac23$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{+\\infty}\\left(-\\frac13\\right)^k$.",
+       "ans": "Rational(3,4)",
+       "sol": "$\\frac1{1+\\frac13}=\\frac34$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "g6",
+     "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac1{k!}$.",
+     "ans": "E-1",
+     "sol": "On retire le terme $k=0$ (qui vaut $1$) de $\\sum_{k\\ge0}\\frac1{k!}=e$ : $e-1$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{+\\infty}\\frac{2^k}{k!}$.",
+       "ans": "exp(2)-1",
+       "sol": "$e^2-1$."
+      }
+     ],
+     "formules": "$\\sum_{k\\ge0}q^k=\\frac1{1-q}$ · $\\sum_{k\\ge0}\\frac{x^k}{k!}=e^x$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Fonction génératrice d'une variable finie",
+   "notions": [
+    "gfin"
+   ],
+   "exos": [
+    {
+     "id": "f1",
+     "enonce": "$X(\\Omega)=\\{1,2,3\\}$, $P(X=1)=\\frac12$, $P(X=2)=\\frac25$, $P(X=3)=\\frac1{10}$. Calculer $G_X(2)=E(2^X)$.",
+     "ans": "Rational(17,5)",
+     "sol": "$G_X(t)=\\frac12t+\\frac25t^2+\\frac1{10}t^3$, donc $G_X(2)=1+\\frac85+\\frac45=\\frac{17}5$.",
+     "variants": [
+      {
+       "enonce": "$X(\\Omega)=\\{0,1,2\\}$, $P(X=0)=\\frac14$, $P(X=1)=\\frac12$, $P(X=2)=\\frac14$. Calculer $G_X(3)=E(3^X)$.",
+       "ans": "4",
+       "sol": "$\\frac14+\\frac32+\\frac94=4$ (c'est $\\left(\\frac{1+3}2\\right)^2$)."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f2",
+     "enonce": "$G_X(t)=a(2t+1)^2$ est la fonction génératrice d'une variable $X$. Déterminer $a$.",
+     "ans": "Rational(1,9)",
+     "sol": "$G_X(1)=1$ donne $a\\times3^2=1$, donc $a=\\frac19$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=a(t+3)^2$. Déterminer $a$.",
+       "ans": "Rational(1,16)",
+       "sol": "$G_X(1)=a\\times16=1$, $a=\\frac1{16}$."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f3",
+     "enonce": "$G_X(t)=\\frac{(1+t)^3}8$. Calculer $P(X=2)$.",
+     "ans": "Rational(3,8)",
+     "sol": "$(1+t)^3=1+3t+3t^2+t^3$ : le coefficient de $t^2$ de $G_X$ est $\\frac38$, donc $P(X=2)=\\frac38$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac{(1+3t)^2}{16}$. Calculer $P(X=1)$.",
+       "ans": "Rational(3,8)",
+       "sol": "$(1+3t)^2=1+6t+9t^2$ : $\\frac6{16}=\\frac38$."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f4",
+     "enonce": "$G_X(t)=\\frac{(1+t^2)^2}4$. Calculer $P(X=2)$.",
+     "ans": "Rational(1,2)",
+     "sol": "$(1+t^2)^2=1+2t^2+t^4$ : le coefficient de $t^2$ de $G_X$ est $\\frac24=\\frac12$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac{(1+t^2)^2}4$. Calculer $P(X=4)$.",
+       "ans": "Rational(1,4)",
+       "sol": "$(1+t^2)^2=1+2t^2+t^4$ : coefficient de $t^4$ : $\\frac14$."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f5",
+     "enonce": "$G_X(t)=\\frac{(2+t)^3}{27}$. Calculer $P(X=0)$.",
+     "ans": "Rational(8,27)",
+     "sol": "$P(X=0)=G_X(0)=\\frac{2^3}{27}=\\frac8{27}$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac{(1+2t)^2}9$. Calculer $P(X=0)$.",
+       "ans": "Rational(1,9)",
+       "sol": "$G_X(0)=\\frac19$."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f6",
+     "enonce": "$X(\\Omega)=\\{0,1,2\\}$, $P(X=0)=\\frac12$, $P(X=1)=\\frac13$, $P(X=2)=\\frac16$. Calculer $G_X(-1)$.",
+     "ans": "Rational(1,3)",
+     "sol": "$G_X(-1)=P(X=0)-P(X=1)+P(X=2)=\\frac12-\\frac13+\\frac16=\\frac13$ (c'est $P(X\\text{ pair})-P(X\\text{ impair})$).",
+     "variants": [
+      {
+       "enonce": "$X(\\Omega)=\\{0,1,2\\}$, probabilités $\\frac14,\\frac14,\\frac12$. Calculer $G_X(-1)$.",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac14-\\frac14+\\frac12=\\frac12$."
+      }
+     ],
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "f7",
+     "enonce": "Soit $X$ une variable aléatoire finie entière. Pourquoi $G_X(1)=1$ ? Pourquoi $X$ et $Y$ de même fonction génératrice ont-elles la même loi ?",
+     "sol": "$G_X(1)=\\sum_{k=0}^nP(X=k)\\times1^k=\\sum_kP(X=k)=P(\\Omega)=1$. Si $G_X=G_Y$ (pour $X(\\Omega),Y(\\Omega)\\subset[\\![0,n]\\!]$), ce sont deux polynômes égaux, donc ils ont les mêmes coefficients : $P(X=k)=P(Y=k)$ pour tout $k\\in[\\![0,n]\\!]$, donc la même loi.",
+     "duree": 4,
+     "formules": "$G_X(t)=\\sum P(X=k)t^k$ · $G_X(1)=1$ · $G_X(0)=P(X=0)$ · $G_X(-1)=P(\\text{pair})-P(\\text{impair})$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Espérance et variance par $G_X'(1)$ et $G_X''(1)$",
+   "notions": [
+    "gderiv"
+   ],
+   "exos": [
+    {
+     "id": "d1",
+     "enonce": "$G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$. Calculer $E(X)=G_X'(1)$.",
+     "ans": "Rational(6,5)",
+     "sol": "$G_X'(t)=\\frac35t+\\frac35t^2$, donc $E(X)=G_X'(1)=\\frac65$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac13\\left(1+t+t^4\\right)$. Calculer $E(X)$.",
+       "ans": "Rational(5,3)",
+       "sol": "$G'(t)=\\frac13(1+4t^3)$ : $G'(1)=\\frac53$."
+      }
+     ],
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d2",
+     "enonce": "Même $G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$. Calculer $V(X)$ avec $V=G''(1)+G'(1)-G'(1)^2$.",
+     "ans": "Rational(39,25)",
+     "sol": "$G''(t)=\\frac35+\\frac65t$, donc $G''(1)=\\frac95$ et $G'(1)=\\frac65$. $V=\\frac95+\\frac65-\\frac{36}{25}=3-\\frac{36}{25}=\\frac{39}{25}$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac13\\left(1+t+t^4\\right)$. Calculer $V(X)$.",
+       "ans": "Rational(26,9)",
+       "sol": "$G''(1)=\\frac{12}3=4$, $G'(1)=\\frac53$ : $V=4+\\frac53-\\frac{25}9=\\frac{36+15-25}9=\\frac{26}9$."
+      }
+     ],
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d3",
+     "enonce": "$G_X(t)=\\left(\\frac{1+t}2\\right)^4$. Calculer $E(X)$.",
+     "ans": "2",
+     "sol": "$G_X'(t)=4\\times\\frac12\\left(\\frac{1+t}2\\right)^3$, donc $G_X'(1)=2$ (c'est $B\\left(4,\\frac12\\right)$ : $np=2$).",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\left(\\frac{1+2t}3\\right)^3$. Calculer $E(X)$.",
+       "ans": "2",
+       "sol": "$G'(1)=3\\times\\frac23=2$ ($B\\left(3,\\frac23\\right)$)."
+      }
+     ],
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d4",
+     "enonce": "$G_X(t)=\\left(\\frac{1+2t}3\\right)^5$. Calculer $V(X)$.",
+     "ans": "Rational(10,9)",
+     "sol": "$G'(1)=5\\times\\frac23=\\frac{10}3$, $G''(1)=20\\times\\frac49=\\frac{80}9$. $V=\\frac{80}9+\\frac{10}3-\\frac{100}9=\\frac{80+30-100}9=\\frac{10}9$ (loi $B\\left(5,\\frac23\\right)$ : $5\\times\\frac23\\times\\frac13$).",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\left(\\frac{1+t}2\\right)^6$. Calculer $V(X)$.",
+       "ans": "Rational(3,2)",
+       "sol": "$G''(1)=30\\times\\frac14=\\frac{15}2$, $G'(1)=3$ : $V=\\frac{15}2+3-9=\\frac32$."
+      }
+     ],
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d5",
+     "enonce": "$Y=X+3$ avec $G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$. Calculer $E(Y)$ à l'aide de $G_Y(t)=t^3G_X(t)$.",
+     "ans": "Rational(21,5)",
+     "sol": "$G_Y'(t)=3t^2G_X(t)+t^3G_X'(t)$, donc $G_Y'(1)=3G_X(1)+G_X'(1)=3+\\frac65=\\frac{21}5$ (on retrouve $E(X)+3$).",
+     "variants": [
+      {
+       "enonce": "$Y=X+2$ avec $G_X(t)=\\frac13\\left(1+t+t^4\\right)$. Calculer $E(Y)$ par $G_Y(t)=t^2G_X(t)$.",
+       "ans": "Rational(11,3)",
+       "sol": "$G_Y'(1)=2G_X(1)+G_X'(1)=2+\\frac53=\\frac{11}3$."
+      }
+     ],
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "d6",
+     "enonce": "Montrer que $G_X'(1)=E(X)$ et $G_X''(1)=E(X^2)-E(X)$, puis que $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$.",
+     "sol": "$G_X(t)=\\sum_{k=0}^np_kt^k$, donc $G_X'(t)=\\sum kp_kt^{k-1}$ et $G_X'(1)=\\sum kp_k=E(X)$. $G_X''(t)=\\sum k(k-1)p_kt^{k-2}$ donc $G_X''(1)=\\sum(k^2-k)p_k=E(X^2)-E(X)$. D'où $E(X^2)=G''(1)+G'(1)$ et $V(X)=E(X^2)-E(X)^2=G''(1)+G'(1)-G'(1)^2$.",
+     "duree": 5,
+     "formules": "$E(X)=G_X'(1)$ · $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ · $G_{X+a}(t)=t^aG_X(t)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Somme de variables indépendantes : $G_{X+Y}=G_XG_Y$",
+   "notions": [
+    "gsomme"
+   ],
+   "exos": [
+    {
+     "id": "s1",
+     "enonce": "$X$ et $Y$ indépendantes, $G_X(t)=\\frac12+\\frac t2$ et $G_Y(t)=\\frac13+\\frac{2t}3$. Calculer $P(X+Y=1)$.",
+     "ans": "Rational(1,2)",
+     "sol": "$G_{X+Y}(t)=\\left(\\frac12+\\frac t2\\right)\\left(\\frac13+\\frac{2t}3\\right)=\\frac16+\\frac12t+\\frac13t^2$ : $P(X+Y=1)=\\frac12$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac14+\\frac{3t}4$ et $G_Y(t)=\\frac13+\\frac{2t}3$ (indépendantes). Calculer $P(X+Y=1)$.",
+       "ans": "Rational(5,12)",
+       "sol": "$\\frac14\\times\\frac23+\\frac34\\times\\frac13=\\frac16+\\frac14=\\frac5{12}$."
+      }
+     ],
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s2",
+     "enonce": "$X$ et $Y$ indépendantes, $G_X(t)=\\frac12+\\frac25t+\\frac1{10}t^2$ et $G_Y(t)=\\frac12+\\frac12t$. Calculer $P(X+Y=2)$.",
+     "ans": "Rational(1,4)",
+     "sol": "Coefficient de $t^2$ du produit : $\\frac25\\times\\frac12+\\frac1{10}\\times\\frac12=\\frac15+\\frac1{20}=\\frac14$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac15+\\frac35t+\\frac15t^2$ et $G_Y(t)=\\frac12+\\frac12t$ (indépendantes). Calculer $P(X+Y=2)$.",
+       "ans": "Rational(2,5)",
+       "sol": "$\\frac35\\times\\frac12+\\frac15\\times\\frac12=\\frac25$."
+      }
+     ],
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s3",
+     "enonce": "$X$ et $X'$ sont indépendantes de même loi de Bernoulli de paramètre $\\frac25$. Calculer $P(X+X'=1)$.",
+     "ans": "Rational(12,25)",
+     "sol": "$G_{X+X'}(t)=\\left(\\frac35+\\frac25t\\right)^2=\\frac9{25}+\\frac{12}{25}t+\\frac4{25}t^2$ : $P(X+X'=1)=\\frac{12}{25}$.",
+     "variants": [
+      {
+       "enonce": "$X,X'$ indépendantes de Bernoulli de paramètre $\\frac13$. Calculer $P(X+X'=1)$.",
+       "ans": "Rational(4,9)",
+       "sol": "$2\\times\\frac23\\times\\frac13=\\frac49$."
+      }
+     ],
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s4",
+     "enonce": "Trois variables de Bernoulli indépendantes de paramètre $\\frac1{10}$ ont pour somme $S$. Calculer $P(S=0)$.",
+     "ans": "Rational(729,1000)",
+     "sol": "$G_S(t)=\\left(\\frac9{10}+\\frac t{10}\\right)^3$ : $P(S=0)=G_S(0)=\\left(\\frac9{10}\\right)^3=\\frac{729}{1000}$.",
+     "variants": [
+      {
+       "enonce": "Trois Bernoulli indépendantes de paramètre $\\frac15$, de somme $S$. Calculer $P(S=0)$.",
+       "ans": "Rational(64,125)",
+       "sol": "$\\left(\\frac45\\right)^3=\\frac{64}{125}$."
+      }
+     ],
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s5",
+     "enonce": "$X$ et $Y$ indépendantes, $G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$ et $G_Y(t)=\\frac13+\\frac{2t}3$. Calculer $E(X+Y)$ par $(G_XG_Y)'(1)$.",
+     "ans": "Rational(28,15)",
+     "sol": "$(G_XG_Y)'(1)=G_X'(1)G_Y(1)+G_X(1)G_Y'(1)=\\frac65\\times1+1\\times\\frac23=\\frac{28}{15}$ (c'est $E(X)+E(Y)$).",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac{1+t}2$ et $G_Y(t)=\\frac{1+t+t^2}3$ (indépendantes). Calculer $E(X+Y)$ par $(G_XG_Y)'(1)$.",
+       "ans": "Rational(3,2)",
+       "sol": "$G_X'(1)=\\frac12$, $G_Y'(1)=1$ : somme $\\frac32$."
+      }
+     ],
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "s6",
+     "enonce": "$X$ est de Bernoulli de paramètre $\\frac25$, $X'$ est indépendante de $X$ et de même loi. $Y=2X$ et $Z=X+X'$ : ont-elles la même loi ? Expliquer.",
+     "sol": "$Y(\\Omega)=\\{0,2\\}$ avec $P(Y=0)=\\frac35$, $P(Y=2)=\\frac25$ : $G_Y(t)=\\frac35+\\frac25t^2$. $Z$ est la somme de deux variables indépendantes : $G_Z(t)=\\left(\\frac35+\\frac25t\\right)^2=\\frac9{25}+\\frac{12}{25}t+\\frac4{25}t^2$, donc $Z(\\Omega)=\\{0,1,2\\}$ avec $P(Z=1)=\\frac{12}{25}\\ne0=P(Y=1)$. Les fonctions génératrices diffèrent : les lois sont différentes. $X+X=2X$ n'est pas une somme de variables indépendantes, la formule $G_{X+Y}=G_XG_Y$ ne s'applique pas.",
+     "duree": 5,
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "type": "open"
+    },
+    {
+     "id": "s7",
+     "enonce": "Démontrer que, si $X$ et $Y$ sont indépendantes (valeurs dans $[\\![0,n]\\!]$ et $[\\![0,m]\\!]$), alors $G_{X+Y}=G_XG_Y$.",
+     "sol": "Pour $k\\in[\\![0,n+m]\\!]$ : $P(X+Y=k)=\\sum_{i+j=k}P(X=i\\text{ et }Y=j)=\\sum_{i+j=k}P(X=i)P(Y=j)$ par indépendance. C'est le coefficient de $t^k$ dans le produit $\\left(\\sum_iP(X=i)t^i\\right)\\left(\\sum_jP(Y=j)t^j\\right)$, en regroupant les termes $t^it^j=t^{i+j}$. Donc $G_{X+Y}(t)=\\sum_kP(X+Y=k)t^k=G_X(t)G_Y(t)$.",
+     "duree": 6,
+     "formules": "$G_{X+Y}=G_XG_Y$ (indépendantes) · coefficient de $t^k$ : $\\sum_{i+j=k}p_iq_j$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Loi binomiale par la fonction génératrice",
+   "notions": [
+    "gsomme",
+    "gderiv"
+   ],
+   "exos": [
+    {
+     "id": "b1",
+     "enonce": "$Y$ suit la loi binomiale $B\\left(5,\\frac15\\right)$ de fonction génératrice $\\left(\\frac45+\\frac t5\\right)^5$. Calculer $P(Y=2)$ comme coefficient de $t^2$.",
+     "ans": "Rational(128,625)",
+     "sol": "$\\binom52\\left(\\frac15\\right)^2\\left(\\frac45\\right)^3=10\\times\\frac{64}{3125}=\\frac{128}{625}$.",
+     "variants": [
+      {
+       "enonce": "$Y\\sim B\\left(4,\\frac12\\right)$ de fonction génératrice $\\left(\\frac{1+t}2\\right)^4$. Calculer $P(Y=1)$.",
+       "ans": "Rational(1,4)",
+       "sol": "$\\binom41\\frac1{16}=\\frac14$."
+      }
+     ],
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b2",
+     "enonce": "$Y$ de fonction génératrice $\\left(\\frac34+\\frac t4\\right)^{12}$. Calculer $E(Y)=G_Y'(1)$.",
+     "ans": "3",
+     "sol": "$G_Y'(t)=12\\times\\frac14\\left(\\frac34+\\frac t4\\right)^{11}$, donc $G_Y'(1)=3=np$.",
+     "variants": [
+      {
+       "enonce": "$Y$ de fonction génératrice $\\left(\\frac13+\\frac{2t}3\\right)^9$. Calculer $E(Y)$.",
+       "ans": "6",
+       "sol": "$9\\times\\frac23=6$."
+      }
+     ],
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b3",
+     "enonce": "Même $Y$ ($G_Y(t)=\\left(\\frac34+\\frac t4\\right)^{12}$). Calculer $V(Y)$ avec $G''(1)+G'(1)-G'(1)^2$.",
+     "ans": "Rational(9,4)",
+     "sol": "$G''(1)=12\\times11\\times\\frac1{16}=\\frac{33}4$. $V=\\frac{33}4+3-9=\\frac94=np(1-p)$.",
+     "variants": [
+      {
+       "enonce": "$Y$ de fonction génératrice $\\left(\\frac13+\\frac{2t}3\\right)^9$. Calculer $V(Y)$.",
+       "ans": "2",
+       "sol": "$G''(1)=72\\times\\frac49=32$ ; $V=32+6-36=2=9\\times\\frac23\\times\\frac13$."
+      }
+     ],
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b4",
+     "enonce": "Un OCR se trompe avec la probabilité $\\frac1{100}$ sur chaque courrier, indépendamment. Sur $10$ courriers, probabilité d'au moins une erreur ?",
+     "ans": "1-Rational(99,100)**10",
+     "sol": "$Y\\sim B\\left(10,\\frac1{100}\\right)$ : $P(Y\\ge1)=1-P(Y=0)=1-G_Y(0)=1-\\left(\\frac{99}{100}\\right)^{10}$.",
+     "variants": [
+      {
+       "enonce": "Sur chaque email un antispam se trompe avec la probabilité $\\frac1{50}$ (indépendamment). Sur $20$ emails, probabilité d'au moins une erreur ?",
+       "ans": "1-Rational(49,50)**20",
+       "sol": "$1-\\left(\\frac{49}{50}\\right)^{20}$."
+      }
+     ],
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b5",
+     "enonce": "$X\\sim B\\left(3,\\frac12\\right)$ et $Y\\sim B\\left(4,\\frac12\\right)$ sont indépendantes. Calculer $P(X+Y=3)$.",
+     "ans": "Rational(35,128)",
+     "sol": "$G_{X+Y}(t)=\\left(\\frac{1+t}2\\right)^7$ : $B\\left(7,\\frac12\\right)$, $P(X+Y=3)=\\binom73\\frac1{2^7}=\\frac{35}{128}$.",
+     "variants": [
+      {
+       "enonce": "$X\\sim B\\left(2,\\frac13\\right)$ et $Y\\sim B\\left(3,\\frac13\\right)$ indépendantes. Calculer $P(X+Y=2)$.",
+       "ans": "Rational(80,243)",
+       "sol": "$X+Y\\sim B\\left(5,\\frac13\\right)$ : $\\binom52\\frac1{9}\\times\\frac8{27}=\\frac{80}{243}$."
+      }
+     ],
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "b6",
+     "enonce": "Soit $X\\sim B(n,p)$ et $Y\\sim B(m,p)$ indépendantes. Quelle est la loi de $X+Y$ ?",
+     "sol": "$G_X(t)=(1-p+pt)^n$ et $G_Y(t)=(1-p+pt)^m$. Par indépendance, $G_{X+Y}(t)=(1-p+pt)^{n+m}$, qui est la fonction génératrice de $B(n+m,p)$. La fonction génératrice caractérisant la loi, $X+Y\\sim B(n+m,p)$.",
+     "duree": 4,
+     "formules": "$B(n,p)$ : $G=(1-p+pt)^n$ · $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ · $G_{X+Y}=G_XG_Y$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Rayon de convergence et règle de d'Alembert",
+   "notions": [
+    "rayon"
+   ],
+   "exos": [
+    {
+     "id": "r1",
+     "enonce": "Rayon de convergence de $\\sum\\frac{x^n}{2^n}$ ($R=\\lim\\left|\\frac{a_n}{a_{n+1}}\\right|$) ?",
+     "ans": "2",
+     "sol": "$a_n=\\frac1{2^n}$, $\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac12\\to\\frac12$ : $R=2$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum\\frac{x^n}{5^n}$ ?",
+       "ans": "5",
+       "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac15$ : $R=5$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r2",
+     "enonce": "Rayon de convergence de $\\sum\\frac{n}{3^n}x^n$ ?",
+     "ans": "3",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{n+1}{3n}\\to\\frac13$ : $R=3$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum\\frac{n+1}{4^n}x^n$ ?",
+       "ans": "4",
+       "sol": "$\\frac{n+2}{4(n+1)}\\to\\frac14$ : $R=4$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r3",
+     "enonce": "Rayon de convergence de $\\sum\\frac{x^n}{n!}$ ?",
+     "ans": "oo",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac1{n+1}\\to0$ : $R=+\\infty$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum\\frac{2^n}{n!}x^n$ ?",
+       "ans": "oo",
+       "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac2{n+1}\\to0$ : $R=+\\infty$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r4",
+     "enonce": "Rayon de convergence de $\\sum n!\\,x^n$ ?",
+     "ans": "0",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=n+1\\to+\\infty$ : $R=0$ (la série ne converge qu'en $x=0$).",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum(n!)^2x^n$ ?",
+       "ans": "0",
+       "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=(n+1)^2\\to+\\infty$ : $R=0$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r5",
+     "enonce": "Rayon de convergence de $\\sum\\frac{(n!)^2}{(2n)!}x^n$ ?",
+     "ans": "4",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{(n+1)^2}{(2n+1)(2n+2)}=\\frac{n+1}{2(2n+1)}\\to\\frac14$ : $R=4$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum\\binom{2n}nx^n$ ?",
+       "ans": "Rational(1,4)",
+       "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{(2n+1)(2n+2)}{(n+1)^2}=\\frac{2(2n+1)}{n+1}\\to4$ : $R=\\frac14$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r6",
+     "enonce": "Rayon de convergence de $\\sum(-1)^nnx^n$ ?",
+     "ans": "1",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{n+1}n\\to1$ : $R=1$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum\\frac{(-2)^n}nx^n$ ?",
+       "ans": "Rational(1,2)",
+       "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{2n}{n+1}\\to2$ : $R=\\frac12$."
+      }
+     ],
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "r7",
+     "enonce": "Rayon de convergence de $\\sum\\frac{x^n}n$ ? Nature de la série en $x=R$ et en $x=-R$ ?",
+     "sol": "$\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac n{n+1}\\to1$ : $R=1$. En $x=1$ on trouve la série harmonique $\\sum\\frac1n$ qui diverge ; en $x=-1$ la série $\\sum\\frac{(-1)^n}n$ converge (série alternée). Aucun théorème ne donne la nature en $\\pm R$ : domaine de convergence $[-1,1[$.",
+     "duree": 5,
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "type": "open"
+    },
+    {
+     "id": "r8",
+     "enonce": "Rayon de convergence de $\\sum\\cos(n)\\,x^n$ ?",
+     "sol": "Pour $|x| < 1$ : $|\\cos(n)x^n|\\le|x|^n$ et $\\sum|x|^n$ converge, donc la série converge absolument : $R\\ge1$. Pour $|x| > 1$ : $\\cos n$ ne tend pas vers $0$ (sinon $\\cos 2n=2\\cos^2n-1\\to-1$, absurde car $(\\cos 2n)$ est une suite extraite de $(\\cos n)$ qui tendrait vers $0$). Il existe donc $\\varepsilon > 0$ avec $|\\cos n|\\ge\\varepsilon$ pour une infinité de $n$, et alors $|\\cos(n)x^n|\\ge\\varepsilon|x|^n\\to+\\infty$ sur ces $n$ : le terme général ne tend pas vers $0$, la série diverge. Donc $R=1$ (d'Alembert ne s'applique pas : $\\cos n$ s'annule presque).",
+     "duree": 8,
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · pas de théorème en $x=\\pm R$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Séries géométriques en $x$ : somme et rayon",
+   "notions": [
+    "sgeo",
+    "rayon"
+   ],
+   "exos": [
+    {
+     "id": "q1",
+     "enonce": "Calculer $f(1)$ pour $f(x)=\\sum_{n=0}^{+\\infty}\\frac{x^n}{2^n}$ (rayon $2$).",
+     "ans": "2",
+     "sol": "$f(x)=\\frac1{1-x/2}=\\frac2{2-x}$ pour $|x| < 2$ : $f(1)=2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $f(2)$ pour $f(x)=\\sum\\frac{x^n}{3^n}$ (rayon $3$).",
+       "ans": "3",
+       "sol": "$f(x)=\\frac3{3-x}$ : $f(2)=3$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q2",
+     "enonce": "Calculer $f\\left(\\frac12\\right)$ pour $f(x)=\\sum_{n=0}^{+\\infty}\\left(-\\frac12\\right)^nx^n$.",
+     "ans": "Rational(4,5)",
+     "sol": "$f(x)=\\frac1{1+x/2}$ ($R=2$) : $f\\left(\\frac12\\right)=\\frac1{1+\\frac14}=\\frac45$.",
+     "variants": [
+      {
+       "enonce": "Calculer $f(1)$ pour $f(x)=\\sum\\left(-\\frac12\\right)^nx^n$.",
+       "ans": "Rational(2,3)",
+       "sol": "$f(1)=\\frac1{1+\\frac12}=\\frac23$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q3",
+     "enonce": "Calculer $f\\left(\\frac14\\right)$ pour $f(x)=\\sum_{n=0}^{+\\infty}(-2)^nx^n$.",
+     "ans": "Rational(2,3)",
+     "sol": "$f(x)=\\frac1{1+2x}$ ($R=\\frac12$) : $f\\left(\\frac14\\right)=\\frac1{1+\\frac12}=\\frac23$.",
+     "variants": [
+      {
+       "enonce": "Calculer $f\\left(\\frac16\\right)$ pour $f(x)=\\sum3^nx^n$.",
+       "ans": "2",
+       "sol": "$f(x)=\\frac1{1-3x}$ : $f\\left(\\frac16\\right)=\\frac1{1/2}=2$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q4",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}n\\left(\\frac12\\right)^n$.",
+     "ans": "2",
+     "sol": "$\\sum_{n\\ge1}nx^n=x\\sum nx^{n-1}=\\frac x{(1-x)^2}$ pour $|x| < 1$ : en $x=\\frac12$, $\\frac{1/2}{1/4}=2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}n\\left(\\frac13\\right)^n$.",
+       "ans": "Rational(3,4)",
+       "sol": "$\\frac x{(1-x)^2}=\\frac{1/3}{4/9}=\\frac34$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q5",
+     "enonce": "Calculer $\\sum_{n=0}^{+\\infty}(n+1)\\left(\\frac12\\right)^n$.",
+     "ans": "4",
+     "sol": "$\\sum(n+1)x^n=\\frac1{(1-x)^2}$ : en $x=\\frac12$, $\\frac1{1/4}=4$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=0}^{+\\infty}(n+1)\\left(\\frac13\\right)^n$.",
+       "ans": "Rational(9,4)",
+       "sol": "$\\frac1{(1-x)^2}=\\frac1{4/9}=\\frac94$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "q6",
+     "enonce": "Rayon de convergence de $\\sum\\left(-\\frac12\\right)^nx^{2n}$ ?",
+     "ans": "sqrt(2)",
+     "sol": "C'est une série géométrique de raison $-\\frac{x^2}2$ : elle converge si $\\frac{x^2}2 < 1$, soit $|x| < \\sqrt2$ : $R=\\sqrt2$.",
+     "variants": [
+      {
+       "enonce": "Rayon de convergence de $\\sum3^nx^{2n}$ ?",
+       "ans": "sqrt(3)/3",
+       "sol": "Raison $3x^2$ : converge si $3x^2 < 1$, soit $|x| < \\frac1{\\sqrt3}$ : $R=\\frac{\\sqrt3}3$."
+      }
+     ],
+     "formules": "$\\sum x^n=\\frac1{1-x}$ · $\\sum nx^{n-1}=\\frac1{(1-x)^2}$ · $\\sum(n+1)x^n=\\frac1{(1-x)^2}$ · $R=\\frac1{|q|}$ pour $\\sum q^nx^n$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Série exponentielle et changements d'indice",
+   "notions": [
+    "sexp"
+   ],
+   "exos": [
+    {
+     "id": "u1",
+     "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(3/2)^n\\,2^n}{n!}$ (c'est $\\sum\\frac{(2x)^n}{n!}$ en $x=\\frac32$).",
+     "ans": "exp(3)",
+     "sol": "$\\sum\\frac{(2x)^n}{n!}=e^{2x}$ : en $x=\\frac32$ on obtient $e^3$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(5/2)^n\\,2^n}{n!}$ (c'est $\\sum\\frac{(2x)^n}{n!}$ en $x=\\frac52$).",
+       "ans": "exp(5)",
+       "sol": "$\\sum\\frac{(2x)^n}{n!}=e^{2x}$ en $x=\\frac52$ : $e^5$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u2",
+     "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(-1)^n2^{2n}}{n!}$ (série $\\sum\\frac{(-1)^nx^{2n}}{n!}$ en $x=2$).",
+     "ans": "exp(-4)",
+     "sol": "$\\sum\\frac{(-1)^nx^{2n}}{n!}=\\sum\\frac{(-x^2)^n}{n!}=e^{-x^2}$ : en $x=2$, $e^{-4}$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(-1)^n3^{2n}}{n!}$.",
+       "ans": "exp(-9)",
+       "sol": "$e^{-x^2}$ en $x=3$ : $e^{-9}$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u3",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{2^n}{(n-1)!}$.",
+     "ans": "2*exp(2)",
+     "sol": "On pose $p=n-1$ : $\\sum_{p\\ge0}\\frac{2^{p+1}}{p!}=2e^2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{3^n}{(n-1)!}$.",
+       "ans": "3*exp(3)",
+       "sol": "$p=n-1$ : $3\\sum\\frac{3^p}{p!}=3e^3$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u4",
+     "enonce": "Calculer $\\sum_{n=3}^{+\\infty}\\frac{2^n}{(n-3)!}$.",
+     "ans": "8*exp(2)",
+     "sol": "On pose $p=n-3$ : $\\sum_{p\\ge0}\\frac{2^{p+3}}{p!}=2^3e^2=8e^2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=3}^{+\\infty}\\frac1{(n-3)!}$.",
+       "ans": "E",
+       "sol": "$p=n-3$ : $\\sum\\frac1{p!}=e$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u5",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{(-1)^n}{(n-1)!}$ (c'est $\\sum\\frac{(-1)^nx^{2n}}{(n-1)!}$ en $x=1$).",
+     "ans": "-exp(-1)",
+     "sol": "$p=n-1$ : $\\sum_{p\\ge0}\\frac{(-1)^{p+1}}{p!}=-e^{-1}$. En général : $\\sum_{n\\ge1}\\frac{(-1)^nx^{2n}}{(n-1)!}=-x^2e^{-x^2}$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{(-1)^n\\,4^n}{(n-1)!}$ (c'est $-x^2e^{-x^2}$ en $x=2$).",
+       "ans": "-4*exp(-4)",
+       "sol": "$p=n-1$ : $-4\\sum\\frac{(-4)^p}{p!}=-4e^{-4}$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "u6",
+     "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(n+1)}{n!}\\,2^n$.",
+     "ans": "3*exp(2)",
+     "sol": "$\\sum\\frac{n\\,2^n}{n!}=2\\sum_{n\\ge1}\\frac{2^{n-1}}{(n-1)!}=2e^2$ et $\\sum\\frac{2^n}{n!}=e^2$ : total $3e^2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(n+1)}{n!}\\,3^n$.",
+       "ans": "4*exp(3)",
+       "sol": "$\\sum\\frac{n3^n}{n!}=3e^3$ et $\\sum\\frac{3^n}{n!}=e^3$ : $4e^3$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}{n!}=e^x$ · changement d'indice $p=n-m$ · $\\sum\\frac{(-1)^nx^{2n}}{n!}=e^{-x^2}$",
+     "duree": 4,
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Dériver et intégrer terme à terme",
+   "notions": [
+    "sgeo"
+   ],
+   "exos": [
+    {
+     "id": "i1",
+     "enonce": "Coefficient de $x^3$ dans le développement en série entière de $\\ln(2-x)$ ?",
+     "ans": "Rational(-1,24)",
+     "sol": "$\\ln(2-x)=\\ln2+\\ln\\left(1-\\frac x2\\right)=\\ln2-\\sum_{n\\ge1}\\frac{x^n}{n\\,2^n}$ : pour $n=3$, $-\\frac1{3\\times8}=-\\frac1{24}$ (rayon $2$).",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^2$ dans la série entière de $\\ln(3-x)$ ?",
+       "ans": "Rational(-1,18)",
+       "sol": "$\\ln(3-x)=\\ln3-\\sum\\frac{x^n}{n\\,3^n}$ : $-\\frac1{2\\times9}=-\\frac1{18}$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i2",
+     "enonce": "Coefficient de $x^5$ dans le développement en série entière de $\\frac{x^3}{(2-x)^2}$ ?",
+     "ans": "Rational(3,16)",
+     "sol": "$\\frac1{(2-x)^2}=\\left(\\frac1{2-x}\\right)'=\\sum_{n\\ge1}\\frac{nx^{n-1}}{2^{n+1}}$ ; multiplié par $x^3$ : $\\sum\\frac{nx^{n+2}}{2^{n+1}}$, pour $n=3$ : $\\frac3{16}$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^4$ dans la série entière de $\\frac{x^2}{(3-x)^2}$ ?",
+       "ans": "Rational(1,27)",
+       "sol": "$\\frac1{(3-x)^2}=\\sum\\frac{nx^{n-1}}{3^{n+1}}$ ; avec $x^2$ : $x^{n+1}$, $n=3$ : $\\frac3{81}=\\frac1{27}$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i3",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}n^2\\left(\\frac12\\right)^n$.",
+     "ans": "6",
+     "sol": "$\\sum n^2x^n=x\\left(\\sum nx^n\\right)'=x\\left(\\frac x{(1-x)^2}\\right)'=\\frac{x(1+x)}{(1-x)^3}$ : en $x=\\frac12$, $\\frac{\\frac12\\times\\frac32}{\\frac18}=6$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}n^2\\left(\\frac13\\right)^n$.",
+       "ans": "Rational(3,2)",
+       "sol": "$\\frac{x(1+x)}{(1-x)^3}=\\frac{\\frac13\\times\\frac43}{\\frac8{27}}=\\frac32$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i4",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac1{n\\,2^n}$.",
+     "ans": "log(2)",
+     "sol": "$\\sum_{n\\ge1}\\frac{x^n}n=-\\ln(1-x)$ pour $|x| < 1$ : en $x=\\frac12$, $-\\ln\\frac12=\\ln2$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac1{n\\,3^n}$.",
+       "ans": "log(Rational(3,2))",
+       "sol": "$-\\ln\\left(1-\\frac13\\right)=\\ln\\frac32$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i5",
+     "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{(-1)^{n-1}}{n\\,2^n}$.",
+     "ans": "log(Rational(3,2))",
+     "sol": "$\\sum_{n\\ge1}\\frac{(-1)^{n-1}x^n}n=\\ln(1+x)$ pour $|x| < 1$ : en $x=\\frac12$, $\\ln\\frac32$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=1}^{+\\infty}\\frac{(-1)^{n-1}}{n\\,3^n}$.",
+       "ans": "log(Rational(4,3))",
+       "sol": "$\\ln\\left(1+\\frac13\\right)=\\ln\\frac43$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i6",
+     "enonce": "Coefficient de $x^4$ dans le développement de $\\frac1{(1-x)^3}$ ?",
+     "ans": "15",
+     "sol": "$\\frac1{(1-x)^3}=\\frac12\\left(\\frac1{1-x}\\right)''=\\frac12\\sum n(n-1)x^{n-2}=\\sum\\frac{(m+1)(m+2)}2x^m$ : pour $m=4$, $\\frac{5\\times6}2=15$.",
+     "variants": [
+      {
+       "enonce": "Coefficient de $x^6$ dans la série entière de $\\frac1{(1-x)^3}$ ?",
+       "ans": "28",
+       "sol": "$\\frac{(m+1)(m+2)}2$ pour $m=6$ : $\\frac{7\\times8}2=28$."
+      }
+     ],
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "i7",
+     "enonce": "Montrer que $\\frac1{(1-x)^2}=\\sum_{n=0}^{+\\infty}(n+1)x^n$ pour $|x| < 1$. Quel est le rayon de convergence ?",
+     "sol": "Pour $|x| < 1$, $\\frac1{1-x}=\\sum_{n\\ge0}x^n$ (rayon $1$). On dérive terme à terme (théorème de dérivation sur $]-1,1[$) : $\\frac1{(1-x)^2}=\\sum_{n\\ge1}nx^{n-1}=\\sum_{m\\ge0}(m+1)x^m$ avec $m=n-1$. Le rayon de convergence de la série dérivée est celui de la série initiale : $R=1$.",
+     "duree": 5,
+     "formules": "$\\sum\\frac{x^n}n=-\\ln(1-x)$ · $\\sum nx^n=\\frac x{(1-x)^2}$ · $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ · dérivation et intégration terme à terme",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Variable entière infinie : loi, espérance, variance",
+   "notions": [
+    "vinf"
+   ],
+   "exos": [
+    {
+     "id": "v1",
+     "enonce": "$P(X=n)=\\frac a{3^n}$ pour $n\\ge1$. Déterminer $a$.",
+     "ans": "2",
+     "sol": "$\\sum_{n\\ge1}\\frac1{3^n}=\\frac{1/3}{2/3}=\\frac12$ et la somme des probabilités vaut $1$ : $a\\times\\frac12=1$, $a=2$.",
+     "variants": [
+      {
+       "enonce": "$P(X=n)=\\frac a{4^n}$ pour $n\\ge1$. Déterminer $a$.",
+       "ans": "3",
+       "sol": "$\\sum_{n\\ge1}\\frac1{4^n}=\\frac13$ donc $a=3$."
+      }
+     ],
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "v2",
+     "enonce": "$P(X=n)=\\frac2{3^n}$ pour $n\\ge1$. Calculer $P(X\\ge3)$.",
+     "ans": "Rational(1,9)",
+     "sol": "$\\sum_{n\\ge3}\\frac2{3^n}=2\\times\\frac{1/27}{2/3}=\\frac19$.",
+     "variants": [
+      {
+       "enonce": "$P(X=n)=\\frac2{3^n}$ pour $n\\ge1$. Calculer $P(X\\ge2)$.",
+       "ans": "Rational(1,3)",
+       "sol": "$2\\times\\frac{1/9}{2/3}=\\frac13$."
+      }
+     ],
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "v3",
+     "enonce": "$P(X=n)=\\frac2{3^n}$ pour $n\\ge1$. Calculer $E(X)$.",
+     "ans": "Rational(3,2)",
+     "sol": "$E(X)=\\sum n\\frac2{3^n}=2\\times\\frac{1/3}{(1-1/3)^2}=2\\times\\frac34=\\frac32$ (avec $\\sum nx^n=\\frac x{(1-x)^2}$).",
+     "variants": [
+      {
+       "enonce": "$P(X=n)=\\frac1{2^n}$ pour $n\\ge1$. Calculer $E(X)$.",
+       "ans": "2",
+       "sol": "$\\frac{1/2}{(1/2)^2}=2$."
+      }
+     ],
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "v4",
+     "enonce": "$P(X=n)=\\frac2{3^n}$ pour $n\\ge1$. Calculer $V(X)$.",
+     "ans": "Rational(3,4)",
+     "sol": "$E(X^2)=2\\sum n^2\\frac1{3^n}=2\\times\\frac{x(1+x)}{(1-x)^3}\\Big|_{1/3}=2\\times\\frac{\\frac13\\times\\frac43}{\\frac8{27}}=3$. $V=3-\\frac94=\\frac34$.",
+     "variants": [
+      {
+       "enonce": "$P(X=n)=\\frac1{2^n}$ pour $n\\ge1$. Calculer $V(X)$.",
+       "ans": "2",
+       "sol": "$E(X^2)=6$, $E(X)=2$ : $V=6-4=2$."
+      }
+     ],
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "v5",
+     "enonce": "$P(X=n)=\\frac2{3^n}$ pour $n\\ge1$. Calculer $P(X\\text{ pair})$.",
+     "ans": "Rational(1,4)",
+     "sol": "$\\sum_{m\\ge1}\\frac2{3^{2m}}=2\\sum_{m\\ge1}\\left(\\frac19\\right)^m=2\\times\\frac{1/9}{8/9}=\\frac14$.",
+     "variants": [
+      {
+       "enonce": "$P(X=n)=\\frac1{2^n}$ pour $n\\ge1$. Calculer $P(X\\text{ pair})$.",
+       "ans": "Rational(1,3)",
+       "sol": "$\\sum_{m\\ge1}\\frac1{4^m}=\\frac13$."
+      }
+     ],
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "v6",
+     "enonce": "Soit $P(X=n)=\\frac1{n(n+1)}$ pour $n\\ge1$. Vérifier que c'est une loi. $X$ a-t-elle une espérance ?",
+     "sol": "$\\frac1{n(n+1)}=\\frac1n-\\frac1{n+1}$ (télescopique) donc $\\sum_{n=1}^N=1-\\frac1{N+1}\\to1$ : c'est bien une loi. Mais $nP(X=n)=\\frac1{n+1}$, terme général d'une série qui diverge (Riemann $\\alpha=1$) : $\\sum nP(X=n)$ diverge, $X$ n'a ni espérance ni variance.",
+     "duree": 6,
+     "formules": "$\\sum P(X=n)=1$ · $E(X)=\\sum nP(X=n)$ · $V(X)=E(X^2)-E(X)^2$ · $\\sum nx^n$, $\\sum n^2x^n$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Fonction génératrice d'une variable infinie",
+   "notions": [
+    "ginf"
+   ],
+   "exos": [
+    {
+     "id": "gi1",
+     "enonce": "$G_X(t)=\\frac a{1-t/2}$ est la fonction génératrice d'une variable entière. Déterminer $a$.",
+     "ans": "Rational(1,2)",
+     "sol": "$G_X(1)=1$ : $\\frac a{1-\\frac12}=2a=1$, $a=\\frac12$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac a{1-t/3}$. Déterminer $a$.",
+       "ans": "Rational(2,3)",
+       "sol": "$\\frac a{2/3}=1$ donc $a=\\frac23$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi2",
+     "enonce": "$G_X(t)=a\\,e^{3t}$ est la fonction génératrice d'une variable entière. Déterminer $a$.",
+     "ans": "exp(-3)",
+     "sol": "$G_X(1)=ae^3=1$ donc $a=e^{-3}$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=a\\,e^{5t}$. Déterminer $a$.",
+       "ans": "exp(-5)",
+       "sol": "$ae^5=1$ donc $a=e^{-5}$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi3",
+     "enonce": "$G_X(t)=\\frac1{2-t}$. Calculer $E(X)=G_X'(1)$.",
+     "ans": "1",
+     "sol": "$G_X'(t)=\\frac1{(2-t)^2}$, donc $G_X'(1)=1$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac2{3-t}$. Calculer $E(X)$.",
+       "ans": "Rational(1,2)",
+       "sol": "$G'(t)=\\frac2{(3-t)^2}$ : $G'(1)=\\frac24=\\frac12$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi4",
+     "enonce": "$G_X(t)=e^{2(t-1)}$. Calculer $E(X)$.",
+     "ans": "2",
+     "sol": "$G_X'(t)=2e^{2(t-1)}$, donc $G_X'(1)=2$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=e^{3(t-1)}$. Calculer $E(X)$.",
+       "ans": "3",
+       "sol": "$G'(1)=3$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi5",
+     "enonce": "$G_X(t)=e^{2(t-1)}$. Calculer $V(X)$.",
+     "ans": "2",
+     "sol": "$G''(t)=4e^{2(t-1)}$ : $G''(1)=4$, $G'(1)=2$ : $V=4+2-4=2$ (Poisson de paramètre $2$ : $E=V=\\lambda$).",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=e^{3(t-1)}$. Calculer $V(X)$.",
+       "ans": "3",
+       "sol": "$G''(1)=9$ : $9+3-9=3$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi6",
+     "enonce": "$G_X(t)=e^{-2}e^{2t}$. Calculer $P(X=3)$.",
+     "ans": "Rational(4,3)*exp(-2)",
+     "sol": "$e^{2t}=\\sum\\frac{2^nt^n}{n!}$ : le coefficient de $t^3$ de $G_X$ est $e^{-2}\\frac{8}{6}=\\frac43e^{-2}$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=e^{-1}e^{t}$. Calculer $P(X=2)$.",
+       "ans": "exp(-1)/2",
+       "sol": "$e^{-1}\\frac{1^2}{2!}=\\frac1{2e}$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi7",
+     "enonce": "$G_X(t)=\\frac1{3-2t}$. Calculer $P(X=4)$.",
+     "ans": "Rational(16,243)",
+     "sol": "$\\frac1{3-2t}=\\frac13\\times\\frac1{1-2t/3}=\\frac13\\sum\\left(\\frac23\\right)^nt^n$ : $P(X=4)=\\frac13\\times\\frac{16}{81}=\\frac{16}{243}$.",
+     "variants": [
+      {
+       "enonce": "$G_X(t)=\\frac1{2-t}$. Calculer $P(X=3)$.",
+       "ans": "Rational(1,16)",
+       "sol": "$\\frac12\\left(\\frac12\\right)^3=\\frac1{16}$."
+      }
+     ],
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "gi8",
+     "enonce": "Soit $X$ une variable entière infinie. Pourquoi le rayon de convergence de $\\sum P(X=n)t^n$ est-il au moins $1$ et pourquoi $G_X(1)=1$ ?",
+     "sol": "Pour $|t|\\le1$ : $|P(X=n)t^n|\\le P(X=n)$ et $\\sum P(X=n)=1$ converge. Par comparaison la série converge absolument pour $|t|\\le1$ : donc $R\\ge1$ et $G_X$ est définie au moins sur $[-1,1]$. Enfin $G_X(1)=\\sum_{n\\ge0}P(X=n)=1$.",
+     "duree": 5,
+     "formules": "$G_X(1)=1$ · $E=G_X'(1)$ · $V=G_X''(1)+G_X'(1)-G_X'(1)^2$ · développement en série entière de $G_X$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "titre": "Lois géométrique, de Pascal et de Poisson",
+   "notions": [
+    "lois",
+    "ginf"
+   ],
+   "exos": [
+    {
+     "id": "l1",
+     "enonce": "$X$ suit la loi géométrique de paramètre $\\frac13$ ($P(X=n)=q^{n-1}p$). Calculer $P(X=4)$.",
+     "ans": "Rational(8,81)",
+     "sol": "$P(X=4)=\\left(\\frac23\\right)^3\\times\\frac13=\\frac8{81}$.",
+     "variants": [
+      {
+       "enonce": "$X$ géométrique de paramètre $\\frac14$. Calculer $P(X=3)$.",
+       "ans": "Rational(9,64)",
+       "sol": "$\\left(\\frac34\\right)^2\\frac14=\\frac9{64}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l2",
+     "enonce": "Même $X$ (géométrique de paramètre $\\frac13$). Calculer $P(X\\ge5)$.",
+     "ans": "Rational(16,81)",
+     "sol": "$P(X\\ge5)$ = les 4 premiers essais échouent : $\\left(\\frac23\\right)^4=\\frac{16}{81}$ (ou somme géométrique de premier terme $\\left(\\frac23\\right)^4\\frac13$).",
+     "variants": [
+      {
+       "enonce": "$X$ géométrique de paramètre $\\frac14$. Calculer $P(X\\ge4)$.",
+       "ans": "Rational(27,64)",
+       "sol": "Trois échecs d'abord : $\\left(\\frac34\\right)^3=\\frac{27}{64}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l3",
+     "enonce": "Même $X$ de fonction génératrice $G_X(t)=\\frac{t/3}{1-2t/3}$. Calculer $E(X)$.",
+     "ans": "3",
+     "sol": "$G'(t)=\\frac{p}{(1-qt)^2}$, donc $G'(1)=\\frac1p=3$.",
+     "variants": [
+      {
+       "enonce": "$X$ de fonction génératrice $\\frac{t/4}{1-3t/4}$. Calculer $E(X)$.",
+       "ans": "4",
+       "sol": "$E(X)=\\frac1p=4$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l4",
+     "enonce": "Même $X$. Calculer $V(X)$ avec $G''(1)+G'(1)-G'(1)^2$.",
+     "ans": "6",
+     "sol": "$G''(t)=\\frac{2pq}{(1-qt)^3}$, $G''(1)=\\frac{2q}{p^2}=12$. $V=12+3-9=6=\\frac q{p^2}$.",
+     "variants": [
+      {
+       "enonce": "$X$ de fonction génératrice $\\frac{t/4}{1-3t/4}$. Calculer $V(X)$.",
+       "ans": "12",
+       "sol": "$G''(1)=\\frac{2q}{p^2}=24$ : $V=24+4-16=12=\\frac q{p^2}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l5",
+     "enonce": "$X$ suit la loi de Poisson de paramètre $3$. Calculer $P(X=2)$.",
+     "ans": "Rational(9,2)*exp(-3)",
+     "sol": "$P(X=n)=e^{-\\lambda}\\frac{\\lambda^n}{n!}$ : $e^{-3}\\times\\frac92$.",
+     "variants": [
+      {
+       "enonce": "$X$ de Poisson de paramètre $2$. Calculer $P(X=3)$.",
+       "ans": "Rational(4,3)*exp(-2)",
+       "sol": "$e^{-2}\\frac86=\\frac43e^{-2}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l6",
+     "enonce": "$X$ suit la loi de Poisson de paramètre $2$. Calculer $P(X\\ge1)$.",
+     "ans": "1-exp(-2)",
+     "sol": "$P(X\\ge1)=1-P(X=0)=1-e^{-2}$.",
+     "variants": [
+      {
+       "enonce": "$X$ de Poisson de paramètre $\\frac12$. Calculer $P(X\\ge1)$.",
+       "ans": "1-exp(-Rational(1,2))",
+       "sol": "$1-e^{-1/2}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l7",
+     "enonce": "Le hameçonneur de probabilité $p=\\frac13$ doit envoyer $Y$ emails pour obtenir $2$ réponses (loi de Pascal). Calculer $P(Y=5)$ comme coefficient de $t^5$ dans $G_Y(t)=\\left(\\frac{t/3}{1-2t/3}\\right)^2$.",
+     "ans": "Rational(32,243)",
+     "sol": "$G_Y=\\frac{t^2}9\\sum(m+1)\\left(\\frac23\\right)^mt^m$ : coefficient de $t^5$ ($m=3$) : $\\frac19\\times4\\times\\frac8{27}=\\frac{32}{243}$ ($=\\binom41p^2q^3$).",
+     "variants": [
+      {
+       "enonce": "$Y$ = nombre d'essais pour $3$ succès avec $p=\\frac12$ : $G_Y=\\left(\\frac{t/2}{1-t/2}\\right)^3$. Calculer $P(Y=5)$.",
+       "ans": "Rational(3,16)",
+       "sol": "$\\binom42p^3q^2=6\\times\\frac1{32}=\\frac3{16}$."
+      }
+     ],
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "l8",
+     "enonce": "$X\\sim$ Poisson$(\\lambda)$ et $Y\\sim$ Poisson$(\\mu)$ sont indépendantes. Quelle est la loi de $X+Y$ ?",
+     "sol": "$G_X(t)=\\sum e^{-\\lambda}\\frac{(\\lambda t)^n}{n!}=e^{\\lambda(t-1)}$ et de même $G_Y(t)=e^{\\mu(t-1)}$. Par indépendance, $G_{X+Y}(t)=e^{(\\lambda+\\mu)(t-1)}$, fonction génératrice de la loi de Poisson de paramètre $\\lambda+\\mu$. Donc $X+Y\\sim$ Poisson$(\\lambda+\\mu)$.",
+     "duree": 5,
+     "formules": "Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · Poisson($\\lambda$) : $G=e^{\\lambda(t-1)}$ · Pascal : $G=\\left(\\frac{pt}{1-qt}\\right)^r$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "titre": "Niveau examen : B5/PSE octobre 2024",
+   "notions": [
+    "gsomme",
+    "gderiv",
+    "sgeo",
+    "sexp",
+    "ginf"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mx1",
+     "src": "Examen B5/PSE octobre 2024, ex. 1 (8 points)",
+     "enonce": "Un OCR lit les adresses du courrier ; sur chaque courrier il se trompe avec la probabilité $p\\in]0,1[$, indépendamment des autres. Pour un lot de $n$ courriers, $Y$ est le nombre d'erreurs. Pour $c\\in[\\![1,n]\\!]$, $X_c=1$ s'il y a erreur sur le courrier $c$, $0$ sinon.\n1. Donner la loi de $X_c$, sa fonction génératrice, puis $E(X_c)$ et $V(X_c)$ à l'aide de $G_{X_c}$.\n2. Donner en justifiant la fonction génératrice de $Y$, en déduire la loi de $Y$, puis $E(Y)$ et $V(Y)$.",
+     "sol": "**1.** $X_c(\\Omega)=\\{0,1\\}$, $P(X_c=1)=p$, $P(X_c=0)=1-p$ : Bernoulli($p$). $G_{X_c}(t)=(1-p)+pt$. $G_{X_c}'(t)=p$ donc $E(X_c)=G_{X_c}'(1)=p$ ; $G_{X_c}''(t)=0$ donc $V(X_c)=G''(1)+G'(1)-G'(1)^2=0+p-p^2=p(1-p)$.\n\n**2.** $Y=X_1+\\dots+X_n$ et les $X_c$ sont indépendantes (performances indépendantes) : $G_Y(t)=G_{X_1}(t)\\cdots G_{X_n}(t)=\\big((1-p)+pt\\big)^n$.\n\n**3.** Binôme : $G_Y(t)=\\sum_{k=0}^n\\binom nk(1-p)^{n-k}p^kt^k$. La fonction génératrice caractérise la loi : $Y(\\Omega)=[\\![0,n]\\!]$ et $P(Y=k)=\\binom nkp^k(1-p)^{n-k}$ ($Y\\sim B(n,p)$).\n\n**4.** Les $X_c$ sont indépendantes : $E(Y)=\\sum E(X_c)=np$ et $V(Y)=\\sum V(X_c)=np(1-p)$. (Avec $G_Y$ : $G_Y'(1)=np\\big((1-p)+p\\big)^{n-1}=np$.)",
+     "formules": "Bernoulli($p$) · $G=(1-p)+pt$ · $E=G'(1)$ · $V=G''(1)+G'(1)-G'(1)^2$ · $G_{X+Y}=G_XG_Y$ (indépendantes) · produit de $n$ fonctions génératrices · binôme de Newton · $G_X$ caractérise la loi · $E(Y)=np$ · $V(Y)=np(1-p)$ · $G_Y'(1)$",
+     "duree": 20,
+     "type": "multi"
+    },
+    {
+     "id": "mx2",
+     "src": "Examen B5/PSE octobre 2024, ex. 2 (7 points)",
+     "enonce": "1. Montrer que $\\frac1{2-x}=\\alpha\\sum_{n\\ge0}\\frac{x^n}{2^n}$. Valeurs de $\\alpha$ et du rayon $R_1$ ?\n2. Série entière de $\\ln(2-x)$ et rayon. 3. Série entière de $\\frac{x^3}{(2-x)^2}$ et rayon.\n4. Rayon $R_2$ de $\\sum\\frac{x^n}{n!}$. 5. Somme de cette série. 6. Rayon et somme de $\\sum\\frac{(-1)^n}{n!}x^{2n}$. 7. Somme de $\\sum_{n\\ge1}\\frac{(-1)^n}{(n-1)!}x^{2n}$.",
+     "sol": "**1.** $\\frac1{2-x}=\\frac12\\times\\frac1{1-\\frac x2}=\\frac12\\sum_{n\\ge0}\\left(\\frac x2\\right)^n$ : $\\alpha=\\frac12$. La série géométrique converge si et seulement si $\\left|\\frac x2\\right| < 1$, soit $|x| < 2$ : $R_1=2$.\n\n**2.** On intègre la série de la question 1 (le rayon ne change pas) : $\\int_0^x\\frac{dt}{2-t}=\\ln2-\\ln(2-x)=\\frac12\\sum\\frac{x^{n+1}}{(n+1)2^n}$. Donc $\\ln(2-x)=\\ln2-\\sum_{n\\ge0}\\frac{x^{n+1}}{(n+1)2^{n+1}}=\\ln2-\\sum_{n\\ge1}\\frac{x^n}{n\\,2^n}$, de rayon $2$.\n\n**3.** On dérive la série de la question 1 : $\\frac1{(2-x)^2}=\\left(\\frac1{2-x}\\right)'=\\frac12\\sum_{n\\ge1}\\frac{nx^{n-1}}{2^n}=\\sum_{n\\ge1}\\frac{nx^{n-1}}{2^{n+1}}$ (rayon $2$). Donc $\\frac{x^3}{(2-x)^2}=\\sum_{n\\ge1}\\frac{n\\,x^{n+2}}{2^{n+1}}$, de rayon $2$.\n\n**4.** D'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{n!}{(n+1)!}=\\frac1{n+1}\\to0$, donc $R_2=+\\infty$. Pour tout $x$ réel, $\\sum_{n\\ge0}\\frac{x^n}{n!}=e^x$.\n\n**5.** $\\frac{(-1)^nx^{2n}}{n!}=\\frac{(-x^2)^n}{n!}$ : c'est la série de la question 4 appliquée à $-x^2$, qui converge pour tout réel : $R=+\\infty$ et la somme vaut $e^{-x^2}$.\n\n**6.** On pose $p=n-1$ : $\\sum_{p\\ge0}\\frac{(-1)^{p+1}x^{2p+2}}{p!}=-x^2\\sum_{p\\ge0}\\frac{(-x^2)^p}{p!}=-x^2e^{-x^2}$.",
+     "formules": "$\\frac1{1-q}=\\sum q^n$ · $|q| < 1$ · $\\int_0^x\\frac{dt}{2-t}$ · intégration terme à terme · même rayon · dérivation terme à terme · $\\left(\\frac1{2-x}\\right)'=\\frac1{(2-x)^2}$ · d'Alembert · $\\sum\\frac{x^n}{n!}=e^x$ · $\\sum\\frac{u^n}{n!}=e^u$ avec $u=-x^2$ · changement d'indice $p=n-1$ · $\\sum\\frac{u^p}{p!}=e^u$",
+     "duree": 30,
+     "type": "multi"
+    },
+    {
+     "id": "mx3",
+     "src": "Examen B5/PSE octobre 2024, ex. 3 (5 points)",
+     "enonce": "Une variable entière $X$ a pour fonction génératrice $G_X(t)=\\frac{at}{1-\\frac t3}$, $a\\in\\mathbb R$.\n1. Valeur de $a$. 2. En développant en série entière, loi de $X$. 3. Espérance et variance de $X$.",
+     "sol": "**1.** $G_X(1)=1$ : $\\frac a{1-\\frac13}=\\frac{3a}2=1$, donc $a=\\frac23$.\n\n**2.** $G_X(t)=\\frac{2t}3\\times\\frac1{1-\\frac t3}=\\frac{2t}3\\sum_{n\\ge0}\\frac{t^n}{3^n}=\\sum_{n\\ge0}\\frac{2t^{n+1}}{3^{n+1}}=\\sum_{p\\ge1}\\frac2{3^p}t^p$ ($p=n+1$). Donc $X(\\Omega)=\\mathbb N^*$ et $P(X=p)=\\frac2{3^p}$ (loi géométrique de paramètre $\\frac23$).\n\n**3.** $G_X(t)=\\frac{2t}{3-t}$, $G_X'(t)=\\frac6{(3-t)^2}$, $G_X''(t)=\\frac{12}{(3-t)^3}$. $E(X)=G_X'(1)=\\frac64=\\frac32$. $G_X''(1)=\\frac{12}8=\\frac32$. $V(X)=\\frac32+\\frac32-\\frac94=\\frac34$.",
+     "formules": "$G_X(1)=1$ · $\\frac1{1-q}=\\sum q^n$ · identification des coefficients de $G_X$ · $E=G'(1)$ · $V=G''(1)+G'(1)-G'(1)^2$ · dérivée d'un quotient",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "titre": "Niveau examen : B5/PSE octobre 2025",
+   "notions": [
+    "gsomme",
+    "rayon",
+    "sgeo",
+    "ginf"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "my1",
+     "src": "Examen B5/PSE octobre 2025, ex. 1 (5 points)",
+     "enonce": "$X(\\Omega)=\\{0,1\\}$, $P(X=0)=\\frac35$, $P(X=1)=\\frac25$.\n1. Loi de $Y=2X$. 2. Fonction génératrice de $Y$. 3. $X_2$ indépendante de $X$, de même loi : fonctions génératrices de $X$ et $X_2$, de $Z=X+X_2$, loi de $Z$.\n4. $Y=X+X$ et $Z=X+X_2$ sont deux sommes de variables de même loi : ont-elles la même loi ?",
+     "sol": "**1.** $Y(\\Omega)=\\{0,2\\}$, $P(Y=0)=P(X=0)=\\frac35$, $P(Y=2)=P(X=1)=\\frac25$. $G_Y(t)=\\frac35+\\frac25t^2$.\n\n**2.** $G_X(t)=G_{X_2}(t)=\\frac35+\\frac25t$. $X$ et $X_2$ sont indépendantes : $G_Z(t)=\\left(\\frac35+\\frac25t\\right)^2=\\frac9{25}+\\frac{12}{25}t+\\frac4{25}t^2$. Donc $Z(\\Omega)=\\{0,1,2\\}$, $P(Z=0)=\\frac9{25}$, $P(Z=1)=\\frac{12}{25}$, $P(Z=2)=\\frac4{25}$.\n\n**3.** Non. $Y(\\Omega)=\\{0,2\\}$ alors que $P(Z=1)=\\frac{12}{25}\\ne0$. Dans $X+X$ les deux termes sont la même variable (totalement dépendants) ; la formule $G_{X+Y}=G_XG_Y$ exige l'indépendance. Ici $G_Y(t)=G_X(t^2)\\ne G_X(t)^2=G_Z(t)$. (Corrigé rédigé, l'énoncé n'a pas de corrigé officiel ; coefficients vérifiés par développement avec un logiciel de calcul formel.)",
+     "formules": "$P(2X=2)=P(X=1)$ · $G_Y(t)=\\sum P(Y=k)t^k$ · $G_{X+X_2}=G_XG_{X_2}$ · lecture des coefficients · $G_{X+X_2}=G_XG_{X_2}$ exige l'indépendance · $X+X=2X$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "my2",
+     "src": "Examen B5/PSE octobre 2025, ex. 2 (8 points)",
+     "enonce": "Un antispam se trompe avec la probabilité $p=1\\%$ sur chaque email, indépendamment. Pour un lot de $n$ emails, $Y$ = nombre d'erreurs ; $X_i=1$ s'il y a erreur sur l'email $i$.\n1. Loi de $X_i$, fonction génératrice, $E(X_i)$ et $V(X_i)$ à l'aide de $G_{X_i}$. 2. Fonction génératrice de $Y$ (justifier), loi de $Y$, $E(Y)$ et $V(Y)$.",
+     "sol": "**1.** $X_i(\\Omega)=\\{0,1\\}$, $P(X_i=1)=\\frac1{100}$, $P(X_i=0)=\\frac{99}{100}$. $G_{X_i}(t)=\\frac{99}{100}+\\frac t{100}$. $G'=\\frac1{100}$ donc $E(X_i)=\\frac1{100}$ ; $G''=0$ donc $V(X_i)=0+\\frac1{100}-\\frac1{10000}=\\frac{99}{10000}$.\n\n**2.** $Y=X_1+\\dots+X_n$ avec $X_i$ indépendantes : $G_Y(t)=\\left(\\frac{99}{100}+\\frac t{100}\\right)^n$. Par le binôme, $P(Y=k)=\\binom nk\\left(\\frac1{100}\\right)^k\\left(\\frac{99}{100}\\right)^{n-k}$ pour $k\\in[\\![0,n]\\!]$ : $Y\\sim B\\left(n,\\frac1{100}\\right)$.\n\n**3.** $E(Y)=nE(X_i)=\\frac n{100}$ et, par indépendance, $V(Y)=nV(X_i)=\\frac{99n}{10000}$. (Corrigé rédigé, pas de corrigé officiel : résultats cohérents avec $np$ et $np(1-p)$ et vérifiés par $G_Y'(1)$ et $G_Y''(1)$.)",
+     "formules": "Bernoulli($p$) · $G=(1-p)+pt$ · $V=G''(1)+G'(1)-G'(1)^2$ · $G_Y=G_{X_1}\\cdots G_{X_n}$ · binôme · $G_Y$ caractérise la loi · $E(Y)=np$ · $V(Y)=np(1-p)$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "my3",
+     "src": "Examen B5/PSE octobre 2025, ex. 3 (7 points)",
+     "enonce": "1. Rayons de convergence de (a) $\\sum\\frac{(2n)!}{n!}x^n$ et (b) $\\sum\\frac{(-2)^n(n!)^2}{(2n)!}x^n$.\n2. Soit $\\sum\\left(-\\frac12\\right)^nx^n$. (a) Son rayon $R_1$. (b) Sa somme partielle puis $f(x)=\\sum\\left(-\\frac12\\right)^nx^n$ comme fraction rationnelle. (c) Série entière de $x\\mapsto\\ln\\left(1+\\frac x2\\right)$ et rayon. (d) Série entière de $x\\mapsto\\frac1{(2+x)^2}$ et rayon.",
+     "sol": "**1.** (a) $\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{(2n+2)!\\,n!}{(n+1)!\\,(2n)!}=\\frac{(2n+2)(2n+1)}{n+1}=2(2n+1)\\to+\\infty$ : $R=0$. (b) $\\left|\\frac{a_{n+1}}{a_n}\\right|=\\frac{2(n+1)^2}{(2n+2)(2n+1)}=\\frac{n+1}{2n+1}\\to\\frac12$ : $R=2$.\n\n**2.** Série géométrique de raison $-\\frac x2$ : $S_N(x)=\\frac{1-\\left(-\\frac x2\\right)^{N+1}}{1+\\frac x2}$, qui converge si et seulement si $\\left|\\frac x2\\right| < 1$ : $R_1=2$. Pour $|x| < 2$ : $f(x)=\\frac1{1+\\frac x2}=\\frac2{2+x}$.\n\n**3.** $\\frac1{2+x}=\\frac12f(x)$. En intégrant : $\\ln\\left(1+\\frac x2\\right)=\\int_0^x\\frac{dt}{2+t}=\\sum_{n\\ge0}\\frac{(-1)^nx^{n+1}}{(n+1)2^{n+1}}=\\sum_{n\\ge1}\\frac{(-1)^{n-1}x^n}{n\\,2^n}$, rayon $2$. En dérivant : $\\frac1{(2+x)^2}=-\\left(\\frac1{2+x}\\right)'=\\sum_{m\\ge0}\\frac{(-1)^m(m+1)}{2^{m+2}}x^m$, rayon $2$ (la dérivation ne change pas le rayon). (Corrigé rédigé, pas de corrigé officiel ; développements vérifiés avec un logiciel de calcul formel.)",
+     "formules": "d'Alembert : $\\left|\\frac{a_{n+1}}{a_n}\\right|\\to\\ell$ $\\Rightarrow$ $R=\\frac1\\ell$ · somme partielle d'une série géométrique · $\\frac1{1-q}$ · $|q| < 1$ · intégration et dérivation terme à terme · même rayon · $\\int_0^x\\frac{dt}{2+t}$",
+     "duree": 15,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 17,
+   "titre": "Niveau examen : autres annales (2023 et 2021)",
+   "notions": [
+    "sexp",
+    "sgeo",
+    "ginf",
+    "lois"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "mz1",
+     "src": "Mi-semestre S3 octobre 2023, ex. 6 (6 points)",
+     "enonce": "1. Rayon $R_1$ de $\\sum\\frac{x^n}{n!}$ (justifier). 2. Sa somme. 3. Rayon et somme de $\\sum\\frac{2^n}{n!}x^n$. 4. Somme de $\\sum_{n\\ge3}\\frac{x^n}{(n-3)!}$.\n5. Montrer que $\\frac1{1+2x}=\\sum(-2)^nx^n$ et donner le rayon $R_2$. 6. Série entière de $\\ln(1+2x)$ et rayon. 7. Série entière de $\\frac{x^2}{(1+2x)^2}$ et rayon.",
+     "sol": "**1.** D'Alembert : $\\frac{1/(n+1)!}{1/n!}=\\frac1{n+1}\\to0$, $R_1=+\\infty$, somme $e^x$. $\\sum\\frac{2^nx^n}{n!}=\\sum\\frac{(2x)^n}{n!}$ converge pour tout $x$ : $R=+\\infty$ et la somme vaut $e^{2x}$.\n\n**2.** On pose $k=n-3$ : $\\sum_{k\\ge0}\\frac{x^{k+3}}{k!}=x^3e^x$.\n\n**3.** $\\sum(-2x)^n$ est géométrique de raison $-2x$ : elle converge si et seulement si $|2x| < 1$, $R_2=\\frac12$, de somme $\\frac1{1-(-2x)}=\\frac1{1+2x}$. Intégration : $\\int_0^x\\frac{2\\,dt}{1+2t}=\\ln(1+2x)=2\\sum\\frac{(-2)^nx^{n+1}}{n+1}=\\sum_{n\\ge1}\\frac{(-1)^{n-1}(2x)^n}n$, rayon $\\frac12$. Dérivation : $-\\frac2{(1+2x)^2}=\\sum_{n\\ge1}(-2)^nnx^{n-1}$, donc $\\frac{x^2}{(1+2x)^2}=\\sum_{n\\ge1}(-2)^{n-1}n\\,x^{n+1}$, rayon $\\frac12$.",
+     "formules": "d'Alembert · $\\sum\\frac{x^n}{n!}=e^x$ · $\\sum\\frac{(2x)^n}{n!}=e^{2x}$ · changement d'indice $k=n-3$ · $\\sum\\frac{x^k}{k!}=e^x$ · $\\frac1{1+2x}=\\sum(-2x)^n$ · intégration et dérivation terme à terme · même rayon",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "mz2",
+     "src": "Mi-semestre S3 octobre 2023, ex. 7 (4 points)",
+     "enonce": "Une variable entière $X$ a pour fonction génératrice $G_X(t)=a\\,e^{2t}$. 1. Valeur de $a$. 2. Loi de $X$. 3. Espérance et variance de $X$.",
+     "sol": "**1.** $G_X(1)=ae^2=1$ donc $a=e^{-2}$. $G_X(t)=e^{-2}\\sum\\frac{(2t)^n}{n!}=\\sum e^{-2}\\frac{2^n}{n!}t^n$ : $X(\\Omega)=\\mathbb N$ et $P(X=n)=e^{-2}\\frac{2^n}{n!}$ (Poisson de paramètre $2$). $G'(t)=2e^{2t-2}$, $E(X)=G'(1)=2$ ; $G''(t)=4e^{2t-2}$, $V(X)=4+2-4=2$.",
+     "formules": "$G_X(1)=1$ · $e^u=\\sum\\frac{u^n}{n!}$ · $E=G'(1)$ · $V=G''(1)+G'(1)-G'(1)^2$",
+     "duree": 5,
+     "type": "multi"
+    },
+    {
+     "id": "mz3",
+     "src": "Contrôle S3 novembre 2021, ex. 4 (6 points)",
+     "enonce": "1. Soit $q\\in\\mathbb R^*$ et $\\sum q^nx^n$. (a) Son rayon $R$. (b) $f(x)=\\sum q^nx^n$ comme fraction rationnelle. (c) En déduire $g(x)=\\frac1{(1-qx)^2}$ en série entière (coefficients et rayon).\n2. Une expérience réussit avec la probabilité $p\\in]0,1[$, essais indépendants ; $X$ = nombre d'essais jusqu'au premier succès. (a) Loi de $X$. (b) $G_X$ (série puis fraction). (c) $E(X)$ et $V(X)$.\n3. $Y$ = nombre d'essais pour obtenir deux succès. (a) Écrire $Y$ comme somme de deux variables. (b) $G_Y$. (c) $P(Y=5)$.",
+     "sol": "**1.** Série géométrique de raison $qx$ : converge si $|qx| < 1$, soit $|x| < \\frac1{|q|}$ : $R=\\frac1{|q|}$. $f(x)=\\frac1{1-qx}$. On dérive : $f'(x)=\\frac q{(1-qx)^2}=\\sum_{n\\ge1}nq^nx^{n-1}$, donc $g(x)=\\frac1{(1-qx)^2}=\\sum_{n\\ge1}nq^{n-1}x^{n-1}=\\sum_{m\\ge0}(m+1)q^mx^m$ : $a_n=(n+1)q^n$, rayon $\\frac1{|q|}$.\n\n**2.** $P(X=n)=(1-p)^{n-1}p$ pour $n\\ge1$. $G_X(t)=\\sum_{n\\ge1}p(1-p)^{n-1}t^n=pt\\sum_{m\\ge0}((1-p)t)^m=\\frac{pt}{1-qt}$ ($q=1-p$). $G'(t)=\\frac p{(1-qt)^2}$ : $E(X)=\\frac1p$. $G''(t)=\\frac{2pq}{(1-qt)^3}$ : $G''(1)=\\frac{2q}{p^2}$ et $V(X)=\\frac{2q}{p^2}+\\frac1p-\\frac1{p^2}=\\frac{2q+p-1}{p^2}=\\frac q{p^2}$.\n\n**3.** $Y=X_1+X_2$ ($X_1$ = essais jusqu'au premier succès, $X_2$ = essais supplémentaires jusqu'au second), indépendantes de même loi que $X$. $G_Y(t)=\\left(\\frac{pt}{1-qt}\\right)^2=p^2t^2\\sum_{m\\ge0}(m+1)q^mt^m$. Coefficient de $t^5$ ($m=3$) : $P(Y=5)=4p^2q^3=4p^2(1-p)^3$.",
+     "formules": "$\\sum(qx)^n=\\frac1{1-qx}$ · dérivation terme à terme · même rayon · Géom$(p)$ : $G=\\frac{pt}{1-qt}$, $E=\\frac1p$, $V=\\frac q{p^2}$ · $G_{X_1+X_2}=G_{X_1}G_{X_2}$ · $\\frac1{(1-qt)^2}=\\sum(m+1)q^mt^m$",
+     "duree": 15,
+     "type": "multi"
+    },
+    {
+     "id": "mz4",
+     "src": "Contrôle S3 novembre 2021, ex. 5 (4 points)",
+     "enonce": "$X$ est une variable entière de fonction génératrice $G_X(t)=a\\ln\\left(1-\\frac t3\\right)$. 1. Valeur de $a$. 2. Série entière de $G_X$ (à partir de la série géométrique), rayon, loi de $X$. 3. Espérance et variance de $X$. 4. Trouver $f$ telle que $Y=f(X)$ vérifie $G_Y(t)=tG_X(t)$.",
+     "sol": "**1.** $G_X(1)=a\\ln\\frac23=1$ donc $a=\\frac1{\\ln\\frac23}=-\\frac1{\\ln\\frac32}$. $\\ln\\left(1-\\frac t3\\right)=-\\sum_{n\\ge1}\\frac{t^n}{n\\,3^n}$ (intégrer $-\\frac13\\sum\\left(\\frac t3\\right)^n$), rayon $3$. Donc $P(X=n)=\\frac1{n\\,3^n\\ln\\frac32}$ pour $n\\ge1$ (loi bien normalisée car $\\sum\\frac1{n3^n}=\\ln\\frac32$).\n\n**2.** Avec $L=\\ln\\frac32$ et $a=-\\frac1L$ : $G'(t)=\\frac{-a/3}{1-t/3}$, $E(X)=G'(1)=-\\frac a2=\\frac1{2L}$. $G''(t)=-\\frac{a/9}{(1-t/3)^2}$, $G''(1)=-\\frac a4$. $V(X)=-\\frac a4-\\frac a2-\\frac{a^2}4=\\frac{3L-1}{4L^2}$ ($\\approx0{,}33$). Enfin $G_{X+1}(t)=E(t^{X+1})=tG_X(t)$ : $f(X)=X+1$.",
+     "formules": "$G_X(1)=1$ · $\\ln\\left(1-\\frac t3\\right)=-\\sum\\frac{t^n}{n\\,3^n}$ · rayon $3$ · $E=G'(1)$ · $V=G''(1)+G'(1)-G'(1)^2$ · $G_{X+1}=tG_X$",
+     "duree": 10,
+     "type": "multi"
+    }
+   ]
+  },
+  {
+   "n": 18,
+   "titre": "Plus dur que l'examen (+20 %)",
+   "notions": [
+    "ginf",
+    "lois",
+    "vinf"
+   ],
+   "examen": true,
+   "exos": [
+    {
+     "id": "z1",
+     "enonce": "$X$ suit la loi géométrique de paramètre $\\frac12$. Calculer $P(X\\text{ pair})$ (indication : $P(\\text{pair})=\\frac{1+G_X(-1)}2$).",
+     "ans": "Rational(1,3)",
+     "sol": "$G_X(t)=\\frac{t/2}{1-t/2}$, $G_X(-1)=\\frac{-1/2}{3/2}=-\\frac13$. $P(\\text{pair})=\\frac{1+G_X(-1)}2=\\frac{2/3}2=\\frac13$ (on retrouve $\\sum_{m\\ge1}\\left(\\frac12\\right)^{2m}=\\frac13$).",
+     "variants": [
+      {
+       "enonce": "$X$ géométrique de paramètre $\\frac13$. Calculer $P(X\\text{ pair})$ (indication : $\\frac{1+G_X(-1)}2$).",
+       "ans": "Rational(2,5)",
+       "sol": "$G_X(-1)=\\frac{-1/3}{5/3}=-\\frac15$ : $\\frac{1-\\frac15}2=\\frac25$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z2",
+     "enonce": "$X$ suit la loi de Poisson de paramètre $2$. Calculer $P(X\\text{ pair})$ sous forme exacte.",
+     "ans": "(1+exp(-4))/2",
+     "sol": "$G_X(t)=e^{2(t-1)}$, $G_X(-1)=e^{-4}$ : $P(\\text{pair})=\\frac{1+e^{-4}}2$.",
+     "variants": [
+      {
+       "enonce": "$X$ de Poisson de paramètre $3$. Calculer $P(X\\text{ pair})$.",
+       "ans": "(1+exp(-6))/2",
+       "sol": "$G_X(-1)=e^{-6}$ : $\\frac{1+e^{-6}}2$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z3",
+     "enonce": "Un sac contient 4 dés : 3 dés ont une probabilité $\\frac13$ de donner blanc, le 4e une probabilité $\\frac56$. On tire un dé au hasard et on le lance jusqu'au premier blanc : $Y$ = nombre de lancers. Calculer $E(Y)$.",
+     "ans": "Rational(51,20)",
+     "sol": "Sachant le dé, $Y$ est géométrique d'espérance $\\frac1p$ : $3$ pour les trois premiers, $\\frac65$ pour le dernier. Probabilités totales : $E(Y)=\\frac34\\times3+\\frac14\\times\\frac65=\\frac94+\\frac3{10}=\\frac{51}{20}$.",
+     "variants": [
+      {
+       "enonce": "Un sac contient 2 dés avec une probabilité $\\frac12$ de blanc et 2 dés avec une probabilité $\\frac14$. On tire un dé et on le lance jusqu'au premier blanc : $Y$ = nombre de lancers. Calculer $E(Y)$.",
+       "ans": "3",
+       "sol": "$\\frac12\\times2+\\frac12\\times4=3$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z4",
+     "enonce": "Même sac de dés. Calculer $P(Y=1)$.",
+     "ans": "Rational(11,24)",
+     "sol": "$P(Y=1)=\\frac34\\times\\frac13+\\frac14\\times\\frac56=\\frac14+\\frac5{24}=\\frac{11}{24}$.",
+     "variants": [
+      {
+       "enonce": "Même sac que ci-dessus (2 dés de probabilité $\\frac12$, 2 dés de probabilité $\\frac14$). Calculer $P(Y=1)$.",
+       "ans": "Rational(3,8)",
+       "sol": "$\\frac12\\times\\frac12+\\frac12\\times\\frac14=\\frac38$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z5",
+     "enonce": "$X_1,X_2$ indépendantes de loi géométrique de paramètre $\\frac14$. Calculer $P(X_1+X_2=5)$.",
+     "ans": "Rational(27,256)",
+     "sol": "$G_{X_1+X_2}=\\left(\\frac{t/4}{1-3t/4}\\right)^2=\\frac{t^2}{16}\\sum(m+1)\\left(\\frac34\\right)^mt^m$ : $m=3$ : $\\frac1{16}\\times4\\times\\frac{27}{64}=\\frac{27}{256}$.",
+     "variants": [
+      {
+       "enonce": "$X_1,X_2$ indépendantes géométriques de paramètre $\\frac13$. Calculer $P(X_1+X_2=3)$.",
+       "ans": "Rational(4,27)",
+       "sol": "$\\binom21p^2q=2\\times\\frac19\\times\\frac23=\\frac4{27}$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z6",
+     "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(n+1)(n+2)}2\\left(\\frac12\\right)^n$.",
+     "ans": "8",
+     "sol": "$\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ ($R=1$) : en $x=\\frac12$, $2^3=8$.",
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{n=0}^{+\\infty}\\frac{(n+1)(n+2)}2\\left(\\frac13\\right)^n$.",
+       "ans": "Rational(27,8)",
+       "sol": "$\\frac1{(1-x)^3}=\\left(\\frac32\\right)^3=\\frac{27}8$."
+      }
+     ],
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "duree": 4,
+     "type": "value"
+    },
+    {
+     "id": "z7",
+     "enonce": "$X\\sim$ Poisson$(\\lambda)$, $Y\\sim$ Poisson$(\\mu)$ indépendantes. Montrer que, sachant $X+Y=n$, $X$ suit la loi binomiale $B\\left(n,\\frac\\lambda{\\lambda+\\mu}\\right)$.",
+     "sol": "$X+Y\\sim$ Poisson$(\\lambda+\\mu)$ (produit des fonctions génératrices $e^{\\lambda(t-1)}e^{\\mu(t-1)}$). Pour $0\\le k\\le n$ : $P(X=k\\mid X+Y=n)=\\frac{P(X=k)P(Y=n-k)}{P(X+Y=n)}=\\frac{e^{-\\lambda}\\frac{\\lambda^k}{k!}e^{-\\mu}\\frac{\\mu^{n-k}}{(n-k)!}}{e^{-(\\lambda+\\mu)}\\frac{(\\lambda+\\mu)^n}{n!}}=\\binom nk\\frac{\\lambda^k\\mu^{n-k}}{(\\lambda+\\mu)^n}=\\binom nk\\left(\\frac\\lambda{\\lambda+\\mu}\\right)^k\\left(\\frac\\mu{\\lambda+\\mu}\\right)^{n-k}$. C'est la loi $B\\left(n,\\frac\\lambda{\\lambda+\\mu}\\right)$.",
+     "duree": 10,
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "type": "open"
+    },
+    {
+     "id": "z8",
+     "enonce": "Soit $X$ entière infinie de fonction génératrice $G_X$ de rayon $R > 1$. Que vaut $P(X\\text{ impair})$ en fonction de $G_X(-1)$ ? Application : $G_X(t)=\\frac{2t}{3-t}$.",
+     "sol": "$G_X(1)=\\sum p_n=1$ et $G_X(-1)=\\sum(-1)^np_n=P(\\text{pair})-P(\\text{impair})$ ; avec $P(\\text{pair})+P(\\text{impair})=1$ : $P(\\text{impair})=\\frac{1-G_X(-1)}2$. Application : $G_X(-1)=\\frac{-2}4=-\\frac12$ donc $P(\\text{impair})=\\frac{1+\\frac12}2=\\frac34$ (loi géométrique de paramètre $\\frac23$ : $P(\\text{pair})=\\frac{q}{1+q}=\\frac14$ ✓).",
+     "duree": 8,
+     "formules": "$P(\\text{pair})=\\frac{1+G_X(-1)}2$ · $G_{X+Y}=G_XG_Y$ · probabilités totales · $\\sum\\frac{(n+1)(n+2)}2x^n=\\frac1{(1-x)^3}$ · Poisson et Pascal",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
