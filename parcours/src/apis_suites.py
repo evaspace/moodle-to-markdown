@@ -98,6 +98,7 @@ def o(id, enonce, sol, src=None, duree=None):
 
 SR = "Examen S1B2-SR janv. 2025"
 ASI = "Examen B2-ASI janv. 2024"
+TD4 = "TD4 Suites S1 2031"
 
 LEVELS = [
     {"n": 1, "titre": "Suites arithmétiques et géométriques", "notions": ["arith-geo"], "exos": [
@@ -175,7 +176,7 @@ LEVELS = [
         v("ge2", r"Limite de $\frac{n+\cos n}{n}$ ? (justifier par encadrement)", "limit((n+cos(n))/n, n, oo)", "1",
           r"$1-\frac1n\le\frac{n+\cos n}n\le1+\frac1n$, les deux bornes tendent vers $1$ : limite $1$.", duree=3),
         o("ge3", r"Soit $u_n=\sum_{k=1}^{n}\frac{n}{n^2+k}$. Encadrer $u_n$ et en déduire sa limite.",
-          r"Pour $1\le k\le n$ : $\frac n{n^2+n}\le\frac n{n^2+k}\le\frac n{n^2+1}$. Avec $n$ termes : $\frac{n^2}{n^2+n}\le u_n\le\frac{n^2}{n^2+1}$. Les deux bornes tendent vers $1$ : $u_n\to1$."),
+          r"Pour $1\le k\le n$ : $\frac n{n^2+n}\le\frac n{n^2+k}\le\frac n{n^2+1}$. Avec $n$ termes : $\frac{n^2}{n^2+n}\le u_n\le\frac{n^2}{n^2+1}$. Les deux bornes tendent vers $1$ : $u_n\to1$.", src=f"{TD4}, ex. 3.6.2"),
         o("ge4", r"Montrer que $u_n=n+(-1)^n\sqrt n$ tend vers $+\infty$.",
           r"$u_n\ge n-\sqrt n=\sqrt n(\sqrt n-1)$ et $\sqrt n(\sqrt n-1)\to+\infty$ : par comparaison, $u_n\to+\infty$.", duree=3),
         o("ge5", r"Soit $u_n=\frac{\lfloor n\sqrt2\rfloor}{n}$. Montrer que $u_n\to\sqrt2$.",
@@ -199,7 +200,7 @@ LEVELS = [
         o("lm1", r"Soit $u_n=\sum_{k=1}^{n}\frac1{k^2}$. En utilisant $\frac1{k^2}\le\frac1{k-1}-\frac1k$ pour $k\ge2$, montrer que $(u_n)$ converge.",
           r"$(u_n)$ est croissante ($u_{n+1}-u_n=\frac1{(n+1)^2}>0$). Pour $n\ge2$, par télescopage $u_n\le1+\sum_{k=2}^n\left(\frac1{k-1}-\frac1k\right)=2-\frac1n<2$. Croissante et majorée : $(u_n)$ converge (vers une limite $\le2$)."),
         o("lm2", r"Soit $u_n=\sum_{k=0}^{n}\frac1{k!}$. Montrer que $(u_n)$ converge (utiliser $k!\ge2^{k-1}$ pour $k\ge1$).",
-          r"Croissante : $u_{n+1}-u_n=\frac1{(n+1)!}>0$. Majorée : $u_n\le1+\sum_{k=1}^n\frac1{2^{k-1}}=1+\frac{1-(1/2)^n}{1/2}<3$. Croissante et majorée : converge."),
+          r"Croissante : $u_{n+1}-u_n=\frac1{(n+1)!}>0$. Majorée : $u_n\le1+\sum_{k=1}^n\frac1{2^{k-1}}=1+\frac{1-(1/2)^n}{1/2}<3$. Croissante et majorée : converge.", src=f"{TD4}, ex. 3.5"),
         o("lm3", r"Soit $u_n=\sum_{k=n}^{2n-1}\frac1k$. On sait que $(u_n)$ est décroissante et que $\frac12\le u_n\le1$. Converge-t-elle ? Encadrer sa limite $\ell$.",
           r"Décroissante et minorée par $\frac12$ : $(u_n)$ converge. En passant à la limite dans $\frac n{2n-1}\le u_n\le1$ : $\frac12\le\ell\le1$. Plus précis : la suite décroît, donc $\ell\le u_n$ pour tout $n$, par exemple $\ell\le u_2=\frac12+\frac13=\frac56$.",
           src=f"{SR}, ex. 2.4", duree=3),
@@ -219,7 +220,7 @@ LEVELS = [
           r"$u_{n+1}-u_n=\frac{2(v_n-u_n)}5=\frac25w_n>0$ : croissante. $v_{n+1}-v_n=-\frac25w_n<0$ : décroissante. $v_n-u_n=\left(\frac15\right)^n\to0$. Adjacentes : même limite $\ell$, et $2\ell=\lim(u_n+v_n)=5$, donc $\ell=\frac52$.",
           src=f"{SR}, ex. 1.2-1.4"),
         o("ad5", r"Montrer que $u_n=\sum_{k=1}^{n}\frac1{k^2}$ et $v_n=u_n+\frac1n$ sont adjacentes.",
-          r"$u$ croissante. $v_{n+1}-v_n=\frac1{(n+1)^2}+\frac1{n+1}-\frac1n=\frac1{(n+1)^2}-\frac1{n(n+1)}=\frac{-1}{n(n+1)^2}<0$. $v_n-u_n=\frac1n\to0$."),
+          r"$u$ croissante. $v_{n+1}-v_n=\frac1{(n+1)^2}+\frac1{n+1}-\frac1n=\frac1{(n+1)^2}-\frac1{n(n+1)}=\frac{-1}{n(n+1)^2}<0$. $v_n-u_n=\frac1n\to0$.", src=f"{TD4}, ex. 3.8"),
     ]},
     {"n": 10, "titre": "Suites récurrentes", "notions": ["recurrentes", "monotone"], "exos": [
         o("re1", r"$u_0=0$, $u_{n+1}=\sqrt{2+u_n}$. Montrer que $0\le u_n\le2$, que $(u_n)$ est croissante, puis trouver sa limite.",
@@ -326,6 +327,76 @@ LEVELS = [
     ]},
 ]
 
+
+# TD4 Suites S1 2031 (Moodle S1-MATHS-2031), sections 1-3: course-control scope. Put first in their level.
+TD4_EXOS = {
+    1: [
+        o("td3", r"Donner avec des quantificateurs la définition d'une suite constante, puis d'une suite stationnaire. Donner une suite stationnaire non constante.",
+          r"Constante : $\forall n\in\mathbb N,\ u_{n+1}=u_n$ (soit $\exists c,\ \forall n,\ u_n=c$). Stationnaire : $\exists N\in\mathbb N,\ \forall n\ge N,\ u_{n+1}=u_n$ (constante à partir d'un rang). Exemple : $u_n=\max(3-n,0)$ vaut $3,2,1,0,0,\dots$ : stationnaire, pas constante.",
+          src=f"{TD4}, ex. 1.1.1-2", duree=3),
+        o("td1", r"Soit $q\in\mathbb R$. Rappeler $\lim_{n\to+\infty}q^n$ selon $q$, ainsi que $\sum_{k=0}^{n}q^k$.",
+          r"$q>1$ : $q^n\to+\infty$. $q=1$ : $q^n=1\to1$. $-1<q<1$ : $q^n\to0$. $q\le-1$ : pas de limite. $\sum_{k=0}^nq^k=\frac{1-q^{n+1}}{1-q}$ si $q\ne1$, et $n+1$ si $q=1$.",
+          src=f"{TD4}, ex. 2.3.1", duree=3),
+        o("td2", r"Discuter du signe d'une suite géométrique $u_n=u_0q^n$ de raison $q\in\mathbb R$.",
+          r"$q>0$ : $q^n>0$, tous les termes ont le signe de $u_0$. $q=0$ : $u_n=0$ pour $n\ge1$. $q<0$ : $q^n$ est du signe de $(-1)^n$, les termes alternent de signe (si $u_0\ne0$). Si $u_0=0$, la suite est nulle.",
+          src=f"{TD4}, ex. 2.3.2", duree=2),
+    ],
+    2: [
+        o("td4", r"Donner avec des quantificateurs la définition de : croissante, décroissante, strictement croissante, strictement décroissante. Donner un exemple de suite croissante mais pas strictement.",
+          r"Croissante : $\forall n,\ u_{n+1}\ge u_n$. Décroissante : $\forall n,\ u_{n+1}\le u_n$. Strictement : inégalités strictes, $\forall n,\ u_{n+1}>u_n$ (resp. $<$). Exemple : une suite constante, ou $u_n=\lfloor n/2\rfloor$ ($0,0,1,1,2,\dots$).",
+          src=f"{TD4}, ex. 1.1.5", duree=3),
+    ],
+    3: [
+        o("td5", r"Donner avec des quantificateurs les définitions de : majorée, minorée, bornée. Donner une suite minorée non majorée et une suite majorée non minorée.",
+          r"Majorée : $\exists M\in\mathbb R,\ \forall n,\ u_n\le M$. Minorée : $\exists m\in\mathbb R,\ \forall n,\ u_n\ge m$. Bornée : majorée et minorée, soit $\exists M\ge0,\ \forall n,\ |u_n|\le M$. Exemples : $u_n=n$ minorée par $0$, non majorée ; $u_n=-n^2$ majorée par $0$, non minorée.",
+          src=f"{TD4}, ex. 1.1.3-4", duree=3),
+        o("td6", r"Donner un exemple de suite bornée et non convergente, puis de suite strictement croissante et bornée.",
+          r"$u_n=(-1)^n$ : $|u_n|\le1$, mais $u_{2n}=1$ et $u_{2n+1}=-1$, donc pas de limite. $v_n=1-\frac1{n+1}$ : $v_{n+1}-v_n=\frac1{n+1}-\frac1{n+2}>0$ et $0\le v_n<1$.",
+          src=f"{TD4}, ex. 1.1.9-10", duree=2),
+    ],
+    4: [
+        o("td7", r"Donner avec des quantificateurs : $(u_n)$ converge vers $\ell\in\mathbb R$ ; $(u_n)$ est convergente ; $u_n\to+\infty$ ; $u_n\to-\infty$. Donner une suite qui n'a pas de limite.",
+          r"$u_n\to\ell$ : $\forall\varepsilon>0,\ \exists N\in\mathbb N,\ \forall n\ge N,\ |u_n-\ell|\le\varepsilon$. Convergente : $\exists\ell\in\mathbb R$ tel que $u_n\to\ell$. $u_n\to+\infty$ : $\forall A\in\mathbb R,\ \exists N,\ \forall n\ge N,\ u_n\ge A$. $u_n\to-\infty$ : $\forall A,\ \exists N,\ \forall n\ge N,\ u_n\le A$. Pas de limite : $(-1)^n$.",
+          src=f"{TD4}, ex. 1.1.6-8", duree=4),
+        o("td8", r"Donner une suite qui tend vers $+\infty$ mais n'est croissante sur aucun intervalle $[\![n_0,+\infty[\![$.",
+          r"$u_n=n+2(-1)^n$. $u_n\ge n-2\to+\infty$, donc $u_n\to+\infty$. Mais $u_{n+1}-u_n=1-4(-1)^n$ vaut $-3$ si $n$ est pair et $5$ si $n$ est impair : la suite redescend à chaque rang pair, quel que soit $n_0$.",
+          src=f"{TD4}, ex. 1.2.1-2"),
+        o("td9", r"Donner une suite non majorée qui ne tend pas vers $+\infty$. Puis une suite ni majorée ni minorée, et expliquer pourquoi elle n'a pas de limite.",
+          r"$u_n=n$ si $n$ pair, $0$ si $n$ impair : non majorée, mais $u_n=0$ pour une infinité de $n$, donc $u_n\not\to+\infty$. $v_n=(-1)^nn$ : ni majorée ni minorée. Convergente $\Rightarrow$ bornée ; $\to+\infty$ $\Rightarrow$ minorée à partir d'un rang ; $\to-\infty$ $\Rightarrow$ majorée à partir d'un rang. Aucun cas possible : pas de limite.",
+          src=f"{TD4}, ex. 1.2.3-4"),
+    ],
+    6: [
+        v("td10", r"Soit $u_n=\sum_{k=1}^{n}\frac1{n^2+k}$ ($n\ge1$). Par encadrement, que vaut $\lim u_n$ ?", "limit(n/(n**2+1), n, oo)", "0",
+          r"Pour $1\le k\le n$ : $\frac1{n^2+n}\le\frac1{n^2+k}\le\frac1{n^2+1}$. Avec $n$ termes : $\frac n{n^2+n}\le u_n\le\frac n{n^2+1}$. Les deux bornes tendent vers $0$ : $u_n\to0$.",
+          src=f"{TD4}, ex. 3.6.1", duree=3),
+    ],
+    7: [
+        o("td11", r"$u_0\in\mathbb R$, $u_{n+1}=\frac{u_n+4}5$. (a) Pour quels $u_0$ la suite est-elle constante ? Quelle équation a-t-on résolue ? (b) On note $\ell$ cette valeur : montrer que $v_n=u_n-\ell$ est géométrique. (c) Avec $u_0=5$, exprimer $u_n$ et donner sa limite.",
+          r"(a) Constante $\iff u_1=u_0\iff u_0=\frac{u_0+4}5\iff u_0=1$ : on a résolu $\ell=f(\ell)$ avec $f(x)=\frac{x+4}5$. (b) $v_{n+1}=\frac{u_n+4}5-1=\frac{u_n-1}5=\frac15v_n$ : géométrique de raison $\frac15$. (c) $v_0=4$, $v_n=4\left(\frac15\right)^n$, $u_n=1+\frac4{5^n}\to1$ car $\left|\frac15\right|<1$.",
+          src=f"{TD4}, ex. 2.3.3 a-c"),
+        v("td12", r"Avec $u_0=5$ et $u_{n+1}=\frac{u_n+4}5$ (donc $u_n=1+\frac4{5^n}$), calculer $S=\sum_{k=0}^{5}u_k$.", "summation(1+4*Rational(1,5)**k, (k, 0, 5))", "Rational(34374,3125)",
+          r"$S=\sum_{k=0}^51+4\sum_{k=0}^5\left(\frac15\right)^k=6+4\cdot\frac{1-(1/5)^6}{1-1/5}=6+5\left(1-\frac1{5^6}\right)=11-\frac1{3125}=\frac{34374}{3125}$.",
+          src=f"{TD4}, ex. 2.3.3 d"),
+        o("td13", r"Une rumeur passe d'élève en élève : chacun transmet ce qu'il a entendu avec probabilité $p\in]0,1[$, l'inverse avec probabilité $1-p$. $\pi_n$ = probabilité d'avoir la bonne information après $n$ transmissions, $\pi_0=1$. (1) Relation entre $\pi_{n+1}$ et $\pi_n$. (2) Formule explicite. (3) Limite.",
+          r"(1) Probabilités totales : $\pi_{n+1}=p\,\pi_n+(1-p)(1-\pi_n)=(2p-1)\pi_n+1-p$. (2) Arithmético-géométrique, point fixe $\ell=(2p-1)\ell+1-p\iff\ell=\frac12$. $\pi_n-\frac12=(2p-1)^n\left(\pi_0-\frac12\right)$, donc $\pi_n=\frac12+\frac12(2p-1)^n$. (3) $0<p<1$ donne $|2p-1|<1$, donc $\pi_n\to\frac12$ : au bout d'un moment, l'information ne vaut pas mieux qu'un pile ou face.",
+          src=f"{TD4}, ex. 2.4"),
+    ],
+    8: [
+        o("td14", r"Soit $u_n=\sum_{k=0}^{n}\frac1{k!}$. (1) Montrer par récurrence que $k!\ge2^{k-1}$ pour $k\ge1$. (2) En déduire $u_n\le3$. (3) Encadrer la limite $\ell$.",
+          r"(1) $k=1$ : $1!=1\ge2^0$. Si $k!\ge2^{k-1}$, alors $(k+1)!=(k+1)k!\ge2\cdot2^{k-1}=2^k$ car $k+1\ge2$. (2) $u_n\le1+\sum_{k=1}^n\frac1{2^{k-1}}=1+2\left(1-\frac1{2^n}\right)<3$. (3) $(u_n)$ croissante majorée converge ; $u_2=\frac52\le u_n$ pour $n\ge2$, donc $\frac52\le\ell\le3$.",
+          src=f"{TD4}, ex. 3.5"),
+        o("td15", r"Soit $S_n=\sum_{k=1}^{n}\frac1{n+k}$ ($n\ge1$). Montrer que $(S_n)$ est convergente.",
+          r"$S_{n+1}=\sum_{j=n+2}^{2n+2}\frac1j$ et $S_n=\sum_{j=n+1}^{2n}\frac1j$, donc $S_{n+1}-S_n=\frac1{2n+1}+\frac1{2n+2}-\frac1{n+1}=\frac1{2n+1}-\frac1{2n+2}>0$ : croissante. Chacun des $n$ termes est $\le\frac1{n+1}$, donc $S_n\le\frac n{n+1}<1$. Croissante et majorée : $(S_n)$ converge.",
+          src=f"{TD4}, ex. 3.7"),
+    ],
+    9: [
+        o("td16", r"$u_n=\sum_{k=1}^{n-1}\frac1{k^2(k+1)^2}$, $v_n=u_n+\frac1{3n^2}$ ($n\ge2$). (1) Montrer que $(u_n)$ et $(v_n)$ sont adjacentes. (2) Comment obtenir la limite commune à $\varepsilon$ près ? Donner-la à $0{,}01$ près.",
+          r"(1) $u_{n+1}-u_n=\frac1{n^2(n+1)^2}>0$. $v_{n+1}-v_n=\frac1{n^2(n+1)^2}+\frac1{3(n+1)^2}-\frac1{3n^2}=\frac{3+n^2-(n+1)^2}{3n^2(n+1)^2}=\frac{2-2n}{3n^2(n+1)^2}<0$ pour $n\ge2$. $v_n-u_n=\frac1{3n^2}\to0$ : adjacentes. (2) $u_n\le\ell\le v_n$ : il suffit que $\frac1{3n^2}\le\varepsilon$. Pour $\varepsilon=0{,}01$ : $n=6$, $u_6=\frac{173}{600}\approx0{,}2883$, $v_6\approx0{,}2976$, donc $\ell\approx0{,}29$ à $0{,}01$ près.",
+          src=f"{TD4}, ex. 3.9"),
+    ],
+}
+for _lvl in LEVELS:
+    _lvl["exos"][:0] = TD4_EXOS.get(_lvl["n"], [])
 
 # Variants (same method, other numbers): a failed exercise comes back with the next one; build.py checks calc == ans.
 def _v(enonce, calc, ans, sol):
@@ -493,4 +564,20 @@ FORMULES = {
     "sh2": _REC + " · " + _DIFF + " · " + _MONO + " · " + _PF,
     "sh3": _LANDAU + r" · $\ln(ab)=\ln a+\ln b$",
     "sh4": _ADJ + r" · $u_{2n}\to\ell$ et $u_{2n+1}\to\ell\Rightarrow u_n\to\ell$",
+    "td1": r"$q^n\to0$ si $|q|<1$, $\to+\infty$ si $q>1$, pas de limite si $q\le-1$ · " + _GEO,
+    "td2": r"$v_n=v_0q^n$ · $q^n$ du signe de $(-1)^n$ si $q<0$",
+    "td3": r"constante : $\forall n,\ u_{n+1}=u_n$ · stationnaire : $\exists N,\ \forall n\ge N,\ u_{n+1}=u_n$",
+    "td4": r"croissante : $\forall n,\ u_{n+1}\ge u_n$ · strictement : $u_{n+1}>u_n$",
+    "td5": r"majorée : $\exists M,\ \forall n,\ u_n\le M$ · minorée : $\exists m,\ \forall n,\ u_n\ge m$ · bornée $\iff\exists M\ge0,\ \forall n,\ |u_n|\le M$",
+    "td6": r"$u_{2n}$ et $u_{2n+1}$ de limites différentes $\Rightarrow$ pas de limite · " + _DIFF,
+    "td7": _DEF + r" · $u_n\to+\infty\iff\forall A,\ \exists N,\ \forall n\ge N,\ u_n\ge A$",
+    "td8": r"$u_n\ge v_n\to+\infty\Rightarrow u_n\to+\infty$ · " + _DIFF,
+    "td9": r"convergente $\Rightarrow$ bornée · $u_n\to+\infty\Rightarrow$ minorée · $u_n\to-\infty\Rightarrow$ majorée",
+    "td10": _ENC + " · " + _GEND,
+    "td11": _FIXE + " · " + _QN,
+    "td12": _GEO,
+    "td13": r"probabilités totales · " + _FIXE + " · " + _QN,
+    "td14": _REC + " · " + _GEO + " · " + _MONO,
+    "td15": _DIFF + " · " + _ENC + " · " + _MONO,
+    "td16": _ADJ,
 }

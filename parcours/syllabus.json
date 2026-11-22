@@ -173,7 +173,7 @@
   {
    "debut": "2026-11-23",
    "titre": "Contrôle de cours APIS (1 h) : primitives, aires et intégrales en entier ; suites, introduction, limites et exemples remarquables",
-   "type": "Contrôle de cours",
+   "type": "Contrôle",
    "parcours": [
     "maths-s1-apis-integrales",
     "maths-s1-apis-suites"
