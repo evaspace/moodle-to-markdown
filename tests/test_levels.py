@@ -308,7 +308,7 @@ class Api(unittest.TestCase):
             ref, limit = levels.timing(conn, SUBJECT, lvl, lvl['exos'][0])
         mean = sum(int(e.get('duree', 5)) for e in lvl['exos']) / len(lvl['exos'])
         self.assertAlmostEqual(ref, 40 * int(lvl['exos'][0].get('duree', 5)) / mean, delta=1)
-        self.assertGreaterEqual(limit, 60)
+        self.assertGreaterEqual(limit, min(int(lvl['exos'][0].get('duree', 5)) * 60, levels.MIN_LIMIT))
 
     def test_abandon_path_clears_stats_and_reviews(self):
         self.register('quitter')

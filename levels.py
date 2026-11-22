@@ -65,6 +65,7 @@ PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-ob
           'archi-s3-assembleur-68000': ['archi-s1-numeration', 'archi-s2-microprocesseur']}
 TIMEOUT_BONUS = 0.5        # +50 % time per timeout on the same exercise since its last success
 TIMEOUT_MAX = 3.0          # at most x3
+MIN_LIMIT = 180            # floor of the time limit in seconds (user, 2026-11-22: 3 min from integrals level 5 on)
 MIN_SAMPLES = 5            # successful attempts needed before the users' average replaces the authored time
 USERNAME_RE = re.compile(r'^[A-Za-z0-9_.-]{3,32}$')
 RESET_TTL = 3600           # reset link lifetime, seconds
@@ -318,7 +319,9 @@ def timing(conn, subject, lvl, exo):
 
     Reference = users' average time on successful attempts of this level (one average per level,
     so it fills up fast), scaled by the exercise's authored length relative to the level's.
-    Before MIN_SAMPLES attempts: the authored length is the limit and 60 % of it the reference."""
+    Before MIN_SAMPLES attempts: the authored length is the limit and 60 % of it the reference.
+    The limit never drops under MIN_LIMIT (or the authored length if shorter): a few fast users
+    must not leave 1 min to solve a 5 min exercise."""
     authored = int(exo.get('duree', 5)) * 60
     row = conn.execute('SELECT AVG(secs), COUNT(*) FROM exo_log WHERE subject=? AND level=? AND ok=1 AND secs > 0',
                        (subject, lvl['n'])).fetchone()
@@ -326,7 +329,7 @@ def timing(conn, subject, lvl, exo):
         return round(authored * 0.6), authored
     level_mean = sum(int(e.get('duree', 5)) * 60 for e in lvl['exos']) / len(lvl['exos'])
     ref = row[0] * authored / level_mean
-    return round(ref), int(min(max(ref * 1.6, 60), 1800))
+    return round(ref), int(min(max(ref * 1.6, min(authored, MIN_LIMIT)), 1800))
 
 
 COMBO_GAP = 30 * 60  # a pause longer than this (seconds) ends the combo
