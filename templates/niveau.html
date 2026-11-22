@@ -35,13 +35,14 @@
   <div class="lv-row">
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
+    <button class="lv-btn" type="button" id="btn-temps">Plus de temps</button>
     <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
     {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
   <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong>{% endif %}</p>
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
-  <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. Sans réponse à la fin du chrono, c'est raté.</p></details>
+  <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>

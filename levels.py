@@ -36,7 +36,8 @@ PARCOURS_DIR = ROOT / 'parcours'
 BASE_POINTS = 100          # points of a level-1 exercise done in the reference time
 # Help opened before answering: code stored in exo_log.peek, points factor, extra time (share of the time limit).
 HINTS = {'solution': (1, 1 / 3, 1.0),   # the formulas used in the solution
-         'fiche': (2, 1 / 2, 0.5)}      # the whole chapter sheet: the right formula still has to be found
+         'fiche': (2, 1 / 2, 0.5),      # the whole chapter sheet: the right formula still has to be found
+         'temps': (0, 1, 1.0)}          # more time only: no division, the speed factor already lowers the points
 PEEK_FACTOR = {0: 1, 1: 1 / 3, 2: 1 / 2}
 # path id -> section of annales/FORMULES.md shown in the chapter sheet
 FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-integrales': 'APIS (intégrales)',
@@ -795,7 +796,7 @@ def level_page(subject):
 @bp.route('/api/niveaux/<subject>/hint', methods=['POST'])
 @login_required
 def level_hint(subject):
-    """A help (chapter sheet or formulas of the solution) is opened before answering:
+    """A help (chapter sheet, formulas of the solution or just more time) is opened before answering:
     recorded in the server clock, so the extra time and the reduced points do not depend on the browser."""
     kind = (request.get_json(silent=True) or {}).get('kind')
     clock = session.get('exo_clock')
@@ -1013,7 +1014,7 @@ def week_history(rows, events, today):
         x['days'].add(r['at'].date())
     kinds = {'niveau_up': 'up', 'niveau_finished': 'up', 'niveau_down': 'down', 'passer': 'skip', 'copie_ia': 'copies'}
     for e in events:
-        k = kinds.get(e['kind']) or ('help' if e['kind'].startswith('aide_') else None)
+        k = kinds.get(e['kind']) or ('help' if e['kind'] in ('aide_fiche', 'aide_solution') else None)
         if k:
             w[monday(e['at'].date())][k] += 1
     if not w:

@@ -293,6 +293,13 @@ class Api(unittest.TestCase):
         self.assertEqual(d['peek'], 2)
         self.assertEqual(levels.hint_code(['fiche', 'solution']), 1)
         self.assertEqual(levels.hint_limit(100, ['fiche', 'solution', 'fiche']), 250)
+        # "more time" only: extra time, points not divided
+        self.c.get(f'/niveaux/{SUBJECT}')
+        t = hint('temps').get_json()
+        self.assertGreater(t['extra'], 0)
+        self.assertEqual(t['div'], 1)
+        self.assertEqual(levels.hint_code(['temps']), 0)
+        self.assertEqual(levels.hint_limit(100, ['temps']), 200)
         # after MIN_SAMPLES successes, the reference time comes from the users' average
         with levels.db() as conn:
             for _ in range(levels.MIN_SAMPLES):

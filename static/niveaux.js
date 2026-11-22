@@ -175,15 +175,19 @@
     const used = {};
     const hint = async (kind) => {
       if (answered || used[kind]) return;
-      used[kind] = peek = true;
+      used[kind] = true;
+      if (kind !== 'temps') peek = true;
       const res = await post(`/api/niveaux/${exo.dataset.subject}/hint`, { kind });
       if (!res.ok || !res.data.extra || answered) return;
       left += res.data.extra;
       $('timer-left').textContent = fmt(left);
-      $('timer-note').textContent = `Aide ouverte : +${fmt(res.data.extra)} de temps, points divisés par ${res.data.div}.`;
+      $('timer-note').textContent = res.data.div > 1
+        ? `Aide ouverte : +${fmt(res.data.extra)} de temps, points divisés par ${res.data.div}.`
+        : `+${fmt(res.data.extra)} de temps, sans formule : seuls les points de vitesse baissent.`;
     };
     toggle($('btn-fiche'), $('fiche'), () => hint('fiche'));
     toggle($('btn-formules'), $('notions'), () => hint('solution'));
+    $('btn-temps').onclick = () => { $('btn-temps').disabled = true; hint('temps'); };
 
     // Forced solo thinking: countdown from data-duree; "J'ai ma réponse" stops it and shows the correction.
     let left = +exo.dataset.duree || 300, answered = false;
