@@ -1,4 +1,4 @@
-import html
+from markupsafe import escape
 import os
 import tempfile
 import unittest
@@ -16,11 +16,11 @@ class BlogTest(unittest.TestCase):
     def test_every_article_renders(self):
         arts = blogsection.articles()
         self.assertGreaterEqual(len(arts), 3)
-        self.assertIn(html.escape(arts[0]['title']), self.c.get('/blog/').get_data(as_text=True))
+        self.assertIn(escape(arts[0]['title']), self.c.get('/blog/').get_data(as_text=True))
         for a in arts:
             r = self.c.get(f'/blog/{a["slug"]}')
             self.assertEqual(r.status_code, 200, a['slug'])
-            self.assertIn(a['title'], r.get_data(as_text=True))
+            self.assertIn(escape(a['title']), r.get_data(as_text=True))
 
     def test_blogbot_json_article(self):
         """blogbot drops <slug>.json in articles/: the site shows it in its own layout."""
