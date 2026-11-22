@@ -1094,30 +1094,16 @@ button {
     50% { transform: translateY(23px) scale(1.04, 0.95); }
 }
 
-.bottom-cat-wrap.cat-zzz::before,
-.bottom-cat-wrap.cat-zzz::after {
-    content: 'Z';
+.bottom-cat-wrap.cat-zzz::before {
+    content: 'z Z';
     position: absolute;
-    right: 18px;
-    bottom: 50px;
+    right: 14px;
+    bottom: 46px;
     font-weight: 900;
-    font-size: 18px;
+    font-size: 13px;
     line-height: 1;
     color: var(--text-color);
-    opacity: 0;
     pointer-events: none;
-    animation: catZzz 2.4s steps(8) infinite;
-}
-
-.bottom-cat-wrap.cat-zzz::after {
-    font-size: 13px;
-    animation-delay: 1.2s;
-}
-
-@keyframes catZzz {
-    0% { transform: translate(0, 0); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translate(-26px, -54px); opacity: 0; }
 }
 
 /* 11. STARTLE (réveil en sursaut, aussi quand on le lâche) */
@@ -1219,8 +1205,6 @@ button {
     .mascot-cat-img.state-grumpy {
         animation: none;
     }
-    .bottom-cat-wrap.cat-zzz::before { animation: none; opacity: 1; transform: translate(-10px, -20px); }
-    .bottom-cat-wrap.cat-zzz::after { display: none; }
 }
 
 /* SCREEN SHAKE */
