@@ -392,7 +392,12 @@ def robots():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    return send_from_directory(app.static_folder, 'sitemap.xml', mimetype='application/xml')
+    """Static sitemap plus every blog article not already listed (blogbot adds articles every day)."""
+    from blogsection import articles
+    xml = (Path(app.static_folder) / 'sitemap.xml').read_text(encoding='utf-8')
+    extra = ''.join(f'  <url>\n    <loc>{PUBLIC_URL}/blog/{a["slug"]}</loc>\n    <lastmod>{a["date"]}</lastmod>\n  </url>\n'
+                    for a in articles() if f'/blog/{a["slug"]}</loc>' not in xml)
+    return Response(xml.replace('</urlset>', extra + '</urlset>'), mimetype='application/xml')
 
 
 @app.route('/')
