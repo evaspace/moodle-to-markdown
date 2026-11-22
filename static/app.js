@@ -157,6 +157,10 @@ const landingCatBubble = $('landing-cat-bubble');
 const catMascot = new CatMascotEngine([chillCat, landingCat]);
 const pixelGore = new PixelGoreFX(goreCanvas, appViewport);
 catMascot.startIdleLife();
+catMascot.onBoom = () => {  // 10 caresses trop rapides
+    const origin = getMascotCenter(chillCat);
+    catMascot.onWrongAnswer(() => pixelGore.explode(origin.x, origin.y));
+};
 
 function getMascotCenter(el) {
     if (!el) {
@@ -209,7 +213,7 @@ function showCatBubble(text, duration = 2200) {
 }
 
 function petTheCat() {
-    catMascot.onPet();
+    if (catMascot.onPet() === false) return;  // agacé ou explosé : il a déjà parlé
     const isLanding = $('landing-screen') && $('landing-screen').classList.contains('visible');
     const quotes = isLanding ? [
         "Ronron... Prêt à doomscroller les maths ? 🐾",
@@ -233,7 +237,6 @@ function triggerFeedback(correct) {
     const currentStreak = streakVal ? parseInt(streakVal.textContent || '0', 10) : 0;
     if (correct) {
         const nextStreak = currentStreak + 1;
-        catMascot.onCorrectAnswer(nextStreak);
         let quote = "Miaou ! 🎉 +1 STREAK !";
         if (nextStreak === 3) {
             quote = "🔥 COMBO x3 ! Tu chauffes !";
@@ -253,7 +256,7 @@ function triggerFeedback(correct) {
             ];
             quote = happyQuotes[Math.floor(Math.random() * happyQuotes.length)];
         }
-        showCatBubble(quote, 2200);
+        catMascot.onCorrectAnswer(nextStreak, quote);  // la phrase arrive après les « happy »
         if (streakPill) {
             streakPill.classList.add('pulse');
             setTimeout(() => streakPill.classList.remove('pulse'), 500);

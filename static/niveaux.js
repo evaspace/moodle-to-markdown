@@ -86,6 +86,12 @@
   const cat = new CatMascotEngine([$('chill-cat')]);
   const gore = new PixelGoreFX($('gore-canvas'), $('gore-canvas'));
   cat.startIdleLife();
+  cat.enter();
+  const boom = () => {
+    const r = $('chill-cat').getBoundingClientRect();
+    cat.onWrongAnswer(() => gore.explode(r.left + r.width / 2, r.top + r.height / 2));
+  };
+  cat.onBoom = boom;  // 10 caresses trop rapides
   let bubbleTimer = null;
   window.showCatBubble = (text, ms = 2000) => {
     const b = $('cat-bubble');
@@ -164,8 +170,9 @@
       pixelConfetti(canvas, 1);
     }
     if (n >= 2) slam(n, before, milestone ? 'milestone' : 'step');
-    showCatBubble(big ? 'Niveau validé !' : milestone ? `Combo ×${n} !` : 'Bien joué !', big || milestone ? 2600 : 1600);
-    cat.onCorrectAnswer(Math.min(1 + Math.floor(n / 5), 5));
+    // happy happy happy : plus de sauts pour un palier, encore plus pour un niveau validé
+    const hops = d.event === 'finished' ? 12 : big ? 8 : milestone ? 6 : 4;
+    cat.happy(hops, n, big ? 'Niveau validé !' : milestone ? `Combo ×${n} !` : 'Bien joué !', 'STAND');
     if (navigator.vibrate) navigator.vibrate(milestone ? [30, 40, 30, 40, 80] : [40]);
   }
 
@@ -199,12 +206,14 @@
 
     // Forced solo thinking: countdown from data-duree; "J'ai ma réponse" stops it and shows the correction.
     let left = +exo.dataset.duree || 300, answered = false;
+    const half = Math.floor(left / 2);
     const fmt = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
     const showSolution = () => {
       answered = true;
       clearInterval(tick);
       $('solution').hidden = false;
       $('btn-correction').disabled = true;
+      cat.relax();
       renderMath($('solution'));
     };
     $('timer-left').textContent = fmt(left);
@@ -212,6 +221,8 @@
     tick = setInterval(() => {
       left -= 1;
       $('timer-left').textContent = fmt(Math.max(left, 0));
+      if (!answered && left === half && half > 30) cat.ponder();
+      if (!answered && left === 30) cat.nervous();
       if (left <= 0 && !answered) {
         showSolution();
         $('timer').textContent = 'Temps écoulé : voici la correction.';

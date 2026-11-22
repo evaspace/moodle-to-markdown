@@ -14,6 +14,11 @@
   const cat = new CatMascotEngine([$('chill-cat')]);
   const gore = new PixelGoreFX($('gore-canvas'), $('gore-canvas'));
   cat.startIdleLife();
+  cat.enter();
+  cat.onBoom = () => {  // 10 caresses trop rapides
+    const r = $('chill-cat').getBoundingClientRect();
+    cat.onWrongAnswer(() => gore.explode(r.left + r.width / 2, r.top + r.height / 2));
+  };
   let bubbleTimer = null;
   window.showCatBubble = (text, ms = 1800) => {
     const b = $('cat-bubble');
@@ -191,8 +196,7 @@
       card.classList.add('revealed');
     }
     if (d.ok) {
-      cat.onCorrectAnswer(1);
-      showCatBubble('Bien joué !');
+      cat.onCorrectAnswer(1, 'Bien joué !');
       pixelConfetti($('gore-canvas'), 2);
     } else {
       const rect = $('chill-cat').getBoundingClientRect();
