@@ -115,6 +115,12 @@ SCHEMA = '''
         at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     CREATE INDEX IF NOT EXISTS idx_event_log ON event_log(account_id, at);
+    CREATE TABLE IF NOT EXISTS prestige (     -- times the user restarted a path from scratch
+        account_id INTEGER NOT NULL,
+        subject TEXT NOT NULL,
+        n INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (account_id, subject)
+    );
     CREATE TABLE IF NOT EXISTS password_reset (
         token_hash TEXT PRIMARY KEY,          -- sha256 of the token sent by e-mail
         account_id INTEGER NOT NULL,
@@ -140,6 +146,13 @@ def init_levels_db(path=DB_PATH):
         if 'board_ban' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # set by the admin from the « Triche possible » list of /admin/stats
             conn.execute('ALTER TABLE account ADD COLUMN board_ban INTEGER NOT NULL DEFAULT 0')
+        # abandoned paths: their rows move here, out of every stat, review and board (kept, never shown)
+        for t in ('exo_log', 'event_log'):
+            conn.execute(f'CREATE TABLE IF NOT EXISTS {t}_archive AS SELECT * FROM {t} WHERE 0')
+            have = {r[1] for r in conn.execute(f'PRAGMA table_info({t}_archive)')}
+            for (col,) in conn.execute('SELECT name FROM pragma_table_info(?)', (t,)).fetchall():
+                if col not in have:  # a column added to the live table later
+                    conn.execute(f'ALTER TABLE {t}_archive ADD COLUMN {col}')
 
 
 def log_event(conn, uid, kind, subject=None, level=None, exo_id=None):
@@ -370,6 +383,24 @@ def login_required(f):
             return redirect('/compte?next=' + request.path)
         return f(*args, **kwargs)
     return wrapper
+
+
+def prestige(conn, uid, subject):
+    row = conn.execute('SELECT n FROM prestige WHERE account_id=? AND subject=?', (uid, subject)).fetchone()
+    return row[0] if row else 0
+
+
+def abandon_path(conn, uid, subject, restart):
+    """Drop a path: its history leaves stats, reviews and boards; restart=True adds one prestige."""
+    for t in ('exo_log', 'event_log'):
+        cols = ', '.join(r[1] for r in conn.execute(f'PRAGMA table_info({t})'))
+        conn.execute(f'INSERT INTO {t}_archive ({cols}) SELECT {cols} FROM {t} WHERE account_id=? AND subject=?',
+                     (uid, subject))
+        conn.execute(f'DELETE FROM {t} WHERE account_id=? AND subject=?', (uid, subject))
+    conn.execute('DELETE FROM level_progress WHERE account_id=? AND subject=?', (uid, subject))
+    if restart:
+        conn.execute('INSERT INTO prestige (account_id, subject, n) VALUES (?, ?, 1) '
+                     'ON CONFLICT(account_id, subject) DO UPDATE SET n = n + 1', (uid, subject))
 
 
 def progress(conn, uid, subject):
@@ -640,6 +671,7 @@ def levels_home():
             subjects.append({'id': sid, 'titre': data['subject']['titre'], 'matiere': data['subject']['matiere'],
                              'ecue': data['subject']['ecue'], 'semestre': data['subject']['semestre'],
                              'level': level, 'best': best, 'n': n, 'percent': total_percent(st, data),
+                             'prestige': prestige(conn, uid, sid), 'started': bool(st),
                              'squares': squares(data['levels'][level - 1], level_status(st, data['levels'][level - 1])),
                              'levels': [{'n': l['n'], 'titre': l['titre'], 'examen': l.get('examen', False)}
                                         for l in data['levels']]})
@@ -651,6 +683,19 @@ def levels_home():
     return render_template('niveaux.html', subjects=subjects, username=session['username'], xp=total_xp,
                            f=f, sel=selector(paths, f), qs=urlencode(f), n_review=n_review,
                            reviewed=bool(request.args.get('revu')))
+
+
+@bp.route('/niveaux/<subject>/abandon', methods=['POST'])
+@login_required
+def level_abandon(subject):
+    """« Abandonner le chapitre »: recommencer (+1 prestige) or erase a misclick (no prestige)."""
+    get_parcours(subject)  # 404 on an unknown path
+    mode = request.form.get('mode')
+    if mode not in ('recommencer', 'erreur'):
+        abort(400)
+    with db() as conn:
+        abandon_path(conn, session['uid'], subject, mode == 'recommencer')
+    return redirect('/niveaux')
 
 
 @bp.route('/niveaux/melange')

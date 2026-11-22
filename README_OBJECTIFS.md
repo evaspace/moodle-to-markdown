@@ -283,3 +283,9 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 
 ## Décision du 2026-11-18 : dates d'examen depuis les mails
 - « Je n'aurai jamais le lien Auriga, donc tu dois faire sans, et les déduire directement des mails. » Fait : `tools/epita_mail.py` lit la boîte EPITA (connexion Microsoft faite une fois par l'utilisateur, jeton sur le serveur), et `tools/exam_dates.py` en déduit les dates (mails Moodle « Ouverture le … », annonces « aura lieu le … », « semaine du … »), 2 fois par jour avec le cron existant. Les mails de notes ne sont jamais lus pour le calendrier. Les plannings en image (pièces jointes Moodle) ne sont pas lus.
+
+## Abandonner un chapitre (2026-11-22)
+
+Demande : pouvoir abandonner complètement un chapitre, pour qu'il sorte des statistiques d'avancement et des exercices récurrents (révisions espacées). Deux cas : vouloir recommencer (on gagne du prestige), ou chapitre ouvert par erreur.
+
+Fait : sur `/niveaux`, chaque chapitre commencé a un bloc « Abandonner ce chapitre » avec deux boutons, « Recommencer à zéro (+1 prestige) » et « Effacer : ouvert par erreur ». Les deux déplacent l'historique du chapitre (`exo_log`, `event_log`) dans `exo_log_archive` / `event_log_archive` et suppriment `level_progress` : plus rien dans les stats, le classement, les points ni les révisions. Le prestige (table `prestige`) s'affiche dans le titre du chapitre.

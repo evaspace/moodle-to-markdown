@@ -36,7 +36,7 @@
 
   {% for s in subjects %}
   <section class="lv-subject">
-    <h2>{{ s.semestre }} {{ s.matiere|capitalize }} · {{ s.ecue }} · {{ s.titre }}</h2>
+    <h2>{{ s.semestre }} {{ s.matiere|capitalize }} · {{ s.ecue }} · {{ s.titre }}{% if s.prestige %} · Prestige {{ s.prestige }}{% endif %}</h2>
     <div class="lv-meter" role="progressbar" aria-valuenow="{{ s.percent }}" aria-valuemin="0" aria-valuemax="100"
          aria-label="Progression {{ s.titre }}"><span style="width: {{ s.percent }}%"></span></div>
     <p><strong>{{ s.percent }} %</strong> · niveau {{ s.level }} sur {{ s.n }} ·
@@ -53,6 +53,16 @@
       {% endfor %}
     </ol>
     </details>
+    {% if s.started %}
+    <details class="lv-all"><summary>Abandonner ce chapitre</summary>
+      <p class="lv-muted">Ton historique de ce chapitre sort de tes statistiques, du classement et des révisions espacées.</p>
+      <form method="post" action="/niveaux/{{ s.id }}/abandon" class="lv-row"
+            onsubmit="return confirm('Effacer toute ta progression sur « {{ s.titre }} » ?')">
+        <button class="lv-btn" name="mode" value="recommencer">Recommencer à zéro (+1 prestige)</button>
+        <button class="lv-btn" name="mode" value="erreur">Effacer : ouvert par erreur</button>
+      </form>
+    </details>
+    {% endif %}
   </section>
   {% endfor %}
 </div>

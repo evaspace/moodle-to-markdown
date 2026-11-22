@@ -303,6 +303,29 @@ class Api(unittest.TestCase):
         self.assertAlmostEqual(ref, 40 * int(lvl['exos'][0].get('duree', 5)) / mean, delta=1)
         self.assertGreaterEqual(limit, 60)
 
+    def test_abandon_path_clears_stats_and_reviews(self):
+        self.register('quitter')
+        self.answer(1, False)  # a miss: would come back in the spaced review
+        self.c.get(f'/niveaux/{SUBJECT}?facile=x')
+        with levels.db() as conn:
+            uid = conn.execute("SELECT id FROM account WHERE username='quitter'").fetchone()[0]
+        bad = self.c.post(f'/niveaux/{SUBJECT}/abandon', data={'mode': 'x'})
+        self.assertEqual(bad.status_code, 400)
+        r = self.c.post(f'/niveaux/{SUBJECT}/abandon', data={'mode': 'recommencer'})
+        self.assertEqual(r.status_code, 302)
+        with levels.db() as conn:
+            for t in ('exo_log', 'event_log', 'level_progress'):
+                self.assertEqual(conn.execute(f'SELECT COUNT(*) FROM {t} WHERE account_id=? AND subject=?',
+                                              (uid, SUBJECT)).fetchone()[0], 0, t)
+            self.assertEqual(conn.execute('SELECT COUNT(*) FROM exo_log_archive WHERE account_id=?', (uid,)).fetchone()[0], 1)
+            self.assertEqual(levels.prestige(conn, uid, SUBJECT), 1)
+        self.assertIn('Prestige 1', self.c.get('/niveaux').get_data(as_text=True))
+        self.answer(1, True)
+        self.c.post(f'/niveaux/{SUBJECT}/abandon', data={'mode': 'erreur'})  # misclick: no prestige
+        with levels.db() as conn:
+            self.assertEqual(levels.prestige(conn, uid, SUBJECT), 1)
+            self.assertEqual(levels.xp(conn, uid), 0)
+
     def test_password_reset(self):
         sent = []
         sync = lambda target, args, daemon: type('T', (), {'start': lambda self: target(*args)})()  # noqa: E731
