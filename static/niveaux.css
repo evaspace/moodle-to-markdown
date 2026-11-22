@@ -386,3 +386,30 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 
 .cal-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:.25rem 0 1rem}
 .cal-filter .lv-btn{padding:.4rem .9rem;min-height:40px}
+
+/* classement: podium with pixel cups (gold, silver, bronze carry the rank, so they are data, not decoration) */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.cl-head h2 { margin: 0; }
+.cl-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cl-find { padding: 6px 12px; font-size: 14px; }
+.cl-podium { list-style: none; padding: 0; margin: 16px 0 8px; display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; align-items: end; }
+.cl-podium li { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+.cl-podium .cl-p1 { order: 2; } .cl-podium .cl-p2 { order: 1; } .cl-podium .cl-p3 { order: 3; }
+.cl-cup { width: 48px; height: 48px; margin-bottom: 6px; }
+.cl-r1 .cl-cup { width: 64px; height: 64px; }
+.cl-r1 { --cup: #E8B10A; --cup-l: #FFE36B; --cup-d: #9C6F00; }
+.cl-r2 { --cup: #AEB5BE; --cup-l: #EEF1F4; --cup-d: #6F7680; }
+.cl-r3 { --cup: #C2723A; --cup-l: #E9A675; --cup-d: #7E4719; }
+.cl-podium .cl-name { font-weight: 700; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-val { font-size: 14px; color: var(--text-muted); margin: 2px 0 6px; }
+.cl-step { align-self: stretch; display: flex; align-items: flex-start; justify-content: center; padding-top: 6px;
+  background: var(--text-color); color: #fff; font-size: 22px; font-weight: 800; }
+.cl-r1 .cl-step { height: 84px; } .cl-r2 .cl-step { height: 60px; } .cl-r3 .cl-step { height: 40px; }
+.cl-podium li.me .cl-step { background: var(--accent-color); }
+.cl-gap td { border-bottom: 0; color: var(--text-muted); }
+.cl-board .st-hist tr.me td { background: #FFE9E9; }
+.cl-board .me:focus { outline: none; }
+.cl-board .me.cl-flash { animation: cl-flash 1.2s steps(2) 2; }
+@keyframes cl-flash { 50% { outline: 3px solid var(--accent-color); outline-offset: 2px; } }
+@media (prefers-reduced-motion: reduce) { .cl-board .me.cl-flash { animation: none; outline: 3px solid var(--accent-color); } }

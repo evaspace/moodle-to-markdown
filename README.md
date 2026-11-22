@@ -447,6 +447,10 @@ from the checkbox on `/classement` and `/compte`. Hidden accounts are left out o
 capped at `MAX_SECS` per attempt, `niveaux` = distinct (path, level) with a `niveau_up`/`niveau_finished`
 event (counted from 2026-11-17, when `event_log` started), `points` = sum of `exo_log.points`.
 Query `?p=jour|semaine|mois|annee&m=<matière id>`; top `BOARD_SIZE` (20) plus the user's own row if lower.
+Ranks are competition ranks (`levels.ranks`: ties share a rank, 1, 1, 3). The first three rows form a
+podium (order 2-1-3, step height by rank) with a pixel-art cup per rank: gold 1, silver 2, bronze 3, so two
+tied firsts get two gold cups and the next one bronze. « Ma place » (shown when the user is on a board) scrolls
+to their row and flashes it; a « … » row precedes their own row when it is outside the top.
 
 ### Cheat flags (`/admin/stats`, « Triche possible »)
 Levels are self-graded, so cheating means clicking « Réussi » without doing the work. `levels.suspects`

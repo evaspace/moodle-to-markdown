@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=32">
+  <link rel="stylesheet" href="/static/niveaux.css?v=34">
 </head>
 <body class="lv-page">
 {% set active = 'classement' %}{% include 'nav.html' %}
@@ -36,24 +36,52 @@
     <noscript><button class="lv-btn" type="submit">Filtrer</button></noscript>
   </form>
 
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="cup" viewBox="0 0 12 12" shape-rendering="crispEdges">
+      <g fill="var(--cup)"><rect x="2" y="1" width="8" height="4"/><rect x="3" y="5" width="6" height="1"/>
+        <rect x="4" y="6" width="4" height="1"/><rect x="5" y="7" width="2" height="2"/><rect x="3" y="9" width="6" height="1"/>
+        <rect x="0" y="1" width="2" height="1"/><rect x="0" y="2" width="1" height="2"/><rect x="1" y="4" width="1" height="1"/>
+        <rect x="10" y="1" width="2" height="1"/><rect x="11" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="1"/></g>
+      <g fill="var(--cup-l)"><rect x="1" y="0" width="10" height="1"/><rect x="3" y="2" width="1" height="2"/></g>
+      <g fill="var(--cup-d)"><rect x="9" y="1" width="1" height="4"/><rect x="8" y="5" width="1" height="1"/>
+        <rect x="6" y="7" width="1" height="2"/><rect x="2" y="10" width="8" height="1"/></g>
+    </symbol>
+  </svg>
   {% for key, title in [('temps', 'Temps de travail'), ('niveaux', 'Niveaux validés'), ('points', 'Points')] %}
-  <section class="cl-board">
-    <h2>{{ title }}</h2>
-    {% if boards[key] %}
+  {% set rows = boards[key] %}
+  <section class="cl-board" id="board-{{ key }}">
+    <div class="cl-head">
+      <h2>{{ title }}</h2>
+      {% if rows|selectattr('me')|list %}<button class="lv-btn cl-find" type="button" data-find="board-{{ key }}">Ma place</button>{% endif %}
+    </div>
+    {% if rows %}
+    <ol class="cl-podium">
+      {% for r in rows[:3] %}
+      <li class="cl-p{{ loop.index }} cl-r{{ r.rank }}{% if r.me %} me{% endif %}"{% if r.me %} tabindex="-1"{% endif %}>
+        <svg class="cl-cup" aria-hidden="true"><use href="#cup"/></svg>
+        <span class="cl-name">{{ r.name }}</span>
+        <span class="cl-val">{{ r.value }}</span>
+        <span class="cl-step">{{ r.rank }}<span class="sr-only">{{ 'er' if r.rank == 1 else 'e' }}</span></span>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if rows|length > 3 %}
     <table class="st-hist">
       <tbody>
-      {% for r in boards[key] %}
-        <tr{% if r.me %} class="me"{% endif %}><td>{{ r.rank }}</td><td class="cl-name">{{ r.name }}</td><td>{{ r.value }}</td></tr>
+      {% for r in rows[3:] %}
+        {% if r.gap %}<tr class="cl-gap" aria-hidden="true"><td>…</td><td></td><td></td></tr>{% endif %}
+        <tr{% if r.me %} class="me" tabindex="-1"{% endif %}><td>{{ r.rank }}</td><td class="cl-name">{{ r.name }}</td><td>{{ r.value }}</td></tr>
       {% endfor %}
       </tbody>
     </table>
+    {% endif %}
     {% else %}
     <p class="lv-muted">Personne sur cette période.</p>
     {% endif %}
   </section>
   {% endfor %}
 </div>
-<script src="/static/niveaux.js?v=14"></script>
+<script src="/static/niveaux.js?v=22"></script>
 {% include 'footer.html' %}
 </body>
 </html>

@@ -61,6 +61,14 @@
     $('board-msg').textContent = !res.ok ? 'Erreur, réessaie'
       : board.checked ? 'Tu apparais dans le classement' : "Tu n'apparais plus dans le classement";
   };
+  document.querySelectorAll('[data-find]').forEach(btn => btn.onclick = () => {
+    const me = document.querySelector(`#${btn.dataset.find} .me`);
+    if (!me) return;
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    me.scrollIntoView({ block: 'center', behavior: calm ? 'auto' : 'smooth' });
+    me.focus({ preventScroll: true });
+    me.classList.remove('cl-flash'); void me.offsetWidth; me.classList.add('cl-flash');
+  });
   const logout = $('logout');
   if (logout) logout.onclick = async () => { await post('/api/logout'); location.href = '/compte'; };
 

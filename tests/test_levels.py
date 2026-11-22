@@ -511,6 +511,10 @@ class Leaderboard(unittest.TestCase):
         self.assertEqual([(r[1], r[2]) for r in b['niveaux']], [('ann', 2)])  # same level twice counts once
         self.assertEqual([r[1] for r in levels.leaderboards(conn, '2026-11-17 23:00:00', ['a'])['points']], ['ann', 'ben'])
 
+    def test_ranks_ties(self):
+        self.assertEqual(levels.ranks([9, 9, 5, 4, 4, 1]), [1, 1, 3, 4, 4, 6])
+        self.assertEqual(levels.ranks([]), [])
+
     def test_page_and_toggle(self):
         import app as app_module
         c = app_module.app.test_client()

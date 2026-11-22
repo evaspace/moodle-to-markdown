@@ -1228,6 +1228,14 @@ def leaderboards(conn, since, subjects=None):
     }
 
 
+def ranks(values):
+    """Competition ranks of values sorted best first: ties share a rank, the next one skips (1, 1, 3)."""
+    out = []
+    for i, v in enumerate(values):
+        out.append(out[-1] if i and v == values[i - 1] else i + 1)
+    return out
+
+
 def _duration(secs):
     h, m = divmod(round(secs / 60), 60)
     return f'{h} h {m:02d}' if h else f'{m} min'
@@ -1259,10 +1267,10 @@ def leaderboard_page():
     fmt = {'temps': _duration, 'niveaux': str, 'points': str}
     boards = {}
     for key, rows in raw.items():
-        ranked = [{'rank': i + 1, 'name': name, 'value': fmt[key](v), 'me': aid == uid}
-                  for i, (aid, name, v) in enumerate(rows)]
+        ranked = [{'rank': rank, 'name': name, 'value': fmt[key](v), 'me': aid == uid}
+                  for (aid, name, v), rank in zip(rows, ranks([r[2] for r in rows]))]
         top = ranked[:BOARD_SIZE]
-        top += [r for r in ranked[BOARD_SIZE:] if r['me']]  # own rank even outside the top
+        top += [dict(r, gap=True) for r in ranked[BOARD_SIZE:] if r['me']]  # own rank even outside the top
         boards[key] = top
     return render_template('classement.html', boards=boards, periods=PERIODS, period=period,
                            mats=mats, mat=mat, visible=visible)
