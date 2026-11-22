@@ -181,14 +181,25 @@ _cache = {}
 
 
 def load_parcours():
-    """All level paths, reloaded when a JSON file changes."""
+    """All level paths, reloaded when a JSON file changes. Each exercise and variant gets its
+    `origine` (TD, exam or written for the site) from parcours/origines.json (tools/sources.py)."""
     out = {}
+    orig_path = PARCOURS_DIR / 'origines.json'
+    orig_mtime = orig_path.stat().st_mtime if orig_path.exists() else None
     for p in sorted(PARCOURS_DIR.glob('*.json')):
-        if p.name == 'syllabus.json':  # registry, not a level path
+        if p.name in ('syllabus.json', 'origines.json'):  # registry and origins, not level paths
             continue
-        mtime = p.stat().st_mtime
+        mtime = (p.stat().st_mtime, orig_mtime)
         if _cache.get(p.name, (None,))[0] != mtime:
-            _cache[p.name] = (mtime, json.loads(p.read_text(encoding='utf-8')))
+            data = json.loads(p.read_text(encoding='utf-8'))
+            origins = json.loads(orig_path.read_text(encoding='utf-8')).get(data['subject']['id'], {}) if orig_mtime else {}
+            for lvl in data['levels']:
+                for exo in lvl['exos']:
+                    o = origins.get(exo['id'], [])
+                    for i, x in enumerate([exo] + exo.get('variants', [])):
+                        if i < len(o):
+                            x['origine'] = o[i]
+            _cache[p.name] = (mtime, data)
         data = _cache[p.name][1]
         out[data['subject']['id']] = data
     return out
@@ -784,7 +795,7 @@ def level_page(subject):
             if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),
         squares=squares(lvl, status), combo=streak_now,
-        exo={'id': exo['id'], 'src': exo.get('src'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
+        exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
              # one formula per line; the level notions stay below as course reminder
              'formules': md('\n'.join(f'- {f}' for f in exo.get('formules', '').split(' · ') if f))},

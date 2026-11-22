@@ -30,7 +30,10 @@
   {% endif %}
 
   <div class="lv-statement" id="exo-statement">{{ exo.enonce|safe }}</div>
-  {% if exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
+  {% set o = exo.origine %}
+  {% if o and o.kind != 'site' %}<p class="lv-muted">Source : {{ o.kind }} · {{ o.src }} · {{ 'adapté' if o.adapte else 'repris tel quel' }}</p>
+  {% elif o %}<p class="lv-muted">Source : {{ o.src|lower }}</p>
+  {% elif exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
 
   <div class="lv-row">
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>

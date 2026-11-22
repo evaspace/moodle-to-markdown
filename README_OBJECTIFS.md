@@ -289,3 +289,11 @@ Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord s
 Demande : pouvoir abandonner complètement un chapitre, pour qu'il sorte des statistiques d'avancement et des exercices récurrents (révisions espacées). Deux cas : vouloir recommencer (on gagne du prestige), ou chapitre ouvert par erreur.
 
 Fait : sur `/niveaux`, chaque chapitre commencé a un bloc « Abandonner ce chapitre » avec deux boutons, « Recommencer à zéro (+1 prestige) » et « Effacer : ouvert par erreur ». Les deux déplacent l'historique du chapitre (`exo_log`, `event_log`) dans `exo_log_archive` / `event_log_archive` et suppriment `level_progress` : plus rien dans les stats, le classement, les points ni les révisions. Le prestige (table `prestige`) s'affiche dans le titre du chapitre.
+
+## Sources des exercices (2026-11-22)
+
+Demande : sur tous les exercices (en commençant par les maths), afficher de quel exercice ça vient, si c'est un TD ou un examen, et si c'est une adaptation ou non.
+
+Décision (utilisateur) : un exercice dont on ne retrouve aucun TD ni examen d'origine affiche « Écrit pour le site » (pas de source inventée).
+
+Fait (maths) : chaque exercice et chaque variante affiche « Source : TD · TD4 Suites S1 2031, ex. 2.4 · adapté », « Source : Examen · … · repris tel quel » ou « Source : écrit pour le site ». Fichier `parcours/origines.json` produit par `tools/sources.py`. Bilan : 1 439 énoncés, 75 TD, 303 examen, 1 061 écrits pour le site. Reste : les autres matières.

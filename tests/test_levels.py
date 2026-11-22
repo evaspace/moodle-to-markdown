@@ -99,6 +99,20 @@ class Rules(unittest.TestCase):
         self.assertIsNone(levels.variant(e, 1)['src'])  # a variant is not the past-exam exercise
         self.assertEqual(levels.variant({'id': 'y', 'enonce': 'C'}, 5)['enonce'], 'C')
 
+    def test_maths_origins_complete(self):
+        # every maths exercise and variant has its own origin: rerun tools/sources.py after a content change
+        for pid, data in levels.load_parcours().items():
+            if not pid.startswith('maths'):
+                continue
+            for lvl in data['levels']:
+                for e in lvl['exos']:
+                    for k, x in enumerate([e] + e.get('variants', [])):
+                        self.assertIn('origine', x, f'{pid}/{lvl["n"]}/{e["id"]} version {k}')
+                        o = levels.variant(e, k)['origine']
+                        self.assertIn(o['kind'], ('TD', 'Examen', 'site'))
+                        if k and not e.get('src'):
+                            self.assertEqual(o['kind'], 'site')  # variant of an uncited exercise
+
 
 class Selection(unittest.TestCase):
     P = [('a', {'subject': {'semestre': 'S1', 'matiere': 'maths', 'ecue': 'A', 'titre': 'a'}}),

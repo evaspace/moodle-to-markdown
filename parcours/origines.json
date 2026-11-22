@@ -1,0 +1,9041 @@
+{
+ "maths-s2-alm": {
+  "al1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "al2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "al3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "al4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "al5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "al6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "an1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "an2": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "an3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "an4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "an5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "an6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ai1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ai2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ai3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ai4": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 2.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ai5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ai6": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 5 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "at0": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "at1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "at2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "at3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "at4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "at5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "am1": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 3.1 (a)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "am2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "am3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "am4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "am5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap2": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ap3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ap7": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "as1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "as2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "as3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "as4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "av1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "av2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "av3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "av4": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 1.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "av5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ab1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ab2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ab3": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 3.1 (b)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ab4": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 3.1 (c)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ab5": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ab6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "aj1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "aj2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "aj3": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 4.1 à 4.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aj4": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 4.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aj5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "aj6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ax1": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 1 (8 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax2": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 2 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax3": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 3 (7 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax4": [
+   {
+    "src": "Examen S2-B4 ALM 2026, ex. 4 et 5 (15 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ay1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ay2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ay3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "aw1": [
+   {
+    "src": "Examen S2-B4 ALM juin 2024, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw2": [
+   {
+    "src": "Examen S2-B4 ALM juin 2024, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw3": [
+   {
+    "src": "Examen S2-B4 ALM mai 2025, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw4": [
+   {
+    "src": "Examen S2-B4 ALM juin 2024, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw5": [
+   {
+    "src": "Examen S2-B4 ALM juin 2024, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw6": [
+   {
+    "src": "Examen S2-B4 ALM juin 2024, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "aw7": [
+   {
+    "src": "Examen S2-B4 ALM mai 2025, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ]
+ },
+ "maths-s2-apef-fonctions": {
+  "fc1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fc2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fc3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fc4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fc5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ft1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ft2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ft3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ft4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ft5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fo1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fo2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fo3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fo4": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fo5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fe6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fy1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fy2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fy3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fy4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fy5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fu7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fp1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fp2": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 4.1",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "fp3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fp4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fp5": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 3.3 (c)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fk1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fk2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fk3": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 4.2 (a)",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "fk4": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 4.2 (b)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fk5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fk6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fl6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fx1": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 3 (étude locale)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fx2": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 4 (développements limités)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fx3": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 5 (calcul de limites)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fz1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fz2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fz3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fz4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fw1": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fw2": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fw3": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fw4": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fw5": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 6",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "fw6": [
+   {
+    "src": "Examen S2-B3 APEF mars 2025, ex. 5",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "fw7": [
+   {
+    "src": "Examen S2-B3 APEF mars 2025, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ]
+ },
+ "maths-s2-apef-polynomes": {
+  "pd1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pd2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pd3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pd4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pe1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pe2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pe3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pe4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pm1": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 1.1 (a)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pm2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pm3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pm4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pm5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ps1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ps2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ps3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ps4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pf1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pf2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pf3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pf4": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 1.1 (b)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pf5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pt1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pt2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pt3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pt4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pz6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "px1": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 1.1",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "px2": [
+   {
+    "src": "Examen S2-B3 APEF mars 2026, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "px3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "py1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "py2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "py3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pw1": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pw2": [
+   {
+    "src": "Examen S2-B3 APEF mars 2024, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pw3": [
+   {
+    "src": "Examen S2-B3 APEF mars 2025, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ]
+ },
+ "maths-s1-apis-edo": {
+  "e1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c2": [
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1a",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "c3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s2": [
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1b",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v4": [
+   {
+    "src": "Examen S2-B3-APEF mars 2025, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2025, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "v5": [
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "k1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p1": [
+   {
+    "src": "Examen S2-B3-APEF mars 2025, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2025, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p2": [
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1c-3.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3.1c-3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ex25": [
+   {
+    "src": "Examen S2-B3-APEF mars 2025, ex. 2 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex24": [
+   {
+    "src": "Examen S2-B3-APEF mars 2024, ex. 3 (9 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "exmix": [
+   {
+    "src": "Écrit pour le site sur le modèle des annales",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "x1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "x2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "x3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "x4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s1-apis-integrales": {
+  "d1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d5": [
+   {
+    "src": "Contrôle 1 S1, nov. 2020, ex. 3.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Contrôle 1 S1, nov. 2020, ex. 3.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "d6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d7": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.1 a",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.1 a",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "d8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d9": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d10": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p1": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p2": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p3": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p4": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "p5": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "p6": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": false
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "p7": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2 application",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "p8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p9": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p10": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p11": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p12": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p13": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p14": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a1": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "a2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "a3": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 a",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "a4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a9": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 c",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 1.2.3 c",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "u3": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.2",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "u4": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.9",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.9",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "u5": [
+   {
+    "src": "Partiel S1 janv. 2023, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S1 janv. 2023, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "u6": [
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.1",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "u7": [
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "u8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u9": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l1": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.1",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.1",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.3",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.3",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.1",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "l4": [
+   {
+    "src": "Partiel S1 janv. 2023, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S1 janv. 2023, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "l5": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.4",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.4",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l6": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.5",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l7": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.8",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.8",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l8": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.6",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.6",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l9": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.7",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.11.7",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "l10": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l11": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l12": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ie1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ie2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ie3": [
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ie4": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ie5": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.1",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.1",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "it1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "it2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.2",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "it3": [
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.2",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "it4": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "il1": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.3",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.3",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "il2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "il3": [
+   {
+    "src": "Contrôle 1 S1 nov. 2020, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Contrôle 1 S1 nov. 2020, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "il4": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.6 ★",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.6 ★",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "dd1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dd2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.4",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.4",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "dd3": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.5",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "dd4": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.7 ★",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.12.7 ★",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "ca1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ca2": [
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.3",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ca3": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.1",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.1",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "cr1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "cr2": [
+   {
+    "src": "Contrôle 1 S1 nov. 2020, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Contrôle 1 S1 nov. 2020, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cr3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cr4": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.3 ; TD3 Primitives et intégrales S1 2031, ex. 3.13.2",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1.3 ; TD3 Primitives et intégrales S1 2031, ex. 3.13.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cs1": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.5",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "cs2": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.3",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.3",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "cs3": [
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.3 ; TD3 Primitives et intégrales S1 2031, ex. 3.13.4",
+    "kind": "Examen",
+    "adapte": false
+   },
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1.3 ; TD3 Primitives et intégrales S1 2031, ex. 3.13.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cs4": [
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.6 ★",
+    "kind": "TD",
+    "adapte": true
+   },
+   {
+    "src": "TD3 Primitives et intégrales S1 2031, ex. 3.13.6 ★",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "x1": [
+   {
+    "src": "Contrôle S1 nov. 2021, ex. 3 (4,5 points)",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "x2": [
+   {
+    "src": "Contrôle S1 nov. 2022, ex. 1 (5 points)",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "x3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 5 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "x4": [
+   {
+    "src": "Contrôle 1 S1 nov. 2020, ex. 3 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "x5": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 1 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "x6": [
+   {
+    "src": "Partiel S1 janv. 2023, ex. 1 (3 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "h1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s1-apis-suites": {
+  "td3": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.1.1-2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td1": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 2.3.1",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td2": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 2.3.2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "ag1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ag2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ag3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ag4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ag5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "td4": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.1.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "va1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va5": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "td5": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.1.3-4",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td6": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.1.9-10",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "bo1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "bo2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "bo3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 4.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bo4": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 2.2-2.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bo5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "td7": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.1.6-8",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td8": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.2.1-2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td9": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 1.2.3-4",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "li1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "li8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fi1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fi2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fi3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fi4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "fi5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "td10": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.6.1",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "ge1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ge2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ge3": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.6.2",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "ge4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ge5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "td11": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 2.3.3 a-c",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td12": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 2.3.3 d",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td13": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 2.4",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "rg1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rg2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rg3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rg4": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "rg5": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 1.4a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "td14": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "td15": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.7",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "lm1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "lm2": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.5",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "lm3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 2.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "lm4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "td16": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.9",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "ad1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ad2": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ad3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ad4": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 1.2-1.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ad5": [
+   {
+    "src": "TD4 Suites S1 2031, ex. 3.8",
+    "kind": "TD",
+    "adapte": true
+   }
+  ],
+  "re1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "re2": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 5.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "re3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "re4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "re5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ex1": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 6",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex2": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 6",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ex4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "la1": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 3.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "la2": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 3.2a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "la3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 3.2b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "la4": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 3.2c",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "la5": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 3.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "la6": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 3.2-3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "de1": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "de2": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "de3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "de4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "sx1": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 1 (7 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sx2": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 2 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sx3": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 3 (7,5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sx4": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 5 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sx5": [
+   {
+    "src": "Examen S1B2-SR janv. 2025, ex. 4-6 (10,5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sx6": [
+   {
+    "src": "Examen B2-ASI janv. 2024, ex. 2-4 et 6 (14 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "sh1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "sh2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "sh3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "sh4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "sh5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s1-dp": {
+  "c1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c5": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pl1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pl2": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pl3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pl4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pl5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ar1": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ar2": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ar3": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ar4": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ar5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ar6": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "co1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "co2": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.6",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.6",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "co3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "co4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "co5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ct1": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ct2": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ct3": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 2.5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ct4": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2.5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ct5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ct6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "id1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "id2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "id3": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 3.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 3.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "id4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "id5": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "id6": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 3.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 3.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eq1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eq2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eq3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eq4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eq5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pc1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pc2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pc3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pc4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ba1": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba4": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba3": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba6": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba2": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 4.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba5": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ba7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "in1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "in2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "in3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "in4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va1": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "va2": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.1",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "va3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "va5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "pr4": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pr5": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 5.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "pr6": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bi1": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bi2": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bi3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "bi4": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 6.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen B1 nov. 2023, ex. 6.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "bi5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "bi6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dx1": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 2 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dx2": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 2 (7 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dx3": [
+   {
+    "src": "Examen B1 nov. 2023, ex. 4 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dx4": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 4 (6,5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dx5": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 6 (9 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dx6": [
+   {
+    "src": "Examen B1-DP oct. 2024, ex. 5 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "dh1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dh2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dh3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dh4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dh5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "dh6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s2-ev": {
+  "ec1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ec2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ec3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ec4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ea1": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ea2": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 1.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ea3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ea4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ea5": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "es0": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "es1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "es2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "es3": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 2.2 (a)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "es4": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 2.2 (b)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "es5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "es6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "es7": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 1.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "es8": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 1.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eg1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eg2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eg3": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eg4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eg5": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 5.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "en1": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "el0": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 5.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "el1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "el2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "el3": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 5.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "el4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "el5": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "el6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eb1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eb2": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eb3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eb4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eb5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eb6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eo1": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eo2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "eo3": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.1 (a)",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.1 (a)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "eo4": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.1 (b)",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 3.1 (b)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ei1": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 5.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ei2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ei3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ei4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ei5": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 3.1 et 3.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ei6": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ed1": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 4.3",
+    "kind": "Examen",
+    "adapte": false
+   }
+  ],
+  "ed2": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 3.3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ed3": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 5.4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ed4": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ed5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ed6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ex1": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 1 et 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex2": [
+   {
+    "src": "Examen S2-B3 EV mars 2026, ex. 3, 4 et 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex3": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 1 à 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ex4": [
+   {
+    "src": "Examen S2-B4 EV 2026, ex. 5 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ey1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ey2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ey3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ez1": [
+   {
+    "src": "Examen S2-B3 EV mars 2024 et mars 2025, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ez2": [
+   {
+    "src": "Examen S2-B3 EV mars 2024, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ez3": [
+   {
+    "src": "Examen S2-B4 EV juin 2024, ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ez4": [
+   {
+    "src": "Examen S2-B4 EV juin 2024, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ez5": [
+   {
+    "src": "Examen S2-B4 EV mai 2025, ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ]
+ },
+ "maths-s3-al": {
+  "b1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "n1": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "n2": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "n3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "n4": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "n5": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "n6": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "n7": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "d1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s1": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s2": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s3": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s4": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s5": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "s6": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "a1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g3": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "g4": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "g5": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "g6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "m1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "m2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "m3": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "m4": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "m5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "m6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "m7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u1": [
+   {
+    "src": "Partiel S3 Maths décembre 2021, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths décembre 2021, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "u2": [
+   {
+    "src": "Partiel S3 Maths décembre 2021, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   },
+   {
+    "src": "Partiel S3 Maths décembre 2021, ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "u3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z0": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ax1": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 3 (4 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax2": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax3": [
+   {
+    "src": "Partiel S3 Maths janvier 2021, ex. 5 (4 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax4": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax5": [
+   {
+    "src": "Final S3 Maths 2020 (feuille Exercises), ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ax6": [
+   {
+    "src": "Partiel S3 Maths décembre 2021, ex. 4 (4,5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "y1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "y2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "y3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "y4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "y5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "y6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s3-asn": {
+  "c1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "p6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "k6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "a6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "h6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "mx1": [
+   {
+    "src": "Examen B5/ASN octobre 2024, ex. 1 (9 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mx2": [
+   {
+    "src": "Examen B5/ASN octobre 2024, ex. 2 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "x3": [
+   {
+    "src": "Examen B5/ASN octobre 2024, style ex. 1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "z1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s3-pse": {
+  "c1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "c6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "e6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "g6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "f7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "d6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "s7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "b6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "r8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "q6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "u6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "i7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "v6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "gi8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "l8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "mx1": [
+   {
+    "src": "Examen B5/PSE octobre 2024, ex. 1 (8 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mx2": [
+   {
+    "src": "Examen B5/PSE octobre 2024, ex. 2 (7 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mx3": [
+   {
+    "src": "Examen B5/PSE octobre 2024, ex. 3 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "my1": [
+   {
+    "src": "Examen B5/PSE octobre 2025, ex. 1 (5 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "my2": [
+   {
+    "src": "Examen B5/PSE octobre 2025, ex. 2 (8 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "my3": [
+   {
+    "src": "Examen B5/PSE octobre 2025, ex. 3 (7 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mz1": [
+   {
+    "src": "Mi-semestre S3 octobre 2023, ex. 6 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mz2": [
+   {
+    "src": "Mi-semestre S3 octobre 2023, ex. 7 (4 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mz3": [
+   {
+    "src": "Contrôle S3 novembre 2021, ex. 4 (6 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "mz4": [
+   {
+    "src": "Contrôle S3 novembre 2021, ex. 5 (4 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "z1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z6": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   },
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z7": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "z8": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ },
+ "maths-s1-obm": {
+  "lg1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "lg2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "lg3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "lg4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "cn1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "cn2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.1a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cn3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.1b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "cn4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ng1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ng2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ng3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.1c",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ng4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ng5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "qt1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "qt2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.2a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "qt3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.2a",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "qt4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "nq1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.2b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "nq2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.2b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "nq3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "nq4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rs1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.3a-b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "rs2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rs3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.3c-d",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "rs4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rc1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rc2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rc3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rc4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "en1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.4a-b",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "en2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1.4c",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "en3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "en4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "im1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 2.1",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "im2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 2.2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "im3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "im4": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 3",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "im5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ij1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ij2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 2.2c-d",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ij3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 2.2e-f",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ij4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ij5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rl1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 4.1-2",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "rl2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 4.3-4",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "rl3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "rl4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "ox1": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 1 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ox2": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 2 et 3 (10 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ox3": [
+   {
+    "src": "Examen B1-OBM oct. 2024, ex. 4 (4 points)",
+    "kind": "Examen",
+    "adapte": true
+   }
+  ],
+  "ox4": [
+   {
+    "src": "Écrit pour le site sur le modèle des annales",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "oh1": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "oh2": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "oh3": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "oh4": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ],
+  "oh5": [
+   {
+    "src": "Écrit pour le site",
+    "kind": "site",
+    "adapte": false
+   }
+  ]
+ }
+}
