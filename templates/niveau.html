@@ -6,9 +6,9 @@
   <meta name="robots" content="noindex">
   <title>Niveau {{ lvl.n }} · {{ subject.titre }}</title>
   {% include "share.html" %}
-  <link rel="stylesheet" href="/static/style.css?v=20261122b">
+  <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=33">
+  <link rel="stylesheet" href="/static/niveaux.css?v=34">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -50,9 +50,9 @@
   {% if nav.streak %}<p class="lv-muted" id="day-streak">Série : {{ nav.streak }} jour{{ 's' if nav.streak > 1 }} de révision d'affilée</p>{% endif %}
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
-  <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p></details>
+  <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p>
+    <label class="lv-pari-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
-  <label class="cl-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>
     <h2 class="lv-notions-title">Fiche du chapitre : {{ subject.titre }}</h2>

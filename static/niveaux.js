@@ -199,6 +199,7 @@
       const res = await post(`/api/niveaux/${exo.dataset.subject}/hint`, { kind });
       if (!res.ok || !res.data.extra || answered) return;
       left += res.data.extra;
+      if (left > 30) cat.relax();  // du temps ajouté : il arrête de stresser
       $('timer-left').textContent = fmt(left);
       $('timer-note').textContent = res.data.div > 1
         ? `Aide ouverte : +${fmt(res.data.extra)} de temps, points divisés par ${res.data.div}.`

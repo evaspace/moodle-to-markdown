@@ -1129,14 +1129,10 @@ button {
     60%, 85% { transform: translateY(2px) rotate(10deg); }
 }
 
-/* 13. NERVOUS (30 dernières secondes du chrono) */
+/* 13. NERVOUS (30 dernières secondes du chrono) : yeux ouverts, mouvement lent pour ne pas déconcentrer */
 .mascot-cat-img.state-nervous {
-    animation: catNervous 0.16s linear infinite;
-}
-
-@keyframes catNervous {
-    0%, 100% { transform: translate(0, 2px); }
-    50% { transform: translate(2px, 0); }
+    transform: translateY(2px);
+    animation: catWakeAlert 1.8s ease-in-out infinite;
 }
 
 /* 14. DIZZY (doomscroll trop rapide) */
