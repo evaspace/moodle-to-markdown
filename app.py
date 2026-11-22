@@ -11,14 +11,15 @@ from datetime import timedelta
 from functools import wraps
 from html import escape as html_escape
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 import bleach
 import markdown
 from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory, session
 
 from init_db import DB_PATH, init_db
-from levels import bp as levels_bp, init_levels_db, is_admin, secret_key
+from levels import PUBLIC_URL, bp as levels_bp, init_levels_db, is_admin, secret_key
+from ratelimit import client_ip, too_many
 from scroll import bp as scroll_bp, init_scroll_db
 from blogsection import bp as blog_bp
 from themes import clean_name, syllabus_rank, theme_for, theme_order
@@ -34,8 +35,22 @@ app = Flask(__name__)
 init_db()
 app.config.update(SECRET_KEY=secret_key(), SESSION_COOKIE_SAMESITE='Lax', SESSION_COOKIE_HTTPONLY=True,
                   SESSION_COOKIE_SECURE=os.environ.get('COOKIE_INSECURE') != '1',
-                  PERMANENT_SESSION_LIFETIME=timedelta(days=180))
+                  PERMANENT_SESSION_LIFETIME=timedelta(days=180), MAX_CONTENT_LENGTH=2 * 1024 * 1024)
 init_levels_db()
+ALLOWED_ORIGINS = {urlparse(PUBLIC_URL).netloc}
+
+
+@app.before_request
+def guard_writes():
+    """CSRF: a browser always sends Origin on a cross-site POST, so reject a foreign one. Then cap writes per IP."""
+    if request.method in ('GET', 'HEAD', 'OPTIONS'):
+        return None
+    origin = request.headers.get('Origin')
+    if origin and urlparse(origin).netloc not in ALLOWED_ORIGINS | {request.host}:
+        return jsonify(error='origine refusée'), 403
+    if too_many(('post', client_ip()), 600, 60):
+        return jsonify(error='trop de requêtes, réessaie dans une minute'), 429
+    return None
 app.register_blueprint(levels_bp)
 init_scroll_db()
 app.register_blueprint(scroll_bp)
@@ -104,7 +119,12 @@ def admin_required(f):
             return f(*args, **kwargs)
         if ADMIN_PASSWORD:
             auth = request.authorization
+            key = ('admin-fail', client_ip())
+            if too_many(key, 10, 900, hit=False):
+                return Response('Trop de tentatives, réessaie dans 15 minutes', 429)
             if not auth or not hmac.compare_digest((auth.password or ''), ADMIN_PASSWORD):
+                if auth:
+                    too_many(key, 10, 900)
                 return Response('Authentification requise', 401,
                                 {'WWW-Authenticate': 'Basic realm="admin"'})
         return f(*args, **kwargs)

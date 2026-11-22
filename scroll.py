@@ -136,6 +136,9 @@ def _progress(data, pts):
 def client_log():
     """Browser-side errors and true/false tap traces (debug of the Android tap bug, 2026-11-17): written to the app log."""
     import logging
+    from ratelimit import client_ip, too_many
+    if too_many(('client-log', client_ip()), 60, 60):
+        return '', 429
     body = (request.get_data(as_text=True) or '')[:2000]
     logging.getLogger('client').warning('client-log uid=%s ua=%s %s', session.get('uid'),
                                         (request.headers.get('User-Agent') or '')[:160], body)

@@ -28,6 +28,7 @@ from flask import Blueprint, abort, jsonify, redirect, render_template, request,
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from init_db import DB_PATH
+from ratelimit import client_ip, too_many
 
 bp = Blueprint('levels', __name__)
 ROOT = Path(__file__).resolve().parent
@@ -421,6 +422,8 @@ def _credentials():
 @bp.route('/api/register', methods=['POST'])
 def register():
     username, password, email = _credentials()
+    if too_many(('register', client_ip()), 30, 3600):  # generous: a whole class shares the school IP
+        return jsonify(error='Trop de comptes créés depuis cette connexion, réessaie plus tard'), 429
     if not USERNAME_RE.match(username):
         return jsonify(error='Identifiant : 3 à 32 caractères, lettres, chiffres, . _ -'), 400
     if not 6 <= len(password) <= 200:
@@ -442,9 +445,14 @@ def register():
 @bp.route('/api/login', methods=['POST'])
 def login():
     username, password, _ = _credentials()
+    user_key, ip_key = ('login-fail', username.lower()), ('login-fail-ip', client_ip())
+    if too_many(user_key, 10, 900, hit=False) or too_many(ip_key, 50, 900, hit=False):
+        return jsonify(error='Trop de tentatives, réessaie dans 15 minutes'), 429
     with db() as conn:
         row = conn.execute('SELECT id, username, pw_hash FROM account WHERE username=?', (username,)).fetchone()
     if not row or not check_password_hash(row['pw_hash'], password):
+        too_many(user_key, 10, 900)
+        too_many(ip_key, 50, 900)
         return jsonify(error='Identifiant ou mot de passe incorrect'), 401
     session.clear()
     session.update(uid=row['id'], username=row['username'])
@@ -498,6 +506,8 @@ def send_mail(to, subject, body):
 def reset_request():
     """Same answer whether the account exists or not (no account enumeration)."""
     who = ((request.get_json(silent=True) or {}).get('who') or '').strip()[:200]
+    if too_many(('reset', client_ip()), 10, 3600):
+        return jsonify(error='Trop de demandes, réessaie dans une heure'), 429
     if who:
         with db() as conn:
             row = conn.execute('SELECT id, username, email FROM account WHERE (username=? OR email=? COLLATE NOCASE) '
