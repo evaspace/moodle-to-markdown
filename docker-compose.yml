@@ -3,6 +3,7 @@ services:
     build: .
     container_name: epitadoomscrolling_app
     environment:
+    - DB_PATH=/data/cards.db
     - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
     - MAIL_SERVER=${MAIL_SERVER:-ssl0.ovh.net}
     - MAIL_PORT=${MAIL_PORT:-587}
@@ -24,4 +25,7 @@ services:
     - 172.17.0.1:5080:5000
     restart: always
     volumes:
-    - .:/app
+    # code = live copy (tools/deploy.sh), data = this folder: cards.db, blogbot articles
+    - /opt/pierref/epitadoomscrolling-live:/app
+    - /opt/pierref/epitadoomscrolling:/data
+    - /opt/pierref/epitadoomscrolling/articles:/app/articles

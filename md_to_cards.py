@@ -78,7 +78,7 @@ SYLLABUS = "SYLLABUS_ORGANISATION.md"
 MAX_CHUNK_CHARS = 14000  # generate_qcms.py:295 — troncature sécurisée tokens
 REMOTE_HOST = "hetzner"
 REMOTE_CONTAINER = "epitadoomscrolling_app"
-REMOTE_DB = "/app/cards.db"
+REMOTE_DB = "/data/cards.db"  # live DB, mounted from the dev folder (see tools/deploy.sh)
 
 # ------------------------------------------------------- Pass C v2 — modèles --
 # Mapping user-proposed names → valid Mistral API model IDs (docs.mistral.ai/models).
