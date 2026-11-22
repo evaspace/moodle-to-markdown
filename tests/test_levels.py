@@ -282,6 +282,18 @@ class Api(unittest.TestCase):
         other.post('/api/register', json={'username': 'carol', 'password': 'secret1'})
         self.assertIn('Continuer au niveau 1', other.get('/niveaux').get_data(as_text=True))
 
+    def test_reserved_and_lookalike_usernames(self):
+        for name in ('admin', 'Adm1n', 'M0rgan_Pierrefeu', 'morgan-pierrefeu', 'pierref', 'root', 'super.admin'):
+            self.assertTrue(levels.banned_name(name), name)
+        self.assertFalse(levels.banned_name('hugo.b'))
+        self.assertEqual({levels.name_key(n) for n in ('hugo.b', 'Hugo.B', 'hugo_b', 'hug0b')}, {'hugob'})
+        r = self.register('Adm1n')  # few API calls: registration is rate limited per IP
+        self.assertEqual(r.status_code, 400)
+        self.assertIn('réservé', r.get_json()['error'])
+        self.assertEqual(self.register('hugo.b').status_code, 200)
+        self.c.post('/api/logout')
+        self.assertEqual(self.register('hug0_B').status_code, 409)
+
     def test_bet_double_and_pari_setting(self):
         self.register('gaby')
         self.assertIn('data-pari="0"', self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True))  # off by default
@@ -585,7 +597,7 @@ class Cheat(unittest.TestCase):
         self.assertEqual([r[1] for r in levels.leaderboards(conn, '2000-01-01 00:00:00')['points']], ['ok'])
         import app as app_module
         c = app_module.app.test_client()
-        c.post('/api/register', json={'username': 'notadmin', 'password': 'secret1'})
+        c.post('/api/register', json={'username': 'notboss', 'password': 'secret1'})
         self.assertEqual(c.post('/api/admin/classement', json={'account_id': 1, 'ban': True}).status_code, 403)
 
 

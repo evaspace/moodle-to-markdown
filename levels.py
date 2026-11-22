@@ -71,6 +71,21 @@ TIMEOUT_MAX = 3.0          # at most x3
 MIN_LIMIT = 180            # floor of the time limit in seconds (user, 2026-11-22: 3 min from integrals level 5 on)
 MIN_SAMPLES = 5            # successful attempts needed before the users' average replaces the authored time
 USERNAME_RE = re.compile(r'^[A-Za-z0-9_.-]{3,32}$')
+# names nobody may register: impersonating the admin or the site (checked on name_key, so variants count)
+BANNED_PARTS = ('admin', 'morgan', 'pierref', 'moderat', 'modo')
+BANNED_NAMES = {'root', 'support', 'staff', 'system', 'systeme', 'officiel', 'official', 'epita', 'eds',
+                'epitadoomscrolling', 'doomscrolling', 'null', 'anonyme', 'anonymous', 'bot', 'webmaster', 'contact'}
+_LEET = str.maketrans('0134578l', 'oieastbi')  # look-alike digits, and l read as i
+
+
+def name_key(username):
+    """Comparison form of a username: case, . _ - and look-alike digits ignored (M0rgan_Pierrefeu = morganpierrefeu)."""
+    return re.sub(r'[^a-z0-9]', '', username.lower().translate(_LEET))
+
+
+def banned_name(username):
+    key = name_key(username)
+    return key in BANNED_NAMES or any(p in key for p in BANNED_PARTS)
 RESET_TTL = 3600           # reset link lifetime, seconds
 RESET_COOLDOWN = 300       # one reset mail per account every 5 minutes
 # fixed public URL: never build the reset link from the request Host header
@@ -479,11 +494,16 @@ def register():
         return jsonify(error='Trop de comptes créés depuis cette connexion, réessaie plus tard'), 429
     if not USERNAME_RE.match(username):
         return jsonify(error='Identifiant : 3 à 32 caractères, lettres, chiffres, . _ -'), 400
+    if banned_name(username) and username.lower() not in ADMIN_USERS:  # the owner can recreate their account
+        return jsonify(error='Identifiant réservé, choisis-en un autre'), 400
     if not 6 <= len(password) <= 200:
         return jsonify(error='Mot de passe : 6 caractères minimum'), 400
     if email and (len(email) > 200 or '@' not in email):
         return jsonify(error='E-mail invalide'), 400
     with db() as conn:
+        # shortcut: scans every username (fine for a few thousand accounts), use a stored key column if it grows
+        if any(name_key(r[0]) == name_key(username) for r in conn.execute('SELECT username FROM account')):
+            return jsonify(error='Identifiant déjà pris'), 409
         try:
             uid = conn.execute('INSERT INTO account (username, pw_hash, email) VALUES (?, ?, ?)',
                                (username, generate_password_hash(password), email or None)).lastrowid

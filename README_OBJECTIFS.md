@@ -309,3 +309,9 @@ Demande : rendre ces boutons plus addictifs, avis d'un conseil de psychologues (
 - Le combo retombe à 0 sur un raté, et la page l'affiche (« un raté le remet à 0 »).
 - Série de jours de révision d'affilée affichée sur la page d'exercice.
 - Bonus de vitesse plafonné à ×1,5 au lieu de ×2 (un gros bonus paie le clic « Réussi » sans vérifier).
+
+## Pseudos réservés et uniques (2026-11-22)
+
+Demande : une liste de pseudos interdits (admin, variantes de morgan.pierrefeu…) et pas deux fois le même pseudo.
+
+Fait : à l'inscription, le pseudo est comparé sous une forme normalisée (minuscules, sans `.` `_` `-`, chiffres sosies lus comme des lettres : `0`→o, `1`/`l`→i, `3`→e, `4`→a, `5`→s, `7`→t, `8`→b). Refusé (« Identifiant réservé ») s'il contient admin, morgan, pierref, moderat ou modo, ou s'il vaut root, support, staff, system, epita, eds, bot, etc. (`BANNED_PARTS`, `BANNED_NAMES` dans `levels.py`). Les comptes de `ADMIN_USERNAMES` restent autorisés. Deux pseudos de même forme normalisée (`hugo.b`, `Hugo_B`, `hug0b`) comptent comme le même : « Identifiant déjà pris ». Les comptes existants ne sont pas touchés (aucun ne tombait dans la liste, à part le vrai compte admin).
