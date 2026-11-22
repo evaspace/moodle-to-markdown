@@ -39,6 +39,9 @@ HINTS = {'solution': (1, 1 / 3, 1.0),   # the formulas used in the solution
          'fiche': (2, 1 / 2, 0.5),      # the whole chapter sheet: the right formula still has to be found
          'temps': (0, 1, 1.0)}          # more time only: no division, the speed factor already lowers the points
 PEEK_FACTOR = {0: 1, 1: 1 / 3, 2: 1 / 2}
+SPEED_CAP = 1.5           # max speed multiplier: a higher one pays for clicking « Réussi » without checking
+CALIB_POINTS = 10         # confidence bet right: « Sûr » and success, or « Au hasard » and miss
+DOUBLE_ODDS = 1 / 6       # « Coup double »: chance of x2 on a success without any help
 # path id -> section of annales/FORMULES.md shown in the chapter sheet
 FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-integrales': 'APIS (intégrales)',
                  'maths-s1-apis-suites': 'APIS (suites)', 'maths-s1-apis-edo': 'APIS (EDO)',
@@ -139,7 +142,8 @@ def init_levels_db(path=DB_PATH):
         cols = {r[1] for r in conn.execute('PRAGMA table_info(exo_log)')}
         for col, decl in (('secs', 'INTEGER'), ('peek', 'INTEGER NOT NULL DEFAULT 0'),
                           ('points', 'INTEGER NOT NULL DEFAULT 0'), ('practice', 'INTEGER NOT NULL DEFAULT 0'),
-                          ('timeout', 'INTEGER NOT NULL DEFAULT 0'), ('review', 'INTEGER NOT NULL DEFAULT 0')):
+                          ('timeout', 'INTEGER NOT NULL DEFAULT 0'), ('review', 'INTEGER NOT NULL DEFAULT 0'),
+                          ('conf', 'INTEGER')):  # confidence bet: NULL none, 0 au hasard, 1 moyen, 2 sûr
             if col not in cols:
                 conn.execute(f'ALTER TABLE exo_log ADD COLUMN {col} {decl}')
         if 'leaderboard' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
@@ -148,6 +152,9 @@ def init_levels_db(path=DB_PATH):
         if 'board_ban' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # set by the admin from the « Triche possible » list of /admin/stats
             conn.execute('ALTER TABLE account ADD COLUMN board_ban INTEGER NOT NULL DEFAULT 0')
+        if 'pari' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
+            # opt-in confidence bet before the correction (an extra tap: off by default)
+            conn.execute('ALTER TABLE account ADD COLUMN pari INTEGER NOT NULL DEFAULT 0')
         # abandoned paths: their rows move here, out of every stat, review and board (kept, never shown)
         for t in ('exo_log', 'event_log'):
             conn.execute(f'CREATE TABLE IF NOT EXISTS {t}_archive AS SELECT * FROM {t} WHERE 0')
@@ -293,12 +300,12 @@ def variant(exo, tries):
 
 
 def score(ok, secs, ref, peek, level):
-    """Points for one exercise: faster than the reference time = more points (x0.5 to x2),
+    """Points for one exercise: faster than the reference time = more points (x0.5 to SPEED_CAP),
     0 if failed. `peek` is the help opened before answering: 0 none, 1 (or True) formulas of the
     solution = a third, 2 chapter sheet only = half."""
     if not ok:
         return 0
-    speed = min(2.0, max(0.5, ref / max(secs, 1)))
+    speed = min(SPEED_CAP, max(0.5, ref / max(secs, 1)))
     pts = BASE_POINTS * (1 + (level - 1) / 4) * speed
     return round(pts * PEEK_FACTOR[int(peek)])
 
@@ -347,8 +354,8 @@ COMBO_GAP = 30 * 60  # a pause longer than this (seconds) ends the combo
 
 
 def combo(rows):
-    """Combo: +1 per success, a miss HALVES it (never zero: an honest « Raté » must not cost the whole
-    combo, or self-grading turns into lying). A pause longer than COMBO_GAP starts a new run.
+    """Combo: +1 per success, a miss resets it to 0 (user choice 2026-11-22, was halved before).
+    A pause longer than COMBO_GAP starts a new run.
     rows = (ok, unix time) newest first, across all paths. Computed by the server: survives reloads."""
     run = []
     for ok, at in rows:
@@ -357,7 +364,7 @@ def combo(rows):
         run.append((ok, at))
     n = 0
     for ok, _ in reversed(run):
-        n = n + 1 if ok else n // 2
+        n = n + 1 if ok else 0
     return n
 
 
@@ -781,6 +788,7 @@ def level_page(subject):
         limit = round(limit * bonus)  # the reference (points) does not move: slower still means fewer points
         total_xp = xp(conn, uid)
         streak_now = current_combo(conn, uid)
+        pari = conn.execute('SELECT pari FROM account WHERE id=?', (uid,)).fetchone()
     # server-side clock: the time spent is measured from here, not sent by the browser
     session['exo_clock'] = [subject, n, exo['id'], time.time(), ref, limit, []]  # last: helps opened
     notions = {x['id']: x for x in data['notions']}
@@ -794,7 +802,7 @@ def level_page(subject):
             (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
             if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),
-        squares=squares(lvl, status), combo=streak_now,
+        squares=squares(lvl, status), combo=streak_now, pari=bool(pari and pari[0]), calib=CALIB_POINTS,
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
              # one formula per line; the level notions stay below as course reminder
@@ -858,15 +866,20 @@ def level_result(subject):
         prev = conn.execute('SELECT ok FROM exo_log WHERE account_id=? AND subject=? AND level=? AND practice=0 '
                             'ORDER BY id DESC LIMIT 1', (uid, subject, n)).fetchone()
         pts = score(ok, secs, ref, peek, n) if secs else 0  # no matching page view: no points
-        conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout, review)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout), int(review)))
+        double = bool(pts) and not peek and random.random() < DOUBLE_ODDS
+        pts *= 2 if double else 1
+        conf = body.get('conf') if body.get('conf') in (0, 1, 2) else None
+        calib = CALIB_POINTS if secs and (conf, ok) in ((2, True), (0, False)) else 0
+        pts += calib
+        conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout, review, conf)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout), int(review), conf))
         total_xp = xp(conn, uid)
         combo_now = current_combo(conn, uid)
         st = statuses(conn, uid, subject)
         status = level_status(st, data['levels'][n - 1])
         green = sum(1 for v in status.values() if v == 1)
-        extra = dict(combo=combo_now, points=pts, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
+        extra = dict(combo=combo_now, points=pts, double=double, calib=calib, conf=conf, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
                      percent=total_percent(st, data))
         fraud = all_suspects(conn).get(uid)
         if fraud:
@@ -1262,6 +1275,15 @@ def set_leaderboard():
     with db() as conn:
         conn.execute('UPDATE account SET leaderboard=? WHERE id=?', (int(visible), session['uid']))
     return jsonify(ok=True, visible=visible)
+
+
+@bp.route('/api/pari', methods=['POST'])
+@login_required
+def set_pari():
+    on = bool((request.get_json(silent=True) or {}).get('on'))
+    with db() as conn:
+        conn.execute('UPDATE account SET pari=? WHERE id=?', (int(on), session['uid']))
+    return jsonify(ok=True, on=on)
 
 
 @bp.route('/classement')

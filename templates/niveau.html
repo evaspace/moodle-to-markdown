@@ -8,14 +8,14 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=32">
+  <link rel="stylesheet" href="/static/niveaux.css?v=33">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
-<div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}" data-revoir="{{ 1 if review else 0 }}" data-combo="{{ combo }}">
+<div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}" data-revoir="{{ 1 if review else 0 }}" data-combo="{{ combo }}" data-pari="{{ 1 if pari else 0 }}">
   <h1 tabindex="-1">Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
   <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"
        aria-label="Progression totale {{ subject.titre }}"><span id="total-bar" style="width: {{ percent }}%"></span></div>
@@ -42,11 +42,17 @@
     <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
     {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
-  <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong>{% endif %}</p>
+  <div class="lv-row" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
+    <button class="lv-btn" type="button" data-conf="2">Sûr</button>
+    <button class="lv-btn" type="button" data-conf="1">Moyen</button>
+    <button class="lv-btn" type="button" data-conf="0">Au hasard</button></div>
+  <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong> <span class="lv-risk">un raté le remet à 0</span>{% endif %}</p>
+  {% if nav.streak %}<p class="lv-muted" id="day-streak">Série : {{ nav.streak }} jour{{ 's' if nav.streak > 1 }} de révision d'affilée</p>{% endif %}
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
   <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
+  <label class="cl-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>
     <h2 class="lv-notions-title">Fiche du chapitre : {{ subject.titre }}</h2>
@@ -98,7 +104,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=22"></script>
+<script src="/static/niveaux.js?v=23"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

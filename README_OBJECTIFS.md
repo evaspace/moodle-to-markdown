@@ -247,7 +247,7 @@ Réponses de l'utilisateur au conseil (débat complet dans `todo.md`) :
 - Les maths d'abord ; le reste plus tard. « C'est la première fois que j'arrive à travailler si longtemps sur des révisions, et j'ai vraiment l'impression de progresser. »
 - Combo : à faire tout de suite, très motivant, doit être très stylé.
 Avis des deux experts (apprentissage, psychologie de la motivation) : d'accord sur les 6 points. Fait selon leurs règles :
-- Combo calculé par le serveur ; un raté le divise par 2 au lieu de le remettre à zéro (sinon on se ment en s'auto-notant) ; pas lié à la vitesse ; petit effet à chaque réussite, grosse animation plein écran seulement aux paliers 5, 10, 20, 30, 50, 75, 100… (sinon on s'habitue).
+- Combo calculé par le serveur ; un raté le remet à zéro (décision du 2026-11-22, avant : divisé par 2) ; pas lié à la vitesse ; petit effet à chaque réussite, grosse animation plein écran seulement aux paliers 5, 10, 20, 30, 50, 75, 100… (sinon on s'habitue).
 - Révision espacée dans le grind : une révision due est glissée tous les 5 exercices du grind, jamais bloquante ; un raté en révision la remet à J+1 sans faire redescendre ; une révision réussie compte dans le combo.
 
 ## Décision du 2026-11-16 : « Copier pour une IA » seulement après la correction
@@ -297,3 +297,15 @@ Demande : sur tous les exercices (en commençant par les maths), afficher de que
 Décision (utilisateur) : un exercice dont on ne retrouve aucun TD ni examen d'origine affiche « Écrit pour le site » (pas de source inventée).
 
 Fait (maths) : chaque exercice et chaque variante affiche « Source : TD · TD4 Suites S1 2031, ex. 2.4 · adapté », « Source : Examen · … · repris tel quel » ou « Source : écrit pour le site ». Fichier `parcours/origines.json` produit par `tools/sources.py`. Bilan : 1 439 énoncés, 75 TD, 303 examen, 1 061 écrits pour le site. Reste : les autres matières.
+
+## Boutons « J'ai ma réponse » et « Réussi » plus addictifs (2026-11-22)
+
+Demande : rendre ces boutons plus addictifs, avis d'un conseil de psychologues (nudges). Retenu par l'utilisateur, et seulement ceci :
+
+- Auto-notation par pari de confiance : optionnelle (case « Parier ma confiance avant la correction » sur la page d'exercice, désactivée par défaut, sinon c'est lent pour avancer vite). Activée, « J'ai ma réponse » demande d'abord « Sûr », « Moyen » ou « Au hasard ». Pari tenu (« Sûr » et réussi, ou « Au hasard » et raté) : +10 points de lucidité.
+- Coup double : une réussite sans aide sur 6 en moyenne, tirée au hasard par le serveur, double les points. Jamais annoncé avant.
+- « Réussi » ne s'active que 1,5 s après l'affichage de la correction (« Raté » tout de suite).
+- Le chat qui explose reste.
+- Le combo retombe à 0 sur un raté, et la page l'affiche (« un raté le remet à 0 »).
+- Série de jours de révision d'affilée affichée sur la page d'exercice.
+- Bonus de vitesse plafonné à ×1,5 au lieu de ×2 (un gros bonus paie le clic « Réussi » sans vérifier).

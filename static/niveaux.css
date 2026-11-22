@@ -304,6 +304,8 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .lv-combo { min-height: 1.6em; margin: 4px 0; font-size: 18px; font-variant-numeric: tabular-nums; }
 .lv-combo strong { font-size: 26px; color: var(--success-color); }
 .lv-combo.hot strong { color: var(--accent-color); }
+.lv-combo .lv-risk { font-size: 14px; color: var(--text-muted); }
+.lv-pari-q { flex-basis: 100%; font-weight: 600; }
 .lv-combo.bump strong { display: inline-block; animation: lv-pop .45s ease-out; }
 .lv-slam { position: fixed; inset: 0; z-index: 95; display: none; place-content: center; justify-items: center; text-align: center; pointer-events: none; }
 .lv-slam.go { display: grid; }

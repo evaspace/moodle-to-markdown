@@ -114,7 +114,7 @@
     practice: () => 'Noté (entraînement libre, ta progression ne bouge pas).',
   };
 
-  // Combo (server count: +1 per success, a miss halves it). Small feedback on every success,
+  // Combo (server count: +1 per success, a miss resets it to 0). Small feedback on every success,
   // the big slam only at milestones, so it does not wear off.
   const MILESTONES = [5, 10, 20, 30, 50, 75, 100, 150, 200];
   const TITLES = { 5: 'Bien lancé', 10: 'En feu', 20: 'Inarrêtable', 30: 'Machine', 50: 'Légende' };
@@ -130,6 +130,10 @@
       const b = document.createElement('strong');
       b.textContent = '×' + n;
       h.append(b);
+      if (n >= 2) {  // loss aversion: the combo is worth keeping
+        const r = document.createElement('span'); r.className = 'lv-risk'; r.textContent = ' un raté le remet à 0';
+        h.append(r);
+      }
     }
     h.classList.remove('bump'); void h.offsetWidth; h.classList.add('bump');
   }
@@ -229,15 +233,33 @@
         answer(false, true);
       }
     }, 1000);
-    $('btn-correction').onclick = () => {
+    // Optional confidence bet (account setting): one tap before the correction, lucidity points after.
+    let conf = null;
+    const pariOn = $('pari-on');
+    pariOn.onchange = async () => {
+      const res = await post('/api/pari', { on: pariOn.checked });
+      if (!res.ok) pariOn.checked = !pariOn.checked;
+    };
+    const reveal = () => {
+      $('pari-row').hidden = true;
       showSolution();
       $('timer').textContent = 'Compare ta réponse avec la correction.';
-      $('btn-ok').disabled = false; $('btn-ko').disabled = false;
+      $('btn-ko').disabled = false;
+      // « Réussi » only after 1.5 s: read the correction instead of a reflex click
+      setTimeout(() => { if (!$('btn-ko').disabled) $('btn-ok').disabled = false; }, 1500);
     };
+    $('btn-correction').onclick = () => {
+      if (!pariOn.checked) return reveal();
+      $('btn-correction').disabled = true;
+      $('pari-row').hidden = false;
+      $('pari-row').querySelector('button').focus();
+    };
+    $('pari-row').querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { conf = +b.dataset.conf; reveal(); });
 
     async function answer(ok, timeout = false) {
       $('btn-ok').disabled = $('btn-ko').disabled = true;
-      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, revoir: exo.dataset.revoir === '1' });
+      $('pari-row').hidden = true;
+      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, conf, revoir: exo.dataset.revoir === '1' });
       const fb = $('feedback');
       if (!res.ok) {
         fb.className = 'lv-feedback bad';
@@ -251,8 +273,10 @@
       if (d.timeout) lines.push('Temps écoulé : cet exercice reviendra avec plus de temps.');
       if (ok && d.points) {
         const fast = d.secs && d.ref ? (d.secs <= d.ref ? `en ${fmt(d.secs)}, plus vite que la moyenne (${fmt(d.ref)})` : `en ${fmt(d.secs)}, moyenne ${fmt(d.ref)}`) : '';
+        if (d.double) lines.push('Coup double : points ×2');
         lines.push(`+${d.points} points ${fast}${d.peek === 2 ? ' · divisé par 2 : fiche du chapitre ouverte' : d.peek ? ' · divisé par 3 : formules de la solution ouvertes' : ''}`);
       }
+      if (d.calib) lines.push(ok ? `Pari tenu : tu étais sûr, +${d.calib} points de lucidité` : `Tu savais que tu ne savais pas : +${d.calib} points de lucidité`);
       fb.replaceChildren(...lines.map((t, i) => { const p = document.createElement('p'); p.textContent = t; if (i) p.className = 'lv-points'; return p; }));
       if (d.warning) {
         const w = document.createElement('p');

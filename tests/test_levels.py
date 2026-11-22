@@ -46,11 +46,11 @@ class Rules(unittest.TestCase):
         self.assertEqual(due_reviews(thrice + [('a', 0, day(12))], day(13)), {'a': day(13)})  # a miss restarts
         self.assertEqual(due_reviews([('b', 1, d)], day(9)), {})  # never missed: never reviewed
 
-    def test_combo_halves_on_miss_and_resets_after_pause(self):
+    def test_combo_resets_on_miss_and_after_pause(self):
         rows = [(1, 100), (1, 90), (1, 80), (1, 70), (1, 60), (1, 50)]  # newest first
         self.assertEqual(combo(rows), 6)
-        self.assertEqual(combo([(0, 110)] + rows), 3)          # a miss halves, never zero
-        self.assertEqual(combo([(1, 120), (0, 110)] + rows), 4)
+        self.assertEqual(combo([(0, 110)] + rows), 0)          # a miss resets to zero
+        self.assertEqual(combo([(1, 120), (0, 110)] + rows), 1)
         self.assertEqual(combo([(1, 100 + COMBO_GAP + 1)] + rows), 1)  # long pause: new run
 
     def test_last_level(self):
@@ -60,7 +60,7 @@ class Rules(unittest.TestCase):
     def test_score_speed_and_peek(self):
         self.assertEqual(score(False, 10, 100, False, 1), 0)
         self.assertEqual(score(True, 100, 100, False, 1), 100)
-        self.assertEqual(score(True, 10, 100, False, 1), 200)    # capped x2
+        self.assertEqual(score(True, 10, 100, False, 1), 150)    # capped x1.5
         self.assertEqual(score(True, 1000, 100, False, 1), 50)   # floored x0.5
         self.assertEqual(score(True, 100, 100, True, 1), 33)     # a third after the solution formulas
         self.assertEqual(score(True, 100, 100, 2, 1), 50)        # half after the chapter sheet only
@@ -281,6 +281,26 @@ class Api(unittest.TestCase):
         other = self.app.test_client()
         other.post('/api/register', json={'username': 'carol', 'password': 'secret1'})
         self.assertIn('Continuer au niveau 1', other.get('/niveaux').get_data(as_text=True))
+
+    def test_bet_double_and_pari_setting(self):
+        self.register('gaby')
+        self.assertIn('data-pari="0"', self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True))  # off by default
+        self.assertTrue(self.c.post('/api/pari', json={'on': True}).get_json()['on'])
+        page = self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True)
+        self.assertIn('data-pari="1"', page)
+        def post(**kw):  # a fresh page view (server clock) for each answer
+            exo_id = self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True).split('data-exo="')[1].split('"')[0]
+            return self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': 1, 'exo_id': exo_id, **kw}).get_json()
+        with mock.patch('levels.random.random', return_value=0.0):  # « Coup double » drawn
+            d = post(ok=True, conf=2)
+        self.assertTrue(d['double'])
+        self.assertEqual(d['calib'], levels.CALIB_POINTS)
+        self.assertEqual(d['points'], 2 * levels.score(True, d['secs'], d['ref'], 0, 1) + levels.CALIB_POINTS)
+        with mock.patch('levels.random.random', return_value=0.0):
+            d = post(ok=False, conf=0)  # « Au hasard » and missed: lucid
+        self.assertEqual((d['double'], d['calib'], d['points'], d['combo']), (False, levels.CALIB_POINTS, levels.CALIB_POINTS, 0))
+        d = post(ok=False, conf=2)  # « Sûr » and missed: no lucidity points
+        self.assertEqual((d['calib'], d['points']), (0, 0))
 
     def test_points_and_users_average(self):
         self.register('erin')
