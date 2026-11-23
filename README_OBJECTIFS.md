@@ -315,3 +315,29 @@ Demande : rendre ces boutons plus addictifs, avis d'un conseil de psychologues (
 Demande : une liste de pseudos interdits (admin, variantes de morgan.pierrefeu…) et pas deux fois le même pseudo.
 
 Fait : à l'inscription, le pseudo est comparé sous une forme normalisée (minuscules, sans `.` `_` `-`, chiffres sosies lus comme des lettres : `0`→o, `1`/`l`→i, `3`→e, `4`→a, `5`→s, `7`→t, `8`→b). Refusé (« Identifiant réservé ») s'il contient admin, morgan, pierref, moderat ou modo, ou s'il vaut root, support, staff, system, epita, eds, bot, etc. (`BANNED_PARTS`, `BANNED_NAMES` dans `levels.py`). Les comptes de `ADMIN_USERNAMES` restent autorisés. Deux pseudos de même forme normalisée (`hugo.b`, `Hugo_B`, `hug0b`) comptent comme le même : « Identifiant déjà pris ». Les comptes existants ne sont pas touchés (aucun ne tombait dans la liste, à part le vrai compte admin).
+
+## Beta : optimiser les révisions (2026-11-23)
+
+Ce que l'utilisateur a dit, pour affiner les objectifs :
+
+- « De mon côté privé, j'aimerais optimiser mes révisions. » Pour ça : epitadoomscrolling (les exercices), puis auriga2google (le vrai calendrier des cours, qu'epitadoomscrolling ne connaissait pas). Tout est public, mais il y a aussi une partie privée.
+- Ce qu'il veut optimiser, et tout est lié : les pauses (« avec des pauses je serais plus efficace »), l'alimentation, la mémorisation. Problème actuel : rien n'est assez relié, donc il ne sait pas quel cours réviser quand. Et le rythme de chaque personne est différent.
+- Première fonction voulue : suggérer, d'après sa classe (son emploi du temps), quel cours réviser à quelle heure. Deuxième : optimiser la récupération.
+- Les corrections actuelles sont justes. Il veut en plus une « sous-correction » de comportement d'élève à 20/20 : facile à lire pour le prof, sûre d'avoir tous les points, sans erreurs d'étourderie, stricte sur la syntaxe.
+- « Actuellement je suis un élève moyen, voire mauvais, mais j'aimerais devenir le bon élève. Pour ça il faut prendre de l'avance. » Il révise déjà le plus possible : maintenant il faut optimiser la révision, « tout en gardant l'humanité derrière ».
+- Pour l'instant : côté admin seulement, dans une sous-page admin « beta » : le calendrier des cours, l'avancement du cours sur le calendrier, et ce qu'il faut faire pour optimiser chaque cours.
+- Le gros problème, ce sont les retards. Exemple : gros retard en physique, causé par un retard en maths ; donc il charbonne les maths plutôt que le reste.
+- « Documente tout ce que je dis pour affiner les objectifs. » (cette section)
+
+Fait (page `/admin/beta`, onglet « Beta » de l'admin) :
+
+- Calendrier : les cours Auriga du propriétaire (130 créneaux, septembre → décembre), exportés d'auriga2google par `tools/planning_cours.py`. Liste des 7 prochains jours.
+- Avancement : pour chaque ECUE, part des cours / TD / TP déjà passés pour la classe, contre la part des niveaux validés par moi. Retard = classe moins moi. Dates d'évaluation : Auriga + calendrier des examens (`syllabus.json`, mails et Moodle).
+- Retards en chaîne : une table de prérequis (mécanique ← analyse et outils de base ; électronique, Boole et analyse ← outils de base). Un prérequis en retard de 15 points ou plus passe avant le cours qu'il bloque, colonne « D'abord ». Exception : à 3 jours ou moins d'une évaluation, on révise le cours lui-même.
+- Quoi réviser quand (aujourd'hui et demain) : 20 min « à chaud » après chaque cours du jour, puis des séances sur les créneaux libres. Les cours les plus urgents (retard, évaluation proche) prennent les heures où je réussis le mieux (taux de réussite par heure mesuré sur mes réponses ; le matin par défaut tant qu'il y a moins de 40 réponses). Une ECUE a au plus 2 séances par jour, pour alterner. Une évaluation déjà passée sans autre évaluation prévue divise le poids du retard par 4.
+- Pauses : séances de 45 min et 10 min de pause, ou 25 et 5 si ma réussite baisse de 10 points après 25 min dans mes longues séances (mesuré automatiquement).
+- Humanité : repas à heures fixes (12 h–13 h, 19 h 30–20 h 15) jamais occupés, rien après 22 h, samedi soir libre (rien après 18 h), au plus 3 h de révision un jour de cours et 5 h un jour libre.
+- Récupération et alimentation : conseils fixes (pause loin de l'écran, sommeil, repas, eau, pas de café après 16 h, se tester plutôt que relire, alterner).
+- Copie 20/20 : listes par matière de ce que le correcteur veut voir et des pièges d'étourderie (unités, hypothèses des théorèmes, `let rec` et `;;` en OCaml, `;` et types en C, etc.).
+
+Reste à faire (idées, à valider) : copie 20/20 rédigée exercice par exercice dans les corrections ; mesurer les pauses réelles (durée entre deux séances) ; noter repas et sommeil si le plan doit en tenir compte ; ouvrir la beta aux autres élèves (chacun son planning auriga2google).

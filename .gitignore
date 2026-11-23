@@ -57,3 +57,6 @@ backups/
 *.bak
 articles/*.json
 articles/images/
+
+# owner timetable exported from auriga2google (private)
+planning_cours.json

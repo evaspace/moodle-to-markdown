@@ -10,7 +10,7 @@ LIVE=/opt/pierref/epitadoomscrolling-live
 APP=epitadoomscrolling_app
 HEALTH=http://127.0.0.1:5117/healthz
 CAL=parcours/syllabus.json
-TESTS=(tests.test_levels tests.test_scroll tests.test_blog tests.test_exam_dates tests.test_admin_stats)
+TESTS=(tests.test_levels tests.test_scroll tests.test_blog tests.test_exam_dates tests.test_admin_stats tests.test_beta)
 
 sha=$(git -C "$DEV" rev-parse --verify "${1:-HEAD}^{commit}")
 prev=$(git -C "$LIVE" rev-parse HEAD)

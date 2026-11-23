@@ -296,6 +296,42 @@ def admin_stats_page():
     return render_template('admin_stats.html', s=stats)
 
 
+@app.route('/admin/beta')
+@admin_required
+def admin_beta_page():
+    """Revision planner on the owner's real timetable (beta.py, README_OBJECTIFS « Beta »)."""
+    import beta
+    from datetime import datetime, timezone
+    from levels import ADMIN_USERS, db as levels_db, load_parcours, percent
+    data_dir = os.path.dirname(os.path.abspath(DB_PATH))
+    events = beta.load_planning(os.path.join(data_dir, 'planning_cours.json'))
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'parcours', 'syllabus.json')) as f:
+        syllabus = json.load(f)
+    reg = beta.ecues(syllabus)
+    evals = beta.syllabus_evals(syllabus, reg, events)
+    paths = load_parcours()
+    now = datetime.now(beta.TZ)
+    with levels_db() as conn:
+        me = session.get('uid')
+        if not me:  # basic-auth admin without an account: show the owner's data
+            row = conn.execute('SELECT id FROM account WHERE lower(username) IN (%s)' % ','.join('?' * len(ADMIN_USERS)),
+                               tuple(ADMIN_USERS)).fetchone()
+            me = row['id'] if row else 0
+        my_pct = {r['subject']: percent(r['best'], len(paths[r['subject']]['levels']))
+                  for r in conn.execute('SELECT subject, best FROM level_progress WHERE account_id=?', (me,))
+                  if r['subject'] in paths}
+        logs = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'])
+                for r in conn.execute('SELECT at, ok FROM exo_log WHERE account_id=?', (me,))]
+    adv = beta.advancement(events + evals, reg, my_pct, now)
+    hours, block = beta.rhythm(logs), beta.block_length(logs)
+    today = now.date()
+    days = [(today, beta.plan_day(today, events, adv, hours, block, now)),
+            (today + timedelta(days=1), beta.plan_day(today + timedelta(days=1), events, adv, hours, block))]
+    return render_template('admin_beta.html', adv=adv, days=days, hours=hours, block=block, n_logs=len(logs),
+                           week=beta.week(events, now), unmapped=beta.unmapped(events, reg), n_events=len(events),
+                           copie=beta.COPIE_20, recup=beta.RECUPERATION, meals=beta.MEALS, today=today)
+
+
 # ------------------------------------------------------------------ API ----
 def uid():
     """Account id, 0 = anonymous visitor (shared state)."""

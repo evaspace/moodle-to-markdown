@@ -416,3 +416,12 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .cl-board .me.cl-flash { animation: cl-flash 1.2s steps(2) 2; }
 @keyframes cl-flash { 50% { outline: 3px solid var(--accent-color); outline-offset: 2px; } }
 @media (prefers-reduced-motion: reduce) { .cl-board .me.cl-flash { animation: none; outline: 3px solid var(--accent-color); } }
+/* /admin/beta */
+.bt td:first-child, .bt th:first-child { text-align: left; }
+.bt-plan th, .bt-plan td { white-space: normal; text-align: left; }
+.bt-plan td:first-child { white-space: nowrap; }
+.bt-late { color: var(--accent-color); font-weight: 700; }
+.bt-warn { color: var(--accent-color); }
+.bt-list { margin: 8px 0 16px 20px; line-height: 1.5; }
+.bt-copie summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
+.bt-day { font-size: 16px; margin: 16px 0 4px; }
