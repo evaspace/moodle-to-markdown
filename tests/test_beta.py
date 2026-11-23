@@ -95,6 +95,28 @@ class Beta(unittest.TestCase):
         self.assertEqual(beta.short('C - Les bases'), 'C - Les bases')
         self.assertEqual(beta.short('À chaud : Analyse : primitives'), 'À chaud : Analyse')
 
+    def test_pause_state(self):
+        t0 = datetime(2026, 11, 24, 14, tzinfo=beta.TZ)
+        work = [t0 + timedelta(minutes=5 * k) for k in range(10)]           # 14:00 -> 14:45
+        st = beta.pause_state(work, t0 + timedelta(minutes=46), 45, 10)
+        self.assertTrue(st['force'])
+        self.assertEqual(st['restant'], 9 * 60)                            # until 14:55
+        self.assertFalse(beta.pause_state(work, t0 + timedelta(minutes=56), 45, 10)['force'])   # break done
+        self.assertEqual(beta.pause_state(work[:4], t0 + timedelta(minutes=16), 45, 10)['avant_pause'], 30)
+        # third break of the day is a long one
+        day = []
+        for c in range(3):
+            day += [t0 + timedelta(minutes=60 * c + 5 * k) for k in range(10)]
+        self.assertTrue(beta.pause_state(day, day[-1] + timedelta(minutes=12), 45, 10)['longue'])
+
+    def test_pause_settings(self):
+        avg = dict(minutes=25, pause=5, raison='moyenne')
+        mine = dict(minutes=45, pause=10, raison='ta réussite tient')
+        self.assertEqual(beta.pause_settings(10, mine, avg)['travail'], 45)
+        self.assertEqual(beta.pause_settings(10, dict(mine, raison='par défaut : x'), avg)['travail'], 25)
+        ev = beta.pause_settings(21, mine, avg)
+        self.assertEqual((ev['travail'], ev['pause']), (34, 15))
+
     def test_rhythm_and_block_length(self):
         self.assertIsNone(beta.rhythm([(NOW, 1)] * 10))
         start = datetime(2026, 11, 1, 9, tzinfo=beta.TZ)

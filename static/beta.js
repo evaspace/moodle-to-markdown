@@ -70,18 +70,63 @@
     scroll.replaceChildren(grid);
     scroll.scrollLeft = keep;
 
-    // advice per course of the week (readable on phone, where hovering is impossible)
-    const seen = new Map();
-    w.items.forEach((it) => { if (it.conseil && it.kind === 'cours' && !seen.has(it.lien)) seen.set(it.lien, it); });
-    const list = document.getElementById('bt-advice');
-    list.replaceChildren(...[...seen.values()].map((it) => {
-      const li = el('li');
-      const a = el(it.lien ? 'a' : 'strong', null, it.titre); if (it.lien) a.href = it.lien;
-      li.append(a, ` (toi ${it.moi} %, classe ${it.classe} %) : ${it.conseil}`);
-      return li;
-    }));
-    if (!seen.size) list.appendChild(el('li', null, 'Aucun cours relié à un parcours cette semaine.'));
+    cards(w.cours || []);
   }
+
+  // one card per course, most urgent first (refreshed with the grid)
+  function cards(list) {
+    const box = document.getElementById('bt-cards');
+    box.replaceChildren(...list.map((c) => {
+      const card = el(c.lien ? 'a' : 'div', `bt-card bt-${c.matiere}${c.urgent ? ' urgent' : ''}`);
+      if (c.lien) card.href = c.lien;
+      const big = el('div', 'bt-card-big');
+      if (c.jours_eval != null && c.jours_eval <= 21) {
+        big.append(el('strong', null, c.jours_eval ? 'J-' + c.jours_eval : 'Auj.'), el('span', null, 'éval ' + c.eval));
+      } else {
+        big.append(el('strong', c.retard >= 15 ? 'late' : null, c.retard ? '−' + c.retard : 'OK'), el('span', null, c.retard ? 'pts de retard' : 'à jour'));
+      }
+      const main = el('div', 'bt-card-main');
+      main.appendChild(el('h3', null, c.titre));
+      const bar = el('span', 'bt-bar');
+      const me = el('span', 'bt-bar-me'); me.style.width = c.moi + '%';
+      const cl = el('span', 'bt-bar-cl'); cl.style.left = c.classe + '%';
+      bar.append(me, cl);
+      main.append(bar, el('p', 'bt-card-pct', `toi ${c.moi} % \u00b7 classe ${c.classe} % (${c.faits}/${c.total} séances passées)`));
+      main.appendChild(el('p', 'bt-card-tip', c.conseil));
+      card.append(big, main);
+      return card;
+    }));
+  }
+
+  // forced break option and live state
+  async function pause(on) {
+    try {
+      const r = on == null ? await fetch('/api/pause', { credentials: 'same-origin' })
+        : await fetch('/api/pause', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ on }) });
+      if (!r.ok) return;
+      const st = await r.json();
+      const big = document.getElementById('bt-pause-big'), unit = document.getElementById('bt-pause-unit');
+      const text = document.getElementById('bt-pause-text'), btn = document.getElementById('bt-pause-btn');
+      btn.hidden = false;
+      btn.textContent = st.on ? 'Désactiver la pause forcée' : 'Activer la pause forcée';
+      btn.className = 'lv-btn' + (st.on ? '' : ' primary');
+      btn.onclick = () => pause(!st.on);
+      document.getElementById('bt-pause').classList.toggle('on', st.on);
+      const plan = `${st.travail} min de travail, puis ${st.pause} min de pause (${st.source}).`;
+      if (st.force) {
+        big.textContent = Math.ceil(st.restant / 60); unit.textContent = 'min de pause';
+        text.textContent = `En pause après ${st.travaille} min d'affilée. ${plan}`;
+      } else if (st.travaille) {
+        big.textContent = st.avant_pause; unit.textContent = 'min avant la pause';
+        text.textContent = `${st.travaille} min de travail d'affilée. ${plan}`;
+      } else {
+        big.textContent = st.travail; unit.textContent = 'min de travail';
+        text.textContent = (st.on ? 'Activée. ' : 'Désactivée. ') + plan;
+      }
+    } catch (e) { /* offline */ }
+  }
+  pause();
+  setInterval(() => pause(), 60000);
 
   async function load(lundi) {
     try {

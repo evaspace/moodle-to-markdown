@@ -18,6 +18,7 @@ import sqlite3
 import threading
 import time
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from email.message import EmailMessage
 from contextlib import contextmanager
 from functools import wraps
@@ -170,6 +171,9 @@ def init_levels_db(path=DB_PATH):
         if 'pari' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # opt-in confidence bet before the correction (an extra tap: off by default)
             conn.execute('ALTER TABLE account ADD COLUMN pari INTEGER NOT NULL DEFAULT 0')
+        if 'pause_forcee' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
+            # opt-in forced break (beta): answers are refused during the break, see beta.pause_state
+            conn.execute('ALTER TABLE account ADD COLUMN pause_forcee INTEGER NOT NULL DEFAULT 0')
         # abandoned paths: their rows move here, out of every stat, review and board (kept, never shown)
         for t in ('exo_log', 'event_log'):
             conn.execute(f'CREATE TABLE IF NOT EXISTS {t}_archive AS SELECT * FROM {t} WHERE 0')
@@ -858,6 +862,10 @@ def level_result(subject):
     data = get_parcours(subject)
     body = request.get_json(silent=True) or {}
     n_levels, uid = len(data['levels']), session['uid']
+    with db() as conn:
+        brk = forced_break(conn, uid)
+    if brk['on'] and brk['force']:
+        return jsonify(error='Pause forcée en cours', pause=brk), 423
     try:
         n = int(body.get('level'))
     except (TypeError, ValueError):
@@ -1295,6 +1303,38 @@ def set_leaderboard():
     with db() as conn:
         conn.execute('UPDATE account SET leaderboard=? WHERE id=?', (int(visible), session['uid']))
     return jsonify(ok=True, visible=visible)
+
+
+_AVG_BLOCK = [0, None]  # (computed at, value): the users' median block, recomputed every hour
+
+
+def forced_break(conn, uid):
+    """Forced-break state of an account (beta option): settings from its rhythm, the users' median and the hour."""
+    import beta
+    on = conn.execute('SELECT pause_forcee FROM account WHERE id=?', (uid,)).fetchone()
+    now = datetime.now(ZoneInfo(TZ))
+    utc = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(ZoneInfo(TZ))
+    if time.time() - _AVG_BLOCK[0] > 3600:
+        by = {}
+        for r in conn.execute("SELECT account_id, at, ok FROM exo_log WHERE at >= datetime('now', '-60 days')"):
+            by.setdefault(r['account_id'], []).append((utc(r['at']), r['ok']))
+        _AVG_BLOCK[:] = [time.time(), beta.average_block(by.values())]
+    mine = [(utc(r['at']), r['ok']) for r in conn.execute(
+        "SELECT at, ok FROM exo_log WHERE account_id=? AND at >= datetime('now', '-60 days')", (uid,))]
+    cfg = beta.pause_settings(now.hour, beta.block_length(mine), _AVG_BLOCK[1])
+    today = sorted(t for t, _ in mine if t.date() == now.date())
+    return dict(on=bool(on and on[0]), **cfg, **beta.pause_state(today, now, cfg['travail'], cfg['pause']))
+
+
+@bp.route('/api/pause', methods=['GET', 'POST'])
+@login_required
+def pause_api():
+    """GET: forced-break state; POST {on}: switch the option."""
+    with db() as conn:
+        if request.method == 'POST':
+            conn.execute('UPDATE account SET pause_forcee=? WHERE id=?',
+                         (int(bool((request.get_json(silent=True) or {}).get('on'))), session['uid']))
+        return jsonify(forced_break(conn, session['uid']))
 
 
 @bp.route('/api/pari', methods=['POST'])

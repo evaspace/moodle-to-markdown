@@ -331,10 +331,9 @@ def _beta_data():
 def admin_beta_page():
     """Revision planner on the owner's real timetable (beta.py, README_OBJECTIFS « Beta »)."""
     d = _beta_data()
-    return render_template('admin_beta.html', adv=d['adv'], hours=d['hours'], block=d['block'], n_logs=len(d['logs']),
+    return render_template('admin_beta.html', chart=d['beta'].rhythm_chart(d['hours']), n_logs=len(d['logs']),
                            unmapped=d['beta'].unmapped(d['events'], d['reg']), n_events=len(d['events']),
-                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, meals=d['beta'].MEALS,
-                           next=d['beta'].next_eval(d['adv']))
+                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, next=d['beta'].next_eval(d['adv']))
 
 
 @app.route('/admin/beta/semaine')
@@ -348,7 +347,8 @@ def admin_beta_week():
     except ValueError:
         day = d['now'].date()
     monday = day - timedelta(days=day.weekday())
-    return jsonify(d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], d['hours'], d['block']))
+    grid = d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], d['hours'], d['block'])
+    return jsonify(dict(grid, cours=d['beta'].course_cards(d['adv'])))
 
 
 # ------------------------------------------------------------------ API ----

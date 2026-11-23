@@ -360,3 +360,18 @@ Fait :
 
 Fait : en haut, le bloc noir de `/calendrier` avec le compte à rebours rouge jusqu'à la prochaine évaluation, son conseil et « Réviser maintenant ». Une couleur par matière (maths bleu, physique orange, électronique vert d'eau, archi ocre, algo framboise, prog brun), avec une légende : cours en clair, révision proposée en plein, évaluation en noir. Jour actuel en rouge, point et ligne rouges pour l'heure. Les blocs apparaissent avec un petit rebond (comme `lv-pop`) et grossissent au survol ; rien ne bouge si le système demande moins d'animations. Grille plus haute (72 px par heure), colonnes plus larges, titres courts (« Mécanique du point » au lieu du titre Auriga complet), titre en premier ; un bloc court n'affiche que le titre, le reste est dans l'infobulle. Barres vertes de `/calendrier` dans le tableau d'avancement.
 Automatique : export du planning toutes les 30 min (cron), mise en ligne avec `tools/deploy.sh`.
+
+### Retour du 2026-11-23 (plan) : zéro effort
+
+- « Il faut que tout soit adaptable, automatiquement, que l'utilisateur soit une princesse qui ne fait rien d'autre que lire les conseils bien placés, appliquer les exercices présentés et se servir des corrections 20/20 de chaque exo. »
+- Conséquence : aucune saisie manuelle (pas de journal d'énergie, de sommeil ou de repas). Tout se déduit des réponses (`exo_log`, `event_log`), du planning Auriga et du calendrier des examens. Plan détaillé : `PLAN_BETA.md`.
+
+### Retour du 2026-11-23 (nuit, 2) : conseils, tableaux, pause forcée
+
+- « Les conseils doivent être dynamiques et rendus plus beaux, là c'est infernal. Pareil pour le tableau d'avancement et le tableau de rythme. Et la pause, on ne la comprend pas : ça devrait être une option de pause forcée, optimisée selon la personne, selon la moyenne et l'horaire de travail. »
+
+Fait :
+- Conseils + avancement fusionnés en une carte par cours (« Tes cours, du plus urgent au moins urgent »), aux couleurs de la matière : gros chiffre (J-n avant l'évaluation, ou retard en rouge), barre verte de progression avec le trait de la classe, séances passées, conseil, clic = parcours. Seul un cours avec une évaluation dans 3 jours ou moins est en noir. Rafraîchies chaque minute avec le calendrier.
+- Nouveau conseil pour un cours dont l'examen est passé : 1 à 2 séances par semaine pour les partiels de fin de semestre, priorité aux cours à venir.
+- Rythme : graphique en barres (réussite par heure), les 3 meilleures heures entre 8 h et 22 h en vert et écrites en clair.
+- Pause forcée (option, désactivée par défaut, bouton sur `/admin/beta`) : après le temps de travail, la page d'exercice passe en écran noir avec compte à rebours, et le serveur refuse les réponses (code 423) jusqu'à la fin. Temps de travail : mon rythme mesuré (25 ou 45 min), sinon la médiane des élèves ; le soir ×0,75 dès 20 h (20 min minimum), pause +5 min dès 21 h ; une pause sur trois dure 20 min. Une pause est faite quand aucune réponse n'a été donnée pendant sa durée.

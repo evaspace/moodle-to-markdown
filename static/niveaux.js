@@ -9,6 +9,26 @@
     return { ok: r.ok, data };
   }
 
+  // ---- forced break (beta option, /admin/beta): full screen, cannot be closed before the end
+  let breakTimer = null;
+  function forcedBreak(st) {
+    if (!st || !st.on || !st.force || breakTimer) return;
+    const box = document.createElement('div');
+    box.className = 'lv-break'; box.setAttribute('role', 'alertdialog'); box.setAttribute('aria-label', 'Pause forcée');
+    box.innerHTML = '<strong></strong><h2></h2><p></p>';
+    box.querySelector('h2').textContent = st.longue ? 'Grande pause' : 'Pause';
+    box.querySelector('p').textContent = `${st.travaille} min de travail d'affilée (${st.source}). Lève-toi, bois de l'eau, regarde loin, pas d'écran. Les réponses reprennent à la fin du compte.`;
+    document.body.appendChild(box);
+    const end = Date.now() + st.restant * 1000;
+    const tick = () => {
+      const s = Math.max(0, Math.round((end - Date.now()) / 1000));
+      box.querySelector('strong').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+      if (!s) { clearInterval(breakTimer); breakTimer = null; box.remove(); }
+    };
+    tick(); breakTimer = setInterval(tick, 1000);
+  }
+  const checkBreak = () => fetch('/api/pause').then(r => r.ok ? r.json() : null).then(forcedBreak).catch(() => {});
+
   // ---- account page
   const form = $('account-form');
   if (form) {
@@ -182,6 +202,7 @@
 
   function setup() {
     const exo = $('exo');
+    if (exo) checkBreak();  // a break started before this page loaded
     const toggle = (btn, panel, onOpen) => {
       btn.onclick = () => {
         panel.hidden = !panel.hidden;
@@ -262,6 +283,8 @@
       $('pari-row').hidden = true;
       const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, conf, revoir: exo.dataset.revoir === '1' });
       const fb = $('feedback');
+      if (res.data.pause) { forcedBreak(res.data.pause); $('btn-ok').disabled = $('btn-ko').disabled = false; return; }
+      checkBreak();
       if (!res.ok) {
         fb.className = 'lv-feedback bad';
         fb.textContent = res.data.error || 'Erreur réseau, réessaie.';

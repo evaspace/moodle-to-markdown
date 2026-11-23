@@ -209,6 +209,9 @@ def conseil(r):
     if r['jours_eval'] is not None and r['jours_eval'] <= IMMINENT:
         return (f"Évaluation dans {r['jours_eval']} j : refais les niveaux déjà vus et la fiche du chapitre, "
                 "pas de nouveau chapitre. Relis la copie 20/20 la veille.")
+    if r.get('eval_passee') and not r['eval']:
+        return ("Examen passé : ce cours revient aux partiels de fin de semestre. 1 à 2 séances par semaine "
+                "pour ne pas l'oublier, priorité aux cours qui ont une évaluation à venir.")
     if r['bloque_par']:
         return f"Rattrape d'abord {', '.join(r['bloque_par'])} : sans ça les TD de ce cours ne passent pas."
     if r['retard'] >= LATE:
@@ -227,6 +230,25 @@ def short(title):
         if tail and len(head) >= 4:
             return ('À chaud : ' + short(tail)) if head == 'À chaud' else head
     return title
+
+
+def course_cards(adv):
+    """One card per course for /admin/beta, most urgent first: progress, lateness, eval, advice, link."""
+    return [dict(titre=short(r['titre']), matiere=r['matiere'], moi=r['moi'], classe=r['classe'], retard=r['retard'],
+                 faits=r['faits'], total=r['total'], jours_eval=r['jours_eval'],
+                 eval=f"{JOURS[r['eval'].weekday()]} {r['eval'].day}/{r['eval'].month}" if r['eval'] else None,
+                 bloque_par=[short(t) for t in r['bloque_par']], conseil=r['conseil'],
+                 urgent=r['jours_eval'] is not None and r['jours_eval'] <= IMMINENT,
+                 lien='/niveaux/' + r['parcours'][0] if r['parcours'] else None) for r in adv]
+
+
+def rhythm_chart(hours):
+    """Bars for the rhythm chart: the 3 best hours are marked."""
+    if not hours:
+        return None
+    best = sorted((h for h in hours if DAY_START.hour <= h < DAY_STOP.hour), key=lambda h: -hours[h]['pct'])[:3]
+    return dict(barres=[dict(h=h, pct=v['pct'], n=v['n'], top=h in best) for h, v in hours.items()],
+                meilleures=sorted(best))
 
 
 def next_eval(adv):
@@ -317,6 +339,54 @@ def block_length(logs, gap=20, split=25, min_sessions=3):
     if e - l_ >= 10:
         return dict(minutes=25, pause=5, raison=f'ta réussite baisse après 25 min ({e} % puis {l_} %)')
     return dict(minutes=45, pause=10, raison=f'ta réussite tient sur une longue séance ({e} % puis {l_} %)')
+
+
+LONG_PAUSE = 20   # minutes, every 3rd break of the day
+
+
+def pause_settings(hour, personal, average):
+    """Work/break minutes for a forced break: the person's measured block, else the users' median, then the hour.
+
+    personal/average: block_length() dicts (personal counts only when measured). Evening: shorter work
+    (x0.75 from 20 h), longer break (+5 min from 21 h)."""
+    base = personal if personal and not personal['raison'].startswith('par défaut') else average
+    travail, pause = base['minutes'], base['pause']
+    source = 'ton rythme mesuré' if base is personal else 'la moyenne des élèves'
+    if hour >= 20:
+        travail = max(20, round(travail * .75))
+        source += ', raccourci le soir'
+    if hour >= 21:
+        pause += 5
+    return dict(travail=travail, pause=pause, source=source)
+
+
+def pause_state(times, now, travail, pause):
+    """Forced-break state from today's answer times (sorted, aware). Stateless: a break is done once no
+    answer was given for `pause` minutes. Every 3rd break of the day lasts LONG_PAUSE minutes."""
+    if not times:
+        return dict(force=False, travaille=0, avant_pause=travail)
+    chains, start = 0, times[0]
+    for a, b in zip(times, times[1:]):
+        if b - a >= timedelta(minutes=pause):
+            chains += (a - start) >= timedelta(minutes=travail)
+            start = b
+    worked = (times[-1] - start).total_seconds() / 60
+    if worked >= travail:
+        length = LONG_PAUSE if chains % 3 == 2 else pause
+        end = times[-1] + timedelta(minutes=length)
+        if now < end:
+            return dict(force=True, travaille=round(worked), jusqua=end.isoformat(),
+                        restant=int((end - now).total_seconds()), longue=length == LONG_PAUSE)
+    if now - times[-1] >= timedelta(minutes=pause):   # break taken: a new work stretch starts
+        return dict(force=False, travaille=0, avant_pause=travail)
+    return dict(force=False, travaille=round(worked), avant_pause=max(0, round(travail - worked)))
+
+
+def average_block(logs_by_account):
+    """Median block of the accounts whose block is measured (45 min default when nobody is)."""
+    measured = sorted(b['minutes'] for b in map(block_length, logs_by_account) if not b['raison'].startswith('par défaut'))
+    m = measured[len(measured) // 2] if measured else 45
+    return dict(minutes=m, pause=5 if m <= 25 else 10, raison='moyenne')
 
 
 def _at(day, t):

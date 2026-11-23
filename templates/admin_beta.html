@@ -8,14 +8,14 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=35">
+  <link rel="stylesheet" href="/static/niveaux.css?v=37">
 </head>
 <body class="lv-page">
 {% set tab = 'beta' %}{% include 'admin_nav.html' %}
 {% set jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'] %}
 <div class="lv-wrap lv-wide">
   <h1>Beta : quoi réviser, et quand</h1>
-  <p class="lv-muted">Visible par toi seul. Calculé sur ton vrai planning Auriga ({{ n_events }} créneaux, via auriga2google), ton avancement dans les niveaux et tes {{ n_logs }} réponses.</p>
+  <p class="lv-muted">Visible par toi seul. Calculé sur ton planning Auriga ({{ n_events }} créneaux), tes niveaux et tes {{ n_logs }} réponses. Mis à jour chaque minute.</p>
   {% if not n_events %}<p class="bt-warn">Pas de planning : lancer <code>tools/planning_cours.py</code> sur le serveur.</p>{% endif %}
 
   {% if next %}
@@ -41,35 +41,35 @@
     <p class="bt-legend">Clair : cours. Plein : révision proposée, clique pour réviser. Noir : évaluation. Barre verte : ta progression, trait : la classe.</p>
     <div class="bt-grid-scroll"></div>
   </div>
-  <h3 class="bt-day">Conseils pour les cours de la semaine</h3>
-  <ul class="bt-list" id="bt-advice"></ul>
-  <p class="lv-muted">Séances de {{ block.minutes }} min, {{ block.pause }} min de pause entre deux ({{ block.raison }}). Repas {% for a, b, n in meals %}{{ n|lower }} {{ a.strftime('%H:%M') }}–{{ b.strftime('%H:%M') }}{% if not loop.last %}, {% endif %}{% endfor %} et arrêt à 22 h (18 h le samedi) ne sont jamais occupés.</p>
 
-  <h2>Avancement : la classe et toi</h2>
-  <p class="lv-muted">Classe = part des cours, TD et TP déjà passés sur ceux qu'Auriga connaît. Toi = niveaux validés dans les parcours de l'ECUE. Retard = classe moins toi.</p>
-  <div class="st-hist-scroll"><table class="st-hist bt">
-    <thead><tr><th>Cours</th><th>Faits</th><th>Classe</th><th>Toi</th><th>Retard</th><th>Évaluation</th><th>D'abord</th><th>Conseil</th></tr></thead>
-    <tbody>{% for r in adv %}<tr>
-      <td>{% if r.parcours %}<a href="/niveaux/{{ r.parcours[0] }}">{{ r.titre }}</a>{% else %}{{ r.titre }}{% endif %}</td>
-      <td>{{ r.faits }}/{{ r.total }}</td><td>{{ r.classe }} %</td><td><span class="cal-meter" role="img" aria-label="{{ r.moi }} %"><i style="width: {{ r.moi }}%"></i></span> {{ r.moi }} %</td>
-      <td{% if r.retard >= 15 %} class="bt-late"{% endif %}>{{ r.retard }}</td>
-      <td>{% if r.eval %}{{ r.eval.strftime('%d/%m') }} ({{ r.jours_eval }} j){% endif %}</td>
-      <td>{{ r.bloque_par|join(', ') }}</td>
-      <td class="bt-wrap">{{ r.conseil }}</td>
-    </tr>{% endfor %}</tbody>
-  </table></div>
-  {% if unmapped %}<p class="lv-muted">Cours Auriga sans ECUE dans le registre : {{ unmapped|join(', ') }}.</p>{% endif %}
+  <h2>Tes cours, du plus urgent au moins urgent</h2>
+  <p class="lv-muted">Barre verte : ta progression dans les niveaux. Trait noir : où en est la classe. L'écart entre les deux, c'est ton retard.</p>
+  <div class="bt-cards" id="bt-cards"></div>
+  {% if unmapped %}<p class="lv-muted">Cours Auriga sans parcours : {{ unmapped|join(', ') }}.</p>{% endif %}
+
+  <h2>Pause forcée</h2>
+  <div class="bt-pause" id="bt-pause">
+    <div class="bt-pause-state"><strong id="bt-pause-big">–</strong><span id="bt-pause-unit"></span></div>
+    <div>
+      <p id="bt-pause-text">Connecte-toi avec ton compte pour régler la pause forcée.</p>
+      <button class="lv-btn primary" id="bt-pause-btn" type="button" hidden></button>
+    </div>
+  </div>
+  <p class="lv-muted">Activée, la page d'exercice s'arrête après le temps de travail : écran noir et compte à rebours, réponses refusées par le serveur jusqu'à la fin. Durée calculée sur ton rythme (sinon la moyenne des élèves), plus courte le soir, une grande pause de 20 min toutes les 3 pauses.</p>
 
   <h2>Ton rythme</h2>
-  {% if hours %}
-  <div class="st-hist-scroll"><table class="st-hist bt">
-    <thead><tr><th>Heure</th>{% for h in hours %}<th>{{ h }} h</th>{% endfor %}</tr></thead>
-    <tbody><tr><td>Réussite</td>{% for h, v in hours.items() %}<td>{{ v.pct }} %</td>{% endfor %}</tr>
-    <tr><td>Réponses</td>{% for h, v in hours.items() %}<td>{{ v.n }}</td>{% endfor %}</tr></tbody>
-  </table></div>
-  <p class="lv-muted">Les cours les plus urgents vont aux heures où tu réussis le mieux.</p>
+  {% if chart %}
+  <p>Entre 8 h et 22 h, tu réussis le mieux à {% for h in chart.meilleures %}<strong>{{ h }} h</strong>{% if not loop.last %}, {% endif %}{% endfor %} : le calendrier y place les cours les plus urgents.</p>
+  <div class="bt-chart" role="img" aria-label="Taux de réussite par heure">
+    {% for b in chart.barres %}<div class="bt-chart-col{{ ' top' if b.top }}" title="{{ b.h }} h : {{ b.pct }} % de réussite sur {{ b.n }} réponses">
+      <span class="bt-chart-pct">{{ b.pct }}</span>
+      <span class="bt-chart-bar" style="height: {{ b.pct }}%"></span>
+      <span class="bt-chart-h">{{ b.h }}h</span>
+    </div>{% endfor %}
+  </div>
+  <p class="lv-muted">Hauteur : part de bonnes réponses à cette heure-là. Seules les heures avec au moins 8 réponses comptent.</p>
   {% else %}
-  <p class="lv-muted">Pas encore assez de réponses (40 minimum) : le plan suppose qu'on est plus efficace le matin. Il s'adaptera tout seul.</p>
+  <p class="lv-muted">Pas encore assez de réponses (40 minimum) : le calendrier suppose que tu es plus efficace le matin, et s'adaptera tout seul.</p>
   {% endif %}
 
   <h2>Récupération</h2>
@@ -85,7 +85,7 @@
   {% endfor %}
 
 </div>
-<script src="/static/beta.js?v=3"></script>
+<script src="/static/beta.js?v=5"></script>
 {% include 'footer.html' %}
 </body>
 </html>
