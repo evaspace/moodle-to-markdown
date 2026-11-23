@@ -50,7 +50,7 @@ class Beta(unittest.TestCase):
             self.assertTrue(all(p['fin'] <= a or p['debut'] >= b for a, b in busy), p)
             self.assertLessEqual(p['fin'].time(), beta.DAY_STOP)
         self.assertLessEqual(sum((p['fin'] - p['debut']).seconds // 60 for p in plan), beta.CAP_COURSE_DAY)
-        hot = [p for p in plan if p['quoi'].startswith('Revoir à chaud')]
+        hot = [p for p in plan if p['quoi'].startswith('À chaud')]
         self.assertEqual([p['debut'].hour for p in hot], [11])            # right after the 9-11 course
         keys = [p['key'] for p in sorted([p for p in plan if p['key']], key=lambda p: -beta.DEFAULT_GOOD_HOURS.get(p['debut'].hour, 0))]
         self.assertEqual(keys[0], 'maths/S1/APIS')                        # best hour: the late maths
@@ -65,7 +65,8 @@ class Beta(unittest.TestCase):
     def test_syllabus_evals(self):
         syl = {'calendrier': [{'debut': '2026-11-25', 'titre': 'QCM2', 'ecue': 'physique/S1/Mécanique'},
                               {'debut': '2026-11-26', 'titre': 'Test', 'parcours': ['m']},
-                              {'debut': '2026-11-26', 'titre': 'S3', 'ecue': 'maths/S3/AL'}]}
+                              {'debut': '2026-11-26', 'titre': 'S3', 'ecue': 'maths/S3/AL'},
+                              {'debut': '2026-11-29', 'titre': 'déjà dans Auriga', 'parcours': ['m']}]}
         out = beta.syllabus_evals(syl, REG, EVENTS)
         self.assertEqual([(e['titre'], e['debut'].day) for e in out],
                          [('Mécanique du point', 25), ('Analyse : primitives, intégrales, suites', 26)])
@@ -75,6 +76,19 @@ class Beta(unittest.TestCase):
         first = max(beta.plan_day(DAY, EVENTS, adv), key=lambda b: beta.DEFAULT_GOOD_HOURS.get(b['debut'].hour, 0)
                     if b['key'] else -1)
         self.assertEqual(first['key'], 'physique/S1/Mécanique')   # eval tomorrow: no detour by the maths
+
+    def test_no_revision_on_the_eval_day(self):
+        adv = beta.advancement(EVENTS, REG, {}, NOW)
+        evday = DAY + timedelta(days=5)
+        self.assertNotIn('maths/S1/APIS', [p['key'] for p in beta.plan_day(evday, EVENTS, adv)])
+
+    def test_week_grid(self):
+        adv = beta.advancement(EVENTS, REG, {'m': 10}, NOW)
+        w = beta.week_grid(EVENTS, adv, DAY - timedelta(days=1), NOW)
+        self.assertEqual((w['lundi'], w['aujourdhui']), ('2026-11-23', 1))
+        td = [i for i in w['items'] if i['kind'] == 'cours' and i['jour'] == 1][0]
+        self.assertEqual((td['debut'], td['fin'], td['lien'], td['classe']), (540, 660, '/niveaux/p', 50))
+        self.assertFalse([i for i in w['items'] if i['kind'] == 'revision' and i['jour'] == 0])  # past day
 
     def test_rhythm_and_block_length(self):
         self.assertIsNone(beta.rhythm([(NOW, 1)] * 10))

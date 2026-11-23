@@ -341,3 +341,15 @@ Fait (page `/admin/beta`, onglet « Beta » de l'admin) :
 - Copie 20/20 : listes par matière de ce que le correcteur veut voir et des pièges d'étourderie (unités, hypothèses des théorèmes, `let rec` et `;;` en OCaml, `;` et types en C, etc.).
 
 Reste à faire (idées, à valider) : copie 20/20 rédigée exercice par exercice dans les corrections ; mesurer les pauses réelles (durée entre deux séances) ; noter repas et sommeil si le plan doit en tenir compte ; ouvrir la beta aux autres élèves (chacun son planning auriga2google).
+
+### Retour du 2026-11-23 (soir)
+
+- « L'implémentation du tableau des révisions n'a pas été faite, les conseils par classe non plus. » Cause : la page n'avait pas été mise en ligne (déploiement refusé par la sécurité de l'assistant, à lancer à la main).
+- « Je suis en L2. » C'est le groupe Auriga « 2627 - S1 Lyon L2 » : le planning exporté est bien le sien (cours mutualisés L1+L2 compris).
+- « Il fallait un tableau de la semaine type Google Calendar, un calendrier, très simple, avec les liens directs dessus et leur progression, et si possible dynamique. »
+
+Fait :
+- Grille de la semaine (lundi → dimanche, 8 h → 22 h) en haut de `/admin/beta` : cours en gris, révisions proposées en rouge clair, évaluations en noir. Chaque bloc est un lien vers le parcours du cours et affiche ma progression (barre verte) et celle de la classe (trait noir). Ligne rouge = maintenant.
+- Dynamique : semaine précédente / suivante sans recharger, rafraîchie chaque minute (`/admin/beta/semaine`, `static/beta.js`).
+- Conseil par cours : une phrase concrète par ECUE (évaluation dans 3 j ou moins → refaire les niveaux vus et la fiche ; prérequis en retard → le rattraper d'abord ; en retard → 2 séances par jour ; à jour → le niveau suivant avant le prochain cours). Sous la grille pour les cours de la semaine, et en colonne « Conseil » du tableau d'avancement.
+- Le jour d'une évaluation, plus de séance proposée sur ce cours (trop tard). Une date d'examen présente dans Auriga et dans `syllabus.json` n'est comptée qu'une fois.

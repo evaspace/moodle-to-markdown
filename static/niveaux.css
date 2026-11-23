@@ -430,3 +430,29 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .bt-list { margin: 8px 0 16px 20px; line-height: 1.5; }
 .bt-copie summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
 .bt-day { font-size: 16px; margin: 16px 0 4px; }
+/* /admin/beta week grid */
+.bt-nav { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+.bt-nav button { font: inherit; padding: 6px 12px; background: #F4F5F7; border: 0; cursor: pointer; }
+.bt-nav strong { margin-right: auto; }
+.bt-grid-scroll { overflow-x: auto; }
+.bt-grid { display: grid; grid-template-columns: 44px repeat(7, minmax(96px, 1fr)); min-width: 720px; }
+.bt-head { height: 28px; font-size: 13px; font-weight: 600; text-align: center; line-height: 28px; }
+.bt-today .bt-head { color: var(--accent-color); }
+.bt-col-body { position: relative; height: var(--h); }
+.bt-line { position: absolute; left: 0; right: 0; border-top: 1px solid #EDEEF1; }
+.bt-hour { position: absolute; right: 6px; font-size: 11px; color: var(--text-muted); transform: translateY(-50%); }
+.bt-col { border-left: 1px solid #EDEEF1; }
+.bt-ev { position: absolute; overflow: hidden; padding: 2px 4px; font-size: 11px; line-height: 1.25; color: inherit;
+         text-decoration: none; background: #E9EBEF; border-left: 3px solid #9AA1AC; display: flex; flex-direction: column; }
+.bt-revision { background: #FFECEC; border-left-color: var(--accent-color); }
+.bt-eval { background: #1F2328; color: #fff; border-left-color: var(--accent-color); }
+.bt-ev-h { color: inherit; opacity: .75; }
+.bt-ev-t { font-weight: 600; }
+.bt-short .bt-ev-h, .bt-short .bt-bar, .bt-short .bt-ev-p { display: none; }
+.bt-short .bt-ev-t { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.bt-bar { position: relative; height: 4px; background: #fff; margin: 2px 0 1px; flex: none; }
+.bt-bar-me { position: absolute; left: 0; top: 0; bottom: 0; background: var(--success-color); }
+.bt-bar-cl { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #1F2328; }
+.bt-now { position: absolute; left: 0; right: 0; height: 2px; background: var(--accent-color); z-index: 2; }
+.bt-legend { font-size: 13px; color: var(--text-muted); }
+.bt-wrap { white-space: normal; text-align: left; min-width: 260px; }

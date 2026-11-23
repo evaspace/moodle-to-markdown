@@ -154,12 +154,15 @@ def syllabus_evals(syllabus, reg, events):
 
     An entry names its ECUE (`ecue`) or its paths (`parcours`); the date has no hour: 08:00 is assumed."""
     seen = {ecue_of(ev['titre'], reg) for ev in events}
+    auriga = {(ecue_of(ev['titre'], reg), ev['debut'].date()) for ev in events if ev['type'] in EVAL_TYPES}
     by_path = {p: k for k, e in reg.items() for p in e['parcours']}
     out = []
     for c in syllabus.get('calendrier', []):
         key = c.get('ecue') or next((by_path[p] for p in c.get('parcours') or [] if p in by_path), None)
         if key in seen and key in reg and c.get('debut'):
             a = datetime.fromisoformat(c['debut']).replace(hour=8, tzinfo=TZ)
+            if (key, a.date()) in auriga:  # Auriga already has it, with the real hour
+                continue
             out.append(dict(titre=reg[key]['titre'], type='EVAL', debut=a, fin=a + timedelta(hours=1), detail=c['titre']))
     return out
 
@@ -174,10 +177,12 @@ def advancement(events, reg, my_pct, now):
         if not key:
             continue
         r = rows.setdefault(key, dict(key=key, titre=reg[key]['titre'], matiere=reg[key]['matiere'],
-                                      faits=0, total=0, eval=None, parcours=reg[key]['parcours']))
+                                      faits=0, total=0, eval=None, prochain=None, parcours=reg[key]['parcours']))
         if ev['type'] in LESSON_TYPES:
             r['total'] += 1
             r['faits'] += ev['fin'] <= now
+            if ev['debut'] > now and (r['prochain'] is None or ev['debut'] < r['prochain']):
+                r['prochain'] = ev['debut']
         elif ev['type'] in EVAL_TYPES and ev['debut'] <= now:
             r['eval_passee'] = True
         elif ev['type'] in EVAL_TYPES and (r['eval'] is None or ev['debut'] < r['eval']):
@@ -192,7 +197,57 @@ def advancement(events, reg, my_pct, now):
         r['bloque_par'] = [rows[p]['titre'] for p in PREREQUIS.get(r['key'], [])
                            if p in rows and rows[p]['retard'] >= LATE]
         r['priorite'] = priority(r)
+        r['conseil'] = conseil(r)
     return sorted(rows.values(), key=lambda r: -r['priorite'])
+
+
+JOURS = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']
+
+
+def conseil(r):
+    """One concrete thing to do for this course now (« conseils par cours »)."""
+    if r['jours_eval'] is not None and r['jours_eval'] <= IMMINENT:
+        return (f"Évaluation dans {r['jours_eval']} j : refais les niveaux déjà vus et la fiche du chapitre, "
+                "pas de nouveau chapitre. Relis la copie 20/20 la veille.")
+    if r['bloque_par']:
+        return f"Rattrape d'abord {', '.join(r['bloque_par'])} : sans ça les TD de ce cours ne passent pas."
+    if r['retard'] >= LATE:
+        return (f"{r['retard']} pts de retard : 2 séances par jour sur ce cours jusqu'à rejoindre la classe, "
+                "en commençant par le premier niveau non validé.")
+    if r['moi'] < 100 and r['prochain']:
+        d = r['prochain']
+        return f"À jour : fais le niveau suivant avant le prochain cours ({JOURS[d.weekday()]} {d.day}, {d:%H:%M}) pour arriver en avance."
+    return "À jour : une séance de révision espacée par semaine suffit (/niveaux/revoir)."
+
+
+def week_grid(events, adv, monday, now, hours=None, block=None):
+    """The week of `monday` for the calendar grid: courses, evals and planned revision blocks, JSON-ready.
+
+    Each item: day (0-6), start/end in minutes since midnight, kind (cours / eval / revision), title,
+    link to the first path of its ECUE, my % and the class %, advice. Revision blocks only from today on."""
+    by_key = {r['key']: r for r in adv}
+    items = []
+
+    def add(day, a, b, kind, titre, key, extra=''):
+        r = by_key.get(key)
+        items.append(dict(jour=day, debut=a.hour * 60 + a.minute, fin=b.hour * 60 + b.minute, kind=kind,
+                          titre=titre, heure=f'{a:%H:%M}–{b:%H:%M}', detail=extra,
+                          lien='/niveaux/' + r['parcours'][0] if r and r['parcours'] else None,
+                          moi=r['moi'] if r else None, classe=r['classe'] if r else None,
+                          conseil=r['conseil'] if r else ''))
+    for d in range(7):
+        day = monday + timedelta(days=d)
+        for ev in events:
+            if ev['debut'].date() == day:
+                kind = 'eval' if ev['type'] in EVAL_TYPES else 'cours'
+                add(d, ev['debut'], ev['fin'], kind, ev['titre'], ecue_of(ev['titre'], by_key),
+                    ev.get('detail') or ' · '.join(x for x in (ev['type'], ev.get('salle')) if x))
+        if day >= now.date():
+            for p in plan_day(day, events, adv, hours, block, now if day == now.date() else None):
+                add(d, p['debut'], p['fin'], 'revision', p['quoi'], p['key'], p['pourquoi'])
+    return dict(lundi=monday.isoformat(), jours=[f'{JOURS[d][:3]}. {(monday + timedelta(days=d)).day}'
+                                                for d in range(7)],
+                aujourdhui=(now.date() - monday).days, maintenant=now.hour * 60 + now.minute, items=items)
 
 
 def priority(r):
@@ -298,8 +353,10 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
         got = take(ev['fin'], 20)
         if got:
             used += 20
-            plan.append(dict(debut=got[0], fin=got[1], quoi=f"Revoir à chaud : {ev['titre']}",
-                             pourquoi='le cours du jour, relu le jour même', key=None))
+            key = ecue_of(ev['titre'], by_key)
+            plan.append(dict(debut=got[0], fin=got[1], quoi=f"À chaud : {ev['titre']}",
+                             pourquoi='le cours du jour, relu le jour même', key=key,
+                             lien='/niveaux/' + by_key[key]['parcours'][0] if key and by_key[key]['parcours'] else None))
 
     targets = []
     for r in adv:
@@ -313,6 +370,8 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
         targets.append((r, reason(r)))
     seen, ordered = {}, []
     for r, why in targets:
+        if r['eval'] and r['eval'].date() == day:  # too late on the eval day itself
+            continue
         if seen.get(r['key'], 0) < 2:
             seen[r['key']] = seen.get(r['key'], 0) + 1
             ordered.append((r, why))

@@ -297,10 +297,8 @@ def admin_stats_page():
     return render_template('admin_stats.html', s=stats)
 
 
-@app.route('/admin/beta')
-@admin_required
-def admin_beta_page():
-    """Revision planner on the owner's real timetable (beta.py, README_OBJECTIFS « Beta »)."""
+def _beta_data():
+    """Everything /admin/beta needs, for the logged-in admin (else the owner account)."""
     import beta
     from datetime import datetime, timezone
     from levels import ADMIN_USERS, db as levels_db, load_parcours, percent
@@ -324,13 +322,32 @@ def admin_beta_page():
         logs = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'])
                 for r in conn.execute('SELECT at, ok FROM exo_log WHERE account_id=?', (me,))]
     adv = beta.advancement(events + evals, reg, my_pct, now)
-    hours, block = beta.rhythm(logs), beta.block_length(logs)
-    today = now.date()
-    days = [(today, beta.plan_day(today, events, adv, hours, block, now)),
-            (today + timedelta(days=1), beta.plan_day(today + timedelta(days=1), events, adv, hours, block))]
-    return render_template('admin_beta.html', adv=adv, days=days, hours=hours, block=block, n_logs=len(logs),
-                           week=beta.week(events, now), unmapped=beta.unmapped(events, reg), n_events=len(events),
-                           copie=beta.COPIE_20, recup=beta.RECUPERATION, meals=beta.MEALS, today=today)
+    return dict(beta=beta, events=events, evals=evals, reg=reg, now=now, adv=adv, logs=logs,
+                hours=beta.rhythm(logs), block=beta.block_length(logs))
+
+
+@app.route('/admin/beta')
+@admin_required
+def admin_beta_page():
+    """Revision planner on the owner's real timetable (beta.py, README_OBJECTIFS « Beta »)."""
+    d = _beta_data()
+    return render_template('admin_beta.html', adv=d['adv'], hours=d['hours'], block=d['block'], n_logs=len(d['logs']),
+                           unmapped=d['beta'].unmapped(d['events'], d['reg']), n_events=len(d['events']),
+                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, meals=d['beta'].MEALS)
+
+
+@app.route('/admin/beta/semaine')
+@admin_required
+def admin_beta_week():
+    """JSON of one week (?lundi=AAAA-MM-JJ, default this week) for the calendar grid of /admin/beta."""
+    from datetime import date
+    d = _beta_data()
+    try:
+        day = date.fromisoformat(request.args.get('lundi', ''))
+    except ValueError:
+        day = d['now'].date()
+    monday = day - timedelta(days=day.weekday())
+    return jsonify(d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], d['hours'], d['block']))
 
 
 # ------------------------------------------------------------------ API ----
