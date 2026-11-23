@@ -220,6 +220,21 @@ def conseil(r):
     return "À jour : une séance de révision espacée par semaine suffit (/niveaux/revoir)."
 
 
+def short(title):
+    """Calendar label: « Mécanique du point - Dynamique… » -> « Mécanique du point »; keeps « C - Les bases »."""
+    for sep in (' - ', ' : '):
+        head, _, tail = title.partition(sep)
+        if tail and len(head) >= 4:
+            return ('À chaud : ' + short(tail)) if head == 'À chaud' else head
+    return title
+
+
+def next_eval(adv):
+    """The closest upcoming evaluation among the courses, for the countdown block."""
+    rows = [r for r in adv if r['eval']]
+    return min(rows, key=lambda r: r['eval']) if rows else None
+
+
 def week_grid(events, adv, monday, now, hours=None, block=None):
     """The week of `monday` for the calendar grid: courses, evals and planned revision blocks, JSON-ready.
 
@@ -231,7 +246,8 @@ def week_grid(events, adv, monday, now, hours=None, block=None):
     def add(day, a, b, kind, titre, key, extra=''):
         r = by_key.get(key)
         items.append(dict(jour=day, debut=a.hour * 60 + a.minute, fin=b.hour * 60 + b.minute, kind=kind,
-                          titre=titre, heure=f'{a:%H:%M}–{b:%H:%M}', detail=extra,
+                          titre=titre, court=short(titre), heure=f'{a:%H:%M}–{b:%H:%M}', detail=extra,
+                          matiere=r['matiere'] if r else 'autre',
                           lien='/niveaux/' + r['parcours'][0] if r and r['parcours'] else None,
                           moi=r['moi'] if r else None, classe=r['classe'] if r else None,
                           conseil=r['conseil'] if r else ''))

@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=34">
+  <link rel="stylesheet" href="/static/niveaux.css?v=35">
 </head>
 <body class="lv-page">
 {% set tab = 'beta' %}{% include 'admin_nav.html' %}
@@ -18,13 +18,27 @@
   <p class="lv-muted">Visible par toi seul. Calculé sur ton vrai planning Auriga ({{ n_events }} créneaux, via auriga2google), ton avancement dans les niveaux et tes {{ n_logs }} réponses.</p>
   {% if not n_events %}<p class="bt-warn">Pas de planning : lancer <code>tools/planning_cours.py</code> sur le serveur.</p>{% endif %}
 
+  {% if next %}
+  <section class="cal-next" aria-labelledby="bt-next-title">
+    <div class="cal-count">
+      {% if next.jours_eval == 0 %}<strong class="today">Aujourd'hui</strong>
+      {% else %}<strong>{{ next.jours_eval }}</strong><span>{{ 'jour' if next.jours_eval == 1 else 'jours' }}</span>{% endif %}
+    </div>
+    <div class="cal-next-body">
+      <h2 id="bt-next-title">{{ next.titre }}</h2>
+      <p>{{ next.eval.strftime('%d/%m') }} · toi {{ next.moi }} %, classe {{ next.classe }} %<br>{{ next.conseil }}</p>
+      {% if next.parcours %}<a class="lv-btn primary" href="/niveaux/{{ next.parcours[0] }}">Réviser maintenant</a>{% endif %}
+    </div>
+  </section>
+  {% endif %}
   <h2>Ta semaine</h2>
   <div id="bt-cal">
     <div class="bt-nav"><strong id="bt-week">Semaine</strong>
       <button id="bt-prev" type="button">Semaine précédente</button>
       <button id="bt-this" type="button">Cette semaine</button>
       <button id="bt-next" type="button">Semaine suivante</button></div>
-    <p class="bt-legend">Gris : cours. Rouge clair : révision proposée, avec le lien vers le parcours. Noir : évaluation. Barre verte : ta progression ; trait noir : où en est la classe.</p>
+    <p class="bt-legend"><span class="bt-key bt-maths">Maths</span><span class="bt-key bt-physique">Physique</span><span class="bt-key bt-electronique">Électronique</span><span class="bt-key bt-archi">Archi</span><span class="bt-key bt-algo">Algo</span><span class="bt-key bt-prog">Prog</span></p>
+    <p class="bt-legend">Clair : cours. Plein : révision proposée, clique pour réviser. Noir : évaluation. Barre verte : ta progression, trait : la classe.</p>
     <div class="bt-grid-scroll"></div>
   </div>
   <h3 class="bt-day">Conseils pour les cours de la semaine</h3>
@@ -37,7 +51,7 @@
     <thead><tr><th>Cours</th><th>Faits</th><th>Classe</th><th>Toi</th><th>Retard</th><th>Évaluation</th><th>D'abord</th><th>Conseil</th></tr></thead>
     <tbody>{% for r in adv %}<tr>
       <td>{% if r.parcours %}<a href="/niveaux/{{ r.parcours[0] }}">{{ r.titre }}</a>{% else %}{{ r.titre }}{% endif %}</td>
-      <td>{{ r.faits }}/{{ r.total }}</td><td>{{ r.classe }} %</td><td>{{ r.moi }} %</td>
+      <td>{{ r.faits }}/{{ r.total }}</td><td>{{ r.classe }} %</td><td><span class="cal-meter" role="img" aria-label="{{ r.moi }} %"><i style="width: {{ r.moi }}%"></i></span> {{ r.moi }} %</td>
       <td{% if r.retard >= 15 %} class="bt-late"{% endif %}>{{ r.retard }}</td>
       <td>{% if r.eval %}{{ r.eval.strftime('%d/%m') }} ({{ r.jours_eval }} j){% endif %}</td>
       <td>{{ r.bloque_par|join(', ') }}</td>
@@ -71,7 +85,7 @@
   {% endfor %}
 
 </div>
-<script src="/static/beta.js?v=1"></script>
+<script src="/static/beta.js?v=3"></script>
 {% include 'footer.html' %}
 </body>
 </html>

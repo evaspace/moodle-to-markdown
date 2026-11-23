@@ -333,7 +333,8 @@ def admin_beta_page():
     d = _beta_data()
     return render_template('admin_beta.html', adv=d['adv'], hours=d['hours'], block=d['block'], n_logs=len(d['logs']),
                            unmapped=d['beta'].unmapped(d['events'], d['reg']), n_events=len(d['events']),
-                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, meals=d['beta'].MEALS)
+                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, meals=d['beta'].MEALS,
+                           next=d['beta'].next_eval(d['adv']))
 
 
 @app.route('/admin/beta/semaine')

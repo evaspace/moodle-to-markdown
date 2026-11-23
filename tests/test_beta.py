@@ -90,6 +90,11 @@ class Beta(unittest.TestCase):
         self.assertEqual((td['debut'], td['fin'], td['lien'], td['classe']), (540, 660, '/niveaux/p', 50))
         self.assertFalse([i for i in w['items'] if i['kind'] == 'revision' and i['jour'] == 0])  # past day
 
+    def test_short(self):
+        self.assertEqual(beta.short('Mécanique du point - Dynamique en référentiel'), 'Mécanique du point')
+        self.assertEqual(beta.short('C - Les bases'), 'C - Les bases')
+        self.assertEqual(beta.short('À chaud : Analyse : primitives'), 'À chaud : Analyse')
+
     def test_rhythm_and_block_length(self):
         self.assertIsNone(beta.rhythm([(NOW, 1)] * 10))
         start = datetime(2026, 11, 1, 9, tzinfo=beta.TZ)

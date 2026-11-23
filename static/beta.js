@@ -1,6 +1,6 @@
 // /admin/beta week grid: fetches /admin/beta/semaine, draws courses, evals and revision blocks, refreshes every minute.
 (() => {
-  const START = 8 * 60, END = 22 * 60, PX = 0.8;   // minutes shown, pixels per minute
+  const START = 8 * 60, END = 22 * 60, PX = 1.2;   // minutes shown, pixels per minute
   const root = document.getElementById('bt-cal');
   if (!root) return;
   let monday = null;
@@ -37,17 +37,20 @@
       const items = w.items.filter((it) => it.jour === d && it.fin > START && it.debut < END);
       lanes(items);
       items.forEach((it) => {
-        const box = el(it.lien ? 'a' : 'div', 'bt-ev bt-' + it.kind);
+        const box = el(it.lien ? 'a' : 'div', `bt-ev bt-${it.kind} bt-${it.matiere}`);
+        box.style.animationDelay = (it.jour * 30 + (it.debut - START) / 6) + 'ms';
         if (it.lien) box.href = it.lien;
         const top = Math.max(it.debut, START), bot = Math.min(it.fin, END);
         box.style.top = ((top - START) * PX) + 'px';
         box.style.height = Math.max((bot - top) * PX - 2, 14) + 'px';
-        if ((bot - top) * PX < 30) box.classList.add('bt-short');   // too short for the hour: title only
+        const hpx = (bot - top) * PX;
+        if (hpx < 40) box.classList.add('bt-short');        // title only
+        else if (hpx < 100) box.classList.add('bt-mid');    // title, hour, bar
         box.style.left = (100 * it.lane / it.lanes) + '%';
         box.style.width = (100 / it.lanes) + '%';
         box.title = [it.heure, it.titre, it.detail, it.conseil].filter(Boolean).join('\n');
+        box.appendChild(el('span', 'bt-ev-t', it.court));
         box.appendChild(el('span', 'bt-ev-h', it.heure));
-        box.appendChild(el('span', 'bt-ev-t', it.titre));
         if (it.moi != null && it.kind !== 'eval') {
           const bar = el('span', 'bt-bar');
           const me = el('span', 'bt-bar-me'); me.style.width = it.moi + '%';

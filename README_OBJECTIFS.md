@@ -353,3 +353,10 @@ Fait :
 - Dynamique : semaine précédente / suivante sans recharger, rafraîchie chaque minute (`/admin/beta/semaine`, `static/beta.js`).
 - Conseil par cours : une phrase concrète par ECUE (évaluation dans 3 j ou moins → refaire les niveaux vus et la fiche ; prérequis en retard → le rattraper d'abord ; en retard → 2 séances par jour ; à jour → le niveau suivant avant le prochain cours). Sous la grille pour les cours de la semaine, et en colonne « Conseil » du tableau d'avancement.
 - Le jour d'une évaluation, plus de séance proposée sur ce cours (trop tard). Une date d'examen présente dans Auriga et dans `syllabus.json` n'est comptée qu'une fois.
+
+### Retour du 2026-11-23 (nuit) : couleurs et lisibilité
+
+- « Ça manque grandement de couleurs, pourquoi pas les mêmes couleurs et animations que le reste du site ? Beaucoup de textes sont écrasés. Il faut absolument mettre en automatique. »
+
+Fait : en haut, le bloc noir de `/calendrier` avec le compte à rebours rouge jusqu'à la prochaine évaluation, son conseil et « Réviser maintenant ». Une couleur par matière (maths bleu, physique orange, électronique vert d'eau, archi ocre, algo framboise, prog brun), avec une légende : cours en clair, révision proposée en plein, évaluation en noir. Jour actuel en rouge, point et ligne rouges pour l'heure. Les blocs apparaissent avec un petit rebond (comme `lv-pop`) et grossissent au survol ; rien ne bouge si le système demande moins d'animations. Grille plus haute (72 px par heure), colonnes plus larges, titres courts (« Mécanique du point » au lieu du titre Auriga complet), titre en premier ; un bloc court n'affiche que le titre, le reste est dans l'infobulle. Barres vertes de `/calendrier` dans le tableau d'avancement.
+Automatique : export du planning toutes les 30 min (cron), mise en ligne avec `tools/deploy.sh`.
