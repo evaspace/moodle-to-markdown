@@ -1,6 +1,6 @@
-"""Compile and run every C program of parcours/src/prog_c_debut.py and compare the output with the stated one.
+"""Compile and run every C program of the C level paths (prog_c_debut, prog_minimake) and compare the output.
 
-build.py cannot run C: run this after any change to prog_c_debut.py. One throwaway Alpine container
+build.py cannot run C: run this after any change to those files. One throwaway Alpine container
 (`apk add gcc musl-dev`), each program compiled with `gcc -std=c99 -w` and run with a 5 s timeout; whitespace collapsed.
 
     python3 parcours/check_c.py
@@ -11,7 +11,9 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from src.prog_c_debut import CHECKS  # noqa: E402
+from src import prog_c_debut, prog_minimake  # noqa: E402
+
+CHECKS = prog_c_debut.CHECKS + prog_minimake.CHECKS
 
 
 def norm(text):

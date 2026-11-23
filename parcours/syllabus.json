@@ -83,6 +83,12 @@
    "semestre": "S3"
   },
   {
+   "debut": "2026-10-12",
+   "titre": "Contrôle de cours 12 octobre : programme de révisions",
+   "type": "Contrôle",
+   "source": "Mail EPITA"
+  },
+  {
    "debut": "2026-10-16",
    "titre": "[Elec] Test 1 - Transistor Bipolaire",
    "type": "Test à distance",
@@ -193,6 +199,14 @@
    "type": "Test à distance",
    "source": "Mail EPITA",
    "ecue": "archi/S3/ASM68K"
+  },
+  {
+   "debut": "2026-11-30",
+   "titre": "QCM2",
+   "type": "Test à distance",
+   "source": "Moodle",
+   "ecue": "physique/S1/Mécanique",
+   "semestre": "S1"
   },
   {
    "debut": "2026-12-07",
@@ -1036,9 +1050,27 @@
         "prog-s1-c-debut"
        ],
        "a_faire": [
-        "Python (S1)",
-        "C avancé (S2)"
+        "Python (S1)"
        ],
+       "annales": []
+      }
+     ]
+    },
+    {
+     "id": "S2",
+     "moodle": ".",
+     "_note": "Calé sur le sujet Minimake 1.0.1 (Forge, PROG-104, mai 2026) et les fiches Pepexator (pepexator.pierref.eu).",
+     "ecues": [
+      {
+       "id": "C avancé (Minimake)",
+       "titre": "Programmation : C avancé jusqu'à Minimake",
+       "bloc": "B4",
+       "periode_examen": "mai (Minimake)",
+       "chapitres": [],
+       "parcours": [
+        "prog-s2-c-minimake"
+       ],
+       "a_faire": [],
        "annales": []
       }
      ]

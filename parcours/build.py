@@ -12,7 +12,7 @@ import sympy as sp
 
 HERE = Path(__file__).parent
 PATHS = ["obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
-         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus", "elec_filtres", "elec_transitoires", "elec_diodes", "algo_taa", "algo_caml", "algo_python", "algo_matrices", "algo_abg", "algo_recherche", "prog_c_debut", "maths_s3_asn", "maths_s3_pse", "maths_s3_al", "phys_s3_quantique", "phys_s3_em", "elec_s3_transistors", "algo_s3_hachage", "algo_s3_arbres", "algo_s3_graphes", "algo_s3_thlr", "archi_s3_68000"]
+         "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus", "elec_filtres", "elec_transitoires", "elec_diodes", "algo_taa", "algo_caml", "algo_python", "algo_matrices", "algo_abg", "algo_recherche", "prog_c_debut", "prog_minimake", "maths_s3_asn", "maths_s3_pse", "maths_s3_al", "phys_s3_quantique", "phys_s3_em", "elec_s3_transistors", "algo_s3_hachage", "algo_s3_arbres", "algo_s3_graphes", "algo_s3_thlr", "archi_s3_68000"]
 x, t = sp.symbols("x t", real=True)
 i, k = sp.symbols("i k", integer=True)
 n = sp.symbols("n", integer=True, positive=True)

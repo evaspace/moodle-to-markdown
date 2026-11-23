@@ -1,0 +1,1035 @@
+{
+ "subject": {
+  "id": "prog-s2-c-minimake",
+  "ordre": 710,
+  "matiere": "prog",
+  "semestre": "S2",
+  "ecue": "C avancé (Minimake)",
+  "titre": "C avancé jusqu'à Minimake : structs, getline, listes, parsing, fork, exec, stat",
+  "chapitres_moodle": [],
+  "td": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator : https://pepexator.pierref.eu",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "structs",
+   "titre": "struct, enum, typedef",
+   "formule": "`struct rule { char *target; struct rule *next; };` · `typedef struct rule rule_t;` · `p->champ` $\\equiv$ `(*p).champ` · `enum mode { HELP, PRINT, EXEC };` (valeurs $0, 1, 2$) · `sizeof(struct …)` $\\ge$ somme des champs (alignement) · `calloc(1, sizeof(*r))` : tout à $0$",
+   "exemple": "`enum mode m = PRINT;` puis `switch (m) { case HELP: … }`",
+   "cours": "Une `struct` regroupe des champs ; on la manipule presque toujours par pointeur (`->`). Un `enum` donne des noms à des entiers : le sujet conseille un `enum` pour l'action choisie (aide, affichage `-p`, exécution). `calloc` met tout à zéro : les pointeurs valent `NULL`, ce qui évite les champs non initialisés. Le compilateur peut ajouter du remplissage entre les champs : la taille d'une `struct` n'est pas toujours la somme des tailles.\n\nFiche Pepexator : [STRUCTS](https://pepexator.pierref.eu/?node=c_struct)"
+  },
+  {
+   "id": "makefile",
+   "titre": "Makefile et compilation du projet",
+   "formule": "`cible: dépendances` puis recette, chaque commande commence par une **tabulation** · `CC = gcc` · `CFLAGS = -Wall -Wextra -fsanitize=address -g` · `${VAR}` · `make` construit la première cible · cible à jour si plus récente que ses dépendances · `.gitignore` : `*.o`, binaire",
+   "exemple": "```make\nCC = gcc\nCFLAGS = -Wall -Wextra -fsanitize=address -g\nminimake: main.o parse.o exec.o\n\t${CC} ${CFLAGS} -o minimake main.o parse.o exec.o\n```",
+   "cours": "Le sujet impose un `Makefile` à la racine de `minimake/` qui produit le binaire `minimake`, avec les options `-Wall -Wextra -fsanitize=address -g` (AddressSanitizer détecte débordements et fuites : le projet doit être sans fuite). Une ligne de recette commence par une tabulation, pas des espaces. `make` ne reconstruit que ce qui est plus ancien que ses dépendances.\n\nFiche Pepexator : [GIT ET RENDU](https://pepexator.pierref.eu/?node=git_root)"
+  },
+  {
+   "id": "chaines",
+   "titre": "Chaînes : strchr, strcmp, isblank, strdup",
+   "formule": "`strchr(s, c)` : pointeur sur la 1re occurrence ou `NULL` · `strcmp(a, b)` : $0$ si égales · `strncmp(a, b, n)` · `isblank(c)` : espace ou `'\\\\t'` (`<ctype.h>`) · `strdup(s)` : copie allouée, à libérer · `strndup(s, n)` · couper : écrire `'\\\\0'`",
+   "exemple": "`char *sep = strchr(line, ':');` puis `*sep = '\\\\0';` : `line` devient la cible, `sep + 1` les dépendances",
+   "cours": "Minimake découpe chaque ligne : chercher un séparateur (`strchr`), poser un `'\\\\0'` pour terminer la première partie, puis enlever les blancs (`isblank`) au début et à la fin. `strcmp` renvoie $0$ quand les chaînes sont égales : `if (!strcmp(a, b))` signifie « égales ». Toute chaîne gardée après la lecture de la ligne doit être copiée (`strdup`), car `getline` réutilise son tampon.\n\nFiche Pepexator : [STRCHR](https://pepexator.pierref.eu/?node=c_strchr)"
+  },
+  {
+   "id": "getline",
+   "titre": "Lire un fichier ligne par ligne : fopen, getline",
+   "formule": "`FILE *f = fopen(path, \\\"r\\\");` (`NULL` si échec) · `char *line = NULL; size_t n = 0; ssize_t len;` · `while ((len = getline(&line, &n, f)) != -1)` · la ligne garde son `'\\\\n'` · `free(line);` une fois à la fin · `fclose(f);`",
+   "exemple": "ligne `all: foo\\\\n` : `len` $=9$, `line[len - 1]` $=$ `'\\\\n'`",
+   "cours": "Le sujet interdit toute taille maximale de ligne : `getline` alloue et agrandit le tampon lui-même. On passe l'adresse du pointeur et de la taille ; le même tampon est réutilisé à chaque appel, donc on le libère une seule fois après la boucle (même si `getline` a échoué). La ligne contient le `'\\\\n'` final (sauf peut-être la dernière) : on le retire avant d'analyser. Si `-f` désigne un fichier impossible à ouvrir, Minimake affiche une erreur et renvoie $3$.\n\nFiche Pepexator : [GETLINE](https://pepexator.pierref.eu/?node=c_getline)"
+  },
+  {
+   "id": "listes",
+   "titre": "Listes chaînées : ajout en fin, recherche, libération",
+   "formule": "ajout en fin : garder l'ordre du Makefile (`-p` affiche dans l'ordre de définition) · recherche par nom : parcourir jusqu'à `strcmp == 0` · libération : sauver `next` avant `free` · double pointeur `struct node **head` pour modifier la tête",
+   "exemple": "`for (struct var *v = vars; v; v = v->next) if (!strcmp(v->name, name)) return v;`",
+   "cours": "Le nombre de variables et de règles est inconnu : une liste chaînée convient. Les ajouts se font en fin de liste pour garder l'ordre du fichier. On cherche souvent par nom (variable, cible) : une fonction `find` qui renvoie le maillon ou `NULL`. Pour libérer, on lit `next` avant le `free`, sinon on lit de la mémoire libérée (ASan le signale).\n\nFiche Pepexator : [LISTES](https://pepexator.pierref.eu/?node=concept_dlist)"
+  },
+  {
+   "id": "parsing",
+   "titre": "Analyser une ligne de Makefile",
+   "formule": "1er de `':'` ou `'='` rencontré : `':'` $\\Rightarrow$ règle, `'='` $\\Rightarrow$ variable, aucun $\\Rightarrow$ pas une définition · ligne commençant par `'\\\\t'` : commande de la règle courante · ligne `'\\\\t'` sans règle : erreur « command outside of rule » · blancs autour de `=` ignorés · valeur jusqu'à la fin de ligne",
+   "exemple": "`  FOO  =   foo   bar` : nom `FOO`, valeur `foo   bar`",
+   "cours": "Le sujet donne la méthode : parcourir la ligne caractère par caractère, le premier `:` ou `=` décide du type. On coupe alors en deux (nom/valeur ou cible/dépendances). Les lignes suivantes qui commencent par une tabulation sont les commandes de la règle ; les lignes vides et les commentaires peuvent s'y glisser ; la recette s'arrête à la première autre ligne. Une cible vide (après expansion) est ignorée.\n\nFiche Pepexator : [PARSING](https://pepexator.pierref.eu/?node=concept_parsing)"
+  },
+  {
+   "id": "variables",
+   "titre": "Variables et expansion ${VAR}",
+   "formule": "`${VAR}` remplacé par la valeur · variable inconnue $\\to$ chaîne vide (pas une erreur) · expansion **au parsing** pour cible, dépendances, nom et valeur de variable · expansion **à l'exécution** pour les commandes · remplacement même entre `'…'` · `${` sans `}` : erreur",
+   "exemple": "`OBJ=${SRC}.o` avant `SRC = main.c` : `OBJ` vaut `.o`",
+   "cours": "L'ordre compte : pendant le parsing, seules les variables déjà lues sont connues. `all: ${FILE}` avant `FILE=foo` donne une règle sans dépendance. Dans une commande, l'expansion a lieu à l'exécution, quand tout le fichier est lu. L'expansion se fait sur une nouvelle chaîne allouée, car la valeur peut être plus longue que `${NOM}`.\n\nFiche Pepexator : [PARSING](https://pepexator.pierref.eu/?node=concept_parsing)"
+  },
+  {
+   "id": "options",
+   "titre": "Ligne de commande : argc, argv, -f -h -p",
+   "formule": "`int main(int argc, char *argv[])` · `argv[0]` nom du programme · options n'importe où : `./minimake all -f file` · `-f fichier` : le dernier gagne ; sans fichier $\\to$ erreur, code $2$ ; fichier absent $\\to$ code $3$ · `-h` prioritaire sur tout, code $0$ · `-p` : afficher sans exécuter · autres mots : cibles, dans l'ordre",
+   "exemple": "`./minimake -f -h` ouvre le fichier nommé `-h` (ce n'est pas l'aide)",
+   "cours": "On parcourt tout `argv` une fois et on remplit une structure d'options (fichier, mode, liste des cibles) avant de faire quoi que ce soit : `-h` doit gagner même s'il est le dernier argument. Le mot qui suit `-f` est toujours un nom de fichier, même s'il commence par `-`. Sans cible, on construit la première règle du fichier.\n\nFiche Pepexator : [ROADMAP](https://pepexator.pierref.eu/?node=root)"
+  },
+  {
+   "id": "processus",
+   "titre": "fork, exec, waitpid : lancer une commande",
+   "formule": "`pid_t pid = fork();` : $0$ dans le fils, pid du fils dans le père, $-1$ si échec · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, (char *) NULL);` (ne revient qu'en cas d'échec) · `waitpid(pid, &st, 0);` · `WIFEXITED(st)` · `WEXITSTATUS(st)` · commande introuvable : $127$",
+   "exemple": "`false` $\\to$ statut $1$ ; `notACommand` $\\to$ $127$",
+   "cours": "Chaque commande de recette s'exécute dans un processus séparé avec `/bin/sh -c` (imposé par le sujet). `fork` duplique le processus ; le fils remplace son programme par `sh` avec `exec` ; le père attend le fils avec `waitpid` et lit son code de sortie. Si `exec` échoue, le fils doit appeler `_exit` (sinon deux copies de Minimake continuent). Au premier code non nul, la règle s'arrête : `minimake: *** [cible] Error N`.\n\nFiche Pepexator : [FORK](https://pepexator.pierref.eu/?node=c_fork)"
+  },
+  {
+   "id": "tampons",
+   "titre": "Tampons de sortie : fflush",
+   "formule": "`printf` met en tampon · terminal : vidé à chaque `'\\\\n'` · fichier ou tube : vidé quand plein ou à la sortie · `fork` copie le tampon non vidé (affichage en double) · `exec` jette le tampon du fils · `fflush(stdout); fflush(stderr);` avant `fork`",
+   "exemple": "`printf(\\\"echo hi\\\\n\\\"); fork(); …` redirigé dans un fichier : `echo hi` peut apparaître deux fois ou après `hi`",
+   "cours": "Minimake affiche chaque commande avant de l'exécuter. La moulinette lit la sortie dans un fichier, donc `stdout` n'est pas vidé à chaque ligne : sans `fflush` avant le `fork`, la ligne reste dans le tampon, est copiée dans le fils, et sort dans le désordre ou en double. Le sujet le dit : appeler `fflush` sur `stdout` et `stderr` avant de lancer le processus.\n\nFiche Pepexator : [FFLUSH](https://pepexator.pierref.eu/?node=c_fflush)"
+  },
+  {
+   "id": "dependances",
+   "titre": "Dépendances, cibles et messages d'erreur",
+   "formule": "construire une règle : d'abord chaque dépendance (récursif), puis ses commandes · dépendance sans règle : `minimake: *** No rule to make target 'D', needed by 'R'.  Stop.` · cible demandée absente : `minimake: *** No rule to make target 'T'.  Stop.` · fichier vide : `minimake: *** No targets.  Stop.` · erreur $\\Rightarrow$ code $2$, sinon $0$ · messages sur la sortie standard",
+   "exemple": "`./minimake all check` construit `all` puis `check`",
+   "cours": "Construire une règle, c'est construire d'abord ses dépendances dans l'ordre (appel récursif), puis exécuter sa recette. Une dépendance sans règle ou une commande en échec arrête cette règle. Les cibles de la ligne de commande sont construites dans l'ordre donné ; un échec sur l'une n'empêche pas de tenter les suivantes. Les messages sont exacts au caractère près (deux espaces avant `Stop.`).\n\nFiche Pepexator : [EXÉCUTION](https://pepexator.pierref.eu/?node=concept_execution)"
+  },
+  {
+   "id": "stat",
+   "titre": "Cibles à jour : stat et dates",
+   "formule": "`struct stat sb;` · `stat(path, &sb)` : $0$ si le fichier existe, $-1$ sinon · `sb.st_mtim.tv_sec` (ou `sb.st_mtime`) : date de dernière modification · à jour si le fichier cible existe, chaque dépendance-fichier est plus ancienne et chaque dépendance est à jour · message `minimake: 'cible' is up to date.`",
+   "exemple": "`file.c` puis `file.o` créés : `file.o` est à jour",
+   "cours": "C'est la partie bonus : ne pas reconstruire une cible plus récente que ses dépendances. `stat` remplit une `struct stat` ; son échec signifie en général que le fichier n'existe pas. On compare les dates de modification : si une dépendance est plus récente que la cible, il faut reconstruire.\n\nFiche Pepexator : [STAT](https://pepexator.pierref.eu/?node=c_stat)"
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "structs",
+   "type": "qcm",
+   "q": "`p->x` est équivalent à :",
+   "choix": [
+    "`(*p).x`",
+    "`*p.x`",
+    "`&p.x`",
+    "`p.x`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "structs",
+   "type": "vf",
+   "q": "`calloc` met tous les octets du bloc à zéro.",
+   "bonne": true
+  },
+  {
+   "notion": "makefile",
+   "type": "qcm",
+   "q": "Une ligne de recette de Makefile commence par :",
+   "choix": [
+    "une tabulation",
+    "quatre espaces",
+    "un `$`",
+    "un `@` obligatoire"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "makefile",
+   "type": "vf",
+   "q": "Sans cible, `make` construit la dernière règle du fichier.",
+   "bonne": false
+  },
+  {
+   "notion": "chaines",
+   "type": "qcm",
+   "q": "`strcmp(a, b)` vaut $0$ quand :",
+   "choix": [
+    "les chaînes sont égales",
+    "`a` est plus courte",
+    "`b` est vide",
+    "une erreur survient"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "chaines",
+   "type": "vf",
+   "q": "`isblank('\\n')` est vrai.",
+   "bonne": false
+  },
+  {
+   "notion": "getline",
+   "type": "qcm",
+   "q": "Le tampon de `getline` doit être libéré :",
+   "choix": [
+    "une seule fois après la boucle",
+    "à chaque tour",
+    "jamais",
+    "seulement si une ligne a été lue"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "getline",
+   "type": "vf",
+   "q": "La ligne lue par `getline` contient le `'\\n'` final s'il existe.",
+   "bonne": true
+  },
+  {
+   "notion": "listes",
+   "type": "qcm",
+   "q": "Pour garder l'ordre du Makefile dans une liste, on ajoute :",
+   "choix": [
+    "en fin de liste",
+    "en tête de liste",
+    "au milieu",
+    "dans un tableau fixe"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "listes",
+   "type": "vf",
+   "q": "On peut lire `v->next` juste après `free(v)`.",
+   "bonne": false
+  },
+  {
+   "notion": "parsing",
+   "type": "qcm",
+   "q": "`X = a:b` est :",
+   "choix": [
+    "une variable",
+    "une règle",
+    "une commande",
+    "une erreur"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "parsing",
+   "type": "vf",
+   "q": "Une ligne qui commence par une tabulation hors de toute règle est une erreur.",
+   "bonne": true
+  },
+  {
+   "notion": "variables",
+   "type": "qcm",
+   "q": "Une variable non définie s'expanse en :",
+   "choix": [
+    "chaîne vide",
+    "erreur, code 2",
+    "son nom",
+    "`NULL`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "variables",
+   "type": "vf",
+   "q": "Dans une commande, on peut utiliser une variable définie plus bas dans le Makefile.",
+   "bonne": true
+  },
+  {
+   "notion": "options",
+   "type": "qcm",
+   "q": "`./minimake -f -h` :",
+   "choix": [
+    "ouvre le fichier nommé `-h`",
+    "affiche l'aide",
+    "renvoie $2$",
+    "ignore `-f`"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "options",
+   "type": "vf",
+   "q": "Si `-f` est donné deux fois, Minimake prend le premier.",
+   "bonne": false
+  },
+  {
+   "notion": "processus",
+   "type": "qcm",
+   "q": "Dans le fils, `fork()` renvoie :",
+   "choix": [
+    "$0$",
+    "le pid du père",
+    "le pid du fils",
+    "$-1$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "processus",
+   "type": "vf",
+   "q": "`execl` revient seulement en cas d'échec.",
+   "bonne": true
+  },
+  {
+   "notion": "tampons",
+   "type": "qcm",
+   "q": "Sortie redirigée vers un fichier, `printf(\\\"A\\\\n\\\")` puis `fork()` sans `fflush` :",
+   "choix": [
+    "`A` peut sortir deux fois",
+    "`A` sort une fois, toujours",
+    "`A` est perdu",
+    "erreur de compilation"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tampons",
+   "type": "vf",
+   "q": "`exec` vide le tampon de `stdout` du processus avant de le remplacer.",
+   "bonne": false
+  },
+  {
+   "notion": "dependances",
+   "type": "qcm",
+   "q": "Code de sortie de Minimake après une erreur d'exécution :",
+   "choix": [
+    "$2$",
+    "$1$",
+    "$127$",
+    "$0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "dependances",
+   "type": "vf",
+   "q": "Les messages d'erreur de Minimake vont sur la sortie standard.",
+   "bonne": true
+  },
+  {
+   "notion": "stat",
+   "type": "qcm",
+   "q": "`stat` sur un fichier absent renvoie :",
+   "choix": [
+    "$-1$",
+    "$0$",
+    "`NULL`",
+    "la date $0$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "stat",
+   "type": "vf",
+   "q": "La cible `all`, sans fichier `all`, peut être à jour.",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "struct, enum, typedef",
+   "notions": [
+    "structs"
+   ],
+   "exos": [
+    {
+     "id": "m11",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct rule\n{\n    char *target;\n    int nb_deps;\n};\n\nint main(void)\n{\n    struct rule r = { \"all\", 2 };\n    struct rule *p = &r;\n    p->nb_deps++;\n    printf(\"%s %d %d\\n\", r.target, r.nb_deps, (*p).nb_deps);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nall 3 3\n```\n\n`p->nb_deps` et `(*p).nb_deps` désignent le champ de `r` : l'incrément le modifie.",
+     "formules": "`p->c` $\\equiv$ `(*p).c` · `enum` : $0, 1, 2…$ · `calloc(1, sizeof(*p))` · `strdup` puis `free`",
+     "type": "open"
+    },
+    {
+     "id": "m12",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nenum mode { HELP, PRINT, EXEC = 5, OTHER };\n\nint main(void)\n{\n    printf(\"%d %d %d %d\\n\", HELP, PRINT, EXEC, OTHER);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n0 1 5 6\n```\n\nLes valeurs commencent à $0$ et suivent de $1$ en $1$ ; après `EXEC = 5`, `OTHER` vaut $6$.",
+     "formules": "`p->c` $\\equiv$ `(*p).c` · `enum` : $0, 1, 2…$ · `calloc(1, sizeof(*p))` · `strdup` puis `free`",
+     "type": "open"
+    },
+    {
+     "id": "m13",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct var\n{\n    char *name;\n    char *value;\n    struct var *next;\n};\n\nint main(void)\n{\n    struct var *v = calloc(1, sizeof(*v));\n    printf(\"%d %d\\n\", v->name == NULL, v->next == NULL);\n    free(v);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 1\n```\n\n`calloc` met tout le bloc à zéro : les pointeurs valent `NULL`. `sizeof(*v)` est la taille de la structure, pas du pointeur.",
+     "formules": "`p->c` $\\equiv$ `(*p).c` · `enum` : $0, 1, 2…$ · `calloc(1, sizeof(*p))` · `strdup` puis `free`",
+     "type": "open"
+    },
+    {
+     "id": "m14",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `struct rule *rule_new(const char *target)` : alloue une règle (`calloc`), copie la cible (`strdup`), sans dépendance ni commande. Et `void rule_free(struct rule *r)`.\n\nCe `main` doit afficher :\n\n```\nall 1\n```\n\n```c\nint main(void)\n{\n    char buf[] = \"all\";\n    struct rule *r = rule_new(buf);\n    buf[0] = 'X';\n    printf(\"%s %d\\n\", r->target, r->next == NULL);\n    rule_free(r);\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct rule\n{\n    char *target;\n    struct rule *next;\n};\n\nstruct rule *rule_new(const char *target)\n{\n    struct rule *r = calloc(1, sizeof(*r));\n    if (!r)\n        return NULL;\n    r->target = strdup(target);\n    return r;\n}\n\nvoid rule_free(struct rule *r)\n{\n    free(r->target);\n    free(r);\n}\n```\n\n`strdup` copie la chaîne : modifier `buf` ensuite ne change pas la cible. On libère la copie puis la structure (dans cet ordre).",
+     "formules": "`p->c` $\\equiv$ `(*p).c` · `enum` : $0, 1, 2…$ · `calloc(1, sizeof(*p))` · `strdup` puis `free`",
+     "type": "open"
+    },
+    {
+     "id": "m15",
+     "enonce": "Le sujet conseille un `enum` pour l'action à faire. Écrire cet `enum` et dire pourquoi c'est mieux que trois `int` booléens.",
+     "sol": "```c\nenum action { ACTION_HELP, ACTION_PRINT, ACTION_EXEC };\n```\nUne seule variable de ce type ne peut valoir qu'une action à la fois : impossible d'avoir « aide » et « affichage » vrais ensemble. Le `switch` sur l'`enum` rend la priorité explicite (`-h` gagne sur `-p`) et `-Wall` avertit si un `case` manque.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`p->c` $\\equiv$ `(*p).c` · `enum` : $0, 1, 2…$ · `calloc(1, sizeof(*p))` · `strdup` puis `free`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Makefile du projet",
+   "notions": [
+    "makefile"
+   ],
+   "exos": [
+    {
+     "id": "m21",
+     "enonce": "Écrire le `Makefile` minimal du projet : binaire `minimake` à partir de `main.c` et `parse.c`, avec les options imposées par le sujet, une règle `clean`.",
+     "sol": "```make\nCC = gcc\nCFLAGS = -Wall -Wextra -fsanitize=address -g\n\nminimake: main.o parse.o\n\t${CC} ${CFLAGS} -o minimake main.o parse.o\n\nmain.o: main.c\n\t${CC} ${CFLAGS} -c main.c\n\nparse.o: parse.c\n\t${CC} ${CFLAGS} -c parse.c\n\nclean:\n\trm -f minimake *.o\n```\n`-fsanitize=address` doit aussi être passé à l'édition de liens. `minimake` est la première règle : c'est elle que `make` construit par défaut.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "recette : tabulation · `-Wall -Wextra -fsanitize=address -g` · première règle par défaut · aucune fuite",
+     "type": "open"
+    },
+    {
+     "id": "m22",
+     "enonce": "Un `Makefile` écrit avec des espaces devant les commandes donne `*** missing separator.  Stop.` Pourquoi ?",
+     "sol": "Une ligne de recette doit commencer par une **tabulation** (`'\\t'`). Avec des espaces, `make` ne la reconnaît pas comme commande et ne sait pas l'analyser. C'est aussi la règle que Minimake applique : une commande est une ligne qui commence par `'\\t'`.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "recette : tabulation · `-Wall -Wextra -fsanitize=address -g` · première règle par défaut · aucune fuite",
+     "type": "open"
+    },
+    {
+     "id": "m23",
+     "enonce": "`all: a b`, `a: c`, `b: c`, `c:` (sans fichier). Combien de fois la recette de `c` est-elle exécutée par GNU `make all` ?",
+     "ans": "1",
+     "sol": "`make` ne construit une cible qu'une fois par exécution, même si plusieurs règles en dépendent.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "recette : tabulation · `-Wall -Wextra -fsanitize=address -g` · première règle par défaut · aucune fuite",
+     "type": "value"
+    },
+    {
+     "id": "m24",
+     "enonce": "Pourquoi le dépôt Minimake doit-il avoir un `.gitignore`, et que doit-il contenir au minimum ?",
+     "sol": "Le sujet l'impose avant le premier rendu. Il évite de pousser les fichiers produits par la compilation : `*.o`, `*.a`, `*.out`, le binaire `minimake`, les fichiers d'éditeur (`*~`, `.idea/`). On ne rend que les sources, le `Makefile` et les tests.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "recette : tabulation · `-Wall -Wextra -fsanitize=address -g` · première règle par défaut · aucune fuite",
+     "type": "open"
+    },
+    {
+     "id": "m25",
+     "enonce": "Que signale `-fsanitize=address` à la fin d'un programme qui fait `malloc` sans `free`, et pourquoi c'est bloquant pour Minimake ?",
+     "sol": "AddressSanitizer (avec LeakSanitizer) affiche `ERROR: LeakSanitizer: detected memory leaks` et le programme sort en erreur. La notation exige « no leaks » : un test qui fuit est raté même si la sortie est juste. Il faut donc libérer variables, règles, commandes et le tampon de `getline` avant de quitter, y compris sur les chemins d'erreur.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "recette : tabulation · `-Wall -Wextra -fsanitize=address -g` · première règle par défaut · aucune fuite",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Découper une chaîne",
+   "notions": [
+    "chaines"
+   ],
+   "exos": [
+    {
+     "id": "m31",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(void)\n{\n    char line[] = \"all: foo bar\";\n    char *sep = strchr(line, ':');\n    *sep = '\\0';\n    printf(\"[%s] [%s]\\n\", line, sep + 1);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n[all] [ foo bar]\n```\n\nLe `':'` est remplacé par `'\\0'` : `line` s'arrête avant, et `sep + 1` commence juste après (avec l'espace).",
+     "formules": "`strchr` · `strcmp == 0` · `isblank` : espace, `'\\\\t'` · couper avec `'\\\\0'` · `strdup`",
+     "type": "open"
+    },
+    {
+     "id": "m32",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(void)\n{\n    printf(\"%d %d %d\\n\", strcmp(\"all\", \"all\") == 0, strcmp(\"a\", \"b\") < 0, !strcmp(\"all\", \"al\"));\n    printf(\"%d\\n\", strchr(\"FOO=1\", ':') == NULL);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 1 0\n1\n```\n\n`strcmp` vaut $0$ si égales, négatif si la première est avant ; `strchr` renvoie `NULL` si le caractère est absent.",
+     "formules": "`strchr` · `strcmp == 0` · `isblank` : espace, `'\\\\t'` · couper avec `'\\\\0'` · `strdup`",
+     "type": "open"
+    },
+    {
+     "id": "m33",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <ctype.h>\n\nint main(void)\n{\n    printf(\"%d %d %d %d\\n\", isblank(' ') != 0, isblank('\\t') != 0, isblank('\\n') != 0, isblank('a') != 0);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n1 1 0 0\n```\n\n`isblank` : seulement l'espace et la tabulation. `'\\n'` est un « space » (`isspace`) mais pas un « blank ».",
+     "formules": "`strchr` · `strcmp == 0` · `isblank` : espace, `'\\\\t'` · couper avec `'\\\\0'` · `strdup`",
+     "type": "open"
+    },
+    {
+     "id": "m34",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `char *trim(char *s)` qui enlève les blancs (`isblank`) au début et à la fin de `s`, en place, et renvoie le début de la chaîne utile.\n\nCe `main` doit afficher :\n\n```\n[FOO] []\n```\n\n```c\nint main(void)\n{\n    char a[] = \"  FOO \\t\";\n    char b[] = \"\\t\\t\";\n    printf(\"[%s] [%s]\\n\", trim(a), trim(b));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nchar *trim(char *s)\n{\n    while (isblank(*s))\n        s++;\n    size_t n = strlen(s);\n    while (n > 0 && isblank(s[n - 1]))\n        n--;\n    s[n] = '\\0';\n    return s;\n}\n```\n\nOn avance le début, puis on recule la fin et on pose un `'\\0'`. Une chaîne toute blanche devient vide. Le pointeur renvoyé est dans le tableau d'origine : ne pas le passer à `free`.",
+     "formules": "`strchr` · `strcmp == 0` · `isblank` : espace, `'\\\\t'` · couper avec `'\\\\0'` · `strdup`",
+     "type": "open"
+    },
+    {
+     "id": "m35",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(void)\n{\n    char buf[16] = \"foo\";\n    char *keep = buf;\n    char *copy = strdup(buf);\n    strcpy(buf, \"bar\");\n    printf(\"%s %s\\n\", keep, copy);\n    free(copy);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nbar foo\n```\n\n`keep` pointe sur le même tableau : il voit la nouvelle valeur. `strdup` a fait une copie indépendante : c'est ce qu'il faut pour garder un nom après le `getline` suivant.",
+     "formules": "`strchr` · `strcmp == 0` · `isblank` : espace, `'\\\\t'` · couper avec `'\\\\0'` · `strdup`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Lire le Makefile : fopen, getline",
+   "notions": [
+    "getline"
+   ],
+   "exos": [
+    {
+     "id": "m41",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(void)\n{\n    FILE *f = fopen(\"mk.txt\", \"w\");\n    fputs(\"all: foo\\n\\tgcc x\\n\", f);\n    fclose(f);\n\n    f = fopen(\"mk.txt\", \"r\");\n    char *line = NULL;\n    size_t n = 0;\n    ssize_t len;\n    while ((len = getline(&line, &n, f)) != -1)\n        printf(\"%zd %d\\n\", len, line[0] == '\\t');\n    free(line);\n    fclose(f);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n9 0\n7 1\n```\n\n`getline` renvoie la longueur **avec** le `'\\n'` : `all: foo\\n` fait $9$, `\\tgcc x\\n` fait $7$. Un seul `free` après la boucle.",
+     "formules": "`getline(&line, &n, f)` · longueur avec `'\\\\n'` · un `free(line)` après la boucle · `fopen` `NULL` $\\Rightarrow$ code $3$",
+     "type": "open"
+    },
+    {
+     "id": "m42",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(void)\n{\n    FILE *f = fopen(\"absent/Makefile\", \"r\");\n    if (!f)\n    {\n        printf(\"cannot open\\n\");\n        return 3;\n    }\n    printf(\"opened\\n\");\n    fclose(f);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\ncannot open\n```\n\n`fopen` renvoie `NULL` si le fichier ne peut pas être ouvert. Le sujet : fichier de `-f` absent $\\Rightarrow$ message d'erreur et code $3$.",
+     "formules": "`getline(&line, &n, f)` · longueur avec `'\\\\n'` · un `free(line)` après la boucle · `fopen` `NULL` $\\Rightarrow$ code $3$",
+     "type": "open"
+    },
+    {
+     "id": "m43",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `void chomp(char *line)` qui retire le `'\\n'` final s'il existe (la dernière ligne d'un fichier peut ne pas en avoir).\n\nCe `main` doit afficher :\n\n```\n[all: foo] [last] []\n```\n\n```c\nint main(void)\n{\n    char a[] = \"all: foo\\n\";\n    char b[] = \"last\";\n    char c[] = \"\";\n    chomp(a);\n    chomp(b);\n    chomp(c);\n    printf(\"[%s] [%s] [%s]\\n\", a, b, c);\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nvoid chomp(char *line)\n{\n    size_t n = strlen(line);\n    if (n > 0 && line[n - 1] == '\\n')\n        line[n - 1] = '\\0';\n}\n```\n\nTester `n > 0` avant de lire `line[n - 1]` : sur une chaîne vide, l'indice $-1$ sort du tableau.",
+     "formules": "`getline(&line, &n, f)` · longueur avec `'\\\\n'` · un `free(line)` après la boucle · `fopen` `NULL` $\\Rightarrow$ code $3$",
+     "type": "open"
+    },
+    {
+     "id": "m44",
+     "enonce": "Ce code fuit et ASan le signale. Pourquoi ? Corriger.\n\n```c\nchar *line = NULL;\nsize_t n = 0;\nwhile (getline(&line, &n, f) != -1)\n{\n    parse(line);\n    free(line);\n    line = NULL;\n}\n```",
+     "sol": "Après le dernier appel (celui qui renvoie $-1$), `getline` a pu allouer un tampon : il n'est jamais libéré. Et libérer à chaque tour est inutile (le tampon est réutilisé). Correct : ne pas libérer dans la boucle, faire un seul `free(line);` après la boucle, même si aucune ligne n'a été lue.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`getline(&line, &n, f)` · longueur avec `'\\\\n'` · un `free(line)` après la boucle · `fopen` `NULL` $\\Rightarrow$ code $3$",
+     "type": "open"
+    },
+    {
+     "id": "m45",
+     "enonce": "Une ligne `\\tgcc -c foo.c\\n` est lue par `getline`. Quelle valeur renvoie-t-il ?",
+     "ans": "14",
+     "sol": "Tabulation ($1$) + `gcc -c foo.c` ($12$) + `'\\n'` ($1$).",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "`getline(&line, &n, f)` · longueur avec `'\\\\n'` · un `free(line)` après la boucle · `fopen` `NULL` $\\Rightarrow$ code $3$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Listes chaînées de variables et de règles",
+   "notions": [
+    "listes"
+   ],
+   "exos": [
+    {
+     "id": "m51",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `void push_back(struct var **head, const char *name)` qui ajoute une variable (nom copié) **en fin** de liste, pour garder l'ordre du Makefile.\n\nCe `main` doit afficher :\n\n```\nCC CFLAGS SRC\n```\n\n```c\nint main(void)\n{\n    struct var *l = NULL;\n    push_back(&l, \"CC\");\n    push_back(&l, \"CFLAGS\");\n    push_back(&l, \"SRC\");\n    for (struct var *v = l; v; v = v->next)\n        printf(\"%s \", v->name);\n    printf(\"\\n\");\n    while (l)\n    {\n        struct var *next = l->next;\n        free(l->name);\n        free(l);\n        l = next;\n    }\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct var\n{\n    char *name;\n    struct var *next;\n};\n\nvoid push_back(struct var **head, const char *name)\n{\n    struct var *v = calloc(1, sizeof(*v));\n    v->name = strdup(name);\n    while (*head)\n        head = &(*head)->next;\n    *head = v;\n}\n```\n\n`head` avance de champ `next` en champ `next` jusqu'au `NULL` final, qu'on remplace par le nouveau maillon. Le double pointeur gère aussi la liste vide sans cas particulier.",
+     "formules": "ajout en fin · `find` par `strcmp` · sauver `next` avant `free` · `struct node **head`",
+     "type": "open"
+    },
+    {
+     "id": "m52",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `struct var *find(struct var *l, const char *name)` : le maillon de ce nom, ou `NULL`.\n\nCe `main` doit afficher :\n\n```\nmain.c 1\n```\n\n```c\nint main(void)\n{\n    struct var c = { \"SRC\", \"main.c\", NULL };\n    struct var b = { \"CC\", \"gcc\", &c };\n    struct var *v = find(&b, \"SRC\");\n    printf(\"%s %d\\n\", v->value, find(&b, \"OBJ\") == NULL);\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct var\n{\n    char *name;\n    char *value;\n    struct var *next;\n};\n\nstruct var *find(struct var *l, const char *name)\n{\n    for (; l; l = l->next)\n        if (!strcmp(l->name, name))\n            return l;\n    return NULL;\n}\n```\n\nOn compare les noms avec `strcmp`, jamais avec `==` (qui compare les adresses).",
+     "formules": "ajout en fin · `find` par `strcmp` · sauver `next` avant `free` · `struct node **head`",
+     "type": "open"
+    },
+    {
+     "id": "m53",
+     "enonce": "Ce code de libération est faux. Pourquoi ?\n\n```c\nfor (struct var *v = l; v; v = v->next)\n    free(v);\n```",
+     "sol": "Après `free(v)`, l'incrément `v = v->next` lit dans un bloc libéré (*heap-use-after-free* pour ASan). Il faut sauver le suivant avant : `while (v) { struct var *n = v->next; free(v->name); free(v->value); free(v); v = n; }` (sans oublier les chaînes allouées dans le maillon).",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "ajout en fin · `find` par `strcmp` · sauver `next` avant `free` · `struct node **head`",
+     "type": "open"
+    },
+    {
+     "id": "m54",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct node\n{\n    int val;\n    struct node *next;\n};\n\nint main(void)\n{\n    struct node c = { 3, NULL }, b = { 2, &c }, a = { 1, &b };\n    int n = 0, s = 0;\n    for (struct node *p = &a; p; p = p->next)\n    {\n        n++;\n        s += p->val;\n    }\n    printf(\"%d %d\\n\", n, s);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n3 6\n```\n\nParcours classique : on s'arrête sur le `next` qui vaut `NULL`.",
+     "formules": "ajout en fin · `find` par `strcmp` · sauver `next` avant `free` · `struct node **head`",
+     "type": "open"
+    },
+    {
+     "id": "m55",
+     "enonce": "Une règle a une cible, des dépendances (en nombre quelconque) et des commandes (en nombre quelconque). Proposer les structures C.",
+     "sol": "```c\nstruct str_list\n{\n    char *s;\n    struct str_list *next;\n};\n\nstruct rule\n{\n    char *target;\n    struct str_list *deps;\n    struct str_list *cmds;\n    struct rule *next;\n};\n\nstruct makefile\n{\n    struct var *vars;\n    struct rule *rules;\n};\n```\nUne liste de chaînes sert aux dépendances et aux commandes. Une structure `makefile` regroupe tout pour la passer aux fonctions (conseil du sujet).",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "ajout en fin · `find` par `strcmp` · sauver `next` avant `free` · `struct node **head`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Règle ou variable ? Analyser une ligne",
+   "notions": [
+    "parsing",
+    "chaines"
+   ],
+   "exos": [
+    {
+     "id": "m61",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int line_kind(const char *s)` : renvoie `'R'` si le premier `':'` ou `'='` est un `':'`, `'V'` si c'est un `'='`, `0` si aucun des deux.\n\nCe `main` doit afficher :\n\n```\nR V 0\nR\n```\n\n```c\nint main(void)\n{\n    printf(\"%c %c %d\\n\", line_kind(\"all: foo\"), line_kind(\"X = a:b\"), line_kind(\"echo hi\"));\n    printf(\"%c\\n\", line_kind(\"t: A=1\"));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint line_kind(const char *s)\n{\n    for (; *s; s++)\n    {\n        if (*s == ':')\n            return 'R';\n        if (*s == '=')\n            return 'V';\n    }\n    return 0;\n}\n```\n\nC'est le premier des deux caractères qui décide : `X = a:b` est une variable (le `=` vient avant le `:`).",
+     "formules": "1er de `:` / `=` · commande : `'\\\\t'` · blancs autour de `=` · valeur jusqu'en fin de ligne",
+     "type": "open"
+    },
+    {
+     "id": "m62",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `void split_var(char *line, char **name, char **value)` : coupe `NOM = valeur` sur le premier `'='`, enlève les blancs autour du nom et **avant** la valeur (la valeur garde ses blancs internes et finaux, comme dans le sujet).\n\nCe `main` doit afficher :\n\n```\n[FOO] [foo bar ]\n```\n\n```c\nint main(void)\n{\n    char l[] = \"  FOO  =         foo               bar              \";\n    char *n, *v;\n    split_var(l, &n, &v);\n    printf(\"[%s] [%s]\\n\", n, v);\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nvoid split_var(char *line, char **name, char **value)\n{\n    char *eq = strchr(line, '=');\n    *eq = '\\0';\n    while (isblank(*line))\n        line++;\n    char *end = eq;\n    while (end > line && isblank(end[-1]))\n        end--;\n    *end = '\\0';\n    char *v = eq + 1;\n    while (isblank(*v))\n        v++;\n    *name = line;\n    *value = v;\n}\n```\n\nLe nom est nettoyé des deux côtés, la valeur seulement au début. Le vérificateur compacte les espaces ; la vraie sortie est `[FOO] [foo               bar              ]`, exactement l'exemple du sujet (la valeur s'étend jusqu'à la fin de ligne).",
+     "formules": "1er de `:` / `=` · commande : `'\\\\t'` · blancs autour de `=` · valeur jusqu'en fin de ligne",
+     "type": "open"
+    },
+    {
+     "id": "m63",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int count_deps(const char *s)` : nombre de mots séparés par des blancs dans la partie dépendances d'une règle.\n\nCe `main` doit afficher :\n\n```\n3 0 0\n```\n\n```c\n#include <stdio.h>\n\nint main(void)\n{\n    printf(\"%d %d %d\\n\", count_deps(\" foo.o  bar.o\\tbaz.o \"), count_deps(\"\"), count_deps(\"   \"));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <ctype.h>\n\nint count_deps(const char *s)\n{\n    int n = 0;\n    while (*s)\n    {\n        while (isblank(*s))\n            s++;\n        if (!*s)\n            break;\n        n++;\n        while (*s && !isblank(*s))\n            s++;\n    }\n    return n;\n}\n```\n\nOn saute les blancs, on compte un mot, on saute le mot. Les chaînes vides ou toutes blanches n'ont aucune dépendance.",
+     "formules": "1er de `:` / `=` · commande : `'\\\\t'` · blancs autour de `=` · valeur jusqu'en fin de ligne",
+     "type": "open"
+    },
+    {
+     "id": "m64",
+     "enonce": "Ces lignes suivent la règle `all: foo`. Lesquelles appartiennent à sa recette ? (`→` = tabulation)\n\n```\n→echo a\n\n# commentaire\n→echo b\nFOO = 1\n→echo c\n```",
+     "sol": "`echo a` et `echo b` : la ligne vide et le commentaire peuvent se trouver dans une recette. La recette s'arrête à `FOO = 1` (ni tabulation, ni vide, ni commentaire). `→echo c` commence par une tabulation mais n'appartient à aucune règle : erreur « command outside of rule ».",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "1er de `:` / `=` · commande : `'\\\\t'` · blancs autour de `=` · valeur jusqu'en fin de ligne",
+     "type": "open"
+    },
+    {
+     "id": "m65",
+     "enonce": "`./minimake -p` sur `sparse_rule: depa depb` : combien de dépendances sont affichées (format `[depa]`) ?",
+     "ans": "2",
+     "sol": "`(sparse_rule): [depa] [depb]`.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "1er de `:` / `=` · commande : `'\\\\t'` · blancs autour de `=` · valeur jusqu'en fin de ligne",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "titre": "Variables : expansion ${VAR}",
+   "notions": [
+    "variables"
+   ],
+   "exos": [
+    {
+     "id": "m71",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `char *expand(const char *s, struct var *vars)` : renvoie une nouvelle chaîne où chaque `${NOM}` est remplacé par sa valeur (chaîne vide si inconnue). On suppose les `}` présents. Allouer assez grand.\n\nCe `main` doit afficher :\n\n```\n[gcc -c main.c x]\n```\n\n```c\nint main(void)\n{\n    struct var b = { \"SRC\", \"main.c\", NULL };\n    struct var a = { \"CC\", \"gcc\", &b };\n    char *r = expand(\"${CC} -c ${SRC} ${NOPE}x\", &a);\n    printf(\"[%s]\\n\", r);\n    free(r);\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct var\n{\n    char *name;\n    char *value;\n    struct var *next;\n};\n\nstatic const char *lookup(struct var *v, const char *name, size_t len)\n{\n    for (; v; v = v->next)\n        if (strlen(v->name) == len && !strncmp(v->name, name, len))\n            return v->value;\n    return \"\";\n}\n\nchar *expand(const char *s, struct var *vars)\n{\n    size_t cap = strlen(s) + 1, n = 0;\n    char *out = malloc(cap);\n    while (*s)\n    {\n        const char *val = NULL;\n        size_t vlen = 1;\n        if (s[0] == '$' && s[1] == '{')\n        {\n            const char *end = strchr(s + 2, '}');\n            val = lookup(vars, s + 2, end - (s + 2));\n            vlen = strlen(val);\n            s = end + 1;\n        }\n        if (n + vlen + 1 > cap)\n        {\n            cap = 2 * (n + vlen + 1);\n            out = realloc(out, cap);\n        }\n        if (val)\n        {\n            memcpy(out + n, val, vlen);\n            n += vlen;\n        }\n        else\n            out[n++] = *s++;\n    }\n    out[n] = '\\0';\n    return out;\n}\n```\n\nLa valeur peut être plus longue que `${NOM}` : on agrandit le tampon (`realloc`). Variable inconnue : chaîne vide, pas d'erreur. Pour `${` sans `}`, `strchr` renvoie `NULL` : Minimake doit le traiter comme une erreur (non géré ici).",
+     "formules": "`${VAR}` · inconnue $\\to$ vide · parsing : déjà lues · exécution : tout le fichier · `${` sans `}` : erreur",
+     "type": "open"
+    },
+    {
+     "id": "m72",
+     "enonce": "Valeur de `OBJ` et dépendances de `all` ?\n\n```\nall: ${FILE}\n\techo useless rule\n\nFILE=foo bar\nOBJ=${SRC}.o\nSRC = main.c\n```",
+     "sol": "`all` n'a **aucune** dépendance : `FILE` n'est pas encore défini quand la ligne de `all` est lue (expansion au parsing, vide). `OBJ` vaut `.o` pour la même raison (`SRC` est défini après). C'est l'exemple du sujet.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`${VAR}` · inconnue $\\to$ vide · parsing : déjà lues · exécution : tout le fichier · `${` sans `}` : erreur",
+     "type": "open"
+    },
+    {
+     "id": "m73",
+     "enonce": "Qu'affiche `./minimake` ?\n\n```\nall:\n\techo The answer is ${FOO}\n\nFOO  =   42\n```",
+     "sol": "```\necho The answer is 42\nThe answer is 42\n```\nLes commandes sont expansées à l'exécution : tout le fichier est lu, `FOO` est connu. Minimake affiche la commande expansée, puis `sh` l'exécute.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`${VAR}` · inconnue $\\to$ vide · parsing : déjà lues · exécution : tout le fichier · `${` sans `}` : erreur",
+     "type": "open"
+    },
+    {
+     "id": "m74",
+     "enonce": "`A = x`, `B = ${A}${A}y`, `C = ${B}${B}`. Combien de caractères dans la valeur de `C` ?",
+     "ans": "6",
+     "sol": "`B` $=$ `xxy` ($3$), `C` $=$ `xxyxxy` ($6$) : chaque valeur est expansée au moment où elle est lue.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "`${VAR}` · inconnue $\\to$ vide · parsing : déjà lues · exécution : tout le fichier · `${` sans `}` : erreur",
+     "type": "value"
+    },
+    {
+     "id": "m75",
+     "enonce": "`VAR=42` puis `echo ${VAR` dans une recette. Variable vide, ou erreur ?",
+     "sol": "Erreur : `${` sans `}` fermant est un cas d'erreur cité par le sujet (contrairement à une variable non définie, qui donne une chaîne vide). Minimake affiche un message sur la sortie standard et renvoie $2$.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`${VAR}` · inconnue $\\to$ vide · parsing : déjà lues · exécution : tout le fichier · `${` sans `}` : erreur",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "titre": "Ligne de commande : -f, -h, -p, cibles",
+   "notions": [
+    "options"
+   ],
+   "exos": [
+    {
+     "id": "m81",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main(int argc, char *argv[])\n{\n    (void) argc;\n    char *av[] = { \"./minimake\", \"all\", \"-f\", \"mk\", \"check\", NULL };\n    argv = av;\n    argc = 5;\n    for (int i = 1; i < argc; i++)\n    {\n        if (!strcmp(argv[i], \"-f\"))\n            printf(\"file=%s\\n\", argv[++i]);\n        else\n            printf(\"target=%s\\n\", argv[i]);\n    }\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\ntarget=all\nfile=mk\ntarget=check\n```\n\nLes options peuvent être n'importe où ; `++i` consomme le mot qui suit `-f`, qui n'est donc pas une cible.",
+     "formules": "`argv` en entier d'abord · dernier `-f` · `-h` prioritaire · `-f` sans fichier : $2$ · absent : $3$",
+     "type": "open"
+    },
+    {
+     "id": "m82",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int parse_args(int argc, char **argv, struct opts *o)` : remplit `o->file` (dernier `-f`, par défaut `\\\"Makefile\\\"`), `o->help`, `o->print`, `o->ntargets`. Renvoie `2` si `-f` est le dernier argument, `0` sinon.\n\nCe `main` doit afficher :\n\n```\n0 -h 0 1 1\n2\n```\n\n```c\nint main(void)\n{\n    struct opts o;\n    char *a[] = { \"m\", \"-f\", \"a\", \"x\", \"-f\", \"-h\", \"-p\" };\n    int r = parse_args(7, a, &o);\n    printf(\"%d %s %d %d %d\\n\", r, o.file, o.help, o.print, o.ntargets);\n    char *b[] = { \"m\", \"all\", \"-f\" };\n    printf(\"%d\\n\", parse_args(3, b, &o));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct opts\n{\n    const char *file;\n    int help;\n    int print;\n    int ntargets;\n};\n\nint parse_args(int argc, char **argv, struct opts *o)\n{\n    o->file = \"Makefile\";\n    o->help = o->print = o->ntargets = 0;\n    for (int i = 1; i < argc; i++)\n    {\n        if (!strcmp(argv[i], \"-f\"))\n        {\n            if (i + 1 == argc)\n                return 2;\n            o->file = argv[++i];\n        }\n        else if (!strcmp(argv[i], \"-h\"))\n            o->help = 1;\n        else if (!strcmp(argv[i], \"-p\"))\n            o->print = 1;\n        else\n            o->ntargets++;\n    }\n    return 0;\n}\n```\n\nLe dernier `-f` gagne et son argument est `-h` : c'est un **nom de fichier**, pas l'aide (piège cité par le sujet). `-f` sans fichier : code $2$.",
+     "formules": "`argv` en entier d'abord · dernier `-f` · `-h` prioritaire · `-f` sans fichier : $2$ · absent : $3$",
+     "type": "open"
+    },
+    {
+     "id": "m83",
+     "enonce": "`./minimake all -h` : que se passe-t-il, et quel code de sortie ?",
+     "sol": "L'aide (`Usage: minimake [OPTIONS] [TARGETS]` …) est affichée sur la sortie standard et rien n'est construit : `-h` a priorité sur tout, même placé après une cible. Code de sortie $0$. D'où l'intérêt de lire tous les arguments avant d'agir.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`argv` en entier d'abord · dernier `-f` · `-h` prioritaire · `-f` sans fichier : $2$ · absent : $3$",
+     "type": "open"
+    },
+    {
+     "id": "m84",
+     "enonce": "`./minimake -p -f Makefile all` : que doit faire Minimake ?",
+     "sol": "Analyser `Makefile` et afficher variables puis règles au format du sujet (`# variables`, `'NOM' = 'valeur'`, `# rules`, `(cible): [dep]`, commandes entre `'…'`), dans l'ordre du fichier, **sans rien exécuter** : la cible `all` est ignorée.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`argv` en entier d'abord · dernier `-f` · `-h` prioritaire · `-f` sans fichier : $2$ · absent : $3$",
+     "type": "open"
+    },
+    {
+     "id": "m85",
+     "enonce": "Fichier donné à `-f` impossible à ouvrir : quel code de sortie ?",
+     "ans": "3",
+     "sol": "Le sujet : fichier inexistant $\\Rightarrow$ message d'erreur et code $3$ (les autres erreurs donnent $2$).",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "`argv` en entier d'abord · dernier `-f` · `-h` prioritaire · `-f` sans fichier : $2$ · absent : $3$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "titre": "Processus : fork, exec, waitpid",
+   "notions": [
+    "processus"
+   ],
+   "exos": [
+    {
+     "id": "m91",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(void)\n{\n    pid_t pid = fork();\n    if (pid == 0)\n    {\n        printf(\"child\\n\");\n        return 4;\n    }\n    int st;\n    waitpid(pid, &st, 0);\n    printf(\"parent %d %d\\n\", WIFEXITED(st) != 0, WEXITSTATUS(st));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nchild\nparent 1 4\n```\n\nLe fils affiche et sort avec $4$ (son tampon est vidé à sa sortie, avant que le père ne reprenne). Le père attend, puis lit le code avec `WEXITSTATUS`.",
+     "formules": "`fork` · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, NULL)` · `_exit(127)` · `waitpid` · `WEXITSTATUS`",
+     "type": "open"
+    },
+    {
+     "id": "m92",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int run(const char *cmd)` : exécute `cmd` avec `/bin/sh -c` dans un processus fils, attend la fin et renvoie le code de sortie.\n\nCe `main` doit afficher :\n\n```\n0\n1\n7\n127\n```\n\n```c\nint main(void)\n{\n    printf(\"%d\\n\", run(\"true\"));\n    printf(\"%d\\n\", run(\"false\"));\n    printf(\"%d\\n\", run(\"exit 7\"));\n    printf(\"%d\\n\", run(\"notACommand 2>/dev/null\"));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint run(const char *cmd)\n{\n    fflush(stdout);\n    fflush(stderr);\n    pid_t pid = fork();\n    if (pid == -1)\n        return -1;\n    if (pid == 0)\n    {\n        execl(\"/bin/sh\", \"sh\", \"-c\", cmd, (char *) NULL);\n        _exit(127);\n    }\n    int st;\n    waitpid(pid, &st, 0);\n    return WIFEXITED(st) ? WEXITSTATUS(st) : 1;\n}\n```\n\n`execl` ne revient qu'en cas d'échec : `_exit(127)` évite que le fils continue le code de Minimake. Commande introuvable : `sh` renvoie $127$. Le `fflush` avant `fork` est expliqué au niveau suivant.",
+     "formules": "`fork` · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, NULL)` · `_exit(127)` · `waitpid` · `WEXITSTATUS`",
+     "type": "open"
+    },
+    {
+     "id": "m93",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(void)\n{\n    for (int i = 0; i < 3; i++)\n    {\n        pid_t pid = fork();\n        if (pid == 0)\n            _exit(i);\n        int st;\n        waitpid(pid, &st, 0);\n        printf(\"%d\", WEXITSTATUS(st));\n    }\n    printf(\"\\n\");\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n012\n```\n\nChaque fils sort tout de suite avec `_exit(i)` (qui ne vide pas le tampon copié : avec `return`, les chiffres déjà dans le tampon du père sortiraient en double) ; le père les attend un par un, dans l'ordre : `0`, `1`, `2`.",
+     "formules": "`fork` · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, NULL)` · `_exit(127)` · `waitpid` · `WEXITSTATUS`",
+     "type": "open"
+    },
+    {
+     "id": "m94",
+     "enonce": "Une recette contient `false` puis `echo \\\"will not appear\\\"`. Qu'affiche Minimake et pourquoi le `echo` n'est-il pas lancé ?",
+     "sol": "```\nfalse\nminimake: *** [falseRule] Error 1\n```\nLa commande est affichée puis exécutée ; son code ($1$) est non nul, donc Minimake arrête la règle à cette commande et affiche l'erreur avec le code. Le code de sortie final de Minimake est $2$.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`fork` · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, NULL)` · `_exit(127)` · `waitpid` · `WEXITSTATUS`",
+     "type": "open"
+    },
+    {
+     "id": "m95",
+     "enonce": "Que se passe-t-il si le fils oublie `_exit` après un `execl` qui échoue ?",
+     "sol": "`execl` revient et le fils continue d'exécuter la suite du code de Minimake : il construit les règles suivantes en même temps que le père (commandes exécutées deux fois, sorties mêlées), puis libère et quitte de son côté. Toujours terminer le fils juste après `exec` : `_exit(127);`.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`fork` · `execl(\\\"/bin/sh\\\", \\\"sh\\\", \\\"-c\\\", cmd, NULL)` · `_exit(127)` · `waitpid` · `WEXITSTATUS`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "titre": "Afficher la commande avant : fflush",
+   "notions": [
+    "tampons",
+    "processus"
+   ],
+   "exos": [
+    {
+     "id": "m101",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(void)\n{\n    printf(\"A\\n\");\n    pid_t pid = fork();\n    if (pid == 0)\n        return 0;\n    waitpid(pid, NULL, 0);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nA\nA\n```\n\nSortie dans un fichier : `A\\n` reste dans le tampon. `fork` copie le tampon ; le fils et le père le vident chacun en sortant. Sur un terminal, on ne verrait qu'un `A` : c'est pour ça que le bug n'apparaît qu'avec la moulinette.",
+     "formules": "tampon copié par `fork` · jeté par `exec` · `fflush(stdout); fflush(stderr);` avant `fork`",
+     "type": "open"
+    },
+    {
+     "id": "m102",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(void)\n{\n    printf(\"echo hi\\n\");\n    pid_t pid = fork();\n    if (pid == 0)\n    {\n        execl(\"/bin/sh\", \"sh\", \"-c\", \"echo hi\", (char *) NULL);\n        _exit(127);\n    }\n    waitpid(pid, NULL, 0);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\nhi\necho hi\n```\n\nLa copie du tampon dans le fils est jetée par `exec` ; `sh` écrit `hi` tout de suite ; le père n'écrit `echo hi` qu'à sa sortie. Résultat : la commande s'affiche **après** son résultat. Test raté.",
+     "formules": "tampon copié par `fork` · jeté par `exec` · `fflush(stdout); fflush(stderr);` avant `fork`",
+     "type": "open"
+    },
+    {
+     "id": "m103",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(void)\n{\n    printf(\"echo hi\\n\");\n    fflush(stdout);\n    pid_t pid = fork();\n    if (pid == 0)\n    {\n        execl(\"/bin/sh\", \"sh\", \"-c\", \"echo hi\", (char *) NULL);\n        _exit(127);\n    }\n    waitpid(pid, NULL, 0);\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\necho hi\nhi\n```\n\n`fflush` vide le tampon avant le `fork` : le fils hérite d'un tampon vide, l'ordre est le bon. C'est la consigne « Logging » du sujet.",
+     "formules": "tampon copié par `fork` · jeté par `exec` · `fflush(stdout); fflush(stderr);` avant `fork`",
+     "type": "open"
+    },
+    {
+     "id": "m104",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `void log_cmd(const char *cmd)` : affiche la commande sans les espaces ni tabulations du début, puis un retour à la ligne, et vide les tampons.\n\nCe `main` doit afficher :\n\n```\necho toto\necho foo\n```\n\n```c\nint main(void)\n{\n    log_cmd(\"\\t  echo toto\");\n    log_cmd(\"\\techo foo\");\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <ctype.h>\n\nvoid log_cmd(const char *cmd)\n{\n    while (isblank(*cmd))\n        cmd++;\n    printf(\"%s\\n\", cmd);\n    fflush(stdout);\n    fflush(stderr);\n}\n```\n\nLe sujet : « delete every space or tab before the command », puis `fflush` avant l'exécution.",
+     "formules": "tampon copié par `fork` · jeté par `exec` · `fflush(stdout); fflush(stderr);` avant `fork`",
+     "type": "open"
+    },
+    {
+     "id": "m105",
+     "enonce": "Pourquoi faut-il aussi `fflush(stderr)` alors que `stderr` n'a pas de tampon par défaut ?",
+     "sol": "`stderr` est non tamponné par défaut, mais un programme peut changer son mode (`setvbuf`), et le sujet le demande explicitement. L'appel ne coûte rien et garantit l'ordre des messages d'erreur par rapport aux sorties des commandes.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "tampon copié par `fork` · jeté par `exec` · `fflush(stdout); fflush(stderr);` avant `fork`",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "titre": "Dépendances et messages d'erreur",
+   "notions": [
+    "dependances"
+   ],
+   "exos": [
+    {
+     "id": "m111",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Règles simplifiées : `struct rule { const char *target; const char *deps[4]; }` (fin par `NULL`). Écrire `int build(struct rule *rules, int n, const char *t)` qui construit d'abord les dépendances, puis affiche `build T` ; renvoie $2$ avec le message exact si une dépendance n'a pas de règle.\n\nCe `main` doit afficher :\n\n```\nbuild foo.o\nbuild foo\nminimake: *** No rule to make target 'tutu', needed by 'bar'. Stop.\n2\n```\n\n```c\nint main(void)\n{\n    struct rule r[] = {\n        { \"all\", { \"foo\", \"bar\", NULL } },\n        { \"foo\", { \"foo.o\", NULL } },\n        { \"foo.o\", { NULL } },\n        { \"bar\", { \"tutu\", NULL } },\n    };\n    printf(\"%d\\n\", build(r, 4, \"all\"));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nstruct rule\n{\n    const char *target;\n    const char *deps[4];\n};\n\nstatic struct rule *find_rule(struct rule *rules, int n, const char *t)\n{\n    for (int i = 0; i < n; i++)\n        if (!strcmp(rules[i].target, t))\n            return &rules[i];\n    return NULL;\n}\n\nint build(struct rule *rules, int n, const char *t)\n{\n    struct rule *r = find_rule(rules, n, t);\n    for (int i = 0; r->deps[i]; i++)\n    {\n        if (!find_rule(rules, n, r->deps[i]))\n        {\n            printf(\"minimake: *** No rule to make target '%s', needed by '%s'.  Stop.\\n\", r->deps[i], t);\n            return 2;\n        }\n        if (build(rules, n, r->deps[i]))\n            return 2;\n    }\n    printf(\"build %s\\n\", t);\n    return 0;\n}\n```\n\nParcours en profondeur : `foo.o`, puis `foo` ; `bar` échoue sur `tutu`, donc `all` n'est pas construit. (Le vérificateur compacte les espaces : le vrai message a **deux** espaces avant `Stop.`.)",
+     "formules": "dépendances d'abord (récursif) · `No rule to make target 'D', needed by 'R'.  Stop.` · code $2$",
+     "type": "open"
+    },
+    {
+     "id": "m112",
+     "enonce": "Le Makefile est vide. Message de `./minimake` ? Et de `./minimake toto` ?",
+     "sol": "```\nminimake: *** No targets.  Stop.\nminimake: *** No rule to make target 'toto'.  Stop.\n```\nDans les deux cas le code de sortie est $2$. Deux espaces avant `Stop.`, apostrophes simples autour du nom.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "dépendances d'abord (récursif) · `No rule to make target 'D', needed by 'R'.  Stop.` · code $2$",
+     "type": "open"
+    },
+    {
+     "id": "m113",
+     "enonce": "`./minimake -f Makefile.false falseRule good` : `falseRule` échoue. `good` est-elle construite ? Code de sortie ?",
+     "sol": "Oui : les cibles de la ligne de commande sont construites dans l'ordre, et un échec sur l'une n'empêche pas de tenter la suivante (exemple du sujet : `echo \\\"All good!\\\"` s'affiche après l'erreur). Le code de sortie est $2$ car une erreur a eu lieu.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "dépendances d'abord (récursif) · `No rule to make target 'D', needed by 'R'.  Stop.` · code $2$",
+     "type": "open"
+    },
+    {
+     "id": "m114",
+     "enonce": "`all: a b`, `a: c`, `b:` et `c:`, chaque règle a une commande `echo`. Combien de lignes affiche `./minimake` (commande affichée + sa sortie) ?",
+     "ans": "8",
+     "sol": "$4$ règles construites (`c`, `a`, `b`, `all`), chacune affiche sa commande puis le résultat de `echo` : $8$ lignes.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "dépendances d'abord (récursif) · `No rule to make target 'D', needed by 'R'.  Stop.` · code $2$",
+     "type": "value"
+    },
+    {
+     "id": "m115",
+     "enonce": "Le sujet ne teste ni les dépendances circulaires ni les cibles en double. Que risque malgré tout un Minimake récursif naïf sur `a: b` / `b: a` ?",
+     "sol": "Une récursion infinie : `build(a)` appelle `build(b)` qui appelle `build(a)`… jusqu'au débordement de pile (*stack overflow*, ASan l'affiche). Ce n'est pas testé, mais savoir pourquoi évite de chercher ce bug au mauvais endroit.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "dépendances d'abord (récursif) · `No rule to make target 'D', needed by 'R'.  Stop.` · code $2$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "titre": "Bonus : cibles à jour avec stat",
+   "notions": [
+    "stat"
+   ],
+   "exos": [
+    {
+     "id": "m121",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 3,
+     "enonce": "Qu'affiche ce programme, sortie redirigée vers un fichier (`./prog > out`) ? (donner exactement la sortie)\n\n```c\n#include <stdio.h>\n#include <sys/stat.h>\n\nint main(void)\n{\n    struct stat sb;\n    FILE *f = fopen(\"x.c\", \"w\");\n    fputs(\"abc\", f);\n    fclose(f);\n    int r = stat(\"x.c\", &sb);\n    printf(\"%d %ld\\n\", r, (long) sb.st_size);\n    printf(\"%d\\n\", stat(\"absent.c\", &sb));\n    return 0;\n}\n```",
+     "sol": "**Affichage :**\n\n```\n0 3\n-1\n```\n\n`stat` est appelé avant de lire `sb` (dans un seul `printf`, l'ordre d'évaluation des arguments n'est pas fixé). Il renvoie $0$ et remplit la structure (ici la taille, $3$ octets) ; $-1$ si le fichier n'existe pas.",
+     "formules": "`stat(path, &sb)` · `st_mtim.tv_sec` · `minimake: 'T' is up to date.`",
+     "type": "open"
+    },
+    {
+     "id": "m122",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int newer(const char *a, const char *b)` : $1$ si le fichier `a` a été modifié strictement après `b`, $0$ sinon (et $0$ si l'un n'existe pas).\n\nCe `main` doit afficher :\n\n```\n1 0 0\n```\n\n```c\n#include <utime.h>\n\nint main(void)\n{\n    fclose(fopen(\"file.c\", \"w\"));\n    fclose(fopen(\"file.o\", \"w\"));\n    struct utimbuf old = { 1000, 1000 };\n    utime(\"file.c\", &old);\n    printf(\"%d %d %d\\n\", newer(\"file.o\", \"file.c\"), newer(\"file.c\", \"file.o\"), newer(\"file.o\", \"nope\"));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <sys/stat.h>\n\nint newer(const char *a, const char *b)\n{\n    struct stat sa, sb;\n    if (stat(a, &sa) || stat(b, &sb))\n        return 0;\n    return sa.st_mtime > sb.st_mtime;\n}\n```\n\n`st_mtime` (équivalent de `st_mtim.tv_sec`) est la date de modification. Le test recule la date de `file.c` avec `utime` pour ne pas dépendre de la seconde courante.",
+     "formules": "`stat(path, &sb)` · `st_mtim.tv_sec` · `minimake: 'T' is up to date.`",
+     "type": "open"
+    },
+    {
+     "id": "m123",
+     "enonce": "`file.c` est créé, puis `file.o`. Règle `file.o: file.c` avec `echo Yes !`. Sortie de `./minimake file.o` ?",
+     "sol": "```\nminimake: 'file.o' is up to date.\n```\nLe fichier cible existe et sa seule dépendance est plus ancienne : rien n'est exécuté. Le nom est entre apostrophes simples, suivi d'un retour à la ligne.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`stat(path, &sb)` · `st_mtim.tv_sec` · `minimake: 'T' is up to date.`",
+     "type": "open"
+    },
+    {
+     "id": "m124",
+     "enonce": "Les trois conditions pour qu'une cible soit à jour ?",
+     "sol": "1. Un fichier du nom de la cible existe. 2. Chaque dépendance qui est un fichier est plus ancienne que la cible. 3. Chaque dépendance est elle-même à jour (la liste peut être vide). Une cible comme `all` (pas de fichier `all`) n'est donc jamais à jour.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "`stat(path, &sb)` · `st_mtim.tv_sec` · `minimake: 'T' is up to date.`",
+     "type": "open"
+    },
+    {
+     "id": "m125",
+     "enonce": "`stat` renvoie `st_mtim.tv_sec` $=1716800000$ pour la cible et $1716800060$ pour la dépendance. De combien de secondes la dépendance est-elle plus récente ?",
+     "ans": "60",
+     "sol": "La dépendance est plus récente de $60$ s : la cible n'est pas à jour, il faut la reconstruire.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 2,
+     "formules": "`stat(path, &sb)` · `st_mtim.tv_sec` · `minimake: 'T' is up to date.`",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "titre": "Récap Minimake",
+   "notions": [
+    "parsing",
+    "variables",
+    "options",
+    "processus",
+    "tampons",
+    "dependances"
+   ],
+   "exos": [
+    {
+     "id": "m131",
+     "enonce": "Donner les étapes de Minimake, dans l'ordre, et la donnée que chaque étape passe à la suivante.",
+     "sol": "1. **Arguments** : lire tout `argv` $\\to$ structure d'options (fichier, action `enum`, liste des cibles). 2. **Aide** : si `-h`, afficher et sortir $0$. 3. **Lecture** : `fopen` + `getline` $\\to$ listes de variables et de règles (expansion au parsing). 4. **Affichage** : si `-p`, afficher et sortir. 5. **Exécution** : pour chaque cible demandée (ou la première), construire récursivement dépendances puis commandes (expansion, affichage, `fflush`, `fork`/`exec`/`waitpid`). 6. **Fin** : tout libérer, renvoyer $0$ ou $2$.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "options $\\to$ lecture $\\to$ `-p` $\\to$ exécution · `fflush` + `fork`/`exec`/`waitpid` · code $0$ / $2$",
+     "type": "open"
+    },
+    {
+     "id": "m132",
+     "enonce": "Qu'affiche `./minimake` ?\n\n```\nNEEDED = hello\n\nall: ${NEEDED}\n\techo All good!\n\nhello:\n\techo Hello\n```",
+     "sol": "```\necho Hello\nHello\necho All good!\nAll good!\n```\n`NEEDED` est défini avant `all` : la dépendance vaut `hello`. `all` (première règle) construit d'abord `hello`. Code de sortie $0$.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "options $\\to$ lecture $\\to$ `-p` $\\to$ exécution · `fflush` + `fork`/`exec`/`waitpid` · code $0$ / $2$",
+     "type": "open"
+    },
+    {
+     "id": "m133",
+     "enonce": "Qu'affiche `./minimake -f Makefile_ls`, avec `ls to/` qui échoue (code $2$) ?\n\n```\nall: l_rule\n\techo Hello\nl_rule:\n\tls to/\n```",
+     "sol": "```\nls to/\nls: cannot access 'to/': No such file or directory\nminimake: *** [l_rule] Error 2\n```\nLa dépendance échoue : la recette de `all` n'est pas lancée. Le message d'erreur de `ls` vient de `ls` lui-même (sur sa sortie d'erreur).",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "options $\\to$ lecture $\\to$ `-p` $\\to$ exécution · `fflush` + `fork`/`exec`/`waitpid` · code $0$ / $2$",
+     "type": "open"
+    },
+    {
+     "id": "m134",
+     "enonce": "Liste de contrôle avant le tag `submit-*` : citer cinq points du sujet.",
+     "sol": "Le binaire `minimake` se construit avec **votre** `Makefile` et `-Wall -Wextra -fsanitize=address -g` ; aucune fuite (ASan) ; arborescence `minimake/` + `.gitignore` + `README` ; au moins $35\\%$ des tests de chaque catégorie *Fundamentals* ; des tests ajoutés à `tests/tests.yaml` ; prototypes respectés ; tests perso retirés. Rappel : `submit` $1$ par heure, la note prend le **dernier** `submit`.",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 4,
+     "formules": "options $\\to$ lecture $\\to$ `-p` $\\to$ exécution · `fflush` + `fork`/`exec`/`waitpid` · code $0$ / $2$",
+     "type": "open"
+    },
+    {
+     "id": "m135",
+     "src": "Sujet Minimake 1.0.1 (Forge EPITA) et fiches Pepexator",
+     "duree": 8,
+     "enonce": "Écrire `int exit_code(int had_error)` puis le `main` d'un mini-programme qui exécute deux commandes avec `/bin/sh -c`, les affiche avant, s'arrête à la première en échec avec le message du sujet, et renvoie $2$ en cas d'erreur.\n\nCe `main` doit afficher :\n\n```\nfalse\nminimake: *** [falseRule] Error 1\nexit 2\n```\n\n```c\nint main(void)\n{\n    const char *recipe[] = { \"false\", \"echo \\\"will not appear\\\"\" };\n    int err = 0;\n    for (int i = 0; i < 2 && !err; i++)\n    {\n        int code = run(recipe[i]);\n        if (code)\n        {\n            printf(\"minimake: *** [falseRule] Error %d\\n\", code);\n            err = 1;\n        }\n    }\n    printf(\"exit %d\\n\", exit_code(err));\n    return 0;\n}\n```",
+     "sol": "```c\n#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint exit_code(int had_error)\n{\n    return had_error ? 2 : 0;\n}\n\nstatic int run(const char *cmd)\n{\n    printf(\"%s\\n\", cmd);\n    fflush(stdout);\n    fflush(stderr);\n    pid_t pid = fork();\n    if (pid == 0)\n    {\n        execl(\"/bin/sh\", \"sh\", \"-c\", cmd, (char *) NULL);\n        _exit(127);\n    }\n    int st;\n    waitpid(pid, &st, 0);\n    return WIFEXITED(st) ? WEXITSTATUS(st) : 1;\n}\n```\n\nAffichage, `fflush`, `fork`, `exec`, `waitpid`, arrêt au premier code non nul : tout le moteur d'exécution de Minimake tient dans ces lignes.",
+     "formules": "options $\\to$ lecture $\\to$ `-p` $\\to$ exécution · `fflush` + `fork`/`exec`/`waitpid` · code $0$ / $2$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}
