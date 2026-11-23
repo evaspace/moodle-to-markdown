@@ -276,7 +276,7 @@ def admin_stats_page():
     from admin_stats import compute
     from datetime import datetime, timezone
     from zoneinfo import ZoneInfo
-    from levels import TZ, db as levels_db, load_parcours, suspect_list
+    from levels import ADMIN_USERS, TZ, db as levels_db, load_parcours, suspect_list
     tz = ZoneInfo(TZ)
     local = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(tz)
     with levels_db() as conn:
@@ -284,10 +284,11 @@ def admin_stats_page():
                     for r in conn.execute('SELECT id, created_at, email FROM account')]
         logs = [dict(r, at=local(r['at'])) for r in conn.execute(
             'SELECT account_id, subject, level, exo_id, ok, secs, peek, timeout, points, review, at FROM exo_log')]
-        events = [dict(r, at=local(r['at'])) for r in conn.execute('SELECT kind, at FROM event_log')]
+        events = [dict(r, at=local(r['at'])) for r in conn.execute('SELECT account_id, kind, at FROM event_log')]
+        owners = [r['id'] for r in conn.execute('SELECT id, username FROM account') if r['username'].lower() in ADMIN_USERS]
         progress = [dict(r) for r in conn.execute('SELECT account_id, subject, level, best FROM level_progress')]
     paths = {sid: {'titre': d['subject']['titre'], 'levels': len(d['levels'])} for sid, d in load_parcours().items()}
-    stats = compute(accounts, logs, progress, paths, datetime.now(tz).date(), events)
+    stats = compute(accounts, logs, progress, paths, datetime.now(tz).date(), events, owners)
     with levels_db() as conn:
         stats['suspects'] = suspect_list(conn)
     stats['updated'] = datetime.now(tz).strftime('%H:%M:%S')

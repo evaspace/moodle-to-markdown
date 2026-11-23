@@ -146,7 +146,7 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-legend { display: flex; align-items: center; gap: 3px; }
 .st-legend i { display: inline-block; }
 .st-chart { display: flex; align-items: flex-end; gap: 2px; height: 140px; background: #F4F5F7; padding: 8px; }
-.st-chart > div { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.st-chart > div { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
 .st-chart span { display: block; width: 100%; min-height: 2px; background: var(--success-color); }
 .st-axis { display: flex; justify-content: space-between; margin-top: 4px; }
 .st-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
@@ -337,6 +337,11 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .st-hist .st-now { background: #F4F5F7; }
 .st-hist small { margin-left: 4px; }
 .st-up { color: var(--success-color); }
+/* admin: the owner's own figures, apart from everyone else's */
+.st-chart span.me { background: #2563C9; min-height: 0; }
+.st-me, .st-me-key { color: #2563C9; }
+.st-me { display: block; font-size: 0.55em; font-weight: 700; }
+.st-hist .st-me, .st-subjects .st-me { font-size: 1em; }
 .st-down { color: var(--accent-color); }
 /* admin */
 .adm-tabs { display: flex; flex-wrap: wrap; gap: 0; max-width: 960px; margin: 16px auto 0; padding: 0 16px; }

@@ -1,5 +1,5 @@
 <div class="wk-heat-scroll"><div class="wk-heat" role="img" aria-label="Exercices par jour de la semaine et par heure">
   <div class="wk-row wk-head"><span></span>{% for h in range(24) %}<b>{{ h if h % 3 == 0 else '' }}</b>{% endfor %}</div>
-  {% for r in heat %}<div class="wk-row"><span>{{ r.day }}</span>{% for c in r.cells %}<i style="background:{{ c.color }}" title="{{ r.day }} {{ c.h }} h : {{ c.n }}"></i>{% endfor %}</div>{% endfor %}
+  {% for r in heat %}<div class="wk-row"><span>{{ r.day }}</span>{% for c in r.cells %}<i style="background:{{ c.color }}" title="{{ r.day }} {{ c.h }} h : {{ c.n }}{% if c.me %}, morgan {{ c.me }}{% endif %}"></i>{% endfor %}</div>{% endfor %}
 </div></div>
 <p class="st-legend lv-muted">Moins <i style="background:#fff"></i><i style="background:hsl(130,62%,80%)"></i><i style="background:hsl(130,62%,60%)"></i><i style="background:hsl(130,62%,38%)"></i> Plus</p>

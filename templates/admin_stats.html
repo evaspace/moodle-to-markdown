@@ -8,77 +8,80 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261115">
-  <link rel="stylesheet" href="/static/niveaux.css?v=33">
+  <link rel="stylesheet" href="/static/niveaux.css?v=35">
 </head>
 <body class="lv-page">
 {% set tab = 'stats' %}{% include 'admin_nav.html' %}
 <div class="lv-wrap lv-wide">
   <h1>Stats de l'application</h1>
   <p class="lv-muted">Chiffres agrégés, aucun identifiant d'utilisateur. Mis à jour toutes les minutes, dernière fois à <span id="updated">{{ s.updated }}</span>.</p>
+  <p>En noir et vert : tous les comptes sauf morgan.pierrefeu. <span class="st-me-key">En bleu : morgan.pierrefeu seul.</span></p>
+  {% macro me(v, unit='') %}<span class="st-me">{{ v }}{{ unit }}</span>{% endmacro %}
 <div id="live">
 
   <h2>Audience</h2>
   <dl class="st-big">
-    <div><dt>Comptes</dt><dd>{{ s.accounts }}</dd></div>
-    <div><dt>Nouveaux, 7 j / 30 j</dt><dd>{{ s.new_7d }} / {{ s.new_30d }}</dd></div>
-    <div><dt>Actifs aujourd'hui</dt><dd>{{ s.dau }}</dd></div>
-    <div><dt>Actifs, 7 j</dt><dd>{{ s.wau }}</dd></div>
-    <div><dt>Actifs, 30 j</dt><dd>{{ s.mau }}</dd></div>
-    <div><dt>Fidélité jour / mois</dt><dd>{{ s.stickiness }} %</dd></div>
+    <div><dt>Comptes</dt><dd>{{ s.accounts }}{{ me(s.me.accounts, '') }}</dd></div>
+    <div><dt>Nouveaux, 7 j / 30 j</dt><dd>{{ s.new_7d }} / {{ s.new_30d }}<span class="st-me">{{ s.me.new_7d }} / {{ s.me.new_30d }}</span></dd></div>
+    <div><dt>Actifs aujourd'hui</dt><dd>{{ s.dau }}{{ me(s.me.dau, '') }}</dd></div>
+    <div><dt>Actifs, 7 j</dt><dd>{{ s.wau }}{{ me(s.me.wau, '') }}</dd></div>
+    <div><dt>Actifs, 30 j</dt><dd>{{ s.mau }}{{ me(s.me.mau, '') }}</dd></div>
+    <div><dt>Fidélité jour / mois</dt><dd>{{ s.stickiness }} %{{ me(s.me.stickiness, ' %') }}</dd></div>
   </dl>
 
   <h2>Activation et rétention</h2>
   <dl class="st-big">
-    <div><dt>Ont fait un exercice</dt><dd>{{ s.activation }} %</dd></div>
-    <div><dt>Plus de 20 exercices</dt><dd>{{ s.engaged }}</dd></div>
-    <div><dt>Reviennent le lendemain</dt><dd>{{ s.retention.d1.pct }} %</dd></div>
-    <div><dt>Reviennent dans la semaine</dt><dd>{{ s.retention.d7.pct }} %</dd></div>
-    <div><dt>Reviennent dans le mois</dt><dd>{{ s.retention.d30.pct }} %</dd></div>
-    <div><dt>E-mail renseigné</dt><dd>{{ s.with_email }} %</dd></div>
+    <div><dt>Ont fait un exercice</dt><dd>{{ s.activation }} %{{ me(s.me.activation, ' %') }}</dd></div>
+    <div><dt>Plus de 20 exercices</dt><dd>{{ s.engaged }}{{ me(s.me.engaged, '') }}</dd></div>
+    <div><dt>Reviennent le lendemain</dt><dd>{{ s.retention.d1.pct }} %{{ me(s.me.retention.d1.pct, ' %') }}</dd></div>
+    <div><dt>Reviennent dans la semaine</dt><dd>{{ s.retention.d7.pct }} %{{ me(s.me.retention.d7.pct, ' %') }}</dd></div>
+    <div><dt>Reviennent dans le mois</dt><dd>{{ s.retention.d30.pct }} %{{ me(s.me.retention.d30.pct, ' %') }}</dd></div>
+    <div><dt>E-mail renseigné</dt><dd>{{ s.with_email }} %{{ me(s.me.with_email, ' %') }}</dd></div>
   </dl>
   <p class="lv-muted">Rétention : parmi les comptes assez anciens ({{ s.retention.d1.cohort }} / {{ s.retention.d7.cohort }} / {{ s.retention.d30.cohort }}), part revenue après le jour d'inscription.</p>
 
   <h2>Usage</h2>
   <dl class="st-big">
-    <div><dt>Exercices faits</dt><dd>{{ s.exercises }}</dd></div>
-    <div><dt>Réussite</dt><dd>{{ s.success }} %</dd></div>
-    <div><dt>Heures de travail</dt><dd>{{ s.hours_spent }}</dd></div>
-    <div><dt>Exercices par utilisateur actif</dt><dd>{{ s.per_active_user }}</dd></div>
-    <div><dt>Minutes par jour de travail</dt><dd>{{ s.minutes_per_active_day }}</dd></div>
-    <div><dt>Temps écoulé / aides ouvertes</dt><dd>{{ s.timeout_rate }} % / {{ s.peek_rate }} %</dd></div>
+    <div><dt>Exercices faits</dt><dd>{{ s.exercises }}{{ me(s.me.exercises, '') }}</dd></div>
+    <div><dt>Réussite</dt><dd>{{ s.success }} %{{ me(s.me.success, ' %') }}</dd></div>
+    <div><dt>Heures de travail</dt><dd>{{ s.hours_spent }}{{ me(s.me.hours_spent, '') }}</dd></div>
+    <div><dt>Exercices par utilisateur actif</dt><dd>{{ s.per_active_user }}{{ me(s.me.per_active_user, '') }}</dd></div>
+    <div><dt>Minutes par jour de travail</dt><dd>{{ s.minutes_per_active_day }}{{ me(s.me.minutes_per_active_day, '') }}</dd></div>
+    <div><dt>Temps écoulé / aides ouvertes</dt><dd>{{ s.timeout_rate }} % / {{ s.peek_rate }} %<span class="st-me">{{ s.me.timeout_rate }} % / {{ s.me.peek_rate }} %</span></dd></div>
   </dl>
 
   <h2>Comportements</h2>
   <dl class="st-big">
-    <div><dt>Niveaux validés</dt><dd>{{ s.events.niveau_up.all }}</dd></div>
-    <div><dt>Niveaux perdus</dt><dd>{{ s.events.niveau_down.all }}</dd></div>
-    <div><dt>« Trop dur, passer »</dt><dd>{{ s.events.passer.all }}</dd></div>
-    <div><dt>Aides ouvertes</dt><dd>{{ s.events.aide.all }}</dd></div>
-    <div><dt>Copies pour une IA</dt><dd>{{ s.events.copie_ia.all }}</dd></div>
-    <div><dt>Dont ces 7 jours</dt><dd>{{ s.events.niveau_up.week + s.events.niveau_down.week + s.events.passer.week + s.events.aide.week + s.events.copie_ia.week }}</dd></div>
+    <div><dt>Niveaux validés</dt><dd>{{ s.events.niveau_up.all }}{{ me(s.me.events.niveau_up.all, '') }}</dd></div>
+    <div><dt>Niveaux perdus</dt><dd>{{ s.events.niveau_down.all }}{{ me(s.me.events.niveau_down.all, '') }}</dd></div>
+    <div><dt>« Trop dur, passer »</dt><dd>{{ s.events.passer.all }}{{ me(s.me.events.passer.all, '') }}</dd></div>
+    <div><dt>Aides ouvertes</dt><dd>{{ s.events.aide.all }}{{ me(s.me.events.aide.all, '') }}</dd></div>
+    <div><dt>Copies pour une IA</dt><dd>{{ s.events.copie_ia.all }}{{ me(s.me.events.copie_ia.all, '') }}</dd></div>
+    <div><dt>Dont ces 7 jours</dt>{% set wk = namespace(a=0, b=0) %}{% for k, v in s.events|dictsort %}{% set wk.a = wk.a + v.week %}{% set wk.b = wk.b + s.me.events[k].week %}{% endfor %}<dd>{{ wk.a }}{{ me(wk.b) }}</dd></div>
   </dl>
 
-  {% if s.history %}<h2>Historique semaine par semaine, tous les utilisateurs</h2>{% set history = s.history %}{% include 'history.html' %}{% endif %}
+  {% if s.history %}<h2>Historique semaine par semaine</h2>{% set history = s.history %}{% set history_me = s.me.history %}{% include 'history.html' %}{% endif %}
 
   <h2>Exercices par jour, 30 jours</h2>
-  <div class="st-chart">{% for b in s.exo_chart %}<div title="{{ b.label }} : {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
+  <div class="st-chart">{% for b in s.exo_chart %}<div title="{{ b.label }} : {{ b.n }}, morgan {{ b.me }}"><span class="me" style="height:{{ b.hm }}%"></span><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
   <div class="st-axis lv-muted"><span>{{ s.exo_chart[0].label }}</span><span>aujourd'hui</span></div>
 
   <h2>Inscriptions par jour, 30 jours</h2>
-  <div class="st-chart">{% for b in s.signup_chart %}<div title="{{ b.label }} : {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
+  <div class="st-chart">{% for b in s.signup_chart %}<div title="{{ b.label }} : {{ b.n }}, morgan {{ b.me }}"><span class="me" style="height:{{ b.hm }}%"></span><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div>
   <div class="st-axis lv-muted"><span>{{ s.signup_chart[0].label }}</span><span>aujourd'hui</span></div>
 
   <h2>Jour de la semaine et heure</h2>
-  <p class="lv-muted">Exercices faits, tous utilisateurs : plus c'est vert, plus il y en a. Compare les jours entre eux.</p>
+  <p class="lv-muted">Exercices faits : plus c'est vert, plus il y en a. La part bleue en bas d'une case est celle de morgan.pierrefeu.</p>
   {% set heat = s.heat %}{% include 'heat.html' %}
 
   <h2>Parcours</h2>
   <p class="lv-muted">Pour chaque parcours : utilisateurs qui l'ont commencé, puis part d'entre eux qui a validé le niveau 1, 2, 3, etc.</p>
-  {% set idle = s.funnel|selectattr('started', 'equalto', 0)|list %}
+  {% set idle = s.funnel|rejectattr('started')|rejectattr('me.started')|list %}
   <ul class="st-subjects">
-    {% for f in s.funnel if f.started %}<li><span>{{ f.titre }}</span>
+    {% for f in s.funnel if f.started or f.me.started %}<li><span>{{ f.titre }}</span>
       <span class="lv-muted">{{ f.started }} commencé · {{ f.finished }} terminé · {{ f.exos }} exercices · {{ f.rate }} % réussis{% if f.stuck %} · le plus de monde au niveau {{ f.stuck[0] }}{% endif %}</span>
-      <div class="st-chart st-funnel">{% for b in f.bars %}<div title="Niveau {{ b.k }} validé par {{ b.n }}"><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div></li>{% else %}<li class="lv-muted">Aucun parcours commencé.</li>{% endfor %}
+      {% if f.me.started %}<span class="st-me">morgan : {{ f.me.finished and 'terminé' or 'commencé' }} · {{ f.me.exos }} exercices · {{ f.me.rate }} % réussis{% if f.me.stuck %} · niveau {{ f.me.stuck[0] }}{% endif %}</span>{% endif %}
+      <div class="st-chart st-funnel">{% for b in f.bars %}<div title="Niveau {{ b.k }} validé par {{ b.n }}, morgan {{ b.me }}"><span class="me" style="height:{{ b.hm }}%"></span><span style="height:{{ b.h }}%"></span></div>{% endfor %}</div></li>{% else %}<li class="lv-muted">Aucun parcours commencé.</li>{% endfor %}
   </ul>
   {% if idle %}<details class="adm-fmt"><summary>{{ idle|length }} parcours pas encore commencés</summary>
     <p class="lv-muted">{% for f in idle %}{{ f.titre }}{{ ' · ' if not loop.last }}{% endfor %}</p></details>{% endif %}
@@ -88,7 +91,7 @@
   <div class="st-hist-scroll">
   <table class="st-hist">
     <thead><tr><th scope="col">Parcours</th><th scope="col">Niveau</th><th scope="col">Exercice</th><th scope="col">Essais</th><th scope="col">Ratés</th><th scope="col">Temps moyen</th></tr></thead>
-    <tbody>{% for h in s.hard %}<tr><th scope="row">{{ h.subject }}</th><td>{{ h.level }}</td><td>{{ h.exo }}</td><td>{{ h.attempts }}</td><td>{{ h.fail }} %</td><td>{{ h.avg_secs }} s</td></tr>{% endfor %}</tbody>
+    <tbody>{% for h in s.hard %}<tr><th scope="row">{{ h.subject }}</th><td>{{ h.level }}</td><td>{{ h.exo }}</td><td>{{ h.attempts }}{% if h.me %} {{ me(h.me) }}{% endif %}</td><td>{{ h.fail }} %</td><td>{{ h.avg_secs }} s</td></tr>{% endfor %}</tbody>
   </table>
   </div>
   {% else %}<p class="lv-muted">Pas encore assez d'essais (5 minimum par exercice).</p>{% endif %}

@@ -7,6 +7,7 @@ MIN_ATTEMPTS = 5    # an exercise needs this many attempts to be ranked as hard
 
 
 EVENTS = ('niveau_up', 'niveau_down', 'passer', 'aide', 'copie_ia')
+OWNER_COLOR = '#2563C9'  # the site owner's share in every admin chart
 DAYS = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim']
 
 
@@ -30,7 +31,44 @@ def _series(counter, days):
     return [{'label': f'{d.day}/{d.month}', 'n': counter.get(d, 0), 'h': round(100 * counter.get(d, 0) / top)} for d in days]
 
 
-def compute(accounts, logs, progress, paths, today, events=()):
+def _stack(a, b):
+    """Stack two same-day series: others (green, h) under the owner (blue, hm), scaled on the combined top."""
+    top = max([x['n'] + y['n'] for x, y in zip(a, b)] + [1])
+    return [{**x, 'me': y['n'], 'h': round(100 * x['n'] / top), 'hm': round(100 * y['n'] / top)} for x, y in zip(a, b)]
+
+
+def compute(accounts, logs, progress, paths, today, events=(), owner_ids=()):
+    """Stats of every account except owner_ids, with the owner's own stats under 'me' (shown in blue),
+    and charts stacked: others then the owner on top."""
+    own = set(owner_ids)
+    split = lambda rows, k: ([r for r in rows if r.get(k) not in own], [r for r in rows if r.get(k) in own])
+    (a0, a1), (l0, l1), (p0, p1), (e0, e1) = (split(accounts, 'id'), split(logs, 'account_id'),
+                                              split(progress, 'account_id'), split(events, 'account_id'))
+    s, m = _compute(a0, l0, p0, paths, today, e0), _compute(a1, l1, p1, paths, today, e1)
+    for k in ('signup_chart', 'exo_chart'):
+        s[k] = _stack(s[k], m[k])
+    for row, mrow in zip(s['heat'], m['heat']):
+        row['me'] = mrow['total']
+        for c, mc in zip(row['cells'], mrow['cells']):
+            if mc['n']:  # owner share as a solid blue fill from the bottom of the cell
+                cut = round(100 * mc['n'] / (mc['n'] + c['n']))
+                c['color'] = f"linear-gradient(to top, {OWNER_COLOR} {cut}%, {c['color']} {cut}%)"
+            c['me'] = mc['n']
+    mf = {f['id']: f for f in m['funnel']}
+    for f in s['funnel']:
+        f['me'] = g = mf[f['id']]
+        total = f['started'] + g['started']
+        f['bars'] = [{**b, 'me': gb['n'], 'h': _pct(b['n'], total), 'hm': _pct(gb['n'], total)}
+                     for b, gb in zip(f['bars'], g['bars'])]
+    s['funnel'].sort(key=lambda f: -(f['started'] + f['me']['started']))
+    for h in s['hard']:
+        h['me'] = m['_exo'].get(h['key'], [0])[0]
+    s.pop('_exo'), m.pop('_exo')
+    s['me'] = m
+    return s
+
+
+def _compute(accounts, logs, progress, paths, today, events=()):
     """accounts: [{id, created(date), email}], logs: [{account_id, subject, level, exo_id, ok, secs, peek, timeout, at(datetime)}],
     progress: [{account_id, subject, level, best}], paths: {subject_id: {'titre', 'levels': n}},
     events: event_log rows [{kind, at(datetime)}] (skips, helps, AI copies, level changes)."""
@@ -117,6 +155,7 @@ def compute(accounts, logs, progress, paths, today, events=()):
         'heat': week_heat([r['at'] for r in logs]),
         'weekly': [weekly.get(i, 0) for i in range(7, -1, -1)],
         'funnel': funnel,
-        'hard': [{'subject': paths.get(k[0], {}).get('titre', k[0]), 'level': k[1], 'exo': k[2], 'attempts': v[0],
+        '_exo': {'|'.join(map(str, k)): v for k, v in per_exo.items()},
+        'hard': [{'key': '|'.join(map(str, k)), 'subject': paths.get(k[0], {}).get('titre', k[0]), 'level': k[1], 'exo': k[2], 'attempts': v[0],
                   'fail': _pct(v[1], v[0]), 'avg_secs': round(v[2] / v[0])} for k, v in hard],
     }

@@ -39,6 +39,21 @@ class AdminStats(unittest.TestCase):
         self.assertEqual((s['events']['niveau_up']['all'], s['events']['niveau_up']['week']), (1, 0))
         self.assertEqual(s['history'][0]['n'], 1)
 
+    def test_owner_apart(self):
+        accounts = [dict(id=1, created=TODAY, email=None), dict(id=9, created=TODAY, email='o')]
+        logs = [log(1, 0), log(9, 0), log(9, 0, ok=0)]
+        events = [dict(account_id=9, kind='passer', at=datetime(2026, 11, 15, 9))]
+        progress = [dict(account_id=9, subject='p', level=2, best=1)]
+        s = compute(accounts, logs, progress, PATHS, TODAY, events, owner_ids=[9])
+        self.assertEqual((s['accounts'], s['exercises'], s['success']), (1, 1, 100))
+        self.assertEqual((s['me']['accounts'], s['me']['exercises'], s['me']['success']), (1, 2, 50))
+        self.assertEqual((s['events']['passer']['all'], s['me']['events']['passer']['all']), (0, 1))
+        today = s['exo_chart'][-1]
+        self.assertEqual((today['n'], today['me'], today['h'], today['hm']), (1, 2, 33, 67))
+        f = s['funnel'][0]
+        self.assertEqual((f['started'], f['me']['started'], f['bars'][0]['hm']), (1, 1, 50))
+        self.assertNotIn('_exo', s['me'])
+
 
 if __name__ == '__main__':
     unittest.main()

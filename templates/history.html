@@ -1,5 +1,8 @@
 {# weekly history table: needs `history` (levels.week_history) #}
   {% macro dv(d, k, unit='') %}{% if d and d[k] is defined and d[k] %}<small class="{{ 'st-up' if d[k] > 0 else 'st-down' }}">{{ '+' if d[k] > 0 else '−' }}{{ d[k]|abs }}{{ unit }}</small>{% endif %}{% endmacro %}
+  {# optional history_me (admin): the owner's weeks, shown in blue under each figure #}
+  {% set hm = {} %}{% for x in history_me or [] %}{% set _ = hm.update({x.label: x}) %}{% endfor %}
+  {% macro mv(w, k, unit='') %}{% set x = hm.get(w.label) %}{% if x and x[k] %}<span class="st-me">{{ x[k] }}{{ unit }}</span>{% endif %}{% endmacro %}
   {% set w = history[0] %}{% if w.delta %}<p class="lv-muted">Cette semaine par rapport à la précédente :
     {{ '+' if w.delta.n >= 0 else '−' }}{{ w.delta.n|abs }} exercice{{ 's' if w.delta.n|abs > 1 }},
     {% if w.delta.rate is defined %}{{ '+' if w.delta.rate >= 0 else '−' }}{{ w.delta.rate|abs }} points de réussite, {% endif %}
@@ -10,11 +13,11 @@
     <tbody>
     {% for w in history %}<tr{% if w.current %} class="st-now"{% endif %}>
       <th scope="row">{{ w.label }}{% if w.current %} (en cours){% endif %}</th>
-      <td>{{ w.n }} {{ dv(w.delta, 'n') }}</td>
-      <td>{% if w.rate is not none %}{{ w.rate }} % {{ dv(w.delta, 'rate') }}{% else %}–{% endif %}</td>
-      <td>{{ w.minutes }} min {{ dv(w.delta, 'minutes') }}</td>
-      <td>{{ w.points }} {{ dv(w.delta, 'points') }}</td>
-      <td>{{ w.days }}</td><td>{{ w.up }}</td><td>{{ w.down }}</td><td>{{ w.skip }}</td><td>{{ w.help }}</td><td>{{ w.copies }}</td><td>{{ w.review }}</td>
+      <td>{{ w.n }} {{ dv(w.delta, 'n') }}{{ mv(w, 'n') }}</td>
+      <td>{% if w.rate is not none %}{{ w.rate }} % {{ dv(w.delta, 'rate') }}{% else %}–{% endif %}{{ mv(w, 'rate', ' %') }}</td>
+      <td>{{ w.minutes }} min {{ dv(w.delta, 'minutes') }}{{ mv(w, 'minutes', ' min') }}</td>
+      <td>{{ w.points }} {{ dv(w.delta, 'points') }}{{ mv(w, 'points') }}</td>
+      {% for k in ('days', 'up', 'down', 'skip', 'help', 'copies', 'review') %}<td>{{ w[k] }}{{ mv(w, k) }}</td>{% endfor %}
     </tr>{% endfor %}
     </tbody>
   </table>
