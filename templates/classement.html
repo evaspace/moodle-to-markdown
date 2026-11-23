@@ -7,7 +7,7 @@
   <title>Classement · Epita Doomscrolling</title>
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261115">
+  <link rel="stylesheet" href="/static/footer.css?v=20261123">
   <link rel="stylesheet" href="/static/niveaux.css?v=34">
 </head>
 <body class="lv-page">
@@ -20,7 +20,7 @@
   </label>
   <p class="lv-muted" id="board-msg" role="status">{% if not visible %}Tu es caché : les autres ne te voient pas, et tu n'as pas de rang.{% endif %}</p>
 
-  <nav class="lv-tabs cl-tabs" aria-label="Période">
+  <nav class="lv-tabs cl-tabs" aria-label="Période" data-slide="fill">
     {% for key, label in periods.items() %}
     <a href="?p={{ key }}{% if mat %}&m={{ mat }}{% endif %}"{% if key == period %} aria-current="page"{% endif %}>{{ label }}</a>
     {% endfor %}
