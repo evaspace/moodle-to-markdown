@@ -827,6 +827,8 @@ def level_page(subject):
             (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
             if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),
+        seance=(session.get('seance_line') or {}).get('texte') if request.args.get('seance') == (session.get('seance_line') or {}).get('ecue') else None,
+        copie_tip=__import__('beta').copie_tip(data['subject']['matiere'], exo['id']) if is_admin() else None,
         squares=squares(lvl, status), combo=streak_now, pari=bool(pari and pari[0]), calib=CALIB_POINTS,
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),

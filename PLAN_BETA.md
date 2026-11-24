@@ -76,6 +76,8 @@ Fait le 2026-11-24 : plafond mesuré (`beta.load`, `beta.caps`) et rythme corrig
 
 ### 3. Conseils au bon endroit (`feat/beta-conseils`)
 
+Fait le 2026-11-24, avec la fatigue en direct de l'étape 2. Limite : le piège 20/20 vient de la liste par matière (en algo, une règle OCaml peut tomber sur un exercice Python) tant que l'étape 4 n'a pas les barèmes par type d'exercice. La liste « Copie 20/20 » reste sur `/admin/beta` comme référence avant examen.
+
 Un conseil = une phrase, affichée là où l'action se passe. On retire la liste fixe.
 
 | Moment | Où | Exemple |

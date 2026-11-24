@@ -293,6 +293,7 @@
       }
       const d = res.data;
       fb.className = 'lv-feedback ' + (ok ? 'good' : 'bad');
+      if (!ok && $('copie-tip')) $('copie-tip').hidden = false;  // the « copie 20/20 » trap, right after a miss
       const lines = [MESSAGES[d.event](d)];
       if (d.timeout) lines.push('Temps écoulé : cet exercice reviendra avec plus de temps.');
       if (ok && d.points) {

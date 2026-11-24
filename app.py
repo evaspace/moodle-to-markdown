@@ -384,9 +384,10 @@ def _beta_now_processor():
 def admin_beta_page():
     """Revision planner on the owner's real timetable (beta.py, README_OBJECTIFS « Beta »)."""
     d = _beta_data()
-    return render_template('admin_beta.html', chart=d['beta'].rhythm_chart(d['hours']), n_logs=len(d['logs']),
+    demain = _beta_plan_for(d)(d['now'].date() + timedelta(days=1))[:3] if d['now'].hour >= 18 else []
+    return render_template('admin_beta.html', demain=demain, chart=d['beta'].rhythm_chart(d['hours']), n_logs=len(d['logs']),
                            unmapped=d['beta'].unmapped(d['events'], d['reg']), n_events=len(d['events']),
-                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, next=d['beta'].next_eval(d['adv']),
+                           copie=d['beta'].COPIE_20, next=d['beta'].next_eval(d['adv']),
                            conflit=d['beta'].conflicts(d['hours']),
                            ics_url=f'{PUBLIC_URL}/beta/plan.ics?t={_beta_ics_token()}')
 
@@ -428,15 +429,28 @@ def beta_seance(ecue):
     paths = [p for p in reg[ecue]['parcours'] if p in all_paths]
     uid, now = session['uid'], datetime.now(beta.TZ)
     with levels_db() as conn:
-        attempts = [((r['subject'], r['level'], r['exo_id']), r['ok'],
-                     datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ))
-                    for r in conn.execute('SELECT subject, level, exo_id, ok, at FROM exo_log WHERE account_id=? ORDER BY id', (uid,))]
+        rows = [(r, datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ))
+                for r in conn.execute('SELECT subject, level, exo_id, ok, secs, at FROM exo_log WHERE account_id=? ORDER BY id', (uid,))]
         due = review_queue(conn, uid, _today())
-        finished = {r['subject'] for r in conn.execute('SELECT subject, best FROM level_progress WHERE account_id=?', (uid,))
-                    if r['subject'] in all_paths and r['best'] >= len(all_paths[r['subject']]['levels'])}
+        prog = {r['subject']: (r['level'], r['best']) for r in conn.execute(
+            'SELECT subject, level, best FROM level_progress WHERE account_id=?', (uid,))}
+    attempts = [((r['subject'], r['level'], r['exo_id']), r['ok'], at) for r, at in rows]
+    finished = {p for p, (_, best) in prog.items() if p in all_paths and best >= len(all_paths[p]['levels'])}
     step = beta.seance_next(attempts, due, paths, finished, now)
     if not step:
+        session.pop('seance_line', None)
         return redirect('/admin/beta')
+    # one sentence on top of the exercise (PLAN_BETA étape 3): fatigue, else end of block, else what comes
+    d = _beta_data()
+    today = [b for b in _beta_plan_for(d)(now.date()) if b.get('key') == ecue or b['fin'] > now]
+    done = [b for b in today if b.get('key') == ecue and now - timedelta(minutes=30) < b['fin'] <= now]
+    later = [b for b in today if b['debut'] > now]
+    ended = done and dict(pause=d['block']['pause'], conseil=beta.RECUPERATION[now.toordinal() % len(beta.RECUPERATION)],
+                          reprise=later[0]['debut'] if later else None, quoi=later[0]['quoi'] if later else '')
+    cur = next((p for p in paths if p not in finished), paths[0] if paths else None)
+    session['seance_line'] = dict(ecue=ecue, texte=beta.seance_line(
+        reg[ecue]['titre'], len([k for k in due if k[0] in paths]), len(beta.recent_misses(attempts, paths, now)),
+        prog.get(cur, (1, 0))[0], beta.fatigue([(at, r['ok'], r['secs']) for r, at in rows], now), ended or None))
     kind, what = step
     if kind == 'niveau':
         return redirect(f'/niveaux/{what}?' + urlencode({'seance': ecue}))

@@ -23,6 +23,7 @@
   <p class="lv-muted"><span id="total-pct">{{ percent }}</span> % de toutes les formules de « {{ subject.titre }} » réussies</p>
   <p>Formules du niveau <span class="lv-squares" role="img" aria-label="{{ squares|selectattr('state', 'equalto', 'ok')|list|length }} réussis sur {{ squares|length }}">{% for q in squares %}<i class="{{ q.state }}{{ ' cur' if q.id == exo.id }}" data-exo="{{ q.id }}"></i>{% endfor %}</span>
     <span class="lv-muted">toutes en vert = niveau validé</span></p>
+  {% if seance %}<p class="lv-practice" id="seance-line">{{ seance }}</p>{% endif %}
   {% if review %}<p class="lv-practice">Révision espacée : cet exercice raté revient pour vérifier qu'il est acquis.</p>
   {% elif easier %}<p class="lv-practice">Plus facile, même notion. Ta progression ne bouge pas ; ensuite, retour au niveau {{ current }}.</p>
   {% elif practice %}
@@ -81,6 +82,7 @@
     <h2>Correction</h2>
     <div id="solution-body">{{ exo.sol|safe }}</div>
   </section>
+  {% if copie_tip %}<p class="lv-practice" id="copie-tip" hidden>Copie 20/20 : {{ copie_tip }}</p>{% endif %}
   <div class="lv-copy" id="copy-ia" hidden>
     <button class="lv-btn ia" type="button" id="btn-copy-ia"
       data-copy-llm="#exo-statement|Énoncé; #solution-body|Correction"
@@ -105,7 +107,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=24"></script>
+<script src="/static/niveaux.js?v=25"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

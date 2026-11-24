@@ -627,6 +627,15 @@ def seance_link(key):
 RECENT_MISS_DAYS, RECENT_MINUTES = 3, 20
 
 
+def recent_misses(attempts, paths, now, skip=()):
+    """Exercises of `paths` whose last try failed in the last 3 days, oldest first."""
+    last = {}
+    for k, ok, at in attempts:
+        last[k] = (ok, at)
+    return [k for k, (ok, at) in sorted(last.items(), key=lambda x: x[1][1])
+            if k[0] in paths and not ok and k not in skip and now - at <= timedelta(days=RECENT_MISS_DAYS)]
+
+
 def seance_next(attempts, due, paths, finished, now):
     """Next step of a revision session on one ECUE (PLAN_BETA étape 1), from the exercise log only:
     1. an exercise due for spaced review (levels.review_queue order), 2. an exercise whose last try failed
@@ -639,13 +648,47 @@ def seance_next(attempts, due, paths, finished, now):
     for k in due:
         if k[0] in paths and k not in recent:
             return 'revoir', k
-    last = {}
-    for k, ok, at in attempts:
-        last[k] = (ok, at)
-    for k, (ok, at) in sorted(last.items(), key=lambda x: x[1][1]):
-        if k[0] in paths and not ok and k not in recent and now - at <= timedelta(days=RECENT_MISS_DAYS):
-            return 'rate', k
+    miss = recent_misses(attempts, paths, now, recent)
+    if miss:
+        return 'rate', miss[0]
     return next((('niveau', p) for p in paths if p not in finished), None)
+
+
+FATIGUE_KO, FATIGUE_SLOW, SITTING = 3, 1.5, 60   # 3 misses in a row, or 1.5x my usual time, within the last hour
+
+
+def fatigue(answers, now):
+    """Why to stop now, else None. answers: [(at, ok, secs)] of the account, oldest first."""
+    sitting = [a for a in answers if now - a[0] <= timedelta(minutes=SITTING)]
+    if len(sitting) >= FATIGUE_KO and not any(ok for _, ok, _ in sitting[-FATIGUE_KO:]):
+        return f'{FATIGUE_KO} ratés d\'affilée'
+    usual = [s for _, _, s in answers[:-1] if s]
+    if sitting and len(usual) >= 10 and sitting[-1][2] and sitting[-1][2] > FATIGUE_SLOW * sum(usual) / len(usual):
+        return 'tu mets bien plus de temps que d\'habitude'
+    return None
+
+
+def seance_line(titre, n_due, n_miss, level, tired=None, ended=None):
+    """The one sentence shown on top of a session exercise (PLAN_BETA étape 3), most urgent first.
+    ended: dict(pause, reprise, quoi, conseil) when the planned block is over."""
+    if tired:
+        return f'Ta réussite baisse ({tired}) : pause maintenant, la suite est gardée.'
+    if ended:
+        nxt = f" Reprise à {ended['reprise']:%H:%M} avec {short(ended['quoi'])}." if ended.get('reprise') else ''
+        return f"Bloc fini : {ended['pause']} min de pause. {ended['conseil']}{nxt}"
+    parts = []
+    if n_due:
+        parts.append(f"{n_due} exo{'s' if n_due > 1 else ''} à revoir")
+    if n_miss:
+        parts.append(f"{n_miss} raté{'s' if n_miss > 1 else ''} récent{'s' if n_miss > 1 else ''}")
+    first = ', '.join(parts) + ' d\'abord, puis ' if parts else ''
+    return f'{short(titre)} : {first}le niveau {level}.'
+
+
+def copie_tip(matiere, exo_id):
+    """One « copie 20/20 » rule for this subject, the same for a given exercise (shown after a miss)."""
+    rules = COPIE_20.get(matiere, []) + COPIE_20['commun']
+    return rules[sum(map(ord, exo_id)) % len(rules)]
 
 
 def reason(r):

@@ -18,6 +18,11 @@
   <p class="lv-muted">Visible par toi seul. Calculé sur ton planning Auriga ({{ n_events }} créneaux), tes niveaux et tes {{ n_logs }} réponses. Mis à jour chaque minute.</p>
   {% if not n_events %}<p class="bt-warn">Pas de planning : lancer <code>tools/planning_cours.py</code> sur le serveur.</p>{% endif %}
 
+  {% if demain %}
+  <h2>Demain</h2>
+  <ul class="bt-list">{% for b in demain %}<li><strong>{{ b.debut.strftime('%H:%M') }}</strong> {{ b.quoi }} : {{ b.pourquoi }}</li>{% endfor %}</ul>
+  {% endif %}
+
   {% if next %}
   <section class="cal-next" aria-labelledby="bt-next-title">
     <div class="cal-count">
@@ -79,9 +84,6 @@
   {% else %}
   <p class="lv-muted">Pas encore assez de réponses (40 minimum) : le calendrier suppose que tu es plus efficace le matin, et s'adaptera tout seul.</p>
   {% endif %}
-
-  <h2>Récupération</h2>
-  <ul class="bt-list">{% for t in recup %}<li>{{ t }}</li>{% endfor %}</ul>
 
   <h2>Copie 20/20</h2>
   <p class="lv-muted">Ce que le correcteur veut voir pour mettre tous les points, et les pièges d'étourderie. À relire avant chaque examen.</p>

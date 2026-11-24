@@ -221,6 +221,23 @@ class Beta(unittest.TestCase):
         self.assertEqual(beta.caps(0.8), (144, 240))
         self.assertEqual(beta.caps(1.1), (198, 300))  # 5 h at most
         self.assertEqual(beta.caps(0.1), (60, 60))    # 1 h at least
+    def test_fatigue_and_seance_line(self):
+        now = datetime(2026, 11, 24, 15, tzinfo=beta.TZ)
+        m = lambda k: now - timedelta(minutes=k)
+        usual = [(m(600 + k), 1, 60) for k in range(10)]
+        self.assertIn('ratés', beta.fatigue(usual + [(m(10), 0, 60), (m(5), 0, 60), (m(1), 0, 60)], now))
+        self.assertIsNone(beta.fatigue(usual + [(m(10), 0, 60), (m(5), 1, 60), (m(1), 0, 60)], now))
+        self.assertIn('temps', beta.fatigue(usual + [(m(1), 1, 100)], now))     # 100 s > 1.5 x 60 s
+        self.assertIsNone(beta.fatigue(usual + [(m(1), 1, 80)], now))
+        self.assertIsNone(beta.fatigue([(m(200), 0, 60)] * 3, now))             # not in this sitting
+        self.assertEqual(beta.seance_line('Mécanique du point - Dynamique', 2, 1, 4),
+                         'Mécanique du point : 2 exos à revoir, 1 raté récent d\'abord, puis le niveau 4.')
+        self.assertEqual(beta.seance_line('Algo', 0, 0, 1), 'Algo : le niveau 1.')
+        self.assertTrue(beta.seance_line('Algo', 0, 0, 1, tired='x').startswith('Ta réussite baisse'))
+        end = beta.seance_line('Algo', 0, 0, 1, ended=dict(pause=10, conseil='Bois.', reprise=now, quoi='Analyse : suites'))
+        self.assertEqual(end, 'Bloc fini : 10 min de pause. Bois. Reprise à 15:00 avec Analyse.')
+        self.assertEqual(beta.copie_tip('maths', 'e1'), beta.copie_tip('maths', 'e1'))
+        self.assertIn(beta.copie_tip('inconnue', 'e1'), beta.COPIE_20['commun'])
 
 if __name__ == '__main__':
     unittest.main()
