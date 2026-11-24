@@ -243,7 +243,7 @@ LEVELS = [
         "`$1002` (big-endian) ?", "135*256+175", "hexa('87AF')", "Les octets à `$1002` et" "\n"
         "`$1003` sont `87` et `AF`. L'octet de poids fort est à l'adresse la plus basse : le mot vaut" "\n"
         "`$87AF`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.1"),
-        v("m23", "Même mémoire :" "\n"
+        v("m23", "Mémoire à partir de `$1000` :" "\n"
         "" "\n"
         "```" "\n"
         "$1000 : 21 45 87 AF B5 F3 3C 32" "\n"
@@ -427,7 +427,7 @@ LEVELS = [
         "`$87AFB5F3` (le second MOVE remplit les" "\n"
         "$32$ bits) et A0 vaut" "\n"
         "`$1006`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.2"),
-        v("a62", "Même état :" "\n"
+        v("a62", "État initial (la mémoire et les registres sont ceux du cours) :" "\n"
         "" "\n"
         "```" "\n"
         "D0 = $11223344   A0 = $00001000" "\n"
@@ -441,7 +441,7 @@ LEVELS = [
         "" "\n"
         "On exécute `MOVE.W (A0)+,D0`, `MOVE.L (A0)+,D0` puis `MOVE.B (A0)+,D0`. Quelle est la valeur finale de A0 ?", "hexa('1000')+2+4+1", "hexa('1007')", "Chaque postincrémentation ajoute la taille de l'instruction : $2+4+1=7$. A0 vaut" "\n"
         "`$1007`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.2"),
-        v("a63", "Même état :" "\n"
+        v("a63", "État initial (la mémoire et les registres sont ceux du cours) :" "\n"
         "" "\n"
         "```" "\n"
         "D0 = $11223344   A0 = $00001000" "\n"
@@ -458,9 +458,9 @@ LEVELS = [
         "`$1006` et on lit" "\n"
         "`$3C`. Seul D0.B change : D0 vaut" "\n"
         "`$1122333C`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.3"),
-        v("a64", "Même état. On exécute `MOVE.W -(A1),D0` puis `MOVE.L -(A1),D0`. Quelle est la valeur finale de A1 ?", "hexa('1008')-2-4", "hexa('1002')", "A1 diminue de $2$ puis de $4$ :" "\n"
+        v("a64", "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.W -(A1),D0` puis `MOVE.L -(A1),D0`. Quelle est la valeur finale de A1 ?", "hexa('1008')-2-4", "hexa('1002')", "A1 diminue de $2$ puis de $4$ :" "\n"
         "`$1002`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.3"),
-        v("a65", "Même état. On exécute `MOVE.L -(A2),-(A2)` (A2 vaut `$1010`). Quelle est la valeur du mot long situé à" "\n"
+        v("a65", "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.L -(A2),-(A2)` (A2 vaut `$1010`). Quelle est la valeur du mot long situé à" "\n"
         "`$1008` après l'instruction ?", "154*2**24+155*2**16+156*256+157", "hexa('9A9B9C9D')", "La source est évaluée d'abord : A2 passe à `$100C` et on lit le mot long" "\n"
         "`$9A9B9C9D` à cette adresse. Puis la destination : A2 passe à" "\n"
         "`$1008` et on y écrit" "\n"
@@ -543,7 +543,7 @@ LEVELS = [
         "`$1A` plus" "\n"
         "`$25` donne" "\n"
         "`$500B`. Cette adresse est **impaire** : avec `MOVE.L` l'exécution provoque une erreur d'adresse (voir l'exercice suivant).", src="TP 2, étape 4"),
-        v("e76", "Même mémoire que le cours :" "\n"
+        v("e76", "Mémoire et registres (ceux du cours) :" "\n"
         "" "\n"
         "```" "\n"
         "D0 = $11223344   A0 = $00001000" "\n"
@@ -558,7 +558,7 @@ LEVELS = [
         "Quelle est la valeur de D0.W après `MOVE.W $100C,D0` ?" "\n"
         "(`$100C` est une adresse absolue.)", "154*256+155", "hexa('9A9B')", "Le mode absolu lit directement à `$100C` : octets `9A 9B`, donc D0.W vaut" "\n"
         "`$9A9B`.", src="Chapitre 1 du cours (D. Bouchet), IV-3.8"),
-        v("e77", "Même mémoire :" "\n"
+        v("e77", "Mémoire et registres (ceux du cours) :" "\n"
         "" "\n"
         "```" "\n"
         "D0 = $11223344   A0 = $00001000" "\n"
@@ -1018,7 +1018,7 @@ LEVELS = [
         "`$70`" "\n"
         "($112$). `BLT` est signé : le saut est pris, `MOVEQ.L #2,D6` est sauté : D6 vaut" "\n"
         "`$00000001`.", src="Contrôle S3 2016/2017, ex. 5"),
-        v("b114", "Même programme avec une comparaison **non signée** (`BLO` au lieu de `BLT`). Valeur initiale :" "\n"
+        v("b114", "Programme avec une comparaison **non signée** (`BLO`). Valeur initiale :" "\n"
         "" "\n"
         "```" "\n"
         "D7 = $23456789" "\n"
@@ -2547,7 +2547,7 @@ VARIANTS = {
         {"enonce": "Le CCR contient $5$ drapeaux utiles (X, N, Z, V, C). Combien de bits du CCR sont inutilisés ?", "calc": "8-5", "ans": "3", "sol": "$8-5=3$ bits inutilisés."},
     ],
     "r35": [
-        {"enonce": "Même question avec X$=1$, N$=0$, Z$=1$, V$=0$, C$=1$.", "calc": "16+4+1", "ans": "bits('10101')", "sol": "$16+4+1=21$, soit `%10101`."},
+        {"enonce": "Dans le CCR (bits $4$ à $0$ : X N Z V C), on a X$=1$, N$=0$, Z$=1$, V$=0$, C$=1$. Quelle est la valeur du CCR (nombre) ?", "calc": "16+4+1", "ans": "bits('10101')", "sol": "$16+4+1=21$, soit `%10101`."},
     ],
     "s41": [
         {"enonce": "D0 contient `$11223344` et D1 contient" "\n"
@@ -2670,7 +2670,7 @@ VARIANTS = {
         "Z$=0$ (résultat non nul)."},
     ],
     "a61": [
-        {"enonce": "Même état. On exécute deux fois `MOVE.W (A1)+,D0` (A1 vaut `$1008`). Quelle est la valeur finale de D0 ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+57*256+152", "ans": "hexa('11223998')", "sol": "Premier mot lu à `$1008` :" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute deux fois `MOVE.W (A1)+,D0` (A1 vaut `$1008`). Quelle est la valeur finale de D0 ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+57*256+152", "ans": "hexa('11223998')", "sol": "Premier mot lu à `$1008` :" "\n"
         "`$AD45` ; second mot lu à" "\n"
         "`$100A` :" "\n"
         "`$3998`. D0.W vaut" "\n"
@@ -2679,22 +2679,22 @@ VARIANTS = {
         "`$11223998`."},
     ],
     "a62": [
-        {"enonce": "Même état. On exécute `MOVE.L D1,(A1)+` puis `MOVE.W D1,(A1)+` puis `MOVE.B D1,(A1)+` (A1 vaut `$1008`). Valeur finale de A1 ?", "calc": "hexa('1008')+4+2+1", "ans": "hexa('100F')", "sol": "$4+2+1=7$ : A1 vaut" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.L D1,(A1)+` puis `MOVE.W D1,(A1)+` puis `MOVE.B D1,(A1)+` (A1 vaut `$1008`). Valeur finale de A1 ?", "calc": "hexa('1008')+4+2+1", "ans": "hexa('100F')", "sol": "$4+2+1=7$ : A1 vaut" "\n"
         "`$100F`."},
     ],
     "a63": [
-        {"enonce": "Même état. On exécute `MOVE.W -(A1),D0` puis `MOVE.W -(A1),D0`. Valeur finale de D0 ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+181*256+243", "ans": "hexa('1122B5F3')", "sol": "Premier `MOVE.W -(A1),D0` : A1 passe à `$1006`, on lit le mot" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.W -(A1),D0` puis `MOVE.W -(A1),D0`. Valeur finale de D0 ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+181*256+243", "ans": "hexa('1122B5F3')", "sol": "Premier `MOVE.W -(A1),D0` : A1 passe à `$1006`, on lit le mot" "\n"
         "`$3C32`. Second : A1 passe à" "\n"
         "`$1004`, on lit" "\n"
         "`$B5F3`. D0 vaut" "\n"
         "`$1122B5F3`."},
     ],
     "a64": [
-        {"enonce": "Même état. On exécute `MOVE.B -(A2),D0` puis `MOVE.L -(A2),D0` (A2 vaut `$1010`). Valeur finale de A2 ?", "calc": "hexa('1010')-1-4", "ans": "hexa('100B')", "sol": "A2 diminue de $1$ puis de $4$ :" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.B -(A2),D0` puis `MOVE.L -(A2),D0` (A2 vaut `$1010`). Valeur finale de A2 ?", "calc": "hexa('1010')-1-4", "ans": "hexa('100B')", "sol": "A2 diminue de $1$ puis de $4$ :" "\n"
         "`$100B`."},
     ],
     "a65": [
-        {"enonce": "Même état. On exécute `MOVE.W -(A2),-(A1)` (A1 vaut `$1008`, A2 vaut" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nOn exécute `MOVE.W -(A2),-(A1)` (A1 vaut `$1008`, A2 vaut" "\n"
         "`$1010`). Valeur du mot situé à" "\n"
         "`$1006` après l'instruction ?", "calc": "156*256+157", "ans": "hexa('9C9D')", "sol": "Source : A2 passe à `$100E`, on lit le mot" "\n"
         "`$9C9D`. Destination : A1 passe à" "\n"
@@ -2725,7 +2725,7 @@ VARIANTS = {
         "`$1010`."},
     ],
     "e73": [
-        {"enonce": "Même instruction avec un autre index :" "\n"
+        {"enonce": "Dans `MOVE.B $5006,34(A2,D1.L)` on s'intéresse à l'opérande destination :" "\n"
         "" "\n"
         "```" "\n"
         "D1 = $FFFFFFF0   A2 = $0000500A" "\n"
@@ -2764,11 +2764,11 @@ VARIANTS = {
         "`$1006`."},
     ],
     "e76": [
-        {"enonce": "Même mémoire. Quelle est la valeur de D2 après `MOVE.L $100A,D2` ?", "calc": "57*2**24+152*2**16+154*256+155", "ans": "hexa('39989A9B')", "sol": "Mot long lu à `$100A` : `39 98 9A 9B`, donc" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nQuelle est la valeur de D2 après `MOVE.L $100A,D2` ?", "calc": "57*2**24+152*2**16+154*256+155", "ans": "hexa('39989A9B')", "sol": "Mot long lu à `$100A` : `39 98 9A 9B`, donc" "\n"
         "`$39989A9B`."},
     ],
     "e77": [
-        {"enonce": "Même mémoire. Quelle est la valeur de D0 après `MOVE.W $100C(PC),D0` ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+154*256+155", "ans": "hexa('11229A9B')", "sol": "Mot lu à `$100C` :" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $11223344   A0 = $00001000\nD1 = $AABBCCDD   A1 = $00001008\nD2 = $0000FFFF   A2 = $00001010\nD3 = $00000003   A3 = $00000006\n$001000  21 45 87 AF B5 F3 3C 32\n$001008  AD 45 39 98 9A 9B 9C 9D\n$001010  03 69 01 00 12 0A 0D C9\n```\n\nQuelle est la valeur de D0 après `MOVE.W $100C(PC),D0` ?", "calc": "(hexa('11223344')-hexa('11223344')%2**16)+154*256+155", "ans": "hexa('11229A9B')", "sol": "Mot lu à `$100C` :" "\n"
         "`$9A9B`. D0 vaut" "\n"
         "`$11229A9B`."},
     ],
@@ -2876,7 +2876,7 @@ VARIANTS = {
         "$16$ chiffres.", "calc": "hexa('54AF18B9E721'+'11C8'+'')", "ans": "hexa('54AF18B9E72111C8')", "sol": "Avant : `54AF18B9E72148C0`. L'instruction écrit `11C8` à partir de l'octet n° 6 de la fenêtre (adresse `$5006`) ; les autres octets ne changent pas. Après : `54AF18B9E72111C8`."},
     ],
     "g87": [
-        {"enonce": "Même état. Quelle est la valeur de A0 après `MOVE.W #52,(A0)+` ?", "calc": "hexa('5000')+2", "ans": "hexa('5002')", "sol": "La postincrémentation ajoute $2$ pour `.W` : A0 vaut" "\n"
+        {"enonce": "État initial :\n\n```\nD0 = $FFFFFFFB   A0 = $00005000\nD1 = $00000008   A1 = $00005008\nD2 = $4444FFFE   A2 = $00005010\n$005000  54 AF 18 B9 E7 21 48 C0\n$005008  C9 10 11 C8 D4 36 1F 88\n$005010  13 79 01 80 42 1A 2D 49\n```\n\nQuelle est la valeur de A0 après `MOVE.W #52,(A0)+` ?", "calc": "hexa('5000')+2", "ans": "hexa('5002')", "sol": "La postincrémentation ajoute $2$ pour `.W` : A0 vaut" "\n"
         "`$5002`."},
     ],
     "ar91": [
@@ -2969,8 +2969,7 @@ VARIANTS = {
         "D3 = $00000002" "\n"
         "```" "\n"
         "" "\n"
-        "Même programme avec D0 `$10`, D1" "\n"
-        "$5$, D2 $1$, D3 $2$. Que contient D1 à la fin ?", "calc": "(5+2+(hexa('10')+1)//2**32)%2**32", "ans": "hexa('00000007')", "sol": "L'addition des mots bas ne déborde pas : X$=0$. `ADDX.L D3,D1` : $5+2+0=7$. D1 vaut" "\n"
+        "On additionne les entiers de $64$ bits D1:D0 et D3:D2 avec `ADD.L D2,D0` puis `ADDX.L D3,D1`. Que contient D1 à la fin ?", "calc": "(5+2+(hexa('10')+1)//2**32)%2**32", "ans": "hexa('00000007')", "sol": "L'addition des mots bas ne déborde pas : X$=0$. `ADDX.L D3,D1` : $5+2+0=7$. D1 vaut" "\n"
         "`$00000007`."},
     ],
     "ar98": [
@@ -3170,7 +3169,7 @@ VARIANTS = {
         "`$00000001`."},
     ],
     "b114": [
-        {"enonce": "Même programme avec une comparaison **non signée** (`BLO` au lieu de `BLT`). Valeur initiale :" "\n"
+        {"enonce": "Programme avec une comparaison **non signée** (`BLO`). Valeur initiale :" "\n"
         "" "\n"
         "```" "\n"
         "D7 = $23456711" "\n"
@@ -3419,7 +3418,7 @@ VARIANTS = {
         "D3 = $00000000" "\n"
         "```" "\n"
         "" "\n"
-        "Même programme. Que vaut D3 à la fin ?", "calc": "hexa('42')", "ans": "hexa('00000042')", "sol": "D3 reçoit en dernier le mot `$0042`, empilé en premier : D3 vaut" "\n"
+        "On exécute le programme suivant (D2 vaut $0$ au départ) :\n\n```asm\n        MOVE.W  #$42,-(A7)\n        MOVE.L  #$53,-(A7)\n        MOVE.W  D0,-(A7)\n        MOVE.L  D1,-(A7)\n        CLR.W   D0\n        CLR.L   D1\n        MOVE.L  (A7)+,D1\n        MOVE.W  (A7)+,D0\n        MOVE.L  (A7)+,D2\n        MOVE.W  (A7)+,D3\n```\n\nQue vaut D3 à la fin ?", "calc": "hexa('42')", "ans": "hexa('00000042')", "sol": "D3 reçoit en dernier le mot `$0042`, empilé en premier : D3 vaut" "\n"
         "`$00000042`."},
     ],
     "p133": [
@@ -3447,7 +3446,7 @@ VARIANTS = {
         "`$F00010`."},
     ],
     "p136": [
-        {"enonce": "A7 vaut `$F00000` au début de `Main`. Même programme, mais `Sub2` commence par `MOVEM.L D0-D7/A0-A6,-(A7)`" "\n"
+        {"enonce": "A7 vaut `$F00000` au début de `Main`. On exécute le programme suivant, qui s'arrête sur l'instruction `ILLEGAL` à la fin de `Sub2` :\n\n```asm\nMain    JSR     Sub1\n        ILLEGAL\nSub1    JSR     Sub2\n        RTS\nSub2    MOVEM.L D0-D7/A0-A6,-(A7)\n        ILLEGAL\n```\n\nIci `Sub2` sauvegarde" "\n"
         "($15$ registres). Que vaut A7 quand le processeur atteint `ILLEGAL` ?", "calc": "hexa('F00000')-4-4-15*4", "ans": "hexa('EFFFBC')", "sol": r"$4+4+15\times4=68$ octets : A7 vaut" "\n"
         "`$EFFFBC`."},
     ],
@@ -3456,8 +3455,7 @@ VARIANTS = {
         "`$F0FFF8`."},
     ],
     "p138": [
-        {"enonce": "A7 vaut `$F00000`. Même programme avec `MOVEQ.L #10,D0`, `MOVEQ.L #20,D0` et `MOVEQ.L #30,D0` à la place de" "\n"
-        "$5$, $7$ et $3$. Que vaut D0 à la fin ?", "calc": "10+20+30", "ans": "60", "sol": "$10$ est empilé, $20$ y est ajouté ($30$), puis $30+30=60$."},
+        {"enonce": "A7 vaut `$F00000`. On exécute le programme suivant :\n\n```asm\n        MOVEQ.L #10,D0\n        MOVE.L  D0,-(A7)\n        MOVEQ.L #20,D0\n        ADD.L   D0,(A7)\n        MOVEQ.L #30,D0\n        ADD.L   (A7)+,D0\n```\n\nQue vaut D0 à la fin (en décimal) ?", "calc": "10+20+30", "ans": "60", "sol": "$10$ est empilé, $20$ y est ajouté ($30$), puis $30+30=60$."},
     ],
     "sp141": [
         {"enonce": "Le sous-programme `GetMin` renvoie dans D0 la plus petite valeur **signée** de D1 et D2 :" "\n"
@@ -3524,7 +3522,7 @@ VARIANTS = {
         "Que vaut D1 à la fin (en décimal) ?", "calc": "5*2**4", "ans": "80", "sol": r"Chaque `BSR Double` double D1 puis `RTS` revient à l'instruction suivante : $5\times2^4=80$."},
     ],
     "sp143": [
-        {"enonce": "Même appel, mais le sous-programme est :" "\n"
+        {"enonce": "Le sous-programme `Calc` est :" "\n"
         "" "\n"
         "```asm" "\n"
         "Calc    MOVE.L  #99,D1" "\n"

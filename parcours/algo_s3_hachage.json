@@ -432,7 +432,7 @@
      "sol": "En moyenne $\\frac{n+1}2=\\frac{1001}2=500{,}5$ comparaisons.",
      "variants": [
       {
-       "enonce": "Même question avec $n=99$ éléments.",
+       "enonce": "On cherche séquentiellement une clé présente dans une liste non triée de $n=99$ éléments, chaque position étant équiprobable. Combien de comparaisons en moyenne ?",
        "ans": "50",
        "sol": "$\\frac{99+1}2=50$."
       }
@@ -448,7 +448,7 @@
      "sol": "Il faut examiner tous les éléments : $250$.",
      "variants": [
       {
-       "enonce": "Même question avec $37$ éléments.",
+       "enonce": "Combien de comparaisons au pire pour constater qu'une clé est absente d'une liste non triée de $37$ éléments ?",
        "ans": "37",
        "sol": "Les $37$ éléments."
       }
@@ -464,7 +464,7 @@
      "sol": "Tous les éléments reculent d'une case : $40$ décalages. Dans une liste chaînée, l'insertion en tête ne déplace rien.",
      "variants": [
       {
-       "enonce": "Même question avec un tableau de $15$ éléments.",
+       "enonce": "Un tableau contient $15$ éléments (il reste de la place). Combien d'éléments faut-il décaler pour insérer un nouvel élément en première position ?",
        "ans": "15",
        "sol": "$15$ décalages."
       }
@@ -876,7 +876,7 @@
     },
     {
      "id": "s3",
-     "enonce": "Mêmes clés que dans l'exercice du hachage de beck à young ($10,10,4,5,6,8,3,8,1,5$, $m=11$, insertion en fin de liste). Nombre total de clés examinées pour retrouver chacune des $10$ clés une fois ?",
+     "enonce": "Chaînage séparé, clés de valeurs de hachage ($10,10,4,5,6,8,3,8,1,5$, $m=11$, insertion en fin de liste). Nombre total de clés examinées pour retrouver chacune des $10$ clés une fois ?",
      "ans": "13",
      "sol": "Cases de longueur $1$ : $1,3,4,6$ donnent $1$ chacune ($4$ au total). Cases de longueur $2$ : $5,8,10$ donnent $1+2=3$ chacune ($9$ au total). Total $4+9=13$.",
      "variants": [
@@ -892,7 +892,7 @@
     },
     {
      "id": "s4",
-     "enonce": "Même table que ci-dessus ($m=11$, dix clés de valeurs $10,10,4,5,6,8,3,8,1,5$). Combien de cases ont une liste vide ?",
+     "enonce": "Chaînage séparé ($m=11$, dix clés de valeurs $10,10,4,5,6,8,3,8,1,5$). Combien de cases ont une liste vide ?",
      "ans": "4",
      "sol": "$3$ clés arrivent dans une case déjà utilisée, donc $10-3=7$ cases sont non vides et $11-7=4$ cases sont vides (0, 2, 7 et 9).",
      "variants": [
@@ -939,7 +939,7 @@
      "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 1",
      "variants": [
       {
-       "enonce": "Mêmes clés ($m=11$) mais $d=3$ : où va sisko ($h=7$) ?",
+       "enonce": "Hachage linéaire, $m=11$, $d=3$. Les clés de valeurs $4,5,3,1,7,6,2$ sont déjà placées (dans cet ordre, table vide au départ). On insère sisko, de valeur $7$. Dans quelle case ?",
        "ans": "10",
        "sol": "$7$ occupée, $(7+3)\\bmod11=10$ libre."
       }
@@ -950,13 +950,13 @@
     },
     {
      "id": "l3",
-     "enonce": "Même table ($m=11$, $d=4$) avec les dix clés de valeurs $4,5,3,1,7,6,2,7,1,7$ insérées dans cet ordre. Dans quelle case arrive la dernière (worf, de valeur $7$) ?",
+     "enonce": "Hachage linéaire, $m=11$, $d=4$, avec les dix clés de valeurs $4,5,3,1,7,6,2,7,1,7$ insérées dans cet ordre. Dans quelle case arrive la dernière (worf, de valeur $7$) ?",
      "ans": "8",
      "sol": "Sisko va en $0$ (voir ci-dessus), tuvok ($h=1$ occupée) en $(1+4)=5$ occupée puis $9$. Worf : $7$ occupée, $0$ occupée (sisko), $4$ occupée (data), $8$ libre : case $8$.",
      "src": "Contrôle n°3 d'algo S3 du 24 octobre 2016 (annales S3/Midterms/Algo/2020, corrigé officiel), ex. 1",
      "variants": [
       {
-       "enonce": "Mêmes dix clés avec $d=3$ : où arrive worf (dernière clé) ?",
+       "enonce": "Hachage linéaire, $m=11$, $d=3$, dix clés de valeurs $4,5,3,1,7,6,2,7,1,7$ insérées dans cet ordre. Dans quelle case arrive la dernière (worf, de valeur $7$) ?",
        "ans": "0",
        "sol": "Worf teste $7,10,2,5,8,0$ ($10$ est sisko) : case $0$ (voir la table du corrigé)."
       }
@@ -973,7 +973,7 @@
      "src": "Contrôle n°3 d'algo S3# du 17 mars 2021 (annales S3/Midterms/Algo/2025#, corrigé officiel), ex. 1 (question 1)",
      "variants": [
       {
-       "enonce": "Mêmes dix clés avec $d=4$ : nombre total de cases examinées ?",
+       "enonce": "Hachage linéaire $m=11$, $d=4$, clés de valeurs $4,5,3,1,7,6,2,7,1,7$. Nombre total de cases examinées pour insérer les dix clés ?",
        "ans": "16",
        "sol": "Sept clés : $7$ ; sisko $2$ ; tuvok : $1,5,9$ soit $3$ ; worf : $7,0,4,8$ soit $4$. Total $7+2+3+4=16$."
       }
@@ -1016,7 +1016,7 @@
      "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 3)",
      "variants": [
       {
-       "enonce": "Mêmes fonctions ($m=11$) : case du $4$-ème essai de $x=39$ ?",
+       "enonce": "$m=11$, $h(x)=(2x+5)\\bmod11$ et $d(x)=7-(x\\bmod7)$ : case du $4$-ème essai de $x=39$ ?",
        "ans": "4",
        "sol": "$h(39)=83\\bmod11=6$, $d(39)=7-4=3$ ; $(6+9)\\bmod11=4$."
       }
@@ -1060,13 +1060,13 @@
     },
     {
      "id": "b4",
-     "enonce": "Mêmes données qu'à l'exercice précédent. Nombre total de cases examinées pour insérer les onze clés ?",
+     "enonce": "$m=11$, $h(x)=(2x+5)\\bmod11$, $d(x)=7-(x\\bmod7)$ (double hachage), clés insérées dans l'ordre $12,44,13,88,23,94,11,39,20,16,5$. Nombre total de cases examinées pour insérer les onze clés ?",
      "ans": "24",
      "sol": "Nombres d'essais clé par clé : $1,1,1,2,2,1,3,4,2,3,4$ (par exemple $88$ : $5,8$ ; $94$ ne bouge pas ; $39$ : $6,9,1,4$ ; $5$ : $4,6,8,10$). Total $24$.",
      "src": "Contrôle n°3 d'algo S3 du 7 novembre 2017 (annales S3/Midterms/Algo/2021, corrigé officiel), ex. 1 (question 3)",
      "variants": [
       {
-       "enonce": "Mêmes données : nombre total de cases examinées ?",
+       "enonce": "$m=7$, valeurs de hachage $3,3,3,5$ insérées dans cet ordre, double hachage de pas $1,2,3,1$ : nombre total de cases examinées ?",
        "ans": "8",
        "sol": "$1+2+2+3=8$."
       }
@@ -1119,13 +1119,13 @@
     },
     {
      "id": "k2",
-     "enonce": "Même table ($m=12$, mêmes clés). Quelle est la valeur du lien de la case $6$ ?",
+     "enonce": "Hachage coalescent sans réserve, $m=12$, $h(x)=x\\bmod12$, clés $15,24,125,4,26,6,78,55,89$ insérées dans cet ordre. Quelle est la valeur du lien de la case $6$ ?",
      "ans": "11",
      "sol": "La clé $6$ (case $6$) est suivie dans sa liste de collisions par $78$, placé en case $11$ : le lien de la case $6$ vaut $11$.",
      "src": "Examen B5 d'algo AR2 du 22 octobre 2024 (annales S3/Midterms/Algo/2028, sans corrigé officiel : corrigé rédigé), ex. 1",
      "variants": [
       {
-       "enonce": "Mêmes clés ($m=7$, valeurs $3,3,1,3,6$) : valeur du lien de la case $3$ ?",
+       "enonce": "Hachage coalescent, $m=7$, valeurs $3,3,1,3,6$ insérées dans cet ordre : valeur du lien de la case $3$ ?",
        "ans": "6",
        "sol": "Le premier suivant de la case $3$ est en case $6$."
       }
@@ -1215,7 +1215,7 @@
     },
     {
      "id": "u2",
-     "enonce": "Mêmes valeurs, double hachage (pas $2,5,1,3,5,4,3,3,1,5,2$) : nombre total de cases examinées ?",
+     "enonce": "Onze clés ($m=11$, valeurs de hachage $7,5,9,5,7,6,5,6,1,4,4$), double hachage (pas $2,5,1,3,5,4,3,3,1,5,2$) : nombre total de cases examinées ?",
      "ans": "24",
      "sol": "Calcul clé par clé : total $24$, nettement moins que le linéaire ($40$).",
      "variants": [
@@ -1231,7 +1231,7 @@
     },
     {
      "id": "u3",
-     "enonce": "Mêmes valeurs, hachage coalescent : nombre total de cases examinées pour retrouver chaque clé (position dans sa liste de collisions) ?",
+     "enonce": "Onze clés ($m=11$, valeurs de hachage $7,5,9,5,7,6,5,6,1,4,4$), hachage coalescent : nombre total de cases examinées pour retrouver chaque clé (position dans sa liste de collisions) ?",
      "ans": "19",
      "sol": "Chaque clé est cherchée dans sa liste de collisions (rang dans la liste : $1$, $2$ ou $3$) : total $19$.",
      "variants": [
@@ -1247,7 +1247,7 @@
     },
     {
      "id": "u4",
-     "enonce": "Mêmes valeurs, chaînage séparé (insertion en fin de liste) : nombre total de clés examinées ?",
+     "enonce": "Onze clés ($m=11$, valeurs de hachage $7,5,9,5,7,6,5,6,1,4,4$), chaînage séparé (insertion en fin de liste) : nombre total de clés examinées ?",
      "ans": "17",
      "sol": "Longueurs des listes : $3$ (case $5$), $2$ (cases $4,6,7$), $1$ (cases $1,9$). Total $6+3+3+3+1+1=17$. Classement : séparé ($17$) $<$ coalescent ($19$) $<$ double ($24$) $<$ linéaire ($40$).",
      "variants": [
@@ -1301,7 +1301,7 @@
     },
     {
      "id": "ts24",
-     "enonce": "Mêmes clés et mêmes valeurs de hachage (beck $10$, cale $10$, clapton $4$, hendrix $5$, hooker $6$, king $8$, richards $3$, vaughan $8$, winter $1$, young $5$, $m=11$). Représenter la table avec le hachage par chaînage séparé (insertion en fin de liste).",
+     "enonce": "Clés et valeurs de hachage (beck $10$, cale $10$, clapton $4$, hendrix $5$, hooker $6$, king $8$, richards $3$, vaughan $8$, winter $1$, young $5$, $m=11$). Représenter la table avec le hachage par chaînage séparé (insertion en fin de liste).",
      "sol": "Chaque case contient la liste des clés de même valeur de hachage (insertion en fin de liste).\n\n```\n 0  vide\n 1  winter\n 2  vide\n 3  richards\n 4  clapton\n 5  hendrix → young\n 6  hooker\n 7  vide\n 8  king → vaughan\n 9  vide\n10  beck → cale\n```\n\nL'ordre dans une liste dépend de la convention d'insertion (ici en fin de liste, ordre d'arrivée) ; les clés de chaque case sont celles du corrigé.",
      "src": "Contrôle n°3 d'algo S3# du 10 mars 2020 (annales S3/Midterms/Algo/2024#, corrigé officiel), ex. 1 (question 2)",
      "duree": 4,
@@ -1385,12 +1385,12 @@
     },
     {
      "id": "p2",
-     "enonce": "Mêmes données ($m=13$, valeurs de hachage $2,0,9,9,9,0,0,11,3,0$). Hachage linéaire $d=2$ : coût moyen d'une recherche réussie (cases examinées, chaque clé cherchée une fois) ?",
+     "enonce": "Table de $m=13$ cases, dix clés insérées dans cet ordre, de valeurs de hachage $2,0,9,9,9,0,0,11,3,0$. Hachage linéaire $d=2$ : coût moyen d'une recherche réussie (cases examinées, chaque clé cherchée une fois) ?",
      "ans": "Rational(17,5)",
      "sol": "Somme des rangs d'essai de chaque clé à l'insertion : $34$ cases examinées au total pour $10$ clés, soit $\\frac{34}{10}=\\frac{17}5$. En double hachage le total tombe à $20$ ($2$ en moyenne).",
      "variants": [
       {
-       "enonce": "Même question en double hachage (pas $7,6,11,12,10,7,8,1,3,9$) : coût moyen ?",
+       "enonce": "Table de $m=13$ cases, dix clés insérées dans cet ordre, de valeurs de hachage $2,0,9,9,9,0,0,11,3,0$, double hachage (pas $7,6,11,12,10,7,8,1,3,9$) : coût moyen ?",
        "ans": "2",
        "sol": "Total $20$ cases examinées pour $10$ clés : $2$."
       }
@@ -1401,12 +1401,12 @@
     },
     {
      "id": "p3",
-     "enonce": "Mêmes données, double hachage avec les pas $d(x)=7,6,11,12,10,7,8,1,3,9$ (dans l'ordre des clés). Dans quelle case arrive la dernière clé, $80$ ($h=0$) ?",
+     "enonce": "Table de $m=13$ cases, dix clés insérées dans cet ordre, de valeurs de hachage $2,0,9,9,9,0,0,11,3,0$, double hachage avec les pas $d(x)=7,6,11,12,10,7,8,1,3,9$ (dans l'ordre des clés). Dans quelle case arrive la dernière clé, $80$ ($h=0$) ?",
      "ans": "5",
      "sol": "Pas de $80$ : $d=9$ (dernier pas de la liste). Essais : $0$ (occupée), $(0+9)\\bmod13=9$ (occupée), $(0+18)\\bmod13=5$ libre : case $5$ (en $3$ essais).",
      "variants": [
       {
-       "enonce": "Mêmes données, hachage coalescent : dans quelle case arrive la dernière clé ($80$) ?",
+       "enonce": "Table de $m=13$ cases, dix clés insérées dans cet ordre, de valeurs de hachage $2,0,9,9,9,0,0,11,3,0$, hachage coalescent : dans quelle case arrive la dernière clé ($80$) ?",
        "ans": "6",
        "sol": "$80$ ($h=0$) : liste de la case $0$ : $0\\to10\\to8$, collision primaire ; première case libre depuis la fin : $6$."
       }

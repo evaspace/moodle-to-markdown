@@ -507,7 +507,7 @@
     },
     {
      "id": "k12",
-     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, sortie U](/static/schemas/elec-ae85133f58fe.svg)\n\nMême circuit : tension $U$ aux bornes de $R_2$ (en V) ?",
+     "enonce": "![Schéma : source E, R_1 en série, R_2 en parallèle, sortie U](/static/schemas/elec-ae85133f58fe.svg)\n\n$E=12$ V alimente $R_1=2$ kΩ en série avec $R_2=4$ kΩ : tension $U$ aux bornes de $R_2$ (en V) ?",
      "ans": "8",
      "sol": "Pont diviseur de tension : $U=\\dfrac{R_2}{R_1+R_2}E=\\dfrac46\\times12=8$ V.",
      "src": "Rappel S1 : TD0 « Révisions »",
@@ -594,7 +594,7 @@
     },
     {
      "id": "j22",
-     "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-f9ebc50476f4.svg)\n\nMême circuit, mais la diode est montée en sens inverse. $I$ (en mA) ?",
+     "enonce": "![Schéma : source E, R en série, D en série](/static/schemas/elec-f9ebc50476f4.svg)\n\n$E=5$ V alimente $R=430$ Ω en série avec une diode à seuil ($V_0=0{,}7$ V) montée en sens inverse. $I$ (en mA) ?",
      "ans": "0",
      "sol": "Diode en polarisation inverse : bloquée, interrupteur ouvert, $I=0$.",
      "src": "Rappel S2 : parcours Diodes",
@@ -628,7 +628,7 @@
     },
     {
      "id": "j24",
-     "enonce": "![Schéma : source E, R_B en série, D_BE en série](/static/schemas/elec-c8cd0a9bbfbc.svg)\n\nMême circuit avec $E=0{,}4$ V (inférieure au seuil). $I_B$ (en µA) ?",
+     "enonce": "![Schéma : source E, R_B en série, D_BE en série](/static/schemas/elec-c8cd0a9bbfbc.svg)\n\nLa jonction base-émetteur d'un transistor se comporte comme une diode ($V_{BE}=0{,}7$ V passante). $E=0{,}4$ V (inférieure au seuil), $R_B=10$ kΩ. $I_B$ (en µA) ?",
      "ans": "0",
      "sol": "$E < 0{,}7$ V : la jonction ne peut pas être passante (sinon $I_B < 0$, absurde). Elle est bloquée, $I_B=0$.",
      "src": "Cours « Les transistors bipolaires »",
@@ -681,7 +681,7 @@
     },
     {
      "id": "m32",
-     "enonce": "Mêmes données. Courant d'émetteur $I_E$ (en mA) ?",
+     "enonce": "Transistor NPN en mode linéaire, $\\beta=200$, $I_C=100$ mA. Courant d'émetteur $I_E$ (en mA) ?",
      "ans": "100.5",
      "sol": "$I_E=I_C+I_B=100+0{,}5=100{,}5$ mA.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 3 Q8",
@@ -767,7 +767,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : NPN avec R_C au collecteur, base reliée à l'émetteur et à la masse](/static/schemas/elec-463287ae317e.svg)\n\nMême circuit avec $V_{CC}=12$ V. Courant $I_C$ (en mA) avec $V_{BE}=0$ ?",
+       "enonce": "![Schéma : NPN avec R_C au collecteur, base reliée à l'émetteur et à la masse](/static/schemas/elec-463287ae317e.svg)\n\nLa base est reliée à la masse (donc à l'émetteur), $V_{CC}=12$ V. Courant $I_C$ (en mA) avec $V_{BE}=0$ ?",
        "ans": "0",
        "sol": "$V_{BE}=0$ : bloqué, $I_C=0$."
       }
@@ -794,7 +794,7 @@
     },
     {
      "id": "s43",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. On suppose le transistor linéaire : que vaut $V_{CE}$ (en V) ? Conclusion ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=10$ V, $R_C=200$ Ω, $R_B=1500$ Ω, $\\beta=50$, $V_{BE}=0{,}7$ V. On suppose le transistor linéaire : que vaut $V_{CE}$ (en V) ? Conclusion ?",
      "ans": "-52",
      "sol": "$I_B=\\dfrac{10-0{,}7}{1{,}5}=6{,}2$ mA, $I_C=\\beta I_B=310$ mA, $V_{CE}=10-0{,}2\\times310=-52$ V $< 0$ : impossible, l'hypothèse est absurde. Le transistor est saturé.",
      "src": "TD « Les transistors bipolaires », ex. 1 c",
@@ -811,7 +811,7 @@
     },
     {
      "id": "s44",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. Valeur minimale du courant de base pour saturer le transistor (en µA) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=10$ V, $R_C=200$ Ω, $R_B=1500$ Ω, $\\beta=50$, $V_{BE}=0{,}7$ V. Valeur minimale du courant de base pour saturer le transistor (en µA) ?",
      "ans": "1000",
      "sol": "Il sature quand $I_C=\\beta I_B\\geq I_{C,sat}$ : $I_B\\geq\\dfrac{50}{50}=1$ mA $=1000$ \\mu A. Ici $I_B=6{,}2$ mA $\\gg 1$ mA : saturé.",
      "src": "Kit de survie « Transistors bipolaires »",
@@ -828,7 +828,7 @@
     },
     {
      "id": "s45",
-     "enonce": "![Schéma : NPN avec R_C au collecteur, base reliée directement à V_CC](/static/schemas/elec-a218534afdb4.svg)\n\nLa base est reliée directement à $V_{CC}=10$ V (figure). Pourquoi le transistor n'est-il pas polarisé correctement ? Que se passe-t-il ? Même question quand la base est à la masse (exercice $s41$).",
+     "enonce": "![Schéma : NPN avec R_C au collecteur, base reliée directement à V_CC](/static/schemas/elec-a218534afdb4.svg)\n\nLa base est reliée directement à $V_{CC}=10$ V (figure). Pourquoi le transistor n'est-il pas polarisé correctement ? Que se passe-t-il ? Même question quand la base est reliée à la masse (donc à l'émetteur, $V_{BE}=0$).",
      "sol": "Base à $V_{CC}$ : $V_{BE}=10$ V, bien trop pour une jonction PN passante ($0{,}7$ V). Aucune résistance ne limite le courant de base : la jonction est détruite. Base à la masse : $V_{BE}=0 < 0{,}7$ V, la jonction base-émetteur est bloquée, $I_B=0$ : le transistor est bloqué.",
      "src": "TD « Les transistors bipolaires », ex. 1 a et b",
      "duree": 3,
@@ -872,7 +872,7 @@
     },
     {
      "id": "p52",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. Courant de collecteur $I_C$ (en mA) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=10$ V, $R_B=10$ kΩ, $R_C=50$ Ω, $\\beta=100$, $V_{BE}=0{,}7$ V, transistor linéaire. Courant de collecteur $I_C$ (en mA) ?",
      "ans": "93",
      "sol": "$I_C=\\beta I_B=100\\times0{,}93=93$ mA.",
      "src": "TD « Les transistors bipolaires », ex. 2 A",
@@ -889,7 +889,7 @@
     },
     {
      "id": "p53",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. Tension $V_{CE}$ (en V) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=10$ V, $R_B=10$ kΩ, $R_C=50$ Ω, $\\beta=100$, $V_{BE}=0{,}7$ V, transistor linéaire. Tension $V_{CE}$ (en V) ?",
      "ans": "5.35",
      "sol": "Maille de sortie : $V_{CE}=V_{CC}-R_CI_C=10-0{,}05\\times93=5{,}35$ V $> 0$ : l'hypothèse linéaire est vérifiée.",
      "src": "TD « Les transistors bipolaires », ex. 2 A",
@@ -923,7 +923,7 @@
     },
     {
      "id": "p55",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. Courant de collecteur maximal possible $I_{C,sat}$ quand $R_B$ varie (en mA) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=15$ V, $R_C=50$ Ω, $\\beta=200$, $V_{BE}=0{,}7$ V. Courant de collecteur maximal possible $I_{C,sat}$ quand $R_B$ varie (en mA) ?",
      "ans": "300",
      "sol": "Maximal quand $V_{CE}=0$ : $I_{C,sat}=\\dfrac{V_{CC}}{R_C}=\\dfrac{15}{0{,}05}=300$ mA.",
      "src": "Examen final S3 Elec, dossier 2024 (sujet de janvier 2021, corrigé officiel), ex. 3 q.2",
@@ -940,7 +940,7 @@
     },
     {
      "id": "p56",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\nMêmes données. Valeur minimale de $R_B$ pour que le transistor ne soit pas saturé (en kΩ, valeur exacte) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C entre V_CC et le collecteur, émetteur à la masse](/static/schemas/elec-9c9bb3d55abc.svg)\n\n$V_{CC}=15$ V, $R_C=50$ Ω, $\\beta=200$, $V_{BE}=0{,}7$ V. Valeur minimale de $R_B$ pour que le transistor ne soit pas saturé (en kΩ, valeur exacte) ?",
      "ans": "28.6/3",
      "sol": "Linéaire tant que $I_C < I_{C,sat}$ : $R_B=\\beta\\dfrac{V_{CC}-V_{BE}}{I_C} > \\beta\\dfrac{V_{CC}-V_{BE}}{I_{C,sat}}=200\\times\\dfrac{14{,}3}{300}=\\dfrac{28{,}6}{3}\\approx9{,}53$ kΩ. (Le corrigé officiel écrit $\\frac{28{,}8}{3}$ kΩ, coquille : $15-0{,}7=14{,}3$.)",
      "src": "Examen final S3 Elec, dossier 2024 (sujet de janvier 2021, corrigé officiel), ex. 3 q.3",
@@ -1018,14 +1018,14 @@
     },
     {
      "id": "e62",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMêmes données. Courant de collecteur $I_C$ (en mA) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=10$ V, $R_B=150$ kΩ, $R_C=1$ kΩ, $R_E=1$ kΩ, $\\beta=150$, $V_{BE}=0{,}7$ V, transistor linéaire, $\\beta+1\\approx\\beta$. Courant de collecteur $I_C$ (en mA) ?",
      "ans": "4.65",
      "sol": "$I_C=\\beta I_B=150\\times0{,}031=4{,}65$ mA.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 1 A.2",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMême circuit. $I_C$ (en mA) ?",
+       "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=12$ V, $R_B=100$ kΩ, $R_E=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V, $\\beta+1\\approx\\beta$. $I_C$ (en mA) ?",
        "ans": "5.65",
        "sol": "$I_C=100\\times0{,}0565=5{,}65$ mA."
       }
@@ -1035,14 +1035,14 @@
     },
     {
      "id": "e63",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMêmes données. Tension $V_{CE}$ (en V) ?",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=10$ V, $R_B=150$ kΩ, $R_C=1$ kΩ, $R_E=1$ kΩ, $\\beta=150$, $V_{BE}=0{,}7$ V, transistor linéaire, $\\beta+1\\approx\\beta$. Tension $V_{CE}$ (en V) ?",
      "ans": "0.7",
      "sol": "Maille de sortie : $V_{CE}=V_{CC}-R_CI_C-R_EI_E=V_{CC}-(R_C+R_E)I_C=10-2\\times4{,}65=0{,}7$ V.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 1 A.2 (corrigé : 0,7 V)",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMême circuit avec $R_C=0{,}5$ kΩ. $V_{CE}$ (en V) ?",
+       "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=12$ V, $R_B=100$ kΩ, $R_C=0{,}5$ kΩ, $R_E=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V, $\\beta+1\\approx\\beta$. $V_{CE}$ (en V) ?",
        "ans": "3.525",
        "sol": "$V_{CE}=12-1{,}5\\times5{,}65=3{,}525$ V."
       }
@@ -1052,7 +1052,7 @@
     },
     {
      "id": "e64",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMême circuit. On veut $I_C=4{,}65$ mA. Quelle valeur de $R_B$ (en kΩ) ? ($\\beta+1\\approx\\beta$)",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=10$ V, $R_C=1$ kΩ, $R_E=1$ kΩ, $\\beta=150$, $V_{BE}=0{,}7$ V, transistor linéaire. On veut $I_C=4{,}65$ mA. Quelle valeur de $R_B$ (en kΩ) ? ($\\beta+1\\approx\\beta$)",
      "ans": "150",
      "sol": "$I_B=\\dfrac{I_C}{\\beta}=0{,}031$ mA. $V_{CC}=R_BI_B+V_{BE}+R_EI_E$ avec $I_E\\approx I_C$ : $R_B=\\dfrac{V_{CC}-V_{BE}-R_EI_C}{I_B}=\\dfrac{10-0{,}7-4{,}65}{0{,}031}=150$ kΩ.",
      "src": "Examen final S3 Elec, dossier 2025 (sujet de décembre 2021, corrigé officiel), ex. 2 q.1b",
@@ -1069,7 +1069,7 @@
     },
     {
      "id": "e65",
-     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\nMême circuit. Valeur minimale de $R_B$ (en kΩ) qui assure un fonctionnement linéaire ? ($\\beta+1\\approx\\beta$)",
+     "enonce": "![Schéma : NPN, R_B entre V_CC et la base, R_C au collecteur, R_E entre émetteur et masse](/static/schemas/elec-69549a25d4bf.svg)\n\n$V_{CC}=10$ V, $R_C=1$ kΩ, $R_E=1$ kΩ, $\\beta=150$, $V_{BE}=0{,}7$ V, transistor linéaire. Valeur minimale de $R_B$ (en kΩ) qui assure un fonctionnement linéaire ? ($\\beta+1\\approx\\beta$)",
      "ans": "129",
      "sol": "Linéaire tant que $V_{CE} > 0$, soit $I_C < I_{C,sat}=\\dfrac{V_{CC}}{R_C+R_E}=5$ mA. Comme $I_C=\\beta\\dfrac{V_{CC}-V_{BE}}{R_B+\\beta R_E}$, la condition donne $R_B > \\beta\\left(\\dfrac{V_{CC}-V_{BE}}{I_{C,sat}}-R_E\\right)=150\\times(1{,}86-1)=129$ kΩ.",
      "src": "Examen final S3 Elec, dossier 2025 (sujet de décembre 2021, corrigé officiel), ex. 2 q.2",
@@ -1103,14 +1103,14 @@
     },
     {
      "id": "e67",
-     "enonce": "![Schéma : NPN, R_C entre V_CC et collecteur, R_B entre le collecteur et la base (réaction de collecteur)](/static/schemas/elec-698059c9a7aa.svg)\n\nMêmes données. Tension $V_{CE}$ (en V) ?",
+     "enonce": "![Schéma : NPN, R_C entre V_CC et collecteur, R_B entre le collecteur et la base (réaction de collecteur)](/static/schemas/elec-698059c9a7aa.svg)\n\n$V_{CC}=10$ V, $R_C=1$ kΩ, $R_B=99$ kΩ entre collecteur et base, $\\beta=100$, $V_{BE}=0{,}7$ V, transistor linéaire. Tension $V_{CE}$ (en V) ?",
      "ans": "5.3035",
      "sol": "$V_{CE}=V_{CC}-R_C(\\beta+1)I_B=10-101\\times0{,}0465=10-4{,}6965=5{,}3035$ V $> 0$ : linéaire.",
      "src": "Examen final S3 Elec, dossier 2021 (sujet de décembre 2017, corrigé officiel), ex. 4",
      "duree": 3,
      "variants": [
       {
-       "enonce": "![Schéma : NPN, R_C entre V_CC et collecteur, R_B entre le collecteur et la base (réaction de collecteur)](/static/schemas/elec-698059c9a7aa.svg)\n\nMême circuit. $V_{CE}$ (en V) ?",
+       "enonce": "![Schéma : NPN, R_C entre V_CC et collecteur, R_B entre le collecteur et la base (réaction de collecteur)](/static/schemas/elec-698059c9a7aa.svg)\n\n$V_{CC}=10{,}7$ V, $R_C=1$ kΩ, $R_B=100$ kΩ entre collecteur et base, $\\beta=99$, $V_{BE}=0{,}7$ V, transistor linéaire. $V_{CE}$ (en V) ?",
        "ans": "5.7",
        "sol": "$V_{CE}=10{,}7-1\\times100\\times0{,}05=5{,}7$ V."
       }
@@ -1155,7 +1155,7 @@
     },
     {
      "id": "q72",
-     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMêmes données. $I_B$ est négligeable devant les courants de $R_1$ et $R_2$ et $\\beta+1\\approx\\beta$. Courant d'émetteur $I_E$ (en mA) ?",
+     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=15$ V, $R_1=10$ kΩ (vers $V_{CC}$), $R_2=5$ kΩ (vers la masse), $R_E=1000$ Ω, $\\beta=200$, $V_{BE}=0{,}6$ V, collecteur relié à $V_{CC}$. $I_B$ est négligeable devant les courants de $R_1$ et $R_2$ et $\\beta+1\\approx\\beta$. Courant d'émetteur $I_E$ (en mA) ?",
      "ans": "4.4",
      "sol": "$R_1$ et $R_2$ sont en série : $U_{R_2}=\\dfrac{R_2}{R_1+R_2}V_{CC}=5$ V. Maille : $U_{R_2}=V_{BE}+R_EI_E$, donc $I_E=\\dfrac{5-0{,}6}{1}=4{,}4$ mA.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 2 q.2",
@@ -1172,14 +1172,14 @@
     },
     {
      "id": "q73",
-     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMêmes données. Courant de base $I_B$ (en µA) ?",
+     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=15$ V, $R_1=10$ kΩ (vers $V_{CC}$), $R_2=5$ kΩ (vers la masse), $R_E=1000$ Ω, $\\beta=200$, $V_{BE}=0{,}6$ V, collecteur relié à $V_{CC}$. On suppose $I_B$ négligeable devant les courants de $R_1$ et $R_2$ et $\\beta+1\\approx\\beta$. Courant de base $I_B$ (en µA) ?",
      "ans": "22",
      "sol": "$I_B=\\dfrac{I_C}{\\beta}\\approx\\dfrac{I_E}{\\beta}=\\dfrac{4{,}4}{200}=0{,}022$ mA $=22$ µA.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 2 q.3",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMême circuit, $\\beta=100$. $I_B$ (en \\mu A) ?",
+       "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=12$ V, $R_1=20$ kΩ, $R_2=10$ kΩ, $R_E=1$ kΩ, $V_{BE}=0{,}6$ V, $\\beta=100$, $I_B$ négligeable pour $I_E$ et $\\beta+1\\approx\\beta$, collecteur à $V_{CC}$. $I_B$ (en \\mu A) ?",
        "ans": "34",
        "sol": "$I_B=\\dfrac{3{,}4}{100}=34$ µA."
       }
@@ -1189,14 +1189,14 @@
     },
     {
      "id": "q74",
-     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMêmes données. Tension $V_{CE}$ (en V) ?",
+     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=15$ V, $R_1=10$ kΩ (vers $V_{CC}$), $R_2=5$ kΩ (vers la masse), $R_E=1000$ Ω, $\\beta=200$, $V_{BE}=0{,}6$ V, collecteur relié à $V_{CC}$. On suppose $I_B$ négligeable devant les courants de $R_1$ et $R_2$ et $\\beta+1\\approx\\beta$. Tension $V_{CE}$ (en V) ?",
      "ans": "10.6",
      "sol": "$V_{CC}=V_{CE}+R_EI_E$ donc $V_{CE}=15-1\\times4{,}4=10{,}6$ V.",
      "src": "Examen Elec B7 « Transistors bipolaires », mars 2026 (corrigé officiel), ex. 2 q.3",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMême circuit, collecteur à $V_{CC}=12$ V. $V_{CE}$ (en V) ?",
+       "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=12$ V, $R_1=20$ kΩ, $R_2=10$ kΩ, $R_E=1$ kΩ, $V_{BE}=0{,}6$ V, $\\beta=100$, $I_B$ négligeable pour $I_E$ et $\\beta+1\\approx\\beta$, collecteur à $V_{CC}$. $V_{CE}$ (en V) ?",
        "ans": "8.6",
        "sol": "$V_{CE}=12-3{,}4=8{,}6$ V."
       }
@@ -1206,7 +1206,7 @@
     },
     {
      "id": "q76",
-     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\nMêmes données, mais sans négliger $I_B$ : on utilise le générateur de Thévenin vu par la base et $\\beta=200$ (avec $\\beta+1$). $I_B$ (en µA, valeur exacte) ?",
+     "enonce": "![Schéma : NPN, collecteur à V_CC, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-6ca93b5c33c0.svg)\n\n$V_{CC}=15$ V, $R_1=10$ kΩ (vers $V_{CC}$), $R_2=5$ kΩ (vers la masse), $R_E=1000$ Ω, $\\beta=200$, $V_{BE}=0{,}6$ V, collecteur relié à $V_{CC}$. Sans négliger $I_B$ : on utilise le générateur de Thévenin vu par la base et $\\beta=200$ (avec $\\beta+1$). $I_B$ (en µA, valeur exacte) ?",
      "ans": "13200/613",
      "sol": "$E_{th}=\\dfrac{R_2}{R_1+R_2}V_{CC}=5$ V, $R_{th}=R_1\\parallel R_2=\\dfrac{10}{3}$ kΩ. $I_B=\\dfrac{E_{th}-V_{BE}}{R_{th}+(\\beta+1)R_E}=\\dfrac{4{,}4}{\\frac{10}3+201}\\approx21{,}5$ \\mu A : très proche de $22$ \\mu A, l'approximation $I_B$ négligeable est bonne.",
      "src": "Méthode de Examen final S3 Elec, dossier 2022 (sujet de décembre 2018, corrigé officiel), ex. 4 (Thévenin)",
@@ -1240,7 +1240,7 @@
     },
     {
      "id": "q78",
-     "enonce": "![Schéma : NPN, R_C au collecteur, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-45ef443e4390.svg)\n\nMême montage, avec $V_E=2$ V et $I_E\\approx I_C=10$ mA. Valeur de $R_E$ (en Ω) ?",
+     "enonce": "![Schéma : NPN, R_C au collecteur, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-45ef443e4390.svg)\n\nDans le montage de la figure, avec $V_E=2$ V et $I_E\\approx I_C=10$ mA. Valeur de $R_E$ (en Ω) ?",
      "ans": "200",
      "sol": "$R_E=\\dfrac{V_E}{I_E}=\\dfrac{2}{10}=0{,}2$ kΩ $=200$ Ω.",
      "src": "TD « Les transistors bipolaires », ex. 3 A.2",
@@ -1257,7 +1257,7 @@
     },
     {
      "id": "q79",
-     "enonce": "![Schéma : NPN, R_C au collecteur, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-45ef443e4390.svg)\n\nMême montage ($V_{CC}=10$ V, $V_E=2$ V, $V_{BE}=0{,}7$ V, $I_B=0{,}1$ mA). On impose $0{,}9$ mA dans $R_2$ (vers la masse). Valeur de $R_1$ (en kΩ) ?",
+     "enonce": "![Schéma : NPN, R_C au collecteur, pont R_1 (vers V_CC) et R_2 (vers la masse) sur la base, R_E à l'émetteur](/static/schemas/elec-45ef443e4390.svg)\n\nDans le montage de la figure ($V_{CC}=10$ V, $V_E=2$ V, $V_{BE}=0{,}7$ V, $I_B=0{,}1$ mA). On impose $0{,}9$ mA dans $R_2$ (vers la masse). Valeur de $R_1$ (en kΩ) ?",
      "ans": "7.3",
      "sol": "$V_B=V_E+V_{BE}=2{,}7$ V, donc $R_2=\\dfrac{2{,}7}{0{,}9}=3$ kΩ. Loi des nœuds : le courant dans $R_1$ vaut $0{,}9+0{,}1=1$ mA, donc $R_1=\\dfrac{V_{CC}-V_B}{1}=7{,}3$ kΩ.",
      "src": "TD « Les transistors bipolaires », ex. 3 A.2",
@@ -1319,7 +1319,7 @@
     },
     {
      "id": "c82",
-     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\nMêmes données, entrée $V_1=5$ V. Courant de base $I_B$ (en mA) ?",
+     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\n$V_{CC}=5$ V, $R_B=10$ kΩ, $R_C=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V. Entrée $V_1=5$ V. Courant de base $I_B$ (en mA) ?",
      "ans": "0.43",
      "sol": "$V_1=R_BI_B+V_{BE}$ donc $I_B=\\dfrac{5-0{,}7}{10}=0{,}43$ mA.",
      "src": "TD « Les transistors bipolaires », ex. 4 q.2",
@@ -1336,7 +1336,7 @@
     },
     {
      "id": "c83",
-     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\nMêmes données. Courant de collecteur théorique $\\beta I_B$ (en mA) ?",
+     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\n$V_{CC}=5$ V, $R_B=10$ kΩ, $R_C=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V. Entrée $V_1=5$ V. Courant de collecteur théorique $\\beta I_B$ (en mA) ?",
      "ans": "43",
      "sol": "$\\beta I_B=100\\times0{,}43=43$ mA (valeur théorique si le transistor était linéaire).",
      "src": "TD « Les transistors bipolaires », ex. 4 q.2",
@@ -1353,7 +1353,7 @@
     },
     {
      "id": "c84",
-     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\nMêmes données. Courant de saturation $I_{C,sat}$ (en mA) ?",
+     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\n$V_{CC}=5$ V, $R_B=10$ kΩ, $R_C=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V. Courant de saturation $I_{C,sat}$ (en mA) ?",
      "ans": "5",
      "sol": "$V_{CE}=0$ : $I_{C,sat}=\\dfrac{V_{CC}}{R_C}=5$ mA. Comme $43 > 5$ mA, le transistor est saturé.",
      "src": "TD « Les transistors bipolaires », ex. 4 q.2",
@@ -1370,7 +1370,7 @@
     },
     {
      "id": "c85",
-     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\nMêmes données. Le transistor est saturé : $I_C=I_{C,sat}$. Tension de sortie $V_S$ (en V) ?",
+     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\n$V_{CC}=5$ V, $R_B=10$ kΩ, $R_C=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V. Le transistor est saturé : $I_C=I_{C,sat}$. Tension de sortie $V_S$ (en V) ?",
      "ans": "0",
      "sol": "$V_S=V_{CE}=V_{CC}-R_CI_{C,sat}=5-1\\times5=0$ V : le montage inverse (fonction NON).",
      "src": "TD « Les transistors bipolaires », ex. 4 q.2 et q.3",
@@ -1387,7 +1387,7 @@
     },
     {
      "id": "c86",
-     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\nMêmes données. Valeur maximale de $R_B$ (en kΩ) qui sature encore le transistor quand $V_1=5$ V ?",
+     "enonce": "![Schéma : NPN, entrée V_1 par R_B sur la base, R_C entre V_CC et collecteur, sortie V_S au collecteur](/static/schemas/elec-06933e7786da.svg)\n\n$V_{CC}=5$ V, $R_B=10$ kΩ, $R_C=1$ kΩ, $\\beta=100$, $V_{BE}=0{,}7$ V. Valeur maximale de $R_B$ (en kΩ) qui sature encore le transistor quand $V_1=5$ V ?",
      "ans": "86",
      "sol": "Saturé si $\\beta I_B\\geq I_{C,sat}$ : $I_B\\geq0{,}05$ mA, soit $R_B\\leq\\dfrac{V_1-V_{BE}}{0{,}05}=\\dfrac{4{,}3}{0{,}05}=86$ kΩ.",
      "src": "Kit de survie « Transistors bipolaires »",
@@ -1474,7 +1474,7 @@
     },
     {
      "id": "g93",
-     "enonce": "Même formule avec $I_{B0}=25$ \\mu A. $r$ (en Ω) ?",
+     "enonce": "Résistance d'entrée $r=\\dfrac{mV_T}{I_{B0}}$ avec $m=2$, $V_T=26$ mV et $I_{B0}=25$ \\mu A. $r$ (en Ω) ?",
      "ans": "2080",
      "sol": "$r=\\dfrac{52\\text{ mV}}{25\\text{}\\mu\\text{A}}=2080$ Ω.",
      "src": "Cours « Les transistors bipolaires », IV.2",
@@ -1570,7 +1570,7 @@
     },
     {
      "id": "a102",
-     "enonce": "![Schéma : amplificateur à émetteur commun sans R_E, R_B, R_C, condensateurs C_1 et C_2, source v_g avec R_g, charge R_u](/static/schemas/elec-e18a3956f989.svg)\n\nMême amplificateur, $\\beta=100$, $R_C=5$ kΩ, $r=2$ kΩ, à vide ($R_u\\to\\infty$). Amplification en tension $A_v$ ?",
+     "enonce": "![Schéma : amplificateur à émetteur commun sans R_E, R_B, R_C, condensateurs C_1 et C_2, source v_g avec R_g, charge R_u](/static/schemas/elec-e18a3956f989.svg)\n\nAmplificateur à émetteur commun sans $R_E$ (figure), résistance de sortie du transistor négligée, $\\beta=100$, $R_C=5$ kΩ, $r=2$ kΩ, à vide ($R_u\\to\\infty$). Amplification en tension $A_v$ ?",
      "ans": "-250",
      "sol": "$v=r\\,i_b$ et $u=-R_C\\beta i_b$ : $A_v=-\\beta\\dfrac{R_C}{r}=-100\\times\\dfrac{5}{2}=-250$.",
      "src": "TD « Les transistors bipolaires », ex. 2 B.2",
@@ -1587,7 +1587,7 @@
     },
     {
      "id": "a103",
-     "enonce": "![Schéma : amplificateur à émetteur commun sans R_E, R_B, R_C, condensateurs C_1 et C_2, source v_g avec R_g, charge R_u](/static/schemas/elec-e18a3956f989.svg)\n\nMême amplificateur chargé par $R_u=5$ kΩ. $A_v$ ?",
+     "enonce": "![Schéma : amplificateur à émetteur commun sans R_E, R_B, R_C, condensateurs C_1 et C_2, source v_g avec R_g, charge R_u](/static/schemas/elec-e18a3956f989.svg)\n\nAmplificateur à émetteur commun sans $R_E$ (figure), résistance de sortie du transistor négligée, $\\beta=100$, $R_C=5$ kΩ, $r=2$ kΩ, chargé par $R_u=5$ kΩ. $A_v$ ?",
      "ans": "-125",
      "sol": "$u=-(R_C\\parallel R_u)\\beta i_b$ avec $R_C\\parallel R_u=2{,}5$ kΩ : $A_v=-\\beta\\dfrac{R_C\\parallel R_u}{r}=-100\\times\\dfrac{2{,}5}{2}=-125$.",
      "src": "TD « Les transistors bipolaires », ex. 2 B.2",
@@ -1674,7 +1674,7 @@
     },
     {
      "id": "d112",
-     "enonce": "![Schéma : montage Darlington, collecteurs reliés, émetteur de T_1 sur la base de T_2](/static/schemas/elec-ca173181eae9.svg)\n\nMêmes transistors, sans approximation : $\\beta=\\beta_1+\\beta_2+\\beta_1\\beta_2$ ?",
+     "enonce": "![Schéma : montage Darlington, collecteurs reliés, émetteur de T_1 sur la base de T_2](/static/schemas/elec-ca173181eae9.svg)\n\nDarlington (figure), $\\beta_1=100$, $\\beta_2=50$, sans approximation : $\\beta=\\beta_1+\\beta_2+\\beta_1\\beta_2$ ?",
      "ans": "5150",
      "sol": "$I_C=[\\beta_1+\\beta_2(\\beta_1+1)]I_B=(\\beta_1+\\beta_2+\\beta_1\\beta_2)I_B$ : $\\beta=100+50+5000=5150$ (le corrigé 2020 donne $\\beta=\\beta_1\\beta_2+\\beta_1+\\beta_2$).",
      "src": "Examen final S3 Elec, dossier 2020 (sujet de décembre 2016, corrigé officiel), ex. 4",
@@ -1767,7 +1767,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur avec $V_{CC}=3{,}3$ V, $V_{IN}=0$. $V_{GS}$ du MOSP (en V) ?",
+       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=3{,}3$ V, $V_{IN}=0$. $V_{GS}$ du MOSP (en V) ?",
        "ans": "-3.3",
        "sol": "$V_{GS_P}=0-3{,}3=-3{,}3$ V."
       }
@@ -1777,14 +1777,14 @@
     },
     {
      "id": "o122",
-     "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur, entrée $V_{IN}=5$ V. Tension $V_{GS}$ du MOSN (en V) ?",
+     "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=5$ V, entrée $V_{IN}=5$ V. Tension $V_{GS}$ du MOSN (en V) ?",
      "ans": "5",
      "sol": "La source du MOSN est à la masse : $V_{GS_N}=5-0=5$ V : le MOSN est conducteur (et le MOSP, $V_{GS_P}=0$, est bloqué).",
      "src": "Cours « Les transistors à effet de champ », II.3.a",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur avec $V_{CC}=3{,}3$ V, $V_{IN}=3{,}3$ V. $V_{GS}$ du MOSN (en V) ?",
+       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=3{,}3$ V, $V_{IN}=3{,}3$ V. $V_{GS}$ du MOSN (en V) ?",
        "ans": "3.3",
        "sol": "$V_{GS_N}=3{,}3$ V."
       }
@@ -1794,14 +1794,14 @@
     },
     {
      "id": "o123",
-     "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur, $V_{IN}=5$ V. Tension de sortie $V_{OUT}$ (en V) ?",
+     "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=5$ V, $V_{IN}=5$ V. Tension de sortie $V_{OUT}$ (en V) ?",
      "ans": "0",
      "sol": "MOSN conducteur et MOSP bloqué : la sortie est reliée à la masse, $V_{OUT}=0$ V.",
      "src": "Cours « Les transistors à effet de champ », II.3.a",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur, $V_{IN}=0$. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=5$ V, $V_{IN}=0$. $V_{OUT}$ (en V) ?",
        "ans": "5",
        "sol": "MOSP conducteur : $V_{OUT}=V_{CC}=5$ V."
       }
@@ -1818,7 +1818,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nMême inverseur, $V_{IN}=5$ V : combien de transistors conduisent ?",
+       "enonce": "![Schéma : inverseur CMOS, un MOSP et un MOSN, grilles à V_IN](/static/schemas/elec-6a8e73cb5536.svg)\n\nInverseur CMOS (figure), $V_{CC}=5$ V, $V_{IN}=5$ V : combien de transistors conduisent ?",
        "ans": "1",
        "sol": "Un seul (le MOSN)."
       }
@@ -1863,7 +1863,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nMême NAND, $a=5$ V, $b=0$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nPorte NAND CMOS (figure), $V_{CC}=5$ V, $a=5$ V, $b=0$ V. $V_{OUT}$ (en V) ?",
        "ans": "5",
        "sol": "Le MOSP de grille $b=0$ conduit : $V_{OUT}=5$ V."
       }
@@ -1873,14 +1873,14 @@
     },
     {
      "id": "n132",
-     "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nMême NAND, $a=0$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
+     "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nPorte NAND CMOS (figure), $V_{CC}=5$ V, $a=0$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
      "ans": "5",
      "sol": "Le MOSP de grille $a=0$ conduit : la sortie est reliée à $V_{CC}$ (le MOSN en série avec $a$ est bloqué). $V_{OUT}=5$ V.",
      "src": "Cours « Les transistors à effet de champ », II.3.b",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nMême NAND, $a=5$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, deux MOSP en parallèle, deux MOSN en série](/static/schemas/elec-7234efdc7356.svg)\n\nPorte NAND CMOS (figure), $V_{CC}=5$ V, $a=5$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
        "ans": "0",
        "sol": "Les deux MOSN conduisent : $V_{OUT}=0$."
       }
@@ -1897,7 +1897,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nMême NOR, $a=5$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nPorte NOR CMOS (figure : MOSP en série, MOSN en parallèle), $V_{CC}=5$ V, $a=5$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
        "ans": "0",
        "sol": "Les deux MOSN en parallèle conduisent : $V_{OUT}=0$."
       }
@@ -1907,14 +1907,14 @@
     },
     {
      "id": "n134",
-     "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nMême NOR, $a=5$ V, $b=0$ V. $V_{OUT}$ (en V) ?",
+     "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nPorte NOR CMOS (figure : MOSP en série, MOSN en parallèle), $V_{CC}=5$ V, $a=5$ V, $b=0$ V. $V_{OUT}$ (en V) ?",
      "ans": "0",
      "sol": "Le MOSN de grille $a=5$ V conduit : la sortie est à la masse. La branche MOSP en série est coupée par le MOSP de grille $a$ bloqué. $V_{OUT}=0$.",
      "src": "Cours « Les transistors à effet de champ », II.3.c",
      "duree": 2,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nMême NOR, $a=0$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nPorte NOR CMOS (figure : MOSP en série, MOSN en parallèle), $V_{CC}=5$ V, $a=0$ V, $b=5$ V. $V_{OUT}$ (en V) ?",
        "ans": "0",
        "sol": "Le MOSN de grille $b=5$ V conduit : $V_{OUT}=0$."
       }
@@ -1950,7 +1950,7 @@
     },
     {
      "id": "n137",
-     "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nMême question pour la porte de la figure (MOSP en série, MOSN en parallèle).",
+     "enonce": "![Schéma : porte CMOS, deux MOSP en série, deux MOSN en parallèle](/static/schemas/elec-84046d24a27f.svg)\n\nMontrer que le montage de la figure (MOSP en série, MOSN en parallèle) est une NOR : déterminer la tension de sortie pour chaque combinaison des entrées, puis l'équation logique.",
      "sol": "Les MOSP en série conduisent si les deux grilles sont à $0$ : $S=\\overline a\\cdot\\overline b=\\overline{a+b}$ (de Morgan). Si $a=1$ ou $b=1$, un MOSN conduit et un MOSP est bloqué : $S=0$. C'est une NOR.",
      "src": "Cours « Les transistors à effet de champ », II.3.c",
      "duree": 5,
@@ -1975,7 +1975,7 @@
      "duree": 3,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nMême porte, $x=0$, $y=0$, $z=5$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nPorte CMOS de la figure, $V_{CC}=5$ V, $x=0$, $y=0$, $z=5$ V. $V_{OUT}$ (en V) ?",
        "ans": "5",
        "sol": "$y=0$ : le MOSN de grille $y$ est bloqué, le MOSP $y$ conduit : $V_{OUT}=5$ V."
       }
@@ -1985,14 +1985,14 @@
     },
     {
      "id": "n142",
-     "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nMême porte, $x=0$, $y=5$ V, $z=0$. $V_{OUT}$ (en V) ?",
+     "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nPorte CMOS de la figure, $V_{CC}=5$ V, $x=0$, $y=5$ V, $z=0$. $V_{OUT}$ (en V) ?",
      "ans": "5",
      "sol": "$x=z=0$ : la branche parallèle des MOSN est bloquée, le MOSN n'est pas passant. Côté MOSP, $x$ et $z$ à $0$ sont conducteurs en série : la sortie est à $V_{CC}$. $V_{OUT}=5$ V.",
      "src": "TD « Fonctions logiques en technologie CMOS » (sans corrigé : corrigé rédigé), ex. 1",
      "duree": 3,
      "variants": [
       {
-       "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nMême porte, $x=5$ V, $y=5$ V, $z=5$ V. $V_{OUT}$ (en V) ?",
+       "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nPorte CMOS de la figure, $V_{CC}=5$ V, $x=5$ V, $y=5$ V, $z=5$ V. $V_{OUT}$ (en V) ?",
        "ans": "0",
        "sol": "MOSN passant : $V_{OUT}=0$."
       }
@@ -2019,7 +2019,7 @@
     },
     {
      "id": "n144",
-     "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nPour la même porte, pour combien de combinaisons des trois entrées la sortie est-elle à $5$ V ?",
+     "enonce": "![Schéma : porte CMOS, MOSP : x en série avec z, le tout en parallèle avec y ; MOSN : x en parallèle avec z, le tout en série avec y](/static/schemas/elec-e107408d2c68.svg)\n\nPour la porte CMOS de la figure ($V_{CC}=5$ V), pour combien de combinaisons des trois entrées la sortie est-elle à $5$ V ?",
      "ans": "5",
      "sol": "$S=\\overline x\\,\\overline z+\\overline y$ vaut $1$ si $y=0$ (4 combinaisons de $x,z$) ou si $y=1$ et $x=z=0$ (1 combinaison) : $4+1=5$ combinaisons sur $8$.",
      "src": "TD « Fonctions logiques en technologie CMOS » (sans corrigé : corrigé rédigé), ex. 1",

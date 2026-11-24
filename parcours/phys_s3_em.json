@@ -694,7 +694,7 @@
      "duree": 5,
      "variants": [
       {
-       "enonce": "Mêmes charges, $CA=CB=0{,}5$ m et $OC=0{,}4$ m. Champ en $C$ (en V·m$^{-1}$) ?",
+       "enonce": "Deux charges identiques $q=1$ nC en $A$ et $B$ distants de $2a$ ; $C$ est sur la médiatrice, $CA=CB=0{,}5$ m et $OC=d=0{,}4$ m ($O$ milieu de $AB$). Champ total en $C$ (en V·m$^{-1}$) ?",
        "ans": "288/5",
        "sol": "$\\frac{2kqd}{a^3}=\\frac{2\\times9\\times0{,}4}{0{,}125}=57{,}6$ V·m$^{-1}$."
       }
@@ -711,7 +711,7 @@
      "duree": 6,
      "variants": [
       {
-       "enonce": "Même triangle avec $q=2$ nC et $a=0{,}6$ m. Norme du champ en $O$ ?",
+       "enonce": "Trois charges $+q,-q,-q$ ($q=2$ nC) aux sommets $A,B,C$ d'un triangle équilatéral de côté $a=0{,}6$ m. Norme du champ au centre $O$ (en V·m$^{-1}$) ?",
        "ans": "300",
        "sol": "$\\frac{6kq}{a^2}=\\frac{108}{0{,}36}=300$ V·m$^{-1}$."
       }
@@ -728,7 +728,7 @@
      "duree": 8,
      "variants": [
       {
-       "enonce": "Même carré avec $q=2$ nC et $a=0{,}6$ m. Norme du champ en $C$ ?",
+       "enonce": "Carré $ABCD$ de côté $a=0{,}6$ m : $A$ (en haut à gauche) porte $-q$, $B$ (en haut à droite) $+q$, $D$ (en bas à gauche) $+q$, avec $q=2$ nC ; $C$ (en bas à droite) est vide. Norme du champ en $C$ (en V·m$^{-1}$) ?",
        "ans": "50*sqrt(2)-25",
        "sol": "$\\frac{kq}{a^2}=50$ : $E=50\\sqrt2-25$ V·m$^{-1}$."
       }
@@ -770,7 +770,7 @@
      "duree": 4,
      "variants": [
       {
-       "enonce": "Même triangle, $q=2$ nC et $a=3$ cm. $V(O)$ (en V) ?",
+       "enonce": "Trois charges $+q,-q,-q$ ($q=2$ nC) aux sommets d'un triangle équilatéral de côté $a=3$ cm. Potentiel en son centre $O$ (en V) ?",
        "ans": "-600*sqrt(3)",
        "sol": "$-\\frac{\\sqrt3kq}a=-\\frac{18\\sqrt3}{0{,}03}=-600\\sqrt3$ V."
       }
@@ -780,14 +780,14 @@
     },
     {
      "id": "pe3",
-     "enonce": "Mêmes charges : énergie potentielle électrique (en J) de la charge $+q$ placée en $A$ dans le champ des deux autres ?",
+     "enonce": "Trois charges $+q,-q,-q$ ($q=4$ nC) aux sommets $A$, $B$, $C$ d'un triangle équilatéral de côté $a=2$ cm : énergie potentielle électrique (en J) de la charge $+q$ placée en $A$ dans le champ des deux autres ?",
      "ans": "-144/10**7",
      "sol": "$V(A)=k\\frac{-q}a+k\\frac{-q}a=-\\frac{2kq}a=-3600$ V, puis $E_p(A)=qV(A)=4\\times10^{-9}\\times(-3600)=-1{,}44\\times10^{-5}$ J.",
      "src": "Contrôle de physique novembre 2021 (dossier 2025), ex. 1",
      "duree": 4,
      "variants": [
       {
-       "enonce": "Même triangle, $q=2$ nC et $a=3$ cm. Énergie de $+q$ en $A$ (en J) ?",
+       "enonce": "Trois charges $+q,-q,-q$ ($q=2$ nC) aux sommets $A$, $B$, $C$ d'un triangle équilatéral de côté $a=3$ cm : énergie potentielle électrique (en J) de la charge $+q$ placée en $A$ dans le champ des deux autres ?",
        "ans": "-24/10**7",
        "sol": "$V(A)=-\\frac{2kq}a=-1200$ V, $E_p=2\\times10^{-9}\\times(-1200)=-2{,}4\\times10^{-6}$ J."
       }
@@ -880,7 +880,7 @@
      "duree": 4,
      "variants": [
       {
-       "enonce": "Ion $^{202}$Hg$^{2+}$, mêmes $v_0$ et $B$. Rayon (en m) ?",
+       "enonce": "Ion $^{202}$Hg$^{2+}$ ($m=202\\,u$ avec $u=1{,}66\\times10^{-27}$ kg, $q=2e$) à $v_0=10^4$ m·s$^{-1}$ dans $B=0{,}2$ T perpendiculaire. Rayon de la trajectoire (en m) ?",
        "ans": "8383/160000",
        "sol": "$R=\\frac{mv_0}{qB}=\\frac{3{,}3532\\times10^{-21}}{6{,}4\\times10^{-20}}\\approx0{,}0524$ m."
       }
@@ -890,14 +890,14 @@
     },
     {
      "id": "lo4",
-     "enonce": "Mêmes données avec l'isotope $^{202}$Hg$^{2+}$ : écart $\\Delta y$ (en m) entre les points d'impact des deux isotopes (demi-tour, $y=2R$) ?",
+     "enonce": "Deux isotopes $^{200}$Hg$^{2+}$ ($m=200\\,u$) et $^{202}$Hg$^{2+}$ ($m=202\\,u$), avec $u=1{,}66\\times10^{-27}$ kg, $q=2e$, $v_0=10^4$ m·s$^{-1}$, dans $B=0{,}2$ T perpendiculaire : écart $\\Delta y$ (en m) entre les points d'impact des deux isotopes (demi-tour, $y=2R$) ?",
      "ans": "83/80000",
      "sol": "À $v_0$ et $B$ fixés, $R\\propto m$ : $\\Delta y=2(R_{202}-R_{200})=\\frac{2\\times2u\\times v_0}{qB}=\\frac{4\\times1{,}66\\times10^{-27}\\times10^4}{6{,}4\\times10^{-20}}\\approx1{,}04\\times10^{-3}$ m.",
      "src": "Examen Physique Électromagnétisme octobre 2024 (dossier promo 2028), ex. 3",
      "duree": 5,
      "variants": [
       {
-       "enonce": "Mêmes ions avec $B=0{,}4$ T : écart $\\Delta y$ (en m) ?",
+       "enonce": "Deux isotopes $^{200}$Hg$^{2+}$ ($m=200\\,u$) et $^{202}$Hg$^{2+}$ ($m=202\\,u$), avec $u=1{,}66\\times10^{-27}$ kg, $q=2e$, $v_0=10^4$ m·s$^{-1}$, dans $B=0{,}4$ T perpendiculaire : écart $\\Delta y$ (en m) entre les points d'impact (demi-tour, $y=2R$) ?",
        "ans": "83/160000",
        "sol": "$B$ double : $\\Delta y$ est divisé par $2$ : $\\approx5{,}2\\times10^{-4}$ m."
       }
@@ -1012,7 +1012,7 @@
      "duree": 4,
      "variants": [
       {
-       "enonce": "Même question avec $E=E_0\\sin(\\omega t-kx)$ : exprimer $c$ (w, kk).",
+       "enonce": "L'onde $E=E_0\\sin(\\omega t-kx)$ vérifie $\\frac{\\partial^2E}{\\partial x^2}=\\frac1{c^2}\\frac{\\partial^2E}{\\partial t^2}$ : exprimer $c$ (w, kk).",
        "ans": "w/kk",
        "sol": "Les deux dérivées secondes valent $-\\omega^2E$ et $-k^2E$ : $c^2=\\frac{\\omega^2}{k^2}$."
       }
@@ -1383,7 +1383,7 @@
     },
     {
      "id": "cv2",
-     "enonce": "Même cylindre, mais à $r=0{,}4$ m ($r > R$) ?",
+     "enonce": "Cylindre infini plein de rayon $R=0{,}2$ m, $\\rho=2$ nC·m$^{-3}$. Champ (en V·m$^{-1}$) à $r=0{,}4$ m de l'axe ($r > R$ ; $\\frac1{2\\varepsilon_0}=2\\pi k$) ?",
      "ans": "18*pi/5",
      "sol": "Pour $r > R$ : $Q_{int}=\\rho\\pi R^2h$, donc $E=\\frac{\\rho R^2}{2\\varepsilon_0r}=\\frac{2\\times10^{-9}\\times0{,}04\\times2\\pi\\times9\\times10^9}{0{,}4}=3{,}6\\pi\\approx11{,}3$ V·m$^{-1}$.",
      "src": "TD4 EM2, ex. 1",
@@ -1407,7 +1407,7 @@
      "duree": 2,
      "variants": [
       {
-       "enonce": "Même question pour un cylindre creux : $E(r > a)=\\frac{\\sigma a}{\\varepsilon_0r}$ et $E(a^-)=0$. Calculer $E(a^+)-E(a^-)$ (sig, a, e0).",
+       "enonce": "Cylindre creux de rayon $a$ chargé en surface (densité $\\sigma$) : $E(r > a)=\\frac{\\sigma a}{\\varepsilon_0r}$ et $E(a^-)=0$. Calculer $E(a^+)-E(a^-)$ (sig, a, e0).",
        "ans": "sig/e0",
        "sol": "$E(a^+)=\\frac\\sigma{\\varepsilon_0}$ : saut égal à $\\frac\\sigma{\\varepsilon_0}$ (charge surfacique)."
       }
@@ -1424,7 +1424,7 @@
      "duree": 6,
      "variants": [
       {
-       "enonce": "Même densité avec $a=1$, $\\lambda=3$, $r=1$, $h=1$. Charge intérieure ?",
+       "enonce": "Fil cylindrique de densité volumique $\\rho(r)=\\frac\\lambda r e^{-r/a}$ avec $\\lambda=3$ et $a=1$. Charge (en C) contenue dans le cylindre de rayon $r=1$ m et de hauteur $h=1$ m ?",
        "ans": "6*pi*(1-exp(-1))",
        "sol": "$2\\pi h\\lambda a(1-e^{-r/a})=6\\pi(1-e^{-1})$."
       }
@@ -1441,7 +1441,7 @@
      "duree": 6,
      "variants": [
       {
-       "enonce": "Mêmes cylindres avec $\\rho_0=2$, $R_1=1$, $h=1$, $Q=2\\pi$, $r=2$, $\\varepsilon_0=1$ (unités arbitraires). Champ ?",
+       "enonce": "Cylindre plein de rayon $R_1$ ($\\rho_0$ uniforme) entouré d'un cylindre creux de rayon $R_2$ chargé en surface avec $+Q$, de même hauteur $h$ : $\\rho_0=2$, $R_1=1$, $h=1$, $Q=2\\pi$, $\\varepsilon_0=1$ (unités arbitraires). Champ en $r=2$ ($r > R_2$) ?",
        "ans": "1",
        "sol": "$Q_{int}=2\\pi+2\\pi=4\\pi$ et flux $E\\times2\\pi\\times2\\times1=4\\pi E$ : $E=1$."
       }
@@ -1566,7 +1566,7 @@
     },
     {
      "id": "sp2",
-     "enonce": "Même boule, mais à $r=0{,}4$ m ?",
+     "enonce": "Boule uniformément chargée, $\\rho_0=3$ nC·m$^{-3}$, rayon $R=0{,}2$ m. Champ (en V·m$^{-1}$) à $r=0{,}4$ m ($\\varepsilon_0=\\frac1{4\\pi k}$) ?",
      "ans": "9*pi/5",
      "sol": "$r > R$ : $Q_{int}=\\frac43\\pi R^3\\rho_0$, donc $E=\\frac{\\rho_0R^3}{3\\varepsilon_0r^2}=\\frac{3\\times10^{-9}\\times0{,}008\\times4\\pi\\times9\\times10^9}{3\\times0{,}16}=1{,}8\\pi$ V·m$^{-1}$ : champ d'une charge ponctuelle placée en $O$.",
      "src": "TD5 EM2, ex. 2",
@@ -1669,7 +1669,7 @@
      "duree": 4,
      "variants": [
       {
-       "enonce": "Même fil avec $\\lambda=2$ nC·m$^{-1}$ : $V(0{,}1)-V(0{,}4)$ (V) ?",
+       "enonce": "Fil infini $\\lambda=2$ nC·m$^{-1}$, $E(r)=\\frac{2k\\lambda}r$. Différence de potentiel $V(0{,}1)-V(0{,}4)$ (en V) ?",
        "ans": "36*log(4)",
        "sol": "$2k\\lambda\\ln\\frac{0{,}4}{0{,}1}=36\\ln4$ V."
       }
@@ -1755,7 +1755,7 @@
      "duree": 5,
      "variants": [
       {
-       "enonce": "Mêmes données avec valeurs : $R=0{,}3$, $z=0{,}4$, $k\\lambda=18$. Intégrer $dE_z=\\frac{k\\lambda Rz\\,d\\theta}{(R^2+z^2)^{3/2}}$ sur $[0,2\\pi]$.",
+       "enonce": "Anneau de charge linéique $\\lambda$, élément $dQ=\\lambda R\\,d\\theta$ : $R=0{,}3$, $z=0{,}4$, $k\\lambda=18$. Intégrer $dE_z=\\frac{k\\lambda Rz\\,d\\theta}{(R^2+z^2)^{3/2}}$ sur $[0,2\\pi]$.",
        "ans": "864*pi/25",
        "sol": "$\\frac{18\\times0{,}12}{0{,}125}=17{,}28$, puis $\\times2\\pi=34{,}56\\pi$."
       }

@@ -364,7 +364,7 @@
     },
     {
      "id": "c2",
-     "enonce": "Mêmes données ($P(A)=\\frac3{10}$, $P_A(B)=\\frac12$, $P_{\\bar A}(B)=\\frac15$). Calculer $P_B(A)$.",
+     "enonce": "$P(A)=\\frac3{10}$, $P_A(B)=\\frac12$, $P_{\\bar A}(B)=\\frac15$. Calculer $P_B(A)$.",
      "ans": "Rational(15,29)",
      "sol": "Bayes : $P_B(A)=\\frac{P(A)P_A(B)}{P(B)}=\\frac{15/100}{29/100}=\\frac{15}{29}$.",
      "variants": [
@@ -469,12 +469,12 @@
     },
     {
      "id": "e2",
-     "enonce": "Même variable $X$. Calculer $V(X)$.",
+     "enonce": "$X(\\Omega)=\\{0,2,3\\}$, $P(X=0)=\\frac12$, $P(X=2)=\\frac3{10}$, $P(X=3)=\\frac15$. Calculer $V(X)$.",
      "ans": "Rational(39,25)",
      "sol": "$E(X^2)=4\\times\\frac3{10}+9\\times\\frac15=3$, donc $V(X)=3-\\left(\\frac65\\right)^2=3-\\frac{36}{25}=\\frac{39}{25}$.",
      "variants": [
       {
-       "enonce": "Même loi ($X(\\Omega)=\\{1,2,4\\}$, probabilités $\\frac12,\\frac14,\\frac14$). Calculer $V(X)$.",
+       "enonce": "$X(\\Omega)=\\{1,2,4\\}$, probabilités $\\frac12,\\frac14,\\frac14$. Calculer $V(X)$.",
        "ans": "Rational(3,2)",
        "sol": "$E(X^2)=\\frac12+1+4=\\frac{11}2$ et $V=\\frac{11}2-4=\\frac32$."
       }
@@ -792,7 +792,7 @@
     },
     {
      "id": "d2",
-     "enonce": "Même $G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$. Calculer $V(X)$ avec $V=G''(1)+G'(1)-G'(1)^2$.",
+     "enonce": "$X$ a pour fonction génératrice $G_X(t)=\\frac12+\\frac3{10}t^2+\\frac15t^3$. Calculer $V(X)$ avec $V=G''(1)+G'(1)-G'(1)^2$.",
      "ans": "Rational(39,25)",
      "sol": "$G''(t)=\\frac35+\\frac65t$, donc $G''(1)=\\frac95$ et $G'(1)=\\frac65$. $V=\\frac95+\\frac65-\\frac{36}{25}=3-\\frac{36}{25}=\\frac{39}{25}$.",
      "variants": [
@@ -1011,7 +1011,7 @@
     },
     {
      "id": "b3",
-     "enonce": "Même $Y$ ($G_Y(t)=\\left(\\frac34+\\frac t4\\right)^{12}$). Calculer $V(Y)$ avec $G''(1)+G'(1)-G'(1)^2$.",
+     "enonce": "$Y$ a pour fonction génératrice $G_Y(t)=\\left(\\frac34+\\frac t4\\right)^{12}$. Calculer $V(Y)$ avec $G''(1)+G'(1)-G'(1)^2$.",
      "ans": "Rational(9,4)",
      "sol": "$G''(1)=12\\times11\\times\\frac1{16}=\\frac{33}4$. $V=\\frac{33}4+3-9=\\frac94=np(1-p)$.",
      "variants": [
@@ -1764,7 +1764,7 @@
     },
     {
      "id": "l2",
-     "enonce": "Même $X$ (géométrique de paramètre $\\frac13$). Calculer $P(X\\ge5)$.",
+     "enonce": "$X$ suit la loi géométrique de paramètre $\\frac13$ ($P(X=n)=q^{n-1}p$). Calculer $P(X\\ge5)$.",
      "ans": "Rational(16,81)",
      "sol": "$P(X\\ge5)$ = les 4 premiers essais échouent : $\\left(\\frac23\\right)^4=\\frac{16}{81}$ (ou somme géométrique de premier terme $\\left(\\frac23\\right)^4\\frac13$).",
      "variants": [
@@ -1780,7 +1780,7 @@
     },
     {
      "id": "l3",
-     "enonce": "Même $X$ de fonction génératrice $G_X(t)=\\frac{t/3}{1-2t/3}$. Calculer $E(X)$.",
+     "enonce": "$X$ suit la loi géométrique de paramètre $\\frac13$, de fonction génératrice $G_X(t)=\\frac{t/3}{1-2t/3}$. Calculer $E(X)$.",
      "ans": "3",
      "sol": "$G'(t)=\\frac{p}{(1-qt)^2}$, donc $G'(1)=\\frac1p=3$.",
      "variants": [
@@ -1796,7 +1796,7 @@
     },
     {
      "id": "l4",
-     "enonce": "Même $X$. Calculer $V(X)$ avec $G''(1)+G'(1)-G'(1)^2$.",
+     "enonce": "$X$ suit la loi géométrique de paramètre $\\frac13$, de fonction génératrice $G_X(t)=\\frac{t/3}{1-2t/3}$. Calculer $V(X)$ avec $G''(1)+G'(1)-G'(1)^2$.",
      "ans": "6",
      "sol": "$G''(t)=\\frac{2pq}{(1-qt)^3}$, $G''(1)=\\frac{2q}{p^2}=12$. $V=12+3-9=6=\\frac q{p^2}$.",
      "variants": [
@@ -2058,12 +2058,12 @@
     },
     {
      "id": "z4",
-     "enonce": "Même sac de dés. Calculer $P(Y=1)$.",
+     "enonce": "Un sac contient 4 dés : 3 dés ont une probabilité $\\frac13$ de donner blanc, le 4e une probabilité $\\frac56$. On tire un dé au hasard et on le lance jusqu'au premier blanc : $Y$ = nombre de lancers. Calculer $P(Y=1)$.",
      "ans": "Rational(11,24)",
      "sol": "$P(Y=1)=\\frac34\\times\\frac13+\\frac14\\times\\frac56=\\frac14+\\frac5{24}=\\frac{11}{24}$.",
      "variants": [
       {
-       "enonce": "Même sac que ci-dessus (2 dés de probabilité $\\frac12$, 2 dés de probabilité $\\frac14$). Calculer $P(Y=1)$.",
+       "enonce": "Un sac contient 4 dés : 2 dés ont une probabilité $\\frac12$ de donner blanc, 2 dés une probabilité $\\frac14$. On tire un dé au hasard et on le lance jusqu'au premier blanc : $Y$ = nombre de lancers. Calculer $P(Y=1)$.",
        "ans": "Rational(3,8)",
        "sol": "$\\frac12\\times\\frac12+\\frac12\\times\\frac14=\\frac38$."
       }

@@ -517,7 +517,7 @@
      "duree": 3,
      "variants": [
       {
-       "enonce": "Même force pour $r=10^{-10}$ m (en N) ?",
+       "enonce": "Force de Coulomb (en N) entre un proton et un électron distants de $r=10^{-10}$ m ($k=9\\times10^9$, $q=1{,}6\\times10^{-19}$ C) ?",
        "ans": "2304*10**-11",
        "sol": "$F=\\frac{2{,}304\\times10^{-28}}{10^{-20}}=2{,}304\\times10^{-8}$ N : divisée par $4$ quand $r$ double."
       }
@@ -902,7 +902,7 @@
     },
     {
      "id": "qr3",
-     "enonce": "Même question pour $\\mathrm{Li}^{2+}$ ($Z=3$) : plus petit rayon (en m) ?",
+     "enonce": "Plus petit rayon possible pour l'ion $\\mathrm{Li}^{2+}$ ($Z=3$), avec $\\frac{\\hbar^2}{me^2}=5\\times10^{-11}$ m (en m) ?",
      "ans": "Rational(5,3)*10**-11",
      "sol": "$r_1=\\frac{5\\times10^{-11}}3\\approx1{,}67\\times10^{-11}$ m. Plus $Z$ est grand, plus le rayon est petit (en $\\frac1Z$).",
      "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q4",
@@ -978,7 +978,7 @@
     },
     {
      "id": "qr8",
-     "enonce": "Avec le 3e postulat $mrv=n\\hbar$ et le résultat précédent, établir le système de deux équations puis le rayon $r_n$ des orbites en fonction de $n$, $m$, $e$, $Z$.",
+     "enonce": "Hydrogénoïde (noyau de $Z$ protons de charge $+q$, un électron de masse $m$, $e^2=kq^2$) : avec le 3e postulat $mrv=n\\hbar$ et le PFD $mv^2=\\frac{Ze^2}r$, établir le système de deux équations puis le rayon $r_n$ des orbites en fonction de $n$, $m$, $e$, $Z$.",
      "sol": "Postulat : $mv=\\frac{n\\hbar}r$, donc $(mv)^2=\\frac{n^2\\hbar^2}{r^2}$. PFD : $mv^2=\\frac{Ze^2}r$, donc en multipliant par $m$, $(mv)^2=\\frac{Zme^2}r$.\n\nÉgalité : $\\frac{n^2\\hbar^2}{r^2}=\\frac{Zme^2}r$, d'où $r_n=\\dfrac{n^2\\hbar^2}{Zme^2}=\\dfrac{n^2}Za_0$ avec $a_0=\\frac{\\hbar^2}{me^2}$ (rayon de Bohr, $\\approx5\\times10^{-11}$ m). Rayons en $n^2$ : quantifiés.",
      "src": "Examen Physique : Mécanique quantique (décembre 2023), ex. 2 q3 ; TD1 de mécanique quantique, ex. 1 q4",
      "duree": 6,
@@ -1047,7 +1047,7 @@
      "duree": 5,
      "variants": [
       {
-       "enonce": "Même électron, vitesse connue à $0{,}1\\,\\%$ près : $\\Delta x$ minimale (en m) ?",
+       "enonce": "Vitesse de $95$ m/s connue à $0{,}1\\,\\%$ près. Incertitude minimale sur la position de l'électron (en m), avec $\\Delta x\\,\\Delta p=\\frac\\hbar2$ ?",
        "ans": "Rational(6620,3458)*10**-3/pi",
        "sol": "$\\Delta p=9{,}1\\times10^{-31}\\times95\\times10^{-3}=8{,}6\\times10^{-32}$ ; $\\Delta x=\\frac h{4\\pi\\Delta p}\\approx6{,}1\\times10^{-4}$ m."
       }
@@ -1057,7 +1057,7 @@
     },
     {
      "id": "qd4",
-     "enonce": "Même calcul pour la balle de tennis ($0{,}05$ kg) : $\\Delta x$ minimale (en m) ?",
+     "enonce": "Vitesse de $95$ m/s connue à $0{,}085\\,\\%$ près. Incertitude minimale sur la position d'une balle de tennis de $0{,}05$ kg (en m), avec $\\Delta x\\,\\Delta p=\\frac\\hbar2$ ?",
      "ans": "Rational(1324,323)*10**-32/pi",
      "sol": "$\\Delta p=0{,}05\\times95\\times8{,}5\\times10^{-4}=4{,}04\\times10^{-3}$. $\\Delta x=\\frac h{4\\pi\\Delta p}\\approx1{,}3\\times10^{-32}$ m : négligeable, la balle est localisée comme en mécanique classique.",
      "src": "TD2 de mécanique quantique, ex. 1 q2",
@@ -1115,7 +1115,7 @@
      "duree": 3,
      "variants": [
       {
-       "enonce": "Même normalisation avec $x_0=2$ : $\\Psi_0$ ?",
+       "enonce": "$\\Psi(x)=\\Psi_0e^{-x/x_0}$ sur $[0;+\\infty[$ avec $x_0=2$ (unité arbitraire). Normaliser : $\\Psi_0$ ?",
        "ans": "1",
        "sol": "$\\Psi_0=\\sqrt{\\frac2{x_0}}=1$."
       }
@@ -1132,7 +1132,7 @@
      "duree": 3,
      "variants": [
       {
-       "enonce": "Même fonction $e^{-x/2}$ : probabilité dans $[0;1]$ ?",
+       "enonce": "$\\Psi(x)=e^{-x/2}$ sur $[0;+\\infty[$ (normalisée). Probabilité de trouver la particule dans $[0;1]$ ?",
        "ans": "1-exp(-1)",
        "sol": "$P=\\int_0^1e^{-x}dx=1-e^{-1}\\approx0{,}632$."
       }
@@ -1182,7 +1182,7 @@
      "duree": 5,
      "variants": [
       {
-       "enonce": "Même état fondamental, probabilité dans la première moitié $[0;\\frac12]$ ?",
+       "enonce": "Particule dans un puits de largeur $1$ à l'état fondamental, $\\psi=\\sqrt2\\sin(\\pi x)$. Probabilité de la trouver dans la première moitié $[0;\\frac12]$ ?",
        "ans": "Rational(1,2)",
        "sol": "$\\left[x-\\frac{\\sin2\\pi x}{2\\pi}\\right]_0^{1/2}=\\frac12$ (symétrie de $|\\psi|^2$ autour de $\\frac12$)."
       }
@@ -1229,14 +1229,14 @@
     },
     {
      "id": "qm2",
-     "enonce": "Même fonction ($\\lambda=2$, $N^2=\\sqrt{\\frac2\\pi}$). Calculer $\\langle x^2\\rangle=\\int_{-\\infty}^{+\\infty}x^2|\\psi|^2dx$.",
+     "enonce": "$\\psi=Ne^{-\\lambda x^2/2}$ avec $\\lambda=2$ et $N^2=\\sqrt{\\frac2\\pi}$. Calculer $\\langle x^2\\rangle=\\int_{-\\infty}^{+\\infty}x^2|\\psi|^2dx$.",
      "ans": "Rational(1,4)",
      "sol": "$\\langle x^2\\rangle=N^2\\int x^2e^{-\\lambda x^2}dx=N^2\\frac1{2\\lambda}\\sqrt{\\frac\\pi\\lambda}=\\frac1{2\\lambda}=\\frac14$ (car $N^2\\sqrt{\\frac\\pi\\lambda}=1$).",
      "src": "TD2 de mécanique quantique, ex. 3 q3",
      "duree": 4,
      "variants": [
       {
-       "enonce": "Même calcul avec $\\lambda=8$ ($N^2=\\sqrt{\\frac8\\pi}$) : $\\langle x^2\\rangle$ ?",
+       "enonce": "$\\psi=Ne^{-\\lambda x^2/2}$ avec $\\lambda=8$ et $N^2=\\sqrt{\\frac8\\pi}$. Calculer $\\langle x^2\\rangle=\\int_{-\\infty}^{+\\infty}x^2|\\psi|^2dx$.",
        "ans": "Rational(1,16)",
        "sol": "$\\langle x^2\\rangle=\\frac1{2\\lambda}=\\frac1{16}$."
       }
@@ -1346,7 +1346,7 @@
      "duree": 5,
      "variants": [
       {
-       "enonce": "Même électron dans $L=1$ nm : $E_1$ (en eV) ?",
+       "enonce": "Électron ($m=9\\times10^{-31}$ kg) dans un puits infini de largeur $L=1$ nm. $E_1=\\frac{h^2}{8mL^2}$ en eV ($h=6{,}6\\times10^{-34}$, $1$ eV $=1{,}6\\times10^{-19}$ J) ?",
        "ans": "121/320",
        "sol": "$E_1\\propto\\frac1{L^2}$ : $\\frac{1{,}51}4\\approx0{,}38$ eV."
       }
@@ -1373,7 +1373,7 @@
     },
     {
      "id": "qs3",
-     "enonce": "Même puits ($E_1=0{,}4$ eV) : longueur d'onde du photon émis lors de $n=2\\to n=1$ (en nm, $hc=1240$ eV·nm) ?",
+     "enonce": "Dans un puits infini où $E_1=0{,}4$ eV et $E_n=n^2E_1$ : longueur d'onde du photon émis lors de $n=2\\to n=1$ (en nm, $hc=1240$ eV·nm) ?",
      "ans": "3100/3",
      "sol": "$\\Delta E=E_2-E_1=4E_1-E_1=3E_1=1{,}2$ eV. $\\lambda=\\frac{1240}{1{,}2}\\approx1033$ nm (infrarouge).",
      "duree": 3,
@@ -1476,7 +1476,7 @@
     },
     {
      "id": "qv2",
-     "enonce": "Même état : énergie moyenne $\\langle E\\rangle$ en unités de $E_1$ ($E_n=n^2E_1$) ?",
+     "enonce": "$\\psi=N(3\\psi_1-\\psi_3)$ avec $\\psi_n$ orthonormés : énergie moyenne $\\langle E\\rangle$ en unités de $E_1$ ($E_n=n^2E_1$) ?",
      "ans": "9/5",
      "sol": "$\\langle E\\rangle=\\sum|c_n|^2E_n=\\frac9{10}E_1+\\frac1{10}\\times9E_1=\\frac{18}{10}E_1=\\frac95E_1$.",
      "src": "TD3 de mécanique quantique, ex. 2 q6",
@@ -1853,7 +1853,7 @@
      "duree": 8,
      "variants": [
       {
-       "enonce": "Même expérience avec $W=5{,}75$ eV ($200$ nm, $hc=1240$) : $\\lambda_{dB}$ des électrons (en m) ?",
+       "enonce": "Lumière à $200$ nm ($hc=1240$ eV·nm) sur un métal de travail d'extraction $5{,}75$ eV. Longueur d'onde de de Broglie des électrons émis (en m), $m=9\\times10^{-31}$, $h=6{,}6\\times10^{-34}$, $1$ eV $=1{,}6\\times10^{-19}$ J ?",
        "ans": "Rational(11,6)*10**-9",
        "sol": "$E_c=0{,}45$ eV, $v=4\\times10^5$ m/s, $\\lambda=\\frac{6{,}6\\times10^{-34}}{3{,}6\\times10^{-25}}\\approx1{,}8\\times10^{-9}$ m."
       }
