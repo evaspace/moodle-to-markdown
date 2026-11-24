@@ -1,0 +1,241 @@
+{
+ "subject": {
+  "id": "bases-puissances",
+  "ordre": 11,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Puissances et racines",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "puissances",
+   "titre": "Puissances",
+   "formule": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+   "exemple": "$\\frac{2^5\\times2^{-2}}{2^4}=2^{5-2-4}=\\frac12$",
+   "cours": "Les règles ne valent que pour une même base (produit) ou un même exposant ($(ab)^n$). Il n'y a pas de règle pour $a^n+a^m$ : on factorise, $2^5+2^3=2^3(2^2+1)$. $a^{1/2}=\\sqrt a$ et $a^{p/q}=\\sqrt[q]{a^p}$ pour $a>0$."
+  },
+  {
+   "id": "racines",
+   "titre": "Racines carrées",
+   "formule": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+   "exemple": "$\\sqrt{50}=\\sqrt{25\\times2}=5\\sqrt2$",
+   "cours": "Pour simplifier $\\sqrt n$, sortir le plus grand carré qui divise $n$. $\\sqrt{a+b}\\neq\\sqrt a+\\sqrt b$. Pour enlever une racine d'un dénominateur, multiplier haut et bas par la quantité conjuguée : $(\\sqrt a-\\sqrt b)(\\sqrt a+\\sqrt b)=a-b$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "puissances",
+   "type": "vf",
+   "q": "$2^3+2^3=2^4$",
+   "bonne": true
+  },
+  {
+   "notion": "puissances",
+   "type": "qcm",
+   "q": "$(x^2)^3=$",
+   "choix": [
+    "$x^6$",
+    "$x^5$",
+    "$x^8$",
+    "$x^9$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "racines",
+   "type": "vf",
+   "q": "$\\sqrt{9+16}=3+4$",
+   "bonne": false
+  },
+  {
+   "notion": "racines",
+   "type": "vf",
+   "q": "$\\sqrt{x^2}=|x|$ pour tout réel $x$.",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Puissances",
+   "notions": [
+    "puissances"
+   ],
+   "exos": [
+    {
+     "id": "pu1",
+     "enonce": "Écrire $\\frac{2^5\\times2^{-3}}{2^{4}}$ sous la forme $2^p$ et donner sa valeur.",
+     "ans": "Rational(1,4)",
+     "sol": "$2^{5-3-4}=2^{-2}=\\frac14$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\frac{3^{-2}\\times3^{7}}{3^{3}}$ sous la forme $3^p$ et donner sa valeur.",
+       "ans": "9",
+       "sol": "$3^{-2+7-3}=3^2=9$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    },
+    {
+     "id": "pu2",
+     "enonce": "Simplifier $\\frac{(x^3)^2\\,x^{-1}}{x^4}$ pour $x\\neq0$.",
+     "ans": "x",
+     "sol": "$x^{6-1-4}=x^1=x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{x^5(x^{-2})^3}{x^{-4}}$ pour $x\\neq0$.",
+       "ans": "x**3",
+       "sol": "$x^{5-6+4}=x^3$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    },
+    {
+     "id": "pu3",
+     "enonce": "Calculer $\\frac{6^3}{2^3\\times3^2}$.",
+     "ans": "3",
+     "sol": "$6^3=2^3\\cdot3^3$ donc $\\frac{2^33^3}{2^33^2}=3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac{10^4}{2^3\\times5^4}$.",
+       "ans": "2",
+       "sol": "$10^4=2^45^4$ donc $\\frac{2^45^4}{2^35^4}=2$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    },
+    {
+     "id": "pu4",
+     "enonce": "Factoriser puis calculer $2^{10}+2^{8}$.",
+     "ans": "2**8*5",
+     "sol": "$2^8(2^2+1)=5\\times2^8=1280$. Aucune règle ne donne $2^{18}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser puis calculer $3^{6}-3^{4}$.",
+       "ans": "3**4*8",
+       "sol": "$3^4(3^2-1)=8\\times3^4=648$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    },
+    {
+     "id": "pu5",
+     "enonce": "Calculer $8^{2/3}$ et $27^{-1/3}$.",
+     "ans": "4+Rational(1,3)",
+     "sol": "$8^{2/3}=(\\sqrt[3]8)^2=4$ et $27^{-1/3}=\\frac1{\\sqrt[3]{27}}=\\frac13$ (le calcul vérifié est leur somme).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $16^{3/4}$ et $32^{-1/5}$.",
+       "ans": "8+Rational(1,2)",
+       "sol": "$(\\sqrt[4]{16})^3=8$ et $\\frac1{\\sqrt[5]{32}}=\\frac12$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Racines carrées",
+   "notions": [
+    "racines"
+   ],
+   "exos": [
+    {
+     "id": "ra1",
+     "enonce": "Simplifier $\\sqrt{72}$.",
+     "ans": "6*sqrt(2)",
+     "sol": "$72=36\\times2$ : $\\sqrt{72}=6\\sqrt2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\sqrt{48}$.",
+       "ans": "4*sqrt(3)",
+       "sol": "$48=16\\times3$ : $4\\sqrt3$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    },
+    {
+     "id": "ra2",
+     "enonce": "Simplifier $\\sqrt{50}-2\\sqrt{18}+\\sqrt8$.",
+     "ans": "sqrt(2)",
+     "sol": "$5\\sqrt2-2\\cdot3\\sqrt2+2\\sqrt2=\\sqrt2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\sqrt{12}+\\sqrt{27}-\\sqrt{75}$.",
+       "ans": "0",
+       "sol": "$2\\sqrt3+3\\sqrt3-5\\sqrt3=0$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    },
+    {
+     "id": "ra3",
+     "enonce": "Écrire $\\frac{1}{\\sqrt3-1}$ sans racine au dénominateur.",
+     "ans": "(sqrt(3)+1)/2",
+     "sol": "Conjugué : $\\frac{\\sqrt3+1}{(\\sqrt3-1)(\\sqrt3+1)}=\\frac{\\sqrt3+1}{3-1}=\\frac{\\sqrt3+1}2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\frac{2}{\\sqrt5+\\sqrt3}$ sans racine au dénominateur.",
+       "ans": "sqrt(5)-sqrt(3)",
+       "sol": "$\\frac{2(\\sqrt5-\\sqrt3)}{5-3}=\\sqrt5-\\sqrt3$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    },
+    {
+     "id": "ra4",
+     "enonce": "Développer $(2+\\sqrt3)^2$.",
+     "ans": "7+4*sqrt(3)",
+     "sol": "$4+4\\sqrt3+3=7+4\\sqrt3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(\\sqrt5-1)^2$.",
+       "ans": "6-2*sqrt(5)",
+       "sol": "$5-2\\sqrt5+1=6-2\\sqrt5$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$ · $(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    },
+    {
+     "id": "ra5",
+     "enonce": "Calculer $\\sqrt{(1-\\sqrt2)^2}$.",
+     "ans": "sqrt(2)-1",
+     "sol": "$\\sqrt{a^2}=|a|$ et $1-\\sqrt2 < 0$ : $|1-\\sqrt2|=\\sqrt2-1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sqrt{(2-\\sqrt5)^2}$.",
+       "ans": "sqrt(5)-2",
+       "sol": "$2 < \\sqrt5$ donc $|2-\\sqrt5|=\\sqrt5-2$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

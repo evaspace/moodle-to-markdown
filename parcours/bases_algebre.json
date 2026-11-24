@@ -1,0 +1,357 @@
+{
+ "subject": {
+  "id": "bases-algebre",
+  "ordre": 12,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Développer et factoriser",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "developper",
+   "titre": "Développer",
+   "formule": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+   "exemple": "$(2x-3)^2=4x^2-12x+9$",
+   "cours": "Double distributivité : $(a+b)(c+d)=ac+ad+bc+bd$. Le signe moins devant une parenthèse change tous les signes à l'intérieur. Les identités remarquables évitent de tout distribuer."
+  },
+  {
+   "id": "factoriser",
+   "titre": "Factoriser",
+   "formule": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+   "exemple": "$x^2-9=(x-3)(x+3)$ ; $(x+1)^2-4=(x-1)(x+3)$",
+   "cours": "Ordre des réflexes : facteur commun, puis identité remarquable, puis racine évidente d'un polynôme (si $P(a)=0$, $P(x)=(x-a)Q(x)$). Une expression factorisée sert à trouver le signe et les zéros."
+  },
+  {
+   "id": "trinome",
+   "titre": "Trinôme du second degré",
+   "formule": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+   "exemple": "$x^2-5x+6$ : $\\Delta=1$, racines 2 et 3, $=(x-2)(x-3)$",
+   "cours": "Le trinôme a le signe de $a$ à l'extérieur des racines et le signe opposé entre elles. Si $\\Delta < 0$, pas de racine réelle et signe de $a$ partout. Racine évidente : essayer $1,-1,2$ puis utiliser le produit $\\frac ca$ pour l'autre."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "developper",
+   "type": "qcm",
+   "q": "$(a-b)^2=$",
+   "choix": [
+    "$a^2-2ab+b^2$",
+    "$a^2-b^2$",
+    "$a^2+b^2$",
+    "$a^2-ab+b^2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "factoriser",
+   "type": "qcm",
+   "q": "$x^2-25=$",
+   "choix": [
+    "$(x-5)(x+5)$",
+    "$(x-5)^2$",
+    "$(x-25)(x+1)$",
+    "pas factorisable"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "trinome",
+   "type": "vf",
+   "q": "Si $\\Delta < 0$, $ax^2+bx+c$ a le signe de $a$ pour tout $x$.",
+   "bonne": true
+  },
+  {
+   "notion": "trinome",
+   "type": "qcm",
+   "q": "Produit des racines de $2x^2-6x+4$ :",
+   "choix": [
+    "$2$",
+    "$3$",
+    "$4$",
+    "$-3$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Développer",
+   "notions": [
+    "developper"
+   ],
+   "exos": [
+    {
+     "id": "dv1",
+     "enonce": "Développer $(3x-2)^2$.",
+     "ans": "9*x**2-12*x+4",
+     "sol": "$(a-b)^2$ : $9x^2-12x+4$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(2x+5)^2$.",
+       "ans": "4*x**2+20*x+25",
+       "sol": "$4x^2+20x+25$."
+      }
+     ],
+     "formules": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    },
+    {
+     "id": "dv2",
+     "enonce": "Développer $(x-4)(x+4)$.",
+     "ans": "x**2-16",
+     "sol": "$(a-b)(a+b)=a^2-b^2$ : $x^2-16$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(5-2x)(5+2x)$.",
+       "ans": "25-4*x**2",
+       "sol": "$25-4x^2$."
+      }
+     ],
+     "formules": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    },
+    {
+     "id": "dv3",
+     "enonce": "Développer $(2x+1)(x-3)$.",
+     "ans": "2*x**2-5*x-3",
+     "sol": "$2x^2-6x+x-3=2x^2-5x-3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(3x-1)(2x+4)$.",
+       "ans": "6*x**2+10*x-4",
+       "sol": "$6x^2+12x-2x-4=6x^2+10x-4$."
+      }
+     ],
+     "formules": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    },
+    {
+     "id": "dv4",
+     "enonce": "Développer $(x+2)^2-(x-1)(x+3)$.",
+     "ans": "2*x+7",
+     "sol": "$x^2+4x+4-(x^2+2x-3)=2x+7$ (le moins change tous les signes).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(2x-1)^2-(2x+1)(2x-3)$.",
+       "ans": "4",
+       "sol": "$4x^2-4x+1-(4x^2-4x-3)=4$."
+      }
+     ],
+     "formules": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    },
+    {
+     "id": "dv5",
+     "enonce": "Développer $(x+1)^3$.",
+     "ans": "x**3+3*x**2+3*x+1",
+     "sol": "$(a+b)^3$ : $x^3+3x^2+3x+1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $(x-2)^3$.",
+       "ans": "x**3-6*x**2+12*x-8",
+       "sol": "$x^3-3\\cdot2x^2+3\\cdot4x-8$."
+      }
+     ],
+     "formules": "$(a+b)^2=a^2+2ab+b^2$ · $(a-b)^2=a^2-2ab+b^2$ · $(a+b)(a-b)=a^2-b^2$ · $(a+b)^3=a^3+3a^2b+3ab^2+b^3$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Factoriser",
+   "notions": [
+    "factoriser"
+   ],
+   "exos": [
+    {
+     "id": "fa1",
+     "enonce": "Factoriser $6x^2-9x$.",
+     "ans": "3*x*(2*x-3)",
+     "sol": "Facteur commun $3x$ : $3x(2x-3)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $4x^3+10x^2$.",
+       "ans": "2*x**2*(2*x+5)",
+       "sol": "Facteur commun $2x^2$ : $2x^2(2x+5)$."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa2",
+     "enonce": "Factoriser $25x^2-4$.",
+     "ans": "(5*x-2)*(5*x+2)",
+     "sol": "$a^2-b^2$ avec $a=5x$, $b=2$ : $(5x-2)(5x+2)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $9-16x^2$.",
+       "ans": "(3-4*x)*(3+4*x)",
+       "sol": "$(3-4x)(3+4x)$."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa3",
+     "enonce": "Factoriser $x^2-10x+25$.",
+     "ans": "(x-5)**2",
+     "sol": "$a^2-2ab+b^2$ : $(x-5)^2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $4x^2+12x+9$.",
+       "ans": "(2*x+3)**2",
+       "sol": "$(2x)^2+2\\cdot2x\\cdot3+3^2=(2x+3)^2$."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa4",
+     "enonce": "Factoriser $(x+1)^2-9$.",
+     "ans": "(x-2)*(x+4)",
+     "sol": "$a^2-b^2$ avec $a=x+1$, $b=3$ : $(x+1-3)(x+1+3)=(x-2)(x+4)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $(2x-1)^2-(x+2)^2$.",
+       "ans": "(x-3)*(3*x+1)",
+       "sol": "$(2x-1-x-2)(2x-1+x+2)=(x-3)(3x+1)$."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa5",
+     "enonce": "Factoriser $(x-2)(3x+1)+(x-2)(x+4)$.",
+     "ans": "(x-2)*(4*x+5)",
+     "sol": "Facteur commun $(x-2)$ : $(x-2)(3x+1+x+4)=(x-2)(4x+5)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $(2x+1)^2-(2x+1)(x-3)$.",
+       "ans": "(2*x+1)*(x+4)",
+       "sol": "$(2x+1)(2x+1-x+3)=(2x+1)(x+4)$."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa6",
+     "enonce": "$P(x)=x^3-2x^2-x+2$. Vérifier que $1$ est racine puis factoriser $P$ complètement.",
+     "ans": "(x-1)*(x+1)*(x-2)",
+     "sol": "$P(1)=0$ donc $P=(x-1)(x^2-x-2)$, et $x^2-x-2=(x+1)(x-2)$ : $P=(x-1)(x+1)(x-2)$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$P(x)=x^3+x^2-4x-4$. Trouver une racine évidente puis factoriser $P$.",
+       "ans": "(x+1)*(x-2)*(x+2)",
+       "sol": "$P(-1)=0$ : $P=(x+1)(x^2-4)=(x+1)(x-2)(x+2)$ (ou facteur commun par groupes : $x^2(x+1)-4(x+1)$)."
+      }
+     ],
+     "formules": "$ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$ · $\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Trinôme du second degré",
+   "notions": [
+    "trinome"
+   ],
+   "exos": [
+    {
+     "id": "tr1",
+     "enonce": "Calculer le discriminant de $2x^2-3x-5$ puis ses racines (donner leur produit).",
+     "ans": "Rational(-5,2)",
+     "sol": "$\\Delta=9+40=49$, racines $\\frac{3\\pm7}4$ : $-1$ et $\\frac52$. Produit $-\\frac52=\\frac ca$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Racines de $3x^2+x-2$ (donner leur produit).",
+       "ans": "Rational(-2,3)",
+       "sol": "$\\Delta=1+24=25$, racines $\\frac{-1\\pm5}6$ : $-1$ et $\\frac23$."
+      }
+     ],
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "value"
+    },
+    {
+     "id": "tr2",
+     "enonce": "Factoriser $x^2+x-12$.",
+     "ans": "(x-3)*(x+4)",
+     "sol": "Racines de somme $-1$ et produit $-12$ : $3$ et $-4$. $(x-3)(x+4)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $x^2-7x+10$.",
+       "ans": "(x-2)*(x-5)",
+       "sol": "Somme 7, produit 10 : $2$ et $5$."
+      }
+     ],
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "value"
+    },
+    {
+     "id": "tr3",
+     "enonce": "Factoriser $2x^2-x-1$.",
+     "ans": "(x-1)*(2*x+1)",
+     "sol": "$1$ racine évidente, l'autre $\\frac ca=-\\frac12$ : $2(x-1)(x+\\frac12)=(x-1)(2x+1)$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Factoriser $3x^2+5x+2$.",
+       "ans": "(x+1)*(3*x+2)",
+       "sol": "$-1$ racine, l'autre $\\frac ca\\cdot\\frac1{-1}=-\\frac23$ : $(x+1)(3x+2)$."
+      }
+     ],
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "value"
+    },
+    {
+     "id": "tr4",
+     "enonce": "Combien de racines réelles a $x^2-4x+7$ ? (donner $\\Delta$)",
+     "ans": "-12",
+     "sol": "$\\Delta=16-28=-12 < 0$ : aucune racine réelle, et $x^2-4x+7>0$ pour tout $x$ (signe de $a$).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Combien de racines réelles a $4x^2-4x+1$ ? (donner $\\Delta$)",
+       "ans": "0",
+       "sol": "$\\Delta=0$ : racine double $\\frac12$, $4x^2-4x+1=(2x-1)^2$."
+      }
+     ],
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "value"
+    },
+    {
+     "id": "tr5",
+     "enonce": "Donner le signe de $-x^2+x+6$ selon $x$.",
+     "sol": "Racines $-2$ et $3$ ($\\Delta=25$). $a=-1 < 0$ : négatif à l'extérieur des racines, positif entre. $-x^2+x+6>0\\iff x\\in\\,]-2,3[$.",
+     "duree": 3,
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "open"
+    }
+   ]
+  }
+ ]
+}

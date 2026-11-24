@@ -1,0 +1,225 @@
+{
+ "subject": {
+  "id": "bases-exp-ln",
+  "ordre": 16,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Exponentielle et logarithme",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "exp",
+   "titre": "Exponentielle",
+   "formule": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+   "exemple": "$\\frac{e^{2x}e^{3}}{e^{x}}=e^{x+3}$",
+   "cours": "Mêmes règles que les puissances. $e^x$ est strictement positive et croissante : $e^a\\le e^b\\iff a\\le b$. Pour $e^{2x}-3e^x+2=0$, poser $X=e^x$ ($X>0$) et résoudre le trinôme."
+  },
+  {
+   "id": "ln",
+   "titre": "Logarithme népérien",
+   "formule": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+   "exemple": "$\\ln8-\\ln2=\\ln4=2\\ln2$",
+   "cours": "$\\ln$ n'est défini que sur $]0,+\\infty[$ : vérifier le domaine avant de résoudre. $\\ln$ est croissante : $\\ln a\\le\\ln b\\iff a\\le b$. $\\ln(a+b)\\neq\\ln a+\\ln b$. $a^b=e^{b\\ln a}$ pour $a>0$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "exp",
+   "type": "vf",
+   "q": "$e^{a}+e^{b}=e^{a+b}$",
+   "bonne": false
+  },
+  {
+   "notion": "exp",
+   "type": "vf",
+   "q": "$e^x>0$ pour tout réel $x$.",
+   "bonne": true
+  },
+  {
+   "notion": "ln",
+   "type": "qcm",
+   "q": "$\\ln(8)=$",
+   "choix": [
+    "$3\\ln2$",
+    "$\\ln6+\\ln2$",
+    "$8\\ln1$",
+    "$\\ln2^3=(\\ln2)^3$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "ln",
+   "type": "vf",
+   "q": "$\\ln(a+b)=\\ln a\\,\\ln b$",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Exponentielle",
+   "notions": [
+    "exp"
+   ],
+   "exos": [
+    {
+     "id": "ex1",
+     "enonce": "Simplifier $\\frac{e^{3x}\\,e^{-x}}{e^{x+1}}$.",
+     "ans": "exp(x-1)",
+     "sol": "$e^{3x-x-x-1}=e^{x-1}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{(e^{x})^3}{e^{2x-1}}$.",
+       "ans": "exp(x+1)",
+       "sol": "$e^{3x-2x+1}=e^{x+1}$."
+      }
+     ],
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    },
+    {
+     "id": "ex2",
+     "enonce": "Résoudre $e^{2x-1}=e^{x+3}$.",
+     "ans": "4",
+     "sol": "$\\exp$ injective : $2x-1=x+3$, $x=4$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $e^{3x}=e^{1-x}$.",
+       "ans": "Rational(1,4)",
+       "sol": "$3x=1-x$, $x=\\frac14$."
+      }
+     ],
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    },
+    {
+     "id": "ex3",
+     "enonce": "Résoudre $e^{x}=5$.",
+     "ans": "log(5)",
+     "sol": "$x=\\ln5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $e^{2x}=3$.",
+       "ans": "log(3)/2",
+       "sol": "$2x=\\ln3$, $x=\\frac{\\ln3}2$."
+      }
+     ],
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$ · $\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+     "type": "value"
+    },
+    {
+     "id": "ex4",
+     "enonce": "Résoudre $e^{2x}-3e^x+2=0$.",
+     "sol": "$X=e^x>0$ : $X^2-3X+2=0$, $X=1$ ou $X=2$. Donc $x=0$ ou $x=\\ln2$.",
+     "duree": 3,
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$ · $\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "open"
+    },
+    {
+     "id": "ex5",
+     "enonce": "Résoudre $e^{x^2}\\le e^{4}$.",
+     "sol": "$\\exp$ croissante : $x^2\\le4\\iff x\\in[-2,2]$.",
+     "duree": 2,
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Logarithme",
+   "notions": [
+    "ln"
+   ],
+   "exos": [
+    {
+     "id": "ln1",
+     "enonce": "Écrire $\\ln 12-\\ln3+\\ln 2$ sous la forme $a\\ln2$.",
+     "ans": "3*log(2)",
+     "sol": "$\\ln\\frac{12\\times2}3=\\ln8=3\\ln2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\ln 50-2\\ln5+\\ln4$ sous la forme $a\\ln2$.",
+       "ans": "3*log(2)",
+       "sol": "$\\ln\\frac{50\\cdot4}{25}=\\ln8=3\\ln2$."
+      }
+     ],
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+     "type": "value"
+    },
+    {
+     "id": "ln2",
+     "enonce": "Simplifier $\\ln(e^3)+e^{\\ln 2}-\\ln\\sqrt e$.",
+     "ans": "Rational(9,2)",
+     "sol": "$3+2-\\frac12=\\frac92$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\ln\\frac1{e^2}+e^{2\\ln3}$.",
+       "ans": "7",
+       "sol": "$-2+e^{\\ln9}=-2+9=7$."
+      }
+     ],
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+     "type": "value"
+    },
+    {
+     "id": "ln3",
+     "enonce": "Résoudre $\\ln(2x-1)=\\ln(x+2)$.",
+     "ans": "3",
+     "sol": "Domaine $x>\\frac12$. $2x-1=x+2$, $x=3$ (dans le domaine).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $\\ln(3x+1)=\\ln(x+5)$.",
+       "ans": "2",
+       "sol": "Domaine $x>-\\frac13$ ; $3x+1=x+5$, $x=2$."
+      }
+     ],
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+     "type": "value"
+    },
+    {
+     "id": "ln4",
+     "enonce": "Résoudre $\\ln x+\\ln(x-1)=\\ln 2$.",
+     "sol": "Domaine $x>1$. $\\ln(x(x-1))=\\ln2\\iff x^2-x-2=0$, $x=2$ ou $x=-1$. Seul $x=2$ est dans le domaine.",
+     "duree": 3,
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$ · $\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "open"
+    },
+    {
+     "id": "ln5",
+     "enonce": "Résoudre $\\ln(x-2)\\le0$.",
+     "sol": "Domaine $x>2$. $\\ln(x-2)\\le\\ln1\\iff x-2\\le1$ : $S=\\,]2,3]$.",
+     "duree": 2,
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
+     "type": "open"
+    },
+    {
+     "id": "ln6",
+     "enonce": "Écrire $2^{x}$ avec l'exponentielle puis calculer $\\ln(2^{10})/\\ln 2$.",
+     "ans": "10",
+     "sol": "$2^x=e^{x\\ln2}$ ; $\\ln(2^{10})=10\\ln2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac{\\ln 81}{\\ln 3}$.",
+       "ans": "4",
+       "sol": "$\\ln81=\\ln3^4=4\\ln3$."
+      }
+     ],
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$ · $e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

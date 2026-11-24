@@ -226,6 +226,38 @@
  ],
  "matieres": [
   {
+   "id": "bases",
+   "titre": "Bases maths",
+   "semestres": [
+    {
+     "id": "S0",
+     "moodle": "S1-MATHS-2031",
+     "ecues": [
+      {
+       "id": "Calcul",
+       "titre": "Bases de calcul (prérequis du lycée)",
+       "periode_examen": "pas d'examen : prérequis de toutes les matières",
+       "chapitres": [],
+       "parcours": [
+        "bases-fractions",
+        "bases-puissances",
+        "bases-algebre",
+        "bases-divisions",
+        "bases-equations",
+        "bases-sommes",
+        "bases-exp-ln",
+        "bases-trigo",
+        "bases-derivees",
+        "bases-limites"
+       ],
+       "a_faire": [],
+       "annales": []
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "maths",
    "titre": "Mathématiques",
    "semestres": [

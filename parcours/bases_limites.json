@@ -1,0 +1,158 @@
+{
+ "subject": {
+  "id": "bases-limites",
+  "ordre": 19,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Limites",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "limites",
+   "titre": "Limites usuelles",
+   "formule": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+   "exemple": "$\\lim_{x\\to+\\infty}\\frac{3x^2+1}{x^2-5}=3$",
+   "cours": "Polynôme ou fraction rationnelle en $\\pm\\infty$ : factoriser par le terme de plus haut degré. Croissances comparées : l'exponentielle l'emporte sur les puissances, qui l'emportent sur le logarithme. Formes indéterminées : $\\infty-\\infty$, $0\\times\\infty$, $\\frac\\infty\\infty$, $\\frac00$."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "limites",
+   "type": "vf",
+   "q": "$\\lim_{x\\to+\\infty}\\frac{e^x}{x^{10}}=+\\infty$",
+   "bonne": true
+  },
+  {
+   "notion": "limites",
+   "type": "qcm",
+   "q": "$\\lim_{x\\to0^+}x\\ln x=$",
+   "choix": [
+    "$0$",
+    "$-\\infty$",
+    "$1$",
+    "$+\\infty$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Polynômes, fractions, conjugué",
+   "notions": [
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "li1",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\frac{3x^2-x+1}{2x^2+5}$.",
+     "ans": "Rational(3,2)",
+     "sol": "Factoriser par $x^2$ : $\\frac{3-\\frac1x+\\frac1{x^2}}{2+\\frac5{x^2}}\\to\\frac32$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to+\\infty}\\frac{x^3+1}{4x^3-x}$.",
+       "ans": "Rational(1,4)",
+       "sol": "Termes dominants : $\\frac{x^3}{4x^3}=\\frac14$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "li2",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(x^2-3x\\right)$.",
+     "ans": "oo",
+     "sol": "Forme $\\infty-\\infty$ : $x^2\\left(1-\\frac3x\\right)\\to+\\infty$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to-\\infty}\\left(x^3+x^2\\right)$.",
+       "ans": "-oo",
+       "sol": "$x^3\\left(1+\\frac1x\\right)\\to-\\infty$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "li6",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(\\sqrt{x+1}-\\sqrt x\\right)$.",
+     "ans": "0",
+     "sol": "Conjugué : $\\frac{1}{\\sqrt{x+1}+\\sqrt x}\\to0$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(\\sqrt{x^2+x}-x\\right)$.",
+       "ans": "Rational(1,2)",
+       "sol": "$\\frac{x}{\\sqrt{x^2+x}+x}=\\frac1{\\sqrt{1+1/x}+1}\\to\\frac12$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0 · $\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Croissances comparées, limites en 0",
+   "notions": [
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "li3",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}x^3e^{-x}$.",
+     "ans": "0",
+     "sol": "Croissances comparées : $\\frac{x^3}{e^x}\\to0$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to+\\infty}\\frac{\\ln x}{\\sqrt x}$.",
+       "ans": "0",
+       "sol": "Croissances comparées : $\\ln$ est dominé par toute puissance."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "li4",
+     "enonce": "Calculer $\\lim_{x\\to0}\\frac{e^{2x}-1}{x}$.",
+     "ans": "2",
+     "sol": "$\\frac{e^{2x}-1}{2x}\\cdot2\\to1\\cdot2=2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to0}\\frac{\\ln(1+3x)}{x}$.",
+       "ans": "3",
+       "sol": "$\\frac{\\ln(1+3x)}{3x}\\cdot3\\to3$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "li5",
+     "enonce": "Calculer $\\lim_{x\\to0}\\frac{\\sin(5x)}{x}$.",
+     "ans": "5",
+     "sol": "$\\frac{\\sin(5x)}{5x}\\cdot5\\to5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to0}\\frac{\\sin x}{3x}$.",
+       "ans": "Rational(1,3)",
+       "sol": "$\\frac13\\cdot\\frac{\\sin x}x\\to\\frac13$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

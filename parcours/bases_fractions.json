@@ -1,0 +1,219 @@
+{
+ "subject": {
+  "id": "bases-fractions",
+  "ordre": 10,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Fractions",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "fractions",
+   "titre": "Fractions",
+   "formule": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+   "exemple": "$\\frac23+\\frac14=\\frac{8+3}{12}=\\frac{11}{12}$",
+   "cours": "Pour additionner, mettre au même dénominateur (le plus petit multiple commun suffit). Pour multiplier, numérateurs entre eux et dénominateurs entre eux. Diviser par une fraction, c'est multiplier par son inverse. Simplifier en divisant haut et bas par le même facteur, jamais en barrant des termes d'une somme."
+  },
+  {
+   "id": "fractions_alg",
+   "titre": "Fractions rationnelles",
+   "formule": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+   "exemple": "$\\frac1x-\\frac1{x+1}=\\frac{1}{x(x+1)}$",
+   "cours": "Même méthode que les fractions numériques, en gardant les dénominateurs factorisés. On ne simplifie que des facteurs communs. Préciser les valeurs interdites (dénominateur nul)."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "fractions",
+   "type": "vf",
+   "q": "$\\frac{a+b}{a+c}=\\frac{b}{c}$",
+   "bonne": false
+  },
+  {
+   "notion": "fractions",
+   "type": "qcm",
+   "q": "$\\frac{2/3}{4/5}=$",
+   "choix": [
+    "$\\frac56$",
+    "$\\frac8{15}$",
+    "$\\frac{6}{5}$",
+    "$\\frac{10}{12}$ non simplifiable"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "fractions_alg",
+   "type": "vf",
+   "q": "$\\frac{x+2}{x+5}=\\frac25$",
+   "bonne": false
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Fractions numériques",
+   "notions": [
+    "fractions"
+   ],
+   "exos": [
+    {
+     "id": "fr1",
+     "enonce": "Calculer $\\frac23+\\frac34$.",
+     "ans": "Rational(17,12)",
+     "sol": "Dénominateur commun 12 : $\\frac8{12}+\\frac9{12}=\\frac{17}{12}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac35+\\frac16$.",
+       "ans": "Rational(23,30)",
+       "sol": "$\\frac{18}{30}+\\frac5{30}=\\frac{23}{30}$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    },
+    {
+     "id": "fr2",
+     "enonce": "Calculer $\\frac56-\\frac7{10}$.",
+     "ans": "Rational(2,15)",
+     "sol": "Dénominateur commun 30 : $\\frac{25}{30}-\\frac{21}{30}=\\frac4{30}=\\frac2{15}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac34-\\frac56$.",
+       "ans": "Rational(-1,12)",
+       "sol": "$\\frac9{12}-\\frac{10}{12}=-\\frac1{12}$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    },
+    {
+     "id": "fr3",
+     "enonce": "Calculer $\\frac{14}{15}\\times\\frac{25}{21}$ sous forme irréductible.",
+     "ans": "Rational(10,9)",
+     "sol": "Simplifier avant de multiplier : $\\frac{2\\times7}{3\\times5}\\times\\frac{5\\times5}{3\\times7}=\\frac{2\\times5}{3\\times3}=\\frac{10}9$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac{6}{35}\\times\\frac{14}{9}$.",
+       "ans": "Rational(4,15)",
+       "sol": "$\\frac{2\\cdot3}{5\\cdot7}\\times\\frac{2\\cdot7}{3\\cdot3}=\\frac4{15}$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    },
+    {
+     "id": "fr4",
+     "enonce": "Calculer $\\dfrac{\\frac34}{\\frac9{8}}$.",
+     "ans": "Rational(2,3)",
+     "sol": "Diviser, c'est multiplier par l'inverse : $\\frac34\\times\\frac89=\\frac{24}{36}=\\frac23$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\dfrac{\\frac5{6}}{\\frac{10}{9}}$.",
+       "ans": "Rational(3,4)",
+       "sol": "$\\frac56\\times\\frac9{10}=\\frac{45}{60}=\\frac34$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    },
+    {
+     "id": "fr5",
+     "enonce": "Calculer $\\dfrac{1+\\frac12}{1-\\frac13}$.",
+     "ans": "Rational(9,4)",
+     "sol": "$\\frac{3/2}{2/3}=\\frac32\\times\\frac32=\\frac94$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\dfrac{2-\\frac14}{\\frac12+\\frac13}$.",
+       "ans": "Rational(21,10)",
+       "sol": "$\\frac{7/4}{5/6}=\\frac74\\times\\frac65=\\frac{42}{20}=\\frac{21}{10}$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Fractions rationnelles",
+   "notions": [
+    "fractions_alg"
+   ],
+   "exos": [
+    {
+     "id": "fa_1",
+     "enonce": "Réduire au même dénominateur $\\frac1x+\\frac2{x+1}$.",
+     "ans": "(3*x+1)/(x*(x+1))",
+     "sol": "$\\frac{(x+1)+2x}{x(x+1)}=\\frac{3x+1}{x(x+1)}$, pour $x\\notin\\{0,-1\\}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Réduire $\\frac3{x-1}-\\frac1{x}$.",
+       "ans": "(2*x+1)/(x*(x-1))",
+       "sol": "$\\frac{3x-(x-1)}{x(x-1)}=\\frac{2x+1}{x(x-1)}$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+     "type": "value"
+    },
+    {
+     "id": "fa_2",
+     "enonce": "Simplifier $\\frac{x^2-4}{x^2+2x}$.",
+     "ans": "(x-2)/x",
+     "sol": "$\\frac{(x-2)(x+2)}{x(x+2)}=\\frac{x-2}x$ pour $x\\notin\\{0,-2\\}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{x^2-6x+9}{x^2-9}$.",
+       "ans": "(x-3)/(x+3)",
+       "sol": "$\\frac{(x-3)^2}{(x-3)(x+3)}=\\frac{x-3}{x+3}$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$ · $ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    },
+    {
+     "id": "fa_3",
+     "enonce": "Écrire $\\frac{1}{x}-\\frac1{x+1}$ en une seule fraction.",
+     "ans": "1/(x*(x+1))",
+     "sol": "$\\frac{x+1-x}{x(x+1)}=\\frac1{x(x+1)}$ (identité utile pour les sommes télescopiques).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\frac{1}{x-1}-\\frac1{x+1}$ en une seule fraction.",
+       "ans": "2/(x**2-1)",
+       "sol": "$\\frac{x+1-(x-1)}{(x-1)(x+1)}=\\frac2{x^2-1}$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+     "type": "value"
+    },
+    {
+     "id": "fa_4",
+     "enonce": "Trouver $a$ et $b$ tels que $\\frac{x+3}{x+1}=a+\\frac{b}{x+1}$ (donner $a+\\frac b{x+1}$).",
+     "ans": "1+2/(x+1)",
+     "sol": "$x+3=(x+1)+2$ : $a=1$, $b=2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\frac{2x-1}{x-2}$ sous la forme $a+\\frac b{x-2}$.",
+       "ans": "2+3/(x-2)",
+       "sol": "$2x-1=2(x-2)+3$ : $a=2$, $b=3$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$ · Entiers : $a=bq+r$, $0\\le r < b$ · Polynômes : $A=BQ+R$, $\\deg R < \\deg B$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

@@ -52,9 +52,12 @@ FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-inte
                  'archi-s1-numeration': 'Numération', 'archi-s2-sequentielle': 'Logique séquentielle',
                  'archi-s2-microprocesseur': 'Systèmes à microprocesseur'}
 # path id -> paths whose notions it relies on; shown as links after a failed exercise
-PREREQ = {'maths-s1-dp': ['maths-s1-obm'], 'maths-s1-apis-suites': ['maths-s1-obm'],
-          'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm'],
-          'maths-s2-apef-fonctions': ['maths-s1-apis-suites'],
+PREREQ = {'maths-s1-dp': ['maths-s1-obm', 'bases-fractions', 'bases-sommes'],
+          'maths-s1-apis-suites': ['maths-s1-obm', 'bases-sommes', 'bases-limites'],
+          'maths-s1-apis-integrales': ['bases-derivees', 'bases-exp-ln', 'bases-puissances', 'bases-trigo'],
+          'maths-s1-obm': ['bases-equations'],
+          'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm', 'bases-algebre', 'bases-divisions'],
+          'maths-s2-apef-fonctions': ['maths-s1-apis-suites', 'bases-limites', 'bases-derivees'],
           'maths-s2-ev': ['maths-s2-apef-polynomes'], 'maths-s2-alm': ['maths-s2-ev'],
           'maths-s3-asn': ['maths-s1-apis-suites', 'maths-s2-apef-fonctions'],
           'maths-s3-pse': ['maths-s1-dp', 'maths-s3-asn'],

@@ -1,0 +1,174 @@
+{
+ "subject": {
+  "id": "bases-sommes",
+  "ordre": 15,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Sommes",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "sommes",
+   "titre": "Sommes",
+   "formule": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+   "exemple": "$\\sum_{k=0}^{9}2^k=2^{10}-1=1023$",
+   "cours": "Linéarité : $\\sum(\\lambda a_k+b_k)=\\lambda\\sum a_k+\\sum b_k$. Une constante sommée de $k=p$ à $n$ donne $(n-p+1)\\times$ la constante. Somme arithmétique : nombre de termes $\\times\\frac{\\text{premier}+\\text{dernier}}2$. Somme géométrique : premier terme $\\times\\frac{1-q^{\\text{nb termes}}}{1-q}$. Télescopage : les termes intermédiaires s'annulent."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "sommes",
+   "type": "qcm",
+   "q": "Nombre de termes de $\\sum_{k=3}^{10}$ :",
+   "choix": [
+    "$8$",
+    "$7$",
+    "$10$",
+    "$13$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "sommes",
+   "type": "vf",
+   "q": "$\\sum_{k=0}^{n}2^k=2^{n+1}-1$",
+   "bonne": true
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Sommes usuelles et linéarité",
+   "notions": [
+    "sommes"
+   ],
+   "exos": [
+    {
+     "id": "so1",
+     "enonce": "Calculer $\\sum_{k=1}^{100}k$.",
+     "ans": "5050",
+     "sol": "$\\frac{100\\times101}2=5050$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{50}k$.",
+       "ans": "1275",
+       "sol": "$\\frac{50\\times51}2=1275$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    },
+    {
+     "id": "so2",
+     "enonce": "Calculer $\\sum_{k=1}^{n}(2k+3)$ en fonction de $n$.",
+     "ans": "n**2+4*n",
+     "sol": "Linéarité : $2\\cdot\\frac{n(n+1)}2+3n=n^2+4n$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{n}(4k-1)$.",
+       "ans": "2*n**2+n",
+       "sol": "$4\\cdot\\frac{n(n+1)}2-n=2n^2+n$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    },
+    {
+     "id": "so4",
+     "enonce": "Calculer $\\sum_{k=2}^{10}5$.",
+     "ans": "45",
+     "sol": "$10-2+1=9$ termes : $9\\times5=45$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{n}7$.",
+       "ans": "7*(n+1)",
+       "sol": "$n+1$ termes : $7(n+1)$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    },
+    {
+     "id": "so6",
+     "enonce": "Calculer $\\sum_{k=1}^{n}k^2$ pour $n=10$.",
+     "ans": "385",
+     "sol": "$\\frac{10\\cdot11\\cdot21}6=385$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{20}k^2$.",
+       "ans": "2870",
+       "sol": "$\\frac{20\\cdot21\\cdot41}6=2870$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Sommes géométriques et télescopiques",
+   "notions": [
+    "sommes"
+   ],
+   "exos": [
+    {
+     "id": "so3",
+     "enonce": "Calculer $\\sum_{k=0}^{n}3^k$.",
+     "ans": "(3**(n+1)-1)/2",
+     "sol": "Géométrique de raison 3, $n+1$ termes : $\\frac{3^{n+1}-1}{3-1}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=0}^{n}\\left(\\frac12\\right)^k$.",
+       "ans": "2-(Rational(1,2))**n",
+       "sol": "$\\frac{1-(1/2)^{n+1}}{1/2}=2-\\frac1{2^n}$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    },
+    {
+     "id": "so7",
+     "enonce": "Calculer $\\sum_{k=1}^{10}2^k$.",
+     "ans": "2046",
+     "sol": "Premier terme $2$, raison 2, 10 termes : $2\\cdot\\frac{2^{10}-1}{2-1}=2046$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=2}^{6}3^k$.",
+       "ans": "1089",
+       "sol": "$9\\cdot\\frac{3^5-1}{3-1}=9\\cdot121=1089$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$",
+     "type": "value"
+    },
+    {
+     "id": "so5",
+     "enonce": "Calculer $\\sum_{k=1}^{n}\\frac1{k(k+1)}$ (écrire $\\frac1{k(k+1)}=\\frac1k-\\frac1{k+1}$).",
+     "ans": "1-1/(n+1)",
+     "sol": "Télescopage : $\\left(1-\\frac12\\right)+\\left(\\frac12-\\frac13\\right)+\\dots=1-\\frac1{n+1}$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sum_{k=1}^{n}\\left(\\sqrt{k+1}-\\sqrt k\\right)$.",
+       "ans": "sqrt(n+1)-1",
+       "sol": "Télescopage : $\\sqrt{n+1}-\\sqrt1$."
+      }
+     ],
+     "formules": "$\\sum_{k=1}^nk=\\frac{n(n+1)}2$ · $\\sum_{k=1}^nk^2=\\frac{n(n+1)(2n+1)}6$ · $\\sum_{k=0}^nq^k=\\frac{1-q^{n+1}}{1-q}$ ($q\\neq1$) · $\\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1$ · $\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+     "type": "value"
+    }
+   ]
+  }
+ ]
+}

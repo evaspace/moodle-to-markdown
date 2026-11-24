@@ -377,3 +377,7 @@ Fait :
 - Nouveau conseil pour un cours dont l'examen est passé : 1 à 2 séances par semaine pour les partiels de fin de semestre, priorité aux cours à venir.
 - Rythme : graphique en barres (réussite par heure), les 3 meilleures heures entre 8 h et 22 h en vert et écrites en clair.
 - Pause forcée (option, désactivée par défaut, bouton sur `/admin/beta`) : après le temps de travail, la page d'exercice passe en écran noir avec compte à rebours, et le serveur refuse les réponses (code 423) jusqu'à la fin. Temps de travail : mon rythme mesuré (25 ou 45 min), sinon la médiane des élèves ; le soir ×0,75 dès 20 h (20 min minimum), pause +5 min dès 21 h ; une pause sur trois dure 20 min. Une pause est faite quand aucune réponse n'a été donnée pendant sa durée.
+
+## Bases maths (2026-11-24)
+Demande : des niveaux pour connaître les bases (sommes, factorisation, divisions, exp, ln, et autres), « fais-les tous ». Puis : plusieurs catégories de thèmes différents dans « Bases maths », qui est une matière ; chaque type est un chapitre, avec des niveaux par chapitre pour voir toutes les formules générales.
+Fait : matière `bases` (« Bases maths »), 10 chapitres, 21 niveaux, 88 exercices (variante chiffrée pour chaque calcul), vérifiés par sympy.

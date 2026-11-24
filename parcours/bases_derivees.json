@@ -1,0 +1,168 @@
+{
+ "subject": {
+  "id": "bases-derivees",
+  "ordre": 18,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Dérivées",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "derivees",
+   "titre": "Dérivées usuelles",
+   "formule": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+   "exemple": "$(x^2e^x)'=(2x+x^2)e^x$",
+   "cours": "$(\\cos u)'=-u'\\sin u$, $(\\sin u)'=u'\\cos u$, $(u^n)'=nu'u^{n-1}$, $\\left(\\frac1u\\right)'=-\\frac{u'}{u^2}$. Toujours repérer la forme (produit, quotient, composée) avant de dériver."
+  }
+ ],
+ "quiz": [
+  {
+   "notion": "derivees",
+   "type": "qcm",
+   "q": "$(\\ln u)'=$",
+   "choix": [
+    "$\\frac{u'}u$",
+    "$\\frac1u$",
+    "$u'\\ln u$",
+    "$\\frac{u}{u'}$"
+   ],
+   "bonne": 0
+  }
+ ],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Opérations : somme, produit, quotient",
+   "notions": [
+    "derivees"
+   ],
+   "exos": [
+    {
+     "id": "de1",
+     "ans": "12*x**3-4*x+5",
+     "enonce": "Dériver $f(x)=3x^4-2x^2+5x-1$.",
+     "sol": "$f'(x)=12x^3-4x+5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "5*x**4-3",
+       "enonce": "Dériver $f(x)=x^5-3x+2$.",
+       "sol": "$f'(x)=5x^4-3$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "de2",
+     "ans": "(x**2+2*x)*exp(x)",
+     "enonce": "Dériver $f(x)=x^2e^x$.",
+     "sol": "$(uv)'$ : $2xe^x+x^2e^x=(x^2+2x)e^x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "log(x)+1",
+       "enonce": "Dériver $f(x)=x\\ln x$.",
+       "sol": "$\\ln x+x\\cdot\\frac1x=\\ln x+1$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "de3",
+     "ans": "5/(x+3)**2",
+     "enonce": "Dériver $f(x)=\\frac{2x+1}{x+3}$.",
+     "sol": "$\\frac{2(x+3)-(2x+1)}{(x+3)^2}=\\frac5{(x+3)^2}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "2/(x+1)**2",
+       "enonce": "Dériver $f(x)=\\frac{x-1}{x+1}$.",
+       "sol": "$\\frac{(x+1)-(x-1)}{(x+1)^2}=\\frac2{(x+1)^2}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Composées",
+   "notions": [
+    "derivees"
+   ],
+   "exos": [
+    {
+     "id": "de4",
+     "ans": "-2*x*exp(-x**2)",
+     "enonce": "Dériver $f(x)=e^{-x^2}$.",
+     "sol": "$u'e^u$ avec $u'=-2x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "3*exp(3*x+1)",
+       "enonce": "Dériver $f(x)=e^{3x+1}$.",
+       "sol": "$3e^{3x+1}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "de5",
+     "ans": "2*x/(x**2+1)",
+     "enonce": "Dériver $f(x)=\\ln(x^2+1)$.",
+     "sol": "$\\frac{u'}u=\\frac{2x}{x^2+1}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "3/(3*x-1)",
+       "enonce": "Dériver $f(x)=\\ln(3x-1)$ sur $\\left]\\frac13,+\\infty\\right[$.",
+       "sol": "$\\frac3{3x-1}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "de6",
+     "ans": "x/sqrt(x**2+1)",
+     "enonce": "Dériver $f(x)=\\sqrt{x^2+1}$.",
+     "sol": "$\\frac{u'}{2\\sqrt u}=\\frac{2x}{2\\sqrt{x^2+1}}=\\frac{x}{\\sqrt{x^2+1}}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "-2*x/(x**2+1)**2",
+       "enonce": "Dériver $f(x)=\\frac1{x^2+1}$.",
+       "sol": "$-\\frac{u'}{u^2}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "de7",
+     "ans": "2*cos(2*x)*cos(x)-sin(2*x)*sin(x)",
+     "enonce": "Dériver $f(x)=\\sin(2x)\\cos x$.",
+     "sol": "$(uv)'$ : $2\\cos(2x)\\cos x-\\sin(2x)\\sin x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "-3*sin(x)*cos(x)**2",
+       "enonce": "Dériver $f(x)=\\cos^3x$.",
+       "sol": "$3u'u^2$ avec $u'=-\\sin x$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    }
+   ]
+  }
+ ]
+}
