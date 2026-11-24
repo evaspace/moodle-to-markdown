@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261124">
-  <link rel="stylesheet" href="/static/niveaux.css?v=39">
+  <link rel="stylesheet" href="/static/niveaux.css?v=40">
 </head>
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
@@ -24,7 +24,8 @@
       <label><input type="radio" name="ordre" value="semestre" {{ 'checked' if f.ordre == 'semestre' }}> le semestre</label>
       <label><input type="radio" name="ordre" value="matiere" {{ 'checked' if f.ordre == 'matiere' }}> la matière</label>
     </fieldset>
-    {% macro sem() %}<label>Semestre <select name="sem"><option value="">Tous</option>{% for x in sel.sems %}<option {{ 'selected' if f.sem == x }}>{{ x }}</option>{% endfor %}</select></label>{% endmacro %}
+    {% macro sem() %}<fieldset class="lv-sems"><legend>Pour qui</legend><input type="hidden" name="sems_set" value="1">
+      {% for x in sel.sems %}<label><input type="checkbox" name="sem" value="{{ x }}" {{ 'checked' if not f.sem or x in f.sem }}> {{ x }} ({{ '2e' if x in ('S3', 'S4') else '1re' }} année)</label>{% endfor %}</fieldset>{% endmacro %}
     {% macro mat() %}<label>Matière <select name="mat"><option value="">Toutes</option>{% for x in sel.mats %}<option value="{{ x }}" {{ 'selected' if f.mat == x }}>{{ x|capitalize }}</option>{% endfor %}</select></label>{% endmacro %}
     <div class="lv-selects">
       {% if f.ordre == 'semestre' %}{{ sem() }}{{ mat() }}{% else %}{{ mat() }}{{ sem() }}{% endif %}
@@ -36,7 +37,7 @@
 
   {% for s in subjects %}
   <section class="lv-subject">
-    <h2>{{ s.semestre }} {{ s.matiere|capitalize }} · {{ s.ecue }} · {{ s.titre }}{% if s.prestige %} · Prestige {{ s.prestige }}{% endif %}</h2>
+    <h2>{{ 'Prérequis' if s.semestre == 'S0' else s.semestre ~ (' (2e année)' if s.semestre in ('S3', 'S4') else ' (1re année)') }} · {{ s.matiere|capitalize }} · {{ s.ecue }} · {{ s.titre }}{% if s.prestige %} · Prestige {{ s.prestige }}{% endif %}</h2>
     <div class="lv-meter" role="progressbar" aria-valuenow="{{ s.percent }}" aria-valuemin="0" aria-valuemax="100"
          aria-label="Progression {{ s.titre }}"><span style="width: {{ s.percent }}%"></span></div>
     <p><strong>{{ s.percent }} %</strong> · niveau {{ s.level }} sur {{ s.n }} ·

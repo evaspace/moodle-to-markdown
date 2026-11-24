@@ -695,29 +695,42 @@ def _paths_meta():
 
 
 def _filters():
-    """Selection from the query string: ordre (semestre|matiere), sem, mat, ch ('' = all)."""
+    """Selection from the query string: ordre (semestre|matiere), sem (list of semesters, kept in the session;
+    [] = all), mat, ch ('' = all). Default S1 + S2: S3 is the next year, shown only when ticked."""
     a = request.args
+    if a.get('sems_set'):  # the checkbox form was sent: no « sem » means every box was unticked
+        sems = session['sems'] = [x for x in a.getlist('sem') if x]
+    elif a.get('sem'):
+        sems = a.getlist('sem')
+    else:
+        sems = session.get('sems', DEFAULT_SEMS)
     return {'ordre': 'matiere' if a.get('ordre') == 'matiere' else 'semestre',
-            'sem': a.get('sem', ''), 'mat': a.get('mat', ''), 'ch': a.get('ch', '')}
+            'sem': sems, 'mat': a.get('mat', ''), 'ch': a.get('ch', '')}
+
+
+DEFAULT_SEMS = ['S1', 'S2']
+ALWAYS_SEM = 'S0'  # Bases maths: prerequisite of every year, never filtered out
+
+
+def _sem_ok(d, f):
+    sem = d['subject']['semestre']
+    return sem == ALWAYS_SEM or not f['sem'] or sem in f['sem']
 
 
 def select_paths(paths, f):
-    """Paths matching the selection; a chapter outside the chosen semester/subject is ignored."""
+    """Paths matching the selection; a chapter outside the chosen semesters/subject is ignored."""
     out = [(sid, d) for sid, d in paths
-           if (not f['sem'] or d['subject']['semestre'] == f['sem'])
-           and (not f['mat'] or d['subject']['matiere'] == f['mat'])]
+           if _sem_ok(d, f) and (not f['mat'] or d['subject']['matiere'] == f['mat'])]
     one = [(sid, d) for sid, d in out if sid == f['ch']]
     return one or out
 
 
 def selector(paths, f):
-    """Options of the three lists, each narrowed by the lists placed before it in the chosen order."""
-    sems = sorted({d['subject']['semestre'] for _, d in paths})
+    """Options: semester boxes (all but S0), then subjects and chapters narrowed by the choices placed before."""
+    sems = sorted({d['subject']['semestre'] for _, d in paths} - {ALWAYS_SEM})
     mats = sorted({d['subject']['matiere'] for _, d in paths})
     if f['ordre'] == 'semestre':
-        mats = sorted({d['subject']['matiere'] for _, d in paths if not f['sem'] or d['subject']['semestre'] == f['sem']})
-    else:
-        sems = sorted({d['subject']['semestre'] for _, d in paths if not f['mat'] or d['subject']['matiere'] == f['mat']})
+        mats = sorted({d['subject']['matiere'] for _, d in paths if _sem_ok(d, f)})
     chs = [{'id': sid, 'titre': f"{d['subject']['ecue']} · {d['subject']['titre']}"}
            for sid, d in select_paths(paths, dict(f, ch=''))]
     return {'sems': sems, 'mats': mats, 'chs': chs}
@@ -746,7 +759,7 @@ def levels_home():
                                                  (uid,))}
     subjects.sort(key=lambda x: -last.get(x['id'], 0))  # the path worked on last comes first (stable otherwise)
     return render_template('niveaux.html', subjects=subjects, username=session['username'], xp=total_xp,
-                           f=f, sel=selector(paths, f), qs=urlencode(f), n_review=n_review,
+                           f=f, sel=selector(paths, f), qs=urlencode(f, doseq=True), n_review=n_review,
                            reviewed=bool(request.args.get('revu')))
 
 
@@ -768,10 +781,12 @@ def level_abandon(subject):
 def levels_mix():
     """'Tout confondu': next exercise from a random selected path, at the user's current level there."""
     f = _filters()
-    chosen = [sid for sid, _ in select_paths(_paths_meta(), f)]
+    picked = select_paths(_paths_meta(), f)
+    # bases (S0) stay listed with every year, but join the mix only when no semester filter is set
+    chosen = [sid for sid, d in picked if not f['sem'] or d['subject']['semestre'] != ALWAYS_SEM] or [sid for sid, _ in picked]
     if not chosen:
         return redirect('/niveaux')
-    return redirect(f'/niveaux/{random.choice(chosen)}?' + urlencode(dict(f, mix=1)))
+    return redirect(f'/niveaux/{random.choice(chosen)}?' + urlencode(dict(f, mix=1), doseq=True))
 
 
 def _today():
@@ -849,7 +864,7 @@ def level_page(subject):
         easier=bool(skipped),
         mix=f'/niveaux/{subject}' if skipped else
             '/beta/seance/' + quote(request.args['seance']) if request.args.get('seance') else
-            ('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
+            ('/niveaux/melange?' + urlencode(_filters(), doseq=True)) if request.args.get('mix') else
             (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
             if request.args.get('revoir') else None,
         review=bool(request.args.get('revoir')),

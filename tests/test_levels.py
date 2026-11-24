@@ -117,25 +117,28 @@ class Rules(unittest.TestCase):
 class Selection(unittest.TestCase):
     P = [('a', {'subject': {'semestre': 'S1', 'matiere': 'maths', 'ecue': 'A', 'titre': 'a'}}),
          ('b', {'subject': {'semestre': 'S2', 'matiere': 'maths', 'ecue': 'B', 'titre': 'b'}}),
-         ('c', {'subject': {'semestre': 'S1', 'matiere': 'info', 'ecue': 'C', 'titre': 'c'}})]
+         ('c', {'subject': {'semestre': 'S1', 'matiere': 'info', 'ecue': 'C', 'titre': 'c'}}),
+         ('d', {'subject': {'semestre': 'S3', 'matiere': 'maths', 'ecue': 'D', 'titre': 'd'}}),
+         ('z', {'subject': {'semestre': 'S0', 'matiere': 'bases', 'ecue': 'Z', 'titre': 'z'}})]
 
     def f(self, **kw):
-        return dict({'ordre': 'semestre', 'sem': '', 'mat': '', 'ch': ''}, **kw)
+        return dict({'ordre': 'semestre', 'sem': [], 'mat': '', 'ch': ''}, **kw)
 
     def ids(self, **kw):
         return [sid for sid, _ in levels.select_paths(self.P, self.f(**kw))]
 
     def test_filters(self):
-        self.assertEqual(self.ids(), ['a', 'b', 'c'])
-        self.assertEqual(self.ids(sem='S1'), ['a', 'c'])
-        self.assertEqual(self.ids(sem='S1', mat='maths'), ['a'])
+        self.assertEqual(self.ids(), ['a', 'b', 'c', 'd', 'z'])
+        self.assertEqual(self.ids(sem=['S1', 'S2']), ['a', 'b', 'c', 'z'])  # S3 apart, bases always there
+        self.assertEqual(self.ids(sem=['S3']), ['d', 'z'])
+        self.assertEqual(self.ids(sem=['S1'], mat='maths'), ['a'])
         self.assertEqual(self.ids(ch='b'), ['b'])
-        self.assertEqual(self.ids(sem='S1', ch='b'), ['a', 'c'])  # chapter outside the semester: ignored
+        self.assertEqual(self.ids(sem=['S1'], ch='b'), ['a', 'c', 'z'])  # chapter outside the semester: ignored
 
     def test_options_follow_order(self):
-        self.assertEqual(levels.selector(self.P, self.f(sem='S2'))['mats'], ['maths'])
-        self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', mat='info'))['sems'], ['S1'])
-        self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', sem='S2'))['mats'], ['info', 'maths'])
+        self.assertEqual(levels.selector(self.P, self.f())['sems'], ['S1', 'S2', 'S3'])  # no box for S0
+        self.assertEqual(levels.selector(self.P, self.f(sem=['S2']))['mats'], ['bases', 'maths'])
+        self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', sem=['S2']))['mats'], ['bases', 'info', 'maths'])
 
 
 _S1_CAL = [  # fixed calendar for the tests: the real one in syllabus.json changes with every sync

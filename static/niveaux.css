@@ -136,6 +136,8 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .lv-order legend { font-weight: 700; margin-bottom: 8px; }
 .lv-selects { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
 .lv-selects label { display: flex; flex-direction: column; gap: 4px; font-weight: 700; }
+.lv-sems { border: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; font-weight: 400; }
+.lv-sems legend { font-weight: 700; margin-bottom: 4px; }
 .lv-selects select { font: inherit; font-weight: 400; padding: 10px; border: 2px solid var(--border-color); background: var(--bg-color); color: var(--text-color); }
 
 /* stats */
