@@ -5,7 +5,7 @@
   "matiere": "bases",
   "semestre": "S0",
   "ecue": "Calcul",
-  "titre": "Divisions",
+  "titre": "Divisions et arithmétique",
   "chapitres_moodle": [],
   "td": "",
   "examens": []
@@ -17,6 +17,13 @@
    "formule": "Entiers : $a=bq+r$, $0\\le r < b$ · Polynômes : $A=BQ+R$, $\\deg R < \\deg B$",
    "exemple": "$47=6\\times7+5$ ; $x^2+3x+5=(x+1)(x+2)+3$",
    "cours": "Pour les entiers : $q$ est la partie entière de $\\frac ab$, puis $r=a-bq$. Pour les polynômes : diviser les termes de plus haut degré, multiplier, soustraire, recommencer tant que le degré du reste est au moins celui de $B$. Le reste de la division de $P$ par $x-a$ vaut $P(a)$."
+  },
+  {
+   "id": "arithmetique",
+   "titre": "Divisibilité, PGCD, PPCM",
+   "formule": "$n=p_1^{a_1}\\cdots p_k^{a_k}$ · $\\mathrm{pgcd}\\times\\mathrm{ppcm}=ab$ · Euclide : $\\mathrm{pgcd}(a,b)=\\mathrm{pgcd}(b,r)$",
+   "exemple": "$\\mathrm{pgcd}(84,36)$ : $84=2\\times36+12$, $36=3\\times12$, donc 12",
+   "cours": "PGCD : produit des facteurs premiers communs avec le plus petit exposant ; PPCM : tous les facteurs avec le plus grand exposant. Critères : 2 (dernier chiffre pair), 3 et 9 (somme des chiffres), 4 (deux derniers chiffres), 5 (finit par 0 ou 5)."
   }
  ],
  "quiz": [
@@ -35,6 +42,24 @@
     "$-1$",
     "$1$",
     "$-2$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "arithmetique",
+   "type": "vf",
+   "q": "$\\mathrm{pgcd}(a,b)\\times\\mathrm{ppcm}(a,b)=ab$ pour $a,b\\ge1$.",
+   "bonne": true
+  },
+  {
+   "notion": "arithmetique",
+   "type": "qcm",
+   "q": "$\\mathrm{pgcd}(48,18)=$",
+   "choix": [
+    "$6$",
+    "$3$",
+    "$9$",
+    "$144$"
    ],
    "bonne": 0
   }
@@ -99,6 +124,71 @@
   },
   {
    "n": 2,
+   "titre": "Divisibilité, PGCD, PPCM",
+   "notions": [
+    "arithmetique"
+   ],
+   "exos": [
+    {
+     "id": "gc1",
+     "enonce": "Calculer $\\mathrm{pgcd}(84,36)$ par l'algorithme d'Euclide.",
+     "ans": "12",
+     "sol": "$84=2\\times36+12$, $36=3\\times12+0$ : $12$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\mathrm{pgcd}(252,198)$.",
+       "ans": "18",
+       "sol": "$252=198+54$, $198=3\\times54+36$, $54=36+18$, $36=2\\times18$."
+      }
+     ],
+     "formules": "$n=p_1^{a_1}\\cdots p_k^{a_k}$ · $\\mathrm{pgcd}\\times\\mathrm{ppcm}=ab$ · Euclide : $\\mathrm{pgcd}(a,b)=\\mathrm{pgcd}(b,r)$",
+     "type": "value"
+    },
+    {
+     "id": "gc2",
+     "enonce": "Calculer $\\mathrm{ppcm}(12,18)$.",
+     "ans": "36",
+     "sol": "$12=2^2\\cdot3$, $18=2\\cdot3^2$ : $2^2\\cdot3^2=36$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\mathrm{ppcm}(14,21)$.",
+       "ans": "42",
+       "sol": "$2\\cdot3\\cdot7=42$."
+      }
+     ],
+     "formules": "$n=p_1^{a_1}\\cdots p_k^{a_k}$ · $\\mathrm{pgcd}\\times\\mathrm{ppcm}=ab$ · Euclide : $\\mathrm{pgcd}(a,b)=\\mathrm{pgcd}(b,r)$",
+     "type": "value"
+    },
+    {
+     "id": "gc3",
+     "enonce": "Décomposer $360$ en facteurs premiers.",
+     "ans": "360",
+     "sol": "$360=2^3\\times3^2\\times5$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Décomposer $1008$ en facteurs premiers.",
+       "ans": "1008",
+       "sol": "$1008=2^4\\times3^2\\times7$."
+      }
+     ],
+     "formules": "$n=p_1^{a_1}\\cdots p_k^{a_k}$ · $\\mathrm{pgcd}\\times\\mathrm{ppcm}=ab$ · Euclide : $\\mathrm{pgcd}(a,b)=\\mathrm{pgcd}(b,r)$",
+     "type": "value"
+    },
+    {
+     "id": "gc4",
+     "enonce": "$4\\,572$ est-il divisible par 2, 3, 4, 5, 9 ?",
+     "sol": "2 : oui (finit par 2). 3 : somme $18$, oui. 4 : $72$ divisible par 4, oui. 5 : non. 9 : somme $18$, oui.",
+     "duree": 2,
+     "formules": "$n=p_1^{a_1}\\cdots p_k^{a_k}$ · $\\mathrm{pgcd}\\times\\mathrm{ppcm}=ab$ · Euclide : $\\mathrm{pgcd}(a,b)=\\mathrm{pgcd}(b,r)$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 3,
    "titre": "Division des polynômes",
    "notions": [
     "divisions"

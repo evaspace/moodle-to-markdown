@@ -381,3 +381,4 @@ Fait :
 ## Bases maths (2026-11-24)
 Demande : des niveaux pour connaître les bases (sommes, factorisation, divisions, exp, ln, et autres), « fais-les tous ». Puis : plusieurs catégories de thèmes différents dans « Bases maths », qui est une matière ; chaque type est un chapitre, avec des niveaux par chapitre pour voir toutes les formules générales.
 Fait : matière `bases` (« Bases maths »), 10 chapitres, 21 niveaux, 88 exercices (variante chiffrée pour chaque calcul), vérifiés par sympy.
+Retour : « c'est normal qu'il n'y ait que 2 niveaux ? il faut voir toutes les formules générales pour être chaud en maths », puis « fais également le changement de variable dans les sommes ». Fait : 3 à 6 niveaux par chapitre, un exercice par formule générale, nouvelles notions (puissances de 10, PGCD/PPCM, produits et factorielles, puissances réelles, tangente et variations, éléments simples, changement d'indice) : 51 niveaux, 164 exercices.

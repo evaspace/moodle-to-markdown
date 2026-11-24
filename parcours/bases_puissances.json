@@ -24,6 +24,13 @@
    "formule": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
    "exemple": "$\\sqrt{50}=\\sqrt{25\\times2}=5\\sqrt2$",
    "cours": "Pour simplifier $\\sqrt n$, sortir le plus grand carré qui divise $n$. $\\sqrt{a+b}\\neq\\sqrt a+\\sqrt b$. Pour enlever une racine d'un dénominateur, multiplier haut et bas par la quantité conjuguée : $(\\sqrt a-\\sqrt b)(\\sqrt a+\\sqrt b)=a-b$."
+  },
+  {
+   "id": "puissances10",
+   "titre": "Puissances de 10, notation scientifique",
+   "formule": "$a\\times10^n$ avec $1\\le a < 10$ · $10^n\\times10^m=10^{n+m}$ · $\\frac{10^n}{10^m}=10^{n-m}$ · $(10^n)^m=10^{nm}$",
+   "exemple": "$0{,}00052=5{,}2\\times10^{-4}$",
+   "cours": "Calculer séparément les nombres $a$ et les puissances de 10, puis ramener $a$ entre 1 et 10. Préfixes : milli $10^{-3}$, micro $10^{-6}$, nano $10^{-9}$, kilo $10^3$, méga $10^6$, giga $10^9$."
   }
  ],
  "quiz": [
@@ -56,12 +63,30 @@
    "type": "vf",
    "q": "$\\sqrt{x^2}=|x|$ pour tout réel $x$.",
    "bonne": true
+  },
+  {
+   "notion": "puissances10",
+   "type": "qcm",
+   "q": "$1\\ \\mu\\mathrm{s}=$",
+   "choix": [
+    "$10^{-6}$ s",
+    "$10^{-3}$ s",
+    "$10^{-9}$ s",
+    "$10^{6}$ s"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "puissances10",
+   "type": "vf",
+   "q": "$12\\times10^{3}$ est en notation scientifique.",
+   "bonne": false
   }
  ],
  "levels": [
   {
    "n": 1,
-   "titre": "Puissances",
+   "titre": "Même base : produit, quotient, puissance",
    "notions": [
     "puissances"
    ],
@@ -99,6 +124,31 @@
      "type": "value"
     },
     {
+     "id": "pu6",
+     "enonce": "Calculer $(2^3)^{-2}\\times4^3$.",
+     "ans": "1",
+     "sol": "$2^{-6}\\times2^{6}=2^0=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $(3^2)^{-3}\\times27^2$.",
+       "ans": "1",
+       "sol": "$3^{-6}\\times3^6=1$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Même exposant, sommes de puissances",
+   "notions": [
+    "puissances"
+   ],
+   "exos": [
+    {
      "id": "pu3",
      "enonce": "Calculer $\\frac{6^3}{2^3\\times3^2}$.",
      "ans": "3",
@@ -131,6 +181,31 @@
      "type": "value"
     },
     {
+     "id": "pu7",
+     "enonce": "Simplifier $2^n+2^{n+1}$.",
+     "ans": "3*2**n",
+     "sol": "$2^n(1+2)=3\\cdot2^n$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $3^{n+2}-3^n$.",
+       "ans": "8*3**n",
+       "sol": "$3^n(9-1)=8\\cdot3^n$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Exposants fractionnaires",
+   "notions": [
+    "puissances"
+   ],
+   "exos": [
+    {
      "id": "pu5",
      "enonce": "Calculer $8^{2/3}$ et $27^{-1/3}$.",
      "ans": "4+Rational(1,3)",
@@ -145,16 +220,23 @@
      ],
      "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
      "type": "value"
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "titre": "Racines carrées",
-   "notions": [
-    "racines"
-   ],
-   "exos": [
+    },
+    {
+     "id": "pu8",
+     "enonce": "Écrire $\\sqrt x\\times\\sqrt[3]x$ sous la forme $x^r$ ($x>0$).",
+     "ans": "x**Rational(5,6)",
+     "sol": "$x^{\\frac12+\\frac13}=x^{5/6}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $\\frac{\\sqrt x}{x^2}$ sous la forme $x^r$.",
+       "ans": "x**Rational(-3,2)",
+       "sol": "$x^{\\frac12-2}=x^{-3/2}$."
+      }
+     ],
+     "formules": "$a^na^m=a^{n+m}$ · $\\frac{a^n}{a^m}=a^{n-m}$ · $(a^n)^m=a^{nm}$ · $(ab)^n=a^nb^n$ · $a^{-n}=\\frac1{a^n}$ · $a^0=1$",
+     "type": "value"
+    },
     {
      "id": "ra1",
      "enonce": "Simplifier $\\sqrt{72}$.",
@@ -170,7 +252,16 @@
      ],
      "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
      "type": "value"
-    },
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Racines carrées : simplifier",
+   "notions": [
+    "racines"
+   ],
+   "exos": [
     {
      "id": "ra2",
      "enonce": "Simplifier $\\sqrt{50}-2\\sqrt{18}+\\sqrt8$.",
@@ -187,6 +278,47 @@
      "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
      "type": "value"
     },
+    {
+     "id": "ra5",
+     "enonce": "Calculer $\\sqrt{(1-\\sqrt2)^2}$.",
+     "ans": "sqrt(2)-1",
+     "sol": "$\\sqrt{a^2}=|a|$ et $1-\\sqrt2 < 0$ : $|1-\\sqrt2|=\\sqrt2-1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\sqrt{(2-\\sqrt5)^2}$.",
+       "ans": "sqrt(5)-2",
+       "sol": "$2 < \\sqrt5$ donc $|2-\\sqrt5|=\\sqrt5-2$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    },
+    {
+     "id": "ra6",
+     "enonce": "Calculer $(\\sqrt5+\\sqrt3)(\\sqrt5-\\sqrt3)$.",
+     "ans": "2",
+     "sol": "$(a+b)(a-b)=a^2-b^2=5-3$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $(2\\sqrt3-1)(2\\sqrt3+1)$.",
+       "ans": "11",
+       "sol": "$12-1=11$."
+      }
+     ],
+     "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Conjugué et développement",
+   "notions": [
+    "racines"
+   ],
+   "exos": [
     {
      "id": "ra3",
      "enonce": "Écrire $\\frac{1}{\\sqrt3-1}$ sans racine au dénominateur.",
@@ -220,19 +352,92 @@
      "type": "value"
     },
     {
-     "id": "ra5",
-     "enonce": "Calculer $\\sqrt{(1-\\sqrt2)^2}$.",
-     "ans": "sqrt(2)-1",
-     "sol": "$\\sqrt{a^2}=|a|$ et $1-\\sqrt2 < 0$ : $|1-\\sqrt2|=\\sqrt2-1$.",
+     "id": "ra7",
+     "enonce": "Écrire $\\frac1{\\sqrt{x+1}-\\sqrt x}$ sans racine au dénominateur ($x\\ge0$).",
+     "ans": "sqrt(x+1)+sqrt(x)",
+     "sol": "Conjugué : $\\frac{\\sqrt{x+1}+\\sqrt x}{(x+1)-x}=\\sqrt{x+1}+\\sqrt x$.",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Calculer $\\sqrt{(2-\\sqrt5)^2}$.",
-       "ans": "sqrt(5)-2",
-       "sol": "$2 < \\sqrt5$ donc $|2-\\sqrt5|=\\sqrt5-2$."
+       "enonce": "Écrire $\\frac{3}{\\sqrt{x+3}-\\sqrt x}$ sans racine au dénominateur.",
+       "ans": "sqrt(x+3)+sqrt(x)",
+       "sol": "$\\frac{3(\\sqrt{x+3}+\\sqrt x)}{3}$."
       }
      ],
      "formules": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "titre": "Puissances de 10 et notation scientifique",
+   "notions": [
+    "puissances10"
+   ],
+   "exos": [
+    {
+     "id": "ps1",
+     "enonce": "Calculer $\\frac{3\\times10^4\\times2\\times10^{-6}}{1{,}2\\times10^{-3}}$.",
+     "ans": "50",
+     "sol": "$\\frac{6}{1{,}2}\\times10^{4-6+3}=5\\times10=50$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac{8\\times10^{-2}\\times5\\times10^{3}}{4\\times10^{-1}}$.",
+       "ans": "1000",
+       "sol": "$\\frac{40}4\\times10^{-2+3+1}=10\\times10^2$."
+      }
+     ],
+     "formules": "$a\\times10^n$ avec $1\\le a < 10$ · $10^n\\times10^m=10^{n+m}$ · $\\frac{10^n}{10^m}=10^{n-m}$ · $(10^n)^m=10^{nm}$",
+     "type": "value"
+    },
+    {
+     "id": "ps2",
+     "enonce": "Écrire $0{,}00052$ en notation scientifique.",
+     "ans": "Rational(52,10)*10**(-4)",
+     "sol": "$5{,}2\\times10^{-4}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Écrire $38\\,000\\,000$ en notation scientifique.",
+       "ans": "Rational(38,10)*10**7",
+       "sol": "$3{,}8\\times10^{7}$."
+      }
+     ],
+     "formules": "$a\\times10^n$ avec $1\\le a < 10$ · $10^n\\times10^m=10^{n+m}$ · $\\frac{10^n}{10^m}=10^{n-m}$ · $(10^n)^m=10^{nm}$",
+     "type": "value"
+    },
+    {
+     "id": "ps3",
+     "enonce": "Calculer $(4\\times10^{-3})^2$ en notation scientifique.",
+     "ans": "Rational(16,10)*10**(-5)",
+     "sol": "$16\\times10^{-6}=1{,}6\\times10^{-5}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $(2\\times10^{4})^3$.",
+       "ans": "8*10**12",
+       "sol": "$8\\times10^{12}$."
+      }
+     ],
+     "formules": "$a\\times10^n$ avec $1\\le a < 10$ · $10^n\\times10^m=10^{n+m}$ · $\\frac{10^n}{10^m}=10^{n-m}$ · $(10^n)^m=10^{nm}$",
+     "type": "value"
+    },
+    {
+     "id": "ps4",
+     "enonce": "Convertir $2{,}5\\ \\mu\\mathrm{F}$ en farads, puis $0{,}47\\ \\mathrm{k}\\Omega$ en ohms (donner le produit $RC$ en secondes).",
+     "ans": "Rational(1175,1000000)",
+     "sol": "$2{,}5\\times10^{-6}\\times470=1{,}175\\times10^{-3}$ s.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "$R=10\\ \\mathrm{k}\\Omega$, $C=100\\ \\mathrm{nF}$ : calculer $RC$.",
+       "ans": "Rational(1,1000)",
+       "sol": "$10^4\\times10^{-7}=10^{-3}$ s."
+      }
+     ],
+     "formules": "$a\\times10^n$ avec $1\\le a < 10$ · $10^n\\times10^m=10^{n+m}$ · $\\frac{10^n}{10^m}=10^{n-m}$ · $(10^n)^m=10^{nm}$",
      "type": "value"
     }
    ]

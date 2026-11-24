@@ -12,6 +12,13 @@
  },
  "notions": [
   {
+   "id": "trinome",
+   "titre": "Trinôme du second degré",
+   "formule": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+   "exemple": "$x^2-5x+6$ : $\\Delta=1$, racines 2 et 3, $=(x-2)(x-3)$",
+   "cours": "Le trinôme a le signe de $a$ à l'extérieur des racines et le signe opposé entre elles. Si $\\Delta < 0$, pas de racine réelle et signe de $a$ partout. Racine évidente : essayer $1,-1,2$ puis utiliser le produit $\\frac ca$ pour l'autre."
+  },
+  {
    "id": "equations",
    "titre": "Équations et inéquations",
    "formule": "$AB=0\\iff A=0$ ou $B=0$ · $\\frac AB=0\\iff A=0$ et $B\\neq0$ · multiplier une inégalité par un négatif la renverse",
@@ -27,6 +34,24 @@
   }
  ],
  "quiz": [
+  {
+   "notion": "trinome",
+   "type": "vf",
+   "q": "Si $\\Delta < 0$, $ax^2+bx+c$ a le signe de $a$ pour tout $x$.",
+   "bonne": true
+  },
+  {
+   "notion": "trinome",
+   "type": "qcm",
+   "q": "Produit des racines de $2x^2-6x+4$ :",
+   "choix": [
+    "$2$",
+    "$3$",
+    "$4$",
+    "$-3$"
+   ],
+   "bonne": 0
+  },
   {
    "notion": "equations",
    "type": "vf",
@@ -49,7 +74,7 @@
  "levels": [
   {
    "n": 1,
-   "titre": "Équations et inéquations",
+   "titre": "Premier degré et systèmes",
    "notions": [
     "equations"
    ],
@@ -79,6 +104,31 @@
      "type": "open"
     },
     {
+     "id": "eq6",
+     "enonce": "Résoudre $\\begin{cases}2x+y=5\\\\x-y=1\\end{cases}$ (donner $x$).",
+     "ans": "2",
+     "sol": "Addition : $3x=6$, $x=2$, puis $y=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $\\begin{cases}x+2y=7\\\\3x-y=0\\end{cases}$ (donner $x$).",
+       "ans": "1",
+       "sol": "$y=3x$ : $7x=7$, $x=1$, $y=3$."
+      }
+     ],
+     "formules": "$AB=0\\iff A=0$ ou $B=0$ · $\\frac AB=0\\iff A=0$ et $B\\neq0$ · multiplier une inégalité par un négatif la renverse",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Inéquations et tableaux de signes",
+   "notions": [
+    "equations"
+   ],
+   "exos": [
+    {
      "id": "eq3",
      "enonce": "Résoudre $(2x-1)(x+3)\\le0$.",
      "sol": "Zéros $\\frac12$ et $-3$. Tableau de signes : produit négatif entre les zéros. $S=\\left[-3,\\frac12\\right]$.",
@@ -105,8 +155,42 @@
    ]
   },
   {
-   "n": 2,
-   "titre": "Valeur absolue",
+   "n": 3,
+   "titre": "Second degré, bicarrées, racines",
+   "notions": [
+    "equations",
+    "trinome"
+   ],
+   "exos": [
+    {
+     "id": "eq7",
+     "enonce": "Résoudre $x^2+2x-8=0$.",
+     "sol": "$\\Delta=36$, $x=\\frac{-2\\pm6}2$ : $2$ ou $-4$.",
+     "duree": 2,
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$",
+     "type": "open"
+    },
+    {
+     "id": "eq8",
+     "enonce": "Résoudre $x^4-5x^2+4=0$.",
+     "sol": "$X=x^2$ : $X^2-5X+4=0$, $X=1$ ou $4$, donc $x\\in\\{-2,-1,1,2\\}$.",
+     "duree": 3,
+     "formules": "$\\Delta=b^2-4ac$ · $\\Delta>0$ : $x_{1,2}=\\frac{-b\\pm\\sqrt\\Delta}{2a}$ et $ax^2+bx+c=a(x-x_1)(x-x_2)$ · $\\Delta=0$ : $a\\left(x+\\frac b{2a}\\right)^2$ · $x_1+x_2=-\\frac ba$, $x_1x_2=\\frac ca$ · $AB=0\\iff A=0$ ou $B=0$ · $\\frac AB=0\\iff A=0$ et $B\\neq0$ · multiplier une inégalité par un négatif la renverse",
+     "type": "open"
+    },
+    {
+     "id": "eq9",
+     "enonce": "Résoudre $\\sqrt{x+2}=x$.",
+     "sol": "Condition $x\\ge0$. Élever au carré : $x+2=x^2$, $x=2$ ou $x=-1$. On garde $x=2$ ($-1 < 0$ ne convient pas).",
+     "duree": 3,
+     "formules": "$AB=0\\iff A=0$ ou $B=0$ · $\\frac AB=0\\iff A=0$ et $B\\neq0$ · multiplier une inégalité par un négatif la renverse · $\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "open"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Valeur absolue : équations et inéquations",
    "notions": [
     "valeur_absolue"
    ],
@@ -134,7 +218,16 @@
      "duree": 2,
      "formules": "$|a|=a$ si $a\\ge0$, $-a$ sinon · $|x-a|\\le r\\iff a-r\\le x\\le a+r$ · $|ab|=|a||b|$ · $|a+b|\\le|a|+|b|$",
      "type": "open"
-    },
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Valeur absolue : expressions",
+   "notions": [
+    "valeur_absolue"
+   ],
+   "exos": [
     {
      "id": "va4",
      "enonce": "Écrire $f(x)=|x-1|+|x+2|$ sans valeur absolue.",
@@ -158,6 +251,14 @@
      ],
      "formules": "$|a|=a$ si $a\\ge0$, $-a$ sinon · $|x-a|\\le r\\iff a-r\\le x\\le a+r$ · $|ab|=|a||b|$ · $|a+b|\\le|a|+|b|$",
      "type": "value"
+    },
+    {
+     "id": "va6",
+     "enonce": "Résoudre $|x|=|x-2|$.",
+     "sol": "Même distance à 0 et à 2 : $x=1$ (ou $x^2=(x-2)^2\\iff4x=4$).",
+     "duree": 2,
+     "formules": "$|a|=a$ si $a\\ge0$, $-a$ sinon · $|x-a|\\le r\\iff a-r\\le x\\le a+r$ · $|ab|=|a||b|$ · $|a+b|\\le|a|+|b|$",
+     "type": "open"
     }
    ]
   }

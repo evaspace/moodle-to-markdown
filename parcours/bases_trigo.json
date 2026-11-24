@@ -42,7 +42,7 @@
  "levels": [
   {
    "n": 1,
-   "titre": "Valeurs remarquables et relations",
+   "titre": "Valeurs remarquables",
    "notions": [
     "trigo"
    ],
@@ -80,6 +80,31 @@
      "type": "value"
     },
     {
+     "id": "tg7",
+     "enonce": "Calculer $\\tan\\frac\\pi3+\\tan\\frac\\pi4$.",
+     "ans": "sqrt(3)+1",
+     "sol": "$\\tan\\frac\\pi3=\\frac{\\sqrt3/2}{1/2}=\\sqrt3$, $\\tan\\frac\\pi4=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\tan\\frac\\pi6$.",
+       "ans": "sqrt(3)/3",
+       "sol": "$\\frac{1/2}{\\sqrt3/2}=\\frac1{\\sqrt3}=\\frac{\\sqrt3}3$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Relations et symétries",
+   "notions": [
+    "trigo"
+   ],
+   "exos": [
+    {
      "id": "tg3",
      "enonce": "Sachant $\\cos x=\\frac35$ et $x\\in\\left]-\\frac\\pi2,0\\right[$, calculer $\\sin x$.",
      "ans": "Rational(-4,5)",
@@ -94,12 +119,60 @@
      ],
      "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
      "type": "value"
+    },
+    {
+     "id": "tg8",
+     "enonce": "Simplifier $\\cos(\\pi+x)+\\cos(\\pi-x)+\\cos(-x)$.",
+     "ans": "-cos(x)",
+     "sol": "$-\\cos x-\\cos x+\\cos x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\sin(\\pi-x)+\\sin(\\pi+x)+\\sin(-x)$.",
+       "ans": "-sin(x)",
+       "sol": "$\\sin x-\\sin x-\\sin x$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    },
+    {
+     "id": "tg9",
+     "enonce": "Simplifier $\\sin\\left(\\frac\\pi2-x\\right)$ et $\\cos\\left(\\frac\\pi2-x\\right)$ (donner la somme).",
+     "ans": "cos(x)+sin(x)",
+     "sol": "$\\sin(\\frac\\pi2-x)=\\cos x$, $\\cos(\\frac\\pi2-x)=\\sin x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\cos\\left(x+\\frac\\pi2\\right)$.",
+       "ans": "-sin(x)",
+       "sol": "$-\\sin x$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    },
+    {
+     "id": "tg10",
+     "enonce": "Montrer que $1+\\tan^2x=\\frac1{\\cos^2x}$ (simplifier $1+\\tan^2x$).",
+     "ans": "1/cos(x)**2",
+     "sol": "$\\frac{\\cos^2x+\\sin^2x}{\\cos^2x}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{1}{1+\\tan^2x}$.",
+       "ans": "cos(x)**2",
+       "sol": "$\\cos^2x$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
     }
    ]
   },
   {
-   "n": 2,
-   "titre": "Formules d'addition, équations",
+   "n": 3,
+   "titre": "Formules d'addition",
    "notions": [
     "trigo"
    ],
@@ -121,6 +194,47 @@
      "type": "value"
     },
     {
+     "id": "tg11",
+     "enonce": "Calculer $\\sin\\frac{7\\pi}{12}$ avec $\\frac{7\\pi}{12}=\\frac\\pi3+\\frac\\pi4$.",
+     "ans": "(sqrt(6)+sqrt(2))/4",
+     "sol": "$\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\cos\\frac{7\\pi}{12}$.",
+       "ans": "(sqrt(2)-sqrt(6))/4",
+       "sol": "$\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    },
+    {
+     "id": "tg12",
+     "enonce": "Développer $\\cos\\left(x+\\frac\\pi3\\right)$.",
+     "ans": "cos(x)/2-sqrt(3)*sin(x)/2",
+     "sol": "$\\cos x\\cdot\\frac12-\\sin x\\cdot\\frac{\\sqrt3}2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Développer $\\sin\\left(x-\\frac\\pi6\\right)$.",
+       "ans": "sqrt(3)*sin(x)/2-cos(x)/2",
+       "sol": "$\\sin x\\frac{\\sqrt3}2-\\cos x\\frac12$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Duplication et linéarisation",
+   "notions": [
+    "trigo"
+   ],
+   "exos": [
+    {
      "id": "tg5",
      "enonce": "Simplifier $\\cos^2x-\\sin^2x-2\\cos^2x$.",
      "ans": "-1",
@@ -137,10 +251,67 @@
      "type": "value"
     },
     {
+     "id": "tg13",
+     "enonce": "Exprimer $\\cos 2x$ avec $\\sin x$ seulement.",
+     "ans": "1-2*sin(x)**2",
+     "sol": "$\\cos^2x-\\sin^2x=1-2\\sin^2x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Exprimer $\\cos 2x$ avec $\\cos x$ seulement.",
+       "ans": "2*cos(x)**2-1",
+       "sol": "$2\\cos^2x-1$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    },
+    {
+     "id": "tg14",
+     "enonce": "Linéariser $\\cos^2x$.",
+     "ans": "(1+cos(2*x))/2",
+     "sol": "$\\cos2x=2\\cos^2x-1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Linéariser $\\sin^2x$.",
+       "ans": "(1-cos(2*x))/2",
+       "sol": "$\\cos2x=1-2\\sin^2x$."
+      }
+     ],
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Équations trigonométriques",
+   "notions": [
+    "trigo"
+   ],
+   "exos": [
+    {
      "id": "tg6",
      "enonce": "Résoudre $\\cos x=\\frac12$ sur $\\mathbb R$.",
      "sol": "$x=\\frac\\pi3+2k\\pi$ ou $x=-\\frac\\pi3+2k\\pi$, $k\\in\\mathbb Z$.",
      "duree": 2,
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "open"
+    },
+    {
+     "id": "tg15",
+     "enonce": "Résoudre $\\sin x=\\frac{\\sqrt2}2$ sur $\\mathbb R$.",
+     "sol": "$x=\\frac\\pi4+2k\\pi$ ou $x=\\pi-\\frac\\pi4+2k\\pi=\\frac{3\\pi}4+2k\\pi$.",
+     "duree": 2,
+     "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
+     "type": "open"
+    },
+    {
+     "id": "tg16",
+     "enonce": "Résoudre $\\cos 2x=0$ sur $[0,\\pi]$.",
+     "sol": "$2x=\\frac\\pi2+k\\pi$, $x=\\frac\\pi4+\\frac{k\\pi}2$ : $x\\in\\left\\{\\frac\\pi4,\\frac{3\\pi}4\\right\\}$.",
+     "duree": 3,
      "formules": "$\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
      "type": "open"
     }

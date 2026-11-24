@@ -12,6 +12,13 @@
  },
  "notions": [
   {
+   "id": "racines",
+   "titre": "Racines carrées",
+   "formule": "$\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+   "exemple": "$\\sqrt{50}=\\sqrt{25\\times2}=5\\sqrt2$",
+   "cours": "Pour simplifier $\\sqrt n$, sortir le plus grand carré qui divise $n$. $\\sqrt{a+b}\\neq\\sqrt a+\\sqrt b$. Pour enlever une racine d'un dénominateur, multiplier haut et bas par la quantité conjuguée : $(\\sqrt a-\\sqrt b)(\\sqrt a+\\sqrt b)=a-b$."
+  },
+  {
    "id": "limites",
    "titre": "Limites usuelles",
    "formule": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
@@ -20,6 +27,18 @@
   }
  ],
  "quiz": [
+  {
+   "notion": "racines",
+   "type": "vf",
+   "q": "$\\sqrt{9+16}=3+4$",
+   "bonne": false
+  },
+  {
+   "notion": "racines",
+   "type": "vf",
+   "q": "$\\sqrt{x^2}=|x|$ pour tout réel $x$.",
+   "bonne": true
+  },
   {
    "notion": "limites",
    "type": "vf",
@@ -42,7 +61,64 @@
  "levels": [
   {
    "n": 1,
-   "titre": "Polynômes, fractions, conjugué",
+   "titre": "Opérations, quotient par zéro",
+   "notions": [
+    "limites"
+   ],
+   "exos": [
+    {
+     "id": "li2",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(x^2-3x\\right)$.",
+     "ans": "oo",
+     "sol": "Forme $\\infty-\\infty$ : $x^2\\left(1-\\frac3x\\right)\\to+\\infty$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to-\\infty}\\left(x^3+x^2\\right)$.",
+       "ans": "-oo",
+       "sol": "$x^3\\left(1+\\frac1x\\right)\\to-\\infty$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "lm1",
+     "enonce": "Calculer $\\lim_{x\\to0^+}\\frac1x$ et $\\lim_{x\\to+\\infty}\\frac1x$ (donner la première).",
+     "ans": "oo",
+     "sol": "$+\\infty$ en $0^+$ et $0$ en $+\\infty$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to0^-}\\frac1x$.",
+       "ans": "-oo",
+       "sol": "$-\\infty$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "lm2",
+     "enonce": "Calculer $\\lim_{x\\to3^+}\\frac{2x+1}{x-3}$.",
+     "ans": "oo",
+     "sol": "Numérateur $\\to7>0$, dénominateur $\\to0^+$ : $+\\infty$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to1^-}\\frac{x}{x-1}$.",
+       "ans": "-oo",
+       "sol": "$\\frac{1}{0^-}=-\\infty$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Fractions rationnelles à l'infini",
    "notions": [
     "limites"
    ],
@@ -64,21 +140,47 @@
      "type": "value"
     },
     {
-     "id": "li2",
-     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(x^2-3x\\right)$.",
-     "ans": "oo",
-     "sol": "Forme $\\infty-\\infty$ : $x^2\\left(1-\\frac3x\\right)\\to+\\infty$.",
+     "id": "lm3",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\frac{x+1}{x^2+3}$.",
+     "ans": "0",
+     "sol": "Degré du haut < degré du bas : $\\frac x{x^2}=\\frac1x\\to0$.",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Calculer $\\lim_{x\\to-\\infty}\\left(x^3+x^2\\right)$.",
-       "ans": "-oo",
-       "sol": "$x^3\\left(1+\\frac1x\\right)\\to-\\infty$."
+       "enonce": "Calculer $\\lim_{x\\to+\\infty}\\frac{x^3-1}{x+2}$.",
+       "ans": "oo",
+       "sol": "$\\frac{x^3}x=x^2\\to+\\infty$."
       }
      ],
      "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
      "type": "value"
     },
+    {
+     "id": "lm4",
+     "enonce": "Calculer $\\lim_{x\\to-\\infty}\\frac{2x^2-x}{1-x^2}$.",
+     "ans": "-2",
+     "sol": "Termes dominants : $\\frac{2x^2}{-x^2}=-2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to-\\infty}\\frac{5x-1}{2x+3}$.",
+       "ans": "Rational(5,2)",
+       "sol": "$\\frac{5x}{2x}=\\frac52$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Racines et conjugué",
+   "notions": [
+    "limites",
+    "racines"
+   ],
+   "exos": [
     {
      "id": "li6",
      "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(\\sqrt{x+1}-\\sqrt x\\right)$.",
@@ -94,12 +196,44 @@
      ],
      "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0 · $\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
      "type": "value"
+    },
+    {
+     "id": "lm5",
+     "enonce": "Calculer $\\lim_{x\\to4}\\frac{\\sqrt x-2}{x-4}$.",
+     "ans": "Rational(1,4)",
+     "sol": "$x-4=(\\sqrt x-2)(\\sqrt x+2)$ : $\\frac1{\\sqrt x+2}\\to\\frac14$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to1}\\frac{x-1}{\\sqrt x-1}$.",
+       "ans": "2",
+       "sol": "$\\sqrt x+1\\to2$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0 · $\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
+    },
+    {
+     "id": "lm6",
+     "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(\\sqrt{x^2+3x}-x\\right)$.",
+     "ans": "Rational(3,2)",
+     "sol": "Conjugué : $\\frac{3x}{\\sqrt{x^2+3x}+x}=\\frac3{\\sqrt{1+3/x}+1}\\to\\frac32$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to+\\infty}\\left(\\sqrt{x^2+1}-x\\right)$.",
+       "ans": "0",
+       "sol": "$\\frac{1}{\\sqrt{x^2+1}+x}\\to0$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0 · $\\sqrt{ab}=\\sqrt a\\sqrt b$ · $\\sqrt{\\frac ab}=\\frac{\\sqrt a}{\\sqrt b}$ · $\\sqrt{a^2}=|a|$ · $\\frac1{\\sqrt a-\\sqrt b}=\\frac{\\sqrt a+\\sqrt b}{a-b}$",
+     "type": "value"
     }
    ]
   },
   {
-   "n": 2,
-   "titre": "Croissances comparées, limites en 0",
+   "n": 4,
+   "titre": "Croissances comparées",
    "notions": [
     "limites"
    ],
@@ -120,6 +254,47 @@
      "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
      "type": "value"
     },
+    {
+     "id": "lm7",
+     "enonce": "Calculer $\\lim_{x\\to-\\infty}xe^{x}$.",
+     "ans": "0",
+     "sol": "Croissances comparées ($X=-x$ : $-\\frac X{e^X}\\to0$).",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to-\\infty}x^2e^{x}$.",
+       "ans": "0",
+       "sol": "$\\frac{X^2}{e^X}\\to0$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "lm8",
+     "enonce": "Calculer $\\lim_{x\\to0^+}x\\ln x$.",
+     "ans": "0",
+     "sol": "Croissances comparées en $0$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to0^+}\\sqrt x\\ln x$.",
+       "ans": "0",
+       "sol": "Puissance de $x$ l'emporte sur $\\ln$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Limites usuelles en 0",
+   "notions": [
+    "limites"
+   ],
+   "exos": [
     {
      "id": "li4",
      "enonce": "Calculer $\\lim_{x\\to0}\\frac{e^{2x}-1}{x}$.",
@@ -150,6 +325,22 @@
       }
      ],
      "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0",
+     "type": "value"
+    },
+    {
+     "id": "lm10",
+     "enonce": "Calculer $\\lim_{x\\to0}\\frac{1-\\cos x}{x^2}$.",
+     "ans": "Rational(1,2)",
+     "sol": "$1-\\cos x=2\\sin^2\\frac x2$ : $\\frac12\\left(\\frac{\\sin(x/2)}{x/2}\\right)^2\\to\\frac12$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Calculer $\\lim_{x\\to0}\\frac{\\tan x}{x}$.",
+       "ans": "1",
+       "sol": "$\\frac{\\sin x}x\\cdot\\frac1{\\cos x}\\to1$."
+      }
+     ],
+     "formules": "En $+\\infty$ : $\\frac{e^x}{x^n}\\to+\\infty$ · $\\frac{\\ln x}{x^n}\\to0$ · $x^ne^{-x}\\to0$ · en $0^+$ : $x\\ln x\\to0$ · $\\frac{e^x-1}x\\to1$, $\\frac{\\ln(1+x)}x\\to1$, $\\frac{\\sin x}x\\to1$ en 0 · $\\cos^2x+\\sin^2x=1$ · $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$ · $\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b$ · $\\cos2a=2\\cos^2a-1$ · $\\sin2a=2\\sin a\\cos a$",
      "type": "value"
     }
    ]

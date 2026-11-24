@@ -17,6 +17,13 @@
    "formule": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
    "exemple": "$(x^2e^x)'=(2x+x^2)e^x$",
    "cours": "$(\\cos u)'=-u'\\sin u$, $(\\sin u)'=u'\\cos u$, $(u^n)'=nu'u^{n-1}$, $\\left(\\frac1u\\right)'=-\\frac{u'}{u^2}$. Toujours repérer la forme (produit, quotient, composée) avant de dériver."
+  },
+  {
+   "id": "tangente",
+   "titre": "Tangente et variations",
+   "formule": "Tangente en $a$ : $y=f'(a)(x-a)+f(a)$ · $f'\\ge0$ sur $I\\Rightarrow f$ croissante sur $I$",
+   "exemple": "$f(x)=x^2$ en $1$ : $y=2(x-1)+1=2x-1$",
+   "cours": "Pour étudier les variations : dériver, factoriser $f'$, tableau de signes de $f'$, flèches. Les extremums locaux sont aux points où $f'$ s'annule en changeant de signe."
   }
  ],
  "quiz": [
@@ -31,12 +38,30 @@
     "$\\frac{u}{u'}$"
    ],
    "bonne": 0
+  },
+  {
+   "notion": "tangente",
+   "type": "qcm",
+   "q": "Tangente à $f$ en $a$ :",
+   "choix": [
+    "$y=f'(a)(x-a)+f(a)$",
+    "$y=f(a)(x-a)+f'(a)$",
+    "$y=f'(x)(x-a)$",
+    "$y=f'(a)x+f(a)$"
+   ],
+   "bonne": 0
+  },
+  {
+   "notion": "tangente",
+   "type": "vf",
+   "q": "Si $f'(a)=0$, $f$ a forcément un extremum en $a$.",
+   "bonne": false
   }
  ],
  "levels": [
   {
    "n": 1,
-   "titre": "Opérations : somme, produit, quotient",
+   "titre": "Dérivées usuelles",
    "notions": [
     "derivees"
    ],
@@ -57,6 +82,47 @@
      "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
      "type": "derivative"
     },
+    {
+     "id": "dd1",
+     "ans": "-1/x**2+1/(2*sqrt(x))",
+     "enonce": "Dériver $f(x)=\\frac1x+\\sqrt x$.",
+     "sol": "$-\\frac1{x^2}+\\frac1{2\\sqrt x}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "-2/x**2-3/(2*sqrt(x))",
+       "enonce": "Dériver $f(x)=\\frac2x-3\\sqrt x$.",
+       "sol": "$-\\frac2{x^2}-\\frac3{2\\sqrt x}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "dd2",
+     "ans": "-3*x**(-4)+3*sqrt(x)/2",
+     "enonce": "Dériver $f(x)=x^{-3}+x^{3/2}$.",
+     "sol": "$(x^r)'=rx^{r-1}$ : $-3x^{-4}+\\frac32\\sqrt x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "x**Rational(-2,3)/3",
+       "enonce": "Dériver $f(x)=\\sqrt[3]x$.",
+       "sol": "$\\frac13x^{-2/3}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Produit et quotient",
+   "notions": [
+    "derivees"
+   ],
+   "exos": [
     {
      "id": "de2",
      "ans": "(x**2+2*x)*exp(x)",
@@ -88,12 +154,28 @@
      ],
      "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
      "type": "derivative"
+    },
+    {
+     "id": "dd3",
+     "ans": "(1-x**2)/(x**2+1)**2",
+     "enonce": "Dériver $f(x)=\\frac x{x^2+1}$.",
+     "sol": "$\\frac{(x^2+1)-2x^2}{(x^2+1)^2}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "(x-1)*exp(x)/x**2",
+       "enonce": "Dériver $f(x)=\\frac{e^x}x$.",
+       "sol": "$\\frac{xe^x-e^x}{x^2}$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
     }
    ]
   },
   {
-   "n": 2,
-   "titre": "Composées",
+   "n": 3,
+   "titre": "Composées exp et ln",
    "notions": [
     "derivees"
    ],
@@ -131,6 +213,31 @@
      "type": "derivative"
     },
     {
+     "id": "dd4",
+     "ans": "cos(x)*exp(sin(x))",
+     "enonce": "Dériver $f(x)=e^{\\sin x}$.",
+     "sol": "$u'e^u$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "-sin(x)/(cos(x)+2)",
+       "enonce": "Dériver $f(x)=\\ln(\\cos x+2)$.",
+       "sol": "$\\frac{u'}u$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Composées puissance, racine, trigo",
+   "notions": [
+    "derivees"
+   ],
+   "exos": [
+    {
      "id": "de6",
      "ans": "x/sqrt(x**2+1)",
      "enonce": "Dériver $f(x)=\\sqrt{x^2+1}$.",
@@ -161,6 +268,95 @@
      ],
      "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
      "type": "derivative"
+    },
+    {
+     "id": "dd5",
+     "ans": "15*(3*x+1)**4",
+     "enonce": "Dériver $f(x)=(3x+1)^5$.",
+     "sol": "$nu'u^{n-1}=5\\cdot3(3x+1)^4$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "-6*x*(1-x**2)**2",
+       "enonce": "Dériver $f(x)=(1-x^2)^3$.",
+       "sol": "$3(-2x)(1-x^2)^2$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    },
+    {
+     "id": "dd6",
+     "ans": "-6*x*sin(3*x**2)",
+     "enonce": "Dériver $f(x)=\\cos(3x^2)$.",
+     "sol": "$-u'\\sin u$.",
+     "duree": 2,
+     "variants": [
+      {
+       "ans": "3*x**2*cos(x**3)",
+       "enonce": "Dériver $f(x)=\\sin(x^3)$.",
+       "sol": "$u'\\cos u$."
+      }
+     ],
+     "formules": "$(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "derivative"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Tangente et variations",
+   "notions": [
+    "tangente"
+   ],
+   "exos": [
+    {
+     "id": "ta1",
+     "enonce": "Équation de la tangente à $f(x)=x^2+1$ en $a=1$.",
+     "ans": "2*x",
+     "sol": "$f(1)=2$, $f'(1)=2$ : $y=2(x-1)+2=2x$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Tangente à $f(x)=x^3$ en $a=1$.",
+       "ans": "3*x-2",
+       "sol": "$f(1)=1$, $f'(1)=3$."
+      }
+     ],
+     "formules": "Tangente en $a$ : $y=f'(a)(x-a)+f(a)$ · $f'\\ge0$ sur $I\\Rightarrow f$ croissante sur $I$",
+     "type": "value"
+    },
+    {
+     "id": "ta2",
+     "enonce": "Équation de la tangente à $\\ln$ en $a=1$, puis à $\\exp$ en $0$ (donner la différence des deux).",
+     "ans": "-2",
+     "sol": "$y=x-1$ et $y=x+1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Tangente à $\\sqrt x$ en $a=4$.",
+       "ans": "x/4+1",
+       "sol": "$f(4)=2$, $f'(4)=\\frac14$."
+      }
+     ],
+     "formules": "Tangente en $a$ : $y=f'(a)(x-a)+f(a)$ · $f'\\ge0$ sur $I\\Rightarrow f$ croissante sur $I$",
+     "type": "value"
+    },
+    {
+     "id": "ta3",
+     "enonce": "Variations de $f(x)=x^3-3x$.",
+     "sol": "$f'(x)=3(x-1)(x+1)$ : croissante sur $]-\\infty,-1]$, décroissante sur $[-1,1]$, croissante sur $[1,+\\infty[$. Max local $f(-1)=2$, min local $f(1)=-2$.",
+     "duree": 3,
+     "formules": "Tangente en $a$ : $y=f'(a)(x-a)+f(a)$ · $f'\\ge0$ sur $I\\Rightarrow f$ croissante sur $I$",
+     "type": "open"
+    },
+    {
+     "id": "ta4",
+     "enonce": "Variations de $f(x)=xe^{-x}$.",
+     "sol": "$f'(x)=(1-x)e^{-x}$, du signe de $1-x$ : croissante sur $]-\\infty,1]$, décroissante ensuite, max $f(1)=\\frac1e$.",
+     "duree": 3,
+     "formules": "Tangente en $a$ : $y=f'(a)(x-a)+f(a)$ · $f'\\ge0$ sur $I\\Rightarrow f$ croissante sur $I$ · $(x^n)'=nx^{n-1}$ · $(e^u)'=u'e^u$ · $(\\ln u)'=\\frac{u'}u$ · $(uv)'=u'v+uv'$ · $\\left(\\frac uv\\right)'=\\frac{u'v-uv'}{v^2}$ · $(\\sqrt u)'=\\frac{u'}{2\\sqrt u}$",
+     "type": "open"
     }
    ]
   }

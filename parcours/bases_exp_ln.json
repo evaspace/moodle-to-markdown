@@ -24,6 +24,13 @@
    "formule": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
    "exemple": "$\\ln8-\\ln2=\\ln4=2\\ln2$",
    "cours": "$\\ln$ n'est défini que sur $]0,+\\infty[$ : vérifier le domaine avant de résoudre. $\\ln$ est croissante : $\\ln a\\le\\ln b\\iff a\\le b$. $\\ln(a+b)\\neq\\ln a+\\ln b$. $a^b=e^{b\\ln a}$ pour $a>0$."
+  },
+  {
+   "id": "puissances_reelles",
+   "titre": "Puissances réelles et logarithmes",
+   "formule": "$a^b=e^{b\\ln a}$ ($a>0$) · $a^x=c\\iff x=\\frac{\\ln c}{\\ln a}$ · $\\log_{10}x=\\frac{\\ln x}{\\ln10}$",
+   "exemple": "$2^x=10\\iff x=\\frac{\\ln10}{\\ln2}\\approx3{,}32$",
+   "cours": "Toute puissance à exposant réel se ramène à l'exponentielle. Le logarithme décimal compte les zéros : $\\log_{10}(10^n)=n$ (décibels, pH, ordres de grandeur)."
   }
  ],
  "quiz": [
@@ -56,12 +63,24 @@
    "type": "vf",
    "q": "$\\ln(a+b)=\\ln a\\,\\ln b$",
    "bonne": false
+  },
+  {
+   "notion": "puissances_reelles",
+   "type": "qcm",
+   "q": "$a^b$ ($a>0$) vaut :",
+   "choix": [
+    "$e^{b\\ln a}$",
+    "$e^{a\\ln b}$",
+    "$b\\ln a$",
+    "$\\ln(a)^b$"
+   ],
+   "bonne": 0
   }
  ],
  "levels": [
   {
    "n": 1,
-   "titre": "Exponentielle",
+   "titre": "Règles de l'exponentielle",
    "notions": [
     "exp"
    ],
@@ -77,22 +96,6 @@
        "enonce": "Simplifier $\\frac{(e^{x})^3}{e^{2x-1}}$.",
        "ans": "exp(x+1)",
        "sol": "$e^{3x-2x+1}=e^{x+1}$."
-      }
-     ],
-     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
-     "type": "value"
-    },
-    {
-     "id": "ex2",
-     "enonce": "Résoudre $e^{2x-1}=e^{x+3}$.",
-     "ans": "4",
-     "sol": "$\\exp$ injective : $2x-1=x+3$, $x=4$.",
-     "duree": 2,
-     "variants": [
-      {
-       "enonce": "Résoudre $e^{3x}=e^{1-x}$.",
-       "ans": "Rational(1,4)",
-       "sol": "$3x=1-x$, $x=\\frac14$."
       }
      ],
      "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
@@ -115,6 +118,47 @@
      "type": "value"
     },
     {
+     "id": "ex6",
+     "enonce": "Simplifier $(e^x+e^{-x})^2-(e^x-e^{-x})^2$.",
+     "ans": "4",
+     "sol": "$(a+b)^2-(a-b)^2=4ab$ et $e^xe^{-x}=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{e^{2x}-1}{e^x-e^{-x}}$.",
+       "ans": "exp(x)",
+       "sol": "$e^x-e^{-x}=e^{-x}(e^{2x}-1)$ : $e^x$."
+      }
+     ],
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Équations avec exp",
+   "notions": [
+    "exp"
+   ],
+   "exos": [
+    {
+     "id": "ex2",
+     "enonce": "Résoudre $e^{2x-1}=e^{x+3}$.",
+     "ans": "4",
+     "sol": "$\\exp$ injective : $2x-1=x+3$, $x=4$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $e^{3x}=e^{1-x}$.",
+       "ans": "Rational(1,4)",
+       "sol": "$3x=1-x$, $x=\\frac14$."
+      }
+     ],
+     "formules": "$e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    },
+    {
      "id": "ex4",
      "enonce": "Résoudre $e^{2x}-3e^x+2=0$.",
      "sol": "$X=e^x>0$ : $X^2-3X+2=0$, $X=1$ ou $X=2$. Donc $x=0$ ou $x=\\ln2$.",
@@ -133,8 +177,8 @@
    ]
   },
   {
-   "n": 2,
-   "titre": "Logarithme",
+   "n": 3,
+   "titre": "Règles du logarithme",
    "notions": [
     "ln"
    ],
@@ -172,6 +216,31 @@
      "type": "value"
     },
     {
+     "id": "ln6",
+     "enonce": "Écrire $2^{x}$ avec l'exponentielle puis calculer $\\ln(2^{10})/\\ln 2$.",
+     "ans": "10",
+     "sol": "$2^x=e^{x\\ln2}$ ; $\\ln(2^{10})=10\\ln2$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\frac{\\ln 81}{\\ln 3}$.",
+       "ans": "4",
+       "sol": "$\\ln81=\\ln3^4=4\\ln3$."
+      }
+     ],
+     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$ · $e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Équations avec ln",
+   "notions": [
+    "ln"
+   ],
+   "exos": [
+    {
      "id": "ln3",
      "enonce": "Résoudre $\\ln(2x-1)=\\ln(x+2)$.",
      "ans": "3",
@@ -202,21 +271,62 @@
      "duree": 2,
      "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$",
      "type": "open"
-    },
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Puissances réelles, logarithme décimal",
+   "notions": [
+    "puissances_reelles"
+   ],
+   "exos": [
     {
-     "id": "ln6",
-     "enonce": "Écrire $2^{x}$ avec l'exponentielle puis calculer $\\ln(2^{10})/\\ln 2$.",
-     "ans": "10",
-     "sol": "$2^x=e^{x\\ln2}$ ; $\\ln(2^{10})=10\\ln2$.",
+     "id": "pw1",
+     "enonce": "Calculer $e^{3\\ln2}$ et $4^{3/2}$ (donner la somme).",
+     "ans": "16",
+     "sol": "$e^{\\ln8}=8$ et $(\\sqrt4)^3=8$.",
      "duree": 2,
      "variants": [
       {
-       "enonce": "Calculer $\\frac{\\ln 81}{\\ln 3}$.",
-       "ans": "4",
-       "sol": "$\\ln81=\\ln3^4=4\\ln3$."
+       "enonce": "Calculer $e^{-\\ln5}+9^{1/2}$.",
+       "ans": "Rational(16,5)",
+       "sol": "$\\frac15+3$."
       }
      ],
-     "formules": "$\\ln(ab)=\\ln a+\\ln b$ · $\\ln\\frac ab=\\ln a-\\ln b$ · $\\ln(a^n)=n\\ln a$ · $\\ln1=0$, $\\ln e=1$ · $e^{\\ln a}=a$ ($a>0$), $\\ln(e^x)=x$ · $e^{a+b}=e^ae^b$ · $e^{-a}=\\frac1{e^a}$ · $(e^a)^n=e^{na}$ · $e^x>0$ · $e^a=e^b\\iff a=b$",
+     "formules": "$a^b=e^{b\\ln a}$ ($a>0$) · $a^x=c\\iff x=\\frac{\\ln c}{\\ln a}$ · $\\log_{10}x=\\frac{\\ln x}{\\ln10}$",
+     "type": "value"
+    },
+    {
+     "id": "pw2",
+     "enonce": "Résoudre $2^x=10$.",
+     "ans": "log(10)/log(2)",
+     "sol": "$x\\ln2=\\ln10$, $x=\\frac{\\ln10}{\\ln2}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Résoudre $3^{2x}=5$.",
+       "ans": "log(5)/(2*log(3))",
+       "sol": "$2x\\ln3=\\ln5$."
+      }
+     ],
+     "formules": "$a^b=e^{b\\ln a}$ ($a>0$) · $a^x=c\\iff x=\\frac{\\ln c}{\\ln a}$ · $\\log_{10}x=\\frac{\\ln x}{\\ln10}$",
+     "type": "value"
+    },
+    {
+     "id": "pw3",
+     "enonce": "Calculer $\\log_{10}(1000)+\\log_{10}(0{,}01)$.",
+     "ans": "1",
+     "sol": "$3+(-2)=1$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $\\log_{10}(10^{5}\\times\\sqrt{10})$.",
+       "ans": "Rational(11,2)",
+       "sol": "$5+\\frac12$."
+      }
+     ],
+     "formules": "$a^b=e^{b\\ln a}$ ($a>0$) · $a^x=c\\iff x=\\frac{\\ln c}{\\ln a}$ · $\\log_{10}x=\\frac{\\ln x}{\\ln10}$",
      "type": "value"
     }
    ]

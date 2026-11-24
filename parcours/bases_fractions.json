@@ -55,7 +55,7 @@
  "levels": [
   {
    "n": 1,
-   "titre": "Fractions numériques",
+   "titre": "Addition et soustraction",
    "notions": [
     "fractions"
    ],
@@ -92,6 +92,31 @@
      "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
      "type": "value"
     },
+    {
+     "id": "fr6",
+     "enonce": "Calculer $3-\\frac54$.",
+     "ans": "Rational(7,4)",
+     "sol": "$3=\\frac{12}4$ : $\\frac{12-5}4=\\frac74$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Calculer $2+\\frac23$.",
+       "ans": "Rational(8,3)",
+       "sol": "$\\frac63+\\frac23=\\frac83$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Produit, quotient, fractions étagées",
+   "notions": [
+    "fractions"
+   ],
+   "exos": [
     {
      "id": "fr3",
      "enonce": "Calculer $\\frac{14}{15}\\times\\frac{25}{21}$ sous forme irréductible.",
@@ -139,11 +164,77 @@
      ],
      "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
      "type": "value"
+    },
+    {
+     "id": "fr9",
+     "enonce": "Que vaut les $\\frac23$ des $\\frac35$ d'une quantité ?",
+     "ans": "Rational(2,5)",
+     "sol": "« de » = multiplier : $\\frac23\\times\\frac35=\\frac25$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Que vaut les $\\frac34$ des $\\frac{8}{9}$ ?",
+       "ans": "Rational(2,3)",
+       "sol": "$\\frac{24}{36}=\\frac23$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
     }
    ]
   },
   {
-   "n": 2,
+   "n": 3,
+   "titre": "Simplifier et comparer",
+   "notions": [
+    "fractions",
+    "fractions_alg"
+   ],
+   "exos": [
+    {
+     "id": "fr7",
+     "enonce": "Rendre irréductible $\\frac{84}{126}$.",
+     "ans": "Rational(2,3)",
+     "sol": "$84=2^2\\cdot3\\cdot7$, $126=2\\cdot3^2\\cdot7$, pgcd $42$ : $\\frac23$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Rendre irréductible $\\frac{90}{150}$.",
+       "ans": "Rational(3,5)",
+       "sol": "pgcd $30$ : $\\frac35$."
+      }
+     ],
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "value"
+    },
+    {
+     "id": "fr8",
+     "enonce": "Comparer $\\frac57$ et $\\frac7{10}$ sans calculatrice.",
+     "sol": "Même dénominateur 70 : $\\frac{50}{70}>\\frac{49}{70}$, donc $\\frac57>\\frac7{10}$ (ou produits en croix : $50>49$).",
+     "duree": 2,
+     "formules": "$\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$ · $\\frac ab\\times\\frac cd=\\frac{ac}{bd}$ · $\\frac{a/b}{c/d}=\\frac ab\\times\\frac dc$",
+     "type": "open"
+    },
+    {
+     "id": "fa_2",
+     "enonce": "Simplifier $\\frac{x^2-4}{x^2+2x}$.",
+     "ans": "(x-2)/x",
+     "sol": "$\\frac{(x-2)(x+2)}{x(x+2)}=\\frac{x-2}x$ pour $x\\notin\\{0,-2\\}$.",
+     "duree": 2,
+     "variants": [
+      {
+       "enonce": "Simplifier $\\frac{x^2-6x+9}{x^2-9}$.",
+       "ans": "(x-3)/(x+3)",
+       "sol": "$\\frac{(x-3)^2}{(x-3)(x+3)}=\\frac{x-3}{x+3}$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$ · $ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 4,
    "titre": "Fractions rationnelles",
    "notions": [
     "fractions_alg"
@@ -163,22 +254,6 @@
       }
      ],
      "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
-     "type": "value"
-    },
-    {
-     "id": "fa_2",
-     "enonce": "Simplifier $\\frac{x^2-4}{x^2+2x}$.",
-     "ans": "(x-2)/x",
-     "sol": "$\\frac{(x-2)(x+2)}{x(x+2)}=\\frac{x-2}x$ pour $x\\notin\\{0,-2\\}$.",
-     "duree": 2,
-     "variants": [
-      {
-       "enonce": "Simplifier $\\frac{x^2-6x+9}{x^2-9}$.",
-       "ans": "(x-3)/(x+3)",
-       "sol": "$\\frac{(x-3)^2}{(x-3)(x+3)}=\\frac{x-3}{x+3}$."
-      }
-     ],
-     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$ · $ka+kb=k(a+b)$ · $a^2-b^2=(a-b)(a+b)$ · $a^2\\pm2ab+b^2=(a\\pm b)^2$ · $a^3-b^3=(a-b)(a^2+ab+b^2)$",
      "type": "value"
     },
     {
@@ -211,6 +286,63 @@
       }
      ],
      "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$ · Entiers : $a=bq+r$, $0\\le r < b$ · Polynômes : $A=BQ+R$, $\\deg R < \\deg B$",
+     "type": "value"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "titre": "Décomposition en éléments simples",
+   "notions": [
+    "fractions_alg"
+   ],
+   "exos": [
+    {
+     "id": "fe1",
+     "enonce": "Trouver $a,b$ tels que $\\frac1{x(x+1)}=\\frac ax+\\frac b{x+1}$.",
+     "ans": "1/x-1/(x+1)",
+     "sol": "$1=a(x+1)+bx$ ; $x=0$ : $a=1$ ; $x=-1$ : $b=-1$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Trouver $a,b$ tels que $\\frac1{x(x+2)}=\\frac ax+\\frac b{x+2}$.",
+       "ans": "(1/x-1/(x+2))/2",
+       "sol": "$x=0$ : $a=\\frac12$ ; $x=-2$ : $b=-\\frac12$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+     "type": "value"
+    },
+    {
+     "id": "fe2",
+     "enonce": "Décomposer $\\frac1{x^2-1}$ en $\\frac a{x-1}+\\frac b{x+1}$.",
+     "ans": "(1/(x-1)-1/(x+1))/2",
+     "sol": "$1=a(x+1)+b(x-1)$ ; $x=1$ : $a=\\frac12$ ; $x=-1$ : $b=-\\frac12$.",
+     "duree": 3,
+     "variants": [
+      {
+       "enonce": "Décomposer $\\frac1{x^2-4}$.",
+       "ans": "(1/(x-2)-1/(x+2))/4",
+       "sol": "$x=2$ : $a=\\frac14$ ; $x=-2$ : $b=-\\frac14$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
+     "type": "value"
+    },
+    {
+     "id": "fe3",
+     "enonce": "Décomposer $\\frac{x+5}{(x-1)(x+2)}$ en $\\frac a{x-1}+\\frac b{x+2}$.",
+     "ans": "2/(x-1)-1/(x+2)",
+     "sol": "$x+5=a(x+2)+b(x-1)$ ; $x=1$ : $6=3a$, $a=2$ ; $x=-2$ : $3=-3b$, $b=-1$.",
+     "duree": 4,
+     "variants": [
+      {
+       "enonce": "Décomposer $\\frac{3x}{(x+1)(x-2)}$.",
+       "ans": "1/(x+1)+2/(x-2)",
+       "sol": "$x=-1$ : $-3=-3a$, $a=1$ ; $x=2$ : $6=3b$, $b=2$."
+      }
+     ],
+     "formules": "$\\frac{A}{B}+\\frac{C}{D}=\\frac{AD+BC}{BD}$ · $\\frac{AC}{BC}=\\frac AB$ si $C\\neq0$",
      "type": "value"
     }
    ]
