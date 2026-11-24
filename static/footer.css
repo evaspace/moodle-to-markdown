@@ -20,9 +20,13 @@
 .slide-ready { position: relative; isolation: isolate; }
 .slide-pill { position: absolute; left: 0; top: 0; width: 1px; height: 1px; transform-origin: 0 0; z-index: -1; pointer-events: none;
   background: var(--slide-color, var(--text-color, #111827)); opacity: 0; transition: transform .38s cubic-bezier(.22, .9, .25, 1), opacity .2s; }
-.slide-ready.slide-fill > a, .slide-ready.slide-fill > button { background: transparent; transition: color .25s; }
-.slide-ready.slide-fill > a[aria-current], .slide-ready.slide-fill > button[aria-selected="true"] { background: transparent; color: inherit; }
-.slide-ready.slide-fill > .on { color: #fff !important; }
+.slide-ready.slide-fill .slide-item, .slide-ready.slide-fill .slide-item:hover { background: transparent; transition: color .25s; }
+.slide-ready.slide-fill .slide-item[aria-current], .slide-ready.slide-fill .slide-item[aria-selected="true"] { background: transparent; color: inherit; }
+.slide-fill .slide-item.on, .slide-fill .slide-item.on * { color: #fff !important; }
+.slide-fill .slide-item.on .cat-count { background: transparent; }
+/* home lists (app.js) and level list (niveaux.html): wrappers let the block show through */
+.slide-ready .category-card, .theme-body.slide-ready { background: transparent; }
+.lv-levels.slide-ready { background: var(--bg-color); }
 .app-nav-links.slide-ready { --slide-color: var(--accent-color, #FF5252); }
 .morgan-footer-nav.slide-ready { --slide-color: #ec6a11; }
 .adm-tabs.slide-ready { background: #F4F5F7; }

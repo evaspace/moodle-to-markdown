@@ -7,7 +7,7 @@
   <title>Mes niveaux · Epita Doomscrolling</title>
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261123">
+  <link rel="stylesheet" href="/static/footer.css?v=20261124">
   <link rel="stylesheet" href="/static/niveaux.css?v=39">
 </head>
 <body class="lv-page">
@@ -44,10 +44,10 @@
     <div class="lv-row"><a class="lv-btn primary" href="/niveaux/{{ s.id }}">Continuer au niveau {{ s.level }}</a>
       <a class="lv-btn" href="/scroll/{{ s.id }}">Scroll : le cours en cartes</a></div>
     <details class="lv-all"><summary>Tous les niveaux ({{ s.best }} validés sur {{ s.n }})</summary>
-    <ol class="lv-levels">
+    <ol class="lv-levels" data-slide="fill" data-slide-items="a">
       {% for l in s.levels %}
       <li class="{{ 'done' if l.n <= s.best }} {{ 'current' if l.n == s.level }} {{ 'exam' if l.examen }}">
-        <a href="/niveaux/{{ s.id }}?n={{ l.n }}"><span>Niveau {{ l.n }} : {{ l.titre }}</span>
+        <a href="/niveaux/{{ s.id }}?n={{ l.n }}"{% if l.n == s.level %} aria-current="step"{% endif %}><span>Niveau {{ l.n }} : {{ l.titre }}</span>
           <span>{% if l.n == s.level %}en cours{% elif l.n <= s.best %}validé{% endif %}</span></a>
       </li>
       {% endfor %}

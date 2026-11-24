@@ -1,10 +1,13 @@
 // Sliding indicator for tab rows, the navbar and the footer: a block (or a line) glides to the hovered item,
 // returns to the current one when the pointer leaves, stays on a clicked one, and on a new page
-// slides from the item clicked on the previous page. Markup: data-slide="fill" | "line" on the row.
+// slides from the item clicked on the previous page. Markup: data-slide="fill" | "line" on the row;
+// data-slide-items="<selector>" picks nested items. Rows built later by JS call window.slideInit(row).
 (() => {
-  document.querySelectorAll('[data-slide]').forEach((box) => {
-    const items = [...box.querySelectorAll(':scope > a, :scope > button')];
+  const init = (box) => {
+    if (box.classList.contains('slide-ready')) return;
+    const items = [...box.querySelectorAll(box.dataset.slideItems || ':scope > a, :scope > button')];
     if (!items.length) return;
+    items.forEach((el) => el.classList.add('slide-item'));
     const key = 'slide:' + (box.getAttribute('aria-label') || box.className);
     const line = box.dataset.slide === 'line';
     const pill = document.createElement('span');
@@ -20,10 +23,12 @@
       shown = el;
       if (!el || !el.offsetWidth) { pill.style.opacity = '0'; return; }
       el.classList.add('on');
+      const r = el.getBoundingClientRect(), b = box.getBoundingClientRect();  // works for nested items too
+      const x = r.left - b.left - box.clientLeft, top = r.top - b.top - box.clientTop;
       const h = line ? 3 : el.offsetHeight;
-      const y = line ? el.offsetTop + el.offsetHeight + 2 : el.offsetTop;
+      const y = line ? top + el.offsetHeight + 2 : top;
       if (instant || hidden) pill.style.transition = 'none';
-      pill.style.transform = `translate(${el.offsetLeft}px, ${y}px) scale(${el.offsetWidth}, ${h})`;
+      pill.style.transform = `translate(${x}px, ${y}px) scale(${el.offsetWidth}, ${h})`;
       pill.style.opacity = '1';
       if (instant || hidden) { void pill.offsetWidth; pill.style.transition = ''; }
     };
@@ -42,5 +47,7 @@
     try { from = items[sessionStorage.getItem(key)]; sessionStorage.removeItem(key); } catch (e) { /* ignore */ }
     if (from && current() && from !== current()) { go(from, true); requestAnimationFrame(() => requestAnimationFrame(rest)); } else go(current(), true);
     new ResizeObserver(() => go(shown, true)).observe(box);  // burger menu opening, wrapping, fonts loading
-  });
+  };
+  window.slideInit = init;
+  document.querySelectorAll('[data-slide]').forEach(init);
 })();

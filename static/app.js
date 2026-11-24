@@ -324,6 +324,7 @@ async function loadCategories() {
         }
 
         themes.forEach(theme => catList.appendChild(buildThemeSection(theme)));
+        if (window.slideInit) catList.querySelectorAll('[data-slide]').forEach(window.slideInit);
     } catch (e) {
         console.error('loadCategories error:', e);
         catList.innerHTML = `
@@ -361,6 +362,8 @@ function buildThemeSection(theme) {
     body.appendChild(allBtn);
 
     theme.categories.forEach((cat, index) => body.appendChild(buildCategoryCard(cat, index)));
+    body.dataset.slide = 'fill';
+    body.dataset.slideItems = '.category-header-btn';
 
     section.appendChild(header);
     section.appendChild(body);
@@ -391,6 +394,7 @@ function buildCategoryCard(cat, index) {
             // Menu déroulant des sous-catégories
             const subDropdown = document.createElement('div');
             subDropdown.className = 'subcategory-dropdown';
+            subDropdown.dataset.slide = 'fill';
 
             // Option 1 : Tout le module
             const allSubBtn = document.createElement('button');
