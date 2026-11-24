@@ -9,8 +9,9 @@ personal rhythm (success rate by hour, block length before fatigue), a day plan 
 meals, and the « copie 20/20 » checklists. Decisions and reasons: README_OBJECTIFS.md, « Beta ».
 """
 import json
+import re
 import unicodedata
-from datetime import datetime, time, timedelta
+from datetime import datetime, time, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -257,22 +258,25 @@ def next_eval(adv):
     return min(rows, key=lambda r: r['eval']) if rows else None
 
 
-def week_grid(events, adv, monday, now, hours=None, block=None):
+def week_grid(events, adv, monday, now, hours=None, block=None, plan_for=None):
     """The week of `monday` for the calendar grid: courses, evals and planned revision blocks, JSON-ready.
 
     Each item: day (0-6), start/end in minutes since midnight, kind (cours / eval / revision), title,
-    link to the first path of its ECUE, my % and the class %, advice. Revision blocks only from today on."""
+    link to the first path of its ECUE, my % and the class %, advice, state (fait / manque / None).
+    `plan_for(day)` gives the revision blocks of a day (default: plan_day from today on)."""
     by_key = {r['key']: r for r in adv}
     items = []
+    plan_for = plan_for or (lambda day: plan_day(day, events, adv, hours, block, now if day == now.date() else None)
+                            if day >= now.date() else [])
 
-    def add(day, a, b, kind, titre, key, extra=''):
+    def add(day, a, b, kind, titre, key, extra='', etat=None):
         r = by_key.get(key)
         items.append(dict(jour=day, debut=a.hour * 60 + a.minute, fin=b.hour * 60 + b.minute, kind=kind,
                           titre=titre, court=short(titre), heure=f'{a:%H:%M}–{b:%H:%M}', detail=extra,
                           matiere=r['matiere'] if r else 'autre',
                           lien='/niveaux/' + r['parcours'][0] if r and r['parcours'] else None,
                           moi=r['moi'] if r else None, classe=r['classe'] if r else None,
-                          conseil=r['conseil'] if r else ''))
+                          conseil=r['conseil'] if r else '', etat=etat))
     for d in range(7):
         day = monday + timedelta(days=d)
         for ev in events:
@@ -280,9 +284,8 @@ def week_grid(events, adv, monday, now, hours=None, block=None):
                 kind = 'eval' if ev['type'] in EVAL_TYPES else 'cours'
                 add(d, ev['debut'], ev['fin'], kind, ev['titre'], ecue_of(ev['titre'], by_key),
                     ev.get('detail') or ' · '.join(x for x in (ev['type'], ev.get('salle')) if x))
-        if day >= now.date():
-            for p in plan_day(day, events, adv, hours, block, now if day == now.date() else None):
-                add(d, p['debut'], p['fin'], 'revision', p['quoi'], p['key'], p['pourquoi'])
+        for p in plan_for(day):
+            add(d, p['debut'], p['fin'], 'revision', p['quoi'], p['key'], p['pourquoi'], p.get('etat'))
     return dict(lundi=monday.isoformat(), jours=[f'{JOURS[d][:3]}. {(monday + timedelta(days=d)).day}'
                                                 for d in range(7)],
                 aujourdhui=(now.date() - monday).days, maintenant=now.hour * 60 + now.minute, items=items)
@@ -476,6 +479,93 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
                          lien='/niveaux/' + r['parcours'][0] if r['parcours'] else None))
     plan.sort(key=lambda p: p['debut'])
     return plan
+
+
+DONE_MIN, DONE_MARGIN = 5, 30   # done = 5+ answers of the block's ECUE within ±30 min: nothing to tick
+
+
+def day_plan(day, events, adv, now, store, hours=None, block=None):
+    """Revision blocks of `day`. Today's plan is frozen in `store` (date iso -> blocks) the first time it is
+    computed, so its blocks can later be marked done or missed; later days are recomputed on every call and
+    past days only come from the store. The caller saves `store` when it gained a key."""
+    k = day.isoformat()
+    if k in store:
+        return [dict(p, debut=datetime.fromisoformat(p['debut']), fin=datetime.fromisoformat(p['fin'])) for p in store[k]]
+    if day < now.date():
+        return []
+    plan = plan_day(day, events, adv, hours, block, now if day == now.date() else None)
+    if day == now.date():
+        store[k] = [dict(p, debut=p['debut'].isoformat(), fin=p['fin'].isoformat()) for p in plan]
+    return plan
+
+
+def block_state(b, answers, paths, now):
+    """'fait' / 'manque' once the block is over, None before or when its ECUE has no path to measure.
+    answers: [(at, path id)] of the account."""
+    if b['fin'] > now or not paths:
+        return None
+    lo, hi = b['debut'] - timedelta(minutes=DONE_MARGIN), b['fin'] + timedelta(minutes=DONE_MARGIN)
+    return 'fait' if sum(1 for at, s in answers if s in paths and lo <= at <= hi) >= DONE_MIN else 'manque'
+
+
+def now_block(blocks, now):
+    """The block running now, else the next one, with en_cours; None when nothing is left."""
+    for b in sorted(blocks, key=lambda b: b['debut']):
+        if b['fin'] > now:
+            return dict(b, en_cours=b['debut'] <= now)
+    return None
+
+
+def _protected(h):
+    """Why hour h is never planned (its middle falls in a meal, at night or on Saturday evening), else None."""
+    mid = time(h, 30)
+    if h < DAY_START.hour or h >= DAY_STOP.hour:
+        return f'après {DAY_STOP.hour} h' if h >= DAY_STOP.hour else f'avant {DAY_START.hour} h'
+    return next((name.lower() for a, b, name in MEALS if a <= mid < b), None)
+
+
+def conflicts(hours):
+    """One sentence when some of my 3 best measured hours fall in a protected range, else None."""
+    if not hours:
+        return None
+    best = sorted(hours, key=lambda h: -hours[h]['pct'])[:3]
+    bad = [(h, _protected(h)) for h in sorted(best) if _protected(h)]
+    if not bad:
+        return None
+    return ('Tu réussis très bien à ' + ', '.join(f"{h} h ({hours[h]['pct']} %, {why})" for h, why in bad)
+            + " : le calendrier n'y place rien, pour garder repas et sommeil.")
+
+
+def _ics_text(s):
+    return s.replace('\\', '\\\\').replace(';', '\\;').replace(',', '\\,').replace('\n', '\\n')
+
+
+def _fold(line):
+    """RFC 5545: lines of at most 75 octets, continued with a leading space."""
+    out, cur = [], ''
+    for ch in line:
+        if len((cur + ch).encode()) > 74:
+            out.append(cur)
+            cur = ' '
+        cur += ch
+    return '\r\n'.join(out + [cur])
+
+
+def ics(blocks, base, stamp):
+    """iCalendar feed of revision blocks; each event links to its path and rings 5 min before."""
+    utc = lambda t: t.astimezone(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//epitadoomscrolling//beta//FR', 'CALSCALE:GREGORIAN',
+             'X-WR-CALNAME:Révisions', 'X-PUBLISHED-TTL:PT1H']
+    for b in blocks:
+        url = base + b['lien'] if b.get('lien') else base
+        uid = re.sub(r'[^A-Za-z0-9]+', '-', f"{b['debut']:%Y%m%dT%H%M}-{b.get('key') or 'revision'}")
+        lines += ['BEGIN:VEVENT', f'UID:{uid}@epitadoomscrolling', f'DTSTAMP:{utc(stamp)}',
+                  f"DTSTART:{utc(b['debut'])}", f"DTEND:{utc(b['fin'])}", f"SUMMARY:{_ics_text(b['quoi'])}",
+                  f"DESCRIPTION:{_ics_text(b['pourquoi'] + chr(10) + url)}", f'URL:{url}',
+                  'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:-PT5M', f"DESCRIPTION:{_ics_text(b['quoi'])}",
+                  'END:VALARM', 'END:VEVENT']
+    lines.append('END:VCALENDAR')
+    return '\r\n'.join(_fold(x) for x in lines) + '\r\n'
 
 
 def reason(r):

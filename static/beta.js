@@ -48,8 +48,11 @@
         else if (hpx < 100) box.classList.add('bt-mid');    // title, hour, bar
         box.style.left = (100 * it.lane / it.lanes) + '%';
         box.style.width = (100 / it.lanes) + '%';
-        box.title = [it.heure, it.titre, it.detail, it.conseil].filter(Boolean).join('\n');
+        if (it.etat) box.classList.add('bt-' + it.etat);
+        const etat = { fait: 'fait', manque: 'manqué' }[it.etat] || '';
+        box.title = [it.heure, it.titre, it.detail, it.conseil, etat].filter(Boolean).join('\n');
         box.appendChild(el('span', 'bt-ev-t', it.court));
+        if (etat) box.appendChild(el('span', 'bt-ev-etat', etat));
         box.appendChild(el('span', 'bt-ev-h', it.heure));
         if (it.moi != null && it.kind !== 'eval') {
           const bar = el('span', 'bt-bar');

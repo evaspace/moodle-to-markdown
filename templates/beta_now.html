@@ -1,0 +1,8 @@
+{# Owner-only banner: the revision block running now or the next one (app.py beta_now, PLAN_BETA étape 0). #}
+{% set b = beta_now() %}
+{% if b %}
+<aside class="bt-now-bar" aria-label="Révision prévue">
+  <p><strong>{% if b.en_cours %}Maintenant, jusqu'à {{ b.fin.strftime('%H:%M') }}{% elif b.demain %}Demain à {{ b.debut.strftime('%H:%M') }}{% else %}À {{ b.debut.strftime('%H:%M') }}{% endif %}</strong> : {{ b.quoi }}<br><span>{{ b.pourquoi }}</span></p>
+  {% if b.lien %}<a class="lv-btn primary" href="{{ b.lien }}">Réviser</a>{% endif %}
+</aside>
+{% endif %}

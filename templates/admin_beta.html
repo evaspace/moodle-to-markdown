@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=37">
+  <link rel="stylesheet" href="/static/niveaux.css?v=38">
 </head>
 <body class="lv-page">
 {% set tab = 'beta' %}{% include 'admin_nav.html' %}
@@ -39,8 +39,14 @@
       <button id="bt-next" type="button">Semaine suivante</button></div>
     <p class="bt-legend"><span class="bt-key bt-maths">Maths</span><span class="bt-key bt-physique">Physique</span><span class="bt-key bt-electronique">Électronique</span><span class="bt-key bt-archi">Archi</span><span class="bt-key bt-algo">Algo</span><span class="bt-key bt-prog">Prog</span></p>
     <p class="bt-legend">Clair : cours. Plein : révision proposée, clique pour réviser. Noir : évaluation. Barre verte : ta progression, trait : la classe.</p>
+    <p class="bt-legend">Une révision passée est marquée « fait » si tu as répondu à 5 exercices de ce cours pendant le bloc (à 30 min près), sinon elle est barrée. Le plan du jour est figé dès son premier calcul.</p>
     <div class="bt-grid-scroll"></div>
   </div>
+
+  <h2>Sur ton téléphone</h2>
+  <p>Abonne ton agenda à cette adresse (Google Agenda : Autres agendas, À partir de l'URL). Chaque révision des 7 prochains jours y apparaît avec son lien, et le téléphone sonne 5 min avant.</p>
+  <p><input class="bt-ics" type="text" readonly value="{{ ics_url }}" aria-label="Adresse du flux iCalendar" onfocus="this.select()"></p>
+  <p class="lv-muted">Adresse secrète : elle donne ton plan sans connexion. Ne la partage pas.</p>
 
   <h2>Tes cours, du plus urgent au moins urgent</h2>
   <p class="lv-muted">Barre verte : ta progression dans les niveaux. Trait noir : où en est la classe. L'écart entre les deux, c'est ton retard.</p>
@@ -67,6 +73,7 @@
       <span class="bt-chart-h">{{ b.h }}h</span>
     </div>{% endfor %}
   </div>
+  {% if conflit %}<p class="bt-warn">{{ conflit }}</p>{% endif %}
   <p class="lv-muted">Hauteur : part de bonnes réponses à cette heure-là. Seules les heures avec au moins 8 réponses comptent.</p>
   {% else %}
   <p class="lv-muted">Pas encore assez de réponses (40 minimum) : le calendrier suppose que tu es plus efficace le matin, et s'adaptera tout seul.</p>
@@ -85,7 +92,7 @@
   {% endfor %}
 
 </div>
-<script src="/static/beta.js?v=5"></script>
+<script src="/static/beta.js?v=6"></script>
 {% include 'footer.html' %}
 </body>
 </html>

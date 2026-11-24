@@ -132,6 +132,52 @@ class Beta(unittest.TestCase):
         sat = date(2026, 11, 28)
         self.assertTrue(all(b.hour <= 18 for _, b in beta.free_slots([], sat)))
 
+    def test_day_plan_frozen_and_block_state(self):
+        adv = beta.advancement(EVENTS, REG, {'m': 10}, NOW)
+        store = {}
+        plan = beta.day_plan(DAY, EVENTS, adv, NOW, store)
+        self.assertIn(DAY.isoformat(), store)                                # today is frozen
+        later = NOW + timedelta(hours=3)
+        self.assertEqual([b['debut'] for b in beta.day_plan(DAY, EVENTS, adv, later, store)], [b['debut'] for b in plan])
+        beta.day_plan(DAY + timedelta(days=1), EVENTS, adv, NOW, store)
+        self.assertEqual(list(store), [DAY.isoformat()])                     # future days are not
+        self.assertEqual(beta.day_plan(DAY - timedelta(days=1), EVENTS, adv, NOW, store), [])
+        b = dict(debut=datetime(2026, 11, 24, 10, tzinfo=beta.TZ), fin=datetime(2026, 11, 24, 10, 45, tzinfo=beta.TZ))
+        after = b['fin'] + timedelta(hours=1)
+        five = [(b['debut'] + timedelta(minutes=8 * k), 'm') for k in range(5)]
+        self.assertIsNone(beta.block_state(b, five, {'m'}, b['fin'] - timedelta(minutes=1)))   # not over
+        self.assertEqual(beta.block_state(b, five, {'m'}, after), 'fait')
+        self.assertEqual(beta.block_state(b, five[:4], {'m'}, after), 'manque')
+        self.assertEqual(beta.block_state(b, five, {'p'}, after), 'manque')                    # other ECUE
+        self.assertIsNone(beta.block_state(b, five, None, after))                              # nothing to measure
+
+    def test_now_block(self):
+        t = lambda h, m=0: datetime(2026, 11, 24, h, m, tzinfo=beta.TZ)
+        bl = [dict(debut=t(14), fin=t(14, 45)), dict(debut=t(10), fin=t(10, 45))]
+        self.assertTrue(beta.now_block(bl, t(10, 20))['en_cours'])
+        nxt = beta.now_block(bl, t(11))
+        self.assertEqual((nxt['debut'], nxt['en_cours']), (t(14), False))
+        self.assertIsNone(beta.now_block(bl, t(15)))
+
+    def test_conflicts(self):
+        self.assertIsNone(beta.conflicts(None))
+        self.assertIsNone(beta.conflicts({9: dict(n=20, pct=80), 10: dict(n=20, pct=70), 14: dict(n=20, pct=60)}))
+        c = beta.conflicts({19: dict(n=20, pct=73), 23: dict(n=20, pct=75), 10: dict(n=20, pct=60), 20: dict(n=20, pct=10)})
+        self.assertIn('19 h (73 %, dîner)', c)
+        self.assertIn('23 h (75 %, après 22 h)', c)
+        self.assertNotIn('10 h', c)
+
+    def test_ics(self):
+        a = datetime(2026, 11, 24, 10, tzinfo=beta.TZ)
+        out = beta.ics([dict(debut=a, fin=a + timedelta(minutes=45), quoi='Analyse : primitives, intégrales',
+                             pourquoi='évaluation dans 5 j; ' + 'x' * 120, key='maths/S1/APIS', lien='/niveaux/m')],
+                       'https://e.x', a)
+        self.assertTrue(out.startswith('BEGIN:VCALENDAR\r\n') and out.endswith('END:VCALENDAR\r\n'))
+        self.assertIn('DTSTART:20261124T090000Z', out)                       # Paris winter = UTC+1
+        self.assertIn('SUMMARY:Analyse : primitives\\, intégrales', out)
+        self.assertIn('UID:20261124T1000-maths-S1-APIS@epitadoomscrolling', out)
+        self.assertTrue(all(len(x.encode()) <= 75 for x in out.split('\r\n')))
+        self.assertIn('https://e.x/niveaux/m', out.replace('\r\n ', ''))
 
 if __name__ == '__main__':
     unittest.main()

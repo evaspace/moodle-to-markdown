@@ -507,3 +507,15 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .bt-pause p { margin: 0 0 12px; line-height: 1.5; }
 @media (max-width: 520px) { .bt-pause { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .bt-card, .bt-chart-bar { animation: none; transition: none; } }
+
+/* beta: done / missed revision blocks, « now » banner (owner only), iCalendar URL */
+.bt-manque { background: color-mix(in srgb, var(--c) 14%, #fff); color: var(--text-color); }
+.bt-manque .bt-ev-t { text-decoration: line-through; }
+.bt-ev-etat { font-size: 11px; font-weight: 700; }
+.bt-short .bt-ev-etat { margin-left: 6px; }
+.bt-now-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px;
+              background: var(--text-color); color: #fff; }
+.bt-now-bar p { margin: 0; line-height: 1.4; }
+.bt-now-bar span { color: #ddd; font-size: 14px; }
+.bt-now-bar .lv-btn { flex: none; }
+.bt-ics { width: 100%; font: inherit; font-size: 13px; padding: 8px; }

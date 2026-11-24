@@ -319,11 +319,59 @@ def _beta_data():
         my_pct = {r['subject']: percent(r['best'], len(paths[r['subject']]['levels']))
                   for r in conn.execute('SELECT subject, best FROM level_progress WHERE account_id=?', (me,))
                   if r['subject'] in paths}
-        logs = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'])
-                for r in conn.execute('SELECT at, ok FROM exo_log WHERE account_id=?', (me,))]
+        rows = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'], r['subject'])
+                for r in conn.execute('SELECT at, ok, subject FROM exo_log WHERE account_id=?', (me,))]
+    logs, answers = [(at, ok) for at, ok, _ in rows], [(at, s) for at, _, s in rows]
     adv = beta.advancement(events + evals, reg, my_pct, now)
-    return dict(beta=beta, events=events, evals=evals, reg=reg, now=now, adv=adv, logs=logs,
-                hours=beta.rhythm(logs), block=beta.block_length(logs))
+    hours = beta.rhythm(logs)
+    return dict(beta=beta, events=events, evals=evals, reg=reg, now=now, adv=adv, logs=logs, answers=answers,
+                hours=hours, block=beta.block_length(logs), data_dir=data_dir)
+
+
+def _beta_plan_for(d):
+    """plan_for(day) for beta.week_grid: today's plan frozen in beta_plans.json (data dir), blocks marked done
+    or missed from the exercise log."""
+    beta = d['beta']
+    path = os.path.join(d['data_dir'], 'beta_plans.json')
+    try:
+        with open(path) as f:
+            store = json.load(f)
+    except (OSError, ValueError):
+        store = {}
+    paths = {r['key']: set(r['parcours']) for r in d['adv']}
+
+    def plan_for(day):
+        n = len(store)
+        blocks = beta.day_plan(day, d['events'] + d['evals'], d['adv'], d['now'], store, d['hours'], d['block'])
+        if len(store) != n:
+            tmp = path + '.tmp'
+            with open(tmp, 'w') as f:
+                json.dump(store, f, ensure_ascii=False)
+            os.replace(tmp, path)
+        return [dict(b, etat=beta.block_state(b, d['answers'], paths.get(b['key']), d['now'])) for b in blocks]
+    return plan_for
+
+
+def _beta_ics_token():
+    return hmac.new(secret_key().encode(), b'beta-ics', 'sha256').hexdigest()[:32]
+
+
+@app.context_processor
+def _beta_now_processor():
+    """beta_now() for templates/beta_now.html: the revision block running now or the next one (owner only)."""
+    def beta_now():
+        if not is_admin():
+            return None
+        try:
+            d = _beta_data()
+            plan_for = _beta_plan_for(d)
+            today = d['now'].date()
+            b = d['beta'].now_block(plan_for(today) + plan_for(today + timedelta(days=1)), d['now'])
+            return b and dict(b, demain=b['debut'].date() > today)
+        except Exception:  # the banner must never break a page
+            app.logger.exception('beta_now')
+            return None
+    return dict(beta_now=beta_now)
 
 
 @app.route('/admin/beta')
@@ -333,7 +381,9 @@ def admin_beta_page():
     d = _beta_data()
     return render_template('admin_beta.html', chart=d['beta'].rhythm_chart(d['hours']), n_logs=len(d['logs']),
                            unmapped=d['beta'].unmapped(d['events'], d['reg']), n_events=len(d['events']),
-                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, next=d['beta'].next_eval(d['adv']))
+                           copie=d['beta'].COPIE_20, recup=d['beta'].RECUPERATION, next=d['beta'].next_eval(d['adv']),
+                           conflit=d['beta'].conflicts(d['hours']),
+                           ics_url=f'{PUBLIC_URL}/beta/plan.ics?t={_beta_ics_token()}')
 
 
 @app.route('/admin/beta/semaine')
@@ -347,8 +397,22 @@ def admin_beta_week():
     except ValueError:
         day = d['now'].date()
     monday = day - timedelta(days=day.weekday())
-    grid = d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], d['hours'], d['block'])
+    grid = d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], plan_for=_beta_plan_for(d))
     return jsonify(dict(grid, cours=d['beta'].course_cards(d['adv'])))
+
+
+@app.route('/beta/plan.ics')
+def beta_ics():
+    """Revision blocks of the next 7 days as an iCalendar feed (subscribe by URL: the phone rings at each block).
+    No session: a calendar app cannot log in, so the URL carries a token derived from the secret key."""
+    if not hmac.compare_digest(request.args.get('t', ''), _beta_ics_token()):
+        abort(404)
+    d = _beta_data()
+    plan_for = _beta_plan_for(d)
+    today = d['now'].date()
+    blocks = [b for i in range(7) for b in plan_for(today + timedelta(days=i))]
+    return Response(d['beta'].ics(blocks, PUBLIC_URL, d['now']), mimetype='text/calendar',
+                    headers={'Cache-Control': 'no-store'})
 
 
 # ------------------------------------------------------------------ API ----
