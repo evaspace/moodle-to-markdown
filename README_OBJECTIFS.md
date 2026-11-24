@@ -390,3 +390,15 @@ Retour : « c'est normal qu'il n'y ait que 2 niveaux ? il faut voir toutes les f
 - QCM de S3 : « doivent être dissociés de S1 et de S2, puisque c'est l'année d'après ».
 - Suite (même jour) : « c'est comme actuellement sauf que ça affiche pour qui c'est, et on peut cocher si on affiche pour S1, S2 ou S3 ; S4 se fait à l'étranger, donc ça fait que S3 ». Probabilités Finance et Assurance n'est pas de S3. Fait sur `/niveaux` : cases « Pour qui » S1 / S2 / S3 (mémorisées dans la session, S1 + S2 par défaut), titre de chaque chapitre avec « S1 (1re année) » ou « S3 (2e année) », Bases maths toujours affichées (prérequis), « Tout confondu » sans les bases quand des semestres sont cochés. Les QCM de la page d'accueil (« Scroller les cours ») n'ont aucun module de S3 d'après `syllabus.json` : rien à séparer là.
 - Suite : « fais les animations de translation sur tous les boutons qui sont liés » (exemple : Tous / S0 / S1 / S2 / S3 / Non classé). Liste des rangées passées au bloc qui glisse (`data-slide="fill"`) : filtre semestre de `/calendrier` (bloc rouge, choix courant en `aria-current`), semaines de `/admin/beta`, les trois flèches de semaine de `/stats` (pas de bloc sur une flèche désactivée). Déjà faites avant : menu, footer, périodes du classement, onglets du compte, onglets admin, modules et chapitres de l'accueil, liste des niveaux. Laissées telles quelles : les rangées `lv-row` (actions indépendantes, pas des choix liés).
+
+## Recherche dans les cours (2026-11-24, soir)
+- Accueil : au survol, un aplat vert glisse de droite à gauche sur les boutons (« Niveaux sur papier », « Lire le cours complet », « Classement », etc.). Fait et déployé (b131ad3).
+- Demande : organiser les cours pour que la recherche soit la plus efficace pour un élève qui connaît le syllabus et le reste du site (niveaux sur papier, annales, formules).
+- Solution choisie par le conseil d'experts (`/council`), à appliquer telle quelle :
+  - un module pilote d'abord (maths S1 2031, la matière la plus avancée), puis les autres ;
+  - une fiche Markdown par notion, identifiant calqué sur le poly : `MATIERE-chap.section` (ex. `APIS-3.2`) ;
+  - en-tête minimal : `id`, `syllabus` (ECUE de `syllabus.json`), `type` (définition, théorème, méthode, exemple), `papier` (niveau sur papier lié), `prereq`, `alias` (mots que l'élève tape vraiment) ;
+  - recherche statique Pagefind, sans base de données, comptes ni CMS ;
+  - un script d'environ 20 lignes vérifie les identifiants en double et les liens `prereq`/`papier` cassés ;
+  - reporté en v2 : vue par annale, rappel actif masqué.
+- Utilisateur : « non on ne prend pas 10 élèves, faut tout faire par IA ». Pas de test avec des élèves : la validation se fait par l'IA. Jeu de requêtes réelles tiré des annales (`annales/FORMULES.md`) et du syllabus ; succès si la bonne fiche est dans le top 3 pour au moins 8 requêtes sur 10, sinon corriger les `alias`.

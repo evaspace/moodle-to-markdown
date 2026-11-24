@@ -1,3 +1,19 @@
+# Handoff — 2026-11-24 (soir) : recherche dans les cours
+## Goal
+Organise the course notes so students who know the syllabus find a notion fast. Decision and rules: `README_OBJECTIFS.md` « Recherche dans les cours ». Apply the council solution as is, validation by AI only (no students).
+
+## State
+- Done, deployed: green hover fill on home buttons (branch `feat/home-hover-vert`, b131ad3, `static/style.css` end of file).
+- Branch `feat/cours-recherche`: only docs so far, no code.
+- Existing: `/cours/<path>` in `app.py` (`course_document`) renders `EPITA_Moodle_Notes_MD/` (3737 .md, Moodle export, git-ignored, bind-mounted read-only in live). `parcours/syllabus.json` = ECUE registry, `annales/FORMULES.md` = formulas per exercise.
+
+## Next
+1. Pilot: maths S1 2031 (`EPITA_Moodle_Notes_MD/S1-MATHS-2031`). One Markdown file per notion, id `MATIERE-chap.section`, front-matter `id, syllabus, type, papier, prereq, alias`.
+2. Pagefind index (static, build-time), search box on `/cours/`.
+3. Check script (~20 lines): duplicate ids, broken `prereq`/`papier`.
+4. AI benchmark: queries from annales + syllabus, target top-3 hit for ≥ 8/10, fix `alias` otherwise.
+5. Commit on the branch, then `tools/deploy.sh`.
+
 # Handoff — 2026-11-14 (nuit)
 ## Goal
 EPITA Doomscrolling refonte (promo 2031): all maths levels for every exam, then other subjects. User decisions: `README_OBJECTIFS.md` (section « Décisions du 2026-11-14 (nuit) »); checklist: `TODO_REFONTE.md`. Full authorization given (deploy, mail, content).
