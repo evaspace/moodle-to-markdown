@@ -164,6 +164,16 @@ class Api(unittest.TestCase):
         exo_id = page.get_data(as_text=True).split('data-exo="')[1].split('"')[0]
         return self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': level, 'exo_id': exo_id, 'ok': ok}).get_json()
 
+    def test_copie_officielle_owner_only(self):
+        url = '/niveaux/maths-s1-apis-suites?n=2'  # level 2 has an official copy in parcours/baremes.json
+        self.register('copie_eleve')
+        self.assertNotIn('Copie 20/20 : corrigé officiel', self.c.get(url).get_data(as_text=True))
+        self.c = self.app.test_client()
+        owner = sorted(levels.ADMIN_USERS)[0]
+        self.register(owner)  # 409 if another test made it: log in either way
+        self.c.post('/api/login', json={'username': owner, 'password': 'secret1'})
+        self.assertIn('Copie 20/20 : corrigé officiel', self.c.get(url).get_data(as_text=True))
+
     def test_pages_need_login(self):
         self.assertEqual(self.c.get('/niveaux').status_code, 302)
         self.assertEqual(self.c.post(f'/api/niveaux/{SUBJECT}/result', json={}).status_code, 401)

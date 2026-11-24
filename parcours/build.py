@@ -350,4 +350,7 @@ def check_syllabus():
 if __name__ == "__main__":
     sys.path.insert(0, str(HERE))
     ok = all([build(p) for p in PATHS])  # build every path even if one fails
+    sys.path.insert(0, str(HERE.parent / "annales" / "tools"))
+    for line in __import__("baremes").warn_missing():  # PLAN_BETA étape 4: nearest exam first
+        print("Avertissement copie 20/20 :", line)
     sys.exit(0 if ok and check_syllabus() else 1)

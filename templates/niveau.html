@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=38">
+  <link rel="stylesheet" href="/static/niveaux.css?v=39">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -81,6 +81,9 @@
   <section class="lv-solution" id="solution" hidden>
     <h2>Correction</h2>
     <div id="solution-body">{{ exo.sol|safe }}</div>
+    {% if copie %}<details class="lv-copie"><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
+      <p class="lv-muted">{{ copie.titre }}{% if copie.points %}, {{ ('%g' % copie.points)|replace('.', ',') }} points{% if copie.sur %} sur {{ copie.sur }}{% endif %}{% endif %}{% if copie.date %}, {{ copie.date }}{% endif %}. Rédige dans cet ordre et avec ces justifications.</p>
+      {{ copie.texte|safe }}</details>{% endif %}
   </section>
   {% if copie_tip %}<p class="lv-practice" id="copie-tip" hidden>Copie 20/20 : {{ copie_tip }}</p>{% endif %}
   <div class="lv-copy" id="copy-ia" hidden>

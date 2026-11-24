@@ -51,6 +51,10 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .lv-notion h3 { font-size: 16px; margin-bottom: 6px; }
 .lv-notion .formule { font-size: 18px; margin: 6px 0; }
 .lv-notion details { margin-top: 6px; }
+.lv-copie { margin-top: 16px; }
+.lv-copie summary { cursor: pointer; font-weight: 600; }
+.lv-copie .katex-display { overflow-x: auto; overflow-y: hidden; }
+.lv-copie blockquote { margin: 6px 0 10px; padding: 6px 10px; background: #F4F5F7; }
 .lv-notion summary { cursor: pointer; font-weight: 700; color: var(--accent-color); }
 .lv-feedback { padding: 16px 20px; margin: 16px 0; font-weight: 700; }
 .lv-feedback p + p { margin-top: 6px; }

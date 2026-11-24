@@ -340,6 +340,8 @@ Fait (page `/admin/beta`, onglet « Beta » de l'admin) :
 - Récupération et alimentation : conseils fixes (pause loin de l'écran, sommeil, repas, eau, pas de café après 16 h, se tester plutôt que relire, alterner).
 - Copie 20/20 : listes par matière de ce que le correcteur veut voir et des pièges d'étourderie (unités, hypothèses des théorèmes, `let rec` et `;;` en OCaml, `;` et types en C, etc.).
 
+- Copie 20/20 par exercice (décision du 2026-11-24) : les annales ne donnent les points que par exercice, pas par étape. Le modèle de copie vient donc des corrections officielles des profs, jamais d'un corrigé rédigé pour le site ; rien n'est inventé.
+
 Reste à faire (idées, à valider) : copie 20/20 rédigée exercice par exercice dans les corrections ; mesurer les pauses réelles (durée entre deux séances) ; noter repas et sommeil si le plan doit en tenir compte ; ouvrir la beta aux autres élèves (chacun son planning auriga2google).
 
 ### Retour du 2026-11-23 (soir)

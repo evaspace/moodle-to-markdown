@@ -206,6 +206,21 @@ def secret_key():
 _cache = {}
 
 
+_copies = {}
+
+
+def copie_officielle(subject, n):
+    """« Copie 20/20 » of a level: newest official correction of an annales exercise of this level
+    (parcours/baremes.json, built by annales/tools/baremes.py), or None."""
+    p = PARCOURS_DIR / 'baremes.json'
+    if not p.exists():
+        return None
+    if _copies.get('mtime') != p.stat().st_mtime:
+        _copies.update(mtime=p.stat().st_mtime, data=json.loads(p.read_text(encoding='utf-8'))['niveaux'])
+    exs = _copies['data'].get(f'{subject}/{n}')
+    return exs[0] if exs else None
+
+
 def load_parcours():
     """All level paths, reloaded when a JSON file changes. Each exercise and variant gets its
     `origine` (TD, exam or written for the site) from parcours/origines.json (tools/sources.py)."""
@@ -213,7 +228,7 @@ def load_parcours():
     orig_path = PARCOURS_DIR / 'origines.json'
     orig_mtime = orig_path.stat().st_mtime if orig_path.exists() else None
     for p in sorted(PARCOURS_DIR.glob('*.json')):
-        if p.name in ('syllabus.json', 'origines.json'):  # registry and origins, not level paths
+        if p.name in ('syllabus.json', 'origines.json', 'baremes.json'):  # registry, origins, copies: not level paths
             continue
         mtime = (p.stat().st_mtime, orig_mtime)
         if _cache.get(p.name, (None,))[0] != mtime:
@@ -829,6 +844,8 @@ def level_page(subject):
         review=bool(request.args.get('revoir')),
         seance=(session.get('seance_line') or {}).get('texte') if request.args.get('seance') == (session.get('seance_line') or {}).get('ecue') else None,
         copie_tip=__import__('beta').copie_tip(data['subject']['matiere'], exo['id']) if is_admin() else None,
+        # hard line breaks: annales lines (a), (b)… are separate steps of the copy
+        copie=(lambda c: c and {**c, 'texte': md(c['texte'].replace('\n', '  \n'))})(copie_officielle(subject, n)) if is_admin() else None,
         squares=squares(lvl, status), combo=streak_now, pari=bool(pari and pari[0]), calib=CALIB_POINTS,
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),

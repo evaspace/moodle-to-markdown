@@ -109,6 +109,10 @@ Mise en œuvre :
 - `annales/tools/baremes.py` extrait, par type d'exercice (`Type :` déjà présent dans chaque exo des annales), les étapes qui portent des points. Résultat : `parcours/baremes.json`, relu à la main.
 - Champ `copie` par exo, construit sur ce squelette. Onglet « Copie 20/20 » à côté de la correction.
 - Ordre de rédaction : évaluation la plus proche d'abord. Le build avertit si un parcours évalué dans les 14 jours a des exos sans `copie`.
+
+Fait le 2026-11-24 (partie 1, exemple rédigé). Constat : les annales donnent les points par exercice (857 marques « (n points) »), presque jamais par étape ; les barèmes détaillés sont manuscrits dans quelques scans de physique. Décision de l'utilisateur : la copie modèle vient des corrections officielles. `annales/tools/baremes.py` prend chaque exercice des corrigés officiels (pas les « corrigés rédigés » du site) qui porte un `Niveau`, avec ses points et le total quand le fichier les donne, et écrit `parcours/baremes.json` (256 exercices, 81 niveaux). Sous la correction, la page d'exercice montre le corrigé officiel le plus récent du niveau (« Copie 20/20 », bloc repliable, propriétaire seulement comme le reste de la beta). `parcours/build.py` et `baremes.py` listent les parcours évalués dans les 14 jours qui ont des niveaux sans copie officielle.
+Reste : squelettes à trous (étapes 2 et 3 de l'ordre d'apprentissage), à écrire à la main depuis ces corrigés, évaluation la plus proche d'abord ; points par étape lus sur les scans de physique avec barème.
+
 ### 5. Le plan vient à l'élève (`feat/beta-ics`)
 
 - Route `/beta/plan.ics?t=<jeton>` : blocs de révision des 7 prochains jours, chacun avec le lien vers sa séance.
