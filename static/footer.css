@@ -30,4 +30,5 @@
 .app-nav-links.slide-ready { --slide-color: var(--accent-color, #FF5252); }
 .morgan-footer-nav.slide-ready { --slide-color: #ec6a11; }
 .adm-tabs.slide-ready { background: #F4F5F7; }
+.cal-filter.slide-ready { --slide-color: var(--accent-color, #FF5252); }
 @media (prefers-reduced-motion: reduce) { .slide-pill { transition: opacity .2s; } }

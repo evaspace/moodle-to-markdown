@@ -7,7 +7,7 @@
   {% include "share.html" %}
   <meta name="description" content="Dates des examens et tests de la prépa EPITA, avec l'entraînement correspondant pour chacun.">
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261124">
+  <link rel="stylesheet" href="/static/footer.css?v=20261124b">
   <link rel="stylesheet" href="/static/niveaux.css?v=40">
 </head>
 <body class="lv-page">
@@ -16,9 +16,9 @@
 <div class="lv-wrap cal">
   <h1>Calendrier des examens</h1>
   {% if sems|length > 1 %}
-  <nav class="cal-filter" aria-label="Filtrer par semestre">
-    <a class="lv-btn{{ ' primary' if sem == 'tous' }}" href="/calendrier?sem=tous" data-sem="tous">Tous</a>
-    {% for x in sems %}<a class="lv-btn{{ ' primary' if sem == x }}" href="/calendrier?sem={{ x }}" data-sem="{{ x }}">{{ 'Non classé' if x == 'none' else x }}</a>{% endfor %}
+  <nav class="cal-filter" aria-label="Filtrer par semestre" data-slide="fill">
+    <a class="lv-btn" href="/calendrier?sem=tous"{% if sem == 'tous' %} aria-current="page"{% endif %} data-sem="tous">Tous</a>
+    {% for x in sems %}<a class="lv-btn" href="/calendrier?sem={{ x }}"{% if sem == x %} aria-current="page"{% endif %} data-sem="{{ x }}">{{ 'Non classé' if x == 'none' else x }}</a>{% endfor %}
   </nav>
   {% endif %}
 

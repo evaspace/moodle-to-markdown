@@ -34,8 +34,9 @@
     };
     const rest = () => go(pinned || current());
     items.forEach((el, i) => {
-      el.addEventListener('pointerenter', () => go(el));
-      el.addEventListener('focus', () => go(el));
+      const enter = () => (el.disabled ? rest() : go(el));  // a disabled arrow gets no block
+      el.addEventListener('pointerenter', enter);
+      el.addEventListener('focus', enter);
       el.addEventListener('click', () => {
         pinned = el;
         try { sessionStorage.setItem(key, i); } catch (e) { /* storage off: no slide-in on the next page */ }

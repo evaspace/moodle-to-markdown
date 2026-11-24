@@ -7,7 +7,7 @@
   <title>Mes stats · Epita Doomscrolling</title>
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/footer.css?v=20261124">
+  <link rel="stylesheet" href="/static/footer.css?v=20261124b">
   <link rel="stylesheet" href="/static/niveaux.css?v=40">
 </head>
 <body class="lv-page">
@@ -41,7 +41,7 @@
   {% set weeks = s.history|reverse|list %}
   <h2>Ta réussite semaine après semaine</h2>
   <div class="st-wk" id="st-wk">
-    <div class="st-wk-nav">
+    <div class="st-wk-nav" data-slide="fill">
       <button type="button" class="lv-btn" data-step="-1" aria-label="Semaine précédente">←</button>
       <span aria-live="polite" id="st-wk-label">Semaine du {{ weeks[-1].label }}{% if weeks[-1].current %} (en cours){% endif %}</span>
       <button type="button" class="lv-btn" data-step="1" aria-label="Semaine suivante" disabled>→</button>
@@ -89,7 +89,7 @@
 
   <h2>Temps passé, 30 derniers jours</h2>
   <div class="st-wk" id="st-time" data-n="{{ (s.chart_all|length - 30) // 7 + 1 }}">
-    <div class="st-wk-nav">
+    <div class="st-wk-nav" data-slide="fill">
       <button type="button" class="lv-btn" data-step="-1" aria-label="7 jours plus tôt">←</button>
       <span aria-live="polite" data-title>30 derniers jours</span>
       <button type="button" class="lv-btn" data-step="1" aria-label="7 jours plus tard" disabled>→</button>
@@ -106,7 +106,7 @@
   <h2>Quand tu travailles</h2>
   <p class="lv-muted">Chaque case est une heure d'un jour de la semaine : plus elle est verte, plus tu as fait d'exercices.</p>
   <div class="st-wk" id="st-hours" data-n="{{ s.heat_weeks|length }}">
-    <div class="st-wk-nav">
+    <div class="st-wk-nav" data-slide="fill">
       <button type="button" class="lv-btn" data-step="-1" aria-label="Semaine précédente">←</button>
       <span aria-live="polite" data-title>{{ s.heat_weeks[-1].label }}</span>
       <button type="button" class="lv-btn" data-step="1" aria-label="Semaine suivante" disabled>→</button>
