@@ -41,6 +41,7 @@
     <p class="bt-legend">Clair : cours. Plein : révision proposée, clique pour réviser. Noir : évaluation. Barre verte : ta progression, trait : la classe.</p>
     <p class="bt-legend">Une révision passée est marquée « fait » si tu as répondu à 5 exercices de ce cours pendant le bloc (à 30 min près), sinon elle est barrée. Le plan du jour est figé dès son premier calcul.</p>
     <div class="bt-grid-scroll"></div>
+    <p class="lv-muted" id="bt-charge"></p>
   </div>
 
   <h2>Sur ton téléphone</h2>
@@ -65,7 +66,7 @@
 
   <h2>Ton rythme</h2>
   {% if chart %}
-  <p>Entre 8 h et 22 h, tu réussis le mieux à {% for h in chart.meilleures %}<strong>{{ h }} h</strong>{% if not loop.last %}, {% endif %}{% endfor %} : le calendrier y place les cours les plus urgents.</p>
+  <p>Entre 8 h et 22 h, à difficulté égale, tu réussis le mieux à {% for h in chart.meilleures %}<strong>{{ h }} h</strong>{% if not loop.last %}, {% endif %}{% endfor %} : le calendrier y place les cours les plus urgents.</p>
   <div class="bt-chart" role="img" aria-label="Taux de réussite par heure">
     {% for b in chart.barres %}<div class="bt-chart-col{{ ' top' if b.top }}" title="{{ b.h }} h : {{ b.pct }} % de réussite sur {{ b.n }} réponses">
       <span class="bt-chart-pct">{{ b.pct }}</span>
@@ -74,7 +75,7 @@
     </div>{% endfor %}
   </div>
   {% if conflit %}<p class="bt-warn">{{ conflit }}</p>{% endif %}
-  <p class="lv-muted">Hauteur : part de bonnes réponses à cette heure-là. Seules les heures avec au moins 8 réponses comptent.</p>
+  <p class="lv-muted">Hauteur : part de bonnes réponses à cette heure-là. Seules les heures avec au moins 8 réponses comptent. Les meilleures heures sont classées en comparant chaque réponse à la réussite des autres élèves sur le même exercice : réussir un exercice dur compte plus.</p>
   {% else %}
   <p class="lv-muted">Pas encore assez de réponses (40 minimum) : le calendrier suppose que tu es plus efficace le matin, et s'adaptera tout seul.</p>
   {% endif %}
@@ -92,7 +93,7 @@
   {% endfor %}
 
 </div>
-<script src="/static/beta.js?v=6"></script>
+<script src="/static/beta.js?v=7"></script>
 {% include 'footer.html' %}
 </body>
 </html>

@@ -248,7 +248,7 @@ def rhythm_chart(hours):
     """Bars for the rhythm chart: the 3 best hours are marked."""
     if not hours:
         return None
-    best = sorted((h for h in hours if DAY_START.hour <= h < DAY_STOP.hour), key=lambda h: -hours[h]['pct'])[:3]
+    best = sorted((h for h in hours if DAY_START.hour <= h < DAY_STOP.hour), key=lambda h: -hours[h]['score'])[:3]
     return dict(barres=[dict(h=h, pct=v['pct'], n=v['n'], top=h in best) for h, v in hours.items()],
                 meilleures=sorted(best))
 
@@ -305,15 +305,66 @@ def unmapped(events, reg):
     return sorted({ev['titre'] for ev in events if ev['type'] in LESSON_TYPES and not ecue_of(ev['titre'], reg)})
 
 
-def rhythm(logs, min_total=40, min_hour=8):
-    """Success rate by hour of the day from (at, ok) logs; None if there is not enough data yet."""
+def rhythm(logs, min_total=40, min_hour=8, expected=None):
+    """Success rate by hour of the day from (at, ok) logs; None if there is not enough data yet.
+
+    `expected` (same order as logs): the other users' success rate on each exercise. Then `score` =
+    50 + my success minus the expected one, in points: a success on a hard exercise counts more, and an
+    hour spent on easy exercises no longer looks good. Without it, score = pct. Plans rank hours by score."""
     if len(logs) < min_total:
         return None
     by = {}
-    for at, ok in logs:
-        n, good = by.get(at.hour, (0, 0))
-        by[at.hour] = (n + 1, good + ok)
-    return {h: dict(n=n, pct=round(100 * g / n)) for h, (n, g) in sorted(by.items()) if n >= min_hour}
+    for i, (at, ok) in enumerate(logs):
+        n, good, exp = by.get(at.hour, (0, 0, 0.0))
+        by[at.hour] = (n + 1, good + ok, exp + (expected[i] if expected else 0))
+    return {h: dict(n=n, pct=round(100 * g / n), score=round(50 + 100 * (g - e) / n) if expected else round(100 * g / n))
+            for h, (n, g, e) in sorted(by.items()) if n >= min_hour}
+
+
+def expected_rates(rows):
+    """Other users' success rate per exercise, smoothed ((ok + 1) / (n + 2), so 0.5 when nobody did it).
+    rows: [(account_id, key, ok)]; returns f(account_id, key) excluding that account's own answers."""
+    tot = {}
+    mine = {}
+    for acc, key, ok in rows:
+        n, g = tot.get(key, (0, 0))
+        tot[key] = (n + 1, g + ok)
+        n, g = mine.get((acc, key), (0, 0))
+        mine[(acc, key)] = (n + 1, g + ok)
+
+    def rate(acc, key):
+        n, g = tot.get(key, (0, 0))
+        mn, mg = mine.get((acc, key), (0, 0))
+        return (g - mg + 1) / (n - mn + 2)
+    return rate
+
+
+CAP_MIN, CAP_MAX, CAP_MIN_BLOCKS = 60, 300, 5
+
+
+def load(store, answers, paths, now):
+    """Daily cap factor from the last 7 days of frozen plans: share of finished blocks marked done.
+    Below 60 %: caps -20 %; above 90 %: +10 %; fewer than 5 measurable blocks: defaults.
+    store: date iso -> blocks (beta_plans.json); paths: ECUE key -> path ids. Returns dict(facteur, raison)."""
+    states = []
+    for k, blocks in store.items():
+        if 0 < (now.date() - datetime.fromisoformat(k).date()).days <= 7:
+            for b in blocks:
+                b = dict(b, debut=datetime.fromisoformat(b['debut']), fin=datetime.fromisoformat(b['fin']))
+                st = block_state(b, answers, paths.get(b.get('key')), now)
+                if st:
+                    states.append(st == 'fait')
+    if len(states) < CAP_MIN_BLOCKS:
+        return dict(facteur=1.0, raison=f'plafond par défaut : {len(states)} bloc(s) mesuré(s) sur 7 jours, il en faut {CAP_MIN_BLOCKS}')
+    pct = round(100 * sum(states) / len(states))
+    f = 0.8 if pct < 60 else 1.1 if pct > 90 else 1.0
+    what = 'baissé de 20 %' if f < 1 else 'monté de 10 %' if f > 1 else 'inchangé'
+    return dict(facteur=f, raison=f'tu as fait {pct} % des {len(states)} blocs des 7 derniers jours : plafond {what}')
+
+
+def caps(facteur):
+    """(course day, free day) caps in minutes after the load factor, between 1 h and 5 h."""
+    return tuple(min(CAP_MAX, max(CAP_MIN, round(c * facteur))) for c in (CAP_COURSE_DAY, CAP_FREE_DAY))
 
 
 def block_length(logs, gap=20, split=25, min_sessions=3):
@@ -413,7 +464,7 @@ def free_slots(events, day):
     return [(a, b) for a, b in slots if b - a >= timedelta(minutes=20)]
 
 
-def plan_day(day, events, adv, hours=None, block=None, now=None):
+def plan_day(day, events, adv, hours=None, block=None, now=None, facteur=1.0):
     """Suggested blocks for one day: [{debut, fin, quoi, pourquoi, lien}], breaks included between blocks.
 
     1. each course of the day gets a 20-min « à chaud » review in the first free slot after it;
@@ -423,7 +474,7 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
     3. an ECUE gets at most 2 blocks a day (alternating subjects helps memory)."""
     block = block or dict(minutes=45, pause=10)
     lessons = [ev for ev in events if ev['debut'].date() == day and ev['type'] in LESSON_TYPES]
-    cap = CAP_COURSE_DAY if lessons else CAP_FREE_DAY
+    cap = caps(facteur)[0 if lessons else 1]
     slots = free_slots(events, day)
     if now:
         slots = [(max(a, now), b) for a, b in slots if b > now + timedelta(minutes=20)]
@@ -474,7 +525,7 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
         while b - t >= timedelta(minutes=m) and used + m * (len(blocks) + 1) <= cap:
             blocks.append(t)
             t += timedelta(minutes=m + block['pause'])
-    score = (lambda h: hours[h]['pct'] if h in hours else 0) if hours else (lambda h: DEFAULT_GOOD_HOURS.get(h, 0))
+    score = (lambda h: hours[h]['score'] if h in hours else 0) if hours else (lambda h: DEFAULT_GOOD_HOURS.get(h, 0))
     for t, (r, why) in zip(sorted(blocks, key=lambda t: -score(t.hour)), ordered):
         plan.append(dict(debut=t, fin=t + timedelta(minutes=m), quoi=r['titre'], pourquoi=why, key=r['key'],
                          lien=seance_link(r['key']) if r['parcours'] else None))
@@ -485,7 +536,7 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
 DONE_MIN, DONE_MARGIN = 5, 30   # done = 5+ answers of the block's ECUE within ±30 min: nothing to tick
 
 
-def day_plan(day, events, adv, now, store, hours=None, block=None):
+def day_plan(day, events, adv, now, store, hours=None, block=None, facteur=1.0):
     """Revision blocks of `day`. Today's plan is frozen in `store` (date iso -> blocks) the first time it is
     computed, so its blocks can later be marked done or missed; later days are recomputed on every call and
     past days only come from the store. The caller saves `store` when it gained a key."""
@@ -494,7 +545,7 @@ def day_plan(day, events, adv, now, store, hours=None, block=None):
         return [dict(p, debut=datetime.fromisoformat(p['debut']), fin=datetime.fromisoformat(p['fin'])) for p in store[k]]
     if day < now.date():
         return []
-    plan = plan_day(day, events, adv, hours, block, now if day == now.date() else None)
+    plan = plan_day(day, events, adv, hours, block, now if day == now.date() else None, facteur)
     if day == now.date():
         store[k] = [dict(p, debut=p['debut'].isoformat(), fin=p['fin'].isoformat()) for p in plan]
     return plan
@@ -529,7 +580,7 @@ def conflicts(hours):
     """One sentence when some of my 3 best measured hours fall in a protected range, else None."""
     if not hours:
         return None
-    best = sorted(hours, key=lambda h: -hours[h]['pct'])[:3]
+    best = sorted(hours, key=lambda h: -hours[h]['score'])[:3]
     bad = [(h, _protected(h)) for h in sorted(best) if _protected(h)]
     if not bad:
         return None

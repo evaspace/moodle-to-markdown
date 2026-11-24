@@ -67,6 +67,8 @@ Fait le 2026-11-24 : `/beta/seance/<ecue>` et `beta.seance_next`. Écart au plan
 
 ### 2. Adaptation automatique (`feat/beta-adapt`)
 
+Fait le 2026-11-24 : plafond mesuré (`beta.load`, `beta.caps`) et rythme corrigé de la difficulté (`score`). La difficulté = réussite lissée des autres élèves sur le même exercice, pas leur temps. La fatigue en direct passe à l'étape 3, avec son bandeau.
+
 - `beta.load(logs, plans)` remplace `CAP_COURSE_DAY` / `CAP_FREE_DAY` par le plafond mesuré.
 - `rhythm` corrigé de la difficulté : une réussite sur un exo dur compte plus qu'une réussite sur un exo facile.
 - Fatigue en direct : trois échecs de suite, ou un temps de réponse au-delà de 1,5 fois la moyenne de l'élève, alors pause proposée maintenant (étape 3).

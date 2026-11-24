@@ -319,11 +319,13 @@ def _beta_data():
         my_pct = {r['subject']: percent(r['best'], len(paths[r['subject']]['levels']))
                   for r in conn.execute('SELECT subject, best FROM level_progress WHERE account_id=?', (me,))
                   if r['subject'] in paths}
-        rows = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'], r['subject'])
-                for r in conn.execute('SELECT at, ok, subject FROM exo_log WHERE account_id=?', (me,))]
-    logs, answers = [(at, ok) for at, ok, _ in rows], [(at, s) for at, _, s in rows]
+        every = conn.execute('SELECT account_id, subject, level, exo_id, ok, at FROM exo_log ORDER BY id').fetchall()
+    rate = beta.expected_rates([(r['account_id'], (r['subject'], r['level'], r['exo_id']), r['ok']) for r in every])
+    rows = [(datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ), r['ok'], r['subject'],
+             rate(me, (r['subject'], r['level'], r['exo_id']))) for r in every if r['account_id'] == me]
+    logs, answers = [(at, ok) for at, ok, _, _ in rows], [(at, s) for at, _, s, _ in rows]
     adv = beta.advancement(events + evals, reg, my_pct, now)
-    hours = beta.rhythm(logs)
+    hours = beta.rhythm(logs, expected=[e for *_, e in rows])
     return dict(beta=beta, events=events, evals=evals, reg=reg, now=now, adv=adv, logs=logs, answers=answers,
                 hours=hours, block=beta.block_length(logs), data_dir=data_dir)
 
@@ -339,16 +341,19 @@ def _beta_plan_for(d):
     except (OSError, ValueError):
         store = {}
     paths = {r['key']: set(r['parcours']) for r in d['adv']}
+    charge = beta.load(store, d['answers'], paths, d['now'])
 
     def plan_for(day):
         n = len(store)
-        blocks = beta.day_plan(day, d['events'] + d['evals'], d['adv'], d['now'], store, d['hours'], d['block'])
+        blocks = beta.day_plan(day, d['events'] + d['evals'], d['adv'], d['now'], store, d['hours'], d['block'],
+                               charge['facteur'])
         if len(store) != n:
             tmp = path + '.tmp'
             with open(tmp, 'w') as f:
                 json.dump(store, f, ensure_ascii=False)
             os.replace(tmp, path)
         return [dict(b, etat=beta.block_state(b, d['answers'], paths.get(b['key']), d['now'])) for b in blocks]
+    plan_for.charge = charge
     return plan_for
 
 
@@ -397,8 +402,11 @@ def admin_beta_week():
     except ValueError:
         day = d['now'].date()
     monday = day - timedelta(days=day.weekday())
-    grid = d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], plan_for=_beta_plan_for(d))
-    return jsonify(dict(grid, cours=d['beta'].course_cards(d['adv'])))
+    plan_for = _beta_plan_for(d)
+    grid = d['beta'].week_grid(d['events'] + d['evals'], d['adv'], monday, d['now'], plan_for=plan_for)
+    course, free = d['beta'].caps(plan_for.charge['facteur'])
+    charge = f"Plafond : {course // 60} h {course % 60:02d} les jours de cours, {free // 60} h {free % 60:02d} sinon ({plan_for.charge['raison']})."
+    return jsonify(dict(grid, cours=d['beta'].course_cards(d['adv']), charge=charge))
 
 
 @app.route('/beta/seance/<path:ecue>')

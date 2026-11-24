@@ -74,6 +74,7 @@
     scroll.scrollLeft = keep;
 
     cards(w.cours || []);
+    document.getElementById('bt-charge').textContent = w.charge || '';
   }
 
   // one card per course, most urgent first (refreshed with the grid)

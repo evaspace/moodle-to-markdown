@@ -161,8 +161,8 @@ class Beta(unittest.TestCase):
 
     def test_conflicts(self):
         self.assertIsNone(beta.conflicts(None))
-        self.assertIsNone(beta.conflicts({9: dict(n=20, pct=80), 10: dict(n=20, pct=70), 14: dict(n=20, pct=60)}))
-        c = beta.conflicts({19: dict(n=20, pct=73), 23: dict(n=20, pct=75), 10: dict(n=20, pct=60), 20: dict(n=20, pct=10)})
+        self.assertIsNone(beta.conflicts({9: dict(n=20, pct=80, score=80), 10: dict(n=20, pct=70, score=70), 14: dict(n=20, pct=60, score=60)}))
+        c = beta.conflicts({19: dict(n=20, pct=73, score=73), 23: dict(n=20, pct=75, score=75), 10: dict(n=20, pct=60, score=60), 20: dict(n=20, pct=10, score=10)})
         self.assertIn('19 h (73 %, dîner)', c)
         self.assertIn('23 h (75 %, après 22 h)', c)
         self.assertNotIn('10 h', c)
@@ -190,6 +190,37 @@ class Beta(unittest.TestCase):
         self.assertEqual(beta.seance_next(recent, [b], ['m'], set(), now), ('niveau', 'm'))     # just tried: skip
         self.assertIsNone(beta.seance_next([], [], ['m'], {'m'}, now))
         self.assertEqual(beta.seance_link('maths/S1/Mécanique'), '/beta/seance/maths/S1/M%C3%A9canique')
+    def test_rhythm_difficulty(self):
+        t = lambda h: datetime(2026, 11, 20, h, tzinfo=beta.TZ)
+        logs = [(t(9), 1)] * 10 + [(t(15), 1)] * 5 + [(t(15), 0)] * 5
+        easy, hard = [0.9] * 10, [0.2] * 10        # 9 h: easy exercises, 15 h: hard ones
+        h = beta.rhythm(logs, min_total=10, expected=easy + hard)
+        self.assertEqual((h[9]['pct'], h[15]['pct']), (100, 50))
+        self.assertEqual((h[9]['score'], h[15]['score']), (60, 80))   # 15 h is the better hour
+        self.assertEqual(beta.rhythm(logs, min_total=10)[9]['score'], 100)
+        rate = beta.expected_rates([(1, 'e', 1), (2, 'e', 0), (2, 'e', 0), (1, 'f', 1)])
+        self.assertEqual(rate(1, 'e'), 1 / 4)         # others: 0/2
+        self.assertEqual(rate(2, 'e'), 2 / 3)         # others: 1/1
+        self.assertEqual(rate(1, 'f'), 0.5)           # nobody else
+
+    def test_load_factor(self):
+        now = datetime(2026, 11, 24, 12, tzinfo=beta.TZ)
+
+        def store(done, missed):
+            blocks, answers = [], []
+            for i in range(done + missed):
+                a = datetime(2026, 11, 20, 8, tzinfo=beta.TZ) + timedelta(hours=i)
+                blocks.append(dict(debut=a.isoformat(), fin=(a + timedelta(minutes=45)).isoformat(), key='k'))
+                if i < done:
+                    answers += [(a + timedelta(minutes=5 * j), 'm') for j in range(5)]
+            return {'2026-11-20': blocks}, answers
+        self.assertEqual(beta.load(*store(1, 2), {'k': {'m'}}, now)['facteur'], 1.0)   # too few blocks
+        self.assertEqual(beta.load(*store(2, 4), {'k': {'m'}}, now)['facteur'], 0.8)
+        self.assertEqual(beta.load(*store(10, 0), {'k': {'m'}}, now)['facteur'], 1.1)
+        self.assertEqual(beta.load(*store(7, 3), {'k': {'m'}}, now)['facteur'], 1.0)
+        self.assertEqual(beta.caps(0.8), (144, 240))
+        self.assertEqual(beta.caps(1.1), (198, 300))  # 5 h at most
+        self.assertEqual(beta.caps(0.1), (60, 60))    # 1 h at least
 
 if __name__ == '__main__':
     unittest.main()
