@@ -382,3 +382,9 @@ Fait :
 Demande : des niveaux pour connaître les bases (sommes, factorisation, divisions, exp, ln, et autres), « fais-les tous ». Puis : plusieurs catégories de thèmes différents dans « Bases maths », qui est une matière ; chaque type est un chapitre, avec des niveaux par chapitre pour voir toutes les formules générales.
 Fait : matière `bases` (« Bases maths »), 10 chapitres, 21 niveaux, 88 exercices (variante chiffrée pour chaque calcul), vérifiés par sympy.
 Retour : « c'est normal qu'il n'y ait que 2 niveaux ? il faut voir toutes les formules générales pour être chaud en maths », puis « fais également le changement de variable dans les sommes ». Fait : 3 à 6 niveaux par chapitre, un exercice par formule générale, nouvelles notions (puissances de 10, PGCD/PPCM, produits et factorielles, puissances réelles, tangente et variations, éléments simples, changement d'indice) : 51 niveaux, 164 exercices.
+
+## Retours du 2026-11-24 (après-midi)
+- Bandeau « Révision prévue » en haut de l'accueil et des exercices : « ce truc de con qui apparaît en haut, ça casse la page ». Supprimé.
+- Boutons de choix (thèmes, modules, chapitres, niveaux) : même effet de bloc qui glisse au survol que le classement. Fait (`static/slide.js`).
+- Flux de révisions (blocs du plan dans le calendrier, `PLAN_BETA.md` étape 5) : « une fonction qu'on choisit d'activer ou non ». Désactivé par défaut, réglage par compte.
+- QCM de S3 : « doivent être dissociés de S1 et de S2, puisque c'est l'année d'après ».

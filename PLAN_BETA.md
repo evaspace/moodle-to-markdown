@@ -120,6 +120,7 @@ Reste : squelettes des autres matières (archi 68000 n'a aucun corrigé officiel
 
 - Route `/beta/plan.ics?t=<jeton>` : blocs de révision des 7 prochains jours, chacun avec le lien vers sa séance.
 - auriga2google l'ajoute au flux Google Calendar, comme `calendrier.json` pour les examens. Le téléphone notifie, plus besoin d'ouvrir le site.
+- Option par compte, désactivée par défaut (décision du 2026-11-24) : l'élève choisit d'activer ou non l'ajout de ses blocs de révision à son calendrier.
 
 ### 6. Plus tard
 
