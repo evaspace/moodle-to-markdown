@@ -535,3 +535,13 @@ Revision planner on the owner's real timetable. Owner-only (admin login). Decisi
 - Request body capped at 2 MB (`MAX_CONTENT_LENGTH`).
 - Backups: `tools/backup_db.py` writes a checked copy of `cards.db` to `backups/daily/` (keeps 14), run daily by cron at 3:30. Restore steps are in the script header.
 - Tests: `tests/test_security.py`.
+
+## Course search: notion sheets (`/cours/fiches/<ID>`, 2026-11-24)
+Pilot: maths S1 2031 (75 sheets). Decision and rules: README_OBJECTIFS « Recherche dans les cours ».
+- One Markdown file per notion in `fiches/<ID>.md`, id `MATIERE-chap.section`: `chap` = the Moodle « Cours N » number (DP-1 dénombrement, DP-2 probabilités, APIS-3 primitives/intégrales, APIS-4 suites, OBM-6), `section` = rank of the notion in the course (order of the synthesis sheet or poly). Front-matter: `id`, `syllabus` (ECUE id of `parcours/syllabus.json`), `type` (définition, théorème, méthode, exemple), `papier` (`<path id>/<level n>` or empty), `prereq`, `alias` (comma-separated words students actually type; indexed with a high weight, not shown).
+- Page: `fiche_page` in `app.py` (same template `docs.html` as the Moodle notes, plus type, ECUE, « S'entraîner sur papier » link and prerequisites).
+- Check (duplicate ids, broken `prereq`/`papier`/body links): `python3 fiches.py` (also `tests/test_fiches.py`, run by `tools/deploy.sh`).
+- Search: static Pagefind index in `static/pagefind/`, committed because the site has no build step. After any sheet change: `.venv/bin/python fiches.py --index` (runs `npx pagefind@1.6.0`, free). Search box on `/cours/` (`static/search.js`); a query with no sheet containing every word falls back to one search per word.
+- AI benchmark (no student testers): `~/.local/share/playwright-venv/bin/python tools/bench_fiches.py` runs the queries of `tools/fiches_bench.json` (exercise types of `annales/FORMULES.md` and chapters of `syllabus.json`) in headless Chromium. Target: right sheet in the top 3 for ≥ 80 %, else fix `alias`. Result 2026-11-24: 57/57.
+
+![Search « ipp ln » on /cours/ at 390 px: the sheet APIS-3.13 comes first](docs/cours-recherche.png)

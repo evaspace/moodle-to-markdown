@@ -35,9 +35,24 @@
     <nav class="docs-breadcrumb" aria-label="Fil d’Ariane">
       <a href="/cours/README.md">Cours</a><span> / </span>{{ relative_path|e }}
     </nav>
-    <article class="docs-article">
-      <h1 class="docs-title">{{ title }}</h1>
+    {% if search %}
+    <form class="docs-search" role="search" action="javascript:void(0)">
+      <label for="docs-q">Chercher une notion du cours</label>
+      <input id="docs-q" type="search" autocomplete="off" placeholder="IPP, Bayes, suites adjacentes, image réciproque">
+      <ol id="docs-results" class="docs-results" aria-live="polite"></ol>
+    </form>
+    <script type="module" src="/static/search.js"></script>
+    {% endif %}
+    <article class="docs-article"{% if fiche %} data-pagefind-body data-pagefind-meta="id:{{ fiche.id }}"{% endif %}>
+      <h1 class="docs-title">{% if fiche %}<span class="docs-fiche-id">{{ fiche.id }}</span> {% endif %}{{ title }}</h1>
+      {% if fiche %}
+      <p class="docs-fiche-meta" data-pagefind-ignore>{{ fiche.type|capitalize }} · {{ fiche.syllabus }}{% if fiche.papier %} · <a href="{{ fiche.papier }}">S'entraîner sur papier</a>{% endif %}</p>
+      <p hidden data-pagefind-weight="7">{{ fiche.alias|join(', ') }}</p>
+      {% endif %}
       <div class="docs-content">{{ content|safe }}</div>
+      {% if fiche and fiche.prereq %}
+      <p class="docs-fiche-meta" data-pagefind-ignore>À savoir avant : {% for id, t in fiche.prereq %}<a href="/cours/fiches/{{ id }}">{{ id }} {{ t }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      {% endif %}
     </article>
     <footer class="docs-footer"><a href="/">Retour au fil de révision →</a></footer>
   </main>

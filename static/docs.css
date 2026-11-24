@@ -33,3 +33,18 @@ html:has(body.docs-page), body.docs-page {
 .course-library-link { display: flex; justify-content: space-between; align-items: center; max-width: 540px; margin: 18px auto 8px; padding: 14px 18px; border: 2px solid var(--border-color); background: #fff; color: var(--text-color); text-decoration: none; font-weight: 700; }
 .course-library-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
 @media (max-width: 600px) { .docs-main { margin-top: 12px; } .docs-header { padding: 12px 14px; } }
+/* Notion sheets (fiches/) and the Pagefind search box on /cours/ */
+.docs-fiche-id { color: var(--accent-color); }
+.docs-fiche-meta { margin: -12px 0 20px; color: var(--text-muted); font-size: .82rem; }
+.docs-fiche-meta a { color: var(--accent-color); font-weight: 700; }
+.docs-search { margin: 0 0 20px; }
+.docs-search label { display: block; margin-bottom: 6px; font-weight: 700; }
+.docs-search input { width: 100%; box-sizing: border-box; padding: 12px 14px; font: inherit; font-size: 1rem; border: 2px solid var(--border-color); border-radius: 0; background: #fff; }
+.docs-search input:focus { outline: none; border-color: var(--accent-color); }
+.docs-results { list-style: none; margin: 0; padding: 0; background: #fff; }
+.docs-results li a { display: block; padding: 12px 14px; color: var(--text-color); text-decoration: none; border: 2px solid var(--border-color); border-top: 0; }
+.docs-results li a:hover, .docs-results li a:focus { color: var(--accent-color); }
+.docs-results strong { display: block; }
+.docs-results span { display: block; font-size: .82rem; color: var(--text-muted); }
+.docs-results mark { background: none; color: var(--accent-color); font-weight: 700; }
+.docs-results li:not(:has(a)) { padding: 12px 14px; }

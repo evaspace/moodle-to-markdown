@@ -632,9 +632,14 @@ def course_document(relative_path='README.md'):
         source = target.read_text(encoding='utf-8')
     except (OSError, UnicodeError):
         abort(404)
-    safe_html = render_markdown_with_math(source)
     title_match = re.search(r'^\s*#\s+(.+?)\s*#*\s*$', source, re.M)
     title = title_match.group(1) if title_match else target.stem
+    return render_doc(source, title, relative_path, search=relative_path == 'README.md')
+
+
+def render_doc(source, title, relative_path, **extra):
+    """Course page (Moodle note or notion sheet) with its description and JSON-LD."""
+    safe_html = render_markdown_with_math(source)
     description = doc_description(source, title)
     canonical = f"https://epitadoomscrolling.pierref.eu/cours/{relative_path}"
     ld = {"@context": "https://schema.org", "@type": "LearningResource", "name": _plain(title), "url": canonical,
@@ -645,7 +650,23 @@ def course_document(relative_path='README.md'):
         ld["description"] = description
     return render_template('docs.html', title=title, content=safe_html,
                            relative_path=relative_path, description=description, canonical=canonical,
-                           jsonld=json.dumps(ld, ensure_ascii=False).replace('</', '<\\/'))
+                           jsonld=json.dumps(ld, ensure_ascii=False).replace('</', '<\\/'), **extra)
+
+
+@app.route('/cours/fiches/<fid>')
+def fiche_page(fid):
+    """One notion sheet (fiches/<ID>.md, see fiches.py): the course page plus its prerequisites and paper level."""
+    import fiches
+    all_fiches = fiches.load_all()
+    if fid not in all_fiches:
+        abort(404)
+    meta, body = all_fiches[fid]
+    heading = re.search(r'^#\s+(.+)$', body, re.M)
+    title = heading.group(1) if heading else fid
+    path, _, n = meta['papier'].partition('/')
+    fiche = dict(meta, prereq=[(r, all_fiches[r][1].split('\n', 1)[0].lstrip('# ')) for r in meta['prereq'] if r in all_fiches],
+                 papier=f'/niveaux/{path}?n={n}' if n else None)
+    return render_doc(body.replace(heading.group(0), '', 1) if heading else body, title, f'fiches/{fid}', fiche=fiche)
 
 
 @app.route('/healthz')
