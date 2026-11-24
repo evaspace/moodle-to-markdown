@@ -361,11 +361,11 @@ button {
 }
 
 .quick-all-btn:hover {
-    background: #333333;
+    background-color: #333333;
 }
 
 .quick-all-btn:active {
-    background: #555555;
+    background-color: #555555;
 }
 
 .quick-all-arrow {
@@ -1585,10 +1585,10 @@ button {
 /* Home: paper levels (red) and full course (blue), same shape as "Tout doomscroller" */
 a.quick-all-btn { text-decoration: none; box-sizing: border-box; }
 .quick-action-wrap .quick-all-btn + .quick-all-btn { margin-top: 10px; }
-.quick-all-btn.quick-red { background: var(--accent-color); border-color: var(--accent-color); }
-.quick-all-btn.quick-red:hover { background: var(--accent-hover); }
-.quick-all-btn.quick-blue { background: #2563C9; border-color: #2563C9; }
-.quick-all-btn.quick-blue:hover { background: #1D4FA3; }
+.quick-all-btn.quick-red { background-color: var(--accent-color); border-color: var(--accent-color); }
+.quick-all-btn.quick-red:hover { background-color: var(--accent-hover); }
+.quick-all-btn.quick-blue { background-color: #2563C9; border-color: #2563C9; }
+.quick-all-btn.quick-blue:hover { background-color: #1D4FA3; }
 
 /* Scroll du cours (scroll.js) : formule sous le titre */
 .card-front .formule { font-weight: 400; margin-top: 1rem; }
@@ -1620,4 +1620,18 @@ body.home #app-viewport { flex: 1; min-height: 0; height: auto; }
     body.home:has(#landing-screen.visible) #app-header { display: none; }
     body.home:has(#landing-screen.visible) .screen { inset: 0; }
     body.home .landing-content > :not(.morgan-footer) { max-width: 720px; margin-left: auto; margin-right: auto; }
+}
+
+/* Home buttons: flat green fill slides in from the right on hover */
+.quick-all-btn {
+    background-image: linear-gradient(var(--success-color), var(--success-color));
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 0% 100%;
+    transition: background-size 0.3s ease, background-color 0.15s;
+}
+.quick-all-btn:hover,
+.quick-all-btn:focus-visible { background-size: 100% 100%; }
+@media (prefers-reduced-motion: reduce) {
+    .quick-all-btn { transition: none; }
 }
