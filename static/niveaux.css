@@ -52,6 +52,12 @@ html, body.lv-page { overflow: auto; height: auto; user-select: text; -webkit-us
 .lv-notion .formule { font-size: 18px; margin: 6px 0; }
 .lv-notion details { margin-top: 6px; }
 .lv-copie { margin-top: 16px; }
+.lv-squelette { margin: 12px 0; }
+.lv-squelette summary { cursor: pointer; font-weight: 600; }
+.lv-squelette ol { margin: 8px 0 4px; padding-left: 2em; }
+.lv-squelette li { margin: 6px 0; }
+.lv-squelette li p { margin: 2px 0 0; }
+.lv-trou { display: inline-block; min-width: 4em; border-bottom: 1px solid currentColor; vertical-align: baseline; }
 .lv-copie summary { cursor: pointer; font-weight: 600; }
 .lv-copie .katex-display { overflow-x: auto; overflow-y: hidden; }
 .lv-copie blockquote { margin: 6px 0 10px; padding: 6px 10px; background: #F4F5F7; }

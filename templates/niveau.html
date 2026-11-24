@@ -37,6 +37,10 @@
   {% elif o %}<p class="lv-muted">Source : {{ o.src|lower }}</p>
   {% elif exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
 
+  {% if squelette and squelette.palier in (2, 3) %}<details class="lv-squelette" open><summary>Copie 20/20 : rédige avec ce squelette ({{ squelette.titre }})</summary>
+    <ol>{% for lab, t in squelette.etapes %}<li><strong>{{ lab }}</strong>{% if squelette.palier == 2 %}{{ t|safe }}{% endif %}</li>{% endfor %}</ol>
+    <p class="lv-muted">{{ 'Complète les trous sur ta feuille.' if squelette.palier == 2 else 'Les étapes seules : écris chacune, dans cet ordre.' }}</p></details>{% endif %}
+
   <div class="lv-row">
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
@@ -81,7 +85,9 @@
   <section class="lv-solution" id="solution" hidden>
     <h2>Correction</h2>
     <div id="solution-body">{{ exo.sol|safe }}</div>
-    {% if copie %}<details class="lv-copie"><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
+    {% if squelette and squelette.palier == 4 %}<details class="lv-squelette"><summary>Copie 20/20 : vérifie ta copie ({{ squelette.titre }})</summary>
+      <ol>{% for lab, t in squelette.etapes %}<li>{{ lab }}</li>{% endfor %}</ol></details>{% endif %}
+    {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
       <p class="lv-muted">{{ copie.titre }}{% if copie.points %}, {{ ('%g' % copie.points)|replace('.', ',') }} points{% if copie.sur %} sur {{ copie.sur }}{% endif %}{% endif %}{% if copie.date %}, {{ copie.date }}{% endif %}. Rédige dans cet ordre et avec ces justifications.</p>
       {{ copie.texte|safe }}</details>{% endif %}
   </section>

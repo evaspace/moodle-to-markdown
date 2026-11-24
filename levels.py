@@ -30,6 +30,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from init_db import DB_PATH
 from ratelimit import client_ip, too_many
+import squelettes
 
 bp = Blueprint('levels', __name__)
 ROOT = Path(__file__).resolve().parent
@@ -831,6 +832,13 @@ def level_page(subject):
         total_xp = xp(conn, uid)
         streak_now = current_combo(conn, uid)
         pari = conn.execute('SELECT pari FROM account WHERE id=?', (uid,)).fetchone()
+        sq = squelettes.pour(subject, n, 0) if is_admin() else None
+        if sq:  # stage from the exercises already done on this type, all its levels together
+            types = squelettes.niveaux_du_type(sq['cle'])
+            faits = conn.execute('SELECT COUNT(*) FROM exo_log WHERE account_id=? AND ('
+                                 + ' OR '.join(['(subject=? AND level=?)'] * len(types)) + ')',
+                                 (uid, *[x for t in types for x in t])).fetchone()[0]
+            sq = squelettes.pour(subject, n, faits)
     # server-side clock: the time spent is measured from here, not sent by the browser
     session['exo_clock'] = [subject, n, exo['id'], time.time(), ref, limit, []]  # last: helps opened
     notions = {x['id']: x for x in data['notions']}
@@ -849,6 +857,8 @@ def level_page(subject):
         copie_tip=__import__('beta').copie_tip(data['subject']['matiere'], exo['id']) if is_admin() else None,
         # hard line breaks: annales lines (a), (b)… are separate steps of the copy
         copie=(lambda c: c and {**c, 'texte': md(c['texte'].replace('\n', '  \n'))})(copie_officielle(subject, n)) if is_admin() else None,
+        squelette=sq and {**sq, 'palier': sq['palier'] if sq['palier'] > 1 or copie_officielle(subject, n) else 2,
+                          'etapes': [(lab, md(t).replace('{}', '<span class="lv-trou"></span>')) for lab, t in sq['etapes']]},
         squares=squares(lvl, status), combo=streak_now, pari=bool(pari and pari[0]), calib=CALIB_POINTS,
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),

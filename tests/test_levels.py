@@ -174,6 +174,24 @@ class Api(unittest.TestCase):
         self.c.post('/api/login', json={'username': owner, 'password': 'secret1'})
         self.assertIn('Copie 20/20 : corrigé officiel', self.c.get(url).get_data(as_text=True))
 
+    def test_squelette_fades_with_exercises_done(self):
+        owner = sorted(levels.ADMIN_USERS)[0]
+        self.register(owner)
+        self.c.post('/api/login', json={'username': owner, 'password': 'secret1'})
+        url = '/niveaux/maths-s1-apis-edo?n=7'  # type edo2: levels 7-10, no official copy on 7
+        with levels.db() as conn:
+            uid = conn.execute('SELECT id FROM account WHERE username=?', (owner,)).fetchone()[0]
+            conn.execute('DELETE FROM exo_log WHERE account_id=? AND subject=?', (uid, 'maths-s1-apis-edo'))
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('rédige avec ce squelette', html)  # stage 1 needs an official copy: starts at holes
+        self.assertIn('lv-trou', html)
+        with levels.db() as conn:
+            conn.executemany('INSERT INTO exo_log (account_id, subject, level, exo_id, ok) VALUES (?, ?, ?, ?, 1)',
+                             [(uid, 'maths-s1-apis-edo', 9, f'x{i}') for i in range(6)])
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('vérifie ta copie', html)
+        self.assertNotIn('lv-trou', html)
+
     def test_pages_need_login(self):
         self.assertEqual(self.c.get('/niveaux').status_code, 302)
         self.assertEqual(self.c.post(f'/api/niveaux/{SUBJECT}/result', json={}).status_code, 401)
