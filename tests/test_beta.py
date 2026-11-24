@@ -178,6 +178,18 @@ class Beta(unittest.TestCase):
         self.assertIn('UID:20261124T1000-maths-S1-APIS@epitadoomscrolling', out)
         self.assertTrue(all(len(x.encode()) <= 75 for x in out.split('\r\n')))
         self.assertIn('https://e.x/niveaux/m', out.replace('\r\n ', ''))
+    def test_seance_next(self):
+        t = lambda d, h=9: datetime(2026, 11, d, h, tzinfo=beta.TZ)
+        now = t(24, 15)
+        a, b, c = ('m', 2, 'e1'), ('m', 3, 'e2'), ('p', 1, 'x')
+        log = [(a, 0, t(20)), (b, 0, t(23)), (c, 0, t(23))]
+        self.assertEqual(beta.seance_next(log, [a], ['m'], set(), now), ('revoir', a))          # due first
+        self.assertEqual(beta.seance_next(log, [], ['m'], set(), now), ('rate', b))             # a: too old
+        self.assertEqual(beta.seance_next(log + [(b, 1, t(24, 10))], [], ['m'], set(), now), ('niveau', 'm'))
+        recent = log + [(b, 0, now - timedelta(minutes=5))]
+        self.assertEqual(beta.seance_next(recent, [b], ['m'], set(), now), ('niveau', 'm'))     # just tried: skip
+        self.assertIsNone(beta.seance_next([], [], ['m'], {'m'}, now))
+        self.assertEqual(beta.seance_link('maths/S1/Mécanique'), '/beta/seance/maths/S1/M%C3%A9canique')
 
 if __name__ == '__main__':
     unittest.main()

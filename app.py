@@ -401,6 +401,41 @@ def admin_beta_week():
     return jsonify(dict(grid, cours=d['beta'].course_cards(d['adv'])))
 
 
+@app.route('/beta/seance/<path:ecue>')
+def beta_seance(ecue):
+    """Revision session on one ECUE (PLAN_BETA étape 1): redirects to the next exercise (due review, recent miss,
+    else current level); the exercise page's « Exercice suivant » comes back here. Owner only for now."""
+    import beta
+    from datetime import datetime, timezone
+    from urllib.parse import quote, urlencode
+    from flask import redirect
+    from levels import db as levels_db, load_parcours, review_queue, _today
+    if not is_admin() or not session.get('uid'):
+        abort(404)
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'parcours', 'syllabus.json')) as f:
+        reg = beta.ecues(json.load(f))
+    if ecue not in reg:
+        abort(404)
+    all_paths = load_parcours()
+    paths = [p for p in reg[ecue]['parcours'] if p in all_paths]
+    uid, now = session['uid'], datetime.now(beta.TZ)
+    with levels_db() as conn:
+        attempts = [((r['subject'], r['level'], r['exo_id']), r['ok'],
+                     datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(beta.TZ))
+                    for r in conn.execute('SELECT subject, level, exo_id, ok, at FROM exo_log WHERE account_id=? ORDER BY id', (uid,))]
+        due = review_queue(conn, uid, _today())
+        finished = {r['subject'] for r in conn.execute('SELECT subject, best FROM level_progress WHERE account_id=?', (uid,))
+                    if r['subject'] in all_paths and r['best'] >= len(all_paths[r['subject']]['levels'])}
+    step = beta.seance_next(attempts, due, paths, finished, now)
+    if not step:
+        return redirect('/admin/beta')
+    kind, what = step
+    if kind == 'niveau':
+        return redirect(f'/niveaux/{what}?' + urlencode({'seance': ecue}))
+    args = {'n': what[1], 'exo': what[2], 'seance': ecue, **({'revoir': 1} if kind == 'revoir' else {})}
+    return redirect(f'/niveaux/{quote(what[0])}?' + urlencode(args))
+
+
 @app.route('/beta/plan.ics')
 def beta_ics():
     """Revision blocks of the next 7 days as an iCalendar feed (subscribe by URL: the phone rings at each block).

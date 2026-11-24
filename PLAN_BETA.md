@@ -55,6 +55,8 @@ Fait le 2026-11-24 (branche `feat/beta-signal`) : bandeau, flux `.ics` (adresse 
 
 ### 1. Séance concrète (`feat/beta-seance`)
 
+Fait le 2026-11-24 : `/beta/seance/<ecue>` et `beta.seance_next`. Écart au plan : la révision espacée existante (`levels.due_reviews`, J+1/J+3/J+7 après un raté) est réutilisée au lieu d'un Leitner ×2,5 sur tous les exercices, et la séance redirige vers la page d'exercice existante au lieu d'un nouveau gabarit.
+
 - `beta.queue(account, ecue, n)` : liste ordonnée d'`exo_id`.
   1. Exercices à revoir (dus) de l'ECUE.
   2. Exercices ratés dans les 3 derniers jours.

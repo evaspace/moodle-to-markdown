@@ -23,7 +23,7 @@ from email.message import EmailMessage
 from contextlib import contextmanager
 from functools import wraps
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 
 from flask import Blueprint, abort, jsonify, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -822,6 +822,7 @@ def level_page(subject):
         best=best, practice=(n != level), percent=total_percent(st, data), xp=total_xp,
         easier=bool(skipped),
         mix=f'/niveaux/{subject}' if skipped else
+            '/beta/seance/' + quote(request.args['seance']) if request.args.get('seance') else
             ('/niveaux/melange?' + urlencode(_filters())) if request.args.get('mix') else
             (f"/niveaux/{request.args['apres']}" if request.args.get('apres') in load_parcours() else '/niveaux/revoir')
             if request.args.get('revoir') else None,

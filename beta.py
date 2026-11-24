@@ -13,6 +13,7 @@ import re
 import unicodedata
 from datetime import datetime, time, timedelta, timezone
 from pathlib import Path
+from urllib.parse import quote
 from zoneinfo import ZoneInfo
 
 TZ = ZoneInfo('Europe/Paris')
@@ -269,12 +270,12 @@ def week_grid(events, adv, monday, now, hours=None, block=None, plan_for=None):
     plan_for = plan_for or (lambda day: plan_day(day, events, adv, hours, block, now if day == now.date() else None)
                             if day >= now.date() else [])
 
-    def add(day, a, b, kind, titre, key, extra='', etat=None):
+    def add(day, a, b, kind, titre, key, extra='', etat=None, lien=None):
         r = by_key.get(key)
         items.append(dict(jour=day, debut=a.hour * 60 + a.minute, fin=b.hour * 60 + b.minute, kind=kind,
                           titre=titre, court=short(titre), heure=f'{a:%H:%M}–{b:%H:%M}', detail=extra,
                           matiere=r['matiere'] if r else 'autre',
-                          lien='/niveaux/' + r['parcours'][0] if r and r['parcours'] else None,
+                          lien=lien or ('/niveaux/' + r['parcours'][0] if r and r['parcours'] else None),
                           moi=r['moi'] if r else None, classe=r['classe'] if r else None,
                           conseil=r['conseil'] if r else '', etat=etat))
     for d in range(7):
@@ -285,7 +286,7 @@ def week_grid(events, adv, monday, now, hours=None, block=None, plan_for=None):
                 add(d, ev['debut'], ev['fin'], kind, ev['titre'], ecue_of(ev['titre'], by_key),
                     ev.get('detail') or ' · '.join(x for x in (ev['type'], ev.get('salle')) if x))
         for p in plan_for(day):
-            add(d, p['debut'], p['fin'], 'revision', p['quoi'], p['key'], p['pourquoi'], p.get('etat'))
+            add(d, p['debut'], p['fin'], 'revision', p['quoi'], p['key'], p['pourquoi'], p.get('etat'), p.get('lien'))
     return dict(lundi=monday.isoformat(), jours=[f'{JOURS[d][:3]}. {(monday + timedelta(days=d)).day}'
                                                 for d in range(7)],
                 aujourdhui=(now.date() - monday).days, maintenant=now.hour * 60 + now.minute, items=items)
@@ -445,7 +446,7 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
             key = ecue_of(ev['titre'], by_key)
             plan.append(dict(debut=got[0], fin=got[1], quoi=f"À chaud : {ev['titre']}",
                              pourquoi='le cours du jour, relu le jour même', key=key,
-                             lien='/niveaux/' + by_key[key]['parcours'][0] if key and by_key[key]['parcours'] else None))
+                             lien=seance_link(key) if key and by_key[key]['parcours'] else None))
 
     targets = []
     for r in adv:
@@ -476,7 +477,7 @@ def plan_day(day, events, adv, hours=None, block=None, now=None):
     score = (lambda h: hours[h]['pct'] if h in hours else 0) if hours else (lambda h: DEFAULT_GOOD_HOURS.get(h, 0))
     for t, (r, why) in zip(sorted(blocks, key=lambda t: -score(t.hour)), ordered):
         plan.append(dict(debut=t, fin=t + timedelta(minutes=m), quoi=r['titre'], pourquoi=why, key=r['key'],
-                         lien='/niveaux/' + r['parcours'][0] if r['parcours'] else None))
+                         lien=seance_link(r['key']) if r['parcours'] else None))
     plan.sort(key=lambda p: p['debut'])
     return plan
 
@@ -566,6 +567,34 @@ def ics(blocks, base, stamp):
                   'END:VALARM', 'END:VEVENT']
     lines.append('END:VCALENDAR')
     return '\r\n'.join(_fold(x) for x in lines) + '\r\n'
+
+
+def seance_link(key):
+    return '/beta/seance/' + quote(key)
+
+
+RECENT_MISS_DAYS, RECENT_MINUTES = 3, 20
+
+
+def seance_next(attempts, due, paths, finished, now):
+    """Next step of a revision session on one ECUE (PLAN_BETA étape 1), from the exercise log only:
+    1. an exercise due for spaced review (levels.review_queue order), 2. an exercise whose last try failed
+    in the last 3 days (oldest first), 3. the current level of the first unfinished path.
+    Exercises tried in the last 20 min are skipped, so a session never loops on the same one.
+    attempts: [((path, level, exo_id), ok, at)] oldest first; due: [(path, level, exo_id)];
+    paths: the ECUE's path ids in syllabus order; finished: path ids whose last level is done.
+    Returns ('revoir', key) | ('rate', key) | ('niveau', path) | None (nothing left)."""
+    recent = {k for k, _, at in attempts if now - at < timedelta(minutes=RECENT_MINUTES)}
+    for k in due:
+        if k[0] in paths and k not in recent:
+            return 'revoir', k
+    last = {}
+    for k, ok, at in attempts:
+        last[k] = (ok, at)
+    for k, (ok, at) in sorted(last.items(), key=lambda x: x[1][1]):
+        if k[0] in paths and not ok and k not in recent and now - at <= timedelta(days=RECENT_MISS_DAYS):
+            return 'rate', k
+    return next((('niveau', p) for p in paths if p not in finished), None)
 
 
 def reason(r):
