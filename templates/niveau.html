@@ -15,7 +15,6 @@
 </head>
 <body class="lv-page">
 {% set active = 'niveaux' %}{% include 'nav.html' %}
-{% include 'beta_now.html' %}
 <div class="lv-wrap" id="exo" data-subject="{{ subject.id }}" data-level="{{ lvl.n }}" data-exo="{{ exo.id }}" data-duree="{{ exo.duree }}" data-ref="{{ exo.ref }}" data-revoir="{{ 1 if review else 0 }}" data-combo="{{ combo }}" data-pari="{{ 1 if pari else 0 }}">
   <h1 tabindex="-1">Niveau {{ lvl.n }} : {{ lvl.titre }}</h1>
   <div class="lv-meter" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100"

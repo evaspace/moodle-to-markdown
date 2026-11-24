@@ -151,14 +151,6 @@ class Beta(unittest.TestCase):
         self.assertEqual(beta.block_state(b, five, {'p'}, after), 'manque')                    # other ECUE
         self.assertIsNone(beta.block_state(b, five, None, after))                              # nothing to measure
 
-    def test_now_block(self):
-        t = lambda h, m=0: datetime(2026, 11, 24, h, m, tzinfo=beta.TZ)
-        bl = [dict(debut=t(14), fin=t(14, 45)), dict(debut=t(10), fin=t(10, 45))]
-        self.assertTrue(beta.now_block(bl, t(10, 20))['en_cours'])
-        nxt = beta.now_block(bl, t(11))
-        self.assertEqual((nxt['debut'], nxt['en_cours']), (t(14), False))
-        self.assertIsNone(beta.now_block(bl, t(15)))
-
     def test_conflicts(self):
         self.assertIsNone(beta.conflicts(None))
         self.assertIsNone(beta.conflicts({9: dict(n=20, pct=80, score=80), 10: dict(n=20, pct=70, score=70), 14: dict(n=20, pct=60, score=60)}))

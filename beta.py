@@ -560,14 +560,6 @@ def block_state(b, answers, paths, now):
     return 'fait' if sum(1 for at, s in answers if s in paths and lo <= at <= hi) >= DONE_MIN else 'manque'
 
 
-def now_block(blocks, now):
-    """The block running now, else the next one, with en_cours; None when nothing is left."""
-    for b in sorted(blocks, key=lambda b: b['debut']):
-        if b['fin'] > now:
-            return dict(b, en_cours=b['debut'] <= now)
-    return None
-
-
 def _protected(h):
     """Why hour h is never planned (its middle falls in a meal, at night or on Saturday evening), else None."""
     mid = time(h, 30)

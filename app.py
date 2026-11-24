@@ -361,24 +361,6 @@ def _beta_ics_token():
     return hmac.new(secret_key().encode(), b'beta-ics', 'sha256').hexdigest()[:32]
 
 
-@app.context_processor
-def _beta_now_processor():
-    """beta_now() for templates/beta_now.html: the revision block running now or the next one (owner only)."""
-    def beta_now():
-        if not is_admin():
-            return None
-        try:
-            d = _beta_data()
-            plan_for = _beta_plan_for(d)
-            today = d['now'].date()
-            b = d['beta'].now_block(plan_for(today) + plan_for(today + timedelta(days=1)), d['now'])
-            return b and dict(b, demain=b['debut'].date() > today)
-        except Exception:  # the banner must never break a page
-            app.logger.exception('beta_now')
-            return None
-    return dict(beta_now=beta_now)
-
-
 @app.route('/admin/beta')
 @admin_required
 def admin_beta_page():
