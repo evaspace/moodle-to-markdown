@@ -29,3 +29,5 @@ services:
     - /opt/pierref/epitadoomscrolling-live:/app
     - /opt/pierref/epitadoomscrolling:/data
     - /opt/pierref/epitadoomscrolling/articles:/app/articles
+    # course notes (/cours/): git-ignored, so absent from the live copy
+    - /opt/pierref/epitadoomscrolling/EPITA_Moodle_Notes_MD:/app/EPITA_Moodle_Notes_MD:ro
