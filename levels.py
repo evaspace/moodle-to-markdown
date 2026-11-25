@@ -1072,6 +1072,25 @@ def compute_stats(rows, today, titles=None):
         first_monday = end
     best_day = max(days.items(), key=lambda kv: (kv[1][1], kv[1][0]), default=None)
     hard = fails.most_common(1)
+    # today hour by hour, against the average of the other active days
+    past = [d for d in days if d != today]
+    by_h, avg_h = [[0, 0] for _ in range(24)], [0] * 24
+    for r in rows:
+        if r['at'].date() == today:
+            by_h[r['at'].hour][0] += 1
+            by_h[r['at'].hour][1] += r['ok']
+        else:
+            avg_h[r['at'].hour] += 1
+    avg_h = [n / len(past) if past else 0 for n in avg_h]
+    top_h = max([n for n, _ in by_h] + avg_h) or 1
+    t = days.get(today, (0, 0, 0))
+    avg = [sum(days[d][i] for d in past) / len(past) if past else 0 for i in range(3)]
+    today_stats = {
+        'hours': [{'h': h, 'n': n, 'ok': g, 'pct': round(100 * n / top_h), 'ok_pct': round(100 * g / n) if n else 0,
+                   'avg': round(avg_h[h], 1), 'avg_pct': round(100 * avg_h[h] / top_h)} for h, (n, g) in enumerate(by_h)],
+        'n': t[0], 'rate': round(100 * t[1] / t[0]) if t[0] else 0, 'min': round(t[2] / 60),
+        'avg_n': round(avg[0], 1), 'avg_rate': round(100 * avg[1] / avg[0]) if avg[0] else 0, 'avg_min': round(avg[2] / 60),
+    }
     # weakest levels (>= 3 attempts)
     lvl = defaultdict(lambda: [0, 0])
     for r in rows:
@@ -1079,6 +1098,7 @@ def compute_stats(rows, today, titles=None):
         lvl[(r['subject'], r['level'])][1] += r['ok']
     weak = sorted(((k, v) for k, v in lvl.items() if v[0] >= 3 and v[1] < v[0]), key=lambda kv: (kv[1][1] / kv[1][0], -kv[1][0]))[:5]
     return {
+        'today': today_stats,
         'heat': week_heat([r['at'] for r in rows]), 'heat_weeks': heat_weeks, 'chart_all': chart_all,
         'weak': [{'id': k[0], 'subject': titles.get(k[0], k[0]), 'level': k[1], 'n': v[0], 'rate': round(100 * v[1] / v[0])} for k, v in weak],
         'avg_secs': round(sum(min(r['secs'] or 0, MAX_SECS) for r in rows) / done) if done else 0,

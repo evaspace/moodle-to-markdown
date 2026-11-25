@@ -334,6 +334,11 @@ body.lv-flash { animation: lv-flash .6s ease-out; }
 .lv-slam.broken strong.old { color: var(--error-color); animation: lv-drop .7s cubic-bezier(.5, 0, .9, .5) forwards; }
 .lv-slam.broken strong.new { color: var(--text-muted, #666); animation: lv-crash .4s ease-out .35s both, lv-fade .35s ease-in 1s forwards; font-size: min(20vw, 90px); }
 .lv-slam span { margin-top: 8px; font-size: 28px; font-weight: 700; background: var(--text-color); color: #fff; padding: 4px 12px; animation: lv-crash .4s ease-out .3s both, lv-fade .4s ease-in 1.4s forwards; }
+.lv-slam.levelup { background: var(--success-color); }
+.lv-slam.levelup strong { font-size: min(48vw, 300px); }
+.lv-slam.levelup strong.new { color: #fff; animation: lv-crash .6s cubic-bezier(.2, 1.6, .4, 1) .2s both, lv-fade .4s ease-in 2.2s forwards; }
+.lv-slam.levelup span { animation: lv-crash .4s ease-out .5s both, lv-fade .4s ease-in 2.2s forwards; }
+.lv-slam.levelup { animation: lv-fade .4s ease-in 2.2s forwards; }
 @keyframes lv-knock { 0% { transform: none; opacity: 1; } 100% { transform: translate(-70vw, -40vh) rotate(-75deg) scale(.6); opacity: 0; } }
 @keyframes lv-crash { 0% { transform: scale(3.2) rotate(8deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; opacity: 1; } }
 @keyframes lv-drop { 0% { transform: none; } 20% { transform: translateX(-10px) rotate(-6deg); } 100% { transform: translateY(70vh) rotate(35deg); opacity: 0; } }
@@ -526,3 +531,9 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .bt-ev-etat { font-size: 11px; font-weight: 700; }
 .bt-short .bt-ev-etat { margin-left: 6px; }
 .bt-ics { width: 100%; font: inherit; font-size: 13px; padding: 8px; }
+/* today hour by hour: bar = exercises (green part = successes), line = average of the other active days */
+.st-day > div { position: relative; }
+.st-day span { min-height: 0; background: linear-gradient(to top, var(--success-color) var(--ok), var(--error-color) var(--ok)); }
+.st-day i { position: absolute; left: 0; right: 0; height: 2px; background: var(--text-color); }
+.st-day-axis { display: grid; grid-template-columns: repeat(8, 1fr); }
+.st-legend .st-avg-key { height: 2px; background: var(--text-color); vertical-align: middle; }

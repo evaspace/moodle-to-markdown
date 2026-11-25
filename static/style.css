@@ -1610,11 +1610,15 @@ body:has(#landing-screen.visible) .feed-only { display: none; }
 .landing-content { width: 100%; }
 
 /* Accueil : barre commune (nav.html). Sur PC, l'accueil a la forme des autres pages ;
-   le fil garde son cadre téléphone, sous la même barre. Sur téléphone, header d'origine. */
+   le fil garde son cadre téléphone, sous la même barre. Sur téléphone, la barre commune reste
+   sur l'écran d'accueil (niveaux, stats, connexion) ; le fil plein écran garde le header d'origine. */
 body.home { display: flex; flex-direction: column; }
 body.home > .app-nav { flex: none; }
 body.home #app-viewport { flex: 1; min-height: 0; height: auto; }
-@media (max-width: 640px) { body.home > .app-nav { display: none; } }
+@media (max-width: 640px) {
+    body.home:not(:has(#landing-screen.visible)) > .app-nav { display: none; }
+    body.home:has(#landing-screen.visible) #app-header { display: none; }
+}
 @media (min-width: 641px) {
     body.home:has(#landing-screen.visible) #app-viewport { max-width: none; border: 0; }
     body.home:has(#landing-screen.visible) #app-header { display: none; }

@@ -180,6 +180,25 @@
     clearTimeout(slamTimer);
     slamTimer = setTimeout(() => { s.className = 'lv-slam'; }, kind === 'milestone' ? 1600 : 1100);
   }
+  // Level validated: « Niveau n » is knocked out, « Niveau n+1 » crashes in, three waves of confetti.
+  function levelUp(d) {
+    const s = $('combo-slam');
+    s.replaceChildren();
+    const stage = document.createElement('div'); stage.className = 'lv-slam-stage';
+    const o = document.createElement('strong'); o.className = 'old';
+    o.textContent = d.event === 'finished' ? d.level : d.level - 1;
+    const b = document.createElement('strong'); b.className = 'new';
+    b.textContent = d.event === 'finished' ? 'MAX' : d.level;
+    stage.append(o, b);
+    const sub = document.createElement('span');
+    sub.textContent = d.event === 'finished' ? 'Parcours terminé' : 'Niveau suivant';
+    s.append(stage, sub);
+    s.className = 'lv-slam go milestone levelup';
+    const w = $('exo'); w.classList.remove('lv-shake'); void w.offsetWidth; w.classList.add('lv-shake');
+    [0, 500, 1100].forEach((t) => setTimeout(() => pixelConfetti($('gore-canvas'), d.event === 'finished' ? 14 : 9), t));
+    clearTimeout(slamTimer);
+    slamTimer = setTimeout(() => { s.className = 'lv-slam'; }, 2600);
+  }
   function celebrate(d, sq, before) {
     const n = d.combo || 0;
     if (sq) { sq.classList.remove('pop'); void sq.offsetWidth; sq.classList.add('pop'); }
@@ -187,13 +206,15 @@
     const milestone = MILESTONES.includes(n);
     hud(n);
     const canvas = $('gore-canvas');
-    if (big || milestone) {
-      pixelConfetti(canvas, d.event === 'finished' || n >= 20 ? 14 : 7);
+    if (big) {
+      levelUp(d);
+    } else if (milestone) {
+      pixelConfetti(canvas, n >= 20 ? 14 : 7);
       document.body.classList.remove('lv-flash'); void document.body.offsetWidth; document.body.classList.add('lv-flash');
     } else {
       pixelConfetti(canvas, 1);
     }
-    if (n >= 2) slam(n, before, milestone ? 'milestone' : 'step');
+    if (n >= 2 && !big) slam(n, before, milestone ? 'milestone' : 'step');
     // happy happy happy : plus de sauts pour un palier, encore plus pour un niveau validé
     const hops = d.event === 'finished' ? 12 : big ? 8 : milestone ? 6 : 4;
     cat.happy(hops, n, big ? 'Niveau validé !' : milestone ? `Combo ×${n} !` : 'Bien joué !', 'STAND');

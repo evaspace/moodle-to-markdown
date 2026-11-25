@@ -524,6 +524,9 @@ class Stats(unittest.TestCase):
         self.assertEqual(s['first_try'], 33)
         self.assertEqual(s['hardest']['subject'], 'Sujet')
         self.assertEqual(s['hour'], 9)
+        t = s['today']  # 14 nov: one miss at 9 h; 12-13 nov: 2 exos at 9 h, 1 at 10 h
+        self.assertEqual((t['n'], t['rate'], t['avg_n'], t['avg_rate']), (1, 0, 1.5, 67))
+        self.assertEqual([(h['n'], h['avg']) for h in t['hours'][9:11]], [(1, 1.0), (0, 0.5)])
         last = s['weeks'][-1]
         self.assertEqual(last[5]['color'], levels.day_color(0, 1))  # Saturday 14 nov: red
         self.assertIsNone(last[6])                                   # Sunday: future

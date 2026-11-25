@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261124b">
-  <link rel="stylesheet" href="/static/niveaux.css?v=40">
+  <link rel="stylesheet" href="/static/niveaux.css?v=41">
 </head>
 <body class="lv-page">
 {% set active = 'stats' %}{% include 'nav.html' %}
@@ -26,6 +26,17 @@
     <div><dt>Temps passé</dt><dd>{{ s.minutes // 60 }} h {{ '%02d' % (s.minutes % 60) }}</dd></div>
     <div><dt>Points</dt><dd>{{ xp }}</dd></div>
   </dl>
+
+  {% set t = s.today %}
+  <h2>Aujourd'hui, heure par heure</h2>
+  <p>{{ t.n }} exercice{{ 's' if t.n > 1 }}{% if t.n %}, {{ t.rate }} % réussis{% endif %}, {{ t.min }} min.
+    <span class="lv-muted">Moyenne d'un jour où tu travailles : {{ '%g' % t.avg_n }} exercices, {{ t.avg_rate }} % réussis, {{ t.avg_min }} min.</span></p>
+  <div class="st-chart st-day" role="img" aria-label="Exercices faits aujourd'hui par heure, comparés à ta moyenne">
+    {% for b in t.hours %}<div title="{{ b.h }} h : {{ b.n }} exercice{{ 's' if b.n > 1 }}{% if b.n %} ({{ b.ok_pct }} % réussis){% endif %} · moyenne {{ b.avg }}">
+      <i style="bottom:{{ b.avg_pct }}%"{% if not b.avg %} hidden{% endif %}></i><span style="height:{{ b.pct }}%;--ok:{{ b.ok_pct }}%"></span></div>{% endfor %}
+  </div>
+  <div class="st-axis st-day-axis lv-muted">{% for h in range(0, 24, 3) %}<span>{{ h }} h</span>{% endfor %}</div>
+  <p class="st-legend lv-muted"><i style="background:var(--success-color)"></i> réussis <i style="background:var(--error-color)"></i> ratés <i class="st-avg-key"></i> ta moyenne à cette heure</p>
 
   <h2>Ta progression sur papier</h2>
   {% for g in s.path_groups %}<details class="cal-fold st-fold">

@@ -257,6 +257,8 @@ function triggerFeedback(correct) {
             quote = happyQuotes[Math.floor(Math.random() * happyQuotes.length)];
         }
         catMascot.onCorrectAnswer(nextStreak, quote);  // la phrase arrive après les « happy »
+        const gc = document.getElementById('gore-canvas');
+        if (gc && window.pixelConfetti) pixelConfetti(gc, nextStreak % 5 === 0 ? 6 : 2);
         if (streakPill) {
             streakPill.classList.add('pulse');
             setTimeout(() => streakPill.classList.remove('pulse'), 500);
