@@ -262,10 +262,14 @@ def build(name):
     errors += [f"duplicate exercise id: {i}" for i in dict.fromkeys(all_ids) if all_ids.count(i) > 1]
     formules = getattr(mod, "FORMULES", {})  # per exercise: the formulas its solution uses
     errors += [f"FORMULES: unknown exercise {i}" for i in formules if i not in by_id]
+    copies = getattr(mod, "COPIES", {})  # per exercise: the 20/20 student copy (optional, path by path)
+    errors += [f"COPIES: unknown exercise {i}" for i in copies if i not in by_id]
     for e in by_id.values():
         if e["id"] not in formules:
             errors.append(f"{e['id']}: no entry in FORMULES")
         e["formules"] = formules.get(e["id"], "")
+        if e["id"] in copies:
+            e["copie"] = copies[e["id"]]
         # variants: same formula, other numbers; each one is checked like the exercise itself
         for i, x in enumerate([e] + [e | v for v in e.get("variants", [])]):
             err = check(x)
@@ -282,6 +286,8 @@ def build(name):
                 e["sol"] = "\n\n".join(f"**{i}.** {by_id[p]['sol']}" for i, p in enumerate(e["parts"], 1))
                 parts = [f.strip() for p in e["parts"] for f in by_id[p]["formules"].split(" · ")]
                 e["formules"] = " · ".join(dict.fromkeys(parts))  # union of the parts, first occurrence order
+                if all("copie" in by_id[p] for p in e["parts"]):
+                    e["copie"] = "\n".join(f"**{i}.** {by_id[p]['copie']}" for i, p in enumerate(e["parts"], 1))
     notion_ids = {n["id"] for n in mod.NOTIONS}
     for lvl in mod.LEVELS:
         errors += [f"level {lvl['n']}: unknown notion {n}" for n in lvl["notions"] if n not in notion_ids]

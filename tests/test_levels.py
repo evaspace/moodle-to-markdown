@@ -228,6 +228,19 @@ class Api(unittest.TestCase):
                                                 "WHERE a.username='navuser'")}
         self.assertTrue({'copie_ia', 'passer'} <= kinds, kinds)
 
+    def test_exercise_copy_owner_only(self):
+        self.register('copyuser')
+        url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
+        self.assertNotIn('Copie 20/20 de cet exercice', self.c.get(url).get_data(as_text=True))
+        self.c.post('/api/logout')
+        self.register('morgan.pierrefeu')  # may already exist from another test: log in anyway
+        self.c.post('/api/login', json={'username': 'morgan.pierrefeu', 'password': 'secret1'})
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('Copie 20/20 de cet exercice', html)
+        self.assertIn('strictement croissante', html)
+        import ratelimit
+        ratelimit._hits.clear()  # 2 more sign-ups here: keep the other test files under the 30/h register limit
+
     def test_admin_only_for_owner_account(self):
         os.environ['ADMIN_PASSWORD'] = 'x'
         import app as app_module

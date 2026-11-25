@@ -381,3 +381,10 @@ Fait :
 ## Bases maths (2026-11-24)
 Demande : des niveaux pour connaître les bases (sommes, factorisation, divisions, exp, ln, et autres), « fais-les tous ». Puis : plusieurs catégories de thèmes différents dans « Bases maths », qui est une matière ; chaque type est un chapitre, avec des niveaux par chapitre pour voir toutes les formules générales.
 Fait : matière `bases` (« Bases maths »), 10 chapitres, 21 niveaux, 88 exercices (variante chiffrée pour chaque calcul), vérifiés par sympy.
+
+### Retour du 2026-11-25 : copie 20/20 par exercice
+
+- « Le but c'est que la correction soit simple, et type d'un élève qui aura obligatoirement 20 sans être superficielle. Surtout pour les suites de S1 en maths, ensuite le reste des maths, puis les autres matières. »
+
+Fait (suites S1) : chaque exercice du parcours « Suites numériques » a sa copie 20/20 (`COPIES` à la fin de `parcours/src/apis_suites.py`, 87 exercices + les 6 exercices d'annales qui les assemblent). Une étape par ligne, chaque signe ou inégalité justifié, théorème nommé, phrase de conclusion, résultat encadré. L'ordre suit le squelette du type (`squelettes.py`), lui-même tiré des corrigés officiels. Affichée dépliée sous la correction, « Copie 20/20 de cet exercice » (propriétaire seulement, comme le reste de la beta). Une variante (autres nombres) n'a pas de copie.
+Reste : les autres parcours de maths, puis les autres matières.

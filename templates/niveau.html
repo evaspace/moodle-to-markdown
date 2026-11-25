@@ -87,7 +87,10 @@
     <div id="solution-body">{{ exo.sol|safe }}</div>
     {% if squelette and squelette.palier == 4 %}<details class="lv-squelette"><summary>Copie 20/20 : vérifie ta copie ({{ squelette.titre }})</summary>
       <ol>{% for lab, t in squelette.etapes %}<li>{{ lab }}</li>{% endfor %}</ol></details>{% endif %}
-    {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
+    {% if exo.copie %}<details class="lv-copie" open><summary>Copie 20/20 de cet exercice</summary>
+      <p class="lv-muted">Ce qu'écrit un élève sûr d'avoir tous les points : chaque étape justifiée, le théorème nommé, une phrase de conclusion.</p>
+      {{ exo.copie|safe }}</details>{% endif %}
+    {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 and not exo.copie %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
       <p class="lv-muted">{{ copie.titre }}{% if copie.points %}, {{ ('%g' % copie.points)|replace('.', ',') }} points{% if copie.sur %} sur {{ copie.sur }}{% endif %}{% endif %}{% if copie.date %}, {{ copie.date }}{% endif %}. Rédige dans cet ordre et avec ces justifications.</p>
       {{ copie.texte|safe }}</details>{% endif %}
   </section>

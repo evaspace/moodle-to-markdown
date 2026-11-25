@@ -136,3 +136,5 @@ Ouvrir la beta aux autres élèves : chacun son planning auriga2google, ses prop
 
 - `.venv/bin/python -m unittest tests.test_levels tests.test_scroll tests.test_beta` à chaque étape.
 - Mise en ligne une seule fois en fin d'étape, par l'utilisateur (`tools/deploy.sh`).
+
+Fait le 2026-11-25 (partie 3) : copie 20/20 rédigée par exercice, parcours suites S1 complet (`COPIES` dans le fichier du parcours, branché par `parcours/build.py`, champ `copie` ; les exercices multi joignent les copies de leurs parties ; formules vérifiées avec KaTeX 0.16.9, 0 erreur). Reste : intégrales, EDO, DP, OBM, S2, puis les autres matières.

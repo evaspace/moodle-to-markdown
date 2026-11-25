@@ -333,7 +333,7 @@ def review_queue(conn, uid, today):
 
 def variant(exo, tries):
     """Version shown after `tries` previous attempts: the base, then each variant in turn (other numbers)."""
-    versions = [exo] + [{**exo, 'src': None, **v} for v in exo.get('variants', [])]
+    versions = [exo] + [{**exo, 'src': None, 'copie': None, **v} for v in exo.get('variants', [])]  # copy fits the base numbers only
     return versions[tries % len(versions)]
 
 
@@ -863,7 +863,9 @@ def level_page(subject):
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
              # one formula per line; the level notions stay below as course reminder
-             'formules': md('\n'.join(f'- {f}' for f in exo.get('formules', '').split(' · ') if f))},
+             'formules': md('\n'.join(f'- {f}' for f in exo.get('formules', '').split(' · ') if f)),
+             # one step per line, like the official copies
+             'copie': md(exo['copie'].replace('\n', '  \n')) if exo.get('copie') and is_admin() else None},
         notions=[{'titre': notions[i]['titre'], 'formule': md(notions[i]['formule']),
                   'exemple': md(notions[i]['exemple']), 'cours': md(notions[i]['cours'])}
                  for i in lvl['notions']],
