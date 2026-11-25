@@ -103,6 +103,13 @@
       data-copy-footer="Source : {{ public_url }}/niveaux/{{ subject.id }}?n={{ lvl.n }} (exercice d'Epita Doomscrolling, site gratuit d'entraînement aux examens de la prépa EPITA, créé par Morgan Pierrefeu : https://morgan.pierref.eu)">Copier pour une IA</button>
     <span class="lv-muted" id="copy-ia-note">Énoncé et correction, avec une demande d’explication détaillée, à coller dans ChatGPT, Claude ou Gemini</span>
   </div>
+  <details class="lv-signal" id="signal">
+    <summary>Signaler une erreur</summary>
+    <label for="signal-texte">Quelle erreur ? (facultatif)</label>
+    <textarea id="signal-texte" rows="3" maxlength="2000" placeholder="Énoncé, correction ou réponse attendue"></textarea>
+    <button class="lv-btn" type="button" id="btn-signal">Envoyer</button>
+    <p class="lv-muted" id="signal-note" role="status"></p>
+  </details>
 
   <div class="lv-row">
     <button class="lv-btn ok" type="button" id="btn-ok" disabled>Réussi</button>

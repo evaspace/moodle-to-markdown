@@ -350,6 +350,14 @@
     }
     $('btn-ok').onclick = () => answer(true);
     $('btn-ko').onclick = () => answer(false);
+    if ($('btn-signal')) $('btn-signal').onclick = async () => {
+      const b = $('btn-signal');
+      b.disabled = true;
+      const r = await post(`/api/niveaux/${exo.dataset.subject}/signaler`,
+        { level: +exo.dataset.level, exo_id: exo.dataset.exo, texte: $('signal-texte').value });
+      $('signal-note').textContent = r.ok ? 'Merci, l’exercice est signalé.' : (r.data.error || 'Envoi impossible, réessaie');
+      if (r.ok) $('signal-texte').value = ''; else b.disabled = false;
+    };
     if ($('btn-copy-ia')) $('btn-copy-ia').addEventListener('click', () =>
       post(`/api/niveaux/${exo.dataset.subject}/copie`, { level: +exo.dataset.level, exo_id: exo.dataset.exo }));  // counted for /stats
     $('next').querySelector('a').onclick = (e) => { e.preventDefault(); next(e.currentTarget.href); };

@@ -228,6 +228,30 @@ class Api(unittest.TestCase):
                                                 "WHERE a.username='navuser'")}
         self.assertTrue({'copie_ia', 'passer'} <= kinds, kinds)
 
+    def test_report_exercise(self):
+        self.register('reporter')
+        page = self.c.get('/niveaux/maths-s1-apis-suites?n=2&exo=va1').get_data(as_text=True)
+        self.assertIn('Signaler une erreur', page)
+        url = '/api/niveaux/maths-s1-apis-suites/signaler'
+        self.assertEqual(self.c.post(url, json={'level': 2}).status_code, 400)  # no exercise
+        self.assertEqual(self.c.post(url, json={'level': 2, 'exo_id': 'va1'}).status_code, 200)  # text optional
+        self.assertEqual(self.c.post(url, json={'level': 2, 'exo_id': 'va1', 'texte': 'signe faux ligne 2'}).status_code, 200)
+        self.assertEqual(self.c.post('/api/niveaux/inconnu/signaler', json={'exo_id': 'x'}).status_code, 404)
+        self.assertEqual(self.c.post('/api/admin/signalement', json={'id': 1, 'fait': True}).status_code, 403)
+        with levels.db() as conn:
+            rows = [tuple(r) for r in conn.execute("SELECT exo_id, level, texte FROM signalement WHERE subject='maths-s1-apis-suites'")]
+        self.assertIn(('va1', 2, ''), rows)
+        self.assertIn(('va1', 2, 'signe faux ligne 2'), rows)
+        self.c.post('/api/logout')
+        self.register('morgan.pierrefeu')
+        self.c.post('/api/login', json={'username': 'morgan.pierrefeu', 'password': 'secret1'})
+        os.environ.setdefault('ADMIN_PASSWORD', 'x')
+        html = self.c.get('/admin/stats').get_data(as_text=True)
+        self.assertIn('signe faux ligne 2', html)
+        self.assertIn('(sans message)', html)
+        import ratelimit
+        ratelimit._hits.clear()
+
     def test_exercise_copy_owner_only(self):
         self.register('copyuser')
         url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'

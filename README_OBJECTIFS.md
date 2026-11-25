@@ -388,3 +388,9 @@ Fait : matière `bases` (« Bases maths »), 10 chapitres, 21 niveaux, 88 exerci
 
 Fait (suites S1) : chaque exercice du parcours « Suites numériques » a sa copie 20/20 (`COPIES` à la fin de `parcours/src/apis_suites.py`, 87 exercices + les 6 exercices d'annales qui les assemblent). Une étape par ligne, chaque signe ou inégalité justifié, théorème nommé, phrase de conclusion, résultat encadré. L'ordre suit le squelette du type (`squelettes.py`), lui-même tiré des corrigés officiels. Affichée dépliée sous la correction, « Copie 20/20 de cet exercice » (propriétaire seulement, comme le reste de la beta). Une variante (autres nombres) n'a pas de copie.
 Reste : les autres parcours de maths, puis les autres matières.
+
+### Retour du 2026-11-25 : signaler un exercice
+
+- « Rajoute une fonction qui permet de signaler un exercice + de rajouter un texte pour dire quel signal c'est, mais pas obligatoire, comme ça je peux voir s'il y a des erreurs. »
+
+Fait : sous chaque exercice, « Signaler une erreur » (bloc replié) avec un texte facultatif. Enregistré dans la table `signalement` (`POST /api/niveaux/<parcours>/signaler`, 30 par heure et par compte au plus). Lecture dans `/admin/stats`, tableau « Signalements » : date, lien vers l'exercice, message, compte, bouton « Traité » / « Rouvrir » ; les non traités d'abord.

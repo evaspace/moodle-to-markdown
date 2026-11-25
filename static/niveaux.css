@@ -529,3 +529,10 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .bt-now-bar span { color: #ddd; font-size: 14px; }
 .bt-now-bar .lv-btn { flex: none; }
 .bt-ics { width: 100%; font: inherit; font-size: 13px; padding: 8px; }
+
+/* « Signaler une erreur » under the exercise: quiet until opened */
+.lv-signal { margin-top: 16px; }
+.lv-signal summary { cursor: pointer; color: var(--text-muted); font-size: 14px; }
+.lv-signal label { display: block; margin: 10px 0 4px; font-size: 14px; }
+.lv-signal textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; border: 2px solid var(--border-color); background: var(--bg-color); color: var(--text-color); }
+.lv-signal .lv-btn { margin-top: 8px; }

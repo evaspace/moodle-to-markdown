@@ -140,6 +140,16 @@ SCHEMA = '''
         at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     CREATE INDEX IF NOT EXISTS idx_event_log ON event_log(account_id, at);
+    CREATE TABLE IF NOT EXISTS signalement (  -- « Signaler une erreur » on an exercise, read on /admin/stats
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        account_id INTEGER NOT NULL,
+        subject TEXT NOT NULL,
+        level INTEGER,
+        exo_id TEXT NOT NULL,
+        texte TEXT NOT NULL DEFAULT '',     -- optional: what is wrong
+        fait INTEGER NOT NULL DEFAULT 0,    -- handled by the admin
+        at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
     CREATE TABLE IF NOT EXISTS prestige (     -- times the user restarted a path from scratch
         account_id INTEGER NOT NULL,
         subject TEXT NOT NULL,
@@ -972,6 +982,47 @@ def level_copy(subject):
     level = body.get('level') if isinstance(body.get('level'), int) else None
     with db() as conn:
         log_event(conn, session['uid'], 'copie_ia', subject, level, str(body.get('exo_id') or '')[:40])
+    return jsonify(ok=True)
+
+
+@bp.route('/api/niveaux/<subject>/signaler', methods=['POST'])
+@login_required
+def report_exercise(subject):
+    """« Signaler une erreur »: the exercise id, the level, and an optional free text."""
+    get_parcours(subject)  # 404 on an unknown subject
+    body = request.get_json(silent=True) or {}
+    exo_id = str(body.get('exo_id') or '')[:40]
+    if not exo_id:
+        return jsonify(error='exercice manquant'), 400
+    if too_many(('signaler', session['uid']), 30, 3600):
+        return jsonify(error='Trop de signalements, réessaie dans une heure'), 429
+    level = body.get('level') if isinstance(body.get('level'), int) else None
+    texte = str(body.get('texte') or '').strip()[:2000]
+    with db() as conn:
+        conn.execute('INSERT INTO signalement (account_id, subject, level, exo_id, texte) VALUES (?, ?, ?, ?, ?)',
+                     (session['uid'], subject, level, exo_id, texte))
+    return jsonify(ok=True)
+
+
+def report_list(conn, limit=200):
+    """Rows for the « Signalements » table of /admin/stats: open ones first, then newest."""
+    return [dict(r) for r in conn.execute(
+        'SELECT s.id, s.subject, s.level, s.exo_id, s.texte, s.fait, s.at, a.username FROM signalement s '
+        'LEFT JOIN account a ON a.id=s.account_id ORDER BY s.fait, s.id DESC LIMIT ?', (limit,))]
+
+
+@bp.route('/api/admin/signalement', methods=['POST'])
+@login_required
+def report_done():
+    if not is_admin():
+        return jsonify(error='réservé à l\'admin'), 403
+    body = request.get_json(silent=True) or {}
+    try:
+        rid = int(body.get('id'))
+    except (TypeError, ValueError):
+        return jsonify(error='signalement invalide'), 400
+    with db() as conn:
+        conn.execute('UPDATE signalement SET fait=? WHERE id=?', (int(bool(body.get('fait'))), rid))
     return jsonify(ok=True)
 
 
