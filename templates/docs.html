@@ -33,7 +33,7 @@
   </header>
   <main class="docs-main">
     <nav class="docs-breadcrumb" aria-label="Fil d’Ariane">
-      <a href="/cours/README.md">Cours</a><span> / </span>{{ relative_path|e }}
+      {% if changelog %}<a href="/">Accueil</a><span> / </span>Nouveautés{% else %}<a href="/cours/README.md">Cours</a><span> / </span>{{ relative_path|e }}{% endif %}
     </nav>
     {% if search %}
     <form class="docs-search" role="search" action="javascript:void(0)">

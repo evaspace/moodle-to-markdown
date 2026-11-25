@@ -12,7 +12,7 @@ SUBJECT = {
     "matiere": "maths",
     "semestre": "S1",
     "ecue": "APIS",
-    "titre": "Équations différentielles",
+    "titre": "Équations différentielles (vues en déc., évaluées au S2)",
     "chapitres_moodle": ["23_Cours 5 - Equations différentielles (S2)"],
     "td": "TD EDO (S2 2030)",
     "examens": ["Examen B2 S1 (APIS)", "Examen S2-B3 APEF"],

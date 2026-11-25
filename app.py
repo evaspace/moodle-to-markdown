@@ -669,6 +669,16 @@ def fiche_page(fid):
     return render_doc(body.replace(heading.group(0), '', 1) if heading else body, title, f'fiches/{fid}', fiche=fiche)
 
 
+@app.route('/nouveautes')
+def nouveautes():
+    """Public changelog, written by hand in NOUVEAUTES.md (one line per change users can see)."""
+    source = (Path(app.root_path) / 'NOUVEAUTES.md').read_text(encoding='utf-8')
+    body = re.sub(r'^#\s+.+\n', '', source, count=1)
+    return render_template('docs.html', title='Nouveautés', content=render_markdown_with_math(body),
+                           relative_path='nouveautes', description='Les mises à jour du site, de la plus récente à la plus ancienne.',
+                           canonical='https://epitadoomscrolling.pierref.eu/nouveautes', jsonld='{}', changelog=True)
+
+
 @app.route('/healthz')
 def healthz():
     """Lightweight container/reverse-proxy health check, including SQLite."""
