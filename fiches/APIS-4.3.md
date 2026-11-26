@@ -4,7 +4,7 @@ syllabus: APIS
 type: définition
 papier: maths-s1-apis-suites/1
 prereq: APIS-4.1
-alias: suite géométrique, raison q, u_n = u_0 q^n, somme géométrique, somme des termes d'une suite géométrique, (1 - q^(n+1))/(1 - q)
+alias: exemples remarquables de suites (Moodle « Exemples remarquables »), suite géométrique, raison q, u_n = u_0 q^n, somme géométrique, somme des termes d'une suite géométrique, (1 - q^(n+1))/(1 - q)
 ---
 # Suite géométrique et somme géométrique
 
