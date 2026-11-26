@@ -173,6 +173,8 @@ class Api(unittest.TestCase):
         self.assertNotIn('corrigé officiel d', self.c.get(url).get_data(as_text=True))
 
     def test_methodo_grid_flags_mistakes_and_counts_copies(self):
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
         self.register('grille_eleve')
         url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
         html = self.c.get(url).get_data(as_text=True)
@@ -201,6 +203,8 @@ class Api(unittest.TestCase):
         self.assertNotIn('Copie 20/20 de cet exercice', html)
 
     def test_copy_rule_reflex_is_one_tap(self):
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
         self.register('choix_eleve')
         html = self.c.get('/niveaux/bases-copie?n=1&exo=rc1').get_data(as_text=True)
         self.assertEqual(html.count('class="lv-choix-btn"'), 4)
@@ -284,18 +288,19 @@ class Api(unittest.TestCase):
         import ratelimit
         ratelimit._hits.clear()
 
-    def test_exercise_copy_owner_only(self):
-        self.register('copyuser')
+    def test_exercise_copy_follows_the_20_mode(self):
+        """Any student sees the 20/20 copy of the exercise once the mode is pressed (no longer owner only)."""
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
+        self.register('mode_copie_eleve')  # 409 if it exists in the shared test DB: log in either way
+        self.c.post('/api/login', json={'username': 'mode_copie_eleve', 'password': 'secret1'})
+        self.c.post('/api/methodo', json={'on': False})
         url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
         self.assertNotIn('Copie 20/20 de cet exercice', self.c.get(url).get_data(as_text=True))
-        self.c.post('/api/logout')
-        self.register('morgan.pierrefeu')  # may already exist from another test: log in anyway
-        self.c.post('/api/login', json={'username': 'morgan.pierrefeu', 'password': 'secret1'})
+        self.c.post('/api/methodo', json={'on': True})
         html = self.c.get(url).get_data(as_text=True)
         self.assertIn('Copie 20/20 de cet exercice', html)
         self.assertIn('strictement croissante', html)
-        import ratelimit
-        ratelimit._hits.clear()  # 2 more sign-ups here: keep the other test files under the 30/h register limit
 
     def test_admin_only_for_owner_account(self):
         os.environ['ADMIN_PASSWORD'] = 'x'
