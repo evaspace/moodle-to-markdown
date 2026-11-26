@@ -4,7 +4,7 @@ syllabus: APIS
 type: méthode
 papier: maths-s1-apis-suites/7
 prereq: APIS-4.3
-alias: suite arithmético-géométrique, u_(n+1) = a u_n + b, point fixe, suite auxiliaire géométrique, v_n = u_n - l, suite homographique
+alias: exemples remarquables de suites (Moodle « Exemples remarquables »), suite arithmético-géométrique, u_(n+1) = a u_n + b, point fixe, suite auxiliaire géométrique, v_n = u_n - l, suite homographique
 ---
 # Suites arithmético-géométriques
 

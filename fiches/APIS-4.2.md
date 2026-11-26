@@ -4,7 +4,7 @@ syllabus: APIS
 type: définition
 papier: maths-s1-apis-suites/1
 prereq: APIS-4.1
-alias: suite arithmétique, raison r, u_n = u_0 + nr, somme des termes d'une suite arithmétique, somme des entiers, n(n+1)/2
+alias: exemples remarquables de suites (Moodle « Exemples remarquables »), suite arithmétique, raison r, u_n = u_0 + nr, somme des termes d'une suite arithmétique, somme des entiers, n(n+1)/2
 ---
 # Suite arithmétique
 
