@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261124b">
-  <link rel="stylesheet" href="/static/niveaux.css?v=42">
+  <link rel="stylesheet" href="/static/niveaux.css?v=43">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -53,7 +53,8 @@
   <div class="lv-row" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
     <button class="lv-btn" type="button" data-conf="2">Sûr</button>
     <button class="lv-btn" type="button" data-conf="1">Moyen</button>
-    <button class="lv-btn" type="button" data-conf="0">Au hasard</button></div>
+    <button class="lv-btn" type="button" data-conf="0">Au hasard</button>
+    <button class="lv-btn" type="button" data-conf="">Passer</button></div>
   <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong> <span class="lv-risk">un raté le remet à 0</span>{% endif %}</p>
   {% if nav.streak %}<p class="lv-muted" id="day-streak">Série : {{ nav.streak }} jour{{ 's' if nav.streak > 1 }} de révision d'affilée</p>{% endif %}
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
@@ -100,9 +101,10 @@
   </section>
   {% if grille and methodo %}<section class="lv-grille" id="grille" hidden data-cle="{{ grille.cle }}">
     <h2>Barème du prof : {{ grille.titre }}</h2>
-    <p class="lv-muted">Coche seulement ce qui est écrit sur ta copie. Chaque case vide est une faute notée, rappelée au prochain exercice de ce type.</p>
+    <p class="lv-muted">Coche seulement ce qui est écrit sur ta copie (à la souris, il suffit de s'arrêter sur la ligne). Chaque case vide est une faute notée, rappelée au prochain exercice de ce type.</p>
     <ul>{% for t, pts in grille.criteres %}<li><label><input type="checkbox" data-i="{{ loop.index0 }}" data-pts="{{ pts }}"> <span>{{ t|safe }}</span> <strong>{{ pts }} pt{{ 's' if pts > 1 }}</strong></label></li>{% endfor %}</ul>
-    <div class="lv-row"><button class="lv-btn primary" type="button" id="btn-note" disabled>Valider ma copie : <span id="note">0</span>/20</button></div>
+    <div class="lv-row"><button class="lv-btn primary" type="button" id="btn-note" disabled>Valider ma copie : <span id="note">0</span>/20</button>
+      <button class="lv-btn" type="button" id="btn-grille-skip">Passer le barème</button></div>
   </section>{% endif %}
   {% if copie_tip %}<p class="lv-practice" id="copie-tip" hidden>Copie 20/20 : {{ copie_tip }}</p>{% endif %}
   <div class="lv-copy" id="copy-ia" hidden>
@@ -136,7 +138,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=27"></script>
+<script src="/static/niveaux.js?v=28"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>
