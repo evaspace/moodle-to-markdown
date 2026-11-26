@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261124b">
-  <link rel="stylesheet" href="/static/niveaux.css?v=41">
+  <link rel="stylesheet" href="/static/niveaux.css?v=42">
 </head>
 <body class="lv-page">
 {% set tab = 'stats' %}{% include 'admin_nav.html' %}
@@ -107,6 +107,19 @@
   </table>
   </div>
   {% else %}<p class="lv-muted">Aucun compte suspect.</p>{% endif %}
+  <h2>Signalements</h2>
+  <p class="lv-muted">Exercices signalés par les élèves depuis la page d'exercice, à traiter d'abord.</p>
+  {% if s.signalements %}
+  <div class="st-hist-scroll">
+  <table class="st-hist">
+    <thead><tr><th scope="col">Date</th><th scope="col">Exercice</th><th scope="col">Message</th><th scope="col">Compte</th><th scope="col">État</th></tr></thead>
+    <tbody>{% for r in s.signalements %}<tr><td>{{ r.at }}</td>
+      <th scope="row"><a href="/niveaux/{{ r.subject }}?n={{ r.level or 1 }}&exo={{ r.exo_id }}">{{ r.subject }} n{{ r.level }} · {{ r.exo_id }}</a></th>
+      <td>{{ r.texte or '(sans message)' }}</td><td>{{ r.username }}</td>
+      <td><button class="lv-btn" type="button" data-signal="{{ r.id }}" data-to="{{ 0 if r.fait else 1 }}">{{ 'Rouvrir' if r.fait else 'Traité' }}</button></td></tr>{% endfor %}</tbody>
+  </table>
+  </div>
+  {% else %}<p class="lv-muted">Aucun signalement.</p>{% endif %}
 </div>
 </div>
 <script>
@@ -117,6 +130,14 @@ document.addEventListener('click', async (e) => {
   const r = await fetch('/api/admin/classement', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ account_id: Number(b.dataset.ban), ban: b.dataset.to === '1' }) });
   if (r.ok) { b.dataset.to = b.dataset.to === '1' ? '0' : '1'; b.textContent = b.dataset.to === '1' ? 'Exclure' : 'Réintégrer'; }
+});
+// « Traité » on a report: same delegated pattern
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-signal]');
+  if (!b) return;
+  const r = await fetch('/api/admin/signalement', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: Number(b.dataset.signal), fait: b.dataset.to === '1' }) });
+  if (r.ok) { b.dataset.to = b.dataset.to === '1' ? '0' : '1'; b.textContent = b.dataset.to === '1' ? 'Traité' : 'Rouvrir'; }
 });
 // Live data: every minute, refetch this page and swap the figures (no reload, nothing while the tab is hidden).
 setInterval(async () => {

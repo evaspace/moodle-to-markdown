@@ -40,6 +40,20 @@ class TestSquelettes(unittest.TestCase):
                 self.assertTrue(lab and t, key)
                 self.assertEqual(t.count('$') % 2, 0, f'{key}: unbalanced $ in « {t} »')
 
+    def test_every_suites_exercise_has_a_copy(self):
+        data = json.loads((PARCOURS / 'apis_suites.json').read_text(encoding='utf-8'))
+        for lvl in data['levels']:
+            for e in lvl['exos']:
+                self.assertTrue(e.get('copie'), e['id'])
+                self.assertNotIn('<', e['copie'].replace(' < ', ''), f"{e['id']}: write `a < b` (raw HTML)")
+                self.assertEqual(e['copie'].count('$') % 2, 0, e['id'])
+
+    def test_variant_shows_no_copy(self):
+        import levels
+        exo = {'id': 'x', 'copie': 'base', 'variants': [{'enonce': 'autre'}]}
+        self.assertEqual(levels.variant(exo, 0)['copie'], 'base')
+        self.assertIsNone(levels.variant(exo, 1)['copie'])  # other numbers: the base copy would be wrong
+
 
 if __name__ == '__main__':
     unittest.main()

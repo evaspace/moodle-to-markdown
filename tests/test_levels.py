@@ -167,15 +167,51 @@ class Api(unittest.TestCase):
         exo_id = page.get_data(as_text=True).split('data-exo="')[1].split('"')[0]
         return self.c.post(f'/api/niveaux/{SUBJECT}/result', json={'level': level, 'exo_id': exo_id, 'ok': ok}).get_json()
 
-    def test_copie_officielle_owner_only(self):
-        url = '/niveaux/maths-s1-apis-suites?n=2'  # level 2 has an official copy in parcours/baremes.json
-        self.register('copie_eleve')
-        self.assertNotIn('Copie 20/20 : corrigé officiel', self.c.get(url).get_data(as_text=True))
-        self.c = self.app.test_client()
+    def test_no_copy_of_another_exercise(self):
+        """User: the 20/20 copy is the one of the exercise asked, never an official copy of another exercise."""
+        url = '/niveaux/maths-s1-apis-suites?n=2'
         owner = sorted(levels.ADMIN_USERS)[0]
         self.register(owner)  # 409 if another test made it: log in either way
         self.c.post('/api/login', json={'username': owner, 'password': 'secret1'})
-        self.assertIn('Copie 20/20 : corrigé officiel', self.c.get(url).get_data(as_text=True))
+        self.assertNotIn('corrigé officiel d', self.c.get(url).get_data(as_text=True))
+
+    def test_methodo_grid_flags_mistakes_and_counts_copies(self):
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
+        self.register('grille_eleve')
+        url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertNotIn('Barème du prof', html)  # off until the student presses the button
+        self.assertIn('aria-pressed="false"', html)
+        self.c.post('/api/methodo', json={'on': True})
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('aria-pressed="true"', html)  # kept pressed
+        self.assertIn('Barème du prof : Sens de variation', html)
+        self.assertIn('Copie 20/20 de cet exercice', html)  # copy shown to every student, not only the owner
+        self.assertIn('Tableau de variations', html)
+        r = self.c.post('/api/niveaux/maths-s1-apis-suites/result',
+                        json={'level': 2, 'exo_id': 'va1', 'ok': True, 'fautes': [5, 99]}).get_json()
+        self.assertFalse(r['ok'] if 'ok' in r else False)
+        self.assertEqual(r['note'], 17)  # criterion 5 (table) is 3 points; 99 does not exist
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('tableau de variations absent', html)  # recalled on the next exercise of the type
+        self.c.get(url)
+        r = self.c.post('/api/niveaux/maths-s1-apis-suites/result',
+                        json={'level': 2, 'exo_id': 'va1', 'ok': True, 'fautes': []}).get_json()
+        self.assertEqual(r['note'], 20)
+        self.assertIn('<strong>1</strong> sur', self.c.get(url).get_data(as_text=True))  # counted even in practice
+        self.c.post('/api/methodo', json={'on': False})
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertNotIn('Barème du prof', html)
+        self.assertNotIn('Copie 20/20 de cet exercice', html)
+
+    def test_copy_rule_reflex_is_one_tap(self):
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
+        self.register('choix_eleve')
+        html = self.c.get('/niveaux/bases-copie?n=1&exo=rc1').get_data(as_text=True)
+        self.assertEqual(html.count('class="lv-choix-btn"'), 4)
+        self.assertEqual(html.count('data-bon="1"'), 1)
 
     def test_squelette_fades_with_exercises_done(self):
         owner = sorted(levels.ADMIN_USERS)[0]
@@ -230,6 +266,44 @@ class Api(unittest.TestCase):
             kinds = {k for (k,) in conn.execute('SELECT kind FROM event_log e JOIN account a ON a.id=e.account_id '
                                                 "WHERE a.username='navuser'")}
         self.assertTrue({'copie_ia', 'passer'} <= kinds, kinds)
+
+    def test_report_exercise(self):
+        self.register('reporter')
+        page = self.c.get('/niveaux/maths-s1-apis-suites?n=2&exo=va1').get_data(as_text=True)
+        self.assertIn('Signaler une erreur', page)
+        url = '/api/niveaux/maths-s1-apis-suites/signaler'
+        self.assertEqual(self.c.post(url, json={'level': 2}).status_code, 400)  # no exercise
+        self.assertEqual(self.c.post(url, json={'level': 2, 'exo_id': 'va1'}).status_code, 200)  # text optional
+        self.assertEqual(self.c.post(url, json={'level': 2, 'exo_id': 'va1', 'texte': 'signe faux ligne 2'}).status_code, 200)
+        self.assertEqual(self.c.post('/api/niveaux/inconnu/signaler', json={'exo_id': 'x'}).status_code, 404)
+        self.assertEqual(self.c.post('/api/admin/signalement', json={'id': 1, 'fait': True}).status_code, 403)
+        with levels.db() as conn:
+            rows = [tuple(r) for r in conn.execute("SELECT exo_id, level, texte FROM signalement WHERE subject='maths-s1-apis-suites'")]
+        self.assertIn(('va1', 2, ''), rows)
+        self.assertIn(('va1', 2, 'signe faux ligne 2'), rows)
+        self.c.post('/api/logout')
+        self.register('morgan.pierrefeu')
+        self.c.post('/api/login', json={'username': 'morgan.pierrefeu', 'password': 'secret1'})
+        os.environ.setdefault('ADMIN_PASSWORD', 'x')
+        html = self.c.get('/admin/stats').get_data(as_text=True)
+        self.assertIn('signe faux ligne 2', html)
+        self.assertIn('(sans message)', html)
+        import ratelimit
+        ratelimit._hits.clear()
+
+    def test_exercise_copy_follows_the_20_mode(self):
+        """Any student sees the 20/20 copy of the exercise once the mode is pressed (no longer owner only)."""
+        import ratelimit
+        ratelimit._hits.clear()  # 30/h register limit is shared by all test files
+        self.register('mode_copie_eleve')  # 409 if it exists in the shared test DB: log in either way
+        self.c.post('/api/login', json={'username': 'mode_copie_eleve', 'password': 'secret1'})
+        self.c.post('/api/methodo', json={'on': False})
+        url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
+        self.assertNotIn('Copie 20/20 de cet exercice', self.c.get(url).get_data(as_text=True))
+        self.c.post('/api/methodo', json={'on': True})
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('Copie 20/20 de cet exercice', html)
+        self.assertIn('strictement croissante', html)
 
     def test_admin_only_for_owner_account(self):
         import base64

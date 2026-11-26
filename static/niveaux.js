@@ -286,8 +286,9 @@
     const reveal = () => {
       $('pari-row').hidden = true;
       showSolution();
-      $('timer').textContent = 'Compare ta réponse avec la correction.';
+      $('timer').textContent = $('grille') ? 'Coche le barème selon ce qui est écrit sur ta copie.' : 'Compare ta réponse avec la correction.';
       $('btn-ko').disabled = false;
+      if ($('grille')) { $('grille').hidden = false; setTimeout(() => { $('btn-note').disabled = $('btn-ko').disabled; }, 1500); }
       // « Réussi » only after 1.5 s: read the correction instead of a reflex click
       setTimeout(() => { if (!$('btn-ko').disabled) $('btn-ok').disabled = false; }, 1500);
     };
@@ -299,23 +300,26 @@
     };
     $('pari-row').querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { conf = +b.dataset.conf; reveal(); });
 
-    async function answer(ok, timeout = false) {
+    async function answer(ok, timeout = false, fautes = null) {
       $('btn-ok').disabled = $('btn-ko').disabled = true;
       $('pari-row').hidden = true;
-      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, conf, revoir: exo.dataset.revoir === '1' });
+      lockGrid();
+      const res = await post(`/api/niveaux/${exo.dataset.subject}/result`, { level: +exo.dataset.level, exo_id: exo.dataset.exo, ok, peek, timeout, conf, revoir: exo.dataset.revoir === '1', fautes });
       const fb = $('feedback');
-      if (res.data.pause) { forcedBreak(res.data.pause); $('btn-ok').disabled = $('btn-ko').disabled = false; return; }
+      if (res.data.pause) { forcedBreak(res.data.pause); $('btn-ok').disabled = $('btn-ko').disabled = false; unlockGrid(); return; }
       checkBreak();
       if (!res.ok) {
         fb.className = 'lv-feedback bad';
         fb.textContent = res.data.error || 'Erreur réseau, réessaie.';
         $('btn-ok').disabled = $('btn-ko').disabled = false;
+        unlockGrid();
         return;
       }
       const d = res.data;
       fb.className = 'lv-feedback ' + (ok ? 'good' : 'bad');
       if (!ok && $('copie-tip')) $('copie-tip').hidden = false;  // the « copie 20/20 » trap, right after a miss
       const lines = [MESSAGES[d.event](d)];
+      if (d.note !== null && d.note !== undefined) lines.unshift(d.note === 20 ? 'Copie 20/20 : tous les critères du barème y sont.' : `Copie ${d.note}/20 : les cases vides sont notées comme fautes.`);
       if (d.timeout) lines.push('Temps écoulé : cet exercice reviendra avec plus de temps.');
       if (ok && d.points) {
         const fast = d.secs && d.ref ? (d.secs <= d.ref ? `en ${fmt(d.secs)}, plus vite que la moyenne (${fmt(d.ref)})` : `en ${fmt(d.secs)}, moyenne ${fmt(d.ref)}`) : '';
@@ -370,7 +374,51 @@
       $('next').querySelector('a').focus();
     }
     $('btn-ok').onclick = () => answer(true);
+    // « copie 20/20 » mode: the grid replaces Réussi / Raté, success only when every criterion is ticked
+    const grille = $('grille');
+    const boxes = grille ? [...grille.querySelectorAll('input[data-i]')] : [];
+    const note = () => boxes.reduce((t, b) => t + (b.checked ? +b.dataset.pts : 0), 0);
+    boxes.forEach(b => b.onchange = () => { $('note').textContent = note(); });
+    function lockGrid() {  // colour code: green = on your copy, red = flagged mistake
+      boxes.forEach(b => { b.disabled = true; b.closest('li').className = b.checked ? 'ok' : 'ko'; });
+      if (grille) $('btn-note').disabled = true;
+    }
+    function unlockGrid() { boxes.forEach(b => { b.disabled = false; b.closest('li').className = ''; }); if (grille) $('btn-note').disabled = false; }
+    if (grille) $('btn-ok').parentElement.hidden = true;  // the grid's button is the answer
+    // copy-rule reflex: one tap, verdict at once, the right line in green and the tapped wrong one in red
+    if ($('choix')) {
+      $('btn-ok').parentElement.hidden = true;
+      $('choix').querySelectorAll('button').forEach(b => b.onclick = () => {
+        $('choix').querySelectorAll('button').forEach(x => {
+          x.disabled = true;
+          if (x.dataset.bon === '1') x.classList.add('bon');
+        });
+        if (b.dataset.bon !== '1') b.classList.add('faux');
+        showSolution();
+        answer(b.dataset.bon === '1');
+      });
+    }
+    // pressed button (account setting, off until pressed once, then stays as left)
+    if ($('methodo-on')) $('methodo-on').onclick = async (e) => {
+      const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+      const r = await post('/api/methodo', { on });
+      if (!r.ok) return;
+      const u = new URL(location.href);  // same exercise, new mode
+      u.searchParams.set('exo', exo.dataset.exo);
+      location.href = u;
+    };
+    if (grille) $('btn-note').onclick = () => {
+      answer(note() === 20, false, boxes.filter(b => !b.checked).map(b => +b.dataset.i));
+    };
     $('btn-ko').onclick = () => answer(false);
+    if ($('btn-signal')) $('btn-signal').onclick = async () => {
+      const b = $('btn-signal');
+      b.disabled = true;
+      const r = await post(`/api/niveaux/${exo.dataset.subject}/signaler`,
+        { level: +exo.dataset.level, exo_id: exo.dataset.exo, texte: $('signal-texte').value });
+      $('signal-note').textContent = r.ok ? 'Merci, l’exercice est signalé.' : (r.data.error || 'Envoi impossible, réessaie');
+      if (r.ok) $('signal-texte').value = ''; else b.disabled = false;
+    };
     if ($('btn-copy-ia')) $('btn-copy-ia').addEventListener('click', () =>
       post(`/api/niveaux/${exo.dataset.subject}/copie`, { level: +exo.dataset.level, exo_id: exo.dataset.exo }));  // counted for /stats
     $('next').querySelector('a').onclick = (e) => { e.preventDefault(); next(e.currentTarget.href); };

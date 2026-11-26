@@ -581,3 +581,388 @@ FORMULES = {
     "td15": _DIFF + " · " + _ENC + " · " + _MONO,
     "td16": _ADJ,
 }
+
+# Copie 20/20, one per exercise (README_OBJECTIFS 2026-11-25): what a student sure to get every point writes.
+# Rules: one step per line, every sign or inequality justified, theorem named, conclusion sentence, result boxed.
+# Order = the type's skeleton in squelettes.py (itself taken from the official corrections). Always `a < b`
+# with spaces: the text is raw HTML. Variants (other numbers) show no copy; multi exercises join their parts'.
+COPIES = {
+    # level 1
+    "td3": r"""Suite constante : $\forall n\in\mathbb N,\ u_{n+1}=u_n$.
+Suite stationnaire : $\exists N\in\mathbb N,\ \forall n\geqslant N,\ u_{n+1}=u_n$.
+Exemple : $u_n=\max(3-n,\,0)$, soit $u_0=3$, $u_1=2$, $u_2=1$, puis $u_n=0$ pour tout $n\geqslant3$.
+Elle est stationnaire ($N=3$) et non constante ($u_1\neq u_0$).""",
+    "td1": r"""Si $q > 1$ : $q^n\to+\infty$.
+Si $q=1$ : $q^n=1\to1$.
+Si $-1 < q < 1$ : $q^n\to0$.
+Si $q\leqslant-1$ : $(q^n)$ n'a pas de limite.
+Somme : si $q\neq1$, $\displaystyle\sum_{k=0}^{n}q^k=\frac{1-q^{n+1}}{1-q}$ ; si $q=1$, $\displaystyle\sum_{k=0}^{n}q^k=n+1$.""",
+    "td2": r"""Pour tout $n\in\mathbb N$, $u_n=u_0q^n$.
+Si $u_0=0$ : la suite est nulle.
+Si $q=0$ : $u_n=0$ pour tout $n\geqslant1$.
+Si $q > 0$ : $q^n > 0$, donc tous les $u_n$ ont le signe de $u_0$.
+Si $q < 0$ et $u_0\neq0$ : $q^n=(-1)^n|q|^n$ a le signe de $(-1)^n$, donc $u_n$ a le signe de $u_0$ pour $n$ pair et le signe contraire pour $n$ impair : les termes alternent.""",
+    "ag1": r"""$(u_n)$ est arithmétique de raison $r=4$, donc $\forall n\in\mathbb N,\ u_n=u_0+nr$.
+$u_{20}=3+20\times4=\boxed{83}$.""",
+    "ag2": r"""$(v_n)$ est géométrique de raison $q=2$, donc $\forall n\in\mathbb N,\ v_n=v_0q^n$.
+$v_6=5\times2^6=5\times64=\boxed{320}$.""",
+    "ag3": r"""On utilise $\displaystyle\sum_{k=1}^{n}k=\frac{n(n+1)}2$ avec $n=100$.
+$1+2+\dots+100=\dfrac{100\times101}{2}=\boxed{5050}$.""",
+    "ag4": r"""$(3^k)$ est géométrique de raison $3\neq1$ ; la somme compte $10$ termes ($k=0$ à $9$).
+$\displaystyle\sum_{k=0}^{9}3^k=\frac{1-3^{10}}{1-3}=\frac{3^{10}-1}{2}=\frac{59049-1}{2}=\boxed{29524}$.""",
+    "ag5": r"""$(u_n)$ est arithmétique de raison $r$, donc $u_7=u_3+4r$.
+$4r=22-10=12$, donc $r=3$.
+$u_{50}=u_3+(50-3)r=10+47\times3=\boxed{151}$.""",
+    # level 2
+    "td4": r"""Croissante : $\forall n\in\mathbb N,\ u_{n+1}\geqslant u_n$.
+Décroissante : $\forall n\in\mathbb N,\ u_{n+1}\leqslant u_n$.
+Strictement croissante : $\forall n\in\mathbb N,\ u_{n+1} > u_n$.
+Strictement décroissante : $\forall n\in\mathbb N,\ u_{n+1} < u_n$.
+Exemple : $u_n=\left\lfloor\frac n2\right\rfloor$ vaut $0,0,1,1,2,\dots$ : $u_{n+1}\geqslant u_n$ pour tout $n$, mais $u_1=u_0$. Croissante, pas strictement.""",
+    "va1": r"""Méthode : signe de $u_{n+1}-u_n$.
+Pour tout $n\in\mathbb N$ :
+$u_{n+1}-u_n=\dfrac{n+1}{n+2}-\dfrac{n}{n+1}=\dfrac{(n+1)^2-n(n+2)}{(n+1)(n+2)}=\dfrac{1}{(n+1)(n+2)}$.
+Le numérateur vaut $1 > 0$ et $(n+1)(n+2) > 0$, donc $u_{n+1}-u_n > 0$.
+Tableau de variations :
+$$\begin{array}{c|ccc} n & 0 & & +\infty \\ \hline u_{n+1}-u_n & & + & \\ \hline u_n & 0 & \nearrow & \end{array}$$
+Donc $(u_n)$ est strictement croissante.""",
+    "va2": r"""Pour tout $n\geqslant1$, $u_n > 0$ (quotient de deux nombres strictement positifs) : on compare $\frac{u_{n+1}}{u_n}$ à $1$.
+$\dfrac{u_{n+1}}{u_n}=\dfrac{2^{n+1}}{(n+1)!}\times\dfrac{n!}{2^n}=\dfrac{2}{n+1}$.
+Pour $n\geqslant1$, $n+1\geqslant2$, donc $\frac{2}{n+1}\leqslant1$, d'où $u_{n+1}\leqslant u_n$.
+Tableau de variations :
+$$\begin{array}{c|ccccc} n & 1 & & 2 & & +\infty \\ \hline u_{n+1}-u_n & & 0 & & - & \\ \hline u_n & 2 & \longrightarrow & 2 & \searrow & \end{array}$$
+Donc $(u_n)$ est décroissante (strictement à partir de $n=2$, car $u_1=u_2=2$).""",
+    "va3": r"""Méthode : signe de $u_{n+1}-u_n$.
+Pour tout $n\geqslant1$ : $u_{n+1}-u_n=\displaystyle\sum_{k=1}^{n+1}\frac1{k^2}-\sum_{k=1}^{n}\frac1{k^2}=\frac{1}{(n+1)^2} > 0$.
+Tableau de variations :
+$$\begin{array}{c|ccc} n & 1 & & +\infty \\ \hline u_{n+1}-u_n & & + & \\ \hline u_n & 1 & \nearrow & \end{array}$$
+Donc $(u_n)$ est strictement croissante.""",
+    "va4": r"""Méthode : signe de $u_{n+1}-u_n$.
+Pour tout $n\in\mathbb N$ : $u_{n+1}-u_n=(n+1)^2-4(n+1)-(n^2-4n)=2n-3$.
+$2n-3 < 0$ pour $n\leqslant1$ et $2n-3 > 0$ pour $n\geqslant2$.
+Tableau de variations :
+$$\begin{array}{c|ccccccc} n & 0 & & 1 & & 2 & & +\infty \\ \hline u_{n+1}-u_n & & - & & - & & + & \\ \hline u_n & 0 & \searrow & -3 & \searrow & -4 & \nearrow & \end{array}$$
+Donc $u_0 > u_1 > u_2$ ($0 > -3 > -4$), puis $(u_n)$ est strictement croissante à partir du rang $2$.
+$(u_n)$ n'est pas monotone sur $\mathbb N$.""",
+    "va5": r"""Méthode : signe de $u_{n+1}-u_n$.
+Pour tout $n\geqslant1$ : $u_{n+1}=\displaystyle\sum_{k=n+1}^{2n+1}\frac1k$ et $u_n=\sum_{k=n}^{2n-1}\frac1k$.
+Les termes $k=n+1,\dots,2n-1$ sont communs et se simplifient :
+$u_{n+1}-u_n=\dfrac1{2n}+\dfrac1{2n+1}-\dfrac1n=\dfrac1{2n+1}-\dfrac1{2n}=\dfrac{-1}{2n(2n+1)}$.
+$2n(2n+1) > 0$, donc $u_{n+1}-u_n < 0$.
+Tableau de variations :
+$$\begin{array}{c|ccc} n & 1 & & +\infty \\ \hline u_{n+1}-u_n & & - & \\ \hline u_n & 1 & \searrow & \end{array}$$
+Donc $(u_n)$ est strictement décroissante.""",
+    # level 3
+    "td5": r"""Majorée : $\exists M\in\mathbb R,\ \forall n\in\mathbb N,\ u_n\leqslant M$.
+Minorée : $\exists m\in\mathbb R,\ \forall n\in\mathbb N,\ u_n\geqslant m$.
+Bornée : majorée et minorée, soit $\exists M\geqslant0,\ \forall n\in\mathbb N,\ |u_n|\leqslant M$.
+$u_n=n$ : $\forall n,\ u_n\geqslant0$, donc minorée ; pour tout $M\in\mathbb R$, $n=\lfloor|M|\rfloor+1$ donne $u_n > M$, donc non majorée.
+$v_n=-n^2$ : $\forall n,\ v_n\leqslant0$, donc majorée ; pour tout $m\in\mathbb R$, $n=\lfloor|m|\rfloor+1$ donne $v_n\leqslant-n < -|m|\leqslant m$, donc non minorée.""",
+    "td6": r"""$u_n=(-1)^n$ : $|u_n|=1$, donc $(u_n)$ est bornée.
+$u_{2n}=1\to1$ et $u_{2n+1}=-1\to-1$ : deux suites extraites de limites différentes, donc $(u_n)$ diverge.
+$v_n=1-\frac1{n+1}$ : $v_{n+1}-v_n=\dfrac1{n+1}-\dfrac1{n+2}=\dfrac1{(n+1)(n+2)} > 0$, donc $(v_n)$ est strictement croissante.
+$0 < \frac1{n+1}\leqslant1$ donne $0\leqslant v_n < 1$ : $(v_n)$ est bornée.""",
+    "bo1": r"""Pour tout $n\in\mathbb N$ : $-1\leqslant(-1)^n\leqslant1$ et $0 < \frac1{n+1}\leqslant1$.
+En additionnant : $-1 < u_n\leqslant2$, donc $|u_n|\leqslant2$.
+Donc $(u_n)$ est bornée ($M=2$).""",
+    "bo2": r"""Pour tout $n\in\mathbb N$ : $u_n=\dfrac{2(n+3)-5}{n+3}=2-\dfrac{5}{n+3}$.
+$n+3\geqslant3$, donc $0 < \frac5{n+3}\leqslant\frac53$.
+Donc $2-\frac53\leqslant u_n < 2$, soit $\frac13\leqslant u_n < 2$.
+$(u_n)$ est minorée par $\frac13$ et majorée par $2$ : elle est bornée.""",
+    "bo3": r"""Définition : $(u_n)$ est bornée si $\exists m,M'\in\mathbb R,\ \forall n\in\mathbb N,\ m\leqslant u_n\leqslant M'$.
+($\Rightarrow$) Soient de tels $m,M'$. Posons $M=\max(|m|,|M'|)\geqslant0$. Pour tout $n$ : $-M\leqslant-|m|\leqslant m\leqslant u_n\leqslant M'\leqslant|M'|\leqslant M$, donc $|u_n|\leqslant M$.
+($\Leftarrow$) Si $\forall n,\ |u_n|\leqslant M$, alors $-M\leqslant u_n\leqslant M$ : $m=-M$ et $M'=M$ conviennent.
+Donc les deux définitions sont équivalentes.""",
+    "bo4": r"""Pour $n\geqslant1$, la somme compte $(2n-1)-n+1=n$ termes.
+Pour $n\leqslant k\leqslant2n-1$ : $\frac1{2n-1}\leqslant\frac1k\leqslant\frac1n$ (la fonction inverse est décroissante sur $]0,+\infty[$).
+En sommant ces $n$ inégalités : $\dfrac{n}{2n-1}\leqslant u_n\leqslant n\times\dfrac1n=1$.
+$2n-1\leqslant2n$ donne $\frac{n}{2n-1}\geqslant\frac{n}{2n}=\frac12$.
+Donc $\frac12\leqslant u_n\leqslant1$ : $(u_n)$ est minorée par $\frac12$, majorée par $1$, donc bornée.""",
+    "bo5": r"""Pour tout $n\in\mathbb N$, par l'inégalité triangulaire : $|\cos n+2\sin(3n)|\leqslant|\cos n|+2|\sin(3n)|\leqslant1+2=3$.
+$n+1\geqslant1$, donc $|u_n|=\dfrac{|\cos n+2\sin(3n)|}{n+1}\leqslant3$.
+Donc $(u_n)$ est bornée ($M=3$).""",
+    # level 4
+    "td7": r"""$u_n\to\ell$ : $\forall\varepsilon > 0,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$.
+$(u_n)$ convergente : $\exists\ell\in\mathbb R$ tel que $u_n\to\ell$.
+$u_n\to+\infty$ : $\forall A\in\mathbb R,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ u_n\geqslant A$.
+$u_n\to-\infty$ : $\forall A\in\mathbb R,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ u_n\leqslant A$.
+Sans limite : $u_n=(-1)^n$, car $u_{2n}\to1$ et $u_{2n+1}\to-1$.""",
+    "td8": r"""$u_n=n+2(-1)^n$.
+Limite : $(-1)^n\geqslant-1$ donne $u_n\geqslant n-2$, et $n-2\to+\infty$ : par comparaison, $u_n\to+\infty$.
+Monotonie : $u_{n+1}-u_n=1+2(-1)^{n+1}-2(-1)^n=1-4(-1)^n$.
+Si $n$ est pair, $u_{n+1}-u_n=-3 < 0$.
+Pour tout $n_0$, il existe un entier pair $n\geqslant n_0$, et $u_{n+1} < u_n$ : $(u_n)$ n'est croissante sur aucun $[\![n_0,+\infty[\![$.""",
+    "td9": r"""$u_n=n$ si $n$ est pair, $u_n=0$ si $n$ est impair.
+Non majorée : pour tout $M$, il existe $n$ pair avec $n > M$, et $u_n=n > M$.
+Ne tend pas vers $+\infty$ : avec $A=1$, pour tout $N$, l'entier impair $n=2N+1\geqslant N$ donne $u_n=0 < 1$.
+$v_n=(-1)^nn$ : $v_{2n}=2n\to+\infty$ et $v_{2n+1}=-(2n+1)\to-\infty$, donc $(v_n)$ n'est ni majorée ni minorée, même à partir d'un rang.
+Une suite convergente est bornée ; une suite de limite $+\infty$ est minorée à partir d'un rang ; une suite de limite $-\infty$ est majorée à partir d'un rang.
+Aucun des trois cas n'est possible : $(v_n)$ n'a pas de limite.""",
+    "li1": r"""Pour $n\geqslant1$ : $\dfrac{3n^2+1}{n^2+5}=\dfrac{n^2\left(3+\frac1{n^2}\right)}{n^2\left(1+\frac5{n^2}\right)}=\dfrac{3+\frac1{n^2}}{1+\frac5{n^2}}$.
+$\frac1{n^2}\to0$, donc le numérateur tend vers $3$ et le dénominateur vers $1$.
+Par quotient, la limite vaut $\boxed{3}$.""",
+    "li2": r"""Pour $n\geqslant1$ : $\dfrac{2n+1}{n^2+1}=\dfrac{n\left(2+\frac1n\right)}{n^2\left(1+\frac1{n^2}\right)}=\dfrac1n\times\dfrac{2+\frac1n}{1+\frac1{n^2}}$.
+$\frac1n\to0$ et $\dfrac{2+\frac1n}{1+\frac1{n^2}}\to2$.
+Par produit, la limite vaut $\boxed{0}$.""",
+    "li3": r"""Pour $n\geqslant1$ : $\dfrac{n^3-2n}{5n^2+1}=n\times\dfrac{1-\frac2{n^2}}{5+\frac1{n^2}}$.
+$n\to+\infty$ et $\dfrac{1-\frac2{n^2}}{5+\frac1{n^2}}\to\dfrac15 > 0$.
+Par produit, la limite vaut $\boxed{+\infty}$.""",
+    "li4": r"""$n^2e^{-n}=\dfrac{n^2}{e^n}$.
+Par croissances comparées ($\frac{n^a}{q^n}\to0$ pour $q > 1$, ici $q=e$), la limite vaut $\boxed{0}$.""",
+    "li5": r"""$\dfrac{3^n+2^n}{3^n}=1+\left(\dfrac23\right)^n$.
+$-1 < \frac23 < 1$, donc $\left(\frac23\right)^n\to0$.
+La limite vaut $\boxed{1}$.""",
+    "li6": r"""$n^5\left(\dfrac23\right)^n=\dfrac{n^5}{\left(\frac32\right)^n}$.
+Par croissances comparées ($\frac{n^a}{q^n}\to0$ pour $q > 1$, ici $q=\frac32$), la limite vaut $\boxed{0}$.""",
+    "li7": r"""Par croissances comparées ($\frac{(\ln n)^a}{n^b}\to0$ pour $a > 0$, $b > 0$), avec $a=3$ et $b=\frac12$ : la limite vaut $\boxed{0}$.""",
+    "li8": r"""Par croissances comparées ($\frac{q^n}{n!}\to0$ pour tout réel $q$), avec $q=5$ : la limite vaut $\boxed{0}$.""",
+    # level 5
+    "fi1": r"""Forme indéterminée $\infty-\infty$ : on multiplie par la quantité conjuguée.
+$\sqrt{n+1}-\sqrt n=\dfrac{(\sqrt{n+1}-\sqrt n)(\sqrt{n+1}+\sqrt n)}{\sqrt{n+1}+\sqrt n}=\dfrac{(n+1)-n}{\sqrt{n+1}+\sqrt n}=\dfrac1{\sqrt{n+1}+\sqrt n}$.
+$\sqrt{n+1}+\sqrt n\to+\infty$, donc par inverse la limite vaut $\boxed{0}$.""",
+    "fi2": r"""Forme indéterminée $\infty-\infty$ : quantité conjuguée.
+$\sqrt{n^2+n}-n=\dfrac{(n^2+n)-n^2}{\sqrt{n^2+n}+n}=\dfrac{n}{\sqrt{n^2+n}+n}$.
+Pour $n\geqslant1$, $\sqrt{n^2+n}=n\sqrt{1+\frac1n}$, donc $\sqrt{n^2+n}-n=\dfrac1{\sqrt{1+\frac1n}+1}$.
+$\sqrt{1+\frac1n}\to1$ (continuité de la racine), donc la limite vaut $\boxed{\frac12}$.""",
+    "fi3": r"""Forme indéterminée $1^\infty$ : pour $n\geqslant1$, $\left(1+\frac1n\right)^n=e^{n\ln\left(1+\frac1n\right)}$.
+Avec $x=\frac1n\to0$ : $n\ln\left(1+\frac1n\right)=\dfrac{\ln(1+x)}{x}\to1$ (limite usuelle).
+Par continuité de l'exponentielle, la limite vaut $\boxed{e}$.""",
+    "fi4": r"""Forme indéterminée $\infty\times0$. Avec $x=\frac1n\to0$ : $n\sin\frac1n=\dfrac{\sin x}{x}$.
+$\dfrac{\sin x}{x}\xrightarrow[x\to0]{}1$ (limite usuelle), donc la limite vaut $\boxed{1}$.""",
+    "fi5": r"""On factorise par le terme dominant $3^n$ :
+$\dfrac{2^n-3^n}{2^n+3^n}=\dfrac{3^n\left(\left(\frac23\right)^n-1\right)}{3^n\left(\left(\frac23\right)^n+1\right)}=\dfrac{\left(\frac23\right)^n-1}{\left(\frac23\right)^n+1}$.
+$-1 < \frac23 < 1$, donc $\left(\frac23\right)^n\to0$.
+Par quotient, la limite vaut $\dfrac{-1}{1}=\boxed{-1}$.""",
+    # level 6
+    "td10": r"""Pour $n\geqslant1$ et $1\leqslant k\leqslant n$ : $n^2+1\leqslant n^2+k\leqslant n^2+n$, donc $\dfrac1{n^2+n}\leqslant\dfrac1{n^2+k}\leqslant\dfrac1{n^2+1}$.
+En sommant les $n$ termes : $\dfrac{n}{n^2+n}\leqslant u_n\leqslant\dfrac{n}{n^2+1}$.
+$\dfrac{n}{n^2+n}=\dfrac1{n+1}\to0$ et $\dfrac{n}{n^2+1}=\dfrac1n\times\dfrac1{1+\frac1{n^2}}\to0$.
+Par le théorème des gendarmes, $\lim u_n=\boxed{0}$.""",
+    "ge1": r"""Pour tout $n\geqslant1$ : $-1\leqslant\sin n\leqslant1$ et $n > 0$, donc $-\dfrac1n\leqslant\dfrac{\sin n}n\leqslant\dfrac1n$.
+$-\frac1n\to0$ et $\frac1n\to0$.
+Par le théorème des gendarmes, $\dfrac{\sin n}{n}\to0$.""",
+    "ge2": r"""Pour tout $n\geqslant1$ : $-1\leqslant\cos n\leqslant1$, donc $n-1\leqslant n+\cos n\leqslant n+1$.
+En divisant par $n > 0$ : $1-\dfrac1n\leqslant\dfrac{n+\cos n}n\leqslant1+\dfrac1n$.
+$1-\frac1n\to1$ et $1+\frac1n\to1$.
+Par le théorème des gendarmes, la limite vaut $\boxed{1}$.""",
+    "ge3": r"""Pour $n\geqslant1$ et $1\leqslant k\leqslant n$ : $n^2+1\leqslant n^2+k\leqslant n^2+n$, donc $\dfrac{n}{n^2+n}\leqslant\dfrac{n}{n^2+k}\leqslant\dfrac{n}{n^2+1}$.
+En sommant les $n$ termes : $\dfrac{n^2}{n^2+n}\leqslant u_n\leqslant\dfrac{n^2}{n^2+1}$.
+$\dfrac{n^2}{n^2+n}=\dfrac1{1+\frac1n}\to1$ et $\dfrac{n^2}{n^2+1}=\dfrac1{1+\frac1{n^2}}\to1$.
+Par le théorème des gendarmes, $u_n\to\boxed{1}$.""",
+    "ge4": r"""Pour tout $n\in\mathbb N$ : $(-1)^n\geqslant-1$, donc $u_n\geqslant n-\sqrt n=\sqrt n\,(\sqrt n-1)$.
+$\sqrt n\to+\infty$ et $\sqrt n-1\to+\infty$, donc par produit $\sqrt n\,(\sqrt n-1)\to+\infty$.
+Par comparaison (minorée par une suite de limite $+\infty$), $u_n\to+\infty$.""",
+    "ge5": r"""Pour tout réel $x$ : $x-1 < \lfloor x\rfloor\leqslant x$. Avec $x=n\sqrt2$ ($n\geqslant1$) : $n\sqrt2-1 < \lfloor n\sqrt2\rfloor\leqslant n\sqrt2$.
+En divisant par $n > 0$ : $\sqrt2-\dfrac1n < u_n\leqslant\sqrt2$.
+$\sqrt2-\frac1n\to\sqrt2$.
+Par le théorème des gendarmes, $u_n\to\sqrt2$.""",
+    # level 7
+    "td11": r"""(a) Si $u_1=u_0$, par récurrence $u_{n+1}=f(u_n)=f(u_0)=u_0$ avec $f(x)=\frac{x+4}5$ : la suite est constante $\iff u_1=u_0$.
+$u_0=\dfrac{u_0+4}5\iff5u_0=u_0+4\iff u_0=1$. On a résolu l'équation du point fixe $\ell=f(\ell)$.
+(b) $\ell=1$. Pour tout $n$ : $v_{n+1}=u_{n+1}-1=\dfrac{u_n+4}5-1=\dfrac{u_n-1}5=\dfrac15v_n$.
+Donc $(v_n)$ est géométrique de raison $\frac15$.
+(c) $v_0=u_0-1=4$, donc $v_n=4\left(\frac15\right)^n$ et $u_n=1+\dfrac4{5^n}$.
+$-1 < \frac15 < 1$, donc $\left(\frac15\right)^n\to0$ et $\lim u_n=\boxed{1}$.""",
+    "td12": r"""Pour tout $k$ : $u_k=1+4\left(\frac15\right)^k$, donc par linéarité $S=\displaystyle\sum_{k=0}^{5}1+4\sum_{k=0}^{5}\left(\frac15\right)^k$.
+$\displaystyle\sum_{k=0}^{5}1=6$.
+Somme géométrique de raison $\frac15\neq1$, $6$ termes : $\displaystyle\sum_{k=0}^{5}\left(\frac15\right)^k=\frac{1-\left(\frac15\right)^6}{1-\frac15}=\frac54\left(1-\frac1{5^6}\right)$.
+$S=6+5\left(1-\dfrac1{15625}\right)=11-\dfrac1{3125}=\boxed{\dfrac{34374}{3125}}$.""",
+    "td13": r"""Notons $B_n$ : « après $n$ transmissions, l'information est bonne », $\pi_n=P(B_n)$.
+(1) $(B_n,\overline{B_n})$ est un système complet d'événements. Formule des probabilités totales :
+$\pi_{n+1}=P(B_n)\,P_{B_n}(B_{n+1})+P(\overline{B_n})\,P_{\overline{B_n}}(B_{n+1})=p\,\pi_n+(1-p)(1-\pi_n)$.
+Donc $\pi_{n+1}=(2p-1)\pi_n+1-p$.
+(2) Suite arithmético-géométrique. Point fixe : $\ell=(2p-1)\ell+1-p\iff(2-2p)\ell=1-p\iff\ell=\frac12$ (car $p\neq1$).
+$\pi_{n+1}-\frac12=(2p-1)\left(\pi_n-\frac12\right)$ : $\left(\pi_n-\frac12\right)$ est géométrique de raison $2p-1$, de premier terme $\pi_0-\frac12=\frac12$.
+Donc $\pi_n=\dfrac12+\dfrac12(2p-1)^n$.
+(3) $0 < p < 1$ donne $-1 < 2p-1 < 1$, donc $(2p-1)^n\to0$ et $\pi_n\to\boxed{\frac12}$.""",
+    "rg1": r"""Point fixe : $\ell=2\ell-3\iff\ell=3$.
+Posons $v_n=u_n-3$. Pour tout $n$ : $v_{n+1}=2u_n-3-3=2(u_n-3)=2v_n$.
+$(v_n)$ est géométrique de raison $2$, de premier terme $v_0=5-3=2$.
+Donc $v_n=2\times2^n=2^{n+1}$ et $u_n=3+2^{n+1}$.
+$u_5=3+2^6=\boxed{67}$.""",
+    "rg2": r"""Point fixe : $\ell=\frac\ell2+1\iff\ell=2$.
+Posons $v_n=u_n-2$. Pour tout $n$ : $v_{n+1}=\frac{u_n}2+1-2=\frac12(u_n-2)=\frac12v_n$.
+$(v_n)$ est géométrique de raison $\frac12$, de premier terme $v_0=-2$, donc $u_n=2-2\left(\frac12\right)^n$.
+$-1 < \frac12 < 1$, donc $\left(\frac12\right)^n\to0$ et $\lim u_n=\boxed{2}$.""",
+    "rg3": r"""Point fixe : $\ell=3\ell+2\iff\ell=-1$.
+Posons $v_n=u_n+1$. Pour tout $n$ : $v_{n+1}=3u_n+2+1=3(u_n+1)=3v_n$.
+$(v_n)$ est géométrique de raison $3$, de premier terme $v_0=1$, donc $v_n=3^n$ et $u_n=3^n-1$.
+$u_4=81-1=\boxed{80}$.""",
+    "rg4": r"""Pour tout $n$ ($u_n > 0$, admis) : $\dfrac1{u_{n+1}}=\dfrac{u_n+8}{u_n}=1+\dfrac8{u_n}$.
+$v_{n+1}=1+\dfrac7{u_{n+1}}=1+7+\dfrac{56}{u_n}=8\left(1+\dfrac7{u_n}\right)=8v_n$.
+Donc $(v_n)$ est géométrique de raison $8$, de premier terme $v_0=1+\frac71=8$ : $v_n=8\times8^n=8^{n+1}$.
+$v_n=1+\dfrac7{u_n}\iff u_n=\dfrac7{v_n-1}$ (car $v_n\neq1$), donc $u_n=\boxed{\dfrac{7}{8^{n+1}-1}}$.
+Vérification : $u_0=\frac77=1$.""",
+    "rg5": r"""Pour tout $n$ : $x_{n+1}=u_{n+1}+v_{n+1}=\dfrac{3u_n+2v_n+2u_n+3v_n}5=\dfrac{5u_n+5v_n}5=x_n$.
+Donc $(x_n)$ est constante : $x_n=x_0=u_0+v_0=\boxed{5}$.""",
+    # level 8
+    "td14": r"""(1) Pour $k\geqslant1$, notons $P(k)$ : « $k!\geqslant2^{k-1}$ ».
+Initialisation : $1!=1=2^0$, donc $P(1)$ est vraie.
+Hérédité : soit $k\geqslant1$ tel que $P(k)$. $(k+1)!=(k+1)\,k!\geqslant(k+1)\,2^{k-1}\geqslant2\times2^{k-1}=2^k$ car $k+1\geqslant2$. Donc $P(k+1)$.
+Conclusion : $\forall k\geqslant1,\ k!\geqslant2^{k-1}$.
+(2) Donc $\frac1{k!}\leqslant\frac1{2^{k-1}}$ pour $k\geqslant1$, et pour tout $n\geqslant1$ :
+$u_n=1+\displaystyle\sum_{k=1}^{n}\frac1{k!}\leqslant1+\sum_{k=1}^{n}\left(\frac12\right)^{k-1}=1+\frac{1-\left(\frac12\right)^n}{1-\frac12}=3-\frac1{2^{n-1}} < 3$ (et $u_0=1 < 3$).
+(3) $u_{n+1}-u_n=\frac1{(n+1)!} > 0$ : $(u_n)$ est croissante. Croissante et majorée par $3$ : par le théorème de la limite monotone, elle converge vers un réel $\ell$.
+Pour $n\geqslant2$ : $\frac52=u_2\leqslant u_n < 3$. Par passage à la limite : $\boxed{\frac52\leqslant\ell\leqslant3}$.""",
+    "td15": r"""Avec $j=n+k$ : $S_n=\displaystyle\sum_{j=n+1}^{2n}\frac1j$ et $S_{n+1}=\sum_{j=n+2}^{2n+2}\frac1j$.
+$S_{n+1}-S_n=\dfrac1{2n+1}+\dfrac1{2n+2}-\dfrac1{n+1}=\dfrac1{2n+1}-\dfrac1{2n+2}=\dfrac1{(2n+1)(2n+2)} > 0$ : $(S_n)$ est croissante.
+Pour $1\leqslant k\leqslant n$ : $\frac1{n+k}\leqslant\frac1{n+1}$, donc $S_n\leqslant\dfrac{n}{n+1} < 1$.
+Croissante et majorée par $1$ : par le théorème de la limite monotone, $(S_n)$ converge.""",
+    "lm1": r"""Monotonie : $u_{n+1}-u_n=\frac1{(n+1)^2} > 0$, donc $(u_n)$ est croissante.
+Majoration : pour $n\geqslant2$, $u_n=1+\displaystyle\sum_{k=2}^{n}\frac1{k^2}\leqslant1+\sum_{k=2}^{n}\left(\frac1{k-1}-\frac1k\right)$.
+Par télescopage, $\displaystyle\sum_{k=2}^{n}\left(\frac1{k-1}-\frac1k\right)=1-\frac1n$, donc $u_n\leqslant2-\frac1n < 2$ (et $u_1=1 < 2$).
+Croissante et majorée par $2$ : par le théorème de la limite monotone, $(u_n)$ converge.""",
+    "lm2": r"""Monotonie : $u_{n+1}-u_n=\frac1{(n+1)!} > 0$, donc $(u_n)$ est croissante.
+Majoration : pour $k\geqslant1$, $k!\geqslant2^{k-1}$ donne $\frac1{k!}\leqslant\frac1{2^{k-1}}$, donc
+$u_n\leqslant1+\displaystyle\sum_{k=1}^{n}\left(\frac12\right)^{k-1}=1+\frac{1-\left(\frac12\right)^n}{1-\frac12}=3-\frac1{2^{n-1}} < 3$.
+Croissante et majorée par $3$ : par le théorème de la limite monotone, $(u_n)$ converge.""",
+    "lm3": r"""$(u_n)$ est décroissante et minorée par $\frac12$ : par le théorème de la limite monotone, elle converge vers un réel $\ell$.
+Passage à la limite dans les inégalités larges $\frac{n}{2n-1}\leqslant u_n\leqslant1$, avec $\frac{n}{2n-1}\to\frac12$ : $\frac12\leqslant\ell\leqslant1$.
+Plus fin : $(u_n)$ décroît vers $\ell$, donc $\ell\leqslant u_n$ pour tout $n$ ; avec $u_2=\frac12+\frac13=\frac56$ : $\boxed{\frac12\leqslant\ell\leqslant\frac56}$.""",
+    "lm4": r"""Soit $(u_n)$ une suite croissante.
+Si $(u_n)$ est majorée, alors elle converge (vers la borne supérieure de $\{u_n,\ n\in\mathbb N\}$).
+Si $(u_n)$ n'est pas majorée, alors $u_n\to+\infty$.""",
+    # level 9
+    "ad1": r"""Définition : $(u_n)$ et $(v_n)$ sont adjacentes si $(u_n)$ est croissante, $(v_n)$ décroissante et $\lim(v_n-u_n)=0$.
+$u_{n+1}-u_n=\dfrac1n-\dfrac1{n+1}=\dfrac1{n(n+1)} > 0$ : $(u_n)$ est croissante.
+$v_{n+1}-v_n=\dfrac1{(n+1)^2}-\dfrac1{n^2} < 0$ car $(n+1)^2 > n^2 > 0$ : $(v_n)$ est décroissante.
+$v_n-u_n=\frac1n+\frac1{n^2}\to0$.
+Donc $(u_n)$ et $(v_n)$ sont adjacentes.""",
+    "ad2": r"""Définition : $(u_n)$ et $(v_n)$ sont adjacentes si $(u_n)$ est croissante, $(v_n)$ décroissante et $\lim(v_n-u_n)=0$.
+$u_{n+1}-u_n=\frac1{(n+1)!} > 0$ : $(u_n)$ est croissante.
+$v_{n+1}-v_n=\dfrac1{(n+1)!}+\dfrac1{(n+1)!}-\dfrac1{n!}=\dfrac{2-(n+1)}{(n+1)!}=\dfrac{1-n}{(n+1)!} < 0$ pour $n\geqslant2$ : $(v_n)$ est décroissante.
+$v_n-u_n=\frac1{n!}\to0$.
+Donc $(u_n)$ et $(v_n)$ sont adjacentes : elles convergent vers une même limite $\ell$. En particulier $(u_n)$ converge.
+$(u_n)$ croît vers $\ell$ et $(v_n)$ décroît vers $\ell$, donc $u_n\leqslant\ell\leqslant v_2=\frac52+\frac12=3$ : $(u_n)$ est majorée par $3$.""",
+    "ad3": r"""Pour tout $n$ : $w_{n+1}=v_{n+1}-u_{n+1}=\dfrac{2u_n+3v_n-3u_n-2v_n}5=\dfrac{v_n-u_n}5=\dfrac15w_n$.
+$(w_n)$ est géométrique de raison $\frac15$, de premier terme $w_0=3-2=1$ : $w_n=\left(\frac15\right)^n$.
+$\left(\frac15\right)^n > 0$, donc $w_n > 0$ pour tout $n$, c'est-à-dire $u_n < v_n$.""",
+    "ad4": r"""$u_{n+1}-u_n=\dfrac{3u_n+2v_n-5u_n}5=\dfrac25(v_n-u_n)=\dfrac25w_n > 0$ : $(u_n)$ est croissante.
+$v_{n+1}-v_n=\dfrac{2u_n+3v_n-5v_n}5=-\dfrac25w_n < 0$ : $(v_n)$ est décroissante.
+$v_n-u_n=w_n=\left(\frac15\right)^n\to0$ car $-1 < \frac15 < 1$.
+Donc $(u_n)$ et $(v_n)$ sont adjacentes : elles convergent vers une même limite $\ell$.
+Pour tout $n$, $u_n+v_n=5$ ; par passage à la limite, $2\ell=5$, donc $\ell=\boxed{\frac52}$.""",
+    "ad5": r"""$u_{n+1}-u_n=\frac1{(n+1)^2} > 0$ : $(u_n)$ est croissante.
+$v_{n+1}-v_n=\dfrac1{(n+1)^2}+\dfrac1{n+1}-\dfrac1n=\dfrac1{(n+1)^2}-\dfrac1{n(n+1)}=\dfrac{n-(n+1)}{n(n+1)^2}=\dfrac{-1}{n(n+1)^2} < 0$ : $(v_n)$ est décroissante.
+$v_n-u_n=\frac1n\to0$.
+Donc $(u_n)$ et $(v_n)$ sont adjacentes.""",
+    "td16": r"""(1) $u_{n+1}-u_n=\dfrac1{n^2(n+1)^2} > 0$ : $(u_n)$ est croissante.
+$v_{n+1}-v_n=\dfrac1{n^2(n+1)^2}+\dfrac1{3(n+1)^2}-\dfrac1{3n^2}=\dfrac{3+n^2-(n+1)^2}{3n^2(n+1)^2}=\dfrac{2-2n}{3n^2(n+1)^2} < 0$ pour $n\geqslant2$ : $(v_n)$ est décroissante.
+$v_n-u_n=\frac1{3n^2}\to0$. Donc $(u_n)$ et $(v_n)$ sont adjacentes, de limite commune $\ell$.
+(2) Pour tout $n\geqslant2$ : $u_n\leqslant\ell\leqslant v_n$, donc $0\leqslant\ell-u_n\leqslant v_n-u_n=\frac1{3n^2}$.
+Il suffit de prendre $n$ tel que $\frac1{3n^2}\leqslant\varepsilon$ : $u_n$ est alors une valeur approchée de $\ell$ à $\varepsilon$ près.
+$\varepsilon=0{,}01$ : $3n^2\geqslant100\iff n\geqslant6$. $u_6=\frac{173}{600}\approx0{,}2883$ et $v_6\approx0{,}2976$, donc $\boxed{\ell\approx0{,}29}$ à $0{,}01$ près.""",
+    # level 10
+    "re1": r"""Notons $P(n)$ : « $0\leqslant u_n\leqslant2$ ».
+Initialisation : $u_0=0\in[0,2]$.
+Hérédité : si $0\leqslant u_n\leqslant2$, alors $2\leqslant2+u_n\leqslant4$ et, la racine étant croissante, $\sqrt2\leqslant u_{n+1}\leqslant2$ : $P(n+1)$.
+Conclusion : $\forall n\in\mathbb N,\ 0\leqslant u_n\leqslant2$.
+Monotonie : $u_{n+1}^2-u_n^2=2+u_n-u_n^2=(2-u_n)(1+u_n)\geqslant0$ car $0\leqslant u_n\leqslant2$. Comme $u_n,u_{n+1}\geqslant0$, on en déduit $u_{n+1}\geqslant u_n$ : $(u_n)$ est croissante.
+Croissante et majorée par $2$ : par le théorème de la limite monotone, $(u_n)$ converge vers $\ell\in[0,2]$.
+$f:x\mapsto\sqrt{2+x}$ est continue sur $[0,2]$, donc $\ell=\sqrt{2+\ell}$, d'où $\ell^2-\ell-2=0$, soit $(\ell-2)(\ell+1)=0$.
+$\ell\geqslant0$, donc $\boxed{\ell=2}$.""",
+    "re2": r"""(a) Notons $P(n)$ : « $u_n > 0$ ». Initialisation : $u_0=1 > 0$. Hérédité : si $u_n > 0$, alors $u_n+8 > 0$ et $u_{n+1}=\frac{u_n}{u_n+8} > 0$. Donc $\forall n,\ u_n > 0$.
+(b) Si $u_n\to\ell$ : $u_n > 0$ donne $\ell\geqslant0$, et $f:x\mapsto\frac{x}{x+8}$ est continue sur $[0,+\infty[$, donc $\ell=f(\ell)$.
+$\ell=\dfrac{\ell}{\ell+8}\iff\ell(\ell+8)=\ell\iff\ell(\ell+7)=0\iff\ell\in\{0,-7\}$. Comme $\ell\geqslant0$ : $\ell=0$.
+(c) $u_n > 0$, donc on compare $\frac{u_{n+1}}{u_n}$ à $1$ : $\dfrac{u_{n+1}}{u_n}=\dfrac1{u_n+8} < 1$ car $u_n+8 > 8$. Donc $(u_n)$ est strictement décroissante.
+(d) Décroissante et minorée par $0$ : par le théorème de la limite monotone, $(u_n)$ converge, et d'après (b) sa limite est $\boxed{0}$.""",
+    "re3": r"""(1) $u_{n+1}-u_n=\dfrac{u_n^2}4-u_n+1=\dfrac{u_n^2-4u_n+4}4=\dfrac{(u_n-2)^2}4\geqslant0$ : $(u_n)$ est croissante.
+(2) Notons $P(n)$ : « $1 < u_n < 2$ ». Initialisation : $1 < \frac32 < 2$.
+Hérédité : si $1 < u_n < 2$, alors $1 < u_n^2 < 4$ (carré croissant sur $\mathbb R_+$), donc $\frac14 < \frac{u_n^2}4 < 1$ et $\frac54 < u_{n+1} < 2$ : $P(n+1)$.
+Conclusion : $\forall n,\ 1 < u_n < 2$.
+(3) Croissante et majorée par $2$ : par le théorème de la limite monotone, $(u_n)$ converge vers $\ell\in[1,2]$.
+$f:x\mapsto1+\frac{x^2}4$ est continue, donc $\ell=1+\frac{\ell^2}4\iff\ell^2-4\ell+4=0\iff(\ell-2)^2=0$, donc $\boxed{\ell=2}$.""",
+    "re4": r"""Notons $P(n)$ : « $0 < u_n\leqslant\frac12$ ». Initialisation : $u_0=\frac12$.
+Hérédité : si $0 < u_n\leqslant\frac12$, alors $\frac12\leqslant1-u_n < 1$, donc $u_{n+1}=u_n(1-u_n)$ vérifie $0 < u_{n+1} < u_n\leqslant\frac12$ : $P(n+1)$.
+Monotonie : $u_{n+1}-u_n=-u_n^2 < 0$ : $(u_n)$ est strictement décroissante.
+Décroissante et minorée par $0$ : par le théorème de la limite monotone, $(u_n)$ converge vers $\ell\in\left[0,\frac12\right]$.
+$f:x\mapsto x-x^2$ est continue, donc $\ell=\ell-\ell^2$, d'où $\boxed{\ell=0}$.""",
+    "re5": r"""Si $(u_n)$ converge vers $\ell$, comme $f:x\mapsto\frac{x^2+6}5$ est continue sur $\mathbb R$, $\ell=f(\ell)$.
+$\ell=\dfrac{\ell^2+6}5\iff\ell^2-5\ell+6=0\iff(\ell-2)(\ell-3)=0$.
+Les seules limites finies possibles sont $\boxed{2\text{ et }3}$ (selon $u_0$, la suite peut aussi diverger).""",
+    # level 11
+    "ex1": r"""$u_{3n}=\sin(n\pi)=0$ pour tout $n$ : $(u_{3n})$ est constante nulle.
+$u_{6n+1}=\sin\left(2n\pi+\frac\pi3\right)=\sin\frac\pi3=\frac{\sqrt3}2$ ($\sin$ est $2\pi$-périodique) : $(u_{6n+1})\to\frac{\sqrt3}2$.
+Si $(u_n)$ convergeait vers $\ell$, toutes ses suites extraites tendraient vers $\ell$, donc $\ell=0$ et $\ell=\frac{\sqrt3}2$ : contradiction.
+Donc $(u_n)$ diverge.""",
+    "ex2": r"""Les termes se compensent deux à deux : $(-1)^{2j}+(-1)^{2j+1}=0$.
+Donc $\displaystyle\sum_{k=0}^{2n-1}(-1)^k=0$ et $\displaystyle\sum_{k=0}^{2n}(-1)^k=0+(-1)^{2n}=1$.
+D'où $u_{2n}=0$ et $u_{2n+1}=\dfrac1{2n+1}$.
+$u_{2n}\to0$ et $u_{2n+1}\to0$ : les termes pairs et impairs ont la même limite, donc $u_n\to\boxed{0}$.""",
+    "ex3": r"""$u_{2n}=\dfrac{2n}{2n+1}=\dfrac1{1+\frac1{2n}}\to1$ et $u_{2n+1}=-\dfrac{2n+1}{2n+2}=-\dfrac1{1+\frac1{2n+1}}\to-1$.
+Deux suites extraites ont des limites différentes ($1\neq-1$), donc $(u_n)$ diverge.""",
+    "ex4": r"""$u_{4n}=\cos(2n\pi)=1\to1$ et $u_{4n+2}=\cos(2n\pi+\pi)=\cos\pi=-1\to-1$.
+Deux suites extraites ont des limites différentes, donc $(u_n)$ diverge.""",
+    # level 12
+    "la1": r"""Pour $(v_n)$ ne s'annulant pas :
+$u_n=o(v_n)\iff\dfrac{u_n}{v_n}\to0$.
+$u_n=O(v_n)\iff\left(\dfrac{u_n}{v_n}\right)$ est bornée, soit $\exists M\geqslant0,\ \forall n,\ |u_n|\leqslant M|v_n|$.
+$u_n\sim v_n\iff\dfrac{u_n}{v_n}\to1$.""",
+    "la2": r"""Pour $n\geqslant1$, $u_n\neq0$ et $v_n\neq0$.
+$\dfrac{v_n}{u_n}=\dfrac{n^2\left(-2+\frac1n\right)}{n^3\left(-1+\frac1{n^2}-\frac2{n^3}\right)}=\dfrac1n\times\dfrac{-2+\frac1n}{-1+\frac1{n^2}-\frac2{n^3}}$.
+$\frac1n\to0$ et la fraction tend vers $2$, donc $\dfrac{v_n}{u_n}\to0$.
+Donc $v_n=o(u_n)$, et par suite $v_n=O(u_n)$.
+$\dfrac{u_n}{v_n}\to+\infty$ n'est pas bornée : $u_n\neq O(v_n)$, donc ni $u_n=o(v_n)$ ni $u_n\sim v_n$.""",
+    "la3": r"""$\dfrac{u_n}{v_n}=\dfrac{e^n\left(1+\frac{\sqrt n}{e^n}\right)}{e^n\left(1+e^{-2n}\right)}=\dfrac{1+\frac{\sqrt n}{e^n}}{1+e^{-2n}}$.
+Par croissances comparées, $\frac{\sqrt n}{e^n}\to0$ ; et $e^{-2n}\to0$. Donc $\dfrac{u_n}{v_n}\to1$.
+Donc $u_n\sim v_n$, et par suite $u_n=O(v_n)$ et $v_n=O(u_n)$.
+Le quotient tend vers $1\neq0$ : ni $u_n=o(v_n)$ ni $v_n=o(u_n)$.""",
+    "la4": r"""Pour $n\geqslant1$, $v_n\neq0$ et $\dfrac{u_n}{v_n}=\dfrac{5^n\left(\left(\frac35\right)^n+\frac6{5^n}\right)}{5^n\left(1-\frac1{5^n}\right)}=\dfrac{\left(\frac35\right)^n+\frac6{5^n}}{1-\frac1{5^n}}$.
+$-1 < \frac35 < 1$ et $-1 < \frac15 < 1$ : le numérateur tend vers $0$, le dénominateur vers $1$, donc $\dfrac{u_n}{v_n}\to0$.
+Donc $u_n=o(v_n)$, et par suite $u_n=O(v_n)$.
+$\dfrac{v_n}{u_n}\to+\infty$ : $v_n\neq O(u_n)$, et $u_n\not\sim v_n$.""",
+    "la5": r"""$\dfrac{u_n}{v_n}=\dfrac{n^2\left(-2+\frac1{n^2}\right)}{n^2\left(-2+\frac1n-\frac3{n^2}\right)}=\dfrac{-2+\frac1{n^2}}{-2+\frac1n-\frac3{n^2}}\to\dfrac{-2}{-2}=1$.
+Donc $u_n\sim v_n$, et par suite $u_n=O(v_n)$ et $v_n=O(u_n)$.
+Le quotient tend vers $1\neq0$ : pas de $o$, ni dans un sens ni dans l'autre.""",
+    "la6": r"""(1) $u_n=e^{2n}-\sqrt n$, $v_n=n+1$ : $\dfrac{v_n}{u_n}=\dfrac{\frac{n+1}{e^{2n}}}{1-\frac{\sqrt n}{e^{2n}}}$.
+Par croissances comparées, $\frac{n+1}{e^{2n}}\to0$ et $\frac{\sqrt n}{e^{2n}}\to0$, donc $\dfrac{v_n}{u_n}\to0$.
+Donc $v_n=o(u_n)$ et $v_n=O(u_n)$ ; $u_n\neq O(v_n)$, pas d'équivalence.
+(2) $u_n=4^n+1$, $v_n=5^n$ : $\dfrac{u_n}{v_n}=\left(\dfrac45\right)^n+\left(\dfrac15\right)^n\to0$ (raisons dans $]-1,1[$).
+Donc $u_n=o(v_n)$ et $u_n=O(v_n)$ ; $v_n\neq O(u_n)$, pas d'équivalence.""",
+    # level 13
+    "de1": r"""Soit $(u_n)$ de limite $\ell$. Définition avec $\varepsilon=1$ : $\exists N\in\mathbb N,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant1$.
+Pour $n\geqslant N$, par l'inégalité triangulaire : $|u_n|\leqslant|u_n-\ell|+|\ell|\leqslant1+|\ell|$.
+Posons $M=\max\left(|u_0|,\dots,|u_{N-1}|,\,1+|\ell|\right)$ (maximum d'un nombre fini de réels).
+Pour tout $n\in\mathbb N$, $|u_n|\leqslant M$ : $(u_n)$ est bornée.
+Réciproque fausse : $u_n=(-1)^n$ est bornée ($|u_n|=1$) mais diverge ($u_{2n}\to1$, $u_{2n+1}\to-1$).
+Contraposée : si $(u_n)$ n'est pas bornée, alors $(u_n)$ diverge.""",
+    "de2": r"""Énoncé : soient $(u_n)$, $(v_n)$, $(w_n)$, $n_0\in\mathbb N$ et $\ell\in\mathbb R$ tels que $\forall n\geqslant n_0,\ v_n\leqslant u_n\leqslant w_n$, $v_n\to\ell$ et $w_n\to\ell$. Alors $u_n\to\ell$.
+Preuve : soit $\varepsilon > 0$.
+$v_n\to\ell$ : $\exists N_1,\ \forall n\geqslant N_1,\ |v_n-\ell|\leqslant\varepsilon$, donc $v_n\geqslant\ell-\varepsilon$.
+$w_n\to\ell$ : $\exists N_2,\ \forall n\geqslant N_2,\ |w_n-\ell|\leqslant\varepsilon$, donc $w_n\leqslant\ell+\varepsilon$.
+Posons $N=\max(n_0,N_1,N_2)$. Pour $n\geqslant N$ : $\ell-\varepsilon\leqslant v_n\leqslant u_n\leqslant w_n\leqslant\ell+\varepsilon$, donc $|u_n-\ell|\leqslant\varepsilon$.
+Ceci vaut pour tout $\varepsilon > 0$ : $u_n\to\ell$.""",
+    "de3": r"""Par l'absurde : $u_n\to\ell$, $u_n\to\ell'$ et $\ell\neq\ell'$. Posons $\varepsilon=\frac{|\ell-\ell'|}3 > 0$.
+$\exists N_1,\ \forall n\geqslant N_1,\ |u_n-\ell|\leqslant\varepsilon$ et $\exists N_2,\ \forall n\geqslant N_2,\ |u_n-\ell'|\leqslant\varepsilon$.
+Pour $n=\max(N_1,N_2)$, par l'inégalité triangulaire : $|\ell-\ell'|\leqslant|\ell-u_n|+|u_n-\ell'|\leqslant2\varepsilon=\frac23|\ell-\ell'|$.
+Comme $|\ell-\ell'| > 0$, cela donne $1\leqslant\frac23$ : contradiction. Donc $\ell=\ell'$ : la limite est unique.""",
+    "de4": r"""Définition : $u_n\to\ell\iff\forall\varepsilon > 0,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$.
+Soit $\varepsilon > 0$. Posons $N=\left\lfloor\frac1\varepsilon\right\rfloor+1$ : $N\geqslant1$ et $N > \frac1\varepsilon$.
+Pour $n\geqslant N$ : $\left|\dfrac1n-0\right|=\dfrac1n\leqslant\dfrac1N < \varepsilon$.
+Donc $\dfrac1n\to0$.""",
+    # level 15
+    "sh1": r"""Avec $j=n+k$ : $u_n=\displaystyle\sum_{j=n+1}^{2n}\frac1j$ et $u_{n+1}=\sum_{j=n+2}^{2n+2}\frac1j$.
+$u_{n+1}-u_n=\dfrac1{2n+1}+\dfrac1{2n+2}-\dfrac1{n+1}=\dfrac1{2n+1}-\dfrac1{2n+2}=\dfrac1{(2n+1)(2n+2)} > 0$ : $(u_n)$ est croissante.
+La somme a $n$ termes et, pour $1\leqslant k\leqslant n$, $\frac1{2n}\leqslant\frac1{n+k}\leqslant\frac1{n+1}$. Donc $\frac12=\frac{n}{2n}\leqslant u_n\leqslant\frac{n}{n+1} < 1$.
+Croissante et majorée par $1$ : par le théorème de la limite monotone, $(u_n)$ converge vers $\ell$, et par passage à la limite $\frac12\leqslant\ell\leqslant1$.""",
+    "sh2": r"""Points fixes de $f:x\mapsto\frac{x^2+2}3$ : $\ell=\frac{\ell^2+2}3\iff\ell^2-3\ell+2=0\iff(\ell-1)(\ell-2)=0$.
+Notons $P(n)$ : « $1 < u_n < 2$ ». Initialisation : $1 < \frac32 < 2$.
+Hérédité : si $1 < u_n < 2$, alors $1 < u_n^2 < 4$, $3 < u_n^2+2 < 6$, donc $1 < u_{n+1} < 2$ : $P(n+1)$.
+Monotonie : $u_{n+1}-u_n=\dfrac{u_n^2-3u_n+2}3=\dfrac{(u_n-1)(u_n-2)}3 < 0$ car $u_n-1 > 0$ et $u_n-2 < 0$ : $(u_n)$ est strictement décroissante.
+Décroissante et minorée par $1$ : par le théorème de la limite monotone, $(u_n)$ converge vers $\ell$, avec $1\leqslant\ell\leqslant u_0=\frac32$.
+$f$ est continue, donc $\ell\in\{1,2\}$ ; avec $\ell\leqslant\frac32$ : $\boxed{\ell=1}$.""",
+    "sh3": r"""Pour $n\geqslant2$, $v_n=\ln n > 0$.
+$u_n=\ln\left(n^2\left(1+\frac1{n^2}\right)\right)=2\ln n+\ln\left(1+\frac1{n^2}\right)$.
+$\dfrac{u_n}{v_n}=2+\dfrac{\ln\left(1+\frac1{n^2}\right)}{\ln n}$ : le numérateur tend vers $\ln1=0$ et $\ln n\to+\infty$, donc $\dfrac{u_n}{v_n}\to2$.
+Limite finie non nulle : $u_n=O(v_n)$ et $v_n=O(u_n)$ ; ni $o$ dans un sens ni dans l'autre.
+Limite $2\neq1$ : $u_n\not\sim v_n$ (mais $u_n\sim2v_n$).""",
+    "sh4": r"""$u_{2n+2}-u_{2n}=\dfrac{1}{2n+1}-\dfrac{1}{2n+2} > 0$ : $(u_{2n})$ est croissante.
+$u_{2n+3}-u_{2n+1}=-\dfrac{1}{2n+2}+\dfrac{1}{2n+3} < 0$ : $(u_{2n+1})$ est décroissante.
+$u_{2n+1}-u_{2n}=\dfrac{(-1)^{2n+2}}{2n+1}=\dfrac1{2n+1}\to0$.
+Donc $(u_{2n})$ et $(u_{2n+1})$ sont adjacentes : elles convergent vers une même limite $\ell$.
+Les termes pairs et impairs tendent vers $\ell$, donc $u_n\to\ell$ : $(u_n)$ converge.""",
+    "sh5": r"""Forme indéterminée $\infty-\infty$ : quantité conjuguée.
+$\sqrt{n^2+3n}-\sqrt{n^2+n}=\dfrac{(n^2+3n)-(n^2+n)}{\sqrt{n^2+3n}+\sqrt{n^2+n}}=\dfrac{2n}{\sqrt{n^2+3n}+\sqrt{n^2+n}}$.
+Pour $n\geqslant1$, en factorisant par $n$ : $=\dfrac{2}{\sqrt{1+\frac3n}+\sqrt{1+\frac1n}}$.
+Les deux racines tendent vers $1$, donc la limite vaut $\dfrac2{1+1}=\boxed{1}$.""",
+}

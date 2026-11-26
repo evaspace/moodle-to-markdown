@@ -97,6 +97,11 @@ NOTIONS += [
      "cours": r"Pour étudier les variations : dériver, factoriser $f'$, tableau de signes de $f'$, flèches. Les extremums locaux sont aux points où $f'$ s'annule en changeant de signe."},
 ]
 
+NOTIONS.append(
+    {"id": "copie", "titre": "Rendu de copie",
+     "formule": r"Quantifier ($\forall n\in\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "exemple": r"« $2n(2n+1) > 0$ car $n\geqslant1$, donc $u_{n+1}-u_n < 0$. Donc $(u_n)$ est strictement décroissante. »",
+     "cours": r"Le correcteur note ce qui est écrit, pas ce que tu penses. Une ligne vaut ses points si elle a : le domaine des variables, la raison de chaque inégalité, le nom du théorème utilisé, et une conclusion qui répond à la question posée. Un symbole faux ($\Rightarrow$ au lieu de $\iff$, $u_n$ au lieu de $(u_n)$, $\geqslant$ au lieu de $>$) coûte la ligne."})
 _FO = {n["id"]: n["formule"] for n in NOTIONS}
 
 
@@ -120,8 +125,146 @@ def o(id, enonce, sol, fo, duree=3):
     return {"id": id, "kind": "open", "enonce": enonce, "sol": sol, "_f": fo, "duree": duree}
 
 
+def c(id, enonce, choix, sol, fo=None, duree=1):
+    """Copy-rule reflex: 4 copy lines, the first one is the only one with full marks (shuffled on the page).
+    sol says what each wrong line loses, in the order given."""
+    return {"id": id, "kind": "choix", "enonce": enonce, "choix": list(choix), "sol": sol, "_f": fo or _FO["copie"], "duree": duree}
+
+
 F = _FO
 _CI = r"Décalage $j=k+p$ : $\sum_{k=a}^{b}u_{k+p}=\sum_{j=a+p}^{b+p}u_j$ (bornes décalées) · Renversement $j=n-k$ : $\sum_{k=0}^{n}u_{n-k}=\sum_{j=0}^{n}u_j$"
+_COPIE = [
+    {"n": 90, "titre": "Rendu de copie", "notions": ["copie"], "exos": [
+        c("rc1", r"Définition de « $(u_n)$ converge vers $\ell$ ». Quelle ligne rapporte tous les points ?",
+          [r"$\forall\varepsilon > 0,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$",
+           r"$\exists N\in\mathbb N,\ \forall\varepsilon > 0,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$",
+           r"$\forall\varepsilon\geqslant0,\ \exists N\in\mathbb N,\ \forall n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$",
+           r"$\forall\varepsilon > 0,\ \exists N\in\mathbb N,\ \exists n\geqslant N,\ |u_n-\ell|\leqslant\varepsilon$"],
+          r"Les fautes : $N$ placé avant $\varepsilon$ (il ne dépend plus de $\varepsilon$) ; $\varepsilon\geqslant0$ ($\varepsilon=0$ force $u_n=\ell$) ; $\exists n$ au lieu de $\forall n$."),
+        c("rc2", r"Définition de « $(u_n)$ est majorée ». Quelle ligne rapporte tous les points ?",
+          [r"$\exists M\in\mathbb R,\ \forall n\in\mathbb N,\ u_n\leqslant M$",
+           r"$\forall n\in\mathbb N,\ \exists M\in\mathbb R,\ u_n\leqslant M$",
+           r"$\exists n\in\mathbb N,\ \forall M\in\mathbb R,\ u_n\leqslant M$",
+           r"$\exists M\in\mathbb R,\ \forall n\in\mathbb N,\ u_n\geqslant M$"],
+          r"Les fautes : $\forall n\ \exists M$ est vrai pour toute suite ($M=u_n$) ; la troisième est toujours fausse ; la dernière définit « minorée »."),
+        c("rc3", r"Hérédité d'une récurrence sur $P(n)$. Quelle première ligne rapporte tous les points ?",
+          [r"Soit $n\in\mathbb N$ tel que $P(n)$ est vraie. Montrons $P(n+1)$.",
+           r"Supposons $P(n)$ vraie pour tout $n\in\mathbb N$. Montrons $P(n+1)$.",
+           r"Soit $n\in\mathbb N$. Montrons $P(n+1)$.",
+           r"Soit $n\in\mathbb N$ tel que $P(n+1)$ est vraie. Montrons $P(n)$."],
+          r"Les fautes : supposer $P(n)$ « pour tout $n$ », c'est supposer le résultat ; sans « tel que $P(n)$ » l'hypothèse de récurrence n'existe pas ; la dernière va dans le mauvais sens."),
+        c("rc4", r"Début d'une étude de variation de $u_n=\frac{n}{n+1}$. Quelle ligne rapporte tous les points ?",
+          [r"Pour tout $n\in\mathbb N$, $u_{n+1}-u_n=\dfrac{1}{(n+1)(n+2)}$.",
+           r"$u_{n+1}-u_n=\dfrac{1}{(n+1)(n+2)}$.",
+           r"Il existe $n\in\mathbb N$ tel que $u_{n+1}-u_n=\dfrac{1}{(n+1)(n+2)}$.",
+           r"Pour tout $n\in\mathbb N$, $u_{n+1}-u_n=\dfrac{1}{n(n+1)}$."],
+          r"Les fautes : domaine absent ; « il existe » ne prouve rien pour toute la suite ; dénominateur faux ($n$ au lieu de $n+2$)."),
+        c("rc5", r"Définition de « $(u_n)$ est strictement croissante ». Quelle ligne rapporte tous les points ?",
+          [r"$\forall n\in\mathbb N,\ u_{n+1} > u_n$",
+           r"$\forall n\in\mathbb N,\ u_{n+1}\geqslant u_n$",
+           r"$\exists n\in\mathbb N,\ u_{n+1} > u_n$",
+           r"$\forall n\in\mathbb N,\ u_{n+1} > 0$"],
+          r"Les fautes : $\geqslant$ définit « croissante » ; $\exists$ ne parle que d'un rang ; $u_{n+1} > 0$ dit « positive », pas « croissante »."),
+    ]},
+    {"n": 91, "titre": "Justifier et nommer le théorème", "notions": ["copie"], "exos": [
+        c("rj1", r"Tu as obtenu $u_{n+1}-u_n=\dfrac{-1}{2n(2n+1)}$ pour $n\geqslant1$. Quelle ligne rapporte tous les points ?",
+          [r"$2n(2n+1) > 0$ car $n\geqslant1$, donc $u_{n+1}-u_n < 0$.",
+           r"Donc $u_{n+1}-u_n < 0$.",
+           r"$2n(2n+1) > 0$ car $n\geqslant1$, donc $u_{n+1}-u_n > 0$.",
+           r"$u_{n+1}-u_n\leqslant0$ car c'est négatif."],
+          r"Les fautes : signe affirmé sans raison ; signe faux (oubli du $-1$) ; « car c'est négatif » répète la conclusion."),
+        c("rj2", r"$(u_n)$ est croissante et majorée par $2$. Quelle conclusion rapporte tous les points ?",
+          [r"$(u_n)$ est croissante et majorée par $2$, donc, d'après le théorème de la limite monotone, $(u_n)$ converge.",
+           r"$(u_n)$ est croissante et majorée par $2$, donc $(u_n)$ converge vers $2$.",
+           r"$(u_n)$ est majorée par $2$, donc $(u_n)$ converge.",
+           r"$(u_n)$ est croissante et majorée par $2$, donc $\lim u_n=2$."],
+          r"Les fautes : un majorant n'est pas la limite (deux fois) ; majorée seule ne suffit pas, $(-1)^n$ est majorée et diverge."),
+        c("rj3", r"Limite de $\frac{\sin n}{n}$. Quelle ligne rapporte tous les points ?",
+          [r"Pour tout $n\geqslant1$, $-\frac1n\leqslant\frac{\sin n}{n}\leqslant\frac1n$ et $\pm\frac1n\to0$, donc, par le théorème des gendarmes, $\frac{\sin n}{n}\to0$.",
+           r"Pour tout $n\geqslant1$, $-\frac1n\leqslant\frac{\sin n}{n}\leqslant\frac1n$, donc $\frac{\sin n}{n}\to0$.",
+           r"$\frac{\sin n}{n}\to0$ car $\sin n\to0$.",
+           r"$\lim\frac{\sin n}{n}=\frac{\lim\sin n}{\lim n}=0$."],
+          r"Les fautes : limites des bornes et nom du théorème absents ; $\sin n$ n'a pas de limite (deux fois), on ne peut pas écrire $\lim\sin n$."),
+        c("rj4", r"$u_n=\frac{2^n}{n!}$, $n\geqslant1$. Quelle ligne rapporte tous les points ?",
+          [r"Pour tout $n\geqslant1$, $u_n > 0$ et $\frac{u_{n+1}}{u_n}=\frac2{n+1}\leqslant1$, donc $u_{n+1}\leqslant u_n$.",
+           r"Pour tout $n\geqslant1$, $\frac{u_{n+1}}{u_n}=\frac2{n+1}\leqslant1$, donc $u_{n+1}\leqslant u_n$.",
+           r"Pour tout $n\geqslant1$, $u_n > 0$ et $\frac{u_{n+1}}{u_n}=\frac2{n+1}\leqslant1$, donc $u_{n+1} < u_n$.",
+           r"Pour tout $n\geqslant1$, $u_n > 0$ et $\frac{u_{n+1}}{u_n}\leqslant1$, donc $(u_n)$ est croissante."],
+          r"Les fautes : $u_n > 0$ absent, alors que comparer le quotient à $1$ l'exige ; $<$ est faux ($u_1=u_2=2$) ; sens de variation inversé."),
+        c("rj5", r"$u_{n+1}=f(u_n)$ avec $f$ continue. Quelle ligne rapporte tous les points ?",
+          [r"$(u_n)$ converge vers $\ell$ et $f$ est continue en $\ell$, donc $\ell=f(\ell)$.",
+           r"$\ell=f(\ell)$, donc $(u_n)$ converge vers $\ell$.",
+           r"$(u_n)$ converge vers $\ell$, donc $\ell=f(\ell)$.",
+           r"$f$ est continue, donc $(u_n)$ converge vers un point fixe de $f$."],
+          r"Les fautes : un point fixe ne prouve pas la convergence ; continuité non citée ; la continuité seule ne donne pas la convergence."),
+    ]},
+    {"n": 92, "titre": "Conclure et présenter le résultat", "notions": ["copie"], "exos": [
+        c("rr1", r"Tu as prouvé $\forall n\in\mathbb N,\ u_{n+1}-u_n > 0$. Quelle conclusion rapporte tous les points ?",
+          [r"Donc $(u_n)$ est strictement croissante.",
+           r"Donc $u_n$ est strictement croissante.",
+           r"Donc $(u_n)$ est croissante.",
+           r"Donc $(u_n)$ converge."],
+          r"Les fautes : $u_n$ est un nombre, la suite s'écrit $(u_n)$ ; « strictement » perdu alors que tu l'as prouvé ; la convergence n'est pas prouvée."),
+        c("rr2", r"Tu as trouvé que $(u_n)$ tend vers $1$. Quel résultat final rapporte tous les points ?",
+          [r"$\boxed{\lim\limits_{n\to+\infty}u_n=1}$",
+           r"$\boxed{u_n=1}$",
+           r"$\boxed{\lim\limits_{n\to+\infty}u_n\to1}$",
+           r"$\boxed{\lim\limits_{n\to1}u_n=+\infty}$"],
+          r"Les fautes : $u_n=1$ dit que la suite est constante ; $\lim$ et $\to$ ensemble ; variable et valeur échangées."),
+        c("rr3", r"$u_0=5$, $u_{n+1}=2u_n-3$. Quel résultat final rapporte tous les points ?",
+          [r"$\boxed{\forall n\in\mathbb N,\ u_n=3+2^{n+1}}$",
+           r"$\boxed{u_n=3+2^{n+1}}$",
+           r"$\boxed{\forall n\in\mathbb N,\ u_n=3+2^{n}}$",
+           r"$\boxed{\forall n\in\mathbb N,\ u_n=3+2\cdot2^{n+1}}$"],
+          r"Les fautes : domaine absent ; $3+2^0=4\neq u_0$ ; $3+2\cdot2=7\neq u_0$. Vérifie toujours sur $u_0$."),
+        c("rr4", r"$(u_n)$ et $(v_n)$ sont adjacentes. Quelle conclusion rapporte tous les points ?",
+          [r"$(u_n)$ et $(v_n)$ sont adjacentes, donc elles convergent vers une même limite $\ell$ et $\forall n\in\mathbb N,\ u_n\leqslant\ell\leqslant v_n$.",
+           r"$(u_n)$ et $(v_n)$ sont adjacentes, donc elles convergent.",
+           r"$(u_n)$ et $(v_n)$ sont adjacentes, donc $\forall n\in\mathbb N,\ u_n=v_n$.",
+           r"$(u_n)$ est croissante et $(v_n)$ décroissante, donc elles sont adjacentes."],
+          r"Les fautes : même limite et encadrement oubliés ; $u_n=v_n$ est faux ; il manque $v_n-u_n\to0$ pour dire adjacentes."),
+        c("rr5", r"$u_{2n}\to1$ et $u_{2n+1}\to-1$. Quelle conclusion rapporte tous les points ?",
+          [r"$(u_{2n})$ et $(u_{2n+1})$ sont extraites de $(u_n)$ et ont des limites différentes, donc $(u_n)$ diverge.",
+           r"$u_{2n}\to1$ et $u_{2n+1}\to-1$, donc $(u_n)$ tend vers $0$.",
+           r"$u_{2n}\to1$, donc $(u_n)$ converge vers $1$.",
+           r"$u_{2n}\to1$ et $u_{2n+1}\to-1$, donc $\lim u_n=\pm1$."],
+          r"Les fautes : on ne fait pas la moyenne des limites ; une seule extraite ne dit rien de $(u_n)$ ; une limite est unique."),
+    ]},
+    {"n": 93, "titre": "Symboles et notations", "notions": ["copie"], "exos": [
+        c("rn1", r"$u_n=-n^3+n-2$, $v_n=-2n^2+n$. Quelle ligne rapporte tous les points ?",
+          [r"$\frac{v_n}{u_n}=\frac{-2n^2+n}{-n^3+n-2}\to0$, donc $v_n=o(u_n)$.",
+           r"$\frac{v_n}{u_n}\to0$, donc $u_n=o(v_n)$.",
+           r"$u_n\sim-n^3$ et $v_n\sim-2n^2$, donc $u_n-v_n\sim-n^3+2n^2$.",
+           r"$\frac{v_n}{u_n}\to0$, donc $u_n\sim v_n$."],
+          r"Les fautes : relation inversée ; on ne soustrait pas des équivalents ; $\sim$ demande un quotient qui tend vers $1$."),
+        c("rn2", r"Résoudre $x^2=4$ dans $\mathbb R$. Quelle ligne rapporte tous les points ?",
+          [r"$x^2=4\iff x=2$ ou $x=-2$, donc $S=\{-2,2\}$.",
+           r"$x^2=4\iff x=2$, donc $S=\{2\}$.",
+           r"$x^2=4\Rightarrow x=2$ ou $x=-2$, donc $S=\{-2,2\}$.",
+           r"$x^2=4=x=\pm2$."],
+          r"Les fautes : racine $-2$ perdue ; $\Rightarrow$ ne donne qu'une inclusion, il faut $\iff$ pour l'ensemble des solutions ; « $=$ » enchaîné entre une équation et sa solution."),
+        c("rn3", r"Pour tout $n$, $u_n\geqslant n$. Quelle ligne rapporte tous les points ?",
+          [r"Pour tout $n\in\mathbb N$, $u_n\geqslant n$ et $n\to+\infty$, donc, par minoration, $u_n\to+\infty$.",
+           r"$\lim u_n\geqslant\lim n=+\infty$.",
+           r"Pour tout $n\in\mathbb N$, $u_n\geqslant n$, donc $(u_n)$ est majorée.",
+           r"Pour tout $n\in\mathbb N$, $u_n\geqslant n$, donc $\lim u_n=n$."],
+          r"Les fautes : $\lim u_n$ écrit avant d'avoir prouvé qu'elle existe ; minorée, pas majorée ; une limite ne dépend pas de $n$."),
+        c("rn4", r"On sait $1\leqslant a\leqslant2$ et $3\leqslant b\leqslant5$. Quelle ligne rapporte tous les points ?",
+          [r"$-5\leqslant-b\leqslant-3$, donc $-4\leqslant a-b\leqslant-1$.",
+           r"$1-3\leqslant a-b\leqslant2-5$, donc $-2\leqslant a-b\leqslant-3$.",
+           r"$-4\leqslant a-b\leqslant-2$.",
+           r"$\frac13\leqslant\frac ab\leqslant\frac25$."],
+          r"Les fautes : on ne soustrait pas deux encadrements, on ajoute $-b$ ; borne fausse ($2-3=-1$) ; pour $\frac ab$ on multiplie par $\frac15\leqslant\frac1b\leqslant\frac13$, d'où $\frac15\leqslant\frac ab\leqslant\frac23$."),
+        c("rn5", r"Quelle phrase rapporte tous les points ?",
+          [r"La suite $(u_n)_{n\in\mathbb N}$ est bornée.",
+           r"La suite $u_n$ est bornée.",
+           r"$u_n$ est bornée pour tout $n$.",
+           r"La suite $(u_n)$ est bornée par $n$."],
+          r"Les fautes : $u_n$ est un terme, pas la suite ; un nombre est toujours « borné », la phrase ne dit rien ; une borne ne dépend pas de $n$."),
+    ]},
+]
+
+
 # Exercise pool: grouped below into chapters (one level path each) by CHAPTERS.
 _POOL = [
     {"n": 1, "titre": "Fractions", "notions": ["fractions"], "exos": [
@@ -561,6 +704,7 @@ _POOL.append({"exos": [
       [(r"Calculer $\lim_{x\to0}\frac{\tan x}{x}$.", "limit(tan(x)/x,x,0)", "1", r"$\frac{\sin x}x\cdot\frac1{\cos x}\to1$.")], duree=3),
 ]})
 
+_POOL += _COPIE
 FORMULES = {e["id"]: e.pop("_f") for lvl in _POOL for e in lvl["exos"]}
 _EXOS = {e["id"]: e for lvl in _POOL for e in lvl["exos"]}
 
@@ -622,6 +766,11 @@ CHAPTERS = {
         ("Composées exp et ln", ["derivees"], ["de4", "de5", "dd4"]),
         ("Composées puissance, racine, trigo", ["derivees"], ["de6", "de7", "dd5", "dd6"]),
         ("Tangente et variations", ["tangente"], ["ta1", "ta2", "ta3", "ta4"])]),
+    "copie": ("Rendu de copie", 9, [
+        ("Quantificateurs et domaines", ["copie"], ["rc1", "rc2", "rc3", "rc4", "rc5"]),
+        ("Justifier et nommer le théorème", ["copie"], ["rj1", "rj2", "rj3", "rj4", "rj5"]),
+        ("Conclure et présenter le résultat", ["copie"], ["rr1", "rr2", "rr3", "rr4", "rr5"]),
+        ("Symboles et notations", ["copie"], ["rn1", "rn2", "rn3", "rn4", "rn5"])]),
     "limites": ("Limites", 19, [
         ("Opérations, quotient par zéro", ["limites"], ["li2", "lm1", "lm2"]),
         ("Fractions rationnelles à l'infini", ["limites"], ["li1", "lm3", "lm4"]),

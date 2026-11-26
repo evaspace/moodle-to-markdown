@@ -537,3 +537,42 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .st-day i { position: absolute; left: 0; right: 0; height: 2px; background: var(--text-color); }
 .st-day-axis { display: grid; grid-template-columns: repeat(8, 1fr); }
 .st-legend .st-avg-key { height: 2px; background: var(--text-color); vertical-align: middle; }
+
+/* « Signaler une erreur » under the exercise: quiet until opened */
+.lv-signal { margin-top: 16px; }
+.lv-signal summary { cursor: pointer; color: var(--text-muted); font-size: 14px; }
+.lv-signal label { display: block; margin: 10px 0 4px; font-size: 14px; }
+.lv-signal textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; border: 2px solid var(--border-color); background: var(--bg-color); color: var(--text-color); }
+.lv-signal .lv-btn { margin-top: 8px; }
+/* « copie 20/20 » mode: switch, recalled mistakes, teacher grid to tick */
+.lv-mode { display: flex; gap: 10px; align-items: center; margin: 10px 0 0; font-size: 14px; color: var(--text-muted); }
+.lv-flag { background: var(--error-bg); padding: 10px 14px; margin: 8px 0; font-size: 14px; }
+.lv-grille { background: #F4F5F7; padding: 12px 14px; margin: 12px 0; }
+.lv-grille h2 { font-size: 18px; margin-bottom: 4px; }
+.lv-grille ul { list-style: none; margin: 8px 0; }
+.lv-grille li label { display: flex; gap: 8px; align-items: baseline; padding: 6px 0; cursor: pointer; }
+.lv-grille li strong { margin-left: auto; white-space: nowrap; }
+/* /formules: one tinted zone per chapter (the colour says which chapter), sticky jump bar */
+.fo-jump { padding: 8px 0; }
+.fo-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0; }
+.fo-group > span { font-weight: 700; font-size: 13px; min-width: 90px; }
+.fo-jump a { padding: 6px 10px; font-size: 13px; color: var(--text-color); text-decoration: none; background: hsl(var(--h) 55% 88%); }
+.fo-jump a:hover, .fo-jump a:focus-visible { background: hsl(var(--h) 45% 30%); color: #fff; }
+.fo-zone { background: hsl(var(--h) 55% 95%); border-left: 6px solid hsl(var(--h) 45% 45%); padding: 12px 14px; margin: 16px 0; scroll-margin-top: 8px; }
+.fo-zone h2 { margin-top: 0; position: sticky; top: 0; background: hsl(var(--h) 55% 95%); padding: 6px 0; z-index: 1; }
+.fo-top { display: inline-block; margin-top: 8px; font-size: 14px; }
+@media (max-width: 600px) { .fo-group > span { min-width: 100%; } }
+.lv-grille li { padding: 0 8px; }
+.lv-grille li:has(input:checked) { background: var(--success-bg); }
+.lv-grille li.ok { background: var(--success-bg); box-shadow: inset 4px 0 var(--success-color); }
+.lv-grille li.ko { background: var(--error-bg); box-shadow: inset 4px 0 var(--error-color); }
+/* copy-rule reflex (Bases maths, rendu de copie): one line per button, verdict in colour */
+.lv-choix { list-style: none; margin: 12px 0; display: grid; gap: 8px; }
+.lv-choix-btn { width: 100%; text-align: left; font: inherit; font-size: 16px; padding: 12px 14px; background: #F4F5F7; border: 0; cursor: pointer; color: var(--text-color); overflow-x: auto; }
+.lv-choix-btn:hover:not(:disabled), .lv-choix-btn:focus-visible { background: #E4E6EA; }
+.lv-choix-btn:disabled { cursor: default; }
+.lv-choix-btn.bon { background: var(--success-bg); box-shadow: inset 6px 0 var(--success-color); }
+.lv-choix-btn.faux { background: var(--error-bg); box-shadow: inset 6px 0 var(--error-color); }
+.lv-toggle { font: inherit; font-weight: 600; font-size: 14px; padding: 8px 12px; background: #F4F5F7; color: var(--text-color); border: 0; cursor: pointer; white-space: nowrap; box-shadow: inset 0 -3px 0 #C9CDD3; }
+.lv-toggle[aria-pressed="true"] { background: var(--text-color); color: #fff; box-shadow: inset 0 3px 0 #000; }
+.lv-toggle:focus-visible { outline: 3px solid var(--accent-color); outline-offset: 2px; }

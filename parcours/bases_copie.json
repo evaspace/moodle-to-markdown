@@ -1,0 +1,341 @@
+{
+ "subject": {
+  "id": "bases-copie",
+  "ordre": 9,
+  "matiere": "bases",
+  "semestre": "S0",
+  "ecue": "Calcul",
+  "titre": "Rendu de copie",
+  "chapitres_moodle": [],
+  "td": "",
+  "examens": []
+ },
+ "notions": [
+  {
+   "id": "copie",
+   "titre": "Rendu de copie",
+   "formule": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+   "exemple": "« $2n(2n+1) > 0$ car $n\\geqslant1$, donc $u_{n+1}-u_n < 0$. Donc $(u_n)$ est strictement décroissante. »",
+   "cours": "Le correcteur note ce qui est écrit, pas ce que tu penses. Une ligne vaut ses points si elle a : le domaine des variables, la raison de chaque inégalité, le nom du théorème utilisé, et une conclusion qui répond à la question posée. Un symbole faux ($\\Rightarrow$ au lieu de $\\iff$, $u_n$ au lieu de $(u_n)$, $\\geqslant$ au lieu de $>$) coûte la ligne."
+  }
+ ],
+ "quiz": [],
+ "levels": [
+  {
+   "n": 1,
+   "titre": "Quantificateurs et domaines",
+   "notions": [
+    "copie"
+   ],
+   "exos": [
+    {
+     "id": "rc1",
+     "enonce": "Définition de « $(u_n)$ converge vers $\\ell$ ». Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$\\forall\\varepsilon > 0,\\ \\exists N\\in\\mathbb N,\\ \\forall n\\geqslant N,\\ |u_n-\\ell|\\leqslant\\varepsilon$",
+      "$\\exists N\\in\\mathbb N,\\ \\forall\\varepsilon > 0,\\ \\forall n\\geqslant N,\\ |u_n-\\ell|\\leqslant\\varepsilon$",
+      "$\\forall\\varepsilon\\geqslant0,\\ \\exists N\\in\\mathbb N,\\ \\forall n\\geqslant N,\\ |u_n-\\ell|\\leqslant\\varepsilon$",
+      "$\\forall\\varepsilon > 0,\\ \\exists N\\in\\mathbb N,\\ \\exists n\\geqslant N,\\ |u_n-\\ell|\\leqslant\\varepsilon$"
+     ],
+     "sol": "Les fautes : $N$ placé avant $\\varepsilon$ (il ne dépend plus de $\\varepsilon$) ; $\\varepsilon\\geqslant0$ ($\\varepsilon=0$ force $u_n=\\ell$) ; $\\exists n$ au lieu de $\\forall n$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rc2",
+     "enonce": "Définition de « $(u_n)$ est majorée ». Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$\\exists M\\in\\mathbb R,\\ \\forall n\\in\\mathbb N,\\ u_n\\leqslant M$",
+      "$\\forall n\\in\\mathbb N,\\ \\exists M\\in\\mathbb R,\\ u_n\\leqslant M$",
+      "$\\exists n\\in\\mathbb N,\\ \\forall M\\in\\mathbb R,\\ u_n\\leqslant M$",
+      "$\\exists M\\in\\mathbb R,\\ \\forall n\\in\\mathbb N,\\ u_n\\geqslant M$"
+     ],
+     "sol": "Les fautes : $\\forall n\\ \\exists M$ est vrai pour toute suite ($M=u_n$) ; la troisième est toujours fausse ; la dernière définit « minorée ».",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rc3",
+     "enonce": "Hérédité d'une récurrence sur $P(n)$. Quelle première ligne rapporte tous les points ?",
+     "choix": [
+      "Soit $n\\in\\mathbb N$ tel que $P(n)$ est vraie. Montrons $P(n+1)$.",
+      "Supposons $P(n)$ vraie pour tout $n\\in\\mathbb N$. Montrons $P(n+1)$.",
+      "Soit $n\\in\\mathbb N$. Montrons $P(n+1)$.",
+      "Soit $n\\in\\mathbb N$ tel que $P(n+1)$ est vraie. Montrons $P(n)$."
+     ],
+     "sol": "Les fautes : supposer $P(n)$ « pour tout $n$ », c'est supposer le résultat ; sans « tel que $P(n)$ » l'hypothèse de récurrence n'existe pas ; la dernière va dans le mauvais sens.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rc4",
+     "enonce": "Début d'une étude de variation de $u_n=\\frac{n}{n+1}$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "Pour tout $n\\in\\mathbb N$, $u_{n+1}-u_n=\\dfrac{1}{(n+1)(n+2)}$.",
+      "$u_{n+1}-u_n=\\dfrac{1}{(n+1)(n+2)}$.",
+      "Il existe $n\\in\\mathbb N$ tel que $u_{n+1}-u_n=\\dfrac{1}{(n+1)(n+2)}$.",
+      "Pour tout $n\\in\\mathbb N$, $u_{n+1}-u_n=\\dfrac{1}{n(n+1)}$."
+     ],
+     "sol": "Les fautes : domaine absent ; « il existe » ne prouve rien pour toute la suite ; dénominateur faux ($n$ au lieu de $n+2$).",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rc5",
+     "enonce": "Définition de « $(u_n)$ est strictement croissante ». Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$\\forall n\\in\\mathbb N,\\ u_{n+1} > u_n$",
+      "$\\forall n\\in\\mathbb N,\\ u_{n+1}\\geqslant u_n$",
+      "$\\exists n\\in\\mathbb N,\\ u_{n+1} > u_n$",
+      "$\\forall n\\in\\mathbb N,\\ u_{n+1} > 0$"
+     ],
+     "sol": "Les fautes : $\\geqslant$ définit « croissante » ; $\\exists$ ne parle que d'un rang ; $u_{n+1} > 0$ dit « positive », pas « croissante ».",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "Justifier et nommer le théorème",
+   "notions": [
+    "copie"
+   ],
+   "exos": [
+    {
+     "id": "rj1",
+     "enonce": "Tu as obtenu $u_{n+1}-u_n=\\dfrac{-1}{2n(2n+1)}$ pour $n\\geqslant1$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$2n(2n+1) > 0$ car $n\\geqslant1$, donc $u_{n+1}-u_n < 0$.",
+      "Donc $u_{n+1}-u_n < 0$.",
+      "$2n(2n+1) > 0$ car $n\\geqslant1$, donc $u_{n+1}-u_n > 0$.",
+      "$u_{n+1}-u_n\\leqslant0$ car c'est négatif."
+     ],
+     "sol": "Les fautes : signe affirmé sans raison ; signe faux (oubli du $-1$) ; « car c'est négatif » répète la conclusion.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rj2",
+     "enonce": "$(u_n)$ est croissante et majorée par $2$. Quelle conclusion rapporte tous les points ?",
+     "choix": [
+      "$(u_n)$ est croissante et majorée par $2$, donc, d'après le théorème de la limite monotone, $(u_n)$ converge.",
+      "$(u_n)$ est croissante et majorée par $2$, donc $(u_n)$ converge vers $2$.",
+      "$(u_n)$ est majorée par $2$, donc $(u_n)$ converge.",
+      "$(u_n)$ est croissante et majorée par $2$, donc $\\lim u_n=2$."
+     ],
+     "sol": "Les fautes : un majorant n'est pas la limite (deux fois) ; majorée seule ne suffit pas, $(-1)^n$ est majorée et diverge.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rj3",
+     "enonce": "Limite de $\\frac{\\sin n}{n}$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "Pour tout $n\\geqslant1$, $-\\frac1n\\leqslant\\frac{\\sin n}{n}\\leqslant\\frac1n$ et $\\pm\\frac1n\\to0$, donc, par le théorème des gendarmes, $\\frac{\\sin n}{n}\\to0$.",
+      "Pour tout $n\\geqslant1$, $-\\frac1n\\leqslant\\frac{\\sin n}{n}\\leqslant\\frac1n$, donc $\\frac{\\sin n}{n}\\to0$.",
+      "$\\frac{\\sin n}{n}\\to0$ car $\\sin n\\to0$.",
+      "$\\lim\\frac{\\sin n}{n}=\\frac{\\lim\\sin n}{\\lim n}=0$."
+     ],
+     "sol": "Les fautes : limites des bornes et nom du théorème absents ; $\\sin n$ n'a pas de limite (deux fois), on ne peut pas écrire $\\lim\\sin n$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rj4",
+     "enonce": "$u_n=\\frac{2^n}{n!}$, $n\\geqslant1$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "Pour tout $n\\geqslant1$, $u_n > 0$ et $\\frac{u_{n+1}}{u_n}=\\frac2{n+1}\\leqslant1$, donc $u_{n+1}\\leqslant u_n$.",
+      "Pour tout $n\\geqslant1$, $\\frac{u_{n+1}}{u_n}=\\frac2{n+1}\\leqslant1$, donc $u_{n+1}\\leqslant u_n$.",
+      "Pour tout $n\\geqslant1$, $u_n > 0$ et $\\frac{u_{n+1}}{u_n}=\\frac2{n+1}\\leqslant1$, donc $u_{n+1} < u_n$.",
+      "Pour tout $n\\geqslant1$, $u_n > 0$ et $\\frac{u_{n+1}}{u_n}\\leqslant1$, donc $(u_n)$ est croissante."
+     ],
+     "sol": "Les fautes : $u_n > 0$ absent, alors que comparer le quotient à $1$ l'exige ; $<$ est faux ($u_1=u_2=2$) ; sens de variation inversé.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rj5",
+     "enonce": "$u_{n+1}=f(u_n)$ avec $f$ continue. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$(u_n)$ converge vers $\\ell$ et $f$ est continue en $\\ell$, donc $\\ell=f(\\ell)$.",
+      "$\\ell=f(\\ell)$, donc $(u_n)$ converge vers $\\ell$.",
+      "$(u_n)$ converge vers $\\ell$, donc $\\ell=f(\\ell)$.",
+      "$f$ est continue, donc $(u_n)$ converge vers un point fixe de $f$."
+     ],
+     "sol": "Les fautes : un point fixe ne prouve pas la convergence ; continuité non citée ; la continuité seule ne donne pas la convergence.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "titre": "Conclure et présenter le résultat",
+   "notions": [
+    "copie"
+   ],
+   "exos": [
+    {
+     "id": "rr1",
+     "enonce": "Tu as prouvé $\\forall n\\in\\mathbb N,\\ u_{n+1}-u_n > 0$. Quelle conclusion rapporte tous les points ?",
+     "choix": [
+      "Donc $(u_n)$ est strictement croissante.",
+      "Donc $u_n$ est strictement croissante.",
+      "Donc $(u_n)$ est croissante.",
+      "Donc $(u_n)$ converge."
+     ],
+     "sol": "Les fautes : $u_n$ est un nombre, la suite s'écrit $(u_n)$ ; « strictement » perdu alors que tu l'as prouvé ; la convergence n'est pas prouvée.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rr2",
+     "enonce": "Tu as trouvé que $(u_n)$ tend vers $1$. Quel résultat final rapporte tous les points ?",
+     "choix": [
+      "$\\boxed{\\lim\\limits_{n\\to+\\infty}u_n=1}$",
+      "$\\boxed{u_n=1}$",
+      "$\\boxed{\\lim\\limits_{n\\to+\\infty}u_n\\to1}$",
+      "$\\boxed{\\lim\\limits_{n\\to1}u_n=+\\infty}$"
+     ],
+     "sol": "Les fautes : $u_n=1$ dit que la suite est constante ; $\\lim$ et $\\to$ ensemble ; variable et valeur échangées.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rr3",
+     "enonce": "$u_0=5$, $u_{n+1}=2u_n-3$. Quel résultat final rapporte tous les points ?",
+     "choix": [
+      "$\\boxed{\\forall n\\in\\mathbb N,\\ u_n=3+2^{n+1}}$",
+      "$\\boxed{u_n=3+2^{n+1}}$",
+      "$\\boxed{\\forall n\\in\\mathbb N,\\ u_n=3+2^{n}}$",
+      "$\\boxed{\\forall n\\in\\mathbb N,\\ u_n=3+2\\cdot2^{n+1}}$"
+     ],
+     "sol": "Les fautes : domaine absent ; $3+2^0=4\\neq u_0$ ; $3+2\\cdot2=7\\neq u_0$. Vérifie toujours sur $u_0$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rr4",
+     "enonce": "$(u_n)$ et $(v_n)$ sont adjacentes. Quelle conclusion rapporte tous les points ?",
+     "choix": [
+      "$(u_n)$ et $(v_n)$ sont adjacentes, donc elles convergent vers une même limite $\\ell$ et $\\forall n\\in\\mathbb N,\\ u_n\\leqslant\\ell\\leqslant v_n$.",
+      "$(u_n)$ et $(v_n)$ sont adjacentes, donc elles convergent.",
+      "$(u_n)$ et $(v_n)$ sont adjacentes, donc $\\forall n\\in\\mathbb N,\\ u_n=v_n$.",
+      "$(u_n)$ est croissante et $(v_n)$ décroissante, donc elles sont adjacentes."
+     ],
+     "sol": "Les fautes : même limite et encadrement oubliés ; $u_n=v_n$ est faux ; il manque $v_n-u_n\\to0$ pour dire adjacentes.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rr5",
+     "enonce": "$u_{2n}\\to1$ et $u_{2n+1}\\to-1$. Quelle conclusion rapporte tous les points ?",
+     "choix": [
+      "$(u_{2n})$ et $(u_{2n+1})$ sont extraites de $(u_n)$ et ont des limites différentes, donc $(u_n)$ diverge.",
+      "$u_{2n}\\to1$ et $u_{2n+1}\\to-1$, donc $(u_n)$ tend vers $0$.",
+      "$u_{2n}\\to1$, donc $(u_n)$ converge vers $1$.",
+      "$u_{2n}\\to1$ et $u_{2n+1}\\to-1$, donc $\\lim u_n=\\pm1$."
+     ],
+     "sol": "Les fautes : on ne fait pas la moyenne des limites ; une seule extraite ne dit rien de $(u_n)$ ; une limite est unique.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "titre": "Symboles et notations",
+   "notions": [
+    "copie"
+   ],
+   "exos": [
+    {
+     "id": "rn1",
+     "enonce": "$u_n=-n^3+n-2$, $v_n=-2n^2+n$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$\\frac{v_n}{u_n}=\\frac{-2n^2+n}{-n^3+n-2}\\to0$, donc $v_n=o(u_n)$.",
+      "$\\frac{v_n}{u_n}\\to0$, donc $u_n=o(v_n)$.",
+      "$u_n\\sim-n^3$ et $v_n\\sim-2n^2$, donc $u_n-v_n\\sim-n^3+2n^2$.",
+      "$\\frac{v_n}{u_n}\\to0$, donc $u_n\\sim v_n$."
+     ],
+     "sol": "Les fautes : relation inversée ; on ne soustrait pas des équivalents ; $\\sim$ demande un quotient qui tend vers $1$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rn2",
+     "enonce": "Résoudre $x^2=4$ dans $\\mathbb R$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$x^2=4\\iff x=2$ ou $x=-2$, donc $S=\\{-2,2\\}$.",
+      "$x^2=4\\iff x=2$, donc $S=\\{2\\}$.",
+      "$x^2=4\\Rightarrow x=2$ ou $x=-2$, donc $S=\\{-2,2\\}$.",
+      "$x^2=4=x=\\pm2$."
+     ],
+     "sol": "Les fautes : racine $-2$ perdue ; $\\Rightarrow$ ne donne qu'une inclusion, il faut $\\iff$ pour l'ensemble des solutions ; « $=$ » enchaîné entre une équation et sa solution.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rn3",
+     "enonce": "Pour tout $n$, $u_n\\geqslant n$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "Pour tout $n\\in\\mathbb N$, $u_n\\geqslant n$ et $n\\to+\\infty$, donc, par minoration, $u_n\\to+\\infty$.",
+      "$\\lim u_n\\geqslant\\lim n=+\\infty$.",
+      "Pour tout $n\\in\\mathbb N$, $u_n\\geqslant n$, donc $(u_n)$ est majorée.",
+      "Pour tout $n\\in\\mathbb N$, $u_n\\geqslant n$, donc $\\lim u_n=n$."
+     ],
+     "sol": "Les fautes : $\\lim u_n$ écrit avant d'avoir prouvé qu'elle existe ; minorée, pas majorée ; une limite ne dépend pas de $n$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rn4",
+     "enonce": "On sait $1\\leqslant a\\leqslant2$ et $3\\leqslant b\\leqslant5$. Quelle ligne rapporte tous les points ?",
+     "choix": [
+      "$-5\\leqslant-b\\leqslant-3$, donc $-4\\leqslant a-b\\leqslant-1$.",
+      "$1-3\\leqslant a-b\\leqslant2-5$, donc $-2\\leqslant a-b\\leqslant-3$.",
+      "$-4\\leqslant a-b\\leqslant-2$.",
+      "$\\frac13\\leqslant\\frac ab\\leqslant\\frac25$."
+     ],
+     "sol": "Les fautes : on ne soustrait pas deux encadrements, on ajoute $-b$ ; borne fausse ($2-3=-1$) ; pour $\\frac ab$ on multiplie par $\\frac15\\leqslant\\frac1b\\leqslant\\frac13$, d'où $\\frac15\\leqslant\\frac ab\\leqslant\\frac23$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    },
+    {
+     "id": "rn5",
+     "enonce": "Quelle phrase rapporte tous les points ?",
+     "choix": [
+      "La suite $(u_n)_{n\\in\\mathbb N}$ est bornée.",
+      "La suite $u_n$ est bornée.",
+      "$u_n$ est bornée pour tout $n$.",
+      "La suite $(u_n)$ est bornée par $n$."
+     ],
+     "sol": "Les fautes : $u_n$ est un terme, pas la suite ; un nombre est toujours « borné », la phrase ne dit rien ; une borne ne dépend pas de $n$.",
+     "duree": 1,
+     "formules": "Quantifier ($\\forall n\\in\\mathbb N$) · justifier chaque signe · nommer le théorème · écrire $(u_n)$ pour la suite, $u_n$ pour un terme · conclure par une phrase · encadrer le résultat",
+     "type": "choix"
+    }
+   ]
+  }
+ ]
+}

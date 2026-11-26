@@ -402,3 +402,29 @@ Retour : « c'est normal qu'il n'y ait que 2 niveaux ? il faut voir toutes les f
   - un script d'environ 20 lignes vérifie les identifiants en double et les liens `prereq`/`papier` cassés ;
   - reporté en v2 : vue par annale, rappel actif masqué.
 - Utilisateur : « non on ne prend pas 10 élèves, faut tout faire par IA ». Pas de test avec des élèves : la validation se fait par l'IA. Jeu de requêtes réelles tiré des annales (`annales/FORMULES.md`) et du syllabus ; succès si la bonne fiche est dans le top 3 pour au moins 8 requêtes sur 10, sinon corriger les `alias`.
+
+### Retour du 2026-11-25 : copie 20/20 par exercice
+
+- « Le but c'est que la correction soit simple, et type d'un élève qui aura obligatoirement 20 sans être superficielle. Surtout pour les suites de S1 en maths, ensuite le reste des maths, puis les autres matières. »
+
+Fait (suites S1) : chaque exercice du parcours « Suites numériques » a sa copie 20/20 (`COPIES` à la fin de `parcours/src/apis_suites.py`, 87 exercices + les 6 exercices d'annales qui les assemblent). Une étape par ligne, chaque signe ou inégalité justifié, théorème nommé, phrase de conclusion, résultat encadré. L'ordre suit le squelette du type (`squelettes.py`), lui-même tiré des corrigés officiels. Affichée dépliée sous la correction, « Copie 20/20 de cet exercice » (propriétaire seulement, comme le reste de la beta). Une variante (autres nombres) n'a pas de copie.
+Reste : les autres parcours de maths, puis les autres matières.
+
+### Retour du 2026-11-25 : signaler un exercice
+
+- « Rajoute une fonction qui permet de signaler un exercice + de rajouter un texte pour dire quel signal c'est, mais pas obligatoire, comme ça je peux voir s'il y a des erreurs. »
+
+Fait : sous chaque exercice, « Signaler une erreur » (bloc replié) avec un texte facultatif. Enregistré dans la table `signalement` (`POST /api/niveaux/<parcours>/signaler`, 30 par heure et par compte au plus). Lecture dans `/admin/stats`, tableau « Signalements » : date, lien vers l'exercice, message, compte, bouton « Traité » / « Rouvrir » ; les non traités d'abord.
+
+## Corrections « copie 20/20 » (2026-11-26)
+Dit par le propriétaire :
+- Les corrections ne disent pas ce qu'il faut écrire pour avoir tous les points. But : la copie 20/20. Définir les critères du prof, puis la forme et la rigueur ; la correction doit être écrite comme par un élève qui a 20, pas juste donner la réponse.
+- Éliminer les fautes : une faute faite doit être signalée (« flaguée »).
+- Option activable : soit tryhard (comparer seulement les réponses), soit apprendre la méthode des vraies réponses.
+- Sens de variation : faire le tableau de variations.
+- Ajouter des codes couleur ; la comparaison doit être binaire et rapide (savoir vite si on a fait la même chose ou pas).
+- Bases maths : des exercices de règles de rendu de copie, au caractère près, rapides : des réflexes de format de sortie, sans perdre de temps.
+- Ne jamais donner en copie 20/20 un autre exercice que celui posé : on ne peut pas s'entraîner dessus, le niveau est déjà passé et ce n'est pas comptabilisé.
+- Fiche de toutes les formules : zones par fond de couleur qui disent à quel chapitre elles appartiennent, et boutons pour s'y téléporter.
+- Cours OBM : bancal, impossible à apprendre (à refaire).
+Décisions (conseil du 2026-11-26) : pas de correcteur IA ; une grille de critères binaires par méthode, sur 20, cochée après la copie papier ; chaque case vide = faute notée et rappelée ; mode tryhard/méthode = un interrupteur.

@@ -11,7 +11,7 @@ from pathlib import Path
 import sympy as sp
 
 HERE = Path(__file__).parent
-PATHS = ["bases_fractions", "bases_puissances", "bases_algebre", "bases_divisions", "bases_equations", "bases_sommes", "bases_exp_ln", "bases_trigo", "bases_derivees", "bases_limites",
+PATHS = ["bases_copie", "bases_fractions", "bases_puissances", "bases_algebre", "bases_divisions", "bases_equations", "bases_sommes", "bases_exp_ln", "bases_trigo", "bases_derivees", "bases_limites",
          "obm", "dp", "apis_integrales", "apis_suites", "apis_edo",
          "apef_polynomes", "apef_fonctions", "ev", "alm", "phys_meca", "phys_thermo", "phys_em", "phys_energie", "archi_numeration", "archi_boole", "archi_circuits", "archi_sequentielle", "archi_micro", "elec_circuits", "elec_sinus", "elec_filtres", "elec_transitoires", "elec_diodes", "algo_taa", "algo_caml", "algo_python", "algo_matrices", "algo_abg", "algo_recherche", "prog_c_debut", "prog_minimake", "maths_s3_asn", "maths_s3_pse", "maths_s3_al", "phys_s3_quantique", "phys_s3_em", "elec_s3_transistors", "algo_s3_hachage", "algo_s3_arbres", "algo_s3_graphes", "algo_s3_thlr", "archi_s3_68000"]
 x, t = sp.symbols("x t", real=True)
@@ -189,7 +189,7 @@ NS = {"hach": _hach, "parc": _parc, "x": x, "t": t, "E": sp.E, "pi": sp.pi, "log
       "Q0": sp.Symbol("Q0"), "Q1": sp.Symbol("Q1"), "Q2": sp.Symbol("Q2"), "Q3": sp.Symbol("Q3"), "cover": _cover, "A": sp.Symbol("A"), "B": sp.Symbol("B"),
       "C": sp.Symbol("C"), "D": sp.Symbol("D"), "Xor": sp.Xor, "Not": sp.Not,
       "C1": sp.Symbol("C1"), "C2": sp.Symbol("C2"), "Y0": sp.Symbol("Y0"), "Y1": sp.Symbol("Y1"), "Y2": sp.Symbol("Y2")}
-DUREE = {"derivative": 2, "primitive": 2, "integral": 5, "value": 4, "open": 5, "ode": 6}
+DUREE = {"choix": 1, "derivative": 2, "primitive": 2, "integral": 5, "value": 4, "open": 5, "ode": 6}
 SAMPLES = [sp.Rational(3, 10), sp.Rational(7, 10), sp.Rational(6, 5)]  # inside every domain used
 
 
@@ -207,6 +207,9 @@ def check(e):
     """Return None if the answer is right, else an error message."""
     if e["kind"] == "open":  # proof / course question: no automatic check, a model answer is required
         return None if e.get("sol") else "open exercise without sol"
+    if e["kind"] == "choix":  # copy-rule reflex: the first line is the only right one, the others differ from it
+        ch = e.get("choix", [])
+        return None if 2 <= len(ch) <= 4 and len(set(ch)) == len(ch) and e.get("sol") else "choix needs 2-4 distinct lines and a sol"
     if e["kind"] == "value":  # counting / probability: the worked computation must equal the stated answer
         calc, ans = parse(e["calc"]), parse(e["ans"])
         if isinstance(calc, sp.MatrixBase):  # matrix answers (product, inverse, coordinates): exact equality
@@ -262,10 +265,14 @@ def build(name):
     errors += [f"duplicate exercise id: {i}" for i in dict.fromkeys(all_ids) if all_ids.count(i) > 1]
     formules = getattr(mod, "FORMULES", {})  # per exercise: the formulas its solution uses
     errors += [f"FORMULES: unknown exercise {i}" for i in formules if i not in by_id]
+    copies = getattr(mod, "COPIES", {})  # per exercise: the 20/20 student copy (optional, path by path)
+    errors += [f"COPIES: unknown exercise {i}" for i in copies if i not in by_id]
     for e in by_id.values():
         if e["id"] not in formules:
             errors.append(f"{e['id']}: no entry in FORMULES")
         e["formules"] = formules.get(e["id"], "")
+        if e["id"] in copies:
+            e["copie"] = copies[e["id"]]
         # variants: same formula, other numbers; each one is checked like the exercise itself
         for i, x in enumerate([e] + [e | v for v in e.get("variants", [])]):
             err = check(x)
@@ -282,6 +289,8 @@ def build(name):
                 e["sol"] = "\n\n".join(f"**{i}.** {by_id[p]['sol']}" for i, p in enumerate(e["parts"], 1))
                 parts = [f.strip() for p in e["parts"] for f in by_id[p]["formules"].split(" · ")]
                 e["formules"] = " · ".join(dict.fromkeys(parts))  # union of the parts, first occurrence order
+                if all("copie" in by_id[p] for p in e["parts"]):
+                    e["copie"] = "\n".join(f"**{i}.** {by_id[p]['copie']}" for i, p in enumerate(e["parts"], 1))
     notion_ids = {n["id"] for n in mod.NOTIONS}
     for lvl in mod.LEVELS:
         errors += [f"level {lvl['n']}: unknown notion {n}" for n in lvl["notions"] if n not in notion_ids]

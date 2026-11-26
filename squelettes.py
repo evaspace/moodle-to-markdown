@@ -192,6 +192,148 @@ SQUELETTES = {
             ('Solutions', '$S = \\{ x \\mapsto$ {} $,\\ (k_1, k_2) \\in \\mathbb{R}^2 \\}$.'),
         ],
     },
+    'denombrement': {
+        'titre': 'Dénombrement',
+        'source': ['maths-s1-dp/2', 'maths-s1-dp/5', 'maths-s1-dp/3'],
+        'etapes': [
+            ('Modèle', 'On compte des {} : ordre {}, répétition {}.'),
+            ('Formule nommée', '{} ($n^p$ pour les $p$-listes, $A_n^p$ pour les arrangements, $n!$ pour les permutations, $\\binom np$ sans ordre).'),
+            ('Contrainte', 'Choix successifs ({} $\\times$ {}) ou complémentaire : total $-$ {}.'),
+            ('Résultat', '{} possibilités.'),
+        ],
+    },
+    'cardinaux': {
+        'titre': 'Cardinaux',
+        'source': ['maths-s1-dp/1'],
+        'etapes': [
+            ('Union disjointe écrite', '{} $=$ {} $\\cup$ {}, union disjointe.'),
+            ('Cardinal', '$\\mathrm{Card}$ {} $= \\mathrm{Card}$ {} $+ \\mathrm{Card}$ {}.'),
+            ('Résultat', '{} (question précédente citée si elle sert).'),
+        ],
+    },
+    'double_comptage': {
+        'titre': 'Double comptage',
+        'source': ['maths-s1-dp/6'],
+        'etapes': [
+            ('Premier compte', 'Directement : {} tirages.'),
+            ('Second compte par cas disjoints', 'Selon {} $= 0, 1, \\dots$ : $\\sum$ {} tirages.'),
+            ('Égalité', 'Les deux comptes portent sur le même ensemble, donc {} $=$ {}.'),
+        ],
+    },
+    'equiprobabilite': {
+        'titre': 'Équiprobabilité',
+        'source': ['maths-s1-dp/7'],
+        'etapes': [
+            ('Univers', '$\\Omega$ : {}, tirages équiprobables, $\\mathrm{Card}(\\Omega) =$ {}.'),
+            ('Événement', '$\\mathrm{Card}(A) =$ {} (cas disjoints additionnés).'),
+            ('Probabilité', '$P(A) = \\dfrac{\\mathrm{Card}(A)}{\\mathrm{Card}(\\Omega)} =$ {} (ou $1 - P(\\bar A)$).'),
+        ],
+    },
+    'proba_totales': {
+        'titre': 'Probabilités totales, Bayes',
+        'source': ['maths-s1-dp/10'],
+        'etapes': [
+            ('Événements et données', '$P(S) =$ {}, $P(V \\mid S) =$ {}, $P(V \\mid \\bar S) =$ {}.'),
+            ('Partition', '$\\{S, \\bar S\\}$ partition de $\\Omega$ : $V = (V \\cap S) \\cup (V \\cap \\bar S)$, union disjointe.'),
+            ('Probabilités totales', '$P(V) = P(V \\mid S)P(S) + P(V \\mid \\bar S)P(\\bar S) =$ {}.'),
+            ('Bayes', '$P(S \\mid V) = \\dfrac{P(V \\mid S)P(S)}{P(V)} =$ {}.'),
+        ],
+    },
+    'independance': {
+        'titre': 'Indépendance',
+        'source': ['maths-s1-dp/11'],
+        'etapes': [
+            ('Événements nommés', '$A$ : « {} », $B$ : « {} ».'),
+            ('Probabilités', '$P(A) =$ {}, $P(B) =$ {}, $P(A \\cap B) =$ {}.'),
+            ('Comparaison', '$P(A \\cap B)$ {} $P(A)P(B)$ (ou $P_B(A)$ {} $P(A)$).'),
+            ('Conclusion', '$A$ et $B$ {} indépendants. Incompatibles seulement si $A \\cap B = \\emptyset$ : {}.'),
+        ],
+    },
+    'loi_va': {
+        'titre': 'Loi, espérance, variance',
+        'source': ['maths-s1-dp/14', 'maths-s1-dp/13'],
+        'etapes': [
+            ('Valeurs', '$X(\\Omega) =$ {}.'),
+            ('Loi', '$P(X = k) =$ {} pour chaque $k$ (somme $= 1$).'),
+            ('Espérance', '$E(X) = \\sum k\\,P(X = k) =$ {}.'),
+            ('Variance', '$E(X^2) =$ {}, $V(X) = E(X^2) - E(X)^2 =$ {} (König-Huygens).'),
+        ],
+    },
+    'binomiale': {
+        'titre': 'Loi binomiale',
+        'source': ['maths-s1-dp/14'],
+        'etapes': [
+            ('Épreuve de Bernoulli', '$X_k(\\Omega) = \\{0, 1\\}$, $P(X_k = 1) =$ {} : Bernoulli de paramètre {}.'),
+            ('Somme', '$Y = X_1 + \\dots + X_n$, les $X_k$ sont indépendantes et de même paramètre.'),
+            ('Loi', '$Y \\sim \\mathcal{B}($ {} $,$ {} $)$, $P(Y = i) = \\binom ni p^i(1 - p)^{n-i} =$ {}.'),
+            ('Espérance et variance', '$E(Y) = np =$ {} ; par indépendance, $V(Y) = np(1 - p) =$ {}.'),
+        ],
+    },
+    'negation': {
+        'titre': 'Nier une phrase',
+        'source': ['maths-s1-obm/5', 'maths-s1-obm/3'],
+        'etapes': [
+            ('Phrase avec quantificateurs', '$P$ : {}.'),
+            ('Règles', '$\\forall$ devient $\\exists$, $\\exists$ devient $\\forall$, « ou » devient « et », $A \\Rightarrow B$ devient $A \\wedge \\neg B$, les ensembles restent.'),
+            ('Négation', '$\\neg P$ : {}.'),
+        ],
+    },
+    'quantificateurs': {
+        'titre': 'Écrire avec des quantificateurs',
+        'source': ['maths-s1-obm/4'],
+        'etapes': [
+            ('Variables et ensembles', '{} $\\in$ {}, {} $\\in$ {}.'),
+            ('Ordre des quantificateurs', '$\\forall$ {}, $\\exists$ {} (l\'élément choisi après dépend de ceux d\'avant).'),
+            ('Phrase', '{}.'),
+        ],
+    },
+    'contraposee': {
+        'titre': 'Contraposée, vrai ou faux',
+        'source': ['maths-s1-obm/6'],
+        'etapes': [
+            ('Vrai ou faux justifié', 'Calcul : {} ; contre-exemple si faux : $x =$ {}.'),
+            ('Négation', '$\\neg P$ : « $\\exists$ {} $, A \\wedge \\neg B$ ».'),
+            ('Contraposée', '« $\\forall$ {} $, \\neg B \\implies \\neg A$ » : {}.'),
+        ],
+    },
+    'recurrence': {
+        'titre': 'Récurrence',
+        'source': ['maths-s1-obm/7'],
+        'etapes': [
+            ('Propriété', '$\\mathcal{P}(n)$ : « {} ».'),
+            ('Initialisation', '$n =$ {} : {} $=$ {}, donc $\\mathcal{P}($ {} $)$ vraie.'),
+            ('Hérédité', 'Supposons $\\mathcal{P}(n)$. Alors {} $=$ {} (hypothèse utilisée), donc $\\mathcal{P}(n+1)$.'),
+            ('Conclusion', 'Par récurrence, $\\forall n \\geqslant$ {}, $\\mathcal{P}(n)$.'),
+        ],
+    },
+    'image': {
+        'titre': 'Image directe, image réciproque',
+        'source': ['maths-s1-obm/9'],
+        'etapes': [
+            ('Définitions', '$f(A) = \\{f(x) ; x \\in A\\}$, $f^{-1}(B) = \\{x \\in E ; f(x) \\in B\\}$.'),
+            ('Calcul', '$f(A) =$ {}, $f^{-1}(B) =$ {}.'),
+        ],
+    },
+    'injection': {
+        'titre': 'Injection, surjection',
+        'source': ['maths-s1-obm/10', 'maths-s1-obm/9'],
+        'etapes': [
+            ('Définition', 'Injective : $\\forall x, x\', f(x) = f(x\') \\implies x = x\'$. Surjective : $\\forall y \\in F, \\exists x \\in E, f(x) = y$.'),
+            ('Preuve ou contre-exemple', '{} : $f$ {} $=$ $f$ {} avec {} $\\neq$ {} (non injective), ou {} n\'a pas d\'antécédent (non surjective).'),
+            ('Conclusion', '$f$ {} injective, {} surjective.'),
+        ],
+    },
+    'relation': {
+        'titre': 'Relation binaire',
+        'source': ['maths-s1-obm/11'],
+        'etapes': [
+            ('Réflexive', '{} donc $a\\,\\mathcal{R}\\,a$.'),
+            ('Symétrique', 'Preuve, ou contre-exemple : {}.'),
+            ('Antisymétrique', '$a\\,\\mathcal{R}\\,b$ et $b\\,\\mathcal{R}\\,a$ donnent {}, donc $a = b$.'),
+            ('Transitive', '$a\\,\\mathcal{R}\\,b$ et $b\\,\\mathcal{R}\\,c$ donnent {}, donc $a\\,\\mathcal{R}\\,c$.'),
+            ('Conclusion', 'Relation d\'ordre (réflexive, antisymétrique, transitive) ou d\'équivalence (réflexive, symétrique, transitive) : {}.'),
+        ],
+    },
 }
 
 # one level = one exercise type; the exam levels mix types and have no skeleton
@@ -230,6 +372,26 @@ NIVEAUX = {
     'maths-s1-apis-edo/8': 'edo2',
     'maths-s1-apis-edo/9': 'edo2',
     'maths-s1-apis-edo/10': 'edo2',
+    'maths-s1-dp/1': 'cardinaux',
+    'maths-s1-dp/2': 'denombrement',
+    'maths-s1-dp/3': 'denombrement',
+    'maths-s1-dp/5': 'denombrement',
+    'maths-s1-dp/6': 'double_comptage',
+    'maths-s1-dp/7': 'equiprobabilite',
+    'maths-s1-dp/9': 'proba_totales',
+    'maths-s1-dp/10': 'proba_totales',
+    'maths-s1-dp/11': 'independance',
+    'maths-s1-dp/12': 'loi_va',
+    'maths-s1-dp/13': 'loi_va',
+    'maths-s1-dp/14': 'binomiale',
+    'maths-s1-obm/3': 'negation',
+    'maths-s1-obm/5': 'negation',
+    'maths-s1-obm/4': 'quantificateurs',
+    'maths-s1-obm/6': 'contraposee',
+    'maths-s1-obm/7': 'recurrence',
+    'maths-s1-obm/9': 'image',
+    'maths-s1-obm/10': 'injection',
+    'maths-s1-obm/11': 'relation',
 }
 
 # exercises already done on the type -> stage (1: full copy, 2: holes, 3: skeleton alone, 4: checklist after)

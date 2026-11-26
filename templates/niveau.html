@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261124b">
-  <link rel="stylesheet" href="/static/niveaux.css?v=41">
+  <link rel="stylesheet" href="/static/niveaux.css?v=42">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -30,12 +30,15 @@
       <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
   {% endif %}
 
+  {% if copies20 %}<p class="lv-muted">Copies 20/20 de ce niveau : <strong>{{ copies20.faites }}</strong> sur {{ copies20.total }}, comptées même sur un niveau déjà validé</p>{% endif %}
+  {% if rappel %}<p class="lv-flag" role="note">Tes fautes sur ce type ces 30 derniers jours : {% for t, c in rappel %}{{ t|safe }}{% if c > 1 %} ({{ c }} fois){% endif %}{{ ' · ' if not loop.last }}{% endfor %}. Évite-les sur ta copie.</p>{% endif %}
   <div class="lv-statement" id="exo-statement">{{ exo.enonce|safe }}</div>
   {% set o = exo.origine %}
   {% if o and o.kind != 'site' %}<p class="lv-muted">Source : {{ o.kind }} · {{ o.src }} · {{ 'adapté' if o.adapte else 'repris tel quel' }}</p>
   {% elif o %}<p class="lv-muted">Source : {{ o.src|lower }}</p>
   {% elif exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
 
+  {% if choix %}<ul class="lv-choix" id="choix">{% for t, bon in choix %}<li><button type="button" class="lv-choix-btn" data-bon="{{ 1 if bon else 0 }}">{{ t|safe }}</button></li>{% endfor %}</ul>{% endif %}
   {% if squelette and squelette.palier in (2, 3) %}<details class="lv-squelette" open><summary>Copie 20/20 : rédige avec ce squelette ({{ squelette.titre }})</summary>
     <ol>{% for lab, t in squelette.etapes %}<li><strong>{{ lab }}</strong>{% if squelette.palier == 2 %}{{ t|safe }}{% endif %}</li>{% endfor %}</ol>
     <p class="lv-muted">{{ 'Complète les trous sur ta feuille.' if squelette.palier == 2 else 'Les étapes seules : écris chacune, dans cet ordre.' }}</p></details>{% endif %}
@@ -44,7 +47,7 @@
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
     <button class="lv-btn" type="button" id="btn-temps">Plus de temps</button>
-    <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
+    <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution"{% if choix %} hidden{% endif %}>J'ai ma réponse</button>
     {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
   <div class="lv-row" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
@@ -56,7 +59,9 @@
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
   <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p>
-    <label class="lv-pari-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label></details>
+    <label class="lv-pari-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label>
+    <div class="lv-mode"><button type="button" class="lv-toggle" id="methodo-on" aria-pressed="{{ 'true' if methodo else 'false' }}">Mode copie 20/20</button>
+      <span>Enfoncé : copie modèle et barème du prof à cocher, réussi seulement à 20/20. Relâché : tu compares seulement ta réponse.</span></div></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>
@@ -86,10 +91,19 @@
     <div id="solution-body">{{ exo.sol|safe }}</div>
     {% if squelette and squelette.palier == 4 %}<details class="lv-squelette"><summary>Copie 20/20 : vérifie ta copie ({{ squelette.titre }})</summary>
       <ol>{% for lab, t in squelette.etapes %}<li>{{ lab }}</li>{% endfor %}</ol></details>{% endif %}
-    {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
+    {% if exo.copie and methodo %}<details class="lv-copie" open><summary>Copie 20/20 de cet exercice</summary>
+      <p class="lv-muted">Ce qu'écrit un élève sûr d'avoir tous les points : chaque étape justifiée, le théorème nommé, une phrase de conclusion.</p>
+      {{ exo.copie|safe }}</details>{% endif %}
+    {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 and not exo.copie %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
       <p class="lv-muted">{{ copie.titre }}{% if copie.points %}, {{ ('%g' % copie.points)|replace('.', ',') }} points{% if copie.sur %} sur {{ copie.sur }}{% endif %}{% endif %}{% if copie.date %}, {{ copie.date }}{% endif %}. Rédige dans cet ordre et avec ces justifications.</p>
       {{ copie.texte|safe }}</details>{% endif %}
   </section>
+  {% if grille and methodo %}<section class="lv-grille" id="grille" hidden data-cle="{{ grille.cle }}">
+    <h2>Barème du prof : {{ grille.titre }}</h2>
+    <p class="lv-muted">Coche seulement ce qui est écrit sur ta copie. Chaque case vide est une faute notée, rappelée au prochain exercice de ce type.</p>
+    <ul>{% for t, pts in grille.criteres %}<li><label><input type="checkbox" data-i="{{ loop.index0 }}" data-pts="{{ pts }}"> <span>{{ t|safe }}</span> <strong>{{ pts }} pt{{ 's' if pts > 1 }}</strong></label></li>{% endfor %}</ul>
+    <div class="lv-row"><button class="lv-btn primary" type="button" id="btn-note" disabled>Valider ma copie : <span id="note">0</span>/20</button></div>
+  </section>{% endif %}
   {% if copie_tip %}<p class="lv-practice" id="copie-tip" hidden>Copie 20/20 : {{ copie_tip }}</p>{% endif %}
   <div class="lv-copy" id="copy-ia" hidden>
     <button class="lv-btn ia" type="button" id="btn-copy-ia"
@@ -99,6 +113,13 @@
       data-copy-footer="Source : {{ public_url }}/niveaux/{{ subject.id }}?n={{ lvl.n }} (exercice d'Epita Doomscrolling, site gratuit d'entraînement aux examens de la prépa EPITA, créé par Morgan Pierrefeu : https://morgan.pierref.eu)">Copier pour une IA</button>
     <span class="lv-muted" id="copy-ia-note">Énoncé et correction, avec une demande d’explication détaillée, à coller dans ChatGPT, Claude ou Gemini</span>
   </div>
+  <details class="lv-signal" id="signal">
+    <summary>Signaler une erreur</summary>
+    <label for="signal-texte">Quelle erreur ? (facultatif)</label>
+    <textarea id="signal-texte" rows="3" maxlength="2000" placeholder="Énoncé, correction ou réponse attendue"></textarea>
+    <button class="lv-btn" type="button" id="btn-signal">Envoyer</button>
+    <p class="lv-muted" id="signal-note" role="status"></p>
+  </details>
 
   <div class="lv-row">
     <button class="lv-btn ok" type="button" id="btn-ok" disabled>Réussi</button>
@@ -115,7 +136,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=26"></script>
+<script src="/static/niveaux.js?v=27"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>
