@@ -187,8 +187,8 @@ def init_levels_db(path=DB_PATH):
             # opt-in confidence bet before the correction (an extra tap: off by default)
             conn.execute('ALTER TABLE account ADD COLUMN pari INTEGER NOT NULL DEFAULT 0')
         if 'methodo' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
-            # « copie 20/20 » method mode (default on): grading grid to tick, success only at 20/20; off = answers only
-            conn.execute('ALTER TABLE account ADD COLUMN methodo INTEGER NOT NULL DEFAULT 1')
+            # « copie 20/20 » method mode (off until the student presses it, then kept): grid to tick, success only at 20/20
+            conn.execute('ALTER TABLE account ADD COLUMN methodo INTEGER NOT NULL DEFAULT 0')
         if 'pause_forcee' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # opt-in forced break (beta): answers are refused during the break, see beta.pause_state
             conn.execute('ALTER TABLE account ADD COLUMN pause_forcee INTEGER NOT NULL DEFAULT 0')

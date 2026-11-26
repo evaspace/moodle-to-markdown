@@ -537,8 +537,7 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .lv-signal textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; border: 2px solid var(--border-color); background: var(--bg-color); color: var(--text-color); }
 .lv-signal .lv-btn { margin-top: 8px; }
 /* « copie 20/20 » mode: switch, recalled mistakes, teacher grid to tick */
-.lv-mode { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; font-size: 14px; }
-.lv-mode input { margin-top: 3px; }
+.lv-mode { display: flex; gap: 10px; align-items: center; margin: 10px 0 0; font-size: 14px; color: var(--text-muted); }
 .lv-flag { background: var(--error-bg); padding: 10px 14px; margin: 8px 0; font-size: 14px; }
 .lv-grille { background: #F4F5F7; padding: 12px 14px; margin: 12px 0; }
 .lv-grille h2 { font-size: 18px; margin-bottom: 4px; }
@@ -566,3 +565,6 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .lv-choix-btn:disabled { cursor: default; }
 .lv-choix-btn.bon { background: var(--success-bg); box-shadow: inset 6px 0 var(--success-color); }
 .lv-choix-btn.faux { background: var(--error-bg); box-shadow: inset 6px 0 var(--error-color); }
+.lv-toggle { font: inherit; font-weight: 600; font-size: 14px; padding: 8px 12px; background: #F4F5F7; color: var(--text-color); border: 0; cursor: pointer; white-space: nowrap; box-shadow: inset 0 -3px 0 #C9CDD3; }
+.lv-toggle[aria-pressed="true"] { background: var(--text-color); color: #fff; box-shadow: inset 0 3px 0 #000; }
+.lv-toggle:focus-visible { outline: 3px solid var(--accent-color); outline-offset: 2px; }

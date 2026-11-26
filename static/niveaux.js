@@ -377,9 +377,11 @@
         answer(b.dataset.bon === '1');
       });
     }
-    if ($('methodo-on')) $('methodo-on').onchange = async (e) => {
-      const r = await post('/api/methodo', { on: e.target.checked });
-      if (!r.ok) { e.target.checked = !e.target.checked; return; }
+    // pressed button (account setting, off until pressed once, then stays as left)
+    if ($('methodo-on')) $('methodo-on').onclick = async (e) => {
+      const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+      const r = await post('/api/methodo', { on });
+      if (!r.ok) return;
       const u = new URL(location.href);  // same exercise, new mode
       u.searchParams.set('exo', exo.dataset.exo);
       location.href = u;

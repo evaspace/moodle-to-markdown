@@ -31,8 +31,6 @@
       <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
   {% endif %}
 
-  <label class="lv-mode"><input type="checkbox" id="methodo-on"{% if methodo %} checked{% endif %}>
-    <span>Mode copie 20/20 : copie modèle et barème du prof à cocher, réussi seulement à 20/20.{% if not methodo %} Désactivé : tu compares seulement ta réponse.{% endif %}</span></label>
   {% if copies20 %}<p class="lv-muted">Copies 20/20 de ce niveau : <strong>{{ copies20.faites }}</strong> sur {{ copies20.total }}, comptées même sur un niveau déjà validé</p>{% endif %}
   {% if rappel %}<p class="lv-flag" role="note">Tes fautes sur ce type ces 30 derniers jours : {% for t, c in rappel %}{{ t|safe }}{% if c > 1 %} ({{ c }} fois){% endif %}{{ ' · ' if not loop.last }}{% endfor %}. Évite-les sur ta copie.</p>{% endif %}
   <div class="lv-statement" id="exo-statement">{{ exo.enonce|safe }}</div>
@@ -62,7 +60,9 @@
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
 
   <details class="lv-rules"><summary aria-label="Règles des points">?</summary><p class="lv-muted">Cherche sur papier. Plus tu réponds vite, plus tu gagnes de points (temps moyen du niveau : {{ (exo.ref / 60)|round(1) }} min). Bloqué ? La fiche du chapitre (toutes ses formules) divise les points par {{ hints.fiche.div }} et ajoute {{ (hints.fiche.extra / 60)|round(1) }} min. Les formules de la solution divisent les points par {{ hints.solution.div }} et ajoutent {{ (hints.solution.extra / 60)|round(1) }} min. « Plus de temps » ajoute {{ (hints.temps.extra / 60)|round(1) }} min sans rien montrer : pas de division, tu perds seulement les points de vitesse. Sans réponse à la fin du chrono, c'est raté.</p>
-    <label class="lv-pari-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label></details>
+    <label class="lv-pari-toggle"><input type="checkbox" id="pari-on"{% if pari %} checked{% endif %}> Parier ma confiance avant la correction (+{{ calib }} points si tu vois juste)</label>
+    <div class="lv-mode"><button type="button" class="lv-toggle" id="methodo-on" aria-pressed="{{ 'true' if methodo else 'false' }}">Mode copie 20/20</button>
+      <span>Enfoncé : copie modèle et barème du prof à cocher, réussi seulement à 20/20. Relâché : tu compares seulement ta réponse.</span></div></details>
   <p class="lv-muted" id="timer-note" role="status"></p>
 
   <section class="lv-notions lv-fiche" id="fiche" hidden>

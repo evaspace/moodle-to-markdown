@@ -176,7 +176,12 @@ class Api(unittest.TestCase):
         self.register('grille_eleve')
         url = '/niveaux/maths-s1-apis-suites?n=2&exo=va1'
         html = self.c.get(url).get_data(as_text=True)
-        self.assertIn('Barème du prof : Sens de variation', html)  # method mode is on by default
+        self.assertNotIn('Barème du prof', html)  # off until the student presses the button
+        self.assertIn('aria-pressed="false"', html)
+        self.c.post('/api/methodo', json={'on': True})
+        html = self.c.get(url).get_data(as_text=True)
+        self.assertIn('aria-pressed="true"', html)  # kept pressed
+        self.assertIn('Barème du prof : Sens de variation', html)
         self.assertIn('Copie 20/20 de cet exercice', html)  # copy shown to every student, not only the owner
         self.assertIn('Tableau de variations', html)
         r = self.c.post('/api/niveaux/maths-s1-apis-suites/result',
