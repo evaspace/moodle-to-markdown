@@ -624,24 +624,24 @@ Pour tout $n\in\mathbb N$ :
 $u_{n+1}-u_n=\dfrac{n+1}{n+2}-\dfrac{n}{n+1}=\dfrac{(n+1)^2-n(n+2)}{(n+1)(n+2)}=\dfrac{1}{(n+1)(n+2)}$.
 Le numérateur vaut $1 > 0$ et $(n+1)(n+2) > 0$, donc $u_{n+1}-u_n > 0$.
 Tableau de variations :
-$$\begin{array}{c|ccc} n & 0 & & +\infty \\ \hline u_{n+1}-u_n & & + & \\ \hline u_n & 0 & \nearrow & \end{array}$$
+$$\begin{array}{c|ccc} n & 0 &  & +\infty \\ \hline u_{n+1}-u_n &  & + &  \\ \hline u_n & 0 & \nearrow &  \end{array}$$
 Donc $(u_n)$ est strictement croissante.""",
     "va2": r"""Pour tout $n\geqslant1$, $u_n > 0$ (quotient de deux nombres strictement positifs) : on compare $\frac{u_{n+1}}{u_n}$ à $1$.
 $\dfrac{u_{n+1}}{u_n}=\dfrac{2^{n+1}}{(n+1)!}\times\dfrac{n!}{2^n}=\dfrac{2}{n+1}$.
 Pour $n\geqslant1$, $n+1\geqslant2$, donc $\frac{2}{n+1}\leqslant1$, d'où $u_{n+1}\leqslant u_n$.
 Tableau de variations :
-$$\begin{array}{c|ccccc} n & 1 & & 2 & & +\infty \\ \hline u_{n+1}-u_n & & 0 & & - & \\ \hline u_n & 2 & \longrightarrow & 2 & \searrow & \end{array}$$
+$$\begin{array}{c|ccccc} n & 1 &  & 2 &  & +\infty \\ \hline u_{n+1}-u_n &  & 0 &  & - &  \\ \hline u_n & 2 & \longrightarrow & 2 & \searrow &  \end{array}$$
 Donc $(u_n)$ est décroissante (strictement à partir de $n=2$, car $u_1=u_2=2$).""",
     "va3": r"""Méthode : signe de $u_{n+1}-u_n$.
 Pour tout $n\geqslant1$ : $u_{n+1}-u_n=\displaystyle\sum_{k=1}^{n+1}\frac1{k^2}-\sum_{k=1}^{n}\frac1{k^2}=\frac{1}{(n+1)^2} > 0$.
 Tableau de variations :
-$$\begin{array}{c|ccc} n & 1 & & +\infty \\ \hline u_{n+1}-u_n & & + & \\ \hline u_n & 1 & \nearrow & \end{array}$$
+$$\begin{array}{c|ccc} n & 1 &  & +\infty \\ \hline u_{n+1}-u_n &  & + &  \\ \hline u_n & 1 & \nearrow &  \end{array}$$
 Donc $(u_n)$ est strictement croissante.""",
     "va4": r"""Méthode : signe de $u_{n+1}-u_n$.
 Pour tout $n\in\mathbb N$ : $u_{n+1}-u_n=(n+1)^2-4(n+1)-(n^2-4n)=2n-3$.
 $2n-3 < 0$ pour $n\leqslant1$ et $2n-3 > 0$ pour $n\geqslant2$.
 Tableau de variations :
-$$\begin{array}{c|ccccccc} n & 0 & & 1 & & 2 & & +\infty \\ \hline u_{n+1}-u_n & & - & & - & & + & \\ \hline u_n & 0 & \searrow & -3 & \searrow & -4 & \nearrow & \end{array}$$
+$$\begin{array}{c|ccccc} n & 0 &  & 2 &  & +\infty \\ \hline u_{n+1}-u_n &  & - &  & + &  \\ \hline u_n & 0 & \searrow & -4 & \nearrow &  \end{array}$$
 Donc $u_0 > u_1 > u_2$ ($0 > -3 > -4$), puis $(u_n)$ est strictement croissante à partir du rang $2$.
 $(u_n)$ n'est pas monotone sur $\mathbb N$.""",
     "va5": r"""Méthode : signe de $u_{n+1}-u_n$.
@@ -650,7 +650,7 @@ Les termes $k=n+1,\dots,2n-1$ sont communs et se simplifient :
 $u_{n+1}-u_n=\dfrac1{2n}+\dfrac1{2n+1}-\dfrac1n=\dfrac1{2n+1}-\dfrac1{2n}=\dfrac{-1}{2n(2n+1)}$.
 $2n(2n+1) > 0$, donc $u_{n+1}-u_n < 0$.
 Tableau de variations :
-$$\begin{array}{c|ccc} n & 1 & & +\infty \\ \hline u_{n+1}-u_n & & - & \\ \hline u_n & 1 & \searrow & \end{array}$$
+$$\begin{array}{c|ccc} n & 1 &  & +\infty \\ \hline u_{n+1}-u_n &  & - &  \\ \hline u_n & 1 & \searrow &  \end{array}$$
 Donc $(u_n)$ est strictement décroissante.""",
     # level 3
     "td5": r"""Majorée : $\exists M\in\mathbb R,\ \forall n\in\mathbb N,\ u_n\leqslant M$.
