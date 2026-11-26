@@ -239,7 +239,7 @@ class Api(unittest.TestCase):
         basic = {'Authorization': 'Basic ' + base64.b64encode(b'x:anything').decode()}
         self.assertEqual(self.c.get('/admin/stats', headers=basic).status_code, 302)  # no password access
         self.register('plainuser')
-        for url in ('/admin', '/admin/stats', '/admin/users', '/admin/beta'):
+        for url in ('/admin', '/admin/stats', '/admin/users', '/admin/beta', '/admin/stickers'):
             self.assertEqual(self.c.get(url).status_code, 403, url)
         self.assertNotIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
         self.c.post('/api/logout')
@@ -249,6 +249,7 @@ class Api(unittest.TestCase):
         html = self.c.get('/admin/stats').get_data(as_text=True)
         self.assertIn('app-nav', html)
         self.assertIn('Comportements', html)
+        self.assertIn('st-black', self.c.get('/admin/stickers').get_data(as_text=True))
         self.c.post('/admin', data={'raw_text': 'Q: Carte de test admin\nR: Verso'})
         html = self.c.get('/admin').get_data(as_text=True)
         self.assertIn('app-nav', html)

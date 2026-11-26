@@ -402,3 +402,7 @@ Retour : « c'est normal qu'il n'y ait que 2 niveaux ? il faut voir toutes les f
   - un script d'environ 20 lignes vérifie les identifiants en double et les liens `prereq`/`papier` cassés ;
   - reporté en v2 : vue par annale, rappel actif masqué.
 - Utilisateur : « non on ne prend pas 10 élèves, faut tout faire par IA ». Pas de test avec des élèves : la validation se fait par l'IA. Jeu de requêtes réelles tiré des annales (`annales/FORMULES.md`) et du syllabus ; succès si la bonne fiche est dans le top 3 pour au moins 8 requêtes sur 10, sinon corriger les `alias`.
+
+## Accueil néo-brutaliste (2026-11-26)
+
+Refaire l'accueil en style néo-brutaliste d'après une maquette. D'abord générer tous les visuels (fond + 10 stickers) avec un outil gratuit, sans rien intégrer ; le chat existant est gardé. Liste, prompts et spécifications d'intégration : `docs/refonte-neobrutaliste.md`.

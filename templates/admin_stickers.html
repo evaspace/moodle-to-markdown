@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Stickers (in dev) · Epita Doomscrolling</title>
+  {% include "share.html" %}
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261126">
+  <link rel="stylesheet" href="/static/niveaux.css?v=41">
+  <style>
+    /* Preview only: the neo-brutalist home of docs/refonte-neobrutaliste.md, not wired to the real home yet */
+    .st-stage { position: relative; background: #fff url('/static/neo/fond.png') center / cover; color: #0d0d0d;
+                padding: 48px 16px 64px; overflow: hidden; }
+    .st-col { position: relative; max-width: 520px; margin: 0 auto; display: grid; gap: 22px; }
+    .st-btn { position: relative; display: block; padding: 18px 20px; border: 3px solid #000; box-shadow: 4px 4px 0 #000;
+              border-radius: 6px; font-weight: 800; text-transform: uppercase; text-decoration: none; text-align: center;
+              color: #fff; transition: transform .12s, box-shadow .12s; }
+    .st-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000; }
+    .st-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
+    .st-black { background: #0d0d0d; } .st-red { background: #f04438; } .st-blue { background: #155eef; }
+    .st-yellow { background: #facc15; color: #0d0d0d; } .st-white { background: #fff; color: #0d0d0d; }
+    .st-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .st-bars { display: flex; gap: 4px; margin-top: 8px; }
+    .st-bars i { flex: 1; height: 8px; border: 2px solid #000; background: #fff; }
+    .st-bars i.on { background: #12b76a; }
+    .st-foot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .st-pill { padding: 6px 14px; border: 2px solid #000; box-shadow: 3px 3px 0 #000; border-radius: 999px; background: #fff;
+               color: #0d0d0d; font-weight: 700; text-decoration: none; transition: transform .12s, box-shadow .12s; }
+    .st-pill:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
+    .st-pill:active { transform: translate(3px, 3px); box-shadow: 0 0 0 #000; }
+    .st-pill.orange { background: #f97316; }
+    .st-hero { position: relative; display: grid; gap: 12px; justify-items: center; }
+    .st-cat { width: 150px; transition: transform .2s; }
+    .st-hero:has(.st-cat:hover, .st-black:hover) .st-cat { transform: translateY(-5px); }
+    .st-rating { text-align: center; font-size: 32px; }
+    .st-rating span { display: inline-block; color: #c9c9c9; cursor: pointer; transition: color .15s, transform .15s; }
+    .st-rating:hover span { color: #facc15; }
+    .st-rating span:hover ~ span { color: #c9c9c9; }
+    .st-rating span:hover { transform: scale(1.2); }
+
+    /* stickers */
+    .stk { position: absolute; z-index: 2; transition: transform .2s; pointer-events: none; }
+    .stk img, .stk .ph { display: block; width: 100%; }
+    .stk .ph { aspect-ratio: 1; border: 2px dashed #8a8a8a; background: #f4f4f4; color: #555; font: 600 11px/1.2 system-ui;
+               display: grid; place-items: center; text-align: center; padding: 4px; overflow-wrap: anywhere; overflow: hidden; }
+    .stk-nonstop { width: 96px; top: -34px; left: -30px; pointer-events: auto; animation: st-sway 3s ease-in-out infinite alternate; }
+    .stk-nonstop:hover { animation: none; transform: scale(1.1) rotate(0); }
+    .stk-new { width: 80px; top: -36px; right: -26px; animation: st-pulse 1.8s ease-in-out infinite; }
+    .st-hero:has(.st-black:hover) .stk-new { animation: st-wiggle .3s linear 3; }
+    .stk-bulle { width: 130px; top: 0; left: calc(50% + 70px); transform: scale(0); }
+    .st-hero:has(.st-cat:hover, .st-black:hover) .stk-bulle { animation: st-pop .35s ease-out forwards; }
+    .stk-etoiles { width: 90px; top: 10px; left: calc(50% - 170px); }
+    .st-hero:has(.st-cat:hover, .st-black:hover) .stk-etoiles { transform: rotate(15deg); }
+    .stk-curseur { width: 90px; bottom: -40px; left: -60px; }
+    .st-col:has(.st-red:hover, .st-blue:hover) .stk-curseur { animation: st-clic .5s ease-out forwards; }
+    .stk-feuilles { width: 80px; top: -30px; right: 14px; }
+    .st-red:hover .stk-feuilles { transform: translateY(-4px) rotate(6deg); }
+    .stk-livre { width: 84px; top: -32px; right: 14px; }
+    .st-blue:hover .stk-livre { transform: translateY(-5px) rotate(-4deg); }
+    .stk-trophee { width: 64px; top: -34px; right: 8px; }
+    .st-yellow:hover .stk-trophee { transform: scale(1.15) rotate(8deg); }
+    .stk-100c { width: 104px; top: 40%; right: -90px; transform: rotate(6deg); pointer-events: auto; }
+    .stk-100c:hover { transform: rotate(14deg) scale(1.1); }
+    .stk-cocarde { width: 70px; bottom: -36px; right: -22px; }
+    .st-white:hover .stk-cocarde { animation: st-pendule .8s ease-in-out infinite alternate; }
+
+    @keyframes st-sway { from { transform: rotate(-6deg); } to { transform: rotate(-2deg); } }
+    @keyframes st-pulse { 50% { transform: scale(1.06); } }
+    @keyframes st-wiggle { 25% { transform: rotate(8deg); } 75% { transform: rotate(-8deg); } }
+    @keyframes st-pop { 0% { transform: scale(.85); } 60% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    @keyframes st-clic { 40% { transform: scale(.85); } 100% { transform: scale(1.15); } }
+    @keyframes st-pendule { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+    @media (max-width: 767px) {
+      .stk { width: 56px; } .stk-100c, .stk-curseur, .stk-etoiles { display: none; }
+      .stk-bulle { left: auto; right: 0; width: 96px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .stk, .stk * { animation: none !important; } }
+    .st-list { columns: 2 240px; }
+  </style>
+</head>
+<body class="lv-page">
+{% set tab = 'stickers' %}{% include 'admin_nav.html' %}
+<div class="lv-wrap lv-wide">
+  <h1>Stickers de l'accueil néo-brutaliste (in dev)</h1>
+  <p class="lv-muted">Aperçu pour toi seul, pas encore branché sur l'accueil. Passe la souris sur le chat et les boutons. Un cadre pointillé = image pas encore déposée dans <code>static/neo/</code> (liste et prompts : <code>docs/refonte-neobrutaliste.md</code>).</p>
+</div>
+
+<div class="st-stage">
+  <div class="st-col">
+    <div class="st-hero">
+      <span class="stk stk-etoiles"><img src="/static/neo/etoiles-fleur.png" alt="Étoiles et fleur"></span>
+      <img class="st-cat" src="/static/stand-up-cat-removebg-preview.png" alt="Le chat mascotte">
+      <span class="stk stk-bulle"><img src="/static/neo/bulle-cest-parti.png" alt="Bulle C'est parti !"></span>
+      <a class="st-btn st-black" href="#" style="width:100%">Scroller les cours (en dev) ↓
+        <span class="stk stk-nonstop"><img src="/static/neo/badge-non-stop.png" alt="Badge Non-stop"></span>
+        <span class="stk stk-new"><img src="/static/neo/badge-new.png" alt="Badge New!"></span>
+      </a>
+    </div>
+    <a class="st-btn st-red" href="#">Niveaux sur papier →
+      <span class="stk stk-feuilles"><img src="/static/neo/feuilles-examens.png" alt="Feuilles d'examens"></span>
+      <span class="stk stk-curseur"><img src="/static/neo/curseur-explosion.png" alt="Curseur et explosion"></span>
+    </a>
+    <a class="st-btn st-blue" href="#">Lire le cours complet →
+      <span class="stk stk-livre"><img src="/static/neo/livre-carnet.png" alt="Livre et carnet"></span>
+    </a>
+    <span class="stk stk-100c"><img src="/static/neo/badge-100-c.png" alt="Badge 100% C"></span>
+    <div class="st-grid">
+      <a class="st-btn st-yellow" href="#">Classement →
+        <span class="stk stk-trophee"><img src="/static/neo/trophee.png" alt="Trophée"></span>
+      </a>
+      <a class="st-btn st-white" href="#">Mes stats • 17/631 niveaux →
+        <span class="st-bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+        <span class="stk stk-cocarde"><img src="/static/neo/cocarde-smiley.png" alt="Cocarde smiley"></span>
+      </a>
+    </div>
+    <div class="st-foot">
+      <a class="st-pill" href="#">Mentions légales</a>
+      <a class="st-pill orange" href="#">Crédits &amp; remerciements</a>
+    </div>
+    <div class="st-rating" aria-label="Notez ce site (aperçu)"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  </div>
+</div>
+
+<div class="lv-wrap lv-wide">
+  <h2>Fichiers attendus</h2>
+  <ul class="st-list" id="st-files"></ul>
+</div>
+<script>
+// missing sticker file: show a dashed placeholder with the expected name, and list every file's state
+document.querySelectorAll('.stk img').forEach(img => {
+  const name = img.getAttribute('src').split('/').pop();
+  const li = document.createElement('li');
+  li.textContent = name + ' : ';
+  document.getElementById('st-files').append(li);
+  const mark = ok => { li.append(ok ? 'présent' : 'manquant'); };
+  if (img.complete && img.naturalWidth) return mark(true);
+  img.addEventListener('load', () => mark(true));
+  img.addEventListener('error', () => {
+    const ph = document.createElement('span');
+    ph.className = 'ph'; ph.textContent = name;
+    img.replaceWith(ph); mark(false);
+  });
+});
+</script>
+{% include 'footer.html' %}
+</body>
+</html>

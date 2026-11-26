@@ -401,6 +401,13 @@ def admin_beta_page():
                            ics_url=f'{PUBLIC_URL}/beta/plan.ics?t={_beta_ics_token()}')
 
 
+@app.route('/admin/stickers')
+@admin_required
+def admin_stickers_page():
+    """Preview of the neo-brutalist home stickers and their hover animations (docs/refonte-neobrutaliste.md)."""
+    return render_template('admin_stickers.html')
+
+
 @app.route('/admin/beta/semaine')
 @admin_required
 def admin_beta_week():

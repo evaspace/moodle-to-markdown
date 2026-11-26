@@ -1,10 +1,11 @@
-{# shared nav + admin tabs: set `tab` to 'stats', 'users', 'cartes' or 'beta' before including #}
+{# shared nav + admin tabs: set `tab` to 'stats', 'users', 'cartes', 'beta' or 'stickers' before including #}
 {% set active = 'admin' %}{% include 'nav.html' %}
 <nav class="adm-tabs" aria-label="Administration" data-slide="fill">
   <a href="/admin/stats"{% if tab == 'stats' %} aria-current="page"{% endif %}>Stats</a>
   <a href="/admin/users"{% if tab == 'users' %} aria-current="page"{% endif %}>Utilisateurs</a>
   <a href="/admin"{% if tab == 'cartes' %} aria-current="page"{% endif %}>Cartes du fil</a>
   <a href="/admin/beta"{% if tab == 'beta' %} aria-current="page"{% endif %}>Beta</a>
+  <a href="/admin/stickers"{% if tab == 'stickers' %} aria-current="page"{% endif %}>Stickers (in dev)</a>
   <a href="/admin/stats?format=json">JSON</a>
   <a href="https://morgan.pierref.eu/admin">morgan.pierref.eu</a>
 </nav>
