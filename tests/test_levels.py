@@ -129,15 +129,17 @@ class Selection(unittest.TestCase):
 
     def test_filters(self):
         self.assertEqual(self.ids(), ['a', 'b', 'c', 'd', 'z'])
-        self.assertEqual(self.ids(sem=['S1', 'S2']), ['a', 'b', 'c', 'z'])  # S3 apart, bases always there
-        self.assertEqual(self.ids(sem=['S3']), ['d', 'z'])
+        self.assertEqual(self.ids(sem=['S1', 'S2']), ['a', 'b', 'c', 'z'])  # S3 apart, bases come with S1
+        self.assertEqual(self.ids(sem=['S3']), ['d'])
+        self.assertEqual(self.ids(sem=['S3'], mat='bases'), ['z'])  # still reachable from the subject list
         self.assertEqual(self.ids(sem=['S1'], mat='maths'), ['a'])
         self.assertEqual(self.ids(ch='b'), ['b'])
         self.assertEqual(self.ids(sem=['S1'], ch='b'), ['a', 'c', 'z'])  # chapter outside the semester: ignored
 
     def test_options_follow_order(self):
         self.assertEqual(levels.selector(self.P, self.f())['sems'], ['S1', 'S2', 'S3'])  # no box for S0
-        self.assertEqual(levels.selector(self.P, self.f(sem=['S2']))['mats'], ['bases', 'maths'])
+        self.assertEqual(levels.selector(self.P, self.f(sem=['S2']))['mats'], ['bases', 'maths'])  # bases always listed
+        self.assertEqual(levels.selector(self.P, self.f(sem=['S3']))['mats'], ['bases', 'maths'])
         self.assertEqual(levels.selector(self.P, self.f(ordre='matiere', sem=['S2']))['mats'], ['bases', 'info', 'maths'])
 
 

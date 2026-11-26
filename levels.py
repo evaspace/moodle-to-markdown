@@ -709,12 +709,14 @@ def _filters():
 
 
 DEFAULT_SEMS = ['S1', 'S2']
-ALWAYS_SEM = 'S0'  # Bases maths: prerequisite of every year, never filtered out
+ALWAYS_SEM = 'S0'  # Bases maths: filed under S1, but always offered in the subject list
 
 
 def _sem_ok(d, f):
     sem = d['subject']['semestre']
-    return sem == ALWAYS_SEM or not f['sem'] or sem in f['sem']
+    if sem == ALWAYS_SEM:  # bases come with S1, or when their subject is picked by hand
+        return not f['sem'] or 'S1' in f['sem'] or f['mat'] == d['subject']['matiere']
+    return not f['sem'] or sem in f['sem']
 
 
 def select_paths(paths, f):
@@ -730,7 +732,8 @@ def selector(paths, f):
     sems = sorted({d['subject']['semestre'] for _, d in paths} - {ALWAYS_SEM})
     mats = sorted({d['subject']['matiere'] for _, d in paths})
     if f['ordre'] == 'semestre':
-        mats = sorted({d['subject']['matiere'] for _, d in paths if _sem_ok(d, f)})
+        mats = sorted({d['subject']['matiere'] for _, d in paths
+                       if _sem_ok(d, f) or d['subject']['semestre'] == ALWAYS_SEM})
     chs = [{'id': sid, 'titre': f"{d['subject']['ecue']} · {d['subject']['titre']}"}
            for sid, d in select_paths(paths, dict(f, ch=''))]
     return {'sems': sems, 'mats': mats, 'chs': chs}
