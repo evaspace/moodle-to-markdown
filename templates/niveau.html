@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=39">
+  <link rel="stylesheet" href="/static/niveaux.css?v=40">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -31,12 +31,17 @@
       <a href="/niveaux/{{ subject.id }}">Y aller</a></p>
   {% endif %}
 
+  <label class="lv-mode"><input type="checkbox" id="methodo-on"{% if methodo %} checked{% endif %}>
+    <span>Mode copie 20/20 : copie modèle et barème du prof à cocher, réussi seulement à 20/20.{% if not methodo %} Désactivé : tu compares seulement ta réponse.{% endif %}</span></label>
+  {% if copies20 %}<p class="lv-muted">Copies 20/20 de ce niveau : <strong>{{ copies20.faites }}</strong> sur {{ copies20.total }}, comptées même sur un niveau déjà validé</p>{% endif %}
+  {% if rappel %}<p class="lv-flag" role="note">Tes fautes sur ce type ces 30 derniers jours : {% for t, c in rappel %}{{ t|safe }}{% if c > 1 %} ({{ c }} fois){% endif %}{{ ' · ' if not loop.last }}{% endfor %}. Évite-les sur ta copie.</p>{% endif %}
   <div class="lv-statement" id="exo-statement">{{ exo.enonce|safe }}</div>
   {% set o = exo.origine %}
   {% if o and o.kind != 'site' %}<p class="lv-muted">Source : {{ o.kind }} · {{ o.src }} · {{ 'adapté' if o.adapte else 'repris tel quel' }}</p>
   {% elif o %}<p class="lv-muted">Source : {{ o.src|lower }}</p>
   {% elif exo.src %}<p class="lv-muted">Source : {{ exo.src }}</p>{% endif %}
 
+  {% if choix %}<ul class="lv-choix" id="choix">{% for t, bon in choix %}<li><button type="button" class="lv-choix-btn" data-bon="{{ 1 if bon else 0 }}">{{ t|safe }}</button></li>{% endfor %}</ul>{% endif %}
   {% if squelette and squelette.palier in (2, 3) %}<details class="lv-squelette" open><summary>Copie 20/20 : rédige avec ce squelette ({{ squelette.titre }})</summary>
     <ol>{% for lab, t in squelette.etapes %}<li><strong>{{ lab }}</strong>{% if squelette.palier == 2 %}{{ t|safe }}{% endif %}</li>{% endfor %}</ol>
     <p class="lv-muted">{{ 'Complète les trous sur ta feuille.' if squelette.palier == 2 else 'Les étapes seules : écris chacune, dans cet ordre.' }}</p></details>{% endif %}
@@ -45,7 +50,7 @@
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
     <button class="lv-btn" type="button" id="btn-temps">Plus de temps</button>
-    <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
+    <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution"{% if choix %} hidden{% endif %}>J'ai ma réponse</button>
     {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
   <div class="lv-row" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
@@ -87,13 +92,19 @@
     <div id="solution-body">{{ exo.sol|safe }}</div>
     {% if squelette and squelette.palier == 4 %}<details class="lv-squelette"><summary>Copie 20/20 : vérifie ta copie ({{ squelette.titre }})</summary>
       <ol>{% for lab, t in squelette.etapes %}<li>{{ lab }}</li>{% endfor %}</ol></details>{% endif %}
-    {% if exo.copie %}<details class="lv-copie" open><summary>Copie 20/20 de cet exercice</summary>
+    {% if exo.copie and methodo %}<details class="lv-copie" open><summary>Copie 20/20 de cet exercice</summary>
       <p class="lv-muted">Ce qu'écrit un élève sûr d'avoir tous les points : chaque étape justifiée, le théorème nommé, une phrase de conclusion.</p>
       {{ exo.copie|safe }}</details>{% endif %}
     {% if copie %}<details class="lv-copie"{% if squelette and squelette.palier == 1 and not exo.copie %} open{% endif %}><summary>Copie 20/20 : corrigé officiel d'un exercice de ce niveau</summary>
       <p class="lv-muted">{{ copie.titre }}{% if copie.points %}, {{ ('%g' % copie.points)|replace('.', ',') }} points{% if copie.sur %} sur {{ copie.sur }}{% endif %}{% endif %}{% if copie.date %}, {{ copie.date }}{% endif %}. Rédige dans cet ordre et avec ces justifications.</p>
       {{ copie.texte|safe }}</details>{% endif %}
   </section>
+  {% if grille and methodo %}<section class="lv-grille" id="grille" hidden data-cle="{{ grille.cle }}">
+    <h2>Barème du prof : {{ grille.titre }}</h2>
+    <p class="lv-muted">Coche seulement ce qui est écrit sur ta copie. Chaque case vide est une faute notée, rappelée au prochain exercice de ce type.</p>
+    <ul>{% for t, pts in grille.criteres %}<li><label><input type="checkbox" data-i="{{ loop.index0 }}" data-pts="{{ pts }}"> <span>{{ t|safe }}</span> <strong>{{ pts }} pt{{ 's' if pts > 1 }}</strong></label></li>{% endfor %}</ul>
+    <div class="lv-row"><button class="lv-btn primary" type="button" id="btn-note" disabled>Valider ma copie : <span id="note">0</span>/20</button></div>
+  </section>{% endif %}
   {% if copie_tip %}<p class="lv-practice" id="copie-tip" hidden>Copie 20/20 : {{ copie_tip }}</p>{% endif %}
   <div class="lv-copy" id="copy-ia" hidden>
     <button class="lv-btn ia" type="button" id="btn-copy-ia"
@@ -126,7 +137,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=25"></script>
+<script src="/static/niveaux.js?v=26"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261123">
-  <link rel="stylesheet" href="/static/niveaux.css?v=39">
+  <link rel="stylesheet" href="/static/niveaux.css?v=40">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -16,15 +16,17 @@
 <body class="lv-page">
 {% set active = 'formules' %}{% include 'nav.html' %}
 <div class="lv-wrap">
-  <h1>Fiche des formules</h1>
+  <h1 id="top">Fiche des formules</h1>
   <p>Toutes les formules qui servent à résoudre les annales de maths, par type d'exercice. Le nombre entre parenthèses compte les exercices d'annales de ce type.</p>
-  <ul class="lv-levels">
-    {% for s in sections %}<li><a href="#{{ s.id }}"><span>{{ s.titre }}</span></a></li>{% endfor %}
-  </ul>
+  <nav class="fo-jump" aria-label="Aller au chapitre">
+    {% for m, secs in sections|groupby('matiere') %}<div class="fo-group"><span>{{ m }}</span>
+      {% for s in secs %}<a href="#{{ s.id }}" style="--h: {{ s.teinte }}">{{ s.titre }}</a>{% endfor %}</div>{% endfor %}
+  </nav>
   {% for s in sections %}
-  <section class="lv-fiche" id="{{ s.id }}">
-    <h2>{{ s.titre }}</h2>
+  <section class="lv-fiche fo-zone" id="{{ s.id }}" style="--h: {{ s.teinte }}">
+    <h2><span class="lv-muted">{{ s.matiere }}</span> {{ s.titre }}</h2>
     {{ s.html|safe }}
+    <a class="fo-top" href="#top">Retour aux chapitres</a>
   </section>
   {% endfor %}
 </div>

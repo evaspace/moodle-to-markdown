@@ -30,6 +30,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from init_db import DB_PATH
 from ratelimit import client_ip, too_many
+import grilles
 import squelettes
 
 bp = Blueprint('levels', __name__)
@@ -54,7 +55,7 @@ FICHE_SECTION = {'maths-s1-obm': 'OBM', 'maths-s1-dp': 'DP', 'maths-s1-apis-inte
                  'archi-s2-microprocesseur': 'Systèmes à microprocesseur'}
 # path id -> paths whose notions it relies on; shown as links after a failed exercise
 PREREQ = {'maths-s1-dp': ['maths-s1-obm', 'bases-fractions', 'bases-sommes'],
-          'maths-s1-apis-suites': ['maths-s1-obm', 'bases-sommes', 'bases-limites'],
+          'maths-s1-apis-suites': ['bases-copie', 'maths-s1-obm', 'bases-sommes', 'bases-limites'],
           'maths-s1-apis-integrales': ['bases-derivees', 'bases-exp-ln', 'bases-puissances', 'bases-trigo'],
           'maths-s1-obm': ['bases-equations'],
           'maths-s1-apis-edo': ['maths-s1-apis-integrales'], 'maths-s2-apef-polynomes': ['maths-s1-obm', 'bases-algebre', 'bases-divisions'],
@@ -185,6 +186,9 @@ def init_levels_db(path=DB_PATH):
         if 'pari' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # opt-in confidence bet before the correction (an extra tap: off by default)
             conn.execute('ALTER TABLE account ADD COLUMN pari INTEGER NOT NULL DEFAULT 0')
+        if 'methodo' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
+            # « copie 20/20 » method mode (default on): grading grid to tick, success only at 20/20; off = answers only
+            conn.execute('ALTER TABLE account ADD COLUMN methodo INTEGER NOT NULL DEFAULT 1')
         if 'pause_forcee' not in {r[1] for r in conn.execute('PRAGMA table_info(account)')}:
             # opt-in forced break (beta): answers are refused during the break, see beta.pause_state
             conn.execute('ALTER TABLE account ADD COLUMN pause_forcee INTEGER NOT NULL DEFAULT 0')
@@ -842,6 +846,12 @@ def level_page(subject):
         total_xp = xp(conn, uid)
         streak_now = current_combo(conn, uid)
         pari = conn.execute('SELECT pari FROM account WHERE id=?', (uid,)).fetchone()
+        methodo = bool(conn.execute('SELECT methodo FROM account WHERE id=?', (uid,)).fetchone()[0])
+        grille = grilles.pour(subject, n, exo['id'])
+        rappel = recent_fautes(conn, uid, grille['cle']) if grille and methodo else []
+        # 20/20 copies of this level, counted in every mode (validated level, free practice): exo ids
+        copies20 = {r[0] for r in conn.execute("SELECT DISTINCT exo_id FROM event_log WHERE account_id=? AND kind='copie20' "
+                                                "AND subject=? AND level=?", (uid, subject, n))} if grille else set()
         sq = squelettes.pour(subject, n, 0) if is_admin() else None
         if sq:  # stage from the exercises already done on this type, all its levels together
             types = squelettes.niveaux_du_type(sq['cle'])
@@ -866,16 +876,21 @@ def level_page(subject):
         seance=(session.get('seance_line') or {}).get('texte') if request.args.get('seance') == (session.get('seance_line') or {}).get('ecue') else None,
         copie_tip=__import__('beta').copie_tip(data['subject']['matiere'], exo['id']) if is_admin() else None,
         # hard line breaks: annales lines (a), (b)… are separate steps of the copy
-        copie=(lambda c: c and {**c, 'texte': md(c['texte'].replace('\n', '  \n'))})(copie_officielle(subject, n)) if is_admin() else None,
-        squelette=sq and {**sq, 'palier': sq['palier'] if sq['palier'] > 1 or copie_officielle(subject, n) else 2,
+        copie=None,  # user: the copy shown must be the one of the exercise asked, never another exercise of the level
+        squelette=sq and {**sq, 'palier': max(sq['palier'], 2),  # stage 1 showed another exercise's copy: dropped
                           'etapes': [(lab, md(t).replace('{}', '<span class="lv-trou"></span>')) for lab, t in sq['etapes']]},
         squares=squares(lvl, status), combo=streak_now, pari=bool(pari and pari[0]), calib=CALIB_POINTS,
+        methodo=methodo, rappel=rappel,
+        copies20=grille and {'faites': len(copies20 & {e['id'] for e in lvl['exos']}), 'total': len(lvl['exos'])},
+        # copy-rule reflex: lines shuffled so the place of the right one is not learnt
+        choix=random.sample([(md(t), i == 0) for i, t in enumerate(exo['choix'])], len(exo['choix'])) if exo.get('choix') else None,
+        grille=grille and {**grille, 'criteres': [(render_markdown_with_math_inline(t), p) for t, p, _ in grille['criteres']]},
         exo={'id': exo['id'], 'src': exo.get('src'), 'origine': exo.get('origine'), 'duree': limit, 'ref': ref, 'bonus': round((bonus - 1) * 100),
              'enonce': md(exo['enonce']), 'sol': md(exo['sol']),
              # one formula per line; the level notions stay below as course reminder
              'formules': md('\n'.join(f'- {f}' for f in exo.get('formules', '').split(' · ') if f)),
              # one step per line, like the official copies
-             'copie': md(exo['copie'].replace('\n', '  \n')) if exo.get('copie') and is_admin() else None},
+             'copie': md(exo['copie'].replace('\n', '  \n')) if exo.get('copie') else None},
         notions=[{'titre': notions[i]['titre'], 'formule': md(notions[i]['formule']),
                   'exemple': md(notions[i]['exemple']), 'cours': md(notions[i]['cours'])}
                  for i in lvl['notions']],
@@ -921,6 +936,9 @@ def level_result(subject):
     if exo_id not in {e['id'] for e in data['levels'][n - 1]['exos']}:
         return jsonify(error='exercice inconnu'), 400
     ok, peek = bool(body.get('ok')), int(bool(body.get('peek')))  # browser flag: fallback if the hint call failed
+    grille = grilles.cle(subject, n, exo_id)
+    fautes = grilles.fautes_valides(grille, body.get('fautes') or []) if grille and isinstance(body.get('fautes'), list) else []
+    ok = ok and not fautes  # method mode: one unticked criterion = not 20/20 = missed
     clock = session.pop('exo_clock', None)
     secs = ref = None
     timeout = False
@@ -947,12 +965,17 @@ def level_result(subject):
         conn.execute('''INSERT INTO exo_log (account_id, subject, level, exo_id, ok, secs, peek, points, practice, timeout, review, conf)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                      (uid, subject, n, exo_id, int(ok), secs, int(peek), pts, int(practice), int(timeout), int(review), conf))
+        for i in fautes:  # flagged mistakes, recalled on the next exercise of the same grid
+            log_event(conn, uid, 'faute', subject, n, f'{grille}:{i}')
+        if grille and isinstance(body.get('fautes'), list) and ok:
+            log_event(conn, uid, 'copie20', subject, n, exo_id)
         total_xp = xp(conn, uid)
         combo_now = current_combo(conn, uid)
         st = statuses(conn, uid, subject)
         status = level_status(st, data['levels'][n - 1])
         green = sum(1 for v in status.values() if v == 1)
-        extra = dict(combo=combo_now, points=pts, double=double, calib=calib, conf=conf, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
+        extra = dict(note=20 - sum(grilles.GRILLES[grille][1][i][1] for i in fautes) if grille and isinstance(body.get('fautes'), list) else None,
+                     combo=combo_now, points=pts, double=double, calib=calib, conf=conf, xp=total_xp, timeout=timeout, secs=secs, ref=ref, peek=peek, green=green, total=len(status),
                      percent=total_percent(st, data))
         fraud = all_suspects(conn).get(uid)
         if fraud:
@@ -1178,6 +1201,11 @@ def week_history(rows, events, today):
 _FICHE = {'mtime': None, 'sections': []}
 
 
+# /formules groups its chapters (ECUE sections of FORMULES.md) by subject; absent = Maths
+FICHE_MATIERE = {'Mécanique': 'Physique', 'Thermodynamique': 'Physique', 'Logique séquentielle': 'Archi',
+                 'Numération': 'Archi', 'Systèmes à microprocesseur': 'Archi', 'Études des filtres': 'Électronique'}
+
+
 def formula_sheet():
     """Sections of annales/FORMULES.md (one per ECUE), rendered once per file change."""
     from app import render_markdown_with_math
@@ -1185,7 +1213,8 @@ def formula_sheet():
     mtime = path.stat().st_mtime
     if _FICHE['mtime'] != mtime:
         parts = re.split(r'^## (.+)$', path.read_text(encoding='utf-8'), flags=re.M)[1:]
-        _FICHE['sections'] = [{'id': 'f%d' % i, 'titre': t.strip(), 'html': render_markdown_with_math(body)}
+        _FICHE['sections'] = [{'id': 'f%d' % i, 'titre': t.strip(), 'html': render_markdown_with_math(body),
+                               'matiere': FICHE_MATIERE.get(t.strip(), 'Maths'), 'teinte': (i * 137) % 360}
                               for i, (t, body) in enumerate(zip(parts[::2], parts[1::2]))]
         _FICHE['mtime'] = mtime
     return _FICHE['sections']
@@ -1421,6 +1450,28 @@ def pause_api():
             conn.execute('UPDATE account SET pause_forcee=? WHERE id=?',
                          (int(bool((request.get_json(silent=True) or {}).get('on'))), session['uid']))
         return jsonify(forced_break(conn, session['uid']))
+
+
+def recent_fautes(conn, uid, cle, days=30):
+    """Mistakes flagged on this grid in the last days: [(label, times)], most frequent first."""
+    rows = conn.execute("SELECT exo_id, COUNT(*) c FROM event_log WHERE account_id=? AND kind='faute' AND exo_id LIKE ? "
+                        "AND at >= datetime('now', ?) GROUP BY exo_id ORDER BY c DESC, MAX(at) DESC LIMIT 3",
+                        (uid, cle + ':%', f'-{days} days')).fetchall()
+    return [(render_markdown_with_math_inline(grilles.faute_texte(r[0])), r[1]) for r in rows if grilles.faute_texte(r[0])]
+
+
+def render_markdown_with_math_inline(text):
+    from app import render_markdown_with_math
+    return re.sub(r'^<p>(.*)</p>\s*$', r'\1', render_markdown_with_math(text), flags=re.S)
+
+
+@bp.route('/api/methodo', methods=['POST'])
+@login_required
+def set_methodo():
+    on = bool((request.get_json(silent=True) or {}).get('on'))
+    with db() as conn:
+        conn.execute('UPDATE account SET methodo=? WHERE id=?', (int(on), session['uid']))
+    return jsonify(ok=True, on=on)
 
 
 @bp.route('/api/pari', methods=['POST'])

@@ -239,6 +239,7 @@
        "periode_examen": "pas d'examen : prérequis de toutes les matières",
        "chapitres": [],
        "parcours": [
+        "bases-copie",
         "bases-fractions",
         "bases-puissances",
         "bases-algebre",
