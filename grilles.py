@@ -216,6 +216,131 @@ GRILLES = {
         ("Conclusion : ordre ou équivalence, total ou non", 4, "nature non conclue"),
         ("Classes d'équivalence décrites quand demandé", 3, "classes oubliées"),
     ]),
+    # S3 maths
+    'determinant': ("Déterminant", [
+        ("Opérations sur les lignes ou colonnes nommées ($L_2\\leftarrow L_2-L_1$) et licites", 5, "opération non nommée"),
+        ("Développement selon une ligne ou colonne avec les signes $(-1)^{i+j}$", 5, "signe de cofacteur faux"),
+        ("Facteurs sortis et justifiés (multilinéarité)", 3, "facteur oublié"),
+        ("Résultat factorisé", 4, "résultat non factorisé"),
+        ("Conclusion demandée : inversible $\\iff\\det\\neq0$, valeurs interdites", 3, "conclusion absente"),
+    ]),
+    'diagonalisation': ("Valeurs propres, diagonalisation", [
+        ("$\\chi_A(\\lambda)=\\det(A-\\lambda I)$ (ou $\\lambda I-A$) calculé et factorisé", 5, "polynôme caractéristique non factorisé"),
+        ("Valeurs propres avec multiplicités", 3, "multiplicités oubliées"),
+        ("Sous-espaces propres : système $(A-\\lambda I)X=0$ résolu, base donnée", 5, "sous-espace propre non résolu"),
+        ("Critère cité : somme des dimensions $=n$ ou $\\dim E_\\lambda=$ multiplicité", 4, "critère non cité"),
+        ("$P$ (vecteurs propres en colonnes, dans l'ordre de $D$) et $D$ écrites, $A=PDP^{-1}$", 3, "$P$ et $D$ non cohérentes"),
+    ]),
+    'puissances': ("Puissances, suites et systèmes couplés", [
+        ("Écriture matricielle : $X_{n+1}=AX_n$ ou $X'=AX$", 4, "écriture matricielle absente"),
+        ("$A=PDP^{-1}$ rappelé", 3, "diagonalisation non rappelée"),
+        ("$A^n=PD^nP^{-1}$ prouvé (récurrence) ou cité", 4, "$A^n$ non justifié"),
+        ("Changement de variable $Y=P^{-1}X$ et système découplé résolu", 5, "changement de variable absent"),
+        ("Retour à $X$ et vérification sur $n=0$ ou $t=0$", 4, "retour à $X$ non vérifié"),
+    ]),
+    'dl': ("DL, équivalents, limites", [
+        ("Ordre du DL annoncé et suffisant", 4, "ordre insuffisant"),
+        ("DL usuels écrits avec leur reste $o(x^n)$", 4, "reste $o$ oublié"),
+        ("Composition : on vérifie que la fonction intérieure tend vers $0$", 4, "composition sans limite nulle"),
+        ("Pas de somme d'équivalents : passage par les DL", 4, "somme d'équivalents"),
+        ("Résultat encadré", 4, "résultat non encadré"),
+    ]),
+    'series': ("Nature d'une série", [
+        ("Signe du terme général précisé (termes positifs ou non)", 4, "signe non étudié"),
+        ("Condition nécessaire $u_n\\to0$ testée en premier", 3, "divergence grossière non testée"),
+        ("Critère nommé : Riemann, comparaison, équivalents, d'Alembert, Cauchy, séries alternées", 5, "critère non nommé"),
+        ("Hypothèses du critère vérifiées (termes positifs pour les équivalents, décroissance pour les alternées)", 5,
+         "hypothèse du critère oubliée"),
+        ("Conclusion : la série converge / diverge", 3, "conclusion absente"),
+    ]),
+    'generatrice': ("Fonction génératrice", [
+        ("$G_X(t)=E(t^X)=\\sum P(X=k)t^k$ écrite", 4, "définition non écrite"),
+        ("Domaine de $t$ précisé (au moins $[-1,1]$)", 3, "domaine oublié"),
+        ("$E(X)=G_X'(1)$, $V(X)=G_X''(1)+G_X'(1)-G_X'(1)^2$ cités", 5, "formule de la variance fausse"),
+        ("Indépendance citée pour $G_{X+Y}=G_XG_Y$", 4, "indépendance non citée"),
+        ("Loi reconnue ou coefficients identifiés, résultat encadré", 4, "loi non identifiée"),
+    ]),
+    'serie_entiere': ("Série entière", [
+        ("Rayon obtenu par une règle nommée (d'Alembert, comparaison), avec $a_n\\neq0$ vérifié", 6, "règle non justifiée"),
+        ("Rayon donné clairement : $R=\\dots$", 3, "rayon non conclu"),
+        ("Somme par une série connue ($\\frac1{1-x}$, $e^x$) avec changement d'indice détaillé", 5, "changement d'indice faux"),
+        ("Dérivation ou intégration terme à terme sur $]-R,R[$ citée", 3, "intervalle de validité oublié"),
+        ("Résultat avec son domaine $|x| < R$", 3, "domaine du résultat oublié"),
+    ]),
+    # S3 physics
+    'physique': ("Calcul de physique", [
+        ("Système, référentiel ou repère, et données nommés", 3, "système non défini"),
+        ("Loi ou théorème nommé avant de l'utiliser", 4, "loi non nommée"),
+        ("Expression littérale avant toute valeur numérique", 5, "application numérique trop tôt"),
+        ("Homogénéité vérifiée", 3, "homogénéité non vérifiée"),
+        ("Application numérique avec unité et chiffres significatifs cohérents", 5, "unité oubliée"),
+    ]),
+    'gauss': ("Théorème de Gauss", [
+        ("Symétries et invariances : direction et variables dont dépend $\\vec E$", 5, "symétries non étudiées"),
+        ("Surface de Gauss fermée choisie et décrite (cylindre, sphère)", 4, "surface de Gauss non décrite"),
+        ("Flux calculé face par face (flux nul sur les faces où $\\vec E\\perp\\vec n$)", 4, "flux mal découpé"),
+        ("$Q_{int}$ calculée selon la position du point (intérieur / extérieur)", 4, "cas intérieur oublié"),
+        ("$\\vec E$ vectoriel avec sa direction et son unité", 3, "champ non vectoriel"),
+    ]),
+    # S3 electronics
+    'transistor': ("Transistor bipolaire", [
+        ("Hypothèse de fonctionnement posée (linéaire, saturé, bloqué)", 4, "régime non posé"),
+        ("Mailles d'entrée et de sortie écrites avec $V_{BE}$ et $V_{CE}$", 5, "maille non écrite"),
+        ("$I_C=\\beta I_B$ utilisé seulement en régime linéaire", 3, "$\\beta I_B$ hors régime linéaire"),
+        ("Hypothèse vérifiée à la fin ($V_{CE} > V_{CE,sat}$, $I_B > 0$)", 4, "hypothèse non vérifiée"),
+        ("Résultats avec unités et schéma annoté", 4, "unités oubliées"),
+    ]),
+    'petits_signaux': ("Petits signaux, amplificateur", [
+        ("Point de repos calculé d'abord", 3, "point de repos oublié"),
+        ("$r_{be}=\\frac{\\beta V_T}{I_{C0}}$ calculé", 3, "$r_{be}$ non calculé"),
+        ("Schéma équivalent dessiné (sources continues éteintes, condensateurs court-circuits)", 5, "schéma équivalent absent"),
+        ("Gain, $R_e$ et $R_s$ exprimés littéralement", 5, "expression littérale absente"),
+        ("Valeurs numériques et signe du gain commenté", 4, "signe du gain non commenté"),
+    ]),
+    'cmos': ("Portes CMOS", [
+        ("Table de vérité ou expression booléenne de départ", 4, "fonction non écrite"),
+        ("Réseau N : série pour ET, parallèle pour OU, sur la fonction complémentée", 5, "réseau N faux"),
+        ("Réseau P dual du réseau N", 5, "réseau P non dual"),
+        ("Vérification : pas de court-circuit $V_{DD}$-masse, sortie jamais flottante", 4, "court-circuit non vérifié"),
+        ("Schéma propre, transistors nommés", 2, "schéma illisible"),
+    ]),
+    # S3 architecture
+    'asm68k': ("Assembleur 68000", [
+        ("Taille de chaque opération lue (.B .W .L) et appliquée", 5, "taille ignorée"),
+        ("Adresse effective calculée pour chaque mode", 5, "adresse effective fausse"),
+        ("Valeurs en hexadécimal sur le bon nombre de chiffres", 3, "format hexadécimal faux"),
+        ("Drapeaux N Z V C donnés après chaque instruction concernée", 4, "drapeaux oubliés"),
+        ("Registres et mémoire modifiés seulement ceux concernés (big-endian)", 3, "octets mal placés"),
+    ]),
+    # S3 algorithmics
+    'trace': ("Dérouler un algorithme sur une structure", [
+        ("État complet après chaque étape demandée", 6, "étape sautée"),
+        ("Règle de l'algorithme appliquée à la lettre (ordre, sens, cas d'égalité)", 6, "règle mal appliquée"),
+        ("Notation du cours (tableau indexé, dessin d'arbre, liste d'adjacence)", 3, "notation non conforme"),
+        ("Résultat final mis en évidence", 3, "résultat final absent"),
+        ("Coût ou nombre de comparaisons donné si demandé", 2, "coût oublié"),
+    ]),
+    'python_algo': ("Écrire une fonction", [
+        ("Signature exacte demandée (nom, paramètres, valeur renvoyée)", 4, "signature non conforme"),
+        ("Cas de base traités (arbre vide, liste vide, graphe sans arête)", 5, "cas de base oublié"),
+        ("Seulement les primitives autorisées par le sujet", 4, "primitive interdite"),
+        ("Terminaison et pas de variable non initialisée", 4, "variable non initialisée"),
+        ("Indentation et noms lisibles", 3, "code illisible"),
+    ]),
+    'automates': ("Automates et langages", [
+        ("Automate complet décrit : états, initial, finaux, transitions", 5, "état initial ou final oublié"),
+        ("Construction du cours suivie (Thompson, sous-ensembles, Moore) avec sa table", 6, "construction non suivie"),
+        ("États renommés et table de transition fournie", 3, "table absente"),
+        ("Vérification sur un mot accepté et un mot refusé", 3, "automate non testé"),
+        ("Langage décrit en français ou par une expression", 3, "langage non conclu"),
+    ]),
+    'etoile': ("Lemme de l'étoile", [
+        ("Par l'absurde : on suppose $L$ rationnel, $N$ donné par le lemme", 4, "hypothèse non posée"),
+        ("Mot $w\\in L$ choisi en fonction de $N$, avec $|w|\\geqslant N$", 5, "mot choisi sans $N$"),
+        ("Découpage $w=xyz$, $|xy|\\leqslant N$, $y\\neq\\varepsilon$, traité dans tous les cas", 5, "découpage incomplet"),
+        ("Un $k$ explicite avec $xy^kz\\notin L$", 4, "$k$ non donné"),
+        ("Conclusion : $L$ n'est pas rationnel", 2, "conclusion absente"),
+    ]),
 }
 
 # (subject, level) -> grid; exercise ids override (definitions inside method levels, exam exercises)
@@ -236,6 +361,31 @@ NIVEAUX = {
     **{('maths-s1-obm', k): 'definition' for k in (2, 3, 4, 5)},
     ('maths-s1-obm', 6): 'raisonnement', ('maths-s1-obm', 7): 'recurrence', ('maths-s1-obm', 8): 'ensembles',
     ('maths-s1-obm', 9): 'applications', ('maths-s1-obm', 10): 'injsurj', ('maths-s1-obm', 11): 'relations',
+    # S3 (exam levels left out: they mix methods)
+    ('maths-s3-al', 1): 'definition', ('maths-s3-al', 2): 'definition', ('maths-s3-al', 3): 'demo',
+    **{('maths-s3-al', k): 'determinant' for k in (4, 5, 6)},
+    **{('maths-s3-al', k): 'diagonalisation' for k in (7, 8, 9, 10, 11, 12)},
+    **{('maths-s3-al', k): 'puissances' for k in (13, 14, 15)},
+    ('maths-s3-asn', 1): 'limite', **{('maths-s3-asn', k): 'dl' for k in (2, 3, 4, 5)},
+    **{('maths-s3-asn', k): 'series' for k in range(6, 13)},
+    ('maths-s3-pse', 1): 'probas', ('maths-s3-pse', 2): 'va', ('maths-s3-pse', 3): 'serie_entiere',
+    **{('maths-s3-pse', k): 'generatrice' for k in (4, 5, 6, 7, 13, 14)},
+    **{('maths-s3-pse', k): 'serie_entiere' for k in (8, 9, 10, 11)}, ('maths-s3-pse', 12): 'va',
+    **{('physique-s3-em', k): 'physique' for k in (1, 2, 3, 4, 5, 6, 7, 8, 14, 15)},
+    **{('physique-s3-em', k): 'gauss' for k in (9, 10, 11, 12, 13)},
+    **{('physique-s3-quantique', k): 'physique' for k in range(1, 14)},
+    **{('electronique-s3-transistors', k): 'physique' for k in (1, 2)},
+    **{('electronique-s3-transistors', k): 'transistor' for k in (3, 4, 5, 6, 7, 8)},
+    **{('electronique-s3-transistors', k): 'petits_signaux' for k in (9, 10, 11)},
+    **{('electronique-s3-transistors', k): 'cmos' for k in (12, 13, 14)},
+    **{('archi-s3-assembleur-68000', k): 'asm68k' for k in range(4, 16)},
+    **{('algo-s3-arbres', k): 'trace' for k in (1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12)}, ('algo-s3-arbres', 6): 'python_algo',
+    **{('algo-s3-graphes', k): 'trace' for k in range(1, 11)}, ('algo-s3-graphes', 11): 'python_algo',
+    ('algo-s3-graphes', 12): 'python_algo',
+    **{('algo-s3-hachage', k): 'trace' for k in range(1, 14)},
+    ('algo-s3-thlr', 5): 'trace',  # edit distance table; word and language exercises have no fitting grid
+    **{('algo-s3-thlr', k): 'automates' for k in range(10, 18)}, ('algo-s3-thlr', 18): 'etoile',
+    ('algo-s3-thlr', 19): 'automates', ('algo-s3-thlr', 20): 'automates',
 }
 EXOS = {
     'maths-s1-apis-suites': {
