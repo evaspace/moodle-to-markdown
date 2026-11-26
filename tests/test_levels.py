@@ -204,6 +204,8 @@ class Api(unittest.TestCase):
         html = self.c.get(url).get_data(as_text=True)
         self.assertNotIn('Barème du prof', html)
         self.assertNotIn('Copie 20/20 de cet exercice', html)
+        self.c.post('/api/methodo', json={'on': True})
+        self.assertIn('Barème du prof : Probabilités', self.c.get('/niveaux/maths-s1-dp?n=9').get_data(as_text=True))
 
     def test_copy_rule_reflex_is_one_tap(self):
         import ratelimit
