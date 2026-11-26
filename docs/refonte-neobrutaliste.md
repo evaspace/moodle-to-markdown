@@ -11,51 +11,51 @@ Demande de l'utilisateur (2026-11-26) : générer d'abord tous les visuels avec 
 - Générer chaque sticker seul, sur fond blanc pur `#FFFFFF`.
 - Détourage gratuit en local : `pipx install "rembg[cli]"` puis `rembg i entree.png sortie.png`. Sinon, garder le fond blanc et utiliser `mix-blend-mode: multiply` en CSS.
 - Vérifier chaque image : texte exact (accents compris, « C'EST PARTI ! »), aucun filigrane, aucune lettre parasite.
-- Déposer les fichiers finaux dans `static/neo/` avec les noms ci-dessous (PNG détouré, ou SVG si l'outil en donne).
+- Déposer les fichiers finaux dans `static/neo/` avec les noms ci-dessous.
 
 ## Liste
 
-- [ ] **Fond** — `static/neo/fond.png` (1920x1080)
+- [ ] **Fond** — `static/neo/fond.svg` (1920x1080)
   ```
   Minimalist neo-brutalist web background on a pure solid white (#FFFFFF) canvas. Faint light gray (#E6E6E6) geometric accents placed sparsely near the edges: two small wireframe grids (top-right and bottom-left), two subtle pixel checkerboard clusters, a few tiny four-point stars on top-left, and a thin light-gray spiral on bottom-right. Vast empty pure white center, flat 2D vector, zero text, no letters, clean UI backdrop --ar 16:9
   ```
-- [ ] **1. Badge « NON-STOP »** (haut-gauche du bouton noir) — `static/neo/badge-non-stop.png`
+- [ ] **1. Badge « NON-STOP »** (haut-gauche du bouton noir) — `static/neo/badge-non-stop.svg`
   ```
   Neo-brutalist vector sticker of a slightly tilted blue pill badge with bold white uppercase text "NON-STOP" outlined in black. Thick 3px solid black border, hard offset black shadow, flat 2D retro web style, isolated on pure white #FFFFFF background.
   ```
-- [ ] **2. Badge « NEW! »** (haut-droite du bouton noir) — `static/neo/badge-new.png`
+- [ ] **2. Badge « NEW! »** (haut-droite du bouton noir) — `static/neo/badge-new.svg`
   ```
   Neo-brutalist vector sticker of a spiky red-orange comic starburst badge with bold yellow text "NEW!" outlined in black. Thick black outlines, hard offset black shadow, flat 2D retro UI style, isolated on pure white #FFFFFF background.
   ```
-- [ ] **3. Bulle « C'EST PARTI ! »** (à droite du chat) — `static/neo/bulle-cest-parti.png`
+- [ ] **3. Bulle « C'EST PARTI ! »** (à droite du chat) — `static/neo/bulle-cest-parti.svg`
   ```
   Neo-brutalist comic speech bubble sticker, white rectangle with a bottom-left pointer tail and bold black uppercase text "C'EST PARTI !". Thick 3px black border, hard solid black offset shadow, flat 2D vector, isolated on pure white #FFFFFF background.
   ```
-- [ ] **4. Étoiles et fleur** (autour du chat) — `static/neo/etoiles-fleur.png`
+- [ ] **4. Étoiles et fleur** (autour du chat) — `static/neo/etoiles-fleur.svg`
   ```
   Small cluster of neo-brutalist comic doodle stickers: three yellow four-point sparkles and one small red pixel-art flower. Thick black outlines, flat 2D vector, isolated on pure white #FFFFFF background.
   ```
-- [ ] **5. Curseur et explosion** (bas-gauche des boutons) — `static/neo/curseur-explosion.png`
+- [ ] **5. Curseur et explosion** (bas-gauche des boutons) — `static/neo/curseur-explosion.svg`
   ```
   Neo-brutalist vector sticker of a classic blue retro pixel mouse pointer clicking a jagged yellow and orange comic burst with a red four-point star. Thick black outlines, hard black shadow, isolated on pure white #FFFFFF background.
   ```
-- [ ] **6. Feuilles d'examens** (sur le bouton rouge) — `static/neo/feuilles-examens.png`
+- [ ] **6. Feuilles d'examens** (sur le bouton rouge) — `static/neo/feuilles-examens.svg`
   ```
   Neo-brutalist vector sticker of three overlapping white exam paper sheets with red grade marks, checkmarks, and lines. Thick black outlines, crisp flat 2D comic illustration, isolated on pure white #FFFFFF background.
   ```
-- [ ] **7. Livre ouvert et carnet** (sur le bouton bleu) — `static/neo/livre-carnet.png`
+- [ ] **7. Livre ouvert et carnet** (sur le bouton bleu) — `static/neo/livre-carnet.svg`
   ```
   Neo-brutalist vector sticker of an open white textbook next to a small closed green notebook with tiny blue sparkles. Thick black outlines, flat 2D retro UI illustration, isolated on pure white #FFFFFF background.
   ```
-- [ ] **8. Trophée** (sur le bouton jaune) — `static/neo/trophee.png`
+- [ ] **8. Trophée** (sur le bouton jaune) — `static/neo/trophee.svg`
   ```
   Neo-brutalist vector sticker of a golden trophy cup with a small star embossed in the center. Thick black outlines, flat 2D retro game icon style, isolated on pure white #FFFFFF background.
   ```
-- [ ] **9. Badge ovale « 100% C »** (droite des boutons) — `static/neo/badge-100-c.png`
+- [ ] **9. Badge ovale « 100% C »** (droite des boutons) — `static/neo/badge-100-c.svg`
   ```
   Neo-brutalist vector sticker of a tilted orange-yellow gradient oval badge with bold white text "100% C" outlined in black. Thick 3px black border, hard offset black shadow, isolated on pure white #FFFFFF background.
   ```
-- [ ] **10. Cocarde smiley** (bas-droite du bloc stats) — `static/neo/cocarde-smiley.png`
+- [ ] **10. Cocarde smiley** (bas-droite du bloc stats) — `static/neo/cocarde-smiley.svg`
   ```
   Neo-brutalist vector sticker of a blue scalloped seal rosette badge with a happy yellow smiley face in the center. Thick black outlines, hard offset black shadow, flat 2D retro aesthetic, isolated on pure white #FFFFFF background.
   ```
