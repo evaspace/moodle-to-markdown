@@ -13,12 +13,14 @@
 }
 #landing-screen .quick-all-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000 !important; }
 #landing-screen .quick-action-wrap .quick-all-btn + .quick-all-btn,
-#landing-screen .scroll-group > .quick-all-btn + .quick-all-btn { margin-top: 16px; }
+#landing-screen .scroll-group > .quick-all-btn + .quick-all-btn { margin-top: 24px; }
+#landing-screen .quick-action-wrap { margin-bottom: 24px; }
+#landing-screen .morgan-footer { margin-top: 96px; }
 #landing-screen .quick-all-btn.quick-red, #landing-screen .quick-all-btn.quick-red:hover { background: #f04438; }
 #landing-screen .quick-all-btn.quick-blue, #landing-screen .quick-all-btn.quick-blue:hover { background: #155eef; }
 #landing-screen .quick-all-btn.quick-yellow, #landing-screen .quick-all-btn.quick-yellow:hover { background: #facc15; color: #0d0d0d; }
 #landing-screen .quick-all-btn.quick-white, #landing-screen .quick-all-btn.quick-white:hover { background: #fff; color: #0d0d0d; }
-#landing-screen .neo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+#landing-screen .neo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
 #landing-screen .neo-duo .quick-all-btn { margin: 0 !important; height: 100%; }
 
 /* stickers */
