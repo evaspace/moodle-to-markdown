@@ -14,14 +14,44 @@
 {% set tab = 'users' %}{% include 'admin_nav.html' %}
 <div class="lv-wrap lv-wide">
   <h1>Utilisateurs</h1>
-  <p class="lv-muted">{{ users|length }} comptes, les plus récemment actifs en premier. Clique sur un nom pour voir toutes ses stats.</p>
+  <p class="lv-muted">{{ users|length }} comptes. Clique sur un titre de colonne pour trier, sur un nom pour voir toutes ses stats.</p>
+  {% set cols = [('Compte', 'text'), ('E-mail', 'text'), ('Inscrit le', 'text'), ('Dernier exercice', 'text'), ('Exercices', 'num'),
+                 ('Réussite', 'num'), ('Minutes', 'num'), ('Niveaux validés', 'num'), ('Points', 'num')] %}
   <div class="st-hist-scroll">
-  <table class="st-hist">
-    <thead><tr><th scope="col">Compte</th><th scope="col">E-mail</th><th scope="col">Inscrit le</th><th scope="col">Dernier exercice</th><th scope="col">Exercices</th><th scope="col">Réussite</th><th scope="col">Minutes</th><th scope="col">Niveaux validés</th><th scope="col">Points</th></tr></thead>
-    <tbody>{% for u in users %}<tr><th scope="row"><a href="/admin/users/{{ u.id }}">{{ u.username }}</a></th><td>{{ u.email or '' }}</td><td>{{ u.created }}</td><td>{{ u.last }}</td><td>{{ u.n }}</td><td>{{ u.rate }} %</td><td>{{ u.minutes }}</td><td>{{ u.levels }}</td><td>{{ u.xp }}</td></tr>{% endfor %}</tbody>
+  <table class="st-hist" id="users">
+    <thead><tr>{% for label, kind in cols %}<th scope="col"{% if loop.index0 == 3 %} aria-sort="descending"{% endif %}><button type="button" class="us-sort" data-kind="{{ kind }}">{{ label }}</button></th>{% endfor %}</tr></thead>
+    <tbody>{% for u in users %}<tr>
+      <th scope="row" data-v="{{ u.username|lower }}"><a href="/admin/users/{{ u.id }}">{{ u.username }}</a></th>
+      <td data-v="{{ (u.email or '')|lower }}">{{ u.email or '' }}</td>
+      <td data-v="{{ u.sort_created }}">{{ u.created }}</td>
+      <td data-v="{{ u.sort_last }}">{{ u.last }}</td>
+      <td data-v="{{ u.n }}">{{ u.n }}</td>
+      <td data-v="{{ u.rate }}">{{ u.rate }} %</td>
+      <td data-v="{{ u.minutes }}">{{ u.minutes }}</td>
+      <td data-v="{{ u.levels }}">{{ u.levels }}</td>
+      <td data-v="{{ u.xp }}">{{ u.xp }}</td>
+    </tr>{% endfor %}</tbody>
   </table>
   </div>
 </div>
+</div>
+<style>
+.us-sort { font: inherit; font-weight: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+th[aria-sort="ascending"] .us-sort::after { content: " ↑"; }
+th[aria-sort="descending"] .us-sort::after { content: " ↓"; }
+</style>
+<script>
+// Click a column title: sort by it (numbers and new dates first, text A-Z); click again to reverse.
+document.querySelectorAll('#users .us-sort').forEach((b, i) => b.addEventListener('click', () => {
+  const th = b.parentElement, body = document.querySelector('#users tbody');
+  const asc = th.getAttribute('aria-sort') ? th.getAttribute('aria-sort') === 'descending' : b.dataset.kind === 'text' && i < 2;
+  document.querySelectorAll('#users thead th').forEach(x => x.removeAttribute('aria-sort'));
+  th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+  const v = r => r.children[i].dataset.v, num = b.dataset.kind === 'num';
+  const rows = [...body.rows].sort((a, c) => (num ? v(a) - v(c) : v(a).localeCompare(v(c))) * (asc ? 1 : -1));
+  body.append(...rows);
+}));
+</script>
 {% include 'footer.html' %}
 </body>
 </html>

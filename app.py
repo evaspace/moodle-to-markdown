@@ -15,7 +15,7 @@ from urllib.parse import quote, urlparse
 
 import bleach
 import markdown
-from flask import Flask, Response, abort, jsonify, render_template, request, send_from_directory, session
+from flask import Flask, Response, abort, jsonify, redirect, render_template, request, send_from_directory, session
 
 from init_db import DB_PATH, init_db
 from levels import PUBLIC_URL, bp as levels_bp, init_levels_db, is_admin, secret_key
@@ -27,9 +27,6 @@ from themes import clean_name, syllabus_rank, theme_for, theme_order
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
-if not ADMIN_PASSWORD:
-    logger.warning("ADMIN_PASSWORD non défini : /admin est ouvert à tout le monde")
 
 app = Flask(__name__)
 init_db()
@@ -113,21 +110,14 @@ def db():
 
 
 def admin_required(f):
+    """Only the logged-in owner account (ADMIN_USERNAMES); everyone else is refused, never let through."""
     @wraps(f)
     def wrapper(*args, **kwargs):
-        if is_admin():  # logged in as the owner account
+        if is_admin():
             return f(*args, **kwargs)
-        if ADMIN_PASSWORD:
-            auth = request.authorization
-            key = ('admin-fail', client_ip())
-            if too_many(key, 10, 900, hit=False):
-                return Response('Trop de tentatives, réessaie dans 15 minutes', 429)
-            if not auth or not hmac.compare_digest((auth.password or ''), ADMIN_PASSWORD):
-                if auth:
-                    too_many(key, 10, 900)
-                return Response('Authentification requise', 401,
-                                {'WWW-Authenticate': 'Basic realm="admin"'})
-        return f(*args, **kwargs)
+        if session.get('uid') or request.path.startswith('/api/'):
+            abort(403)
+        return redirect('/compte?next=' + quote(request.path))
     return wrapper
 
 
@@ -316,7 +306,7 @@ def admin_users_page():
     for r in rows:
         r['rate'] = round(100 * r['ok'] / r['n']) if r['n'] else 0
         r['minutes'] = round(r['secs'] / 60)
-        r['sort_last'] = r['last'] or ''
+        r['sort_last'], r['sort_created'] = r['last'] or '', r['created_at'] or ''
         r['created'], r['last'] = local(r['created_at']), local(r['last'])
     rows.sort(key=lambda r: r['sort_last'], reverse=True)  # most recently active first
     return render_template('admin_users.html', users=rows)

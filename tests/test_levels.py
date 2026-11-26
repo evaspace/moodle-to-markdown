@@ -232,11 +232,15 @@ class Api(unittest.TestCase):
         self.assertTrue({'copie_ia', 'passer'} <= kinds, kinds)
 
     def test_admin_only_for_owner_account(self):
-        os.environ['ADMIN_PASSWORD'] = 'x'
-        import app as app_module
-        app_module.ADMIN_PASSWORD = 'secret-admin'
+        import base64
+        anon = self.c.get('/admin/stats')
+        self.assertEqual(anon.status_code, 302)  # not logged in: sent to the login page
+        self.assertIn('/compte?next=/admin/stats', anon.headers['Location'])
+        basic = {'Authorization': 'Basic ' + base64.b64encode(b'x:anything').decode()}
+        self.assertEqual(self.c.get('/admin/stats', headers=basic).status_code, 302)  # no password access
         self.register('plainuser')
-        self.assertEqual(self.c.get('/admin/stats').status_code, 401)
+        for url in ('/admin', '/admin/stats', '/admin/users', '/admin/beta'):
+            self.assertEqual(self.c.get(url).status_code, 403, url)
         self.assertNotIn('>Admin</a>', self.c.get('/niveaux').get_data(as_text=True))
         self.c.post('/api/logout')
         self.register('morgan.pierrefeu')
@@ -252,11 +256,9 @@ class Api(unittest.TestCase):
         self.assertIn('morgan-footer', html)
 
     def test_admin_users_list_and_detail(self):
-        import app as app_module
-        app_module.ADMIN_PASSWORD = 'secret-admin'
         self.register('statsuser')
         self.answer(1, True)
-        self.assertEqual(self.c.get('/admin/users').status_code, 401)
+        self.assertEqual(self.c.get('/admin/users').status_code, 403)
         self.c.post('/api/logout')
         owner = sorted(levels.ADMIN_USERS)[0]
         self.register(owner)
@@ -266,6 +268,7 @@ class Api(unittest.TestCase):
         with levels.db() as conn:
             uid = conn.execute("SELECT id FROM account WHERE username='statsuser'").fetchone()[0]
         self.assertIn(f'href="/admin/users/{uid}"', html)
+        self.assertIn('class="us-sort"', html)
         page = self.c.get(f'/admin/users/{uid}').get_data(as_text=True)
         self.assertIn('Stats de statsuser', page)
         self.assertNotIn('Rien encore', page)  # the answered exercise shows up

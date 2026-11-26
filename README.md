@@ -478,8 +478,9 @@ phone frame under the navbar. Under 640 px the navbar is hidden and the original
 
 ## Navbar, stats et admin (2026-11-15)
 - `templates/nav.html` : navbar commune, alimentée par `levels.nav_state()` (processeur de contexte `nav`, route `/api/me`). Footer `footer.html` inclus sur toutes les pages sauf les fils plein écran.
-- `/stats` : stats personnelles. `/admin/stats` (HTTP Basic `ADMIN_PASSWORD`, `?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).
-- `/admin/users` : liste de tous les comptes (e-mail, inscription, dernier exercice, exercices, réussite, minutes, niveaux validés, points), du plus récemment actif au moins actif. `/admin/users/<id>` : la page `/stats` de ce compte telle que l'élève la voit (`levels.user_stats(uid, username)`, partagée avec `/stats`).
+- Admin (`/admin*`, `admin_required` in `app.py`) : only the logged-in owner account (`ADMIN_USERNAMES`, default `morgan.pierrefeu`); logged-in others get 403, visitors are sent to `/compte`. No password access (HTTP Basic `ADMIN_PASSWORD` removed 2026-11-26: it let anyone in when unset).
+- `/stats` : stats personnelles. `/admin/stats` (`?format=json`) : stats agrégées calculées par `admin_stats.compute()` (testée dans `tests/test_admin_stats.py`).
+- `/admin/users` : liste de tous les comptes (e-mail, inscription, dernier exercice, exercices, réussite, minutes, niveaux validés, points), du plus récemment actif au moins actif, tri en cliquant sur un titre de colonne (re-clic = sens inverse). `/admin/users/<id>` : la page `/stats` de ce compte telle que l'élève la voit (`levels.user_stats(uid, username)`, partagée avec `/stats`).
 
 
 ## Home feed state per account
