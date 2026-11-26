@@ -1276,15 +1276,20 @@ def calendar_page():
 @bp.route('/stats')
 @login_required
 def stats_page():
+    return render_template('stats.html', **user_stats(session['uid'], session['username']))
+
+
+def user_stats(uid, username):
+    """Template context of /stats for one account (also used by /admin/users/<id>)."""
     from datetime import datetime, timezone
     from zoneinfo import ZoneInfo
     tz = ZoneInfo(TZ)
     with db() as conn:
         rows = [dict(r) for r in conn.execute(
             'SELECT subject, level, exo_id, ok, secs, timeout, points, review, at FROM exo_log WHERE account_id=? ORDER BY id',
-            (session['uid'],))]
-        events = [dict(r) for r in conn.execute('SELECT kind, at FROM event_log WHERE account_id=?', (session['uid'],))]
-        total_xp = xp(conn, session['uid'])
+            (uid,))]
+        events = [dict(r) for r in conn.execute('SELECT kind, at FROM event_log WHERE account_id=?', (uid,))]
+        total_xp = xp(conn, uid)
     for r in rows + events:  # sqlite CURRENT_TIMESTAMP is UTC
         r['at'] = datetime.fromisoformat(r['at']).replace(tzinfo=timezone.utc).astimezone(tz)
     paths = _paths_meta()
@@ -1294,8 +1299,8 @@ def stats_page():
     with db() as conn:
         s['paths'] = []
         for sid, data in paths:
-            _, _, best = progress(conn, session['uid'], sid)
-            st = statuses(conn, session['uid'], sid)
+            _, _, best = progress(conn, uid, sid)
+            st = statuses(conn, uid, sid)
             green = sum(1 for l in data['levels'] for e in l['exos'] if st.get((l['n'], e['id'])) == 1)
             s['paths'].append({'id': sid, 'titre': data['subject']['titre'], 'best': best, 'n': len(data['levels']),
                                'green': green, 'total': sum(len(l['exos']) for l in data['levels']),
@@ -1313,11 +1318,11 @@ def stats_page():
     with db() as conn:  # home feed (session_log is per account since uid)
         n, answered, right, ms = conn.execute(
             'SELECT COUNT(*), COUNT(is_correct), COALESCE(SUM(is_correct), 0), COALESCE(SUM(time_spent_ms), 0)'
-            ' FROM session_log WHERE uid=?', (session['uid'],)).fetchone()
-        best = conn.execute('SELECT max_streak FROM user_state WHERE uid=?', (session['uid'],)).fetchone()
+            ' FROM session_log WHERE uid=?', (uid,)).fetchone()
+        best = conn.execute('SELECT max_streak FROM user_state WHERE uid=?', (uid,)).fetchone()
     s['feed'] = {'n': n, 'answered': answered, 'rate': round(100 * right / answered) if answered else 0,
                  'minutes': round(ms / 60000), 'combo': best[0] if best else 0}
-    return render_template('stats.html', s=s, username=session['username'], xp=total_xp)
+    return {'s': s, 'username': username, 'xp': total_xp}
 
 
 # ---------------------------------------------------------- classement ----

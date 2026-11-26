@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Utilisateurs · Epita Doomscrolling</title>
+  {% include "share.html" %}
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/footer.css?v=20261124b">
+  <link rel="stylesheet" href="/static/niveaux.css?v=41">
+</head>
+<body class="lv-page">
+{% set tab = 'users' %}{% include 'admin_nav.html' %}
+<div class="lv-wrap lv-wide">
+  <h1>Utilisateurs</h1>
+  <p class="lv-muted">{{ users|length }} comptes, les plus récemment actifs en premier. Clique sur un nom pour voir toutes ses stats.</p>
+  <div class="st-hist-scroll">
+  <table class="st-hist">
+    <thead><tr><th scope="col">Compte</th><th scope="col">E-mail</th><th scope="col">Inscrit le</th><th scope="col">Dernier exercice</th><th scope="col">Exercices</th><th scope="col">Réussite</th><th scope="col">Minutes</th><th scope="col">Niveaux validés</th><th scope="col">Points</th></tr></thead>
+    <tbody>{% for u in users %}<tr><th scope="row"><a href="/admin/users/{{ u.id }}">{{ u.username }}</a></th><td>{{ u.email or '' }}</td><td>{{ u.created }}</td><td>{{ u.last }}</td><td>{{ u.n }}</td><td>{{ u.rate }} %</td><td>{{ u.minutes }}</td><td>{{ u.levels }}</td><td>{{ u.xp }}</td></tr>{% endfor %}</tbody>
+  </table>
+  </div>
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

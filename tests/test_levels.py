@@ -251,6 +251,28 @@ class Api(unittest.TestCase):
         self.assertIn('Carte de test admin', html)  # live list of the last cards
         self.assertIn('morgan-footer', html)
 
+    def test_admin_users_list_and_detail(self):
+        import app as app_module
+        app_module.ADMIN_PASSWORD = 'secret-admin'
+        self.register('statsuser')
+        self.answer(1, True)
+        self.assertEqual(self.c.get('/admin/users').status_code, 401)
+        self.c.post('/api/logout')
+        owner = sorted(levels.ADMIN_USERS)[0]
+        self.register(owner)
+        self.c.post('/api/login', json={'username': owner, 'password': 'secret1'})
+        html = self.c.get('/admin/users').get_data(as_text=True)
+        self.assertIn('statsuser', html)
+        with levels.db() as conn:
+            uid = conn.execute("SELECT id FROM account WHERE username='statsuser'").fetchone()[0]
+        self.assertIn(f'href="/admin/users/{uid}"', html)
+        page = self.c.get(f'/admin/users/{uid}').get_data(as_text=True)
+        self.assertIn('Stats de statsuser', page)
+        self.assertNotIn('Rien encore', page)  # the answered exercise shows up
+        self.assertEqual(self.c.get('/admin/users/999999').status_code, 404)
+        import ratelimit
+        ratelimit._hits.clear()  # register limit is shared with the other test files
+
     def test_skip_too_hard_serves_easier_without_penalty(self):
         self.register('skipper')
         page = self.c.get(f'/niveaux/{SUBJECT}').get_data(as_text=True)

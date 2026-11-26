@@ -4,16 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Mes stats · Epita Doomscrolling</title>
+  <title>{% if admin_view %}Stats de {{ username }}{% else %}Mes stats{% endif %} · Epita Doomscrolling</title>
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/footer.css?v=20261124b">
   <link rel="stylesheet" href="/static/niveaux.css?v=41">
 </head>
 <body class="lv-page">
-{% set active = 'stats' %}{% include 'nav.html' %}
+{% if admin_view %}{% set tab = 'users' %}{% include 'admin_nav.html' %}{% else %}{% set active = 'stats' %}{% include 'nav.html' %}{% endif %}
 <div class="lv-wrap">
-  <h1>Mes stats</h1>
+  {% if admin_view %}<h1>Stats de {{ username }}</h1>
+  <p><a href="/admin/users">Tous les utilisateurs</a></p>{% else %}<h1>Mes stats</h1>{% endif %}
   {% if not s.done %}
     <p>Rien encore : fais un premier exercice et tes stats apparaîtront ici.</p>
     <a class="lv-btn primary" href="/niveaux">Commencer un niveau</a>

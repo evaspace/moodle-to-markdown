@@ -297,6 +297,43 @@ def admin_stats_page():
     return render_template('admin_stats.html', s=stats)
 
 
+@app.route('/admin/users')
+@admin_required
+def admin_users_page():
+    """Every account with its activity summary; each row links to its full /stats view."""
+    from datetime import datetime, timezone
+    from zoneinfo import ZoneInfo
+    from levels import TZ, db as levels_db
+    tz = ZoneInfo(TZ)
+    local = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc).astimezone(tz).strftime('%d/%m/%Y %H:%M') if t else ''
+    with levels_db() as conn:
+        rows = [dict(r) for r in conn.execute(
+            'SELECT a.id, a.username, a.email, a.created_at,'
+            ' COUNT(e.id) AS n, COALESCE(SUM(e.ok), 0) AS ok, COALESCE(SUM(e.points), 0) AS xp,'
+            ' COALESCE(SUM(e.secs), 0) AS secs, MAX(e.at) AS last,'
+            ' (SELECT COALESCE(SUM(best), 0) FROM level_progress p WHERE p.account_id = a.id) AS levels'
+            ' FROM account a LEFT JOIN exo_log e ON e.account_id = a.id GROUP BY a.id')]
+    for r in rows:
+        r['rate'] = round(100 * r['ok'] / r['n']) if r['n'] else 0
+        r['minutes'] = round(r['secs'] / 60)
+        r['sort_last'] = r['last'] or ''
+        r['created'], r['last'] = local(r['created_at']), local(r['last'])
+    rows.sort(key=lambda r: r['sort_last'], reverse=True)  # most recently active first
+    return render_template('admin_users.html', users=rows)
+
+
+@app.route('/admin/users/<int:uid>')
+@admin_required
+def admin_user_page(uid):
+    """The /stats page of one account, as that student sees it."""
+    from levels import db as levels_db, user_stats
+    with levels_db() as conn:
+        acc = conn.execute('SELECT username FROM account WHERE id=?', (uid,)).fetchone()
+    if not acc:
+        abort(404)
+    return render_template('stats.html', admin_view=True, **user_stats(uid, acc['username']))
+
+
 def _beta_data():
     """Everything /admin/beta needs, for the logged-in admin (else the owner account)."""
     import beta
