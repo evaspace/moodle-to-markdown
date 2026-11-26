@@ -20,9 +20,10 @@ juste.
 2. Dans le dossier distant, créer un `.env` contenant au minimum :
 
    ```dotenv
-   ADMIN_PASSWORD=un-mot-de-passe-long-et-aleatoire
    APP_BIND_IP=127.0.0.1
    ```
+
+   L'admin est réservé au compte `ADMIN_USERNAMES` (défaut `morgan.pierrefeu`) connecté.
 
    `APP_BIND_IP` doit être l'adresse que le reverse proxy du serveur peut joindre.
    L'application écoute sur le port hôte `5080` et expose `/healthz` pour le contrôle
