@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="/static/style.css?v=20261125">
     <link rel="stylesheet" href="/static/niveaux.css?v=43">
     <link rel="stylesheet" href="/static/footer.css?v=20261126">
+    <link rel="stylesheet" href="/static/neo.css?v=1">
     <script defer src="/static/cat.js?v=20261122"></script>
     <script defer src="/static/copy-for-llm.js?v=1.0.0"></script>
     <script defer src="/static/card-copy.js?v=1"></script>
@@ -106,6 +107,7 @@
             <div class="landing-content">
                 <!-- LE PETIT CHAT SEUL AU CENTRE -->
                 <div class="landing-cat-section" onclick="petTheCat()">
+                    <span class="neo-stk neo-etoiles" aria-hidden="true"><img src="/static/neo/etoiles-fleur.svg" alt=""></span><span class="neo-stk neo-bulle" aria-hidden="true"><img src="/static/neo/bulle-cest-parti.svg" alt=""></span>
                     <div id="landing-cat-bubble" class="cat-speech-bubble hidden">Miaou !</div>
                     <div class="landing-cat-frame">
                         <img src="/static/laying-cat-removebg-preview.png" alt="Le petit chat" class="landing-cat-img state-rest" id="landing-cat-img">
@@ -114,7 +116,7 @@
 
                 <!-- SCROLLER LES COURS : tout doomscroller + modules, repliés -->
                 <details class="quick-action-wrap scroll-group">
-                    <summary class="quick-all-btn"><span>SCROLLER LES COURS (EN DEV)</span><span class="quick-all-arrow">↓</span></summary>
+                    <summary class="quick-all-btn"><span>SCROLLER LES COURS (EN DEV)</span><span class="quick-all-arrow">↓</span><span class="neo-stk neo-nonstop" aria-hidden="true"><img src="/static/neo/badge-non-stop.svg" alt=""></span><span class="neo-stk neo-new" aria-hidden="true"><img src="/static/neo/badge-new.svg" alt=""></span></summary>
                     <button class="quick-all-btn" onclick="launchFeed(null, null)">
                         <span>⚡ TOUT DOOMSCROLLER</span>
                         <span class="quick-all-arrow">→</span>
@@ -125,11 +127,14 @@
                 </details>
 
                 <div class="quick-action-wrap">
-                    <a class="quick-all-btn quick-red" href="/niveaux"><span>NIVEAUX SUR PAPIER</span><span class="quick-all-arrow">→</span></a>
-                    <a class="quick-all-btn quick-blue" href="/cours/"><span>LIRE LE COURS COMPLET</span><span class="quick-all-arrow">→</span></a>
-                    <a class="quick-all-btn" href="/classement"><span>CLASSEMENT</span><span class="quick-all-arrow">→</span></a>
-                    {% if nav.logged %}<a class="quick-all-btn" href="/stats"><span>MES STATS · {{ nav.levels_done }}/{{ nav.levels_total }} NIVEAUX</span><span class="quick-all-arrow">→</span></a>
-                    {% else %}<a class="quick-all-btn" href="/compte"><span>CONNEXION / CRÉER UN COMPTE</span><span class="quick-all-arrow">→</span></a>{% endif %}
+                    <a class="quick-all-btn quick-red" href="/niveaux"><span>NIVEAUX SUR PAPIER</span><span class="quick-all-arrow">→</span><span class="neo-stk neo-feuilles" aria-hidden="true"><img src="/static/neo/feuilles-examens.svg" alt=""></span><span class="neo-stk neo-curseur" aria-hidden="true"><img src="/static/neo/curseur-explosion.svg" alt=""></span></a>
+                    <a class="quick-all-btn quick-blue" href="/cours/"><span>LIRE LE COURS COMPLET</span><span class="quick-all-arrow">→</span><span class="neo-stk neo-livre" aria-hidden="true"><img src="/static/neo/livre-carnet.svg" alt=""></span></a>
+                    <span class="neo-stk neo-100c" aria-hidden="true"><img src="/static/neo/badge-100-c.svg" alt=""></span>
+                    <div class="neo-duo">
+                    <a class="quick-all-btn quick-yellow" href="/classement"><span>CLASSEMENT</span><span class="quick-all-arrow">→</span><span class="neo-stk neo-trophee" aria-hidden="true"><img src="/static/neo/trophee.svg" alt=""></span></a>
+                    {% if nav.logged %}<a class="quick-all-btn quick-white" href="/stats"><span>MES STATS · {{ nav.levels_done }}/{{ nav.levels_total }} NIVEAUX</span><span class="quick-all-arrow">→</span><span class="neo-stk neo-cocarde" aria-hidden="true"><img src="/static/neo/cocarde-smiley.svg" alt=""></span></a>
+                    {% else %}<a class="quick-all-btn quick-white" href="/compte"><span>CONNEXION / CRÉER UN COMPTE</span><span class="quick-all-arrow">→</span><span class="neo-stk neo-cocarde" aria-hidden="true"><img src="/static/neo/cocarde-smiley.svg" alt=""></span></a>{% endif %}
+                    </div>
                 </div>
 
                 {% include 'footer.html' %}

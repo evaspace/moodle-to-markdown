@@ -4,6 +4,7 @@ Ce qui change sur le site, du plus récent au plus ancien. Une remarque ? Laisse
 
 ## 26 novembre 2026
 
+- Nouvelle page d'accueil : boutons en couleur, stickers qui bougent au survol. Les pages d'exercices ne changent pas, pour rester concentré.
 - Niveaux : les bases de maths ne s'ajoutent plus quand tu coches S3 ou S4, seulement avec S1. Elles restent toujours dans la liste des matières.
 - Pari de confiance : à la souris, il suffit de s'arrêter sur « Sûr », « Moyen » ou « Au hasard », plus besoin de cliquer. Nouveau choix « Passer » pour voir la correction sans parier.
 

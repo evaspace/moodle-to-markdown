@@ -1,0 +1,74 @@
+/* Neo-brutalist landing (docs/refonte-neobrutaliste.md). Loaded by index.html only and scoped to #landing-screen:
+   the feed, the exercise pages and the footer keep their own calm style. */
+#landing-screen { background: #fff url('/static/neo/fond.svg') center top / cover no-repeat; overflow-x: hidden; }
+
+#landing-screen .quick-action-wrap { position: relative; }
+#landing-screen .quick-all-btn {
+    position: relative; border: 3px solid #000; border-radius: 6px; box-shadow: 4px 4px 0 #000 !important;
+    background: #0d0d0d; color: #fff; font-weight: 800; text-transform: uppercase;
+    transition: transform .12s, box-shadow .12s;
+}
+#landing-screen .quick-all-btn:hover, #landing-screen .quick-all-btn:focus-visible {
+    transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000 !important; background: #0d0d0d;
+}
+#landing-screen .quick-all-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000 !important; }
+#landing-screen .quick-action-wrap .quick-all-btn + .quick-all-btn,
+#landing-screen .scroll-group > .quick-all-btn + .quick-all-btn { margin-top: 16px; }
+#landing-screen .quick-all-btn.quick-red, #landing-screen .quick-all-btn.quick-red:hover { background: #f04438; }
+#landing-screen .quick-all-btn.quick-blue, #landing-screen .quick-all-btn.quick-blue:hover { background: #155eef; }
+#landing-screen .quick-all-btn.quick-yellow, #landing-screen .quick-all-btn.quick-yellow:hover { background: #facc15; color: #0d0d0d; }
+#landing-screen .quick-all-btn.quick-white, #landing-screen .quick-all-btn.quick-white:hover { background: #fff; color: #0d0d0d; }
+#landing-screen .neo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+#landing-screen .neo-duo .quick-all-btn { margin: 0 !important; height: 100%; }
+
+/* stickers */
+.neo-stk { position: absolute; z-index: 2; display: block; pointer-events: none; transition: transform .2s; }
+.neo-stk img { display: block; width: 100%; }
+#landing-screen .landing-cat-section { position: relative; }
+.landing-cat-section:hover .landing-cat-frame,
+#landing-screen:has(.scroll-group > summary:hover) .landing-cat-frame { transform: translateY(-5px); }
+.landing-cat-frame { transition: transform .2s; }
+.neo-bulle { width: 150px; top: 6px; left: calc(50% + 62px); transform: scale(0); }
+.landing-cat-section:hover .neo-bulle,
+#landing-screen:has(.scroll-group > summary:hover) .neo-bulle { animation: neo-pop .35s ease-out forwards; }
+.neo-etoiles { width: 80px; top: 6px; left: calc(50% - 150px); }
+.landing-cat-section:hover .neo-etoiles,
+#landing-screen:has(.scroll-group > summary:hover) .neo-etoiles { transform: rotate(15deg); }
+.neo-nonstop { width: 96px; top: -30px; left: -26px; pointer-events: auto; animation: neo-sway 3s ease-in-out infinite alternate; }
+.neo-nonstop:hover { animation: none; transform: scale(1.1) rotate(0); }
+.neo-new { width: 74px; top: -46px; right: -30px; animation: neo-pulse 1.8s ease-in-out infinite; }
+.scroll-group > summary:hover .neo-new { animation: neo-wiggle .3s linear 3; }
+.neo-feuilles { width: 76px; top: -30px; right: 70px; }
+.quick-red:hover .neo-feuilles { transform: translateY(-4px) rotate(6deg); }
+.neo-livre { width: 84px; top: -32px; right: 70px; }
+.quick-blue:hover .neo-livre { transform: translateY(-5px) rotate(-4deg); }
+.neo-curseur { width: 84px; bottom: -34px; left: -54px; }
+#landing-screen .quick-action-wrap:has(.quick-red:hover, .quick-blue:hover) .neo-curseur { animation: neo-clic .5s ease-out forwards; }
+.neo-100c { width: 104px; top: 70px; right: -96px; transform: rotate(6deg); pointer-events: auto; }
+.neo-100c:hover { transform: rotate(14deg) scale(1.1); }
+.neo-trophee { width: 58px; top: -38px; right: -16px; }
+.quick-yellow:hover .neo-trophee { transform: scale(1.15) rotate(8deg); }
+.neo-cocarde { width: 64px; bottom: -32px; right: -18px; }
+.quick-white:hover .neo-cocarde { animation: neo-pendule .8s ease-in-out infinite alternate; }
+
+@keyframes neo-sway { from { transform: rotate(-6deg); } to { transform: rotate(-2deg); } }
+@keyframes neo-pulse { 50% { transform: scale(1.06); } }
+@keyframes neo-wiggle { 25% { transform: rotate(8deg); } 75% { transform: rotate(-8deg); } }
+@keyframes neo-pop { 0% { transform: scale(.85); } 60% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes neo-clic { 40% { transform: scale(.85); } 100% { transform: scale(1.15); } }
+@keyframes neo-pendule { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+@media (max-width: 767px) {
+    .neo-100c, .neo-curseur, .neo-etoiles { display: none; }
+    .neo-nonstop { width: 70px; top: -24px; left: -10px; }
+    .neo-new { width: 54px; top: -34px; right: -8px; }
+    .neo-feuilles, .neo-livre { width: 56px; right: 48px; top: -24px; }
+    .neo-trophee { width: 44px; right: -6px; top: -28px; }
+    .neo-cocarde { width: 48px; right: -6px; bottom: -24px; }
+    .neo-bulle { width: 110px; left: auto; right: 0; }
+    #landing-screen .quick-all-btn { font-size: .85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .neo-stk { animation: none !important; transition: none; }
+    #landing-screen .quick-all-btn { transition: none; }
+}
