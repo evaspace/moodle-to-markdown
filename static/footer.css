@@ -30,5 +30,10 @@
 .app-nav-links.slide-ready { --slide-color: var(--accent-color, #FF5252); }
 .morgan-footer-nav.slide-ready { --slide-color: #ec6a11; }
 .adm-tabs.slide-ready { background: #F4F5F7; }
+/* exercise page buttons: the ink block glides under them; coloured buttons keep their fill above it */
+.lv-row.slide-ready .slide-item.primary { background: var(--accent-color); }
+.lv-row.slide-ready .slide-item.primary.on { background: var(--accent-hover); }
+.lv-row.slide-ready .slide-item.ok { background: var(--success-color); }
+.lv-row.slide-ready .slide-item.ia { background: #1f5fbf; }
 .cal-filter.slide-ready { --slide-color: var(--accent-color, #FF5252); }
 @media (prefers-reduced-motion: reduce) { .slide-pill { transition: opacity .2s; } }

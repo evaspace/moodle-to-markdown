@@ -7,7 +7,7 @@
   <title>Niveau {{ lvl.n }} · {{ subject.titre }}</title>
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
-  <link rel="stylesheet" href="/static/footer.css?v=20261124b">
+  <link rel="stylesheet" href="/static/footer.css?v=20261126">
   <link rel="stylesheet" href="/static/niveaux.css?v=41">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -40,14 +40,14 @@
     <ol>{% for lab, t in squelette.etapes %}<li><strong>{{ lab }}</strong>{% if squelette.palier == 2 %}{{ t|safe }}{% endif %}</li>{% endfor %}</ol>
     <p class="lv-muted">{{ 'Complète les trous sur ta feuille.' if squelette.palier == 2 else 'Les étapes seules : écris chacune, dans cet ordre.' }}</p></details>{% endif %}
 
-  <div class="lv-row">
+  <div class="lv-row" data-slide="fill" data-slide-items=".lv-btn">
     <button class="lv-btn" type="button" id="btn-fiche" aria-expanded="false" aria-controls="fiche">Fiche du chapitre</button>
     <button class="lv-btn" type="button" id="btn-formules" aria-expanded="false" aria-controls="notions">Formules de la solution</button>
     <button class="lv-btn" type="button" id="btn-temps">Plus de temps</button>
     <button class="lv-btn primary" type="button" id="btn-correction" aria-controls="solution">J'ai ma réponse</button>
     {% if not practice and not review and not mix %}<a class="lv-btn" id="btn-skip" href="/niveaux/{{ subject.id }}?facile={{ exo.id }}">Trop dur, passer</a>{% endif %}
   </div>
-  <div class="lv-row" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
+  <div class="lv-row" data-slide="fill" data-slide-items=".lv-btn" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
     <button class="lv-btn" type="button" data-conf="2">Sûr</button>
     <button class="lv-btn" type="button" data-conf="1">Moyen</button>
     <button class="lv-btn" type="button" data-conf="0">Au hasard</button></div>
@@ -100,7 +100,7 @@
     <span class="lv-muted" id="copy-ia-note">Énoncé et correction, avec une demande d’explication détaillée, à coller dans ChatGPT, Claude ou Gemini</span>
   </div>
 
-  <div class="lv-row">
+  <div class="lv-row" data-slide="fill" data-slide-items=".lv-btn">
     <button class="lv-btn ok" type="button" id="btn-ok" disabled>Réussi</button>
     <button class="lv-btn primary" type="button" id="btn-ko" disabled>Raté</button>
   </div>
