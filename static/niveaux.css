@@ -537,3 +537,10 @@ a.bt-card:hover, a.bt-card:focus-visible { transform: translateY(-2px); backgrou
 .st-day i { position: absolute; left: 0; right: 0; height: 2px; background: var(--text-color); }
 .st-day-axis { display: grid; grid-template-columns: repeat(8, 1fr); }
 .st-legend .st-avg-key { height: 2px; background: var(--text-color); vertical-align: middle; }
+
+/* hover-to-validate (niveaux.js dwell): a light fill grows while the mouse rests */
+.lv-dwell, .lv-btn.lv-dwell { background-image: linear-gradient(var(--success-bg), var(--success-bg)); background-repeat: no-repeat;
+            background-size: 0 100%; animation: lv-dwell var(--dwell, 400ms) linear forwards; }
+.lv-btn.primary.lv-dwell { background-image: linear-gradient(var(--success-color), var(--success-color)); }
+@keyframes lv-dwell { to { background-size: 100% 100%; } }
+@media (prefers-reduced-motion: reduce) { .lv-dwell { animation: none; background-size: 100% 100%; } }

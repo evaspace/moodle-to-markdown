@@ -8,7 +8,7 @@
   {% include "share.html" %}
   <link rel="stylesheet" href="/static/style.css?v=20261122c">
   <link rel="stylesheet" href="/static/footer.css?v=20261126">
-  <link rel="stylesheet" href="/static/niveaux.css?v=41">
+  <link rel="stylesheet" href="/static/niveaux.css?v=43">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -50,7 +50,8 @@
   <div class="lv-row" data-slide="fill" data-slide-items=".lv-btn" id="pari-row" hidden><span class="lv-pari-q">Ta confiance avant de voir la correction</span>
     <button class="lv-btn" type="button" data-conf="2">Sûr</button>
     <button class="lv-btn" type="button" data-conf="1">Moyen</button>
-    <button class="lv-btn" type="button" data-conf="0">Au hasard</button></div>
+    <button class="lv-btn" type="button" data-conf="0">Au hasard</button>
+    <button class="lv-btn" type="button" data-conf="">Passer</button></div>
   <p class="lv-combo{{ ' on' if combo >= 2 }}" id="combo-hud" aria-live="polite">{% if combo >= 2 %}Combo <strong>×{{ combo }}</strong> <span class="lv-risk">un raté le remet à 0</span>{% endif %}</p>
   {% if nav.streak %}<p class="lv-muted" id="day-streak">Série : {{ nav.streak }} jour{{ 's' if nav.streak > 1 }} de révision d'affilée</p>{% endif %}
   <p class="lv-timer" id="timer" role="timer" aria-live="off">Réfléchis seul : <strong id="timer-left"></strong>{% if exo.bonus %} (temps rallongé de {{ exo.bonus }} %){% endif %}</p>
@@ -115,7 +116,7 @@
 </div>
 {% include 'footer.html' %}
 <script src="/static/cat.js?v=20261122"></script>
-<script src="/static/niveaux.js?v=26"></script>
+<script src="/static/niveaux.js?v=28"></script>
 <script src="/static/copy-for-llm.js?v=1.0.0"></script>
 <script>CopyForLLM.config({ done: 'Copié', failed: 'Copie impossible' });</script>
 </body>

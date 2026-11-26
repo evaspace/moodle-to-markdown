@@ -2,6 +2,10 @@
 
 Ce qui change sur le site, du plus récent au plus ancien. Une remarque ? Laisse un avis en bas de page : il est lu.
 
+## 26 novembre 2026
+
+- Pari de confiance : à la souris, il suffit de s'arrêter sur « Sûr », « Moyen » ou « Au hasard », plus besoin de cliquer. Nouveau choix « Passer » pour voir la correction sans parier.
+
 ## 25 novembre 2026
 
 - Équations différentielles : le parcours indique maintenant qu'elles sont vues en décembre mais évaluées au S2 (APEF). Merci pour le signalement : le Moodle 2031 range ce chapitre en S2 et aucun examen final S1 récent n'en contient.

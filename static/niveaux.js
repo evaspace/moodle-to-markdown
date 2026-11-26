@@ -297,7 +297,10 @@
       $('pari-row').hidden = false;
       $('pari-row').querySelector('button').focus();
     };
-    $('pari-row').querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { conf = +b.dataset.conf; reveal(); });
+    $('pari-row').querySelectorAll('[data-conf]').forEach(b => {
+      b.onclick = () => { if (!$('pari-row').hidden) { conf = b.dataset.conf === '' ? null : +b.dataset.conf; reveal(); } };
+      dwell(b, () => b.click());
+    });
 
     async function answer(ok, timeout = false) {
       $('btn-ok').disabled = $('btn-ko').disabled = true;
@@ -375,6 +378,19 @@
       post(`/api/niveaux/${exo.dataset.subject}/copie`, { level: +exo.dataset.level, exo_id: exo.dataset.exo }));  // counted for /stats
     $('next').querySelector('a').onclick = (e) => { e.preventDefault(); next(e.currentTarget.href); };
     if ($('btn-skip')) $('btn-skip').onclick = (e) => { e.preventDefault(); clearInterval(tick); next(e.currentTarget.href); };
+  }
+
+  // Mouse only: resting on an element for `ms` runs `fn` (a fill shows the wait); touch and keyboard still click.
+  function dwell(el, fn, ms = 400) {
+    let t = null;
+    const stop = () => { clearTimeout(t); el.classList.remove('lv-dwell'); };
+    el.style.setProperty('--dwell', ms + 'ms');
+    el.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || el.disabled || el.closest('[hidden]')) return;
+      el.classList.add('lv-dwell');
+      t = setTimeout(() => { stop(); if (!el.disabled) fn(); }, ms);
+    });
+    el.addEventListener('pointerleave', stop);
   }
 
   // Next exercise without a page reload: fetch the next page and swap #exo (a full load is the fallback).
